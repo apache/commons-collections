@@ -22,6 +22,7 @@ import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
@@ -50,7 +51,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     /**
      * The shape used by this BloomFilter
      */
-    private final BloomFilter.Shape shape;
+    private final Shape shape;
 
     /**
      * Gets an array of little-endian long values representing the on bits of this filter.
@@ -75,7 +76,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      *
      * @param shape The shape.
      */
-    protected AbstractBloomFilter(BloomFilter.Shape shape) {
+    protected AbstractBloomFilter(Shape shape) {
         this.shape = shape;
     }
 
@@ -95,7 +96,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param shape the other shape to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    protected void verifyShape(BloomFilter.Shape shape) {
+    protected void verifyShape(Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
         }
@@ -121,7 +122,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @return The shape of this filter.
      */
     @Override
-    public final BloomFilter.Shape getShape() {
+    public final Shape getShape() {
         return shape;
     }
 

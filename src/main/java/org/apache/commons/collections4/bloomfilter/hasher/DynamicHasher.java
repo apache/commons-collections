@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-
 /**
  * The class that performs hashing on demand.
  * @since 4.5

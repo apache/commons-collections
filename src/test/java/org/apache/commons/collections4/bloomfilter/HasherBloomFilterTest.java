@@ -30,9 +30,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.ToLongBiFunction;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.After;
 import org.junit.Before;
@@ -43,18 +43,18 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
 
     @Override
-    protected HasherBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
+    protected HasherBloomFilter createFilter(Hasher hasher, Shape shape) {
         return new HasherBloomFilter( hasher, shape );
     }
 
     @Override
-    protected AbstractBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
+    protected AbstractBloomFilter createEmptyFilter(Shape shape) {
         return new HasherBloomFilter( shape );
     }
 
     @Test
     public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
-        BloomFilter.Shape shape = new BloomFilter.Shape( new MD5Cyclic(), 3, 72, 17 );
+        Shape shape = new Shape( new MD5Cyclic(), 3, 72, 17 );
         DynamicHasher hasher = new DynamicHasher.Builder( new MD5Cyclic() ).with( "Hello").build();
         HasherBloomFilter filter = createFilter( hasher, shape );
         long[] lb = filter.getBits();

@@ -19,8 +19,6 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-
 
 /**
  * The class that performs hashing.

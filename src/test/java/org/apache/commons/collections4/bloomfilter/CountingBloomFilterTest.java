@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
@@ -36,12 +36,12 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
 
     @Override
-    protected CountingBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
+    protected CountingBloomFilter createFilter(Hasher hasher, Shape shape) {
         return new CountingBloomFilter( hasher, shape );
     }
 
     @Override
-    protected CountingBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
+    protected CountingBloomFilter createEmptyFilter(Shape shape) {
         return new CountingBloomFilter( shape );
     }
 

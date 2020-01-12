@@ -30,8 +30,6 @@ import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.junit.Test;
 
 public class StaticHasherTest {
@@ -90,7 +88,7 @@ public class StaticHasherTest {
                 return 0;
             }};
 
-    private BloomFilter.Shape shape = new BloomFilter.Shape(testFunction, 3, 72, 17);
+    private Shape shape = new Shape(testFunction, 3, 72, 17);
 
     @Test
     public void testGetBits() throws Exception {
@@ -130,7 +128,7 @@ public class StaticHasherTest {
 
 
         try {
-            hasher.getBits(new BloomFilter.Shape( testFunctionX, 3, 72, 17) );
+            hasher.getBits(new Shape( testFunctionX, 3, 72, 17) );
             fail( "Should have thown IllegalArgumentException");
           }
           catch (IllegalArgumentException expected) {
@@ -222,7 +220,7 @@ public class StaticHasherTest {
     public void testConstructor_StaticHasher_WrongShape() throws Exception {
         int[] values = { 1, 3, 5, 7, 9, 3, 5, 1};
         Iterator<Integer> iter = Arrays.stream(values).iterator();
-        StaticHasher hasher = new StaticHasher(iter, new BloomFilter.Shape( testFunctionX, 3, 72, 17) );
+        StaticHasher hasher = new StaticHasher(iter, new Shape( testFunctionX, 3, 72, 17) );
 
         try {
             new StaticHasher( hasher, shape );
@@ -245,7 +243,7 @@ public class StaticHasherTest {
             }
 
             @Override
-            public OfInt getBits(BloomFilter.Shape shape) {
+            public OfInt getBits(Shape shape) {
                 int[] values = { 1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream( values ).iterator();
             }};
@@ -269,7 +267,7 @@ public class StaticHasherTest {
             }
 
             @Override
-            public OfInt getBits(BloomFilter.Shape shape) {
+            public OfInt getBits(Shape shape) {
                 int[] values = { 1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream( values ).iterator();
             }};

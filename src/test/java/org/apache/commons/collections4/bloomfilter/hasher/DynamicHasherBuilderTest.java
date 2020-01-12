@@ -26,8 +26,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +33,7 @@ import org.junit.Test;
 public class DynamicHasherBuilderTest {
 
     DynamicHasher.Builder builder;
-    BloomFilter.Shape shape = new BloomFilter.Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
+    Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
 
     @Before
     public void setup() throws NoSuchAlgorithmException

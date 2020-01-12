@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 
@@ -57,7 +58,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param hasher The hasher to build the filter from.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Hasher hasher, BloomFilter.Shape shape) {
+    public CountingBloomFilter(Hasher hasher, Shape shape) {
         super(shape);
         verifyHasher(hasher);
         counts = new TreeMap<Integer, Integer>();
@@ -71,7 +72,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(BloomFilter.Shape shape) {
+    public CountingBloomFilter(Shape shape) {
         super(shape);
         this.counts = new TreeMap<Integer, Integer>();
     }
@@ -82,7 +83,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param counts A map of data counts.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Map<Integer,Integer> counts, BloomFilter.Shape shape) {
+    public CountingBloomFilter(Map<Integer,Integer> counts, Shape shape) {
         this(shape);
         counts.entrySet().stream().forEach( e -> {
             if (e.getKey() >= shape.getNumberOfBits())

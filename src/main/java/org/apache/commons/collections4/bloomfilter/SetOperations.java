@@ -17,7 +17,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
  * Implementations of set operations on Bloom filters.

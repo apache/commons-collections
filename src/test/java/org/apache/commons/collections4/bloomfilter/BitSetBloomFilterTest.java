@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
@@ -32,12 +33,12 @@ import org.junit.Test;
 public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
 
     @Override
-    protected BitSetBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
+    protected BitSetBloomFilter createFilter(Hasher hasher, Shape shape) {
         return new BitSetBloomFilter( hasher, shape );
     }
 
     @Override
-    protected BitSetBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
+    protected BitSetBloomFilter createEmptyFilter(Shape shape) {
         return new BitSetBloomFilter( shape );
     }
 

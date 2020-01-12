@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
@@ -59,7 +60,7 @@ public class SetOperationsTest {
         }
     };
 
-    private BloomFilter.Shape shape = new BloomFilter.Shape(testFunction, 3, 72, 17);
+    private Shape shape = new Shape(testFunction, 3, 72, 17);
 
     /**
      * Tests that the size estimate is correctly calculated.

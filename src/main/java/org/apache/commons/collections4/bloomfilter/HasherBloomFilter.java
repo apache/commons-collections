@@ -24,6 +24,7 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.function.IntConsumer;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
@@ -48,7 +49,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
      * @param hasher the hasher to use.
      * @param shape the shape of the Bloom filter.
      */
-    public HasherBloomFilter(Hasher hasher, BloomFilter.Shape shape) {
+    public HasherBloomFilter(Hasher hasher, Shape shape) {
         super(shape);
         verifyHasher(hasher);
         if (hasher instanceof StaticHasher) {
@@ -64,7 +65,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
      *
      * @param shape the shape of the Bloom filter.
      */
-    public HasherBloomFilter(BloomFilter.Shape shape) {
+    public HasherBloomFilter(Shape shape) {
         super(shape);
         this.hasher = new StaticHasher(EmptyIterator.emptyIterator(), shape);
     }
