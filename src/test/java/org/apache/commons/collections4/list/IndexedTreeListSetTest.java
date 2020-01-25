@@ -26,9 +26,9 @@ import java.util.*;
  *
  * @since 3.1
  */
-public class TreeListSetTest<E> extends AbstractListTest<E> {
+public class IndexedTreeListSetTest<E> extends AbstractListTest<E> {
 
-    public TreeListSetTest(final String name) {
+    public IndexedTreeListSetTest(final String name) {
         super(name);
     }
 
@@ -46,7 +46,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
 //    }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TreeListSetTest.class);
+        return BulkTest.makeSuite(IndexedTreeListSetTest.class);
     }
 
     public static void benchmark(final List<? super Integer> l) {
@@ -102,8 +102,8 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
 
     //-----------------------------------------------------------------------
     @Override
-    public TreeListSet<E> makeObject() {
-        return new TreeListSet<>();
+    public IndexedTreeListSet<E> makeObject() {
+        return new IndexedTreeListSet<>();
     }
 
     @Override
@@ -138,31 +138,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
 
     @Override
     public void testListIteratorAdd() {
-        // override to cope with Set behaviour
-        resetEmpty();
-        final List<E> list1 = getCollection();
-        final List<E> list2 = getConfirmed();
-
-        final E[] elements = getOtherElements();  // changed here
-        ListIterator<E> iter1 = list1.listIterator();
-        ListIterator<E> iter2 = list2.listIterator();
-
-        for (final E element : elements) {
-            iter1.add(element);
-            iter2.add(element);
-            super.verify();  // changed here
-        }
-
-        resetFull();
-        iter1 = getCollection().listIterator();
-        iter2 = getConfirmed().listIterator();
-        for (final E element : elements) {
-            iter1.next();
-            iter2.next();
-            iter1.add(element);
-            iter2.add(element);
-            super.verify();  // changed here
-        }
+        // Does not support ListIterator.add(obj)
     }
 
     //-----------------------------------------------------------------------
@@ -241,23 +217,55 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
         assertEquals(4, l.indexOf("4"));
         assertEquals(5, l.indexOf("5"));
         assertEquals(6, l.indexOf("6"));
+        assertEquals(7, l.size());
 
-        l.set(1, (E) "0");
-        assertEquals(0, l.indexOf("0"));
+        l.set(2, (E) "0"); // Previous "0" at index 0 was removed
+        assertEquals(1, l.indexOf("0"));
+        assertEquals(-1, l.indexOf("2"));
+        assertEquals(0, l.indexOf("1"));
+        assertEquals(6, l.size());
 
-        l.set(3, (E) "3");
-        assertEquals(3, l.indexOf("3"));
-        l.set(2, (E) "3");
-        assertEquals(2, l.indexOf("3"));
-        l.set(1, (E) "3");
-        assertEquals(1, l.indexOf("3"));
-        l.set(0, (E) "3");
-        assertEquals(0, l.indexOf("3"));
+        l.set(2, (E) "7");
+        assertEquals(-1, l.indexOf("3"));
+        assertEquals(2, l.indexOf("7"));
+        assertEquals(6, l.size());
+
+        l.set(2, (E) "5"); // Previous "5" at index 4 was removed
+        assertEquals(2, l.indexOf("5"));
+        assertEquals(4, l.indexOf("6"));
+        assertEquals(5, l.size());
+
+        l.remove(4);
+        assertEquals(2, l.indexOf("5"));
+
+        l.remove(1);
+        assertEquals(1, l.indexOf("5"));
+    }
+
+    /**
+     *  Test {@link List#set(int,Object)}.
+     */
+    public void testListSetByIndex() {
+        if (!isSetSupported()) {
+            return;
+        }
+
+        resetFull();
+        final E[] elements = getFullElements();
+        final E[] other = getOtherElements();
+
+        for (int i = 0; i < other.length; i++) {
+            final E n = other[i % other.length];
+            final E v = getCollection().set(i % elements.length, n);
+            assertEquals("Set should return correct element", elements[i], v);
+            getConfirmed().set(i % elements.length, n);
+            verify();
+        }
     }
 
     @SuppressWarnings("unchecked")
     public void testAddAll() {
-        final TreeListSet<E> lset = new TreeListSet<>();
+        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>();
 
         lset.addAll(Arrays.asList((E[]) new Integer[] { Integer.valueOf(1), Integer.valueOf(1)}));
 
@@ -306,7 +314,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
     public void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
 
-        final List<Integer> TreeListSet = new TreeListSet<>();
+        final List<Integer> TreeListSet = new IndexedTreeListSet<>();
         TreeListSet.add(Integer.valueOf(0));
         TreeListSet.add(Integer.valueOf(1));
         TreeListSet.add(Integer.valueOf(2));
@@ -334,7 +342,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
     }
 
     public void testBugCollections447() {
-        final List<String> TreeListSet = new TreeListSet<>();
+        final List<String> TreeListSet = new IndexedTreeListSet<>();
         TreeListSet.add("A");
         TreeListSet.add("B");
         TreeListSet.add("C");
@@ -364,7 +372,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
             for (int i = 0; i < size; i++) {
                 other.add(i);
             }
-            final TreeListSet<Integer> l = new TreeListSet<>(other);
+            final IndexedTreeListSet<Integer> l = new IndexedTreeListSet<>(other);
             final ListIterator<Integer> it = l.listIterator();
             int i = 0;
             while (it.hasNext()) {
@@ -394,7 +402,7 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
             for (int j = i; j < size; j++) {
                 other.add(j);
             }
-            final TreeListSet<Integer> l = new TreeListSet<>();
+            final IndexedTreeListSet<Integer> l = new IndexedTreeListSet<>();
             for (int j = 0; j < i; j++) {
                 l.add(j);
             }
@@ -414,5 +422,40 @@ public class TreeListSetTest<E> extends AbstractListTest<E> {
             }
         }
     }
+//
+//    /**
+//     *  Tests the {@link ListIterator#set(Object)} method of the list
+//     *  iterator.
+//     */
+//    public void testListIteratorSet() {
+//        final E[] elements = getOtherElements();
+//
+//        resetFull();
+//        final ListIterator<E> iter1 = getCollection().listIterator();
+//        final ListIterator<E> iter2 = getConfirmed().listIterator();
+//        for (final E element : elements) {
+//            iter1.next();
+//            iter2.next();
+//            iter1.set(element);
+//            iter2.set(element);
+//            verify();
+//        }
+//    }
 
+    //-----------------------------------------------------------------------
+    public BulkTest bulkTestListIterator() {
+        return new TestListIteratorNoAddSet();
+    }
+
+    public class TestListIteratorNoAddSet extends TestListIterator {
+        @Override
+        public boolean supportsAdd() {
+            return false;
+        }
+
+        @Override
+        public boolean supportsSet() {
+            return false;
+        }
+    }
 }

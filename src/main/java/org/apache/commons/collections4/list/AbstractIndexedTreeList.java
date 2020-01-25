@@ -19,19 +19,27 @@ package org.apache.commons.collections4.list;
 import java.util.*;
 
 /**
- * Common class for indexable tree lists.
+ * Common class for indexed tree lists.
  *
  * Code is based on apache common collections <code>TreeList</code>.
  *
  * @author Aleksandr Maksymenko
  */
-abstract class AbstractTreeList<E> extends AbstractList<E> {
+abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
 
     /** The root node in the AVL tree */
     protected AVLNode root;
 
     /** Size of a List */
     protected int size = 0;
+
+    /**
+     * Methods set(obj) and add(obj) in ListIterator can't be implemented to satisfy specification in IndexedTreeListSet.
+     * So these methods are disabled by default and throws UnsupportedOperationException.
+     * It's possible to enable this feature but in this case exception may be thrown if someone tries to add/set
+     * an element which is already in a collection.
+     */
+    protected boolean supportAddSetInIterator = true;
 
     //-----------------------------------------------------------------------
     /**
@@ -796,7 +804,7 @@ abstract class AbstractTreeList<E> extends AbstractList<E> {
      */
     private class TreeListIterator implements ListIterator<E> { // TODO implements ListIterator<E>, OrderedIterator<E>
         /** The parent list */
-        private final AbstractTreeList parent;
+        private final AbstractIndexedTreeList parent;
         /**
          * Cache of the next node that will be returned by {@link #next()}.
          */
@@ -828,7 +836,7 @@ abstract class AbstractTreeList<E> extends AbstractList<E> {
          * @param parent the parent list
          * @param fromIndex the index to start at
          */
-        protected TreeListIterator(final AbstractTreeList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
+        protected TreeListIterator(final AbstractIndexedTreeList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
             super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
@@ -916,15 +924,27 @@ abstract class AbstractTreeList<E> extends AbstractList<E> {
         }
 
         public void set(final E obj) {
+            if (!supportAddSetInIterator) {
+                throw new UnsupportedOperationException("Set operation is not supported");
+            }
             checkModCount();
             if (current == null) {
                 throw new IllegalStateException();
+            }
+            if (!canAdd(obj)) {
+                throw new IllegalArgumentException("Unable to set specified element");
             }
             current.setValue(obj);
         }
 
         public void add(final E obj) {
+            if (!supportAddSetInIterator) {
+                throw new UnsupportedOperationException("Add operation is not supported");
+            }
             checkModCount();
+            if (!canAdd(obj)) {
+                throw new IllegalArgumentException("Unable to add specified element");
+            }
             parent.add(nextIndex, obj);
             current = null;
             currentIndex = -1;

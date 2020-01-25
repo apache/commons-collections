@@ -23,9 +23,8 @@ import java.util.function.Function;
  * As a <code>List</code> this data structure stores order of elements and
  * provides access by index. It's is optimised for fast insertions, removals
  * and searching by any index or object in the list.
- * As a <code>Set</code> this data structure stores unique elements only.
  * <p/>
- * TreeListSet can be suitable for tasks which requires fast modification in the
+ * IndexedTreeList can be suitable for tasks which requires fast modification in the
  * middle of a list and provides fast contains and indexOf.
  * <p/>
  * Get by index is O(log n).
@@ -54,13 +53,13 @@ import java.util.function.Function;
  * <li>Has greatly improved contains and indexOf operations, O(log n) while TreeList has O(n)</li>
  * </ul>
  *
- * As this implementation is slightly slower, anr require more memory it's recommended to use
- * <code>TreeList</code> in cases when no searching is required or <code>TreeListSet</code> in
- * cases where unique elements should be stored.
+ * As this implementation is slightly slower and require more memory it's recommended to use
+ * <code>TreeList</code> in cases when no searching is required or <code>IndexedTreeListSet</code>
+ * in cases where unique elements should be stored.
  *
  * @author Aleksandr Maksymenko
  */
-public class IndexedTreeList<E> extends AbstractTreeList<E> {
+public class IndexedTreeList<E> extends AbstractIndexedTreeList<E> {
 
     private final Comparator<AVLNode> NODE_COMPARATOR = Comparator.comparingInt(AVLNode::getPosition);
     private final Function<E, TreeSet<AVLNode>> NEW_NODE_TREE_SET = k -> new TreeSet(NODE_COMPARATOR);

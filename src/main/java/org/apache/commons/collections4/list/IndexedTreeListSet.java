@@ -29,8 +29,8 @@ import java.util.Set;
  * and searching by any index or object in the list.
  * As a <code>Set</code> this data structure stores unique elements only.
  * <p/>
- * TreeListSet can be suitable for tasks which requires fast modification in the
- * middle of a list and provides fast contains and indexOf.
+ * IndexedTreeListSet can be suitable for tasks which requires fast modification
+ * in the middle of a list and provides fast contains and indexOf operations.
  * <p/>
  * Get by index, insert (head, tail, middle), remove(by index or by value)
  * and indexOf are all O(log n). Contains is O(1) or O(log n) depending on Map
@@ -54,7 +54,9 @@ import java.util.Set;
  *
  * @author Aleksandr Maksymenko
  */
-public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
+public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements Set<E> {
+
+    private static final boolean SUPPORT_ADD_SET_IN_ITERATOR = false;
 
     /** Map from element to it's node or nodes */
     protected final Map<E, AVLNode> nodeMap;
@@ -63,7 +65,7 @@ public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
     /**
      * Constructs a new empty list.
      */
-    public TreeListSet() {
+    public IndexedTreeListSet() {
         this(new HashMap<>());
     }
 
@@ -72,8 +74,9 @@ public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
      * @param map Map implementation. It defines how elements would be compared. For example HashMap (by hashcode/equals),
      *            TreeMap (by compareTo or Comparator), IdentityHashMap (by identity). Specified map should be empty.
      */
-    public TreeListSet(final Map map) {
+    public IndexedTreeListSet(final Map map) {
         this.nodeMap = map;
+        this.supportAddSetInIterator = SUPPORT_ADD_SET_IN_ITERATOR;
     }
 
     /**
@@ -82,7 +85,7 @@ public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
      * @param coll The collection to copy
      * @throws NullPointerException if the collection is null
      */
-    public TreeListSet(final Collection<? extends E> coll) {
+    public IndexedTreeListSet(final Collection<? extends E> coll) {
         this(coll, new HashMap<>());
     }
 
@@ -94,8 +97,9 @@ public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
      *            TreeMap (by compareTo or Comparator), IdentityHashMap (by identity). Specified map should be empty.
      * @throws NullPointerException if the collection is null
      */
-    public TreeListSet(final Collection<? extends E> coll, final Map map) {
+    public IndexedTreeListSet(final Collection<? extends E> coll, final Map map) {
         this.nodeMap = map;
+        this.supportAddSetInIterator = SUPPORT_ADD_SET_IN_ITERATOR;
         for (E e : coll) {
             add(e);
         }
@@ -138,6 +142,27 @@ public class TreeListSet<E> extends AbstractTreeList<E> implements Set<E> {
     @Override
     public boolean contains(final Object object) {
         return nodeMap.containsKey(object);
+    }
+
+    /**
+     * Sets the element at the specified index.
+     * If specified value already exist in Set, it will be removed at old position.
+     * E.g. if TreeListSet contains ["A", "B", "C"] and set(2, "A") is invoked, then result will be ["B", "A"].
+     *
+     * @param index the index to set
+     * @param obj the object to store at the specified index
+     * @return
+     */
+    @Override
+    public E set(int index, final E obj) {
+        final int pos = indexOf(obj);
+        if (pos >= 0 && pos != index) {
+            remove(pos);
+            if (pos < index) {
+                index--;
+            }
+        }
+        return super.set(index, obj);
     }
 
     /**
