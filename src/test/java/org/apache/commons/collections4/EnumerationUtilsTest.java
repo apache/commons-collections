@@ -18,11 +18,13 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -38,21 +40,48 @@ public class EnumerationUtilsTest {
     public static final String TO_LIST_FIXTURE = "this is a test";
 
     @Test
-    public void testToListWithStringTokenizer() {
-        final List<String> expectedList1 = new ArrayList<>();
-        final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
-             while (st.hasMoreTokens()) {
-                 expectedList1.add(st.nextToken());
-             }
-        final List<String> expectedList2 = new ArrayList<>();
-        expectedList2.add("this");
-        expectedList2.add("is");
-        expectedList2.add("a");
-        expectedList2.add("test");
-        final List<String> actualList = EnumerationUtils.toList(new StringTokenizer(TO_LIST_FIXTURE));
-        assertEquals(expectedList1, expectedList2);
-        assertEquals(expectedList1, actualList);
-        assertEquals(expectedList2, actualList);
+    public void getFromEnumeration() throws Exception {
+        // Enumeration, entry exists
+        final Vector<String> vector = new Vector<>();
+        vector.addElement("zero");
+        vector.addElement("one");
+        Enumeration<String> en = vector.elements();
+        assertEquals("zero", EnumerationUtils.get(en, 0));
+        en = vector.elements();
+        assertEquals("one", EnumerationUtils.get(en, 1));
+
+        // Enumerator, non-existent entry
+        try {
+            EnumerationUtils.get(en, 3);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+        assertTrue(!en.hasMoreElements());
+    }
+
+    @Test
+    public void testAsIterableFor() {
+        final Vector<String> vector = new Vector<>();
+        vector.addElement("zero");
+        vector.addElement("one");
+        Enumeration<String> en = vector.elements();
+        final Iterator<String> iterator = EnumerationUtils.asIterable(en).iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals("zero", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("one", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testAsIterableForNull() {
+        try {
+            EnumerationUtils.asIterable((Enumeration) null).iterator().next();
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
     }
 
     @Test
@@ -87,24 +116,21 @@ public class EnumerationUtilsTest {
     }
 
     @Test
-    public void getFromEnumeration() throws Exception {
-        // Enumeration, entry exists
-        final Vector<String> vector = new Vector<>();
-        vector.addElement("zero");
-        vector.addElement("one");
-        Enumeration<String> en = vector.elements();
-        assertEquals("zero", EnumerationUtils.get(en, 0));
-        en = vector.elements();
-        assertEquals("one", EnumerationUtils.get(en, 1));
-
-        // Enumerator, non-existent entry
-        try {
-            EnumerationUtils.get(en, 3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertTrue(!en.hasMoreElements());
+    public void testToListWithStringTokenizer() {
+        final List<String> expectedList1 = new ArrayList<>();
+        final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
+             while (st.hasMoreTokens()) {
+                 expectedList1.add(st.nextToken());
+             }
+        final List<String> expectedList2 = new ArrayList<>();
+        expectedList2.add("this");
+        expectedList2.add("is");
+        expectedList2.add("a");
+        expectedList2.add("test");
+        final List<String> actualList = EnumerationUtils.toList(new StringTokenizer(TO_LIST_FIXTURE));
+        assertEquals(expectedList1, expectedList2);
+        assertEquals(expectedList1, actualList);
+        assertEquals(expectedList2, actualList);
     }
 
 }

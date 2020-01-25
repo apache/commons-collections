@@ -108,6 +108,12 @@
     <action dev="ggregory" type="fix" due-to="Dominik Stadler">
       Fix links to release notes and update contents for 4.4 #127.
     </action>
+    <action issue="COLLECTIONS-744" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.EnumerationUtils.asIterable(Enumeration).
+    </action>
+    <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
+      BloomFilter contribution.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
