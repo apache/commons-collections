@@ -79,7 +79,7 @@ public final class StaticHasher implements Hasher {
      */
     public StaticHasher(Iterator<Integer> iter, Shape shape) {
         this.shape = shape;
-        Set<Integer> workingValues = new TreeSet<Integer>();
+        Set<Integer> workingValues = new TreeSet<>();
         iter.forEachRemaining( idx -> {
             if (idx >= this.shape.getNumberOfBits())
             {

@@ -377,7 +377,7 @@ public abstract class AbstractBloomFilterTest {
         AbstractBloomFilter filter = createEmptyFilter(shape);
         assertFalse(filter.isFull());
 
-        List<Integer> values = new ArrayList<Integer>(shape.getNumberOfBits());
+        List<Integer> values = new ArrayList<>(shape.getNumberOfBits());
         for (int i = 0; i < shape.getNumberOfBits(); i++) {
             values.add(i);
         }

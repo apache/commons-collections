@@ -46,7 +46,7 @@ public class DynamicHasher implements Hasher {
      * @param buffers the byte buffers that will be hashed.
      */
     public DynamicHasher(HashFunction function, List<byte[]> buffers) {
-        this.buffers = new ArrayList<byte[]>(buffers);
+        this.buffers = new ArrayList<>(buffers);
         this.function = function;
     }
 
@@ -143,7 +143,7 @@ public class DynamicHasher implements Hasher {
          */
         public Builder(HashFunction function) {
             this.function = function;
-            this.buffers = new ArrayList<byte[]>();
+            this.buffers = new ArrayList<>();
 
         }
 

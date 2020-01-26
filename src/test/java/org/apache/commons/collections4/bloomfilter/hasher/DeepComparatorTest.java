@@ -127,8 +127,8 @@ public class DeepComparatorTest {
     @Test
     public void testSortOrder() {
         // in this test the signature is the position in the final collection for the ID
-        TreeSet<HashFunctionIdentity> result = new TreeSet<HashFunctionIdentity>(HashFunctionIdentity.DEEP_COMPARATOR);
-        List<HashFunctionIdentity> collection = new ArrayList<HashFunctionIdentity>();
+        TreeSet<HashFunctionIdentity> result = new TreeSet<>(HashFunctionIdentity.DEEP_COMPARATOR);
+        List<HashFunctionIdentity> collection = new ArrayList<>();
 
         collection
             .add(new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED, ProcessType.CYCLIC, 0));

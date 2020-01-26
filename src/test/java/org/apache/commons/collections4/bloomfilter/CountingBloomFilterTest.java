@@ -72,7 +72,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void ConstructorTest_Map_CountsTest() {
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i =0;i<17;i++)
         {
             map.put( i, 1 );
@@ -137,7 +137,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         assertEquals(Integer.valueOf(2), bf.getCounts().map(Map.Entry::getValue).max(Integer::compare).get());
         assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).min(Integer::compare).get());
 
-        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
         for (int i=0;i<29;i++)
         {
@@ -177,7 +177,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         assertEquals(Integer.valueOf(2), bf.getCounts().map(Map.Entry::getValue).max(Integer::compare).get());
         assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).min(Integer::compare).get());
 
-        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
         for (int i=0;i<29;i++)
         {
@@ -217,7 +217,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         assertEquals(Integer.valueOf(2), bf.getCounts().map(Map.Entry::getValue).max(Integer::compare).get());
         assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).min(Integer::compare).get());
 
-        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
         for (int i=0;i<29;i++)
         {
@@ -243,7 +243,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         CountingBloomFilter bf = createFilter(hasher, shape);
 
 
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         bf.getCounts().forEach( e -> map.put( e.getKey(), e.getValue()));
         map.put(1, Integer.MAX_VALUE );
 
@@ -276,7 +276,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
         };
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i=1;i<values.length;i++)
         {
             map.put( i, values[i] );
@@ -290,7 +290,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         bf.remove( bf2 );
         assertEquals( 17, bf.cardinality() );
-        Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map2 = new HashMap<>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 
         for (int i = 11; i<values.length; i++ )
@@ -311,7 +311,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
         };
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i=1;i<values.length;i++)
         {
             map.put( i, values[i] );
@@ -325,7 +325,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         bf.remove( bf2 );
         assertEquals( 17, bf.cardinality() );
-        Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map2 = new HashMap<>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 
         for (int i = 11; i<values.length; i++ )
@@ -348,7 +348,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         CountingBloomFilter bf = createFilter(hasher, shape);
 
 
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         bf.getCounts().forEach( e -> map.put( e.getKey(), e.getValue()));
         map.remove(1);
 
@@ -381,7 +381,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
         };
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i=1;i<values.length;i++)
         {
             map.put( i, values[i] );
@@ -395,7 +395,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         bf.remove( hasher );
         assertEquals( 17, bf.cardinality() );
-        Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
+        Map<Integer,Integer> map2 = new HashMap<>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 
         for (int i = 11; i<values.length; i++ )

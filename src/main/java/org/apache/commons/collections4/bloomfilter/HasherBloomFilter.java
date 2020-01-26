@@ -112,7 +112,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(Hasher hasher) {
         verifyHasher(hasher);
-        IteratorChain<Integer> iter = new IteratorChain<Integer>(this.hasher.getBits(getShape()),
+        IteratorChain<Integer> iter = new IteratorChain<>(this.hasher.getBits(getShape()),
             hasher.getBits(getShape()));
         this.hasher = new StaticHasher(iter, getShape());
     }
@@ -125,7 +125,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     @Override
     public boolean contains(Hasher hasher) {
         verifyHasher(hasher);
-        Set<Integer> set = new TreeSet<Integer>();
+        Set<Integer> set = new TreeSet<>();
         hasher.getBits(getShape()).forEachRemaining((IntConsumer) idx -> {
             set.add(idx);
         });

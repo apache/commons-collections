@@ -124,9 +124,9 @@ public class CommonComparatorTest {
     @Test
     public void testSortOrder() {
         // in this test the signature is the position in the final collection for the ID
-        TreeSet<HashFunctionIdentity> result = new TreeSet<HashFunctionIdentity>(
+        TreeSet<HashFunctionIdentity> result = new TreeSet<>(
             HashFunctionIdentity.COMMON_COMPARATOR);
-        List<HashFunctionIdentity> collection = new ArrayList<HashFunctionIdentity>();
+        List<HashFunctionIdentity> collection = new ArrayList<>();
 
         collection
             .add(new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED, ProcessType.CYCLIC, 0));

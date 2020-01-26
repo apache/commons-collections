@@ -325,7 +325,7 @@ public class StaticHasherTest {
      */
     @Test
     public void testIsEmpty() {
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
 

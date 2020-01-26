@@ -61,8 +61,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     public CountingBloomFilter(Hasher hasher, Shape shape) {
         super(shape);
         verifyHasher(hasher);
-        counts = new TreeMap<Integer, Integer>();
-        Set<Integer> idxs = new HashSet<Integer>();
+        counts = new TreeMap<>();
+        Set<Integer> idxs = new HashSet<>();
         hasher.getBits(shape).forEachRemaining((IntConsumer) idxs::add);
         idxs.stream().forEach(idx -> counts.put(idx, 1));
     }
@@ -74,7 +74,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public CountingBloomFilter(Shape shape) {
         super(shape);
-        this.counts = new TreeMap<Integer, Integer>();
+        this.counts = new TreeMap<>();
     }
 
     /**
@@ -111,7 +111,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public Stream<Map.Entry<Integer, Integer>> getCounts() {
         return counts.entrySet().stream()
-            .map(e -> new AbstractMap.SimpleEntry<Integer, Integer>(e.getKey(), e.getValue()));
+            .map(e -> new AbstractMap.SimpleEntry<>(e.getKey(), e.getValue()));
     }
 
     @Override
@@ -200,7 +200,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public void remove(Hasher hasher) {
         verifyHasher( hasher );
-        Set<Integer> lst = new HashSet<Integer>();
+        Set<Integer> lst = new HashSet<>();
         hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
         remove(lst.stream());
     }
@@ -262,7 +262,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public int andCardinality(BloomFilter other) {
         if (other instanceof CountingBloomFilter) {
-            Set<Integer> result = new HashSet<Integer>( counts.keySet());
+            Set<Integer> result = new HashSet<>( counts.keySet());
             result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
             return result.size();
         }
