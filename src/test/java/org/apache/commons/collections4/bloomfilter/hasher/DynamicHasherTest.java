@@ -37,7 +37,7 @@ public class DynamicHasherTest {
     private DynamicHasher.Builder builder;
     private Shape shape;
 
-    private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+    private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
         @Override
         public String getName() {
@@ -82,11 +82,11 @@ public class DynamicHasherTest {
     @Test
     public void testGetBits() {
 
-        int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
+        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
 
-        Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello").build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         for (int i = 0; i < expected.length; i++) {
             assertTrue(iter.hasNext());
@@ -101,12 +101,12 @@ public class DynamicHasherTest {
      */
     @Test
     public void testGetBits_MultipleHashes() {
-        int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
+        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
             59, 49, 39, 13, 3, 65, 55, 45, 35, 25};
 
-        Hasher hasher = builder.with("Hello").with("World").build();
+        final Hasher hasher = builder.with("Hello").with("World").build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         for (int i = 0; i < expected.length; i++) {
             assertTrue(iter.hasNext());
@@ -122,12 +122,12 @@ public class DynamicHasherTest {
     @Test
     public void testGetBits_WongShape() {
 
-        Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello").build();
 
         try {
             hasher.getBits(new Shape(testFunction, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }

@@ -35,7 +35,7 @@ public interface HashFunctionIdentity {
     Comparator<HashFunctionIdentity> COMMON_COMPARATOR = new Comparator<HashFunctionIdentity>() {
 
         @Override
-        public int compare(HashFunctionIdentity identity1, HashFunctionIdentity identity2) {
+        public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
             int result = identity1.getName().compareToIgnoreCase(identity2.getName());
             if (result == 0) {
                 result = identity1.getSignedness().compareTo(identity2.getSignedness());
@@ -54,7 +54,7 @@ public interface HashFunctionIdentity {
     Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
 
         @Override
-        public int compare(HashFunctionIdentity identity1, HashFunctionIdentity identity2) {
+        public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
             int result = COMMON_COMPARATOR.compare(identity1, identity2);
             if (result == 0) {
                 result = identity1.getProvider().compareToIgnoreCase(identity2.getProvider());
@@ -69,7 +69,7 @@ public interface HashFunctionIdentity {
      * @param identity the identity to format.
      * @return the String representing the identity.
      */
-    static String asCommonString(HashFunctionIdentity identity) {
+    static String asCommonString(final HashFunctionIdentity identity) {
         return String.format("%s-%s-%s", identity.getName(), identity.getSignedness(), identity.getProcessType());
     }
 
@@ -85,7 +85,7 @@ public interface HashFunctionIdentity {
      * @param identity The HashFunctionIdentity to create the buffer for.
      * @return the signature buffer for the identity
      */
-    static byte[] prepareSignatureBuffer(HashFunctionIdentity identity) {
+    static byte[] prepareSignatureBuffer(final HashFunctionIdentity identity) {
 
        return String.format( "%s-%s-%s",
            identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),

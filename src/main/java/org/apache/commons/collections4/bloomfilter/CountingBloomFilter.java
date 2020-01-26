@@ -58,11 +58,11 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param hasher The hasher to build the filter from.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Hasher hasher, Shape shape) {
+    public CountingBloomFilter(final Hasher hasher, final Shape shape) {
         super(shape);
         verifyHasher(hasher);
         counts = new TreeMap<>();
-        Set<Integer> idxs = new HashSet<>();
+        final Set<Integer> idxs = new HashSet<>();
         hasher.getBits(shape).forEachRemaining((IntConsumer) idxs::add);
         idxs.stream().forEach(idx -> counts.put(idx, 1));
     }
@@ -72,7 +72,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Shape shape) {
+    public CountingBloomFilter(final Shape shape) {
         super(shape);
         this.counts = new TreeMap<>();
     }
@@ -83,7 +83,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param counts A map of data counts.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Map<Integer,Integer> counts, Shape shape) {
+    public CountingBloomFilter(final Map<Integer,Integer> counts, final Shape shape) {
         this(shape);
         counts.entrySet().stream().forEach( e -> {
             if (e.getKey() >= shape.getNumberOfBits())
@@ -116,8 +116,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("{ ");
-        for (Map.Entry<Integer, Integer> e : counts.entrySet()) {
+        final StringBuilder sb = new StringBuilder("{ ");
+        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
             sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
         }
         return sb.append("}").toString();
@@ -135,7 +135,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param other the other filter.
      */
     @Override
-    public void merge(BloomFilter other) {
+    public void merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter)
         {
@@ -146,7 +146,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public void merge(Hasher hasher) {
+    public void merge(final Hasher hasher) {
         verifyHasher( hasher );
         merge( hasher.getBits(getShape()) );
     }
@@ -155,9 +155,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * Merge an iterator of set bits into this filter.
      * @param iter the iterator of bits to set.
      */
-    private void merge(Iterator<Integer> iter) {
+    private void merge(final Iterator<Integer> iter) {
         iter.forEachRemaining(idx -> {
-            Integer val = counts.get(idx);
+            final Integer val = counts.get(idx);
             if (val == null) {
                 counts.put(idx, 1 );
             } else if (val == Integer.MAX_VALUE) {
@@ -178,7 +178,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param other the other filter.
      */
-    public void remove(BloomFilter other) {
+    public void remove(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter)
         {
@@ -198,9 +198,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param hasher the hasher to generate bits.
      */
-    public void remove(Hasher hasher) {
+    public void remove(final Hasher hasher) {
         verifyHasher( hasher );
-        Set<Integer> lst = new HashSet<>();
+        final Set<Integer> lst = new HashSet<>();
         hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
         remove(lst.stream());
     }
@@ -210,9 +210,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param idxStream The stream of bit counts to decrement.
      */
-    private void remove(Stream<Integer> idxStream) {
+    private void remove(final Stream<Integer> idxStream) {
         idxStream.forEach(idx -> {
-            Integer val = counts.get(idx);
+            final Integer val = counts.get(idx);
             if (val != null) {
                 if (val - 1 == 0) {
                     counts.remove(idx);
@@ -232,7 +232,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
 
     @Override
     public long[] getBits() {
-        BitSet bs = new BitSet();
+        final BitSet bs = new BitSet();
         counts.keySet().stream().forEach(bs::set);
         return bs.toLongArray();
     }
@@ -243,9 +243,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public boolean contains(Hasher hasher) {
+    public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
-        OfInt iter = hasher.getBits(getShape());
+        final OfInt iter = hasher.getBits(getShape());
         while (iter.hasNext()) {
             if (counts.get(iter.nextInt()) == null) {
                 return false;
@@ -260,9 +260,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public int andCardinality(BloomFilter other) {
+    public int andCardinality(final BloomFilter other) {
         if (other instanceof CountingBloomFilter) {
-            Set<Integer> result = new HashSet<>( counts.keySet());
+            final Set<Integer> result = new HashSet<>( counts.keySet());
             result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
             return result.size();
         }

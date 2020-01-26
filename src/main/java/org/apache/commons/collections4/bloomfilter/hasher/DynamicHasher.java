@@ -45,7 +45,7 @@ public class DynamicHasher implements Hasher {
      * @param function the function to use.
      * @param buffers the byte buffers that will be hashed.
      */
-    public DynamicHasher(HashFunction function, List<byte[]> buffers) {
+    public DynamicHasher(final HashFunction function, final List<byte[]> buffers) {
         this.buffers = new ArrayList<>(buffers);
         this.function = function;
     }
@@ -71,7 +71,7 @@ public class DynamicHasher implements Hasher {
      * {@code getName()}
      */
     @Override
-    public PrimitiveIterator.OfInt getBits(Shape shape) {
+    public PrimitiveIterator.OfInt getBits(final Shape shape) {
         if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
             shape.getHashFunctionIdentity()) != 0) {
             throw new IllegalArgumentException(
@@ -95,7 +95,7 @@ public class DynamicHasher implements Hasher {
          *
          * @param shape
          */
-        private Iterator(Shape shape) {
+        private Iterator(final Shape shape) {
             this.shape = shape;
         }
 
@@ -141,7 +141,7 @@ public class DynamicHasher implements Hasher {
          *
          * @param function the function implementation.
          */
-        public Builder(HashFunction function) {
+        public Builder(final HashFunction function) {
             this.function = function;
             this.buffers = new ArrayList<>();
 
@@ -158,18 +158,18 @@ public class DynamicHasher implements Hasher {
         }
 
         @Override
-        public final Builder with(byte property) {
+        public final Builder with(final byte property) {
             return with(new byte[] {property});
         }
 
         @Override
-        public final Builder with(byte[] property) {
+        public final Builder with(final byte[] property) {
             buffers.add(property);
             return this;
         }
 
         @Override
-        public final Builder with(String property) {
+        public final Builder with(final String property) {
             return with(property.getBytes(StandardCharsets.UTF_8));
         }
 

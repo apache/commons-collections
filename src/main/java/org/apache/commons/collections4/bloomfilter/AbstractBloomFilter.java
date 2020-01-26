@@ -76,7 +76,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      *
      * @param shape The shape.
      */
-    protected AbstractBloomFilter(Shape shape) {
+    protected AbstractBloomFilter(final Shape shape) {
         this.shape = shape;
     }
 
@@ -86,7 +86,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param other the other filter to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    protected void verifyShape(BloomFilter other) {
+    protected void verifyShape(final BloomFilter other) {
         verifyShape(other.getShape());
     }
 
@@ -96,7 +96,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param shape the other shape to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    protected void verifyShape(Shape shape) {
+    protected void verifyShape(final Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
         }
@@ -107,7 +107,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      *
      * @param hasher the Hasher to check
      */
-    protected void verifyHasher(Hasher hasher) {
+    protected void verifyHasher(final Hasher hasher) {
         if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
             throw new IllegalArgumentException(
                 String.format("Hasher (%s) is not the hasher for shape (%s)",
@@ -163,12 +163,12 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @return the cardinality of the result of {@code ( this AND other )}.
      */
     @Override
-    public int andCardinality(BloomFilter other) {
+    public int andCardinality(final BloomFilter other) {
         verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
-        int limit = Integer.min(mine.length, theirs.length);
-        long[] result = new long[limit];
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
+        final int limit = Integer.min(mine.length, theirs.length);
+        final long[] result = new long[limit];
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] & theirs[i];
         }
@@ -176,10 +176,10 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     }
 
     @Override
-    public int orCardinality(BloomFilter other) {
+    public int orCardinality(final BloomFilter other) {
         verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
         long[] remainder = null;
         long[] result = null;
         if (mine.length > theirs.length) {
@@ -190,7 +190,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
             remainder = theirs;
 
         }
-        int limit = Integer.min(mine.length, theirs.length);
+        final int limit = Integer.min(mine.length, theirs.length);
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] | theirs[i];
         }
@@ -209,10 +209,10 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @return the cardinality of the result of {@code( this XOR other )}
      */
     @Override
-    public int xorCardinality(BloomFilter other) {
+    public int xorCardinality(final BloomFilter other) {
         verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
         long[] remainder = null;
         long[] result = null;
         if (mine.length > theirs.length) {
@@ -223,7 +223,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
             remainder = theirs;
 
         }
-        int limit = Integer.min(mine.length, theirs.length);
+        final int limit = Integer.min(mine.length, theirs.length);
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] ^ theirs[i];
         }
@@ -241,7 +241,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @return true if this filter matches the other.
      */
     @Override
-    public boolean contains(BloomFilter other) {
+    public boolean contains(final BloomFilter other) {
         verifyShape(other);
         return other.cardinality() == andCardinality(other);
     }
@@ -257,16 +257,16 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * this filter, or if the hasher is not the specified one
      */
     @Override
-    public boolean contains(Hasher hasher) {
+    public boolean contains(final Hasher hasher) {
         verifyHasher( hasher );
-        long[] buff = getBits();
+        final long[] buff = getBits();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
         while (iter.hasNext()) {
-            int idx = iter.nextInt();
-            int buffIdx = idx / Long.SIZE;
-            int pwr = Math.floorMod(idx, Long.SIZE);
-            long buffOffset = 1L << pwr;
+            final int idx = iter.nextInt();
+            final int buffIdx = idx / Long.SIZE;
+            final int pwr = Math.floorMod(idx, Long.SIZE);
+            final long buffOffset = 1L << pwr;
             if ((buff[buffIdx] & buffOffset) == 0) {
                 return false;
             }

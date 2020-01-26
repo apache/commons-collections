@@ -41,7 +41,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
 	private class ReverseStringComparator implements Comparator<String> {
 		@Override
-		public int compare(String arg0, String arg1) {
+		public int compare(final String arg0, final String arg1) {
 			return arg1.compareTo(arg0);
 		}
 	}

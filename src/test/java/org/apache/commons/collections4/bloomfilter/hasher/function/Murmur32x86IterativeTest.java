@@ -36,9 +36,9 @@ public class Murmur32x86IterativeTest {
      */
     @Test
     public void applyTest() {
-        Murmur32x86Iterative murmur = new Murmur32x86Iterative();
+        final Murmur32x86Iterative murmur = new Murmur32x86Iterative();
 
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country"
+        final byte[] buffer = "Now is the time for all good men to come to the aid of their country"
             .getBytes(StandardCharsets.UTF_8);
 
         long l = murmur.apply(buffer, 0);
@@ -54,10 +54,10 @@ public class Murmur32x86IterativeTest {
      */
     @Test
     public void signatureTest() {
-        Murmur32x86Iterative murmur = new Murmur32x86Iterative();
-        String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
+        final Murmur32x86Iterative murmur = new Murmur32x86Iterative();
+        final String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
             murmur.getProcessType());
-        long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, murmur.getSignature());
     }
 

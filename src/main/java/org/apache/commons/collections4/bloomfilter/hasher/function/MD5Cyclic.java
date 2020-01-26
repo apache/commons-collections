@@ -58,14 +58,14 @@ public final class MD5Cyclic implements HashFunction {
     public MD5Cyclic() {
         try {
             messageDigest = MessageDigest.getInstance(NAME);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             throw new IllegalStateException( e.getMessage() );
         }
         signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
 
         if (seed == 0) {
             byte[] hash;
@@ -75,7 +75,7 @@ public final class MD5Cyclic implements HashFunction {
                 messageDigest.reset();
             }
 
-            LongBuffer lb = ByteBuffer.wrap(hash).asLongBuffer();
+            final LongBuffer lb = ByteBuffer.wrap(hash).asLongBuffer();
             result[0] = lb.get(0);
             result[1] = lb.get(1);
         } else {

@@ -107,8 +107,8 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
 	public void testOffer() {
-        Queue<E> queue = makeFullCollection();
-        E e = null;
+        final Queue<E> queue = makeFullCollection();
+        final E e = null;
         try {
             queue.offer(e);
             fail();
@@ -116,7 +116,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     public void testPoll() {
-        Queue<E> queue = makeFullCollection();
+        final Queue<E> queue = makeFullCollection();
         try {
             queue.poll();
             fail();
