@@ -152,7 +152,7 @@ abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
      * @param index index at which to insert the first element from the
      *              specified collection
      * @param collection collection containing elements to be added to this list
-     * @return <tt>true</tt> if this list changed as a result of the call
+     * @return true if this list changed as a result of the call
      */
     @Override
     public boolean addAll(final int index, final Collection<? extends E> collection) {
@@ -212,7 +212,7 @@ abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
      * Removes the element at the specified index.
      *
      * @param o element to be removed from this list, if present
-     * @return <tt>true</tt> if this list contained the specified element
+     * @return true if this list contained the specified element
      */
     @Override
     public boolean remove(Object o) {
@@ -238,6 +238,8 @@ abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
 
     /**
      * Creates a {@link Spliterator} over the elements in this list.
+     *
+     * @return spliterator
      */
     @Override
     public Spliterator<E> spliterator() {
@@ -266,17 +268,24 @@ abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
     }
 
     /**
-     * Check if object can be added to list (e.g. check uniquess)
+     * Check if object can be added to list (e.g. check uniqueness)
+     *
+     * @param e element to check if it can be added to collection
+     * @return true if specified element can be added to collection
      */
     abstract protected boolean canAdd(E e);
 
     /**
      * Add node to nodeMap.
+     *
+     * @param node node to add
      */
     abstract protected void addNode(AVLNode node);
 
     /**
      * Remove node from nodeMap.
+     *
+     * @param node node to remove
      */
     abstract protected void removeNode(AVLNode node);
 

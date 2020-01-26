@@ -19,27 +19,34 @@ package org.apache.commons.collections4.list;
 import java.util.*;
 
 /**
+ * <p>
  * Data structure which implements both <code>List</code> and <code>Set</code>.
- * <p/>
+ * </p>
+ * <p>
  * As a <code>List</code> this data structure stores order of elements and
  * provides access by index. It's is optimised for fast insertions, removals
  * and searching by any index or object in the list.
  * As a <code>Set</code> this data structure stores unique elements only.
- * <p/>
+ * </p>
+ * <p>
  * IndexedTreeListSet can be suitable for tasks which requires fast modification
  * in the middle of a list and provides fast contains and indexOf operations.
- * <p/>
+ * </p>
+ * <p>
  * Get by index, insert (head, tail, middle), remove(by index or by value)
  * and indexOf are all O(log n). Contains is O(1) or O(log n) depending on Map
  * implementation.
- * <p/>
+ * </p>
+ * <p>
  * Internally it uses Map (HashMap by default) and AVL tree.
  * HashMap can be replaced to TreeMap, this will slightly reduce overall performance
  * but will eliminate problems with hash collisions and hash table resizing.
- * <p/>
+ * </p>
+ * <p>
  * Objects equality is checked by Map, so objects should be immutable for Map
  * consistency.
- * <p/>
+ * </p>
+ * <p>
  * Code is based on apache common collections <code>TreeList</code>.
  * Comparing to <code>TreeList</code> this data structure:
  * <ul>
@@ -48,6 +55,7 @@ import java.util.*;
  * <li>Requires more memory, however it's still O(n).</li>
  * <li>Has greatly improved contains and indexOf operations, O(log n) while TreeList has O(n)</li>
  * </ul>
+ * </p>
  *
  * @author Aleksandr Maksymenko
  */
@@ -128,7 +136,7 @@ public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements
 
     /**
      * Returns an unmodifiable view of the portion of this list between the specified
-     * <tt>fromIndex</tt>, inclusive, and <tt>toIndex</tt>, exclusive.
+     * fromIndex, inclusive, and toIndex, exclusive.
      *
      * @param fromIndex low endpoint (inclusive) of the subList
      * @param toIndex high endpoint (exclusive) of the subList
@@ -157,7 +165,7 @@ public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements
      *
      * @param index the index to set
      * @param obj the object to store at the specified index
-     * @return
+     * @return previous value
      */
     @Override
     public E set(int index, final E obj) {
