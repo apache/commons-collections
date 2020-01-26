@@ -1,0 +1,1137 @@
+<?xml version="1.0"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	You under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<document>
+
+	<properties>
+		<title>Bloom filters</title>
+		<author email="dev@commons.apache.org">Commons Documentation Team</author>
+	</properties>
+
+	<head>
+		<link rel="stylesheet" href="./css/LaTeXML.css" type="text/css" />
+		<link rel="stylesheet" href="./css/references.css"
+			type="text/css" />
+		<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
+	</head>
+
+	<body>
+		<section name='Contents'>
+			<ol>
+				<li>
+					<a href="#S1" title="1 Introducing Bloom filters">
+						Introducing Bloom filters
+					</a>
+					<ol>
+						<li>
+							<a href="#S1.SS1" title="1.1 Understanding Bloom filters">
+								Understanding Bloom filters
+							</a>
+						</li>
+						<li>
+							<a href="#S1.SS2" title="1.2 Defining a Bloom filter">
+								Defining a Bloom filter
+							</a>
+						</li>
+						<li>
+							<a href="#S1.SS3" title="1.3 Constructing a Bloom filter">
+								Constructing a Bloom filter
+							</a>
+						</li>
+					</ol>
+				</li>
+				<li>
+					<a href="#S2" title="2. Exploring the Classes">
+						Exploring the Classes
+					</a>
+					<ol>
+						<li>
+							<a href="#S2.SS1"
+								title="2.1 Exploring the HashFunctionIdentity and HashFunction">
+								Exploring the HashFunctionIdentity and HashFunction
+							</a>
+						</li>
+						<li>
+							<a href="#S2.SS2" title="2.2 Exploring the Shape">
+								Exploring the Shape
+							</a>
+						</li>
+						<li>
+							<a href="#S2.SS3" title="2.3 Exploring the Hasher">
+								Exploring the Hasher
+							</a>
+						</li>
+						<li>
+							<a href="#S2.SS4" title="2.4 Exploring the BloomFilter">
+								Exploring the BloomFilter
+							</a>
+						</li>
+						<li>
+							<a href="#S2.SS5"
+								title="2.5 Why Hasher, Shape and BloomFilter?">
+								Why Hasher, Shape and BloomFilter?
+							</a>
+						</li>
+						<li>
+							<a href="#S2.SS6" title="2.6 Build your own BloomFilter">
+								Build your own BloomFilter
+							</a>
+						</li>
+					</ol>
+				</li>
+				<li>
+					<a href="#S3" title="3 Examples">
+						Examples
+					</a>
+					<ol>
+						<li>
+							<a href="#S3.SS1"
+								title="3.1 How to use a Bloom filter as a gatekeeper">
+								Example: How to use a Bloom filter as a gatekeeper
+							</a>
+						</li>
+						<li>
+							<a href="#S3.SS2" title="3.2 Data sharding">
+								Example: Data sharding
+							</a>
+						</li>
+						<li>
+							<a href="#S3.SS3" title="3.3 Future directions">
+								Future directions
+							</a>
+						</li>
+					</ol>
+				</li>
+				<li>
+					<a href="#S4" title="4 References">
+						References
+					</a>
+				</li>
+			</ol>
+		</section>
+
+
+		<section id="S1" name="1. Introducing Bloom filters">
+
+			<subsection id="S1.SS1" name="1.1 Understanding Bloom filters">
+				<p>
+					Bloom filters were introduced to Apache
+					commons-collections in
+					version 4.5. A Bloom filter:
+				</p>
+				<ul>
+					<li>
+						Is a probabilistic data structure defined by Burton Bloom in
+						1970&#160;<cite>[<a href='#Bloom'>Bloom</a>]</cite>;
+					</li>
+					<li>
+						Can be considered as a bit vector representing a set of
+						objects;
+					</li>
+					<li>
+						Is constructed by hashing data multiple times;
+					</li>
+					<li>
+						Identifies where things are
+						<b>not</b>
+						;
+					</li>
+					<li>
+						Will yield false positives but
+						<b>never</b>
+						false negatives.
+					</li>
+					<li>Is typically used where hash table solutions are
+						too
+						memory
+						intensive and false positives can be addressed;
+						for example
+						a gating
+						function to a longer operation (e.g.
+						determine if a
+						database lookup
+						should be made);
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection id="S1.SS2" name="1.2 Defining a Bloom filter">
+
+				<p>Bloom filters are constrained by: the number of
+					elements in the
+					set, the number of hash functions, the number
+					of bits in the
+					vector,
+					and the probability of false positives.
+				</p>
+				<ul>
+					<li>
+						\(p\)
+						- is the probability of false positives,
+					</li>
+					<li>
+						\(n\)
+						- is the number of elements in the set represented by the
+						Bloom
+						filter,
+					</li>
+					<li>
+						\(m\)
+						- is the number of bits, and
+					</li>
+					<li>
+						\(k\)
+						- is the number of hash functions.
+					</li>
+				</ul>
+				<p>
+					Mitzenmacher and Upfal&#160;<cite>[<a href='#Mitzenmacher'>Mitzenmacher</a>]</cite>
+					have shown that the relationship between these properties is:
+					\(p =
+					(1- e^{-kn/m})^k\)
+
+				</p>
+
+				<p>
+					Thomas Hurst provides a good calculator&#160;<cite>[<a href='#Hurst'>Hurst</a>]</cite>
+					where the interplay between these values can be explored.
+				</p>
+
+			</subsection>
+			<subsection id="S1.SS3" name="1.3 Constructing a Bloom filter">
+
+				<p>
+					A simple Bloom filter is constructed by hashing an object
+					\(k\)
+					times, and using each hash value to turn on a single bit in a
+					bit
+					vector comprising
+					\(m\)
+					bits.
+				</p>
+
+				<div id="algorithm1" class="ltx_float">
+					<div class="ltx_listing ltx_lst_numbers_left ltx_listing">
+						<div class="ltx_listingline">
+							<span class="ltx_text ltx_font_bold">Result:</span>
+							A populated bit vector
+						</div>
+						<div class="ltx_listingline"> byte[][] buffers // the list of buffers to hash
+						</div>
+						<div class="ltx_listingline"> bit[m] bitBuffer;
+						</div>
+						<div class="ltx_listingline">
+							<span class="ltx_text ltx_font_bold">for</span>
+							 
+							<em class="ltx_emph ltx_font_italic">buffer in buffers</em>
+							 
+							<span class="ltx_text ltx_font_bold">do</span>
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							   
+							<span class="ltx_text ltx_font_bold">for</span>
+							 
+							<em class="ltx_emph ltx_font_italic">i=1 to k</em>
+							 
+							<span class="ltx_text ltx_font_bold">do</span>
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							     
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							    long h = hash( buffer, i );
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							     
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							    int bitIdx = h mod m;
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							     
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							    bitBuffer[bitIdx] = 1;
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							     
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							   
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							    end for
+						</div>
+						<div class="ltx_listingline">
+							  
+							<span class="ltx_rule"
+								style="width:1px;height:100%;background:black;display:inline-block;"> </span>
+							   
+						</div>
+						<div class="ltx_listingline"> end for
+						</div>
+						<div class="ltx_listingline" />
+
+					</div>
+					<div>
+						<span class="ltx_tag ltx_tag_float">
+							<span class="ltx_text ltx_font_bold">Algorithm 1</span>
+						</span>
+						How to construct a Bloom filter
+					</div>
+				</div>
+
+
+				<p>Building a bloom filter with the Apache
+					Commons-Collections
+					implementation looks like:
+				</p>
+				<source><![CDATA[
+// select a hash function
+HashFunction hFunc = new Murmur128x86Cyclic();
+// define the shape - 7 items. 1 in 1000 probability of collisions
+Shape shape = new Shape ( hFunc , 7, 1.0/1000);
+// create a hasher.
+DynamicHasher hasher = new DynamicHasher.Builder( hFunc )
+    .with( "banana" ).with( "apple" ).with( "pear" ).build();
+// create the bloom filter
+BloomFilter filter = new BitSetBloomFilter ( hasher , shape ); ]]></source>
+
+
+				<p>This looks more complex than the simple Hadoop Bloom
+					filters.
+					Creating the same filter using the Hadoop library look
+					like:
+				</p>
+				<source><![CDATA[
+//define the filter
+BloomFilter hadoopBloomFilter = new BloomFilter (1 _000 , 7, Hash.MURMUR_HASH );
+// add the fruits
+hadoopBloomFilter.add( new Key( "banana".getBytes() ) );
+hadoopBloomFilter.add( new Key( "apple".getBytes() ) );
+hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
+
+				<p>
+					However, the Commons Collection Bloom filter library is
+					designed to
+					meet
+					<b>most</b>
+					Bloom filter use cases. Covering the wide variety of use cases
+					means that the library provides more options and therefore
+					appears
+					more complex. Any application that wants a simple,
+					consistent,
+					cross
+					platform Bloom filter with a tested
+					implementation can build
+					it very
+					quickly from the Commons
+					Collections Bloom filter library.
+				</p>
+
+			</subsection>
+		</section>
+		<section id="S2" name="2. Exploring the Classes">
+
+			<p>The Commons Collections Bloom filter library has five (5) major
+				components.
+			</p>
+			<ol>
+				<li>
+					<code>HashFunctionIdentity</code>
+					- An interface that defines a hash function.
+				</li>
+				<li>
+					<code>HashFunction</code>
+					-
+					An interface that extends
+					<code>HashFunctionIdentity</code>
+					to include a the hash function implementation. The hash
+					function
+					converts a
+					<code>byte[]</code>
+					into a
+					<code>long</code>
+					value using a seed.
+				</li>
+				<li>
+					<code>Hasher</code>
+					- A class that, when provided with a
+					<code>Shape</code>
+					, converts one
+					or more
+					<code>byte[]</code>
+					into an
+					<code>iterator&lt;int&gt;</code>
+					representing
+					the bits that are enabled in the Bloom filter.
+				</li>
+				<li>
+					<code>Shape</code>
+					- A class that describes the
+					shape of the Bloom filter. The shape is
+					defined by:
+					<ul>
+						<li>
+							<code>HashFunctionIdentity</code>
+						</li>
+						<li>
+							The probability of false positives (
+							\(p\)
+							)
+						</li>
+						<li>
+							The number of elements in the set represented by the Bloom filter
+							(
+							\(n\)
+							)
+						</li>
+						<li>
+							The number of bits (
+							\(m\)
+							)
+						</li>
+						<li>
+							The number of hash functions (
+							\(k\)
+							)
+						</li>
+					</ul>
+				</li>
+				<li>
+					<code>BloomFilter</code>
+					- An interface that defines the standard functions that a Bloom
+					filter must
+					provide. Implementations generally take a
+					<code>Hasher</code>
+					and a
+					<code>Shape</code>
+					and converts the
+					<code>iterator&lt;int&gt;</code>
+					from the
+					<code>Hasher</code>
+					and preserves them in an internal representation.
+				</li>
+			</ol>
+			<subsection id="S2.SS1"
+				name="2.1 Exploring the HashFunctionIdentity 
+				and HashFunction">
+
+				<p>
+					The
+					<code>HashFunctionIdentity</code>
+					is an interface that defines three (3) basic attributes of a
+					<code>HashFunction</code>
+					:
+				</p>
+
+				<ul>
+					<li>
+						The common hash function
+						name. This is a value like
+						<b>MD5</b>
+						or
+						<b>Murmur3-128-x86</b>
+					</li>
+					<li>
+						The signedness of the calculation. When a
+						<code>byte[]</code>
+						is interpreted as a numerical value is it assumed to be signed or
+						unsigned?
+					</li>
+					<li>
+						The process type. In a traditional Bloom filter
+						calculation the
+						hash function is called multiple times with different seeds.
+						This
+						technique is called iterative hashing. However Kirsch and
+						Mitzenmacher&#160;<cite>[<a href='#kirsch'>kirsch</a>]</cite>
+						have shown that it is possible to more
+						quickly generate the
+						necessary values by utilizing two (2) values from
+						the
+						hashing. This
+						is called cyclic hashing.
+					</li>
+				</ul>
+
+				<p>
+					The
+					<code>HashFunctionIdentity</code>
+					is used in situations
+					where the attributes of the
+					<code>HashFunction</code>
+					are required but
+					the implementation is not. For example, a Bloom
+					filter need only know
+					what
+					the attributes of the
+					<code>HashFunction</code>
+					that generated the bits
+					was, it does not require the implementation.
+				</p>
+
+				<p>
+					The
+					<code>HashFunctionIdentity</code>
+					also has a signature created
+					by hashing the string produced by:
+					<code>String.format( "%s-%s-%s", getName(),
+						getSignedness(),getProcess() ).getBytes( "UTF-8" )
+					</code>
+					with a seed of
+					0 (zero). The signature is used in quick comparison
+					checks to ensure
+					function
+					compatibility.
+				</p>
+
+				<p>
+					The
+					<code>HashFunction</code>
+					is an interface that extends
+					<code>HashFunctionIdentity</code>
+					with an method to access the hash function implementation.
+					<code>HashFunction</code>
+					implementations are often used where the
+					<code>HashFunctionIdentity</code>
+					is required as they are the only provided implementations of
+					<code>HashFunctionIdentity</code>
+					.
+				</p>
+
+				<p>
+					<code>HashFunction</code>
+					implementations include:
+				</p>
+				<ul>
+					<li>MD5Cyclic
+						- MD5 hash used in a cyclic manner.
+					</li>
+					<li>Murmur128x86Cyclic
+						- Murmur3 128-bit x86 hash implementation
+						used in a cyclic manner.
+					</li>
+					<li>Murmur32x86Iterative - Murmur3 32-bit x86 hash implementation
+						used in an iterative manner.
+					</li>
+					<li>ObjectsHashIterative - Java
+						Objects hash used in an iterative
+						manner.
+					</li>
+				</ul>
+
+				<p>
+					Additional
+					<code>HashFunction</code>
+					implementations
+					can be created to support the hashing strategies
+					often found in
+					bioinformatics
+					where k-mer sequences are indexed into
+					Bloom filters. In some cases the
+					data
+					about the k-mer sequence is
+					used as the seed value for the hash.
+				</p>
+
+
+			</subsection>
+
+			<subsection id="S2.SS2" name="2.2 Exploring the Shape">
+
+				<p>
+					As noted earlier the
+					<code>Shape</code>
+					describes the shape of the resulting Bloom filter. The constructor
+					for
+					<code>Shape</code>
+					always takes a
+					<code>HashFunctionIdentity</code>
+					as well
+					as many of the other Shape properties necessary to solve
+					\(p = (1- e^{-kn/m})^k\). These combinations are:
+				</p>
+
+				<ul>
+					<li>
+						The probability of collisions (
+						\(p\)
+						), the
+						number of bits (
+						\(m\)
+						), and the number of hash functions (
+						\(k\)
+						).
+					</li>
+					<li>
+						The number of elements (
+						\(n\)
+						), and
+						the probability of collisions (
+						\(p\)
+						).
+					</li>
+					<li>
+						The number of elements (
+						\(n\)
+						), number of bits (
+						\(m\)
+						), and
+						number of hash functions (
+						\(k\)
+						).
+					</li>
+				</ul>
+			</subsection>
+
+			<subsection id="S2.SS3" name="2.3 Exploring the Hasher">
+
+				<p>
+					The
+					<code>Hasher</code>
+					converts converts one or more
+					<code>byte[]</code>
+					into an
+					<code>iterator&lt;int&gt;</code>
+					representing the bits that
+					are enabled in the Bloom filter. The bits
+					indexes are in the range [0,
+					\(m\)
+					-1]. The Hasher is, in a sense, a primitive Bloom filter. There are
+					two implementations of Hasher provided:
+				</p>
+				<ul>
+					<li>DynamicHasher - calls the HashFunction as needed to generate
+						the list of bits.
+					</li>
+					<li>StaticHasher - contains a list of bits that were enabled
+						for a
+						specific Shape and simply replays them. This method is faster
+						than
+						the Dynamic when the Hasher is reused but can only be used for
+						filters with
+						the same Shape as the Hasher.
+					</li>
+				</ul>
+
+				<p>
+					Other implementations of
+					<code>Hasher</code>
+					are possible. Consider
+					the
+					<code>Hasher</code>
+					as the class that converts one or more
+					<code>byte[]</code>
+					into Bloom filters of any shape.
+				</p>
+
+			</subsection>
+
+			<subsection id="S2.SS4"
+				name="2.4 Exploring the BloomFilter">
+
+				<p>
+					The
+					<code>BloomFilter</code>
+					is an interface that describes the functionality
+					of the Bloom
+					filter. Along with the
+					<code>AbstractBloomFilter</code>
+					there
+					are three (3) concrete implementations of
+					<code>BloomFilter</code>
+					provided:
+				</p>
+
+				<ul>
+					<li>
+						<code>BitSetBloomFilter</code>
+						- Stores the enabled bits in a
+						<code>BitSet</code>
+						object.
+					</li>
+					<li>
+						<code>HasherBloomFilter</code>
+						- Uses the
+						<code>Hasher</code>
+						implementation as the storage for the bits. This is not efficient
+						but often convenient if few Bloom filter operations are required.
+					</li>
+					<li>
+						<code>CountingBloomFilter</code>
+						- Uses a sparse list (
+						<code>HashMap</code>
+						) of counts for the enabled bits. CountingBloomFilters
+						are an
+						extension to the normal Bloom filter and enable removal of
+						Bloom
+						filters from the set.
+					</li>
+				</ul>
+
+			</subsection>
+
+			<subsection id="S2.SS5"
+				name="2.5 Why Hasher, Shape and BloomFilter?">
+
+				<p>
+					Other libraries tend to merge the functionality
+					of the
+					<code>Hasher</code>
+					,
+					<code>Shape</code>
+					, and
+					<code>BloomFilter</code>
+					into one or two classes. By separating the responsibility we have
+					developed classes that focus on a single task. This permits a wider
+					range
+					of uses for the classes, for example:
+				</p>
+
+				<ul>
+					<li>
+						It
+						becomes possible to create client/server style applications
+						where the
+						client
+						creates a
+						<code>Hasher</code>
+						, sends it across the wire, and the server
+						then builds Bloom
+						filters of various
+						<code>Shape</code>
+						depending on the
+						requested functionality.
+					</li>
+					<li>
+						The library can support
+						Bloom filters that represent the enabled
+						bits in different ways in
+						order
+						to support specific functionality.
+						For example some applications
+						utilize
+						Bloom filters that are very
+						large (large
+						\(m\)
+						value) but have few bits
+						enabled (low
+						\(t\)
+						and
+						\(n\)
+						values). When storing a large number of these
+						it becomes important
+						to have bit vector compression. However, for
+						Bloom filters
+						with a
+						higher number of enabled bits the compression is just excess
+						overhead.
+						Applications can swap out the
+						<code>BloomFilter</code>
+						implementation without
+						impacting the
+						<code>Hasher</code>
+						or
+						<code>Shape</code>
+						selections.
+					</li>
+
+					<li>The library can support implementations of attenuated,
+						spectral
+						and other exotic Bloom filter varieties.
+					</li>
+				</ul>
+
+			</subsection>
+
+			<subsection id="S2.SS6"
+				name="2.6 Build your own BloomFilter">
+
+				<p>
+					The
+					<code>AbstractBloomFilter</code>
+					requires
+					implementation of four methods:
+				</p>
+
+				<ul>
+					<li>getBits()
+						- Get the enabled bits as an array of long values.
+					</li>
+
+					<li>getHasher() - Creates a StaticHasher that returns the indexes
+						of the enabled
+						bits and contains the shame Shape as the Bloom
+						filter.
+					</li>
+
+					<li>merge(BloomFilter) - Merges enabled bits from the other Bloom
+						filter into
+						this Bloom filter.
+					</li>
+
+					<li>merge(Hasher) - Enables
+						the bits specified by the Hasher in this
+						Bloom filter.
+					</li>
+				</ul>
+
+				<p>
+					Other methods in
+					<code>AbstractBloomFilter</code>
+					should be overridden
+					to take advantage of the bit encoding the new
+					implementation
+					provides.
+				</p>
+
+			</subsection>
+		</section>
+
+		<section id="S3" name="3 Examples">
+
+			<subsection id="S3.SS1"
+				name="3.1 How to use a Bloom filter as a gatekeeper">
+				<p>
+					A ”gatekeeper” is a Bloom filter that determines if a longer
+					running
+					method should be executed. In this example we create a Bloom
+					filter from
+					a list of bad IDs. We then check a candidate ID against
+					the Bloom
+					filter.
+					If the ID is in the Bloom filter we make the
+					expensive call to a
+					remote server
+					to verify the ID. For purposes of
+					illustration
+					<code>server.getBlackList()</code>
+					returns a list of IDs as
+					<code>Strings</code>
+					, and
+					<code>server.checkBlackList(
+						String id )
+					</code>
+					verifies that the ID is on the black list.
+				</p>
+
+
+				<source><![CDATA[
+/* setup environment */
+// select the hash function
+HashFunction hFunc = new Murmur128x86Cyclic();
+// 10000 elements, 1/million probability of collision
+Shape shape = new Shape( hFunc , 10000, 1.0/1000000);
+
+/* build the gatekeeper */
+BloomFilter gateKeeper = new BitSetBloomFilter( shape );
+for ( String id : server.getBlackList() ) {
+    DynamicHasher hasher = new DynamicHasher.Builder( hFunc ).with( id ).build();
+    gateKeeper.merge( hasher );
+}
+
+/* use the gatekeeper */
+String id = // perhaps entered by user during login
+DynamicHasher hasher = new DynamicHasher.Builder( hFunc ).with( id ).build();
+boolean inBlackList = gatekeeper.contains( hasher );
+if ( inBlackList )
+{
+    /* it might be in the blacklist, so execute the server call to find out. */
+    inBlackList = server.checkBlackList( id );
+}
+// inBlackList is now true if the ID is in the black list, false otherwise.
+				]]></source>
+
+
+
+
+			</subsection>
+
+			<subsection id="S3.SS2" name="3.2 Data sharding">
+
+				<p>In this example we create a Bloom filter for
+					each data item we are
+					going to save. When the data is inserted in the
+					storage
+					each
+					gatekeeper Bloom filter is checked to see which is ”closest” to
+					the
+					filter being inserted and the object is inserted in the associated
+					container.
+					When searching for data each gatekeeper Bloom filter is
+					checked for the
+					presence
+					of the data Bloom filter if it is in the
+					gatekeeper then the
+					associated container
+					is searched for the object.
+				</p>
+
+
+				<source><![CDATA[
+/* setup environment */
+
+// Set some limits
+int MAX_SHARD_SIZE = 100000;
+
+// select the hash function
+HashFunction hFunc = new Murmur128x86Cyclic();
+
+// 100000 elements, 1/million probability of collision
+Shape shape = new Shape( hFunc , MAX_SHARD_SIZE , 1.0/1000000);
+
+// create the sharding container
+Map < CountingBloomFilter , Map < String , T >> shards = new HashMap <>();
+
+// populate the minimum shards (5)
+for ( int i =0; i <5; i ++) {
+    shards.put( new CountingBloomFilter( shape ), new HashMap < String , T >>() );
+}
+
+
+/* insert a data object */
+
+T data = // get the data object.
+DynamicHasher hasher = new DynamicHasher.Builder( hFunc ).with( data.getId() ).build();
+BloomFilter dataBloom = new BitSetBloomFilter( hasher , shape );
+int distance = Integer.MAX_VALUE ;
+BloomFilter collectionFilter = null
+for ( BloomFilter candidate : shards.keySet() ) {
+    if ( SetOperations.hammingDistance( candidate , dataBloom ) < distance ) {
+        distance = SetOperations.hammingDistance( candidate , dataBloom );
+        collectionFilter = candidate ;
+    }
+}
+if ( collectionFilter == null ) {
+    // no available collection so create one.
+    collectionFilter = new CountingBloomFilter( shape );
+    shards.put( collectionFilter , new HashMap < String , T >() );
+}
+Map < String , T > collection = shards.get( collectionFilter );
+if ( collection.size() >= MAX_SHARD_SIZE ) {
+    // no space in collection so create a new one.
+    collectionFilter = new CountingBloomFilter( shape );
+    collection = new HashMap < String , T >();
+    shards.put( collectionFilter , collection );
+}
+collectionFilter.merge( dataBloom );
+collections.put( data.getId(), data );
+
+
+/* search for a data object */
+
+T result = null ;
+String id = // get the data ID.
+DynamicHasher hasher = new DynamicHasher.Builder( hFunc ).with( id ).build();
+BloomFilter dataBloom = new BitSetBloomFilter( hasher , shape );
+for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
+    if ( shard.key().contains( dataBloom )) {
+        T candidate = shard.value().get( id );
+        if ( candidate != null ) {
+            result = candidate ;
+        }
+    }
+}
+// result is either null or contains the desired value. 
+		]]></source>
+			</subsection>
+			<subsection id="S3.SS3" name="3.3 Future directions">
+
+				<p>
+					The separation and definition of the
+					<code>HashFunctionIdentity</code>
+					,
+					<code>HashFunction</code>
+					, and
+					<code>Hasher</code>
+					classes as well as the development of the Cyclic hash function,
+					means that it is possible to construct hashers that can be sent
+					across the
+					wire. This opens up the possibility of sending query
+					requests without
+					exposing
+					the values or properties being queried and
+					may provide the ability to
+					query
+					encrypted data.&#160;<cite>[<a href='#Bellovin'>Bellovin</a>,
+						<a href='#Goh'>Goh</a>,
+						<a href='#Tajima'>Tajima</a>,
+						<a href='#Warren1'>Warren1</a>]</cite>
+				</p>
+
+				<p>
+					Implementations of multidimensional
+					Bloom filters&#160;<cite>[<a href='#Crainiceanu'>Crainiceanu</a>]</cite>
+					(AKA Bloom filter
+					indexes) may also be enhanced as the Hasher is not
+					bound to a shape. So
+					multidimensional
+					filters can us a Bloom filter
+					of a different Shape from the ones being
+					stored
+					to reduce the number
+					of filters it actually checks for.&#160;<cite>[<a href='#Warren2'>Warren2</a>]</cite>
+				</p>
+
+				<p>Implementations of attenuated,
+					spectral and other exotic Bloom
+					filter varieties is possible using the
+					commons-collection
+					library.
+				</p>
+			</subsection>
+		</section>
+		<section id="S4" name="4 References">
+			<div class="references">
+
+				<div id="Bellovin">
+					<span class="refName">[Bellovin]</span>
+					<span class="refBody">
+						Steven M Bellovin and William R Cheswick”. Privacy-Enchanced
+						Searched
+						Using Encrypted Bloom Filters”. 2004. url:
+						<a
+							href="https://mice.cs.columbia.edu/getTechreport.php?techreportID=483">https://mice.cs.columbia.edu/getTechreport.php?techreportID=483
+						</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Bloom">
+					<span class="refName">[Bloom]</span>
+					<span class="refBody">
+						Burton H. Bloom. “Space/Time Trade-offs in Hash
+						Coding with
+						Allowable
+						Errors”. In: Communications of the ACM 13.7
+						(July 1970), pp. 422–426.
+					</span>
+				</div>
+
+				<div id="Crainiceanu">
+					<span class="refName">[Crainiceanu]</span>
+					<span class="refBody">
+						Adina Crainiceanu and Daniel Lemire. Bloofi: Multidimensional
+						Bloom
+						Filters. Accessed on 11-Jan-2020. 2016. url:
+						<a href="https://arxiv.org/pdf/1501.01941.pdf">https://arxiv.org/pdf/1501.01941.pdf</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+				<div id="Goh">
+					<span class="refName">[Goh]</span>
+					<span class="refBody">
+						Eu-Jin Goh. Secure Indexes. 2004. url:
+						<a
+							href="https://crypto.stanford.edu/~eujin/papers/secureindex/secureindex.pdf">https://crypto.stanford.edu/~eujin/papers/secureindex/secureindex.pdf
+						</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Hurst">
+					<span class="refName">[Hurst]</span>
+					<span class="refBody">
+						Thomas Hurst. Bloom filter calculator. 2019.
+						url:
+						<a href="https://hur.st/bloomfilter/">https://hur.st/bloomfilter/</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Kirsch">
+					<span class="refName">[Kirsch]</span>
+					<span class="refBody">
+						Adam Kirsch and Michael Mitzenmacher. Building a Better Bloom
+						Filter.
+						2008. url:
+						<a
+							href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf
+						</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Mitzenmacher">
+					<span class="refName">[Mitzenmacher]</span>
+					<span class="refBody">
+						Michael Mitzenmacher and Eli Upfal. Probability
+						and computing:
+						Randomized algorithms and probabilistic analysis.
+						Cambridge, Cambridgeshire,
+						UK: Cambridge University Press, 2005,
+						pp. 109–111, 308. isbn:
+						9780521835404.
+					</span>
+				</div>
+
+				<div id="Tajima">
+					<span class="refName">[Tajima]</span>
+					<span class="refBody">
+						Arisa Tajima, Hiroki Sato, and Hayato Yamana. Privacy-Preserving
+						Join
+						Processing over outsourced private datasets with Fully
+						Homomorphic En-
+						cryption and Bloom Filters. 2018. url:
+						<a href="https://db-event.jpn.org/deim2018/data/papers/201.pdf">https://db-event.jpn.org/deim2018/data/papers/201.pdf
+						</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Warren1">
+					<span class="refName">[Warren1]</span>
+					<span class="refBody">
+						Claude N. Warren Jr.
+						Bloom Encrypted Index. 2019. url:
+						<a href="https://github.com/Claudenw/BloomEncryptedIndex">
+							https://github.com/Claudenw/BloomEncryptedIndex
+						</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+
+				<div id="Warren2">
+					<span class="refName">[Warren2]</span>
+					<span class="refBody">
+						Claude N. Warren Jr.
+						Multidimentional Bloom Filter Implementations.
+						2019. url:
+						<a href="https://github.com/Claudenw/MultidimentionalBloom">https://github.com/Claudenw/MultidimentionalBloom</a>
+						(Accessed 26 Jan 2020).
+					</span>
+				</div>
+			</div>
+		</section>
+
+	</body>
+</document>
