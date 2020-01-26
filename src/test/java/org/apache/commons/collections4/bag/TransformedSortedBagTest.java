@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bag;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;

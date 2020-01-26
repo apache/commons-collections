@@ -41,8 +41,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.function.Function;
-
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.apache.commons.collections4.junit.AbstractAvailableLocalesTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
