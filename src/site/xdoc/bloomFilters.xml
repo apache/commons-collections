@@ -18,8 +18,7 @@
 	</properties>
 
 	<head>
-		<link rel="stylesheet" href="./css/LaTeXML.css"
-			type="text/css" />
+		<link rel="stylesheet" href="./css/LaTeXML.css" type="text/css" />
 		<link rel="stylesheet" href="./css/references.css"
 			type="text/css" />
 		<script type="text/javascript"
@@ -30,23 +29,23 @@
 		<section name='Contents'>
 			<ol>
 				<li>
-					<a href="#S1" title="1 Introduction to the Bloom filter">
-						Introduction to the Bloom filter
+					<a href="#S1" title="1 Introducing Bloom filters">
+						Introducing Bloom filters
 					</a>
 					<ol>
 						<li>
-							<a href="#S1.SS1" title="1.1 What is a Bloom filter">
-								What is a Bloom filter
+							<a href="#S1.SS1" title="1.1 Understanding Bloom filters">
+								Understanding Bloom filters
 							</a>
 						</li>
 						<li>
-							<a href="#S1.SS2" title="1.2 How is it defined">
-								How is it defined
+							<a href="#S1.SS2" title="1.2 Defining a Bloom filter">
+								Defining a Bloom filter
 							</a>
 						</li>
 						<li>
-							<a href="#S1.SS3" title="1.3 How is it constructed">
-								How is it constructed
+							<a href="#S1.SS3" title="1.3 Constructing a Bloom filter">
+								Constructing a Bloom filter
 							</a>
 						</li>
 					</ol>
@@ -122,9 +121,9 @@
 		</section>
 
 
-		<section id="S1" name="1. Introduction to the Bloom filter">
+		<section id="S1" name="1. Introducing Bloom filters">
 
-			<subsection id="S1.SS1" name="1.1 What is a Bloom filter">
+			<subsection id="S1.SS1" name="1.1 Understanding Bloom filters">
 				<p>
 					Bloom filters were introduced to Apache
 					commons-collections in
@@ -133,13 +132,7 @@
 				<ul>
 					<li>
 						Is a probabilistic data structure defined by Burton Bloom in
-						1970 
-						<cite class="ltx_cite ltx_citemacro_cite">
-							[
-							<a href='#Bloom'>Bloom</a>
-							]
-						</cite>
-						;
+						1970&#160;<cite>[<a href='#Bloom'>Bloom</a>]</cite>;
 					</li>
 					<li>
 						Can be considered as a bit vector representing a set of
@@ -172,7 +165,7 @@
 				</ul>
 			</subsection>
 
-			<subsection id="S1.SS2" name="1.2 How is it defined">
+			<subsection id="S1.SS2" name="1.2 Defining a Bloom filter">
 
 				<p>Bloom filters are constrained by: the number of
 					elements in the
@@ -183,31 +176,26 @@
 				</p>
 				<ul>
 					<li>
-						<i>p</i>
+						\(p\)
 						- is the probability of false positives,
 					</li>
 					<li>
-						<i>n</i>
+						\(n\)
 						- is the number of elements in the set represented by the
 						Bloom
 						filter,
 					</li>
 					<li>
-						<i>m</i>
+						\(m\)
 						- is the number of bits, and
 					</li>
 					<li>
-						<i>k</i>
+						\(k\)
 						- is the number of hash functions.
 					</li>
 				</ul>
 				<p>
-					Mitzenmacher and Upfal 
-					<cite class="ltx_cite ltx_citemacro_cite">
-						[
-						<a href='#Mitzenmacher'>Mitzenmacher</a>
-						]
-					</cite>
+					Mitzenmacher and Upfal&#160;<cite>[<a href='#Mitzenmacher'>Mitzenmacher</a>]</cite>
 					have shown that the relationship between these properties is:
 					\(p =
 					(1- e^{-kn/m})^k\)
@@ -215,25 +203,20 @@
 				</p>
 
 				<p>
-					Thomas Hurst provides a good calculator
-					<cite class="ltx_cite ltx_citemacro_cite">
-						[
-						<a href='#Hurst'>Hurst</a>
-						]
-					</cite>
+					Thomas Hurst provides a good calculator&#160;<cite>[<a href='#Hurst'>Hurst</a>]</cite>
 					where the interplay between these values can be explored.
 				</p>
 
 			</subsection>
-			<subsection id="S1.SS3" name="1.3 How is it constructed">
+			<subsection id="S1.SS3" name="1.3 Constructing a Bloom filter">
 
 				<p>
 					A simple Bloom filter is constructed by hashing an object
-					<i>k</i>
+					\(k\)
 					times, and using each hash value to turn on a single bit in a
 					bit
 					vector comprising
-					<i>m</i>
+					\(m\)
 					bits.
 				</p>
 
@@ -390,19 +373,13 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 					<code>HashFunction</code>
 					-
 					An interface that extends
-					<code>
-						HashFunctionIdentity
-					</code>
+					<code>HashFunctionIdentity</code>
 					to include a the hash function implementation. The hash
 					function
 					converts a
-					<code>
-						byte[]
-					</code>
+					<code>byte[]</code>
 					into a
-					<code>
-						long
-					</code>
+					<code>long</code>
 					value using a seed.
 				</li>
 				<li>
@@ -428,23 +405,23 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 						</li>
 						<li>
 							The probability of false positives (
-							<i>p</i>
+							\(p\)
 							)
 						</li>
 						<li>
 							The number of elements in the set represented by the Bloom filter
 							(
-							<i>n</i>
+							\(n\)
 							)
 						</li>
 						<li>
 							The number of bits (
-							<i>m</i>
+							\(m\)
 							)
 						</li>
 						<li>
 							The number of hash functions (
-							<i>k</i>
+							\(k\)
 							)
 						</li>
 					</ul>
@@ -472,9 +449,7 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 					The
 					<code>HashFunctionIdentity</code>
 					is an interface that defines three (3) basic attributes of a
-					<code>
-						HashFunction
-					</code>
+					<code>HashFunction</code>
 					:
 				</p>
 
@@ -498,12 +473,7 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 						hash function is called multiple times with different seeds.
 						This
 						technique is called iterative hashing. However Kirsch and
-						Mitzenmacher
-						<cite class="ltx_cite ltx_citemacro_cite">
-							[
-							<a href='#kirsch'>kirsch</a>
-							]
-						</cite>
+						Mitzenmacher&#160;<cite>[<a href='#kirsch'>kirsch</a>]</cite>
 						have shown that it is possible to more
 						quickly generate the
 						necessary values by utilizing two (2) values from
@@ -535,8 +505,7 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 					also has a signature created
 					by hashing the string produced by:
 					<code>String.format( "%s-%s-%s", getName(),
-						getSignedness(),
-						getProcess() ).getBytes( "UTF-8" )
+						getSignedness(),getProcess() ).getBytes( "UTF-8" )
 					</code>
 					with a seed of
 					0 (zero). The signature is used in quick comparison
@@ -582,8 +551,8 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					Additional
-					<code>HashFunction </code>
-					implementation
+					<code>HashFunction</code>
+					implementations
 					can be created to support the hashing strategies
 					often found in
 					bioinformatics
@@ -604,44 +573,41 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 					<code>Shape</code>
 					describes the shape of the resulting Bloom filter. The constructor
 					for
-					<code>
-						Shape
-					</code>
+					<code>Shape</code>
 					always takes a
-					<code> HashFunctionIdentity </code>
+					<code>HashFunctionIdentity</code>
 					as well
 					as many of the other Shape properties necessary to solve
-					\(p
-					= (1- e^{-kn/m})^k\). These combinations are:
+					\(p = (1- e^{-kn/m})^k\). These combinations are:
 				</p>
 
 				<ul>
 					<li>
 						The probability of collisions (
-						<i>p</i>
+						\(p\)
 						), the
 						number of bits (
-						<i>m</i>
+						\(m\)
 						), and the number of hash functions (
-						<i>k</i>
+						\(k\)
 						).
 					</li>
 					<li>
 						The number of elements (
-						<i>n</i>
+						\(n\)
 						), and
 						the probability of collisions (
-						<i>p</i>
+						\(p\)
 						).
 					</li>
 					<li>
 						The number of elements (
-						<i>n</i>
+						\(n\)
 						), number of bits (
-						<i>m</i>
+						\(m\)
 						), and
 						number of hash functions (
-						<i>k</i>
+						\(k\)
 						).
 					</li>
 				</ul>
@@ -651,16 +617,15 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					The
-					<code> Hasher </code>
+					<code>Hasher</code>
 					converts converts one or more
-					<code> byte[]
-					</code>
+					<code>byte[]</code>
 					into an
-					<code>iterator&lt;int&gt; </code>
+					<code>iterator&lt;int&gt;</code>
 					representing the bits that
 					are enabled in the Bloom filter. The bits
 					indexes are in the range [0,
-					<i>m</i>
+					\(m\)
 					-1]. The Hasher is, in a sense, a primitive Bloom filter. There are
 					two implementations of Hasher provided:
 				</p>
@@ -680,13 +645,12 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					Other implementations of
-					<code> Hasher </code>
+					<code>Hasher</code>
 					are possible. Consider
 					the
-					<code> Hasher </code>
+					<code>Hasher</code>
 					as the class that converts one or more
-					<code> byte[]
-					</code>
+					<code>byte[]</code>
 					into Bloom filters of any shape.
 				</p>
 
@@ -697,36 +661,35 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					The
-					<code> BloomFilter </code>
+					<code>BloomFilter</code>
 					is an interface that describes the functionality
 					of the Bloom
 					filter. Along with the
-					<code> AbstractBloomFilter </code>
+					<code>AbstractBloomFilter</code>
 					there
 					are three (3) concrete implementations of
-					<code> BloomFilter </code>
+					<code>BloomFilter</code>
 					provided:
 				</p>
 
 				<ul>
 					<li>
-						<code> BitSetBloomFilter</code>
+						<code>BitSetBloomFilter</code>
 						- Stores the enabled bits in a
-						<code> BitSet </code>
+						<code>BitSet</code>
 						object.
 					</li>
 					<li>
-						<code> HasherBloomFilter </code>
+						<code>HasherBloomFilter</code>
 						- Uses the
-						<code>Hasher </code>
+						<code>Hasher</code>
 						implementation as the storage for the bits. This is not efficient
 						but often convenient if few Bloom filter operations are required.
 					</li>
 					<li>
-						<code> CountingBloomFilter </code>
-						- Uses a sparse
-						list (
-						<code> HashMap </code>
+						<code>CountingBloomFilter</code>
+						- Uses a sparse list (
+						<code>HashMap</code>
 						) of counts for the enabled bits. CountingBloomFilters
 						are an
 						extension to the normal Bloom filter and enable removal of
@@ -743,12 +706,11 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 				<p>
 					Other libraries tend to merge the functionality
 					of the
-					<code> Hasher </code>
+					<code>Hasher</code>
 					,
-					<code> Shape </code>
+					<code>Shape</code>
 					, and
-					<code> BloomFilter
-					</code>
+					<code>BloomFilter</code>
 					into one or two classes. By separating the responsibility we have
 					developed classes that focus on a single task. This permits a wider
 					range
@@ -762,11 +724,11 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 						where the
 						client
 						creates a
-						<code> Hasher </code>
+						<code>Hasher</code>
 						, sends it across the wire, and the server
 						then builds Bloom
 						filters of various
-						<code> Shape </code>
+						<code>Shape</code>
 						depending on the
 						requested functionality.
 					</li>
@@ -780,12 +742,12 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 						utilize
 						Bloom filters that are very
 						large (large
-						<i>m</i>
+						\(m\)
 						value) but have few bits
 						enabled (low
-						<i>t</i>
+						\(t\)
 						and
-						<i>n</i>
+						\(n\)
 						values). When storing a large number of these
 						it becomes important
 						to have bit vector compression. However, for
@@ -794,12 +756,12 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 						higher number of enabled bits the compression is just excess
 						overhead.
 						Applications can swap out the
-						<code> BloomFilter </code>
+						<code>BloomFilter</code>
 						implementation without
 						impacting the
-						<code> Hasher </code>
+						<code>Hasher</code>
 						or
-						<code> Shape </code>
+						<code>Shape</code>
 						selections.
 					</li>
 
@@ -816,7 +778,7 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					The
-					<code> AbstractBloomFilter </code>
+					<code>AbstractBloomFilter</code>
 					requires
 					implementation of four methods:
 				</p>
@@ -845,7 +807,7 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 
 				<p>
 					Other methods in
-					<code> AbstractBloomFilter </code>
+					<code>AbstractBloomFilter</code>
 					should be overridden
 					to take advantage of the bit encoding the new
 					implementation
@@ -872,12 +834,11 @@ hadoopBloomFilter.add( new Key( "pear".getBytes () ) ); ]]></source>
 					remote server
 					to verify the ID. For purposes of
 					illustration
-					<code> server.getBlackList()
-					</code>
+					<code>server.getBlackList()</code>
 					returns a list of IDs as
-					<code> Strings </code>
+					<code>Strings</code>
 					, and
-					<code> server.checkBlackList(
+					<code>server.checkBlackList(
 						String id )
 					</code>
 					verifies that the ID is on the black list.
@@ -1007,13 +968,11 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 
 				<p>
 					The separation and definition of the
-					<code> HashFunctionIdentity </code>
+					<code>HashFunctionIdentity</code>
 					,
-					<code> HashFunction </code>
+					<code>HashFunction</code>
 					, and
-					<code>
-						Hasher
-					</code>
+					<code>Hasher</code>
 					classes as well as the development of the Cyclic hash function,
 					means that it is possible to construct hashers that can be sent
 					across the
@@ -1023,29 +982,15 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 					the values or properties being queried and
 					may provide the ability to
 					query
-					encrypted data.
-					<cite>
-						[
-						<a href='#Bellovin'>Bellovin</a>
-						,
-						<a href='#Goh'>Goh</a>
-						,
-						<a href='#Tajima'>Tajima</a>
-						,
-						<a href='#Warren1'>Warren1</a>
-						]
-					</cite>
-					.
+					encrypted data.&#160;<cite>[<a href='#Bellovin'>Bellovin</a>,
+						<a href='#Goh'>Goh</a>,
+						<a href='#Tajima'>Tajima</a>,
+						<a href='#Warren1'>Warren1</a>]</cite>
 				</p>
 
 				<p>
 					Implementations of multidimensional
-					Bloom filters
-					<cite class="ltx_cite ltx_citemacro_cite">
-						[
-						<a href='#Crainiceanu'>Crainiceanu</a>
-						]
-					</cite>
+					Bloom filters&#160;<cite>[<a href='#Crainiceanu'>Crainiceanu</a>]</cite>
 					(AKA Bloom filter
 					indexes) may also be enhanced as the Hasher is not
 					bound to a shape. So
@@ -1054,13 +999,7 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 					of a different Shape from the ones being
 					stored
 					to reduce the number
-					of filters it actually checks for.
-					<cite class="ltx_cite 
-				ltx_citemacro_cite">
-						[
-						<a href='#Warren2'>Warren2</a>
-						]
-					</cite>
+					of filters it actually checks for.&#160;<cite>[<a href='#Warren2'>Warren2</a>]</cite>
 				</p>
 
 				<p>Implementations of attenuated,
@@ -1082,16 +1021,19 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 						Using Encrypted Bloom Filters”. 2004. url:
 						<a
 							href="https://mice.cs.columbia.edu/getTechreport.php?techreportID=483">https://mice.cs.columbia.edu/getTechreport.php?techreportID=483
-						</a> (Accessed 26 Jan 2020).
+						</a>
+						(Accessed 26 Jan 2020).
 					</span>
 				</div>
 
 				<div id="Bloom">
 					<span class="refName">[Bloom]</span>
 					<span class="refBody">
-						Burton H. Bloom. “Space/Time Trade-offs in Hash Coding with
+						Burton H. Bloom. “Space/Time Trade-offs in Hash
+						Coding with
 						Allowable
-						Errors”. In: Communications of the ACM 13.7 (July 1970), pp. 422–426.
+						Errors”. In: Communications of the ACM 13.7
+						(July 1970), pp. 422–426.
 					</span>
 				</div>
 
@@ -1142,9 +1084,12 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 				<div id="Mitzenmacher">
 					<span class="refName">[Mitzenmacher]</span>
 					<span class="refBody">
-						Michael Mitzenmacher and Eli Upfal. Probability and computing:
-						Randomized algorithms and probabilistic analysis. Cambridge, Cambridgeshire,
-						UK: Cambridge University Press, 2005, pp. 109–111, 308. isbn:
+						Michael Mitzenmacher and Eli Upfal. Probability
+						and computing:
+						Randomized algorithms and probabilistic analysis.
+						Cambridge, Cambridgeshire,
+						UK: Cambridge University Press, 2005,
+						pp. 109–111, 308. isbn:
 						9780521835404.
 					</span>
 				</div>
@@ -1154,7 +1099,8 @@ for ( Map.Entry < BloomFilter , Collection < T >> entry : shards ) {
 					<span class="refBody">
 						Arisa Tajima, Hiroki Sato, and Hayato Yamana. Privacy-Preserving
 						Join
-						Processing over outsourced private datasets with Fully Homomorphic En-
+						Processing over outsourced private datasets with Fully
+						Homomorphic En-
 						cryption and Bloom Filters. 2018. url:
 						<a href="https://db-event.jpn.org/deim2018/data/papers/201.pdf">https://db-event.jpn.org/deim2018/data/papers/201.pdf
 						</a>
