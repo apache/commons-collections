@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.list;
 
+import org.apache.commons.collections4.OrderedIterator;
+
 import java.util.*;
 
 /**
@@ -833,7 +835,7 @@ abstract class AbstractIndexedTreeList<E> extends AbstractList<E> {
     /**
      * A list iterator over the linked list.
      */
-    private class TreeListIterator implements ListIterator<E> { // TODO implements ListIterator<E>, OrderedIterator<E>
+    private class TreeListIterator implements ListIterator<E>, OrderedIterator<E> {
         /** The parent list */
         private final AbstractIndexedTreeList parent;
         /**
