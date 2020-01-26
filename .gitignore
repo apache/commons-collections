@@ -15,6 +15,7 @@ site-content
 .settings
 .classpath
 .project
+.checkstyle
 
 # Mac files
 .DS_Store

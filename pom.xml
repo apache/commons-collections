@@ -438,6 +438,9 @@
     <contributor>
       <name>Vamsi Kavuri</name>
     </contributor>
+    <contributor>
+      <name>Claude Warren</name>
+    </contributor>
   </contributors>
 
   <dependencies>
@@ -458,6 +461,12 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.9</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>commons-codec</groupId>
+    	<artifactId>commons-codec</artifactId>
+    	<version>1.14</version>
+    	<optional>true</optional>
     </dependency>
   </dependencies>
 
