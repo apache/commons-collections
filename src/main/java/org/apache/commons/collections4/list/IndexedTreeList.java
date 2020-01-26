@@ -24,8 +24,8 @@ import java.util.function.Function;
  * As a <code>List</code> this data structure stores order of elements and
  * provides access by index. It's is optimised for fast insertions, removals
  * and searching by any index or object in the list.
- * <p>
  * </p>
+ * <p>
  * IndexedTreeList can be suitable for tasks which requires fast modification in the
  * middle of a list and provides fast contains and indexOf.
  * </p>
@@ -51,6 +51,7 @@ import java.util.function.Function;
  * </p>
  * <p>
  * Code is based on apache common collections <code>TreeList</code>.
+ * </p>
  * Comparing to <code>TreeList</code> this data structure:
  * <ul>
  * <li>Has slightly slower insertion/removing operations, O(log n) in most cases, O((log n) ^ 2) in
@@ -59,6 +60,7 @@ import java.util.function.Function;
  * <li>Has greatly improved contains and indexOf operations, O(log n) while TreeList has O(n)</li>
  * </ul>
  *
+ * <p>
  * As this implementation is slightly slower and require more memory it's recommended to use
  * <code>TreeList</code> in cases when no searching is required or <code>IndexedTreeListSet</code>
  * in cases where unique elements should be stored.

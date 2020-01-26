@@ -48,6 +48,7 @@ import java.util.*;
  * </p>
  * <p>
  * Code is based on apache common collections <code>TreeList</code>.
+ * </p>
  * Comparing to <code>TreeList</code> this data structure:
  * <ul>
  * <li>Contains unique elements</li>
@@ -55,7 +56,6 @@ import java.util.*;
  * <li>Requires more memory, however it's still O(n).</li>
  * <li>Has greatly improved contains and indexOf operations, O(log n) while TreeList has O(n)</li>
  * </ul>
- * </p>
  *
  * @author Aleksandr Maksymenko
  */
