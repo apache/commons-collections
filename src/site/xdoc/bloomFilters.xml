@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="./css/references.css"
 			type="text/css" />
 		<script type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
+			src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
 	</head>
 
 	<body>
