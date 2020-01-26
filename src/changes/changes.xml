@@ -114,6 +114,12 @@
     <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
       BloomFilter contribution.
     </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] Update JUnit from 4.12 to 4.13.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [build] Update Apache commons-parent from 48 to 50.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
