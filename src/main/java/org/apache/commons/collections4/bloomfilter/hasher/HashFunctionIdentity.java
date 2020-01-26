@@ -98,7 +98,7 @@ public interface HashFunctionIdentity {
      */
     enum Signedness {
         SIGNED, UNSIGNED
-    };
+    }
 
     /**
      * An enum that identifies the process type of this function. <dl> <dt>Iterative
@@ -110,7 +110,7 @@ public interface HashFunctionIdentity {
      */
     enum ProcessType {
         CYCLIC, ITERATIVE
-    };
+    }
 
     /**
      * Gets the name of this hash function.
