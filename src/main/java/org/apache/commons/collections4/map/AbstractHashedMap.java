@@ -164,9 +164,10 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     }
 
     /**
-     * Initialise subclasses during construction, cloning or deserialization.
+     * Initialize subclasses during construction, cloning or deserialization.
      */
     protected void init() {
+        // noop
     }
 
     //-----------------------------------------------------------------------
@@ -763,6 +764,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * MapIterator implementation.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class HashMapIterator<K, V> extends HashIterator<K, V> implements MapIterator<K, V> {
 
@@ -834,6 +838,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * EntrySet implementation.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
         /** The parent map */
@@ -885,6 +892,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * EntrySet iterator.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class EntrySetIterator<K, V> extends HashIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 
@@ -929,6 +939,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * KeySet implementation.
+     *
+     * @param <K> the type of elements maintained by this set
      */
     protected static class KeySet<K> extends AbstractSet<K> {
         /** The parent map */
@@ -969,6 +981,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * KeySet iterator.
+     *
+     * @param <K> the type of elements maintained by this set
      */
     protected static class KeySetIterator<K> extends HashIterator<K, Object> implements Iterator<K> {
 
@@ -1014,6 +1028,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Values implementation.
+     *
+     * @param <V> the type of elements maintained by this collection
      */
     protected static class Values<V> extends AbstractCollection<V> {
         /** The parent map */
@@ -1047,6 +1063,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Values iterator.
+     *
+     * @param <V> the type of elements maintained by this collection
      */
     protected static class ValuesIterator<V> extends HashIterator<Object, V> implements Iterator<V> {
 
@@ -1069,6 +1087,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * then you will not be able to access the protected fields.
      * The {@code entryXxx()} methods on {@code AbstractHashedMap} exist
      * to provide the necessary access.
+     *
+     * @param <K> the type of the keys
+     * @param <V> the type of the values
      */
     protected static class HashEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
         /** The next entry in the hash chain */
@@ -1139,6 +1160,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Base Iterator
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static abstract class HashIterator<K, V> {
 
