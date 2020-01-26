@@ -16,99 +16,25 @@
  */
 package org.apache.commons.collections4.list;
 
-import junit.framework.Test;
-import org.apache.commons.collections4.BulkTest;
-
 import java.util.*;
 
 /**
- * JUnit tests
+ * JUnit tests.
  *
- * @since 3.1
+ * @since 3.0
  */
 public class IndexedTreeListSetTest<E> extends AbstractListTest<E> {
 
-    public IndexedTreeListSetTest(final String name) {
-        super(name);
-    }
+    boolean extraVerify = true;
 
-//    public static void main(String[] args) {
-//        junit.textui.TestRunner.run(suite());
-//        System.out.println("         add; toArray; iterator; insert; get; indexOf; remove");
-//        System.out.print("   TreeListSet = ");
-//        benchmark(new TreeListSet());
-//        System.out.print("\n  ArrayList = ");
-//        benchmark(new java.util.ArrayList());
-//        System.out.print("\n LinkedList = ");
-//        benchmark(new java.util.LinkedList());
-//        System.out.print("\n NodeCachingLinkedList = ");
-//        benchmark(new NodeCachingLinkedList());
-//    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(IndexedTreeListSetTest.class);
-    }
-
-    public static void benchmark(final List<? super Integer> l) {
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 100000; i++) {
-            l.add(Integer.valueOf(i));
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 200; i++) {
-            l.toArray();
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++) {
-            final java.util.Iterator<? super Integer> it = l.iterator();
-            while (it.hasNext()) {
-                it.next();
-            }
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 10000; i++) {
-            final int j = (int) (Math.random() * 100000);
-            l.add(j, Integer.valueOf(-j));
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 50000; i++) {
-            final int j = (int) (Math.random() * 110000);
-            l.get(j);
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 200; i++) {
-            final int j = (int) (Math.random() * 100000);
-            l.indexOf(Integer.valueOf(j));
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < 10000; i++) {
-            final int j = (int) (Math.random() * 100000);
-            l.remove(j);
-        }
-        System.out.print(System.currentTimeMillis() - start + ";");
+    public IndexedTreeListSetTest(final String testName) {
+        super(testName);
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public IndexedTreeListSet<E> makeObject() {
-        return new IndexedTreeListSet<>();
-    }
-
-    @Override
-    public boolean isNullSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -136,68 +62,207 @@ public class IndexedTreeListSetTest<E> extends AbstractListTest<E> {
         };
     }
 
+    //-----------------------------------------------------------------------
     @Override
-    public void testListIteratorAdd() {
-        // Does not support ListIterator.add(obj)
+    public List<E> makeObject() {
+        IndexedTreeListSet<E> list = new IndexedTreeListSet<>();
+        list.supportSetInIterator = false;
+        return list;
+    }
+
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testAdd() {
+        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>(new ArrayList<E>());
+
+        // Duplicate element
+        final E obj = (E) Integer.valueOf(1);
+        lset.add(obj);
+        lset.add(obj);
+        assertEquals("Duplicate element was added.", 1, lset.size());
+
+        // Unique element
+        lset.add((E) Integer.valueOf(2));
+        assertEquals("Unique element was not added.", 2, lset.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testAddAll() {
+        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>(new ArrayList<E>());
+
+        lset.addAll(
+            Arrays.asList((E[]) new Integer[] { Integer.valueOf(1), Integer.valueOf(1)}));
+
+        assertEquals("Duplicate element was added.", 1, lset.size());
+    }
+
+    @Override
+    public void testCollectionAddAll() {
+        // override for set behaviour
+        resetEmpty();
+        E[] elements = getFullElements();
+        boolean r = getCollection().addAll(Arrays.asList(elements));
+        getConfirmed().addAll(Arrays.asList(elements));
+        verify();
+        assertTrue("Empty collection should change after addAll", r);
+        for (final E element : elements) {
+            assertTrue("Collection should contain added element",
+                    getCollection().contains(element));
+        }
+
+        resetFull();
+        final int size = getCollection().size();
+        elements = getOtherElements();
+        r = getCollection().addAll(Arrays.asList(elements));
+        getConfirmed().addAll(Arrays.asList(elements));
+        verify();
+        assertTrue("Full collection should change after addAll", r);
+        for (int i = 0; i < elements.length; i++) {
+            assertTrue("Full collection should contain added element " + i,
+                    getCollection().contains(elements[i]));
+        }
+        assertEquals("Size should increase after addAll",
+                size + elements.length, getCollection().size());
+    }
+
+    @Override
+    public void testCollectionIteratorRemove() {
+        try {
+            extraVerify = false;
+            super.testCollectionIteratorRemove();
+        } finally {
+            extraVerify = true;
+        }
+    }
+    public void testCollections304() {
+        final List<String> list = new LinkedList<>();
+        final IndexedTreeListSet<String> decoratedList = new IndexedTreeListSet(list);
+        final String s1 = "Apple";
+        final String s2 = "Lemon";
+        final String s3 = "Orange";
+        final String s4 = "Strawberry";
+
+        decoratedList.add(s1);
+        decoratedList.add(s2);
+        decoratedList.add(s3);
+        assertEquals(3, decoratedList.size());
+
+        decoratedList.set(1, s4);
+        assertEquals(3, decoratedList.size());
+
+        decoratedList.add(1, s4);
+        assertEquals(3, decoratedList.size());
+
+        decoratedList.add(1, s2);
+        assertEquals(4, decoratedList.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testCollections307() {
+        List<E> list = new ArrayList<>();
+        List<E> uniqueList = new IndexedTreeListSet(list);
+
+        final String hello = "Hello";
+        final String world = "World";
+        uniqueList.add((E) hello);
+        uniqueList.add((E) world);
+
+        List<E> subList = list.subList(0, 0);
+        List<E> subUniqueList = uniqueList.subList(0, 0);
+
+        assertFalse(subList.contains(world)); // passes
+        assertFalse(subUniqueList.contains(world)); // fails
+
+        List<E> worldList = new ArrayList<>();
+        worldList.add((E) world);
+        assertFalse(subList.contains("World")); // passes
+        assertFalse(subUniqueList.contains("World")); // fails
+
+        // repeat the test with a different class than HashSet;
+        // which means subclassing IndexedTreeListSet below
+        list = new ArrayList<>();
+        uniqueList = new IndexedTreeListSet(list, new java.util.TreeMap());
+
+        uniqueList.add((E) hello);
+        uniqueList.add((E) world);
+
+        subList = list.subList(0, 0);
+        subUniqueList = uniqueList.subList(0, 0);
+
+        assertFalse(subList.contains(world)); // passes
+        assertFalse(subUniqueList.contains(world)); // fails
+
+        worldList = new ArrayList<>();
+        worldList.add((E) world);
+        assertFalse(subList.contains("World")); // passes
+        assertFalse(subUniqueList.contains("World")); // fails
+    }
+
+    public void testCollections701() {
+        final IndexedTreeListSet<Object> uniqueList = new IndexedTreeListSet<>(new ArrayList<>());
+        final Integer obj1 = Integer.valueOf(1);
+        final Integer obj2 = Integer.valueOf(2);
+        uniqueList.add(obj1);
+        uniqueList.add(obj2);
+        assertEquals(2, uniqueList.size());
+        uniqueList.add(uniqueList);
+        assertEquals(3, uniqueList.size());
+        final List<Object> list = new LinkedList<>();
+        final IndexedTreeListSet<Object> decoratedList = new IndexedTreeListSet(list);
+        final String s1 = "Apple";
+        final String s2 = "Lemon";
+        final String s3 = "Orange";
+        final String s4 = "Strawberry";
+        decoratedList.add(s1);
+        decoratedList.add(s2);
+        decoratedList.add(s3);
+        assertEquals(3, decoratedList.size());
+        decoratedList.set(1, s4);
+        assertEquals(3, decoratedList.size());
+        decoratedList.add(decoratedList);
+        assertEquals(4, decoratedList.size());
     }
 
     //-----------------------------------------------------------------------
-    @SuppressWarnings("unchecked")
-    public void testAddMultiple() {
-        final List<E> l = makeObject();
-        l.add((E) "hugo");
-        l.add((E) "erna");
-        l.add((E) "daniel");
-        l.add((E) "andres");
-        l.add(0, (E) "harald");
-        assertEquals("harald", l.get(0));
-        assertEquals("hugo", l.get(1));
-        assertEquals("erna", l.get(2));
-        assertEquals("daniel", l.get(3));
-        assertEquals("andres", l.get(4));
+    public void testFactory() {
+        final Integer[] array = new Integer[] { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
+        final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(array));
+        final IndexedTreeListSet<Integer> lset = new IndexedTreeListSet(list);
+
+        assertEquals("Duplicate element was added.", 2, lset.size());
+        assertEquals(Integer.valueOf(1), lset.get(0));
+        assertEquals(Integer.valueOf(2), lset.get(1));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
     }
 
-    @SuppressWarnings("unchecked")
-    public void testRemove() {
-        final List<E> l = makeObject();
-        l.add((E) "hugo");
-        l.add((E) "erna");
-        l.add((E) "daniel");
-        l.add((E) "andres");
-        l.add(0, (E) "harald");
-        int i = 0;
-        assertEquals("harald", l.get(i++));
-        assertEquals("hugo", l.get(i++));
-        assertEquals("erna", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
+    public void testIntCollectionAddAll() {
+      // make a IndexedTreeListSet with one element
+      final List<Integer> list = new IndexedTreeListSet<>(new ArrayList<Integer>());
+      final Integer existingElement = Integer.valueOf(1);
+      list.add(existingElement);
 
-        l.remove(0);
-        i = 0;
-        assertEquals("hugo", l.get(i++));
-        assertEquals("erna", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
+      // add two new unique elements at index 0
+      final Integer firstNewElement = Integer.valueOf(2);
+      final Integer secondNewElement = Integer.valueOf(3);
+      Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
+      list.addAll(0, collection);
+      assertEquals("Unique elements should be added.", 3, list.size());
+      assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
+      assertEquals("Second new element should be at index 1", secondNewElement, list.get(1));
+      assertEquals("Existing element should shift to index 2", existingElement, list.get(2));
 
-        i = 0;
-        l.remove(1);
-        assertEquals("hugo", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
-
-        i = 0;
-        l.remove(2);
-        assertEquals("hugo", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-    }
-
-    @SuppressWarnings("unchecked")
-    public void testInsertBefore() {
-        final List<E> l = makeObject();
-        l.add((E) "erna");
-        l.add(0, (E) "hugo");
-        assertEquals("hugo", l.get(0));
-        assertEquals("erna", l.get(1));
+      // add a duplicate element and a unique element at index 0
+      final Integer thirdNewElement = Integer.valueOf(4);
+      collection = Arrays.asList(existingElement, thirdNewElement);
+      list.addAll(0, collection);
+      assertEquals("Duplicate element should not be added, unique element should be added.",
+        4, list.size());
+      assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
     }
 
     @SuppressWarnings("unchecked")
@@ -242,74 +307,200 @@ public class IndexedTreeListSetTest<E> extends AbstractListTest<E> {
         assertEquals(1, l.indexOf("5"));
     }
 
-    /**
-     *  Test {@link List#set(int,Object)}.
-     */
-    public void testListSetByIndex() {
-        if (!isSetSupported()) {
-            return;
-        }
-
-        resetFull();
-        final E[] elements = getFullElements();
-        final E[] other = getOtherElements();
-
-        for (int i = 0; i < other.length; i++) {
-            final E n = other[i % other.length];
-            final E v = getCollection().set(i % elements.length, n);
-            assertEquals("Set should return correct element", elements[i], v);
-            getConfirmed().set(i % elements.length, n);
-            verify();
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    public void testAddAll() {
-        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>();
+    public void testListIterator() {
+        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>(new ArrayList<E>());
 
-        lset.addAll(Arrays.asList((E[]) new Integer[] { Integer.valueOf(1), Integer.valueOf(1)}));
+        final E obj1 = (E) Integer.valueOf(1);
+        final E obj2 = (E) Integer.valueOf(2);
+        lset.add(obj1);
+        lset.add(obj2);
 
-        assertEquals("Duplicate element was added.", 1, lset.size());
+        // Attempts to add a duplicate object
+        for (final ListIterator<E> it = lset.listIterator(); it.hasNext();) {
+            it.next();
+
+            if (!it.hasNext()) {
+                it.add(obj1);
+                break;
+            }
+        }
+
+        assertEquals("Duplicate element was added", 2, lset.size());
     }
 
     @Override
-    public void testCollectionAddAll() {
-        // override for set behaviour
+    public void testListIteratorAdd() {
+        // override to cope with Set behaviour
         resetEmpty();
-        E[] elements = getFullElements();
-        boolean r = getCollection().addAll(Arrays.asList(elements));
-        getConfirmed().addAll(Arrays.asList(elements));
-        verify();
-        assertTrue("Empty collection should change after addAll", r);
+        final List<E> list1 = getCollection();
+        final List<E> list2 = getConfirmed();
+
+        final E[] elements = getOtherElements();  // changed here
+        ListIterator<E> iter1 = list1.listIterator();
+        ListIterator<E> iter2 = list2.listIterator();
+
         for (final E element : elements) {
-            assertTrue("Collection should contain added element",
-                    getCollection().contains(element));
+            iter1.add(element);
+            iter2.add(element);
+            super.verify();  // changed here
         }
 
         resetFull();
-        final int size = getCollection().size();
-        elements = getOtherElements();
-        r = getCollection().addAll(Arrays.asList(elements));
-        getConfirmed().addAll(Arrays.asList(elements));
-        verify();
-        assertTrue("Full collection should change after addAll", r);
-        for (int i = 0; i < elements.length; i++) {
-            assertTrue("Full collection should contain added element " + i,
-                    getCollection().contains(elements[i]));
+        iter1 = getCollection().listIterator();
+        iter2 = getConfirmed().listIterator();
+        for (final E element : elements) {
+            iter1.next();
+            iter2.next();
+            iter1.add(element);
+            iter2.add(element);
+            super.verify();  // changed here
         }
-        assertEquals("Size should increase after addAll",
-                size + elements.length, getCollection().size());
     }
 
-//    public void testCheck() {
-//        List l = makeEmptyList();
-//        l.add("A1");
-//        l.add("A2");
-//        l.add("A3");
-//        l.add("A4");
-//        l.add("A5");
-//        l.add("A6");
-//    }
+    //-----------------------------------------------------------------------
+    @Override
+    public void testListIteratorSet() {
+        // override to block
+        resetFull();
+        final ListIterator<E> it = getCollection().listIterator();
+        it.next();
+        try {
+            it.set(null);
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void testListSetByIndex() {
+        // override for set behaviour
+        resetFull();
+        final int size = getCollection().size();
+        getCollection().set(0, (E) new Long(1000));
+        assertEquals(size, getCollection().size());
+
+        getCollection().set(2, (E) new Long(1000));
+        assertEquals(size - 1, getCollection().size());
+        assertEquals(new Long(1000), getCollection().get(1));  // set into 2, but shifted down to 1
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testRetainAll() {
+        final List<E> list = new ArrayList<>(10);
+        final IndexedTreeListSet<E> uniqueList = new IndexedTreeListSet(list);
+        for (int i = 0; i < 10; ++i) {
+            uniqueList.add((E)Integer.valueOf(i));
+        }
+
+        final Collection<E> retained = new ArrayList<>(5);
+        for (int i = 0; i < 5; ++i) {
+            retained.add((E)Integer.valueOf(i * 2));
+        }
+
+        assertTrue(uniqueList.retainAll(retained));
+        assertEquals(5, uniqueList.size());
+        assertTrue(uniqueList.contains(Integer.valueOf(0)));
+        assertTrue(uniqueList.contains(Integer.valueOf(2)));
+        assertTrue(uniqueList.contains(Integer.valueOf(4)));
+        assertTrue(uniqueList.contains(Integer.valueOf(6)));
+        assertTrue(uniqueList.contains(Integer.valueOf(8)));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testRetainAllWithInitialList() {
+        // initialized with empty list
+        final List<E> list = new ArrayList<>(10);
+        for (int i = 0; i < 5; ++i) {
+            list.add((E)Integer.valueOf(i));
+        }
+        final IndexedTreeListSet<E> uniqueList = new IndexedTreeListSet(list);
+        for (int i = 5; i < 10; ++i) {
+            uniqueList.add((E)Integer.valueOf(i));
+        }
+
+        final Collection<E> retained = new ArrayList<>(5);
+        for (int i = 0; i < 5; ++i) {
+            retained.add((E)Integer.valueOf(i * 2));
+        }
+
+        assertTrue(uniqueList.retainAll(retained));
+        assertEquals(5, uniqueList.size());
+        assertTrue(uniqueList.contains(Integer.valueOf(0)));
+        assertTrue(uniqueList.contains(Integer.valueOf(2)));
+        assertTrue(uniqueList.contains(Integer.valueOf(4)));
+        assertTrue(uniqueList.contains(Integer.valueOf(6)));
+        assertTrue(uniqueList.contains(Integer.valueOf(8)));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testSet() {
+        final IndexedTreeListSet<E> lset = new IndexedTreeListSet<>(new ArrayList<E>());
+
+        // Duplicate element
+        final E obj1 = (E) Integer.valueOf(1);
+        final E obj2 = (E) Integer.valueOf(2);
+        final E obj3 = (E) Integer.valueOf(3);
+
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj1);
+        assertEquals(2, lset.size());
+        assertSame(obj1, lset.get(0));
+        assertSame(obj2, lset.get(1));
+
+        lset.clear();
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj2);
+        assertEquals(1, lset.size());
+        assertSame(obj2, lset.get(0));
+
+        lset.clear();
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj3);
+        assertEquals(2, lset.size());
+        assertSame(obj3, lset.get(0));
+        assertSame(obj2, lset.get(1));
+
+        lset.clear();
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(1, obj1);
+        assertEquals(1, lset.size());
+        assertSame(obj1, lset.get(0));
+    }
+
+    public void testSetCollections444() {
+        final IndexedTreeListSet<Integer> lset = new IndexedTreeListSet<>(new ArrayList<Integer>());
+
+        // Duplicate element
+        final Integer obj1 = Integer.valueOf(1);
+        final Integer obj2 = Integer.valueOf(2);
+
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj1);
+        assertEquals(2, lset.size());
+        assertSame(obj1, lset.get(0));
+        assertSame(obj2, lset.get(1));
+
+        assertTrue(lset.contains(obj1));
+        assertTrue(lset.contains(obj2));
+    }
+
+    public void testSubListIsUnmodifiable() {
+        resetFull();
+        final List<E> subList = getCollection().subList(1, 3);
+        try {
+            subList.remove(0);
+            fail("subList should be unmodifiable");
+        } catch (final UnsupportedOperationException e) {
+            // expected
+        }
+    }
+
 
     public void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
@@ -422,40 +613,62 @@ public class IndexedTreeListSetTest<E> extends AbstractListTest<E> {
             }
         }
     }
-//
-//    /**
-//     *  Tests the {@link ListIterator#set(Object)} method of the list
-//     *  iterator.
-//     */
-//    public void testListIteratorSet() {
-//        final E[] elements = getOtherElements();
-//
+
+    @SuppressWarnings("unchecked")
+    public void testUniqueListDoubleInsert() {
+        final List<E> l = new IndexedTreeListSet(new LinkedList<E>());
+        l.add((E) new Object());
+        l.add((E) new Object());
+
+        // duplicate is removed
+        l.set(0, l.get(1));
+        assertEquals(1, l.size());
+
+        // duplicate should be removed again
+        l.add(1, l.get(0));
+        assertEquals(1, l.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUniqueListReInsert() {
+        final List<E> l = new IndexedTreeListSet(new LinkedList<E>());
+        l.add((E) new Object());
+        l.add((E) new Object());
+
+        final E a = l.get(0);
+
+        // duplicate is removed
+        l.set(0, l.get(1));
+        assertEquals(1, l.size());
+
+        // old object is added back in
+        l.add(1, a);
+        assertEquals(2, l.size());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void verify() {
+        super.verify();
+
+        if (extraVerify) {
+            final int size = getCollection().size();
+            getCollection().add((E) new Long(1000));
+            assertEquals(size + 1, getCollection().size());
+
+            getCollection().add((E) new Long(1000));
+            assertEquals(size + 1, getCollection().size());
+            assertEquals(new Long(1000), getCollection().get(size));
+
+            getCollection().remove(size);
+        }
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/IndexedTreeListSet.emptyCollection.version4.obj");
 //        resetFull();
-//        final ListIterator<E> iter1 = getCollection().listIterator();
-//        final ListIterator<E> iter2 = getConfirmed().listIterator();
-//        for (final E element : elements) {
-//            iter1.next();
-//            iter2.next();
-//            iter1.set(element);
-//            iter2.set(element);
-//            verify();
-//        }
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/IndexedTreeListSet.fullCollection.version4.obj");
 //    }
 
-    //-----------------------------------------------------------------------
-    public BulkTest bulkTestListIterator() {
-        return new TestListIteratorNoAddSet();
-    }
-
-    public class TestListIteratorNoAddSet extends TestListIterator {
-        @Override
-        public boolean supportsAdd() {
-            return false;
-        }
-
-        @Override
-        public boolean supportsSet() {
-            return false;
-        }
-    }
 }

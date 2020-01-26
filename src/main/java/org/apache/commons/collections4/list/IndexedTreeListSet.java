@@ -16,10 +16,7 @@
  */
 package org.apache.commons.collections4.list;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Data structure which implements both <code>List</code> and <code>Set</code>.
@@ -56,8 +53,6 @@ import java.util.Set;
  */
 public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements Set<E> {
 
-    private static final boolean SUPPORT_ADD_SET_IN_ITERATOR = false;
-
     /** Map from element to it's node or nodes */
     protected final Map<E, AVLNode> nodeMap;
 
@@ -76,7 +71,6 @@ public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements
      */
     public IndexedTreeListSet(final Map map) {
         this.nodeMap = map;
-        this.supportAddSetInIterator = SUPPORT_ADD_SET_IN_ITERATOR;
     }
 
     /**
@@ -99,7 +93,6 @@ public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements
      */
     public IndexedTreeListSet(final Collection<? extends E> coll, final Map map) {
         this.nodeMap = map;
-        this.supportAddSetInIterator = SUPPORT_ADD_SET_IN_ITERATOR;
         for (E e : coll) {
             add(e);
         }
@@ -131,6 +124,19 @@ public class IndexedTreeListSet<E> extends AbstractIndexedTreeList<E> implements
     @Override
     public int lastIndexOf(final Object object) {
         return indexOf(object);
+    }
+
+    /**
+     * Returns an unmodifiable view of the portion of this list between the specified
+     * <tt>fromIndex</tt>, inclusive, and <tt>toIndex</tt>, exclusive.
+     *
+     * @param fromIndex low endpoint (inclusive) of the subList
+     * @param toIndex high endpoint (exclusive) of the subList
+     * @return an unmodifiable view of the specified range within this list
+     */
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return Collections.unmodifiableList(super.subList(fromIndex, toIndex));
     }
 
     /**
