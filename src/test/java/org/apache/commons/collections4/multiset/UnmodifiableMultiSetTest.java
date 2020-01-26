@@ -105,7 +105,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         try {
-            unmodifiableMultiSet.remove( (E)"One",1);
+            unmodifiableMultiSet.remove( "One",1);
             fail();
         } catch (final UnsupportedOperationException ex) {}
     }

@@ -115,7 +115,7 @@ public class DynamicHasher implements Hasher {
                     buffer++;
                 }
                 return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
-                    (long) shape.getNumberOfBits());
+                    shape.getNumberOfBits());
             }
             throw new NoSuchElementException();
         }

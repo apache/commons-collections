@@ -1410,7 +1410,7 @@ public class IteratorUtilsTest {
     @Test(expected = NullPointerException.class)
     public void testUnmodifiableMapIterator() {
         Set<?> set = new LinkedHashSet<>();
-        final MapIterator ie = (MapIterator) new EntrySetToMapIteratorAdapter(set);
+        final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
         assertTrue("create instance fail", IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
         IteratorUtils.unmodifiableMapIterator(null);
 
