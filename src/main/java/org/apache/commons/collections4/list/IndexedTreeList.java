@@ -55,8 +55,8 @@ import java.util.function.Function;
  * Comparing to <code>TreeList</code> this data structure:
  * <ul>
  * <li>Has slightly slower insertion/removing operations, O(log n) in most cases, O((log n) ^ 2) in
- * worst cases (if TreeMap is used).</li>
- * <li>Requires more memory, however it's still O(n).</li>
+ * worst cases (if TreeMap is used)</li>
+ * <li>Requires more memory, however it's still O(n)</li>
  * <li>Has greatly improved contains and indexOf operations, O(log n) while TreeList has O(n)</li>
  * </ul>
  *
