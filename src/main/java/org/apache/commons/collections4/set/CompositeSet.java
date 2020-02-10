@@ -291,7 +291,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         if (Objects.isNull(filter)) {
             return false;
         }

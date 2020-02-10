@@ -57,11 +57,11 @@ public final class ObjectsHashIterative implements HashFunction {
     }
 
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
         if (seed == 0) {
             last = 0;
         }
-        long result = Arrays.deepHashCode( new Object[] {last, buffer});
+        final long result = Arrays.deepHashCode( new Object[] {last, buffer});
         last += result;
         return result;
     }

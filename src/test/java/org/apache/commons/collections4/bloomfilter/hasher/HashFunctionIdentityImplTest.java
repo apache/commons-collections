@@ -34,7 +34,7 @@ public class HashFunctionIdentityImplTest {
      */
     @Test
     public void copyConstructorTest() {
-        HashFunctionIdentity identity = new HashFunctionIdentity() {
+        final HashFunctionIdentity identity = new HashFunctionIdentity() {
 
             @Override
             public String getName() {
@@ -62,7 +62,7 @@ public class HashFunctionIdentityImplTest {
             }
 
         };
-        HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( identity );
+        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( identity );
         assertEquals( "NAME", impl.getName());
         assertEquals( "Provider", impl.getProvider());
         assertEquals( Signedness.SIGNED, impl.getSignedness());
@@ -80,7 +80,7 @@ public class HashFunctionIdentityImplTest {
      */
     @Test
     public void valuesConstructorTest() {
-        HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( "Provider", "NAME",
+        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( "Provider", "NAME",
             Signedness.UNSIGNED, ProcessType.ITERATIVE, -2l);
         assertEquals( "NAME", impl.getName());
         assertEquals( "Provider", impl.getProvider());

@@ -472,9 +472,9 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset.add((T) "A");
         final MultiSet.Entry<T> entry = multiset.entrySet().iterator().next();
         assertEquals(2, entry.getCount());
-        multiset.remove((T) "A");
+        multiset.remove("A");
         assertEquals(1, entry.getCount());
-        multiset.remove((T) "A");
+        multiset.remove("A");
         assertEquals(0, entry.getCount());
     }
 

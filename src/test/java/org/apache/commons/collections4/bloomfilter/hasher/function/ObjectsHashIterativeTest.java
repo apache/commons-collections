@@ -36,9 +36,9 @@ public class ObjectsHashIterativeTest {
      */
     @Test
     public void applyTest() {
-        ObjectsHashIterative obj = new ObjectsHashIterative();
+        final ObjectsHashIterative obj = new ObjectsHashIterative();
 
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country"
+        final byte[] buffer = "Now is the time for all good men to come to the aid of their country"
             .getBytes(StandardCharsets.UTF_8);
 
         long l = obj.apply(buffer, 0);
@@ -57,11 +57,11 @@ public class ObjectsHashIterativeTest {
      */
     @Test
     public void signatureTest() {
-        ObjectsHashIterative obj = new ObjectsHashIterative();
-        String arg = String.format("%s-%s-%s", obj.getName().toUpperCase(Locale.ROOT), obj.getSignedness(),
+        final ObjectsHashIterative obj = new ObjectsHashIterative();
+        final String arg = String.format("%s-%s-%s", obj.getName().toUpperCase(Locale.ROOT), obj.getSignedness(),
             obj.getProcessType());
-        long expected = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
-        long expected2 = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        final long expected = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        final long expected2 = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, expected2);
         assertEquals(expected, obj.getSignature());
     }

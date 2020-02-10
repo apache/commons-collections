@@ -1829,8 +1829,8 @@ public class CollectionUtils {
                     "The sum of start index and count can't be greater than the size of collection.");
         }
 
-        Collection<E> result = new ArrayList<>(count);
-        Iterator<E> iterator = input.iterator();
+        final Collection<E> result = new ArrayList<>(count);
+        final Iterator<E> iterator = input.iterator();
         while (count > 0) {
             if (startIndex > 0) {
                 startIndex = startIndex - 1;

@@ -127,11 +127,11 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void constructorTest_Hasher() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
-        long[] lb = bf.getBits();
+        final BloomFilter bf = createFilter(hasher, shape);
+        final long[] lb = bf.getBits();
         assertEquals(0x1FFFF, lb[0]);
         assertEquals(1, lb.length);
     }
@@ -142,8 +142,8 @@ public abstract class AbstractBloomFilterTest {
     @Test
     public final void constructorTest_Empty() {
 
-        BloomFilter bf = createEmptyFilter(shape);
-        long[] lb = bf.getBits();
+        final BloomFilter bf = createEmptyFilter(shape);
+        final long[] lb = bf.getBits();
         assertEquals(0, lb.length);
     }
 
@@ -153,14 +153,14 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void constructorTest_WrongShape() {
-        Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
+        final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
 
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), anotherShape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), anotherShape);
         try {
             createFilter(hasher, shape);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
     }
@@ -171,10 +171,10 @@ public abstract class AbstractBloomFilterTest {
     @Test
     public final void cardinalityTest() {
 
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
         assertEquals(17, bf.cardinality());
     }
 
@@ -183,15 +183,15 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void orCardinalityTest() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        AbstractBloomFilter bf = createFilter(hasher, shape);
+        final AbstractBloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(27, bf.orCardinality(bf2));
     }
@@ -201,15 +201,15 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void orCardinalityTest_ExtraLongs() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        AbstractBloomFilter bf = createFilter(hasher, shape);
+        final AbstractBloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        AbstractBloomFilter bf2 = createFilter(hasher2, shape);
+        final AbstractBloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(27, bf.orCardinality(bf2));
         assertEquals(27, bf2.orCardinality(bf));
@@ -220,15 +220,15 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void andCardinalityTest() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(7, bf.andCardinality(bf2));
     }
@@ -238,15 +238,15 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void andCardinalityTest_ExtraLongs() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(7, bf.andCardinality(bf2));
         assertEquals(7, bf2.andCardinality(bf));
@@ -257,14 +257,14 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void xorCardinalityTest() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(20, bf.xorCardinality(bf2));
     }
@@ -274,14 +274,14 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void xorCardinalityTest_ExtraLongs() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         assertEquals(20, bf.xorCardinality(bf2));
         assertEquals(20, bf2.xorCardinality(bf));
@@ -292,14 +292,14 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void mergeTest_BloomFilter() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
         bf.merge(bf2);
         assertEquals(27, bf.cardinality());
@@ -310,20 +310,20 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void mergeTest_BloomFilter_WrongShape() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
-        BloomFilter bf2 = createFilter(hasher2, anotherShape);
+        final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
+        final BloomFilter bf2 = createFilter(hasher2, anotherShape);
 
         try {
             bf.merge(bf2);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
     }
@@ -333,13 +333,13 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void mergeTest_Hasher() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
         bf.merge(hasher2);
         assertEquals(27, bf.cardinality());
@@ -350,19 +350,19 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void mergeTest_Hasher_WrongShape() {
-        List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        BloomFilter bf = createFilter(hasher, shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
-        List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
+        final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
 
         try {
             bf.merge(hasher2);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
     }
@@ -377,7 +377,7 @@ public abstract class AbstractBloomFilterTest {
         AbstractBloomFilter filter = createEmptyFilter(shape);
         assertFalse(filter.isFull());
 
-        List<Integer> values = new ArrayList<Integer>(shape.getNumberOfBits());
+        final List<Integer> values = new ArrayList<>(shape.getNumberOfBits());
         for (int i = 0; i < shape.getNumberOfBits(); i++) {
             values.add(i);
         }
@@ -387,7 +387,7 @@ public abstract class AbstractBloomFilterTest {
 
         assertTrue(filter.isFull());
 
-        int mid = shape.getNumberOfBits() / 2;
+        final int mid = shape.getNumberOfBits() / 2;
         values.remove(Integer.valueOf(mid));
         hasher2 = new StaticHasher(values.iterator(), shape);
         filter = createFilter(hasher2, shape);
@@ -400,17 +400,17 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void containsTest_BloomFilter_WrongShape() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
-        Hasher hasher2 = new StaticHasher(lst.iterator(), anotherShape);
-        BloomFilter bf2 = createFilter(hasher2, anotherShape);
+        final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
+        final Hasher hasher2 = new StaticHasher(lst.iterator(), anotherShape);
+        final BloomFilter bf2 = createFilter(hasher2, anotherShape);
         try {
             bf.contains(bf2);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
     }
@@ -420,13 +420,13 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void containsTest_BloomFilter() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        BloomFilter bf2 = createFilter(hasher2, shape);
+        final List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
         assertTrue(bf.contains(bf2));
         assertFalse(bf2.contains(bf));
     }
@@ -436,9 +436,9 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void containsTest_Hasher() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
         List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
         Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
@@ -458,18 +458,18 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void containsTest_Hasher_WrongShape() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
+        final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
 
-        List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
+        final List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
         try {
             bf.contains(hasher2);
             fail("Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -480,9 +480,9 @@ public abstract class AbstractBloomFilterTest {
      * @param hasher1 the first static hasher.
      * @param hasher2 the second static hasher.
      */
-    private void assertSameBits(StaticHasher hasher1, StaticHasher hasher2) {
-        OfInt iter1 = hasher1.getBits(shape);
-        OfInt iter2 = hasher2.getBits(shape);
+    private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
+        final OfInt iter1 = hasher1.getBits(shape);
+        final OfInt iter2 = hasher2.getBits(shape);
 
         while (iter1.hasNext()) {
             assertTrue("Not enough data in second hasher", iter2.hasNext());
@@ -496,11 +496,11 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void getHasherTest() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
 
-        StaticHasher hasher2 = bf.getHasher();
+        final StaticHasher hasher2 = bf.getHasher();
 
         assertEquals(shape, hasher2.getShape());
         assertSameBits(hasher, hasher2);
@@ -511,10 +511,10 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void getBitsTest_SpanLong() {
-        List<Integer> lst = Arrays.asList(63, 64);
-        StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter bf = createFilter(hasher, shape);
-        long[] lb = bf.getBits();
+        final List<Integer> lst = Arrays.asList(63, 64);
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf = createFilter(hasher, shape);
+        final long[] lb = bf.getBits();
         assertEquals(2, lb.length);
         assertEquals(0x8000000000000000L, lb[0]);
         assertEquals(0x1, lb[1]);

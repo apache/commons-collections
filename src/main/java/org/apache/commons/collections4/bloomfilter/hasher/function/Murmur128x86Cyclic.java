@@ -54,7 +54,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
 
 
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
         if (parts == null || seed == 0) {
             parts = MurmurHash3.hash128x64(buffer, 0, buffer.length, 0);
         } else {

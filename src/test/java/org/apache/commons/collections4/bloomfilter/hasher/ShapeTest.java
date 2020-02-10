@@ -34,7 +34,7 @@ import org.junit.Test;
 public class ShapeTest {
 
 
-    private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+    private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
         @Override
         public String getName() {
@@ -74,7 +74,7 @@ public class ShapeTest {
          */
 
 
-        private Shape shape = new Shape(testFunction, 5, 0.1);
+        private final Shape shape = new Shape(testFunction, 5, 0.1);
 
         /**
          * Tests that the constructor with a null name, number of items, and probability fails.
@@ -86,7 +86,7 @@ public class ShapeTest {
                 new Shape(null, 5, 0.1);
                 fail( "Should throw IllegalArgumentException");
             }
-            catch (IllegalArgumentException expected)
+            catch (final IllegalArgumentException expected)
             {
                 // do nothing
             }
@@ -102,7 +102,7 @@ public class ShapeTest {
                 new Shape(null, 5, 72);
                 fail( "Should throw IllegalArgumentException");
             }
-            catch (IllegalArgumentException expected)
+            catch (final IllegalArgumentException expected)
             {
                 // do nothing
             }
@@ -119,7 +119,7 @@ public class ShapeTest {
                 new Shape(null, 5, 72, 17);
                 fail( "Should throw IllegalArgumentException");
             }
-            catch (IllegalArgumentException expected)
+            catch (final IllegalArgumentException expected)
             {
                 // do nothing
             }
@@ -136,7 +136,7 @@ public class ShapeTest {
                 new Shape(null, 0.1, 72, 17);
                 fail( "Should throw IllegalArgumentException");
             }
-            catch (IllegalArgumentException expected)
+            catch (final IllegalArgumentException expected)
             {
                 // do nothing
             }
@@ -165,7 +165,7 @@ public class ShapeTest {
             try {
                 new Shape( testFunction, Integer.MAX_VALUE, 1.0 / 10);
                 fail("Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected) {
+            } catch (final IllegalArgumentException expected) {
                 // do nothing.
             }
         }
@@ -179,7 +179,7 @@ public class ShapeTest {
             try {
                 new Shape( testFunction, 0, 1.0 / 10);
                 fail("Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected) {
+            } catch (final IllegalArgumentException expected) {
                 // do nothing.
             }
         }
@@ -193,14 +193,14 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 10, 0.0);
                 fail("Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected) {
+            } catch (final IllegalArgumentException expected) {
                 // do nothing.
             }
 
             try {
                 new Shape(testFunction, 10, 1.0);
                 fail("Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected) {
+            } catch (final IllegalArgumentException expected) {
                 // do nothing.
             }
         }
@@ -214,7 +214,7 @@ public class ShapeTest {
             /*
              * values from https://hur.st/bloomfilter/?n=5&m=24
              */
-            Shape filterConfig = new Shape(testFunction, 5, 24);
+            final Shape filterConfig = new Shape(testFunction, 5, 24);
 
             assertEquals(24, filterConfig.getNumberOfBits());
             assertEquals(3, filterConfig.getNumberOfBytes());
@@ -233,7 +233,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 0, 24);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -248,7 +248,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 5, 6);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -262,7 +262,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 16,8);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -277,7 +277,7 @@ public class ShapeTest {
             /*
              * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
              */
-            Shape filterConfig = new Shape(testFunction, 5, 24, 4);
+            final Shape filterConfig = new Shape(testFunction, 5, 24, 4);
 
             assertEquals(24, filterConfig.getNumberOfBits());
             assertEquals(3, filterConfig.getNumberOfBytes());
@@ -295,7 +295,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 0, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -309,7 +309,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 5, 6, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -324,7 +324,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 5, 24, 0);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -339,7 +339,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 4000,8,1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -354,7 +354,7 @@ public class ShapeTest {
             /*
              * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
              */
-            Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
+            final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
 
             assertEquals(24, filterConfig.getNumberOfBits());
             assertEquals(3, filterConfig.getNumberOfBytes());
@@ -373,7 +373,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 0.0, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -382,7 +382,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, -1.0, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -391,7 +391,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, -1.5, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -400,7 +400,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 1.0, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -409,7 +409,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 2.0, 24, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -423,7 +423,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 0.5, 6, 1);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -437,7 +437,7 @@ public class ShapeTest {
             try {
                 new Shape(testFunction, 0.5, 24, 0);
                 fail( "Should have thrown IllegalArgumentException");
-            } catch (IllegalArgumentException expected)
+            } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
@@ -453,7 +453,7 @@ public class ShapeTest {
             assertNotEquals(new Shape(testFunction, 5, 1.0 / 11), shape);
             assertNotEquals(new Shape(testFunction, 4, 1.0 / 10), shape);
 
-            HashFunctionIdentity testFunction2 = new HashFunctionIdentity() {
+            final HashFunctionIdentity testFunction2 = new HashFunctionIdentity() {
 
                 @Override
                 public String getName() {
@@ -489,7 +489,7 @@ public class ShapeTest {
          */
         @Test
         public void hashCodeTest() {
-            int hashCode = Objects.hash(testFunction, 24, 3 );
+            final int hashCode = Objects.hash(testFunction, 24, 3 );
             assertEquals(hashCode, shape.hashCode());
         }
 

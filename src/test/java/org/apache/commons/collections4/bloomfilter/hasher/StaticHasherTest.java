@@ -35,7 +35,7 @@ import org.junit.Test;
  */
 public class StaticHasherTest {
 
-    private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+    private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
         @Override
         public String getName() {
@@ -63,7 +63,7 @@ public class StaticHasherTest {
         }
     };
 
-    private HashFunctionIdentity testFunctionX = new HashFunctionIdentity() {
+    private final HashFunctionIdentity testFunctionX = new HashFunctionIdentity() {
 
         @Override
         public String getName() {
@@ -91,18 +91,18 @@ public class StaticHasherTest {
         }
     };
 
-    private Shape shape = new Shape(testFunction, 3, 72, 17);
+    private final Shape shape = new Shape(testFunction, 3, 72, 17);
 
     /**
      * Tests that getBits returns the proper values.
      */
     @Test
     public void testGetBits() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
-        StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
         assertEquals(17, hasher.size());
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
         for (int i = 0; i < 17; i++) {
             assertTrue(iter.hasNext());
             assertEquals(i, iter.nextInt());
@@ -116,14 +116,14 @@ public class StaticHasherTest {
      */
     @Test
     public void testGetBits_DuplicateValues() {
-        int[] input = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69, 59,
+        final int[] input = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69, 59,
             49, 39, 13, 3, 65, 55, 45, 35, 25};
-        int[] expected = {1, 2, 3, 6, 7, 10, 11, 13, 15, 17, 19, 23, 24, 25, 35, 36, 39, 43, 44, 45, 48, 49, 53, 55, 57,
+        final int[] expected = {1, 2, 3, 6, 7, 10, 11, 13, 15, 17, 19, 23, 24, 25, 35, 36, 39, 43, 44, 45, 48, 49, 53, 55, 57,
             59, 61, 62, 63, 65, 69, 70};
 
-        StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
+        final StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
         for (int i = 0; i < expected.length; i++) {
             assertTrue(iter.hasNext());
             assertEquals(expected[i], iter.nextInt());
@@ -136,13 +136,13 @@ public class StaticHasherTest {
      */
     @Test
     public void testGetBits_WrongShape() {
-        List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
         try {
             hasher.getBits(new Shape(testFunctionX, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
 
@@ -154,9 +154,9 @@ public class StaticHasherTest {
     @Test
     public void testConstructor_Iterator() {
 
-        int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+        final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
         Iterator<Integer> iter = Arrays.stream(values).iterator();
-        StaticHasher hasher = new StaticHasher(iter, shape);
+        final StaticHasher hasher = new StaticHasher(iter, shape);
 
         assertEquals(5, hasher.size());
         assertEquals(shape, hasher.getShape());
@@ -178,12 +178,12 @@ public class StaticHasherTest {
     @Test
     public void testConstructor_Iterator_ValueTooBig() {
 
-        int[] values = {shape.getNumberOfBits(), 3, 5, 7, 9, 3, 5, 1};
-        Iterator<Integer> iter = Arrays.stream(values).iterator();
+        final int[] values = {shape.getNumberOfBits(), 3, 5, 7, 9, 3, 5, 1};
+        final Iterator<Integer> iter = Arrays.stream(values).iterator();
         try {
             new StaticHasher(iter, shape);
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -195,12 +195,12 @@ public class StaticHasherTest {
     @Test
     public void testConstructor_Iterator_ValueTooSmall() {
 
-        int[] values = {-1, 3, 5, 7, 9, 3, 5, 1};
-        Iterator<Integer> iter = Arrays.stream(values).iterator();
+        final int[] values = {-1, 3, 5, 7, 9, 3, 5, 1};
+        final Iterator<Integer> iter = Arrays.stream(values).iterator();
         try {
             new StaticHasher(iter, shape);
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -211,9 +211,9 @@ public class StaticHasherTest {
      * @param hasher1 the first static hasher.
      * @param hasher2 the second static hasher.
      */
-    private void assertSameBits(StaticHasher hasher1, StaticHasher hasher2) {
-        OfInt iter1 = hasher1.getBits(shape);
-        OfInt iter2 = hasher2.getBits(shape);
+    private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
+        final OfInt iter1 = hasher1.getBits(shape);
+        final OfInt iter2 = hasher2.getBits(shape);
 
         while (iter1.hasNext()) {
             assertTrue("Not enough data in second hasher", iter2.hasNext());
@@ -227,11 +227,11 @@ public class StaticHasherTest {
      */
     @Test
     public void testConstructor_StaticHasher() {
-        int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
-        Iterator<Integer> iter = Arrays.stream(values).iterator();
-        StaticHasher hasher = new StaticHasher(iter, shape);
+        final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+        final Iterator<Integer> iter = Arrays.stream(values).iterator();
+        final StaticHasher hasher = new StaticHasher(iter, shape);
 
-        StaticHasher hasher2 = new StaticHasher(hasher, shape);
+        final StaticHasher hasher2 = new StaticHasher(hasher, shape);
         assertEquals(shape, hasher2.getShape());
         assertSameBits(hasher, hasher2);
 
@@ -243,14 +243,14 @@ public class StaticHasherTest {
      */
     @Test
     public void testConstructor_StaticHasher_WrongShape() {
-        int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
-        Iterator<Integer> iter = Arrays.stream(values).iterator();
-        StaticHasher hasher = new StaticHasher(iter, new Shape(testFunctionX, 3, 72, 17));
+        final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+        final Iterator<Integer> iter = Arrays.stream(values).iterator();
+        final StaticHasher hasher = new StaticHasher(iter, new Shape(testFunctionX, 3, 72, 17));
 
         try {
             new StaticHasher(hasher, shape);
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -261,9 +261,9 @@ public class StaticHasherTest {
      */
     @Test
     public void testConstructor_Hasher() {
-        int[] expected = {1, 3, 5, 7, 9};
+        final int[] expected = {1, 3, 5, 7, 9};
 
-        Hasher testHasher = new Hasher() {
+        final Hasher testHasher = new Hasher() {
 
             @Override
             public boolean isEmpty() { return false; }
@@ -274,14 +274,14 @@ public class StaticHasherTest {
             }
 
             @Override
-            public OfInt getBits(Shape shape) {
-                int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+            public OfInt getBits(final Shape shape) {
+                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream(values).iterator();
             }
         };
 
-        StaticHasher hasher = new StaticHasher(testHasher, shape);
-        OfInt iter = hasher.getBits(shape);
+        final StaticHasher hasher = new StaticHasher(testHasher, shape);
+        final OfInt iter = hasher.getBits(shape);
         for (int i = 0; i < expected.length; i++) {
             assertTrue(iter.hasNext());
             assertEquals(expected[i], iter.nextInt());
@@ -295,7 +295,7 @@ public class StaticHasherTest {
      */
     @Test
     public void testConstructor_Hasher_WrongShape() {
-        Hasher testHasher = new Hasher() {
+        final Hasher testHasher = new Hasher() {
 
             @Override
             public boolean isEmpty() { return false; }
@@ -306,8 +306,8 @@ public class StaticHasherTest {
             }
 
             @Override
-            public OfInt getBits(Shape shape) {
-                int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+            public OfInt getBits(final Shape shape) {
+                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream(values).iterator();
             }
         };
@@ -315,7 +315,7 @@ public class StaticHasherTest {
         try {
             new StaticHasher(testHasher, shape);
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -325,7 +325,7 @@ public class StaticHasherTest {
      */
     @Test
     public void testIsEmpty() {
-        List<Integer> lst = new ArrayList<Integer>();
+        final List<Integer> lst = new ArrayList<>();
         StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
 

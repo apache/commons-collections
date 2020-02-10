@@ -261,14 +261,14 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testCustomPurge() {
-        List<Integer> expiredValues = new ArrayList<>();
+        final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
         final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) v -> expiredValues.add(v);
         final Map<Integer, Integer> map = new ReferenceMap<Integer, Integer>(ReferenceStrength.WEAK, ReferenceStrength.HARD, false) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected ReferenceEntry<Integer, Integer> createEntry(HashEntry<Integer, Integer> next, int hashCode, Integer key, Integer value) {
+            protected ReferenceEntry<Integer, Integer> createEntry(final HashEntry<Integer, Integer> next, final int hashCode, final Integer key, final Integer value) {
                 return new AccessibleEntry<>(this, next, hashCode, key, value, consumer);
             }
         };

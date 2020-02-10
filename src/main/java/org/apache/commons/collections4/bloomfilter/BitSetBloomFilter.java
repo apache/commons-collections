@@ -43,7 +43,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
      * @param hasher the Hasher to use.
      * @param shape the desired shape of the filter.
      */
-    public BitSetBloomFilter(Hasher hasher, Shape shape) {
+    public BitSetBloomFilter(final Hasher hasher, final Shape shape) {
         this(shape);
         verifyHasher(hasher);
         hasher.getBits(shape).forEachRemaining((IntConsumer) bitSet::set);
@@ -54,7 +54,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
      *
      * @param shape the desired shape of the filter.
      */
-    public BitSetBloomFilter(Shape shape) {
+    public BitSetBloomFilter(final Shape shape) {
         super(shape);
         this.bitSet = new BitSet();
     }
@@ -70,7 +70,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public void merge(BloomFilter other) {
+    public void merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof BitSetBloomFilter) {
             bitSet.or(((BitSetBloomFilter)other).bitSet);
@@ -80,9 +80,9 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public boolean contains(Hasher hasher) {
+    public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
-        OfInt iter = hasher.getBits(getShape());
+        final OfInt iter = hasher.getBits(getShape());
         while (iter.hasNext()) {
             if (!bitSet.get(iter.nextInt())) {
                 return false;
@@ -103,7 +103,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
 
 
     @Override
-    public void merge(Hasher hasher) {
+    public void merge(final Hasher hasher) {
         verifyHasher(hasher);
         hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
     }
@@ -117,10 +117,10 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
      * @see #andCardinality(BloomFilter)
      */
     @Override
-    public int andCardinality(BloomFilter other) {
+    public int andCardinality(final BloomFilter other) {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);
-            BitSet result = (BitSet) bitSet.clone();
+            final BitSet result = (BitSet) bitSet.clone();
             result.and(((BitSetBloomFilter)other).bitSet);
             return result.cardinality();
         }
@@ -129,10 +129,10 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
 
 
     @Override
-    public int xorCardinality(BloomFilter other) {
+    public int xorCardinality(final BloomFilter other) {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);
-            BitSet result = (BitSet) bitSet.clone();
+            final BitSet result = (BitSet) bitSet.clone();
             result.xor(((BitSetBloomFilter)other).bitSet);
             return result.cardinality();
         }
