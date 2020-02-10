@@ -65,7 +65,7 @@ public class EnumerationUtilsTest {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
-        Enumeration<String> en = vector.elements();
+        final Enumeration<String> en = vector.elements();
         final Iterator<String> iterator = EnumerationUtils.asIterable(en).iterator();
         assertTrue(iterator.hasNext());
         assertEquals("zero", iterator.next());

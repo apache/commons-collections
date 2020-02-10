@@ -37,7 +37,7 @@ public final class SetOperations {
      * @param second the second filter to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    private static void verifyShape(BloomFilter first, BloomFilter second) {
+    private static void verifyShape(final BloomFilter first, final BloomFilter second) {
         if (!first.getShape().equals(second.getShape())) {
             throw new IllegalArgumentException(String.format("Shape %s is not the same as %s",
                 first.getShape(), second.getShape()));
@@ -51,7 +51,7 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the Hamming distance.
      */
-    public static int hammingDistance(BloomFilter first, BloomFilter second) {
+    public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
         return first.xorCardinality(second);
     }
@@ -66,9 +66,9 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the Jaccard similarity.
      */
-    public static double jaccardSimilarity(BloomFilter first, BloomFilter second) {
+    public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
-        int orCard = first.orCardinality(second);
+        final int orCard = first.orCardinality(second);
         // if the orCard is zero then the hamming distance will also be zero.
         return orCard==0?0:hammingDistance(first,second) / (double) orCard;
     }
@@ -82,7 +82,7 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the Jaccard distance.
      */
-    public static double jaccardDistance(BloomFilter first, BloomFilter second) {
+    public static double jaccardDistance(final BloomFilter first, final BloomFilter second) {
         return 1.0 - jaccardSimilarity(first,second);
     }
 
@@ -97,9 +97,9 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the Cosine similarity.
      */
-    public static double cosineSimilarity(BloomFilter first, BloomFilter second) {
+    public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
-        int numerator = first.andCardinality(second);
+        final int numerator = first.andCardinality(second);
 
         return numerator==0?0:numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
     }
@@ -113,7 +113,7 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the jaccard distance.
      */
-    public static double cosineDistance(BloomFilter first, BloomFilter second) {
+    public static double cosineDistance(final BloomFilter first, final BloomFilter second) {
         return 1.0 - cosineSimilarity(first,second);
     }
 
@@ -124,9 +124,9 @@ public final class SetOperations {
      * @param filter the Bloom filter to estimate size for.
      * @return an estimate of the number of items that were placed in the Bloom filter.
      */
-    public static long estimateSize(BloomFilter filter) {
-        Shape shape = filter.getShape();
-        double estimate = -(shape.getNumberOfBits() *
+    public static long estimateSize(final BloomFilter filter) {
+        final Shape shape = filter.getShape();
+        final double estimate = -(shape.getNumberOfBits() *
             Math.log(1.0 - filter.cardinality() * 1.0 / shape.getNumberOfBits())) /
             shape.getNumberOfHashFunctions();
         return Math.round(estimate);
@@ -140,10 +140,10 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return an estimate of the size of the union between the two filters.
      */
-    public static long estimateUnionSize(BloomFilter first, BloomFilter second) {
+    public static long estimateUnionSize(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
-        Shape shape = first.getShape();
-        double estimate = -(shape.getNumberOfBits() *
+        final Shape shape = first.getShape();
+        final double estimate = -(shape.getNumberOfBits() *
             Math.log(1.0 - first.orCardinality(second) * 1.0 / shape.getNumberOfBits())) /
             shape.getNumberOfHashFunctions();
         return Math.round(estimate);
@@ -157,7 +157,7 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return an estimate of the size of the intersection between the two filters.
      */
-    public static long estimateIntersectionSize(BloomFilter first, BloomFilter second) {
+    public static long estimateIntersectionSize(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
         // do subtraction early to avoid Long overflow.
         return estimateSize(first) - estimateUnionSize(first,second) + estimateSize(second);

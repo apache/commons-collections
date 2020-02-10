@@ -688,8 +688,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
         assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
 
-        map.remove((K) "A");
-        map.remove((K) "B");
+        map.remove("A");
+        map.remove("B");
         assertEquals("{}", map.toString());
     }
 

@@ -123,7 +123,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     protected PredicatedCollection(final Collection<E> collection, final Predicate<? super E> predicate) {
         super(collection);
-        this.predicate = Objects.requireNonNull(predicate, "predicate");;
+        this.predicate = Objects.requireNonNull(predicate, "predicate");
         for (final E item : collection) {
             validate(item);
         }

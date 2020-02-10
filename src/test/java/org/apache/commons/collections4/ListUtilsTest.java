@@ -167,7 +167,7 @@ public class ListUtilsTest {
             private int index;
 
             @Override
-            public Integer transform(Integer input) {
+            public Integer transform(final Integer input) {
                 return offsets.get(input) + index++;
             }
 

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class LazyListTest extends AbstractObjectTest {
 
-    public LazyListTest(String testName) {
+    public LazyListTest(final String testName) {
         super(testName);
     }
 
@@ -101,7 +101,7 @@ public class LazyListTest extends AbstractObjectTest {
     public void testGetWithNull() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
-        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
+        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
         LocalDateTime fourthElement = list.get(3);
         assertFalse(list.isEmpty());
         assertNotNull(fourthElement);
@@ -113,8 +113,8 @@ public class LazyListTest extends AbstractObjectTest {
 
     public void testSubListWitheFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
-        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
-        LocalDateTime fourthElement = list.get(3);
+        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
+        final LocalDateTime fourthElement = list.get(3);
         assertFalse(list.isEmpty());
         assertNotNull(fourthElement);
         testSubList(list);
@@ -123,14 +123,14 @@ public class LazyListTest extends AbstractObjectTest {
     public void testSubListWithTransformer() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
-        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
-        LocalDateTime fourthElement = list.get(3);
+        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
+        final LocalDateTime fourthElement = list.get(3);
         assertFalse(list.isEmpty());
         assertNotNull(fourthElement);
         testSubList(list);
     }
 
-    private void testSubList(List<LocalDateTime> list) {
+    private void testSubList(final List<LocalDateTime> list) {
         List<LocalDateTime> subList = list.subList(1, 3);
         assertFalse(subList.isEmpty());
         assertNotNull(subList);

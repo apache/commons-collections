@@ -35,7 +35,7 @@ import org.junit.Test;
 public class DynamicHasherBuilderTest {
 
     private DynamicHasher.Builder builder;
-    private Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
+    private final Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
 
     /**
      * Sets up the builder for testing.
@@ -52,11 +52,11 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_byte() {
-        DynamicHasher hasher = builder.with((byte) 0x1).build();
+        final DynamicHasher hasher = builder.with((byte) 0x1).build();
 
-        int expected = 1483089307;
+        final int expected = 1483089307;
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
         assertEquals( expected, iter.nextInt() );
@@ -68,10 +68,10 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_byteArray() {
-        DynamicHasher hasher = builder.with("Hello".getBytes()).build();
-        int expected = 1519797563;
+        final DynamicHasher hasher = builder.with("Hello".getBytes()).build();
+        final int expected = 1519797563;
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
         assertEquals( expected, iter.nextInt() );
@@ -84,10 +84,10 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_String() {
-        DynamicHasher hasher = builder.with("Hello").build();
-        int expected = 1519797563;
+        final DynamicHasher hasher = builder.with("Hello").build();
+        final int expected = 1519797563;
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
         assertEquals( expected, iter.nextInt() );
@@ -99,9 +99,9 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_Empty() {
-        DynamicHasher hasher = builder.build();
+        final DynamicHasher hasher = builder.build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertFalse(iter.hasNext());
     }

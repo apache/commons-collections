@@ -36,10 +36,10 @@ public class MD5CyclicTest {
      */
     @Test
     public void applyTest() {
-        MD5Cyclic md5 = new MD5Cyclic();
-        long l1 = 0x8b1a9953c4611296L;
-        long l2 = 0xa827abf8c47804d7L;
-        byte[] buffer = "Hello".getBytes();
+        final MD5Cyclic md5 = new MD5Cyclic();
+        final long l1 = 0x8b1a9953c4611296L;
+        final long l2 = 0xa827abf8c47804d7L;
+        final byte[] buffer = "Hello".getBytes();
 
         long l = md5.apply(buffer, 0);
         assertEquals(l1, l);
@@ -54,10 +54,10 @@ public class MD5CyclicTest {
      */
     @Test
     public void signatureTest() {
-        MD5Cyclic md5 = new MD5Cyclic();
-        String arg = String.format("%s-%s-%s", md5.getName().toUpperCase(Locale.ROOT), md5.getSignedness(),
+        final MD5Cyclic md5 = new MD5Cyclic();
+        final String arg = String.format("%s-%s-%s", md5.getName().toUpperCase(Locale.ROOT), md5.getSignedness(),
             md5.getProcessType());
-        long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        final long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, md5.getSignature());
     }
 

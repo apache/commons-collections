@@ -405,7 +405,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         HashEntry<K, V> previous = null;
         HashEntry<K, V> entry = data[index];
         while (entry != null) {
-            ReferenceEntry<K, V> refEntry = (ReferenceEntry<K, V>) entry;
+            final ReferenceEntry<K, V> refEntry = (ReferenceEntry<K, V>) entry;
             if (refEntry.purge(ref)) {
                 if (previous == null) {
                     data[index] = entry.next;

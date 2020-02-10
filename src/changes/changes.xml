@@ -21,7 +21,7 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
-    <action issue="COLLECTIONS-697" dev="grimreaper" type="update" due-to="Ranjan George">
+    <action issue="COLLECTIONS-697" dev="eax" type="update" due-to="Ranjan George">
       JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
     </action>
     <action issue="COLLECTIONS-738" dev="kinow" type="update" due-to="Pengyu Nie">
@@ -113,6 +113,18 @@
     </action>
     <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
       BloomFilter contribution.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] Update JUnit from 4.12 to 4.13.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [build] Update Apache commons-parent from 48 to 50.
+    </action>
+    <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [build] Update Jacoco from 0.8.4 to 0.8.5.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

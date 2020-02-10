@@ -89,7 +89,7 @@ public class Shape {
      * @param probability The desired probability of duplicates. Must be in the range
      * (0.0,1.0).
      */
-    public Shape(HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final double probability) {
+    public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final double probability) {
         if (hashFunctionIdentity == null) {
             throw new IllegalArgumentException("Hash function identity may not be null");
         }
@@ -213,7 +213,7 @@ public class Shape {
         this.numberOfHashFunctions = numberOfHashFunctions;
 
         // n = ceil(m / (-k / log(1 - exp(log(p) / k))))
-        double n = Math.ceil(numberOfBits /
+        final double n = Math.ceil(numberOfBits /
             (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
 
         // log of probability is always < 0
@@ -251,12 +251,12 @@ public class Shape {
      * @param numberOfBits the number of bits in the filter.
      * @return the optimal number of hash functions.
      */
-    private int calculateNumberOfHashFunctions(int numberOfItems, int numberOfBits) {
+    private int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
         /*
          * k = round((m / n) * log(2)) We change order so that we use real math rather
          * than integer math.
          */
-        long k = Math.round(LOG_OF_2 * numberOfBits / numberOfItems);
+        final long k = Math.round(LOG_OF_2 * numberOfBits / numberOfItems);
         if (k < 1) {
             throw new IllegalArgumentException(
                 String.format("Filter to small: Calculated number of hash functions (%s) was less than 1", k));
@@ -279,7 +279,7 @@ public class Shape {
      */
     public final double getProbability() {
         // (1 - exp(-kn/m))^k
-        double p = Math.pow(1.0 - Math.exp(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
+        final double p = Math.pow(1.0 - Math.exp(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
             numberOfHashFunctions);
         /*
          * We do not need to check for p < = since we only allow positive values for
@@ -331,9 +331,9 @@ public class Shape {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o instanceof Shape) {
-            Shape other = (Shape) o;
+            final Shape other = (Shape) o;
             return
                 other.getNumberOfBits() == getNumberOfBits() &&
                 other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&

@@ -45,7 +45,7 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape for the resulting values.
      * @throws IllegalArgumentException if the shape of the hasher and the shape parameter are not the same.
      */
-    public StaticHasher(StaticHasher hasher, Shape shape) {
+    public StaticHasher(final StaticHasher hasher, final Shape shape) {
         if (!hasher.shape.equals(shape)) {
             throw new IllegalArgumentException(String.format("Hasher shape (%s) is not the same as shape (%s)",
                 hasher.getShape().toString(), shape.toString()));
@@ -60,7 +60,7 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape for the resulting values.
      * @throws IllegalArgumentException if the hasher function and the shape function are not the same.
      */
-    public StaticHasher(Hasher hasher, Shape shape) {
+    public StaticHasher(final Hasher hasher, final Shape shape) {
         this( hasher.getBits(shape), shape);
         if (
             HashFunctionIdentity.COMMON_COMPARATOR.compare(
@@ -77,9 +77,9 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape that the integers were generated for.
      * @throws IllegalArgumentException if any Integer is outside the range [0,shape.getNumberOfBits())
      */
-    public StaticHasher(Iterator<Integer> iter, Shape shape) {
+    public StaticHasher(final Iterator<Integer> iter, final Shape shape) {
         this.shape = shape;
-        Set<Integer> workingValues = new TreeSet<Integer>();
+        final Set<Integer> workingValues = new TreeSet<>();
         iter.forEachRemaining( idx -> {
             if (idx >= this.shape.getNumberOfBits())
             {
@@ -92,7 +92,7 @@ public final class StaticHasher implements Hasher {
         });
         this.values = new int[workingValues.size()];
         int i=0;
-        for (Integer value : workingValues)
+        for (final Integer value : workingValues)
         {
             values[i++] = value.intValue();
         }
@@ -136,7 +136,7 @@ public final class StaticHasher implements Hasher {
      *                                  equal {@code getName()}
      */
     @Override
-    public OfInt getBits(Shape shape) {
+    public OfInt getBits(final Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));

@@ -34,12 +34,12 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
 
     @Override
-    protected HasherBloomFilter createFilter(Hasher hasher, Shape shape) {
+    protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new HasherBloomFilter( hasher, shape );
     }
 
     @Override
-    protected AbstractBloomFilter createEmptyFilter(Shape shape) {
+    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
         return new HasherBloomFilter( shape );
     }
 
@@ -49,10 +49,10 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
-        Shape shape = new Shape( new MD5Cyclic(), 3, 72, 17 );
-        DynamicHasher hasher = new DynamicHasher.Builder( new MD5Cyclic() ).with( "Hello").build();
-        HasherBloomFilter filter = createFilter( hasher, shape );
-        long[] lb = filter.getBits();
+        final Shape shape = new Shape( new MD5Cyclic(), 3, 72, 17 );
+        final DynamicHasher hasher = new DynamicHasher.Builder( new MD5Cyclic() ).with( "Hello").build();
+        final HasherBloomFilter filter = createFilter( hasher, shape );
+        final long[] lb = filter.getBits();
         assertEquals( 2, lb.length );
         assertEquals( 0x6203101001888c44L, lb[0]);
         assertEquals( 0x60L, lb[1]);

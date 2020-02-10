@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bag;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
@@ -64,7 +63,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     public void testTransformedBag_decorateTransform() {
-        final TreeBag<T> originalBag = new TreeBag<T>();
+        final TreeBag<T> originalBag = new TreeBag<>();
         final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {
             originalBag.add((T) el);

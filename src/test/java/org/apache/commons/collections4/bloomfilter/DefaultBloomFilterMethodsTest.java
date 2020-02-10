@@ -31,12 +31,12 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
 
     @Override
-    protected AbstractBloomFilter createFilter(Hasher hasher, Shape shape) {
+    protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new BF( hasher, shape );
     }
 
     @Override
-    protected AbstractBloomFilter createEmptyFilter(Shape shape) {
+    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
         return new BF( shape );
     }
 
@@ -49,7 +49,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         /**
          * The bitset that defines this BloomFilter.
          */
-        private BitSet bitSet;
+        private final BitSet bitSet;
 
         /**
          * Constructs a BitSetBloomFilter from a hasher and a shape.
@@ -57,7 +57,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
          * @param hasher the Hasher to use.
          * @param shape the desired shape of the filter.
          */
-        public BF(Hasher hasher, Shape shape) {
+        public BF(final Hasher hasher, final Shape shape) {
             this(shape);
             verifyHasher(hasher);
             hasher.getBits(shape).forEachRemaining((IntConsumer) bitSet::set);
@@ -68,7 +68,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
          *
          * @param shape the desired shape of the filter.
          */
-        public BF(Shape shape) {
+        public BF(final Shape shape) {
             super(shape);
             this.bitSet = new BitSet();
         }
@@ -84,13 +84,13 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         }
 
         @Override
-        public void merge(BloomFilter other) {
+        public void merge(final BloomFilter other) {
             verifyShape(other);
             bitSet.or(BitSet.valueOf(other.getBits()));
         }
 
         @Override
-        public void merge(Hasher hasher) {
+        public void merge(final Hasher hasher) {
             verifyHasher( hasher );
             hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
         }

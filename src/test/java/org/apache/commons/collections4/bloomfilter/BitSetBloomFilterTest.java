@@ -33,12 +33,12 @@ import org.junit.Test;
 public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
 
     @Override
-    protected BitSetBloomFilter createFilter(Hasher hasher, Shape shape) {
+    protected BitSetBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new BitSetBloomFilter( hasher, shape );
     }
 
     @Override
-    protected BitSetBloomFilter createEmptyFilter(Shape shape) {
+    protected BitSetBloomFilter createEmptyFilter(final Shape shape) {
         return new BitSetBloomFilter( shape );
     }
 
@@ -47,9 +47,9 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void andCardinalityTest_BitSetBloomFilter() {
-        Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
+        final Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
 
-        BitSetBloomFilter bf = createFilter(hasher, shape);
+        final BitSetBloomFilter bf = createFilter(hasher, shape);
 
         Hasher hasher2 = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
         BitSetBloomFilter bf2 = createFilter(hasher2, shape);
@@ -76,9 +76,9 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void xorCardinalityTest_BitSetBloomFilter() {
-        Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
+        final Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
 
-        BitSetBloomFilter bf = createFilter(hasher, shape);
+        final BitSetBloomFilter bf = createFilter(hasher, shape);
 
         Hasher hasher2 = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
         BitSetBloomFilter bf2 = createFilter(hasher2, shape);
@@ -106,14 +106,14 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void mergeTest_BitSetBloomFilter() {
 
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
+        final List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
+        final Hasher hasher = new StaticHasher( lst.iterator(), shape );
 
-        BitSetBloomFilter bf = createFilter(hasher, shape);
+        final BitSetBloomFilter bf = createFilter(hasher, shape);
 
-        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-        BloomFilter bf2 = new BitSetBloomFilter(hasher2, shape);
+        final List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27 );
+        final Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
+        final BloomFilter bf2 = new BitSetBloomFilter(hasher2, shape);
 
         bf.merge(bf2);
 

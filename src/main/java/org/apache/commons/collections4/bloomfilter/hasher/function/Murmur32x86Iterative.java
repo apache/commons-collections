@@ -49,7 +49,7 @@ public final class Murmur32x86Iterative implements HashFunction {
     }
 
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
         return MurmurHash3.hash32x86(buffer, 0, buffer.length, seed);
     }
 

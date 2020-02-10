@@ -104,7 +104,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     public void testRemoveException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         try {
-            map.remove((K) "one");
+            map.remove("one");
             fail();
         } catch (final UnsupportedOperationException e) {
             // expected, not support remove() method
@@ -116,7 +116,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     public void testRemoveMappingException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         try {
-            map.removeMapping((K) "one", (V) "uno");
+            map.removeMapping("one", "uno");
             fail();
         } catch (final UnsupportedOperationException e) {
             // expected, not support removeMapping() method

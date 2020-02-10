@@ -1474,7 +1474,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testRemoveRange() {
-        List<Integer> list = new ArrayList<>();
+        final List<Integer> list = new ArrayList<>();
         list.add(1);
         Collection<Integer> result = CollectionUtils.removeRange(list, 0, 0);
         assertEquals(1, list.size());
@@ -1492,42 +1492,42 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeNull() {
-        Collection<Integer> list = null;
-        Collection result = CollectionUtils.removeRange(list, 0, 0);
+        final Collection<Integer> list = null;
+        final Collection result = CollectionUtils.removeRange(list, 0, 0);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveRangeStartIndexNegative() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, -1, 1);
+        final Collection result = CollectionUtils.removeRange(list, -1, 1);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeEndIndexNegative() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, 0, -1);
+        final Collection result = CollectionUtils.removeRange(list, 0, -1);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeEndLowStart() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
-        Collection result = CollectionUtils.removeRange(list, 1, 0);
+        final Collection result = CollectionUtils.removeRange(list, 1, 0);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveRangeWrongEndIndex() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, 0, 2);
+        final Collection result = CollectionUtils.removeRange(list, 0, 2);
     }
 
     @Test
     public void testRemoveCount() {
-        List<Integer> list = new ArrayList<>();
+        final List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -1558,27 +1558,27 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveCountWithNull() {
-        Collection<Integer> list = null;
-        Collection result = CollectionUtils.removeCount(list, 0, 1);
+        final Collection<Integer> list = null;
+        final Collection result = CollectionUtils.removeCount(list, 0, 1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountStartNegative() {
-        Collection<Integer> list = new ArrayList<>();
-        Collection result = CollectionUtils.removeCount(list, -1, 1);
+        final Collection<Integer> list = new ArrayList<>();
+        final Collection result = CollectionUtils.removeCount(list, -1, 1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountNegative() {
-        Collection<Integer> list = new ArrayList<>();
-        Collection result = CollectionUtils.removeCount(list, 0, -1);
+        final Collection<Integer> list = new ArrayList<>();
+        final Collection result = CollectionUtils.removeCount(list, 0, -1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountWrongCount() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeCount(list, 0, 2);
+        final Collection result = CollectionUtils.removeCount(list, 0, 2);
     }
 
     @Test
