@@ -126,6 +126,9 @@
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       [build] Update Jacoco from 0.8.4 to 0.8.5.
     </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] Update org.easymock:easymock 4.1 -> 4.2.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
