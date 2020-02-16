@@ -124,9 +124,9 @@ public class StaticHasherTest {
         final StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
 
         final OfInt iter = hasher.getBits(shape);
-        for (int i = 0; i < expected.length; i++) {
+        for (final int element : expected) {
             assertTrue(iter.hasNext());
-            assertEquals(expected[i], iter.nextInt());
+            assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
     }
@@ -282,9 +282,9 @@ public class StaticHasherTest {
 
         final StaticHasher hasher = new StaticHasher(testHasher, shape);
         final OfInt iter = hasher.getBits(shape);
-        for (int i = 0; i < expected.length; i++) {
+        for (final int element : expected) {
             assertTrue(iter.hasNext());
-            assertEquals(expected[i], iter.nextInt());
+            assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
     }
