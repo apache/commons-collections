@@ -116,7 +116,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      */
     @Override
     public boolean contains(final Hasher hasher) {
-        verifyHasher( hasher );
+        verifyHasher(hasher);
         final long[] buff = getBits();
 
         final OfInt iter = hasher.getBits(shape);
@@ -208,9 +208,8 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] | theirs[i];
         }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
+        if (limit < result.length) {
+            System.arraycopy(remainder, limit, result, limit, result.length - limit);
         }
         return BitSet.valueOf(result).cardinality();
     }
@@ -277,9 +276,8 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] ^ theirs[i];
         }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
+        if (limit < result.length) {
+            System.arraycopy(remainder, limit, result, limit, result.length - limit);
         }
         return BitSet.valueOf(result).cardinality();
     }

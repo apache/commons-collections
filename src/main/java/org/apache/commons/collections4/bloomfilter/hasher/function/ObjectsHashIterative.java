@@ -53,7 +53,7 @@ public final class ObjectsHashIterative implements HashFunction {
      * Constructs a hash that uses the Objects.hash method to has values.
      */
     public ObjectsHashIterative() {
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
@@ -61,7 +61,7 @@ public final class ObjectsHashIterative implements HashFunction {
         if (seed == 0) {
             last = 0;
         }
-        final long result = Arrays.deepHashCode( new Object[] {last, buffer});
+        final long result = Arrays.deepHashCode(new Object[] { last, buffer });
         last += result;
         return result;
     }

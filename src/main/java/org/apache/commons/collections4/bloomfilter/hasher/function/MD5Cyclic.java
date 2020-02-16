@@ -59,9 +59,9 @@ public final class MD5Cyclic implements HashFunction {
         try {
             messageDigest = MessageDigest.getInstance(NAME);
         } catch (final NoSuchAlgorithmException e) {
-            throw new IllegalStateException( e.getMessage() );
+            throw new IllegalStateException(e.getMessage());
         }
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override

@@ -49,7 +49,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
      * Constructs a Murmur3 x64 128 hash.
      */
     public Murmur128x86Cyclic() {
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
 

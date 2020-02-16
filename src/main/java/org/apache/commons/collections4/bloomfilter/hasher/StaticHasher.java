@@ -46,13 +46,11 @@ public final class StaticHasher implements Hasher {
      * @throws IllegalArgumentException if the hasher function and the shape function are not the same.
      */
     public StaticHasher(final Hasher hasher, final Shape shape) {
-        this( hasher.getBits(shape), shape);
-        if (
-            HashFunctionIdentity.COMMON_COMPARATOR.compare(
-            hasher.getHashFunctionIdentity(), shape.getHashFunctionIdentity()) != 0) {
+        this(hasher.getBits(shape), shape);
+        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(hasher.getHashFunctionIdentity(),
+            shape.getHashFunctionIdentity()) != 0) {
             throw new IllegalArgumentException(String.format("Hasher (%s) is not the same as for shape (%s)",
-                HashFunctionIdentity.asCommonString( hasher.getHashFunctionIdentity()),
-                shape.toString()));
+                HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()), shape.toString()));
         }
     }
 
@@ -65,20 +63,18 @@ public final class StaticHasher implements Hasher {
     public StaticHasher(final Iterator<Integer> iter, final Shape shape) {
         this.shape = shape;
         final Set<Integer> workingValues = new TreeSet<>();
-        iter.forEachRemaining( idx -> {
-            if (idx >= this.shape.getNumberOfBits())
-            {
-                throw new IllegalArgumentException( String.format( "Bit index (%s) is too big for %s", idx, shape ));
+        iter.forEachRemaining(idx -> {
+            if (idx >= this.shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format("Bit index (%s) is too big for %s", idx, shape));
             }
-            if (idx < 0 ) {
-                throw new IllegalArgumentException( String.format( "Bit index (%s) may not be less than zero", idx ));
+            if (idx < 0) {
+                throw new IllegalArgumentException(String.format("Bit index (%s) may not be less than zero", idx));
             }
-            workingValues.add( idx );
+            workingValues.add(idx);
         });
         this.values = new int[workingValues.size()];
-        int i=0;
-        for (final Integer value : workingValues)
-        {
+        int i = 0;
+        for (final Integer value : workingValues) {
             values[i++] = value.intValue();
         }
     }
@@ -114,7 +110,7 @@ public final class StaticHasher implements Hasher {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));
         }
-        return Arrays.stream( values ).iterator();
+        return Arrays.stream(values).iterator();
     }
 
     @Override

@@ -116,7 +116,7 @@ public class DynamicHasher implements Hasher {
                     buffer++;
                 }
                 return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
-                    // Cast to long to workaround a bug in animal-sniffer. 
+                    // Cast to long to workaround a bug in animal-sniffer.
                     (long) shape.getNumberOfBits());
             }
             throw new NoSuchElementException();

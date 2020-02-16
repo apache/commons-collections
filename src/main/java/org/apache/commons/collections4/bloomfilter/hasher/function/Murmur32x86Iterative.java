@@ -45,7 +45,7 @@ public final class Murmur32x86Iterative implements HashFunction {
      * Constructs a Murmur3 x86 32 hash
      */
     public Murmur32x86Iterative() {
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
