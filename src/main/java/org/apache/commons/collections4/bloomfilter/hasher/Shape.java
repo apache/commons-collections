@@ -55,14 +55,17 @@ public class Shape {
      * 1 / 2^log(2) approx -0.090619058. Used in calculating the number of bits.
      */
     private static final double DENOMINATOR = Math.log(1.0 / (Math.pow(2.0, LOG_OF_2)));
+
     /**
      * number of items in the filter. (AKA: {@code n})
      */
     private final int numberOfItems;
+
     /**
      * number of bits in the filter. (AKA: {@code m})
      */
     private final int numberOfBits;
+
     /**
      * number of hash functions. (AKA: {@code k})
      */
@@ -113,8 +116,8 @@ public class Shape {
             throw new IllegalArgumentException("Resulting filter has more than " + Integer.MAX_VALUE + " bits");
         }
         this.numberOfBits = (int) m;
-        numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-        hashCode = generateHashCode();
+        this.numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
+        this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
 
@@ -142,7 +145,7 @@ public class Shape {
         this.numberOfItems = numberOfItems;
         this.numberOfBits = numberOfBits;
         this.numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-        hashCode = generateHashCode();
+        this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
 
@@ -175,7 +178,7 @@ public class Shape {
         this.numberOfItems = numberOfItems;
         this.numberOfBits = numberOfBits;
         this.numberOfHashFunctions = numberOfHashFunctions;
-        hashCode = generateHashCode();
+        this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
 
@@ -227,7 +230,7 @@ public class Shape {
         // similarly we can not produce a number greater than numberOfBits so we
         // do not have to check for Integer.MAX_VALUE either.
         this.numberOfItems = (int) n;
-        hashCode = generateHashCode();
+        this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
     }
