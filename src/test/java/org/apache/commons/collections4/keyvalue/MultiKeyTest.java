@@ -53,6 +53,7 @@ public class MultiKeyTest {
         }
 
     }
+    
     static class SystemHashCodeSimulatingKey implements Serializable {
 
         private static final long serialVersionUID = -1736147315703444603L;
@@ -82,13 +83,12 @@ public class MultiKeyTest {
             return this;
         }
     }
-
     Integer ONE = Integer.valueOf(1);
+
     Integer TWO = Integer.valueOf(2);
     Integer THREE = Integer.valueOf(3);
     Integer FOUR = Integer.valueOf(4);
     Integer FIVE = Integer.valueOf(5);
-
     //-----------------------------------------------------------------------
     @Test
     public void testConstructors() throws Exception {
@@ -292,6 +292,14 @@ public class MultiKeyTest {
         assertEquals(1, new MultiKey<>(new Integer[] { ONE }).size());
         assertEquals(2, new MultiKey<>(new Integer[] { ONE, TWO }).size());
         assertEquals(7, new MultiKey<>(new Integer[] { ONE, TWO, ONE, TWO, ONE, TWO, ONE }).size());
+    }
+
+    @Test
+    public void testTwoArgCtor() {
+        MultiKeyTest key1 = new MultiKeyTest();
+        MultiKeyTest key2 = new MultiKeyTest();
+        MultiKeyTest[] keys = new MultiKey<>(key1, key2).getKeys();
+        assertNotNull(keys);
     }
 
 }
