@@ -42,23 +42,23 @@ public class ShapeTest {
         }
 
         @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
-        }
-
-        @Override
         public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 
         @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
         public long getSignature() {
             return 0;
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
         }};
 
         /*
@@ -77,290 +77,17 @@ public class ShapeTest {
         private final Shape shape = new Shape(testFunction, 5, 0.1);
 
         /**
-         * Tests that the constructor with a null name, number of items, and probability fails.
-         */
-        @Test
-        public void constructor_np_noName() {
-
-            try {
-                new Shape(null, 5, 0.1);
-                fail( "Should throw IllegalArgumentException");
-            }
-            catch (final IllegalArgumentException expected)
-            {
-                // do nothing
-            }
-        }
-
-        /**
-         * Tests that the constructor with a null name, number of items and size of filter fails.
-         */
-        @Test
-        public void constructor_nm_noName() {
-
-            try {
-                new Shape(null, 5, 72);
-                fail( "Should throw IllegalArgumentException");
-            }
-            catch (final IllegalArgumentException expected)
-            {
-                // do nothing
-            }
-        }
-
-        /**
-         * Tests that the constructor with a null name, number of items, size of filter,
-         * and number of functions fails.
-         */
-        @Test
-        public void constructor_nmk_noName() {
-
-            try {
-                new Shape(null, 5, 72, 17);
-                fail( "Should throw IllegalArgumentException");
-            }
-            catch (final IllegalArgumentException expected)
-            {
-                // do nothing
-            }
-        }
-
-        /**
-         * Tests that the constructor with a null name, probability, size of filter,
-         * and number of functions fails.
-         */
-        @Test
-        public void constructor_pmk_noName() {
-
-            try {
-                new Shape(null, 0.1, 72, 17);
-                fail( "Should throw IllegalArgumentException");
-            }
-            catch (final IllegalArgumentException expected)
-            {
-                // do nothing
-            }
-        }
-
-        /**
-         * Tests the the probability is calculated correctly.
-         */
-        @Test
-        public void constructor_items_probability_Test() {
-
-            assertEquals(24, shape.getNumberOfBits());
-            assertEquals(3, shape.getNumberOfBytes());
-            assertEquals(3, shape.getNumberOfHashFunctions());
-            assertEquals(5, shape.getNumberOfItems());
-            assertEquals(0.100375138, shape.getProbability(), 0.000001);
-
-        }
-
-        /**
-         * Tests that if calculated number of bits is greater than Integer.MAX_VALUE an
-         * IllegalArgumentException is thrown.
-         */
-        @Test
-        public void constructor_items_probability_NumberOfBitsOverflowTest() {
-            try {
-                new Shape( testFunction, Integer.MAX_VALUE, 1.0 / 10);
-                fail("Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected) {
-                // do nothing.
-            }
-        }
-
-        /**
-         * Tests that if the number of items is less than 1 an IllegalArgumentException is
-         * thrown.
-         */
-        @Test
-        public void constructor_items_probability_BadNumberOfItemsTest() {
-            try {
-                new Shape( testFunction, 0, 1.0 / 10);
-                fail("Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected) {
-                // do nothing.
-            }
-        }
-
-        /**
-         * Tests that if the probability is less than or equal to 0 an IllegalArgumentException
-         * is thrown.
-         */
-        @Test
-        public void constructor_items_probability_BadProbabilityTest() {
-            try {
-                new Shape(testFunction, 10, 0.0);
-                fail("Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected) {
-                // do nothing.
-            }
-
-            try {
-                new Shape(testFunction, 10, 1.0);
-                fail("Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected) {
-                // do nothing.
-            }
-        }
-
-        /**
-         * Tests that the number of items and number of bits is passed the other values are
-         * calculated correctly.
-         */
-        @Test
-        public void constructor_items_bitsTest() {
-            /*
-             * values from https://hur.st/bloomfilter/?n=5&m=24
-             */
-            final Shape filterConfig = new Shape(testFunction, 5, 24);
-
-            assertEquals(24, filterConfig.getNumberOfBits());
-            assertEquals(3, filterConfig.getNumberOfBytes());
-            assertEquals(3, filterConfig.getNumberOfHashFunctions());
-            assertEquals(5, filterConfig.getNumberOfItems());
-            assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
-
-        }
-
-        /**
-         * Tests that if the number of items less than 1 an IllegalArgumentException
-         * is thrown.
-         */
-        @Test
-        public void constructor_items_bits_BadNumberOfItemsTest() {
-            try {
-                new Shape(testFunction, 0, 24);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
-         * Tests that if the number of bits less than 8 an IllegalArgumentException
-         * is thrown.
-         */
-        @Test
-        public void constructor_items_bits_BadNumberOfBitsTest() {
-            try {
-                new Shape(testFunction, 5, 6);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
-         * Tests that if the number of hash functions is less than 1 an exception is thrown.
-         */
-        @Test
-        public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
-            try {
-                new Shape(testFunction, 16,8);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
-         * Tests that when the number of items, number of bits and number of hash functions
-         * is passed the values are calculated correctly.
-         */
-        @Test
-        public void constructor_items_bits_hashTest() {
-            /*
-             * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
-             */
-            final Shape filterConfig = new Shape(testFunction, 5, 24, 4);
-
-            assertEquals(24, filterConfig.getNumberOfBits());
-            assertEquals(3, filterConfig.getNumberOfBytes());
-            assertEquals(4, filterConfig.getNumberOfHashFunctions());
-            assertEquals(5, filterConfig.getNumberOfItems());
-            assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
-
-        }
-
-        /**
-         * Tests that if the number of items is less than 1 an exception is thrown.
-         */
-        @Test
-        public void constructor_items_bits_hash_BadNumberOfItemsTest() {
-            try {
-                new Shape(testFunction, 0, 24, 1);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
          * Tests that if the number of bits is less than 8 an exception is thrown
          */
         @Test
-        public void constructor_items_bits_hash_BadNumberOfBitsTest() {
+        public void constructor__probability_bits_hash__BadNumberOfBitsTest() {
             try {
-                new Shape(testFunction, 5, 6, 1);
+                new Shape(testFunction, 0.5, 6, 1);
                 fail( "Should have thrown IllegalArgumentException");
             } catch (final IllegalArgumentException expected)
             {
                 //expected
             }
-        }
-
-        /**
-         * Tests that if the number of hash functions is less than 1 an exception is
-         * thrown.
-         */
-        @Test
-        public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
-            try {
-                new Shape(testFunction, 5, 24, 0);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
-         * Tests that if the calculated probability is greater than or equal to 1 an
-         * IllegalArgumentException is thrown
-         */
-        @Test
-        public void constructor_items_bits_hash_BadProbabilityTest() {
-            try {
-                new Shape(testFunction, 4000,8,1);
-                fail( "Should have thrown IllegalArgumentException");
-            } catch (final IllegalArgumentException expected)
-            {
-                //expected
-            }
-        }
-
-        /**
-         * Tests the calculated values of calling the constructor with the
-         * probability, number of bits and number of hash functions.
-         */
-        @Test
-        public void constructor_probability_bits_hashTest() {
-            /*
-             * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
-             */
-            final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
-
-            assertEquals(24, filterConfig.getNumberOfBits());
-            assertEquals(3, filterConfig.getNumberOfBytes());
-            assertEquals(3, filterConfig.getNumberOfHashFunctions());
-            assertEquals(5, filterConfig.getNumberOfItems());
-            assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
         }
 
         /**
@@ -416,16 +143,271 @@ public class ShapeTest {
         }
 
         /**
-         * Tests that if the number of bits is less than 8 an exception is thrown
+         * Tests that if the number of bits less than 8 an IllegalArgumentException
+         * is thrown.
          */
         @Test
-        public void constructor__probability_bits_hash__BadNumberOfBitsTest() {
+        public void constructor_items_bits_BadNumberOfBitsTest() {
             try {
-                new Shape(testFunction, 0.5, 6, 1);
+                new Shape(testFunction, 5, 6);
                 fail( "Should have thrown IllegalArgumentException");
             } catch (final IllegalArgumentException expected)
             {
                 //expected
+            }
+        }
+
+        /**
+         * Tests that if the number of hash functions is less than 1 an exception is thrown.
+         */
+        @Test
+        public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
+            try {
+                new Shape(testFunction, 16,8);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that if the number of items less than 1 an IllegalArgumentException
+         * is thrown.
+         */
+        @Test
+        public void constructor_items_bits_BadNumberOfItemsTest() {
+            try {
+                new Shape(testFunction, 0, 24);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that if the number of bits is less than 8 an exception is thrown
+         */
+        @Test
+        public void constructor_items_bits_hash_BadNumberOfBitsTest() {
+            try {
+                new Shape(testFunction, 5, 6, 1);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that if the number of hash functions is less than 1 an exception is
+         * thrown.
+         */
+        @Test
+        public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
+            try {
+                new Shape(testFunction, 5, 24, 0);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that if the number of items is less than 1 an exception is thrown.
+         */
+        @Test
+        public void constructor_items_bits_hash_BadNumberOfItemsTest() {
+            try {
+                new Shape(testFunction, 0, 24, 1);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that if the calculated probability is greater than or equal to 1 an
+         * IllegalArgumentException is thrown
+         */
+        @Test
+        public void constructor_items_bits_hash_BadProbabilityTest() {
+            try {
+                new Shape(testFunction, 4000,8,1);
+                fail( "Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected)
+            {
+                //expected
+            }
+        }
+
+        /**
+         * Tests that when the number of items, number of bits and number of hash functions
+         * is passed the values are calculated correctly.
+         */
+        @Test
+        public void constructor_items_bits_hashTest() {
+            /*
+             * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
+             */
+            final Shape filterConfig = new Shape(testFunction, 5, 24, 4);
+
+            assertEquals(24, filterConfig.getNumberOfBits());
+            assertEquals(3, filterConfig.getNumberOfBytes());
+            assertEquals(4, filterConfig.getNumberOfHashFunctions());
+            assertEquals(5, filterConfig.getNumberOfItems());
+            assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
+
+        }
+
+        /**
+         * Tests that the number of items and number of bits is passed the other values are
+         * calculated correctly.
+         */
+        @Test
+        public void constructor_items_bitsTest() {
+            /*
+             * values from https://hur.st/bloomfilter/?n=5&m=24
+             */
+            final Shape filterConfig = new Shape(testFunction, 5, 24);
+
+            assertEquals(24, filterConfig.getNumberOfBits());
+            assertEquals(3, filterConfig.getNumberOfBytes());
+            assertEquals(3, filterConfig.getNumberOfHashFunctions());
+            assertEquals(5, filterConfig.getNumberOfItems());
+            assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
+
+        }
+
+        /**
+         * Tests that if the number of items is less than 1 an IllegalArgumentException is
+         * thrown.
+         */
+        @Test
+        public void constructor_items_probability_BadNumberOfItemsTest() {
+            try {
+                new Shape( testFunction, 0, 1.0 / 10);
+                fail("Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected) {
+                // do nothing.
+            }
+        }
+
+        /**
+         * Tests that if the probability is less than or equal to 0 an IllegalArgumentException
+         * is thrown.
+         */
+        @Test
+        public void constructor_items_probability_BadProbabilityTest() {
+            try {
+                new Shape(testFunction, 10, 0.0);
+                fail("Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected) {
+                // do nothing.
+            }
+
+            try {
+                new Shape(testFunction, 10, 1.0);
+                fail("Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected) {
+                // do nothing.
+            }
+        }
+
+        /**
+         * Tests that if calculated number of bits is greater than Integer.MAX_VALUE an
+         * IllegalArgumentException is thrown.
+         */
+        @Test
+        public void constructor_items_probability_NumberOfBitsOverflowTest() {
+            try {
+                new Shape( testFunction, Integer.MAX_VALUE, 1.0 / 10);
+                fail("Should have thrown IllegalArgumentException");
+            } catch (final IllegalArgumentException expected) {
+                // do nothing.
+            }
+        }
+
+        /**
+         * Tests the the probability is calculated correctly.
+         */
+        @Test
+        public void constructor_items_probability_Test() {
+
+            assertEquals(24, shape.getNumberOfBits());
+            assertEquals(3, shape.getNumberOfBytes());
+            assertEquals(3, shape.getNumberOfHashFunctions());
+            assertEquals(5, shape.getNumberOfItems());
+            assertEquals(0.100375138, shape.getProbability(), 0.000001);
+
+        }
+
+        /**
+         * Tests that the constructor with a null name, number of items and size of filter fails.
+         */
+        @Test
+        public void constructor_nm_noName() {
+
+            try {
+                new Shape(null, 5, 72);
+                fail( "Should throw IllegalArgumentException");
+            }
+            catch (final IllegalArgumentException expected)
+            {
+                // do nothing
+            }
+        }
+
+        /**
+         * Tests that the constructor with a null name, number of items, size of filter,
+         * and number of functions fails.
+         */
+        @Test
+        public void constructor_nmk_noName() {
+
+            try {
+                new Shape(null, 5, 72, 17);
+                fail( "Should throw IllegalArgumentException");
+            }
+            catch (final IllegalArgumentException expected)
+            {
+                // do nothing
+            }
+        }
+
+        /**
+         * Tests that the constructor with a null name, number of items, and probability fails.
+         */
+        @Test
+        public void constructor_np_noName() {
+
+            try {
+                new Shape(null, 5, 0.1);
+                fail( "Should throw IllegalArgumentException");
+            }
+            catch (final IllegalArgumentException expected)
+            {
+                // do nothing
+            }
+        }
+
+        /**
+         * Tests that the constructor with a null name, probability, size of filter,
+         * and number of functions fails.
+         */
+        @Test
+        public void constructor_pmk_noName() {
+
+            try {
+                new Shape(null, 0.1, 72, 17);
+                fail( "Should throw IllegalArgumentException");
+            }
+            catch (final IllegalArgumentException expected)
+            {
+                // do nothing
             }
         }
 
@@ -441,6 +423,24 @@ public class ShapeTest {
             {
                 //expected
             }
+        }
+
+        /**
+         * Tests the calculated values of calling the constructor with the
+         * probability, number of bits and number of hash functions.
+         */
+        @Test
+        public void constructor_probability_bits_hashTest() {
+            /*
+             * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+             */
+            final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
+
+            assertEquals(24, filterConfig.getNumberOfBits());
+            assertEquals(3, filterConfig.getNumberOfBytes());
+            assertEquals(3, filterConfig.getNumberOfHashFunctions());
+            assertEquals(5, filterConfig.getNumberOfItems());
+            assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
         }
 
         /**
@@ -461,23 +461,23 @@ public class ShapeTest {
                 }
 
                 @Override
-                public String getProvider() {
-                    return "Apache Commons Collection Tests";
-                }
-
-                @Override
-                public Signedness getSignedness() {
-                    return Signedness.SIGNED;
-                }
-
-                @Override
                 public ProcessType getProcessType() {
                     return ProcessType.CYCLIC;
                 }
 
                 @Override
+                public String getProvider() {
+                    return "Apache Commons Collection Tests";
+                }
+
+                @Override
                 public long getSignature() {
                     return 0;
+                }
+
+                @Override
+                public Signedness getSignedness() {
+                    return Signedness.SIGNED;
                 }};
 
                 assertNotEquals(new Shape(testFunction2, 4, 1.0 / 10), shape);

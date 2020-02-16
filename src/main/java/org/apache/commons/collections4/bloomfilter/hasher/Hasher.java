@@ -34,31 +34,6 @@ import java.util.PrimitiveIterator;
 public interface Hasher {
 
     /**
-     * Gets HashFunctionIdentity of the hash function this Hasher uses.
-     *
-     * @return HashFunctionIdentity of the hash function this Hasher uses.
-     */
-    HashFunctionIdentity getHashFunctionIdentity();
-
-    /**
-     * Returns true if the hasher specifies no bits.
-     * @return true if the hasher does not specify any bits.
-     */
-    boolean isEmpty();
-
-    /**
-     * Return an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape.  No guarantee is made as to order
-     * or duplication of values.
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
-     *                                  equal {@code getName()}
-     */
-    PrimitiveIterator.OfInt getBits(Shape shape);
-
-    /**
      * A builder to build a hasher.
      * @since 4.5
      */
@@ -101,4 +76,29 @@ public interface Hasher {
         Builder with(String property);
 
     }
+
+    /**
+     * Return an iterator of integers that are the bits to enable in the Bloom
+     * filter based on the shape.  No guarantee is made as to order
+     * or duplication of values.
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the Iterator of integers;
+     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
+     *                                  equal {@code getName()}
+     */
+    PrimitiveIterator.OfInt getBits(Shape shape);
+
+    /**
+     * Gets HashFunctionIdentity of the hash function this Hasher uses.
+     *
+     * @return HashFunctionIdentity of the hash function this Hasher uses.
+     */
+    HashFunctionIdentity getHashFunctionIdentity();
+
+    /**
+     * Returns true if the hasher specifies no bits.
+     * @return true if the hasher does not specify any bits.
+     */
+    boolean isEmpty();
 }

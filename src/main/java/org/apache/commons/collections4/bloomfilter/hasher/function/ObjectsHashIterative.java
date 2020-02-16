@@ -72,22 +72,22 @@ public final class ObjectsHashIterative implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
     }
 
     @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
     public long getSignature() {
         return signature;
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
     }
 }

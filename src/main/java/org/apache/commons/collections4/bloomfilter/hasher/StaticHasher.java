@@ -40,21 +40,6 @@ public final class StaticHasher implements Hasher {
     private final int[] values;
 
     /**
-     * Constructs the StaticHasher from a StaticHasher and a Shape.
-     * @param hasher the StaticHasher to read.
-     * @param shape the Shape for the resulting values.
-     * @throws IllegalArgumentException if the shape of the hasher and the shape parameter are not the same.
-     */
-    public StaticHasher(final StaticHasher hasher, final Shape shape) {
-        if (!hasher.shape.equals(shape)) {
-            throw new IllegalArgumentException(String.format("Hasher shape (%s) is not the same as shape (%s)",
-                hasher.getShape().toString(), shape.toString()));
-        }
-        this.shape = shape;
-        this.values = hasher.values;
-    }
-
-    /**
      * Constructs the StaticHasher from a Hasher and a Shape.
      * @param hasher the Hasher to read.
      * @param shape the Shape for the resulting values.
@@ -99,30 +84,18 @@ public final class StaticHasher implements Hasher {
     }
 
     /**
-     * Gets the shape this static hasher was created with.
-     *
-     * @return the Shape of this hasher.
+     * Constructs the StaticHasher from a StaticHasher and a Shape.
+     * @param hasher the StaticHasher to read.
+     * @param shape the Shape for the resulting values.
+     * @throws IllegalArgumentException if the shape of the hasher and the shape parameter are not the same.
      */
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return values.length == 0;
-    }
-
-    @Override
-    public HashFunctionIdentity getHashFunctionIdentity() {
-        return shape.getHashFunctionIdentity();
-    }
-
-    /**
-     * Gets the the number of unique values in this hasher.
-     * @return the number of unique values.
-     */
-    public int size() {
-        return values.length;
+    public StaticHasher(final StaticHasher hasher, final Shape shape) {
+        if (!hasher.shape.equals(shape)) {
+            throw new IllegalArgumentException(String.format("Hasher shape (%s) is not the same as shape (%s)",
+                hasher.getShape().toString(), shape.toString()));
+        }
+        this.shape = shape;
+        this.values = hasher.values;
     }
 
     /**
@@ -142,5 +115,32 @@ public final class StaticHasher implements Hasher {
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));
         }
         return Arrays.stream( values ).iterator();
+    }
+
+    @Override
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return shape.getHashFunctionIdentity();
+    }
+
+    /**
+     * Gets the shape this static hasher was created with.
+     *
+     * @return the Shape of this hasher.
+     */
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return values.length == 0;
+    }
+
+    /**
+     * Gets the the number of unique values in this hasher.
+     * @return the number of unique values.
+     */
+    public int size() {
+        return values.length;
     }
 }

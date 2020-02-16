@@ -32,14 +32,14 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 public final class Murmur32x86Iterative implements HashFunction {
 
     /**
-     * The signature for this hash function.
-     */
-    private final long signature;
-
-    /**
      * The name of this hash function.
      */
     public static final String NAME = "Murmur3_x86_32";
+
+    /**
+     * The signature for this hash function.
+     */
+    private final long signature;
 
     /**
      * Constructs a Murmur3 x86 32 hash
@@ -58,22 +58,22 @@ public final class Murmur32x86Iterative implements HashFunction {
         return NAME;
     }
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
     }
 
     @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
     public long getSignature() {
         return signature;
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
     }
 }

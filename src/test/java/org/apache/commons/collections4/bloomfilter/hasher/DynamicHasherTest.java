@@ -45,23 +45,23 @@ public class DynamicHasherTest {
         }
 
         @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
-        }
-
-        @Override
         public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 
         @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
         public long getSignature() {
             return 0;
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
         }
     };
 

@@ -43,23 +43,23 @@ public class StaticHasherTest {
         }
 
         @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
-        }
-
-        @Override
         public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 
         @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
         public long getSignature() {
             return 0;
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
         }
     };
 
@@ -71,58 +71,71 @@ public class StaticHasherTest {
         }
 
         @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
-        }
-
-        @Override
         public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
+        }
+
+        @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
         }
 
         @Override
         public long getSignature() {
             return 0;
         }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
+        }
     };
 
     private final Shape shape = new Shape(testFunction, 3, 72, 17);
 
     /**
-     * Tests that getBits returns the proper values.
+     * Compare 2 static hashers to verify they have the same bits enabled.
+     *
+     * @param hasher1 the first static hasher.
+     * @param hasher2 the second static hasher.
      */
-    @Test
-    public void testGetBits() {
-        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+    private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
+        final OfInt iter1 = hasher1.getBits(shape);
+        final OfInt iter2 = hasher2.getBits(shape);
 
-        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
-        assertEquals(17, hasher.size());
-        final OfInt iter = hasher.getBits(shape);
-        for (int i = 0; i < 17; i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(i, iter.nextInt());
+        while (iter1.hasNext()) {
+            assertTrue("Not enough data in second hasher", iter2.hasNext());
+            assertEquals(iter1.nextInt(), iter2.nextInt());
         }
-        assertFalse(iter.hasNext());
-
+        assertFalse("Too much data in second hasher", iter2.hasNext());
     }
 
     /**
-     * Tests that gitBits does not return duplicates and orders the indices.
+     * Tests that passing a hasher other than a StaticHahser to the constructor works as
+     * expected.
      */
     @Test
-    public void testGetBits_DuplicateValues() {
-        final int[] input = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69, 59,
-            49, 39, 13, 3, 65, 55, 45, 35, 25};
-        final int[] expected = {1, 2, 3, 6, 7, 10, 11, 13, 15, 17, 19, 23, 24, 25, 35, 36, 39, 43, 44, 45, 48, 49, 53, 55, 57,
-            59, 61, 62, 63, 65, 69, 70};
+    public void testConstructor_Hasher() {
+        final int[] expected = {1, 3, 5, 7, 9};
 
-        final StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
+        final Hasher testHasher = new Hasher() {
 
+            @Override
+            public OfInt getBits(final Shape shape) {
+                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+                return Arrays.stream(values).iterator();
+            }
+
+            @Override
+            public HashFunctionIdentity getHashFunctionIdentity() {
+                return testFunction;
+            }
+
+            @Override
+            public boolean isEmpty() { return false; }
+        };
+
+        final StaticHasher hasher = new StaticHasher(testHasher, shape);
         final OfInt iter = hasher.getBits(shape);
         for (final int element : expected) {
             assertTrue(iter.hasNext());
@@ -132,20 +145,34 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that gitBits is called with the wrong shape an exeption is thrown.
+     * Tests that passing a hasher other than a StaticHahser and the wrong Shape to the
+     * constructor throws an IllegalArgumentException.
      */
     @Test
-    public void testGetBits_WrongShape() {
-        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+    public void testConstructor_Hasher_WrongShape() {
+        final Hasher testHasher = new Hasher() {
+
+            @Override
+            public OfInt getBits(final Shape shape) {
+                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
+                return Arrays.stream(values).iterator();
+            }
+
+            @Override
+            public HashFunctionIdentity getHashFunctionIdentity() {
+                return testFunctionX;
+            }
+
+            @Override
+            public boolean isEmpty() { return false; }
+        };
 
         try {
-            hasher.getBits(new Shape(testFunctionX, 3, 72, 17));
+            new StaticHasher(testHasher, shape);
             fail("Should have thown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
-
     }
 
     /**
@@ -206,23 +233,6 @@ public class StaticHasherTest {
     }
 
     /**
-     * Compare 2 static hashers to verify they have the same bits enabled.
-     *
-     * @param hasher1 the first static hasher.
-     * @param hasher2 the second static hasher.
-     */
-    private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
-        final OfInt iter1 = hasher1.getBits(shape);
-        final OfInt iter2 = hasher2.getBits(shape);
-
-        while (iter1.hasNext()) {
-            assertTrue("Not enough data in second hasher", iter2.hasNext());
-            assertEquals(iter1.nextInt(), iter2.nextInt());
-        }
-        assertFalse("Too much data in second hasher", iter2.hasNext());
-    }
-
-    /**
      * Tests that the constructor that accepts a static hasher properly builds the hasher.
      */
     @Test
@@ -256,31 +266,35 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that passing a hasher other than a StaticHahser to the constructor works as
-     * expected.
+     * Tests that getBits returns the proper values.
      */
     @Test
-    public void testConstructor_Hasher() {
-        final int[] expected = {1, 3, 5, 7, 9};
+    public void testGetBits() {
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
-        final Hasher testHasher = new Hasher() {
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+        assertEquals(17, hasher.size());
+        final OfInt iter = hasher.getBits(shape);
+        for (int i = 0; i < 17; i++) {
+            assertTrue(iter.hasNext());
+            assertEquals(i, iter.nextInt());
+        }
+        assertFalse(iter.hasNext());
 
-            @Override
-            public boolean isEmpty() { return false; }
+    }
 
-            @Override
-            public HashFunctionIdentity getHashFunctionIdentity() {
-                return testFunction;
-            }
+    /**
+     * Tests that gitBits does not return duplicates and orders the indices.
+     */
+    @Test
+    public void testGetBits_DuplicateValues() {
+        final int[] input = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69, 59,
+            49, 39, 13, 3, 65, 55, 45, 35, 25};
+        final int[] expected = {1, 2, 3, 6, 7, 10, 11, 13, 15, 17, 19, 23, 24, 25, 35, 36, 39, 43, 44, 45, 48, 49, 53, 55, 57,
+            59, 61, 62, 63, 65, 69, 70};
 
-            @Override
-            public OfInt getBits(final Shape shape) {
-                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
-                return Arrays.stream(values).iterator();
-            }
-        };
+        final StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
 
-        final StaticHasher hasher = new StaticHasher(testHasher, shape);
         final OfInt iter = hasher.getBits(shape);
         for (final int element : expected) {
             assertTrue(iter.hasNext());
@@ -290,34 +304,20 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that passing a hasher other than a StaticHahser and the wrong Shape to the
-     * constructor throws an IllegalArgumentException.
+     * Tests that gitBits is called with the wrong shape an exeption is thrown.
      */
     @Test
-    public void testConstructor_Hasher_WrongShape() {
-        final Hasher testHasher = new Hasher() {
-
-            @Override
-            public boolean isEmpty() { return false; }
-
-            @Override
-            public HashFunctionIdentity getHashFunctionIdentity() {
-                return testFunctionX;
-            }
-
-            @Override
-            public OfInt getBits(final Shape shape) {
-                final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
-                return Arrays.stream(values).iterator();
-            }
-        };
+    public void testGetBits_WrongShape() {
+        final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+        final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
         try {
-            new StaticHasher(testHasher, shape);
+            hasher.getBits(new Shape(testFunctionX, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
+
     }
 
     /**

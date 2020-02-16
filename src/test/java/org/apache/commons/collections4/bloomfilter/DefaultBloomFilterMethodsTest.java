@@ -30,16 +30,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  */
 public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
 
-    @Override
-    protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        return new BF( hasher, shape );
-    }
-
-    @Override
-    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
-        return new BF( shape );
-    }
-
     /**
      * A testing class that implements only the abstract methods from BloomFilter.
      *
@@ -95,6 +85,16 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
             hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
         }
 
+    }
+
+    @Override
+    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
+        return new BF( shape );
+    }
+
+    @Override
+    protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
+        return new BF( hasher, shape );
     }
 
 }

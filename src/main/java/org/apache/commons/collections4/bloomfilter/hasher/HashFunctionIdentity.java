@@ -29,6 +29,25 @@ import java.util.Locale;
 public interface HashFunctionIdentity {
 
     /**
+     * An enum that identifies the process type of this function. <dl> <dt>Iterative
+     * processes</dt> <dd>Call the underlying algorithm for each buffer, seed pair call to
+     * {@code apply}.</dd> <dt>Cyclic processes</dt> <dd>Call the underlying algorithm to
+     * generate two values for each buffer. It returns the first value on the call with
+     * seed 0, and increments the result with the second value before returning it on all
+     * subsequent calls.</dd> </dl>
+     */
+    enum ProcessType {
+        CYCLIC, ITERATIVE
+    }
+
+    /**
+     * An enum that identifies the Signedness of the calculations for this function.
+     */
+    enum Signedness {
+        SIGNED, UNSIGNED
+    }
+
+    /**
      * A comparator implementation that performs the most common comparison using the
      * HashFunctionIdentity name, signedness, and process.
      */
@@ -94,25 +113,6 @@ public interface HashFunctionIdentity {
     }
 
     /**
-     * An enum that identifies the Signedness of the calculations for this function.
-     */
-    enum Signedness {
-        SIGNED, UNSIGNED
-    }
-
-    /**
-     * An enum that identifies the process type of this function. <dl> <dt>Iterative
-     * processes</dt> <dd>Call the underlying algorithm for each buffer, seed pair call to
-     * {@code apply}.</dd> <dt>Cyclic processes</dt> <dd>Call the underlying algorithm to
-     * generate two values for each buffer. It returns the first value on the call with
-     * seed 0, and increments the result with the second value before returning it on all
-     * subsequent calls.</dd> </dl>
-     */
-    enum ProcessType {
-        CYCLIC, ITERATIVE
-    }
-
-    /**
      * Gets the name of this hash function.
      * <p> Hash function should be the common name
      * for the hash. This may include indications as to hash length
@@ -122,6 +122,13 @@ public interface HashFunctionIdentity {
      * @return the Hash name
      */
     String getName();
+
+    /**
+     * Gets the process of this function.
+     *
+     * @return process of this function.
+     */
+    ProcessType getProcessType();
 
     /**
      * Gets the name of the provider of this hash function implementation.
@@ -134,20 +141,6 @@ public interface HashFunctionIdentity {
     String getProvider();
 
     /**
-     * Gets the signedness of this function.
-     *
-     * @return signedness of this function.
-     */
-    Signedness getSignedness();
-
-    /**
-     * Gets the process of this function.
-     *
-     * @return process of this function.
-     */
-    ProcessType getProcessType();
-
-    /**
      * Get the signature of this function. <p> The signature of this function is
      * calculated as: {@code
      * apply( String.format( "%s-%s-%s", getName(), getSignedness(), getProcess() )
@@ -157,5 +150,12 @@ public interface HashFunctionIdentity {
      * @return the signature of this function.
      */
     long getSignature();
+
+    /**
+     * Gets the signedness of this function.
+     *
+     * @return signedness of this function.
+     */
+    Signedness getSignedness();
 
 }

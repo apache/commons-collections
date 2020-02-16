@@ -33,16 +33,6 @@ import org.junit.Test;
 public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
 
-    @Override
-    protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        return new HasherBloomFilter( hasher, shape );
-    }
-
-    @Override
-    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
-        return new HasherBloomFilter( shape );
-    }
-
     /**
      * Tests that the constructor works correctly.
      * @throws NoSuchAlgorithmException
@@ -56,6 +46,16 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
         assertEquals( 2, lb.length );
         assertEquals( 0x6203101001888c44L, lb[0]);
         assertEquals( 0x60L, lb[1]);
+    }
+
+    @Override
+    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
+        return new HasherBloomFilter( shape );
+    }
+
+    @Override
+    protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
+        return new HasherBloomFilter( hasher, shape );
     }
 
 

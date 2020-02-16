@@ -38,16 +38,6 @@ public class DynamicHasherBuilderTest {
     private final Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
 
     /**
-     * Sets up the builder for testing.
-     * @throws NoSuchAlgorithmException if MD5 is not available.
-     */
-    @Before
-    public void setup() throws NoSuchAlgorithmException
-    {
-        builder = new DynamicHasher.Builder( new MD5Cyclic());
-    }
-
-    /**
      * Tests that hashing a byte works as expected.
      */
     @Test
@@ -80,6 +70,18 @@ public class DynamicHasherBuilderTest {
     }
 
     /**
+     * Tests that an empty hasher works as expected.
+     */
+    @Test
+    public void buildTest_Empty() {
+        final DynamicHasher hasher = builder.build();
+
+        final OfInt iter = hasher.getBits(shape);
+
+        assertFalse(iter.hasNext());
+    }
+
+    /**
      * Tests that hashing a string works as expected.
      */
     @Test
@@ -95,14 +97,12 @@ public class DynamicHasherBuilderTest {
     }
 
     /**
-     * Tests that an empty hasher works as expected.
+     * Sets up the builder for testing.
+     * @throws NoSuchAlgorithmException if MD5 is not available.
      */
-    @Test
-    public void buildTest_Empty() {
-        final DynamicHasher hasher = builder.build();
-
-        final OfInt iter = hasher.getBits(shape);
-
-        assertFalse(iter.hasNext());
+    @Before
+    public void setup() throws NoSuchAlgorithmException
+    {
+        builder = new DynamicHasher.Builder( new MD5Cyclic());
     }
 }

@@ -33,6 +33,11 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 public final class MD5Cyclic implements HashFunction {
 
     /**
+     * The name of this hash function.
+     */
+    public static final String NAME = "MD5";
+
+    /**
      * The MD5 digest implementation.
      */
     private final MessageDigest messageDigest;
@@ -46,11 +51,6 @@ public final class MD5Cyclic implements HashFunction {
      * The result from the digest 0
      */
     private final long[] result = new long[2];
-
-    /**
-     * The name of this hash function.
-     */
-    public static final String NAME = "MD5";
 
     /**
      * Constructs the MD5 hashing function.
@@ -90,23 +90,23 @@ public final class MD5Cyclic implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
     }
 
     @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
     public long getSignature() {
         return signature;
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
     }
 
 }

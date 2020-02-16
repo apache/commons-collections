@@ -31,6 +31,11 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
  */
 public final class Murmur128x86Cyclic implements HashFunction {
     /**
+     * The name of this hash method.
+     */
+    public static final String NAME = "Murmur3_x64_128";
+
+    /**
      * The result of the hash 0 call.
      */
     private long[] parts = null;
@@ -39,11 +44,6 @@ public final class Murmur128x86Cyclic implements HashFunction {
      * The signature for this hash function.
      */
     private final long signature;
-
-    /**
-     * The name of this hash method.
-     */
-    public static final String NAME = "Murmur3_x64_128";
 
     /**
      * Constructs a Murmur3 x64 128 hash.
@@ -69,23 +69,23 @@ public final class Murmur128x86Cyclic implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
     }
 
     @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
     public long getSignature() {
         return signature;
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
     }
 
 }

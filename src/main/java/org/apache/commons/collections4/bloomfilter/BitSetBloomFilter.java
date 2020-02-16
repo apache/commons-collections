@@ -59,6 +59,42 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         this.bitSet = new BitSet();
     }
 
+    /**
+     * Calculates the andCardinality with another BitSetBloomFilter. <p> This method takes
+     * advantage of internal structures of BitSetBloomFilter. </p>
+     *
+     * @param other the other BitSetBloomFilter.
+     * @return the cardinality of the result of {@code ( this AND other )}.
+     * @see #andCardinality(BloomFilter)
+     */
+    @Override
+    public int andCardinality(final BloomFilter other) {
+        if (other instanceof BitSetBloomFilter) {
+            verifyShape(other);
+            final BitSet result = (BitSet) bitSet.clone();
+            result.and(((BitSetBloomFilter)other).bitSet);
+            return result.cardinality();
+        }
+        return super.andCardinality(other);
+    }
+
+    @Override
+    public int cardinality() {
+        return bitSet.cardinality();
+    }
+
+    @Override
+    public boolean contains(final Hasher hasher) {
+        verifyHasher(hasher);
+        final OfInt iter = hasher.getBits(getShape());
+        while (iter.hasNext()) {
+            if (!bitSet.get(iter.nextInt())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public long[] getBits() {
         return bitSet.toLongArray();
@@ -79,28 +115,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         }
     }
 
-    @Override
-    public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
-        final OfInt iter = hasher.getBits(getShape());
-        while (iter.hasNext()) {
-            if (!bitSet.get(iter.nextInt())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public int cardinality() {
-        return bitSet.cardinality();
-    }
-
-    @Override
-    public String toString() {
-        return bitSet.toString();
-    }
-
 
     @Override
     public void merge(final Hasher hasher) {
@@ -108,23 +122,9 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
     }
 
-    /**
-     * Calculates the andCardinality with another BitSetBloomFilter. <p> This method takes
-     * advantage of internal structures of BitSetBloomFilter. </p>
-     *
-     * @param other the other BitSetBloomFilter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     * @see #andCardinality(BloomFilter)
-     */
     @Override
-    public int andCardinality(final BloomFilter other) {
-        if (other instanceof BitSetBloomFilter) {
-            verifyShape(other);
-            final BitSet result = (BitSet) bitSet.clone();
-            result.and(((BitSetBloomFilter)other).bitSet);
-            return result.cardinality();
-        }
-        return super.andCardinality(other);
+    public String toString() {
+        return bitSet.toString();
     }
 
 

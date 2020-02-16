@@ -83,6 +83,57 @@ public class Shape {
 
     /**
      * Create a filter configuration with the specified number of items and
+     * probability.
+     *
+     * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
+     * @param probability The probability of duplicates. Must be in the range
+     * (0.0,1.0).
+     * @param numberOfBits The number of bits in the filter.
+     * @param numberOfHashFunctions The number of hash functions in the filter.
+     */
+    public Shape(final HashFunctionIdentity hashFunctionIdentity, final double probability, final int numberOfBits,
+        final int numberOfHashFunctions) {
+        if (hashFunctionIdentity == null) {
+            throw new IllegalArgumentException("Hash function name may not be null");
+        }
+        if (probability <= 0.0) {
+            throw new IllegalArgumentException("Probability must be greater than 0.0");
+        }
+        if (probability >= 1.0) {
+            throw new IllegalArgumentException("Probability must be less than 1.0");
+        }
+        if (numberOfBits < 8) {
+            throw new IllegalArgumentException("Number of bits must be greater than or equal to 8");
+        }
+        if (numberOfHashFunctions < 1) {
+            throw new IllegalArgumentException("Number of hash functions must be greater than or equal to 8");
+        }
+        this.hashFunctionIdentity = hashFunctionIdentity;
+        this.numberOfBits = numberOfBits;
+        this.numberOfHashFunctions = numberOfHashFunctions;
+
+        // n = ceil(m / (-k / log(1 - exp(log(p) / k))))
+        final double n = Math.ceil(numberOfBits /
+            (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
+
+        // log of probability is always < 0
+        // number of hash functions is >= 1
+        // e^x where x < 0 = [0,1)
+        // log 1-e^x = [log1, log0) = <0 with an effective lower limit of -53
+        // numberOfBits/ (-numberOfHashFunctions / [-53,0) ) >0
+        // ceil( >0 ) >= 1
+        // so we can not produce a negative value thus we don't check for it.
+        //
+        // similarly we can not produce a number greater than numberOfBits so we
+        // do not have to check for Integer.MAX_VALUE either.
+        this.numberOfItems = (int) n;
+        this.hashCode = generateHashCode();
+        // check that probability is within range
+        getProbability();
+    }
+
+    /**
+     * Create a filter configuration with the specified number of items and
      * probability. <p> The actual probability will be approximately equal to the
      * desired probability but will be dependent upon the calculated bloom filter size
      * and function count. </p>
@@ -185,68 +236,6 @@ public class Shape {
     }
 
     /**
-     * Create a filter configuration with the specified number of items and
-     * probability.
-     *
-     * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
-     * @param probability The probability of duplicates. Must be in the range
-     * (0.0,1.0).
-     * @param numberOfBits The number of bits in the filter.
-     * @param numberOfHashFunctions The number of hash functions in the filter.
-     */
-    public Shape(final HashFunctionIdentity hashFunctionIdentity, final double probability, final int numberOfBits,
-        final int numberOfHashFunctions) {
-        if (hashFunctionIdentity == null) {
-            throw new IllegalArgumentException("Hash function name may not be null");
-        }
-        if (probability <= 0.0) {
-            throw new IllegalArgumentException("Probability must be greater than 0.0");
-        }
-        if (probability >= 1.0) {
-            throw new IllegalArgumentException("Probability must be less than 1.0");
-        }
-        if (numberOfBits < 8) {
-            throw new IllegalArgumentException("Number of bits must be greater than or equal to 8");
-        }
-        if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException("Number of hash functions must be greater than or equal to 8");
-        }
-        this.hashFunctionIdentity = hashFunctionIdentity;
-        this.numberOfBits = numberOfBits;
-        this.numberOfHashFunctions = numberOfHashFunctions;
-
-        // n = ceil(m / (-k / log(1 - exp(log(p) / k))))
-        final double n = Math.ceil(numberOfBits /
-            (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
-
-        // log of probability is always < 0
-        // number of hash functions is >= 1
-        // e^x where x < 0 = [0,1)
-        // log 1-e^x = [log1, log0) = <0 with an effective lower limit of -53
-        // numberOfBits/ (-numberOfHashFunctions / [-53,0) ) >0
-        // ceil( >0 ) >= 1
-        // so we can not produce a negative value thus we don't check for it.
-        //
-        // similarly we can not produce a number greater than numberOfBits so we
-        // do not have to check for Integer.MAX_VALUE either.
-        this.numberOfItems = (int) n;
-        this.hashCode = generateHashCode();
-        // check that probability is within range
-        getProbability();
-    }
-
-    private int generateHashCode() {
-        return Objects.hash(hashFunctionIdentity, numberOfBits, numberOfHashFunctions);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Shape[ %s n=%s m=%s k=%s ]",
-            HashFunctionIdentity.asCommonString(hashFunctionIdentity),
-            numberOfItems, numberOfBits, numberOfHashFunctions);
-    }
-
-    /**
      * Calculates the number of hash functions given numberOfItems and numberofBits.
      * This is a method so that the calculation is consistent across all constructors.
      *
@@ -273,6 +262,67 @@ public class Shape {
         return (int) k;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (o instanceof Shape) {
+            final Shape other = (Shape) o;
+            return
+                other.getNumberOfBits() == getNumberOfBits() &&
+                other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
+                HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
+                    other.getHashFunctionIdentity()) == 0;
+        }
+        return false;
+    }
+
+    private int generateHashCode() {
+        return Objects.hash(hashFunctionIdentity, numberOfBits, numberOfHashFunctions);
+    }
+
+    /**
+     * Gets the HashFunctionIdentity of the hash function this shape uses.
+     * @return the HashFunctionIdentity of the hash function this shape uses.
+     */
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return hashFunctionIdentity;
+    }
+
+    /**
+     * Gets the number of bits in the Bloom filter. AKA: {@code m}
+     *
+     * @return the number of bits in the Bloom filter.
+     */
+    public int getNumberOfBits() {
+        return numberOfBits;
+    }
+
+    /**
+     * Gets the number of bytes in the Bloom filter.
+     *
+     * @return the number of bytes in the Bloom filter.
+     */
+    public int getNumberOfBytes() {
+        return Double.valueOf(Math.ceil(numberOfBits / (double)Byte.SIZE )).intValue();
+    }
+
+    /**
+     * Gets the number of hash functions used to construct the filter. AKA: {@code k}
+     *
+     * @return the number of hash functions used to construct the filter.
+     */
+    public int getNumberOfHashFunctions() {
+        return numberOfHashFunctions;
+    }
+
+    /**
+     * Gets the number of items that are expected in the filter. AKA: {@code n}
+     *
+     * @return the number of items.
+     */
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
+
     /**
      * Calculates the probability of false positives (AKA: {@code p} given
      * numberOfItems, numberofBits and numberOfHashFunctions. This is a method so that
@@ -297,65 +347,15 @@ public class Shape {
         return p;
     }
 
-    /**
-     * Gets the number of items that are expected in the filter. AKA: {@code n}
-     *
-     * @return the number of items.
-     */
-    public int getNumberOfItems() {
-        return numberOfItems;
-    }
-
-    /**
-     * Gets the number of bits in the Bloom filter. AKA: {@code m}
-     *
-     * @return the number of bits in the Bloom filter.
-     */
-    public int getNumberOfBits() {
-        return numberOfBits;
-    }
-
-    /**
-     * Gets the number of hash functions used to construct the filter. AKA: {@code k}
-     *
-     * @return the number of hash functions used to construct the filter.
-     */
-    public int getNumberOfHashFunctions() {
-        return numberOfHashFunctions;
-    }
-
-    /**
-     * Gets the number of bytes in the Bloom filter.
-     *
-     * @return the number of bytes in the Bloom filter.
-     */
-    public int getNumberOfBytes() {
-        return Double.valueOf(Math.ceil(numberOfBits / (double)Byte.SIZE )).intValue();
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (o instanceof Shape) {
-            final Shape other = (Shape) o;
-            return
-                other.getNumberOfBits() == getNumberOfBits() &&
-                other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
-                HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
-                    other.getHashFunctionIdentity()) == 0;
-        }
-        return false;
-    }
-
     @Override
     public int hashCode() {
         return hashCode;
     }
 
-    /**
-     * Gets the HashFunctionIdentity of the hash function this shape uses.
-     * @return the HashFunctionIdentity of the hash function this shape uses.
-     */
-    public HashFunctionIdentity getHashFunctionIdentity() {
-        return hashFunctionIdentity;
+    @Override
+    public String toString() {
+        return String.format("Shape[ %s n=%s m=%s k=%s ]",
+            HashFunctionIdentity.asCommonString(hashFunctionIdentity),
+            numberOfItems, numberOfBits, numberOfHashFunctions);
     }
 }

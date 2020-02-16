@@ -68,16 +68,6 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
-     * Constructs an empty Counting filter with the specified shape.
-     *
-     * @param shape  The shape of the resulting filter.
-     */
-    public CountingBloomFilter(final Shape shape) {
-        super(shape);
-        this.counts = new TreeMap<>();
-    }
-
-    /**
      * Constructs a counting Bloom filter with the provided counts and shape
      *
      * @param counts A map of data counts.
@@ -104,6 +94,50 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
+     * Constructs an empty Counting filter with the specified shape.
+     *
+     * @param shape  The shape of the resulting filter.
+     */
+    public CountingBloomFilter(final Shape shape) {
+        super(shape);
+        this.counts = new TreeMap<>();
+    }
+
+    @Override
+    public int andCardinality(final BloomFilter other) {
+        if (other instanceof CountingBloomFilter) {
+            final Set<Integer> result = new HashSet<>( counts.keySet());
+            result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
+            return result.size();
+        }
+        return super.andCardinality(other);
+    }
+
+    @Override
+    public int cardinality() {
+        return counts.size();
+    }
+
+    @Override
+    public boolean contains(final Hasher hasher) {
+        verifyHasher(hasher);
+        final OfInt iter = hasher.getBits(getShape());
+        while (iter.hasNext()) {
+            if (counts.get(iter.nextInt()) == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public long[] getBits() {
+        final BitSet bs = new BitSet();
+        counts.keySet().stream().forEach(bs::set);
+        return bs.toLongArray();
+    }
+
+    /**
      * Gets the count for each enabled bit.
      *
      * @return an immutable map of enabled bits (key) to counts for that bit
@@ -115,12 +149,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{ ");
-        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
-            sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
-        }
-        return sb.append("}").toString();
+    public StaticHasher getHasher() {
+        return new StaticHasher(counts.keySet().iterator(), getShape());
     }
 
     /**
@@ -231,41 +261,11 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public long[] getBits() {
-        final BitSet bs = new BitSet();
-        counts.keySet().stream().forEach(bs::set);
-        return bs.toLongArray();
-    }
-
-    @Override
-    public StaticHasher getHasher() {
-        return new StaticHasher(counts.keySet().iterator(), getShape());
-    }
-
-    @Override
-    public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
-        final OfInt iter = hasher.getBits(getShape());
-        while (iter.hasNext()) {
-            if (counts.get(iter.nextInt()) == null) {
-                return false;
-            }
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{ ");
+        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
+            sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
         }
-        return true;
-    }
-
-    @Override
-    public int cardinality() {
-        return counts.size();
-    }
-
-    @Override
-    public int andCardinality(final BloomFilter other) {
-        if (other instanceof CountingBloomFilter) {
-            final Set<Integer> result = new HashSet<>( counts.keySet());
-            result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
-            return result.size();
-        }
-        return super.andCardinality(other);
+        return sb.append("}").toString();
     }
 }

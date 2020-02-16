@@ -42,23 +42,23 @@ public class HashFunctionIdentityImplTest {
             }
 
             @Override
-            public String getProvider() {
-                return "Provider";
-            }
-
-            @Override
-            public Signedness getSignedness() {
-                return Signedness.SIGNED;
-            }
-
-            @Override
             public ProcessType getProcessType() {
                 return ProcessType.CYCLIC;
             }
 
             @Override
+            public String getProvider() {
+                return "Provider";
+            }
+
+            @Override
             public long getSignature() {
                 return -1l;
+            }
+
+            @Override
+            public Signedness getSignedness() {
+                return Signedness.SIGNED;
             }
 
         };
