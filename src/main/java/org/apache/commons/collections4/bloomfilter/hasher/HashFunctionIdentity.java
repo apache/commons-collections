@@ -83,7 +83,7 @@ public interface HashFunctionIdentity {
     };
 
     /**
-     * Get a common formatted string for general display.
+     * Gets a common formatted string for general display.
      *
      * @param identity the identity to format.
      * @return the String representing the identity.
@@ -93,7 +93,7 @@ public interface HashFunctionIdentity {
     }
 
     /**
-     * Get the signature buffer for a HashFunctionIdentity.
+     * Gets the signature buffer for a HashFunctionIdentity.
      * <p>
      * The signature of this function is calculated as:
      * {@code
@@ -141,7 +141,7 @@ public interface HashFunctionIdentity {
     String getProvider();
 
     /**
-     * Get the signature of this function. <p> The signature of this function is
+     * Gets the signature of this function. <p> The signature of this function is
      * calculated as: {@code
      * apply( String.format( "%s-%s-%s", getName(), getSignedness(), getProcess() )
      *     .getBytes( "UTF-8" ), 0 );

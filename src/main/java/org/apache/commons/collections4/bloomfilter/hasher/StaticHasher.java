@@ -34,6 +34,7 @@ public final class StaticHasher implements Hasher {
      * The shape of this hasher
      */
     private final Shape shape;
+
     /**
      * The ordered set of values that this hasher will return.
      */
@@ -95,7 +96,7 @@ public final class StaticHasher implements Hasher {
     }
 
     /**
-     * Returns an iterator of integers that are the bits to enable in the Bloom
+     * Gets an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.  The iterator will not return the same value multiple
      * times.  Values will be returned in ascending order.
      *

@@ -59,6 +59,7 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
         this.process = process;
         this.signature = signature;
     }
+
     @Override
     public String getName() {
         return name;

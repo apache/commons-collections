@@ -35,7 +35,7 @@ import org.junit.Test;
 public class DynamicHasherBuilderTest {
 
     private DynamicHasher.Builder builder;
-    private final Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
+    private final Shape shape = new Shape(new MD5Cyclic(), 1, Integer.MAX_VALUE, 1);
 
     /**
      * Tests that hashing a byte works as expected.
@@ -49,8 +49,8 @@ public class DynamicHasherBuilderTest {
         final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
     }
 
     /**
@@ -64,8 +64,8 @@ public class DynamicHasherBuilderTest {
         final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
 
     }
 
@@ -92,17 +92,17 @@ public class DynamicHasherBuilderTest {
         final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
     }
 
     /**
      * Sets up the builder for testing.
+     * 
      * @throws NoSuchAlgorithmException if MD5 is not available.
      */
     @Before
-    public void setup() throws NoSuchAlgorithmException
-    {
-        builder = new DynamicHasher.Builder( new MD5Cyclic());
+    public void setup() throws NoSuchAlgorithmException {
+        builder = new DynamicHasher.Builder(new MD5Cyclic());
     }
 }

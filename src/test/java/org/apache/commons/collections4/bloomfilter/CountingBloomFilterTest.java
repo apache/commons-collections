@@ -104,7 +104,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         map.put( shape.getNumberOfBits(), 1 );
         try {
             bf = new CountingBloomFilter( map, shape);
-            fail( "Should have thrown IllegalArgumentExceptionW");
+            fail("Should have thrown IllegalArgumentExceptionW");
         } catch (final IllegalArgumentException exprected)
         {
             // expected
@@ -114,7 +114,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         map.put( -1, 1 );
         try {
             bf = new CountingBloomFilter( map, shape);
-            fail( "Should have thrown IllegalArgumentExceptionW");
+            fail("Should have thrown IllegalArgumentExceptionW");
         } catch (final IllegalArgumentException exprected)
         {
             // expected
@@ -124,7 +124,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         map.put( 1, -1 );
         try {
             bf = new CountingBloomFilter( map, shape);
-            fail( "Should have thrown IllegalArgumentExceptionW");
+            fail("Should have thrown IllegalArgumentExceptionW");
         } catch (final IllegalArgumentException exprected)
         {
             // expected
@@ -249,7 +249,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         try {
             bf.merge(bf2);
-            fail( "Should have thrown IllegalStateException");
+            fail("Should have thrown IllegalStateException");
         }
         catch (final IllegalStateException expected)
         {
@@ -428,7 +428,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         try {
             bf.remove(bf2);
-            fail( "Should have thrown IllegalStateException");
+            fail("Should have thrown IllegalStateException");
         }
         catch (final IllegalStateException expected)
         {

@@ -30,6 +30,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
  * @since 4.5
  */
 public final class Murmur128x86Cyclic implements HashFunction {
+
     /**
      * The name of this hash method.
      */

@@ -137,8 +137,8 @@ public class DynamicHasherTest {
      */
     @Test
     public void testIsEmpty() {
-        assertTrue( builder.build().isEmpty() );
-        assertFalse( builder.with("Hello").build().isEmpty() );
+        assertTrue(builder.build().isEmpty());
+        assertFalse(builder.with("Hello").build().isEmpty());
     }
 
 }

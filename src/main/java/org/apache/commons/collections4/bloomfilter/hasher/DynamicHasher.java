@@ -34,6 +34,7 @@ public class DynamicHasher implements Hasher {
      * @since 4.5
      */
     public static class Builder implements Hasher.Builder {
+
         /**
          * The list of byte[] that are to be hashed.
          */
@@ -92,7 +93,7 @@ public class DynamicHasher implements Hasher {
         private final Shape shape;
 
         /**
-         * Creates iterator with the specified shape.
+         * Constructs iterator with the specified shape.
          *
          * @param shape
          */

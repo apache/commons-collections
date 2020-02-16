@@ -88,14 +88,14 @@ public interface BloomFilter {
     Shape getShape();
 
     /**
-     * Merge the other Bloom filter into this one.
+     * Merges the other Bloom filter into this one.
      *
      * @param other the other Bloom filter.
      */
     void merge(BloomFilter other);
 
     /**
-     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
+     * Merges the decomposed Bloom filter defined by the hasher into this Bloom
      * filter. The hasher provides an iterator of bit indexes to enable.
      *
      * @param hasher the hasher to provide the indexes.

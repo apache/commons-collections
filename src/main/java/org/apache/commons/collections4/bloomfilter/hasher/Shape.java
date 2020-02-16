@@ -82,7 +82,7 @@ public class Shape {
     private final HashFunctionIdentity hashFunctionIdentity;
 
     /**
-     * Create a filter configuration with the specified number of items and
+     * Constructs a filter configuration with the specified number of items and
      * probability.
      *
      * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
@@ -93,9 +93,7 @@ public class Shape {
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final double probability, final int numberOfBits,
         final int numberOfHashFunctions) {
-        if (hashFunctionIdentity == null) {
-            throw new IllegalArgumentException("Hash function name may not be null");
-        }
+        Objects.requireNonNull(hashFunctionIdentity, "hashFunctionIdentity");
         if (probability <= 0.0) {
             throw new IllegalArgumentException("Probability must be greater than 0.0");
         }
@@ -133,7 +131,7 @@ public class Shape {
     }
 
     /**
-     * Create a filter configuration with the specified number of items and
+     * Constructs a filter configuration with the specified number of items and
      * probability. <p> The actual probability will be approximately equal to the
      * desired probability but will be dependent upon the calculated bloom filter size
      * and function count. </p>
@@ -144,9 +142,7 @@ public class Shape {
      * (0.0,1.0).
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final double probability) {
-        if (hashFunctionIdentity == null) {
-            throw new IllegalArgumentException("Hash function identity may not be null");
-        }
+        Objects.requireNonNull(hashFunctionIdentity, "hashFunctionIdentity");
         if (numberOfItems < 1) {
             throw new IllegalArgumentException("Number of Items must be greater than 0");
         }
@@ -175,7 +171,7 @@ public class Shape {
     }
 
     /**
-     * Create a filter configuration with the specified number of items and
+     * Constructs a filter configuration with the specified number of items and
      * probability.
      *
      * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
@@ -183,9 +179,7 @@ public class Shape {
      * @param numberOfBits The number of bits in the filter.
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits) {
-        if (hashFunctionIdentity == null) {
-            throw new IllegalArgumentException("Hash function name may not be null");
-        }
+        Objects.requireNonNull(hashFunctionIdentity, "hashFunctionIdentity");
         if (numberOfItems < 1) {
             throw new IllegalArgumentException("Number of Items must be greater than 0");
         }
@@ -203,7 +197,7 @@ public class Shape {
     }
 
     /**
-     * Create a filter configuration with the specified number of items and
+     * Constructs a filter configuration with the specified number of items and
      * probability.
      *
      * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
@@ -213,9 +207,7 @@ public class Shape {
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits,
         final int numberOfHashFunctions) {
-        if (hashFunctionIdentity == null) {
-            throw new IllegalArgumentException("Hash function name may not be null");
-        }
+        Objects.requireNonNull(hashFunctionIdentity, "hashFunctionIdentity");
         if (numberOfItems < 1) {
             throw new IllegalArgumentException("Number of Items must be greater than 0");
         }

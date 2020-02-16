@@ -47,7 +47,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 public class CountingBloomFilter extends AbstractBloomFilter {
 
     /**
-     * the count of entries. Each enabled bit is a key with the count for that bit
+     * The count of entries. Each enabled bit is a key with the count for that bit
      * being the value.  Entries with a value of zero are removed.
      */
     private final TreeMap<Integer, Integer> counts;
@@ -73,24 +73,21 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param counts A map of data counts.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(final Map<Integer,Integer> counts, final Shape shape) {
+    public CountingBloomFilter(final Map<Integer, Integer> counts, final Shape shape) {
         this(shape);
-        counts.entrySet().stream().forEach( e -> {
-            if (e.getKey() >= shape.getNumberOfBits())
-            {
-                throw new IllegalArgumentException( "dataMap has an item with an index larger than "+
-                    (shape.getNumberOfBits()-1) );
-            }
-            else if (e.getKey() < 0)
-            {
-                throw new IllegalArgumentException( "dataMap has an item with an index less than 0" );
+        counts.entrySet().stream().forEach(e -> {
+            if (e.getKey() >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(
+                    "dataMap has an item with an index larger than " + (shape.getNumberOfBits() - 1));
+            } else if (e.getKey() < 0) {
+                throw new IllegalArgumentException("dataMap has an item with an index less than 0");
             }
             if (e.getValue() < 0) {
-                throw new IllegalArgumentException( "dataMap has an item with an value less than 0" );
-            } else if (e.getValue() > 0)
-            {
-                this.counts.put( e.getKey(), e.getValue() );
-            }});
+                throw new IllegalArgumentException("dataMap has an item with an value less than 0");
+            } else if (e.getValue() > 0) {
+                this.counts.put(e.getKey(), e.getValue());
+            }
+        });
     }
 
     /**
@@ -167,9 +164,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter)
-        {
-            merge(((CountingBloomFilter)other).counts.keySet().iterator());
+        if (other instanceof CountingBloomFilter) {
+            merge(((CountingBloomFilter) other).counts.keySet().iterator());
         } else {
             merge(BitSet.valueOf(other.getBits()).stream().iterator());
         }
@@ -182,7 +178,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
-     * Merge an iterator of set bits into this filter.
+     * Merges an iterator of set bits into this filter.
      * @param iter the iterator of bits to set.
      */
     private void merge(final Iterator<Integer> iter) {
@@ -199,7 +195,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
-     * Decrement the counts for the bits that are on in the other BloomFilter from this
+     * Decrements the counts for the bits that are on in the other BloomFilter from this
      * one.
      *
      * <p>
@@ -210,16 +206,15 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public void remove(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter)
-        {
-            remove(((CountingBloomFilter)other).counts.keySet().stream());
+        if (other instanceof CountingBloomFilter) {
+            remove(((CountingBloomFilter) other).counts.keySet().stream());
         } else {
             remove(BitSet.valueOf(other.getBits()).stream().boxed());
         }
     }
 
     /**
-     * Decrement the counts for the bits that are on in the hasher from this
+     * Decrements the counts for the bits that are on in the hasher from this
      * Bloom filter.
      *
      * <p>

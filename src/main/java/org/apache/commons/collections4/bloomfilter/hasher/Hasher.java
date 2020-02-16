@@ -38,8 +38,9 @@ public interface Hasher {
      * @since 4.5
      */
     interface Builder {
+
         /**
-         * Build the hasher.
+         * Builds the hasher.
          * @return the fully constructed hasher.
          */
         Hasher build();
@@ -78,7 +79,7 @@ public interface Hasher {
     }
 
     /**
-     * Return an iterator of integers that are the bits to enable in the Bloom
+     * Gets an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.  No guarantee is made as to order
      * or duplication of values.
      *
@@ -98,6 +99,7 @@ public interface Hasher {
 
     /**
      * Returns true if the hasher specifies no bits.
+     *
      * @return true if the hasher does not specify any bits.
      */
     boolean isEmpty();

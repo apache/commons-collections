@@ -50,10 +50,9 @@ public final class SetOperations {
      * @return the Cosine similarity.
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         final int numerator = first.andCardinality(second);
-
-        return numerator==0?0:numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
+        return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
     }
 
     /**
@@ -138,10 +137,10 @@ public final class SetOperations {
      * @return the Jaccard similarity.
      */
     public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         final int orCard = first.orCardinality(second);
         // if the orCard is zero then the hamming distance will also be zero.
-        return orCard==0?0:hammingDistance(first,second) / (double) orCard;
+        return orCard == 0 ? 0 : hammingDistance(first, second) / (double) orCard;
     }
 
     /**

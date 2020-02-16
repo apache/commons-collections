@@ -62,16 +62,17 @@ public class HashFunctionIdentityImplTest {
             }
 
         };
-        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( identity );
-        assertEquals( "NAME", impl.getName());
-        assertEquals( "Provider", impl.getProvider());
-        assertEquals( Signedness.SIGNED, impl.getSignedness());
-        assertEquals( ProcessType.CYCLIC, impl.getProcessType());
-        assertEquals( -1l, impl.getSignature());
+        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl(identity);
+        assertEquals("NAME", impl.getName());
+        assertEquals("Provider", impl.getProvider());
+        assertEquals(Signedness.SIGNED, impl.getSignedness());
+        assertEquals(ProcessType.CYCLIC, impl.getProcessType());
+        assertEquals(-1l, impl.getSignature());
     }
 
     /**
      * Test the constructor from component values.
+     * 
      * @param provider the name of the provider.
      * @param name the name of the hash function.
      * @param signedness the signedness of the hash function.
@@ -80,13 +81,13 @@ public class HashFunctionIdentityImplTest {
      */
     @Test
     public void valuesConstructorTest() {
-        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl( "Provider", "NAME",
-            Signedness.UNSIGNED, ProcessType.ITERATIVE, -2l);
-        assertEquals( "NAME", impl.getName());
-        assertEquals( "Provider", impl.getProvider());
-        assertEquals( Signedness.UNSIGNED, impl.getSignedness());
-        assertEquals( ProcessType.ITERATIVE, impl.getProcessType());
-        assertEquals( -2l, impl.getSignature());
+        final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl("Provider", "NAME", Signedness.UNSIGNED,
+            ProcessType.ITERATIVE, -2l);
+        assertEquals("NAME", impl.getName());
+        assertEquals("Provider", impl.getProvider());
+        assertEquals(Signedness.UNSIGNED, impl.getSignedness());
+        assertEquals(ProcessType.ITERATIVE, impl.getProcessType());
+        assertEquals(-2l, impl.getSignature());
     }
 
 }
