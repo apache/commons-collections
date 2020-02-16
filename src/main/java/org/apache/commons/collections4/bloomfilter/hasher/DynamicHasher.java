@@ -145,7 +145,7 @@ public class DynamicHasher implements Hasher {
     }
 
     /**
-     * Return an iterator of integers that are the bits to enable in the Bloom filter
+     * Gets an iterator of integers that are the bits to enable in the Bloom filter
      * based on the shape. The iterator may return the same value multiple times. There is
      * no guarantee made as to the order of the integers.
      *
