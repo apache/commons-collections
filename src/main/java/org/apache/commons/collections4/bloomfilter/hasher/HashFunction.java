@@ -25,11 +25,12 @@ public interface HashFunction extends HashFunctionIdentity {
 
 
     /**
-     * Apply the hash function to the buffer.
+     * Applies the hash function to the buffer.
+     *
      * @param buffer the buffer to apply the hash function to.
      * @param seed the seed for the hashing.
      * @return the long value of the hash.
      */
-    long apply( byte[] buffer, int seed );
+    long apply(byte[] buffer, int seed);
 
 }
