@@ -59,14 +59,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         this.bitSet = new BitSet();
     }
 
-    /**
-     * Calculates the andCardinality with another BitSetBloomFilter. <p> This method takes
-     * advantage of internal structures of BitSetBloomFilter. </p>
-     *
-     * @param other the other BitSetBloomFilter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     * @see #andCardinality(BloomFilter)
-     */
     @Override
     public int andCardinality(final BloomFilter other) {
         if (other instanceof BitSetBloomFilter) {
