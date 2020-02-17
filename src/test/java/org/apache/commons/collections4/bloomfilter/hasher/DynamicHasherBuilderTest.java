@@ -28,8 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DynamicHasher Builder tests.
- *
+ * {@link DynamicHasher.Builder} tests.
  */
 public class DynamicHasherBuilderTest {
 

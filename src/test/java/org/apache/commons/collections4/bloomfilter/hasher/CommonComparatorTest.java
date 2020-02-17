@@ -30,8 +30,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.S
 import org.junit.Test;
 
 /**
- * Tests of the HashFunctionIdentity.COMMON_COMPARATOR
- *
+ * Tests of the {@link HashFunctionIdentity#COMMON_COMPARATOR}.
  */
 public class CommonComparatorTest {
 

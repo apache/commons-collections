@@ -31,7 +31,7 @@ import java.util.PrimitiveIterator.OfInt;
 import org.junit.Test;
 
 /**
- * Tests the static hasher.
+ * Tests the {@link StaticHasher}.
  */
 public class StaticHasherTest {
 

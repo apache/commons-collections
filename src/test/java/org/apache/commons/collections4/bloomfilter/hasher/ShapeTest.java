@@ -28,8 +28,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.junit.Test;
 
 /**
- * Tests that the Shap class.
- *
+ * Tests the {@link Shape} class.
  */
 public class ShapeTest {
 
@@ -225,7 +224,6 @@ public class ShapeTest {
         } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
-
         try {
             new Shape(testFunction, 10, 1.0);
             fail("Should have thrown IllegalArgumentException");
@@ -265,7 +263,6 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nm_noName() {
-
         try {
             new Shape(null, 5, 72);
             fail("Should throw NullPointerException");
@@ -279,7 +276,6 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nmk_noName() {
-
         try {
             new Shape(null, 5, 72, 17);
             fail("Should throw NullPointerException");
@@ -293,7 +289,6 @@ public class ShapeTest {
      */
     @Test
     public void constructor_np_noName() {
-
         try {
             new Shape(null, 5, 0.1);
             fail("Should throw NullPointerException");
@@ -307,7 +302,6 @@ public class ShapeTest {
      */
     @Test
     public void constructor_pmk_noName() {
-
         try {
             new Shape(null, 0.1, 72, 17);
             fail("Should throw NullPointerException");

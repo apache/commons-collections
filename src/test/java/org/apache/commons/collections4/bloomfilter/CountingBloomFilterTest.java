@@ -32,8 +32,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
 /**
- * Tests for the Counting Bloom filter implementation.
- *
+ * Tests for the {@link CountingBloomFilter}.
  */
 public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 

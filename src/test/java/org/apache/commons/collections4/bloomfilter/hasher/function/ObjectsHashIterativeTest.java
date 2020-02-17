@@ -26,8 +26,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.function.ObjectsHashIt
 import org.junit.Test;
 
 /**
- * Tests that the Objects hash works correctly..
- *
+ * Tests that the Objects hash works correctly.
  */
 public class ObjectsHashIterativeTest {
 

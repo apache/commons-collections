@@ -27,8 +27,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
 /**
- * Test SetOperations implementation
- *
+ * Test {@link SetOperations}.
  */
 public class SetOperationsTest {
 

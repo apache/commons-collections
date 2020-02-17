@@ -24,8 +24,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.P
 import org.junit.Test;
 
 /**
- * Tests the HashFunctionIdentity implementation.
- *
+ * Tests the HashFunctionIdentity implementation ({@link HashFunctionIdentityImpl})..
  */
 public class HashFunctionIdentityImplTest {
 

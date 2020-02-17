@@ -26,8 +26,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Test;
 
 /**
- * Tests the HasherBloomFilter implementation.
- *
+ * Tests the {@link HasherBloomFilter}.
  */
 public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 

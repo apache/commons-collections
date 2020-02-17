@@ -27,7 +27,6 @@ import org.junit.Test;
 
 /**
  * Test that the Murmur3 32 x86 hash function works correctly.
- *
  */
 public class Murmur32x86IterativeTest {
 

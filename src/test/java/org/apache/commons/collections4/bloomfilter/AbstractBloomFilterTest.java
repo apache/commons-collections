@@ -33,8 +33,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
 /**
- * Test standard methods.
- *
+ * Test standard methods in the {@link BloomFilter} interface.
  */
 public abstract class AbstractBloomFilterTest {
 

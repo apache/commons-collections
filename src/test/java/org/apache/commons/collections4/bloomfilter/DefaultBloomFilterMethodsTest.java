@@ -25,8 +25,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
- * A test that test all the default implementations on the BloomFilter.
- *
+ * Test all the default implementations of the BloomFilter in {@link AbstractBloomFilter}.
  */
 public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
 

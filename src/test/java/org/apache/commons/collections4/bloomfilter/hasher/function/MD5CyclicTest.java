@@ -27,7 +27,6 @@ import org.junit.Test;
 
 /**
  * Tests the MD5 cyclic hash function.
- *
  */
 public class MD5CyclicTest {
 

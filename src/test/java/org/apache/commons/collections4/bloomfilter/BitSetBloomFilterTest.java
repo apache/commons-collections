@@ -27,8 +27,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
 /**
- * Tests for the BitSetBloomFilter implementation.
- *
+ * Tests for the {@link BitSetBloomFilter}.
  */
 public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
 

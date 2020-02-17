@@ -29,8 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the Dynamic Hasher
- *
+ * Tests the {@link DynamicHasher}.
  */
 public class DynamicHasherTest {
     private DynamicHasher.Builder builder;
