@@ -102,8 +102,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public int andCardinality(final BloomFilter other) {
         if (other instanceof CountingBloomFilter) {
-            final Set<Integer> result = new HashSet<>( counts.keySet());
-            result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
+            final Set<Integer> result = new HashSet<>(counts.keySet());
+            result.retainAll(((CountingBloomFilter)other).counts.keySet());
             return result.size();
         }
         return super.andCardinality(other);
@@ -172,8 +172,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
 
     @Override
     public void merge(final Hasher hasher) {
-        verifyHasher( hasher );
-        merge( hasher.getBits(getShape()) );
+        verifyHasher(hasher);
+        merge(hasher.getBits(getShape()));
     }
 
     /**
@@ -186,9 +186,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
             if (val == null) {
                 counts.put(idx, 1 );
             } else if (val == Integer.MAX_VALUE) {
-                throw new IllegalStateException( "Overflow on index "+idx);
+                throw new IllegalStateException("Overflow on index " + idx);
             } else {
-                counts.put( idx,  val+1 );
+                counts.put(idx, val + 1);
             }
         });
     }
@@ -223,9 +223,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param hasher the hasher to generate bits.
      */
     public void remove(final Hasher hasher) {
-        verifyHasher( hasher );
+        verifyHasher(hasher);
         final Set<Integer> lst = new HashSet<>();
-        hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
+        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>)lst::add);
         remove(lst.stream());
     }
 
@@ -245,7 +245,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
                 }
             }
             if (val == null || val == 0) {
-                throw new IllegalStateException( "Underflow on index "+idx);
+                throw new IllegalStateException("Underflow on index " + idx);
             } else if (val - 1 == 0) {
                 counts.remove(idx);
             } else {

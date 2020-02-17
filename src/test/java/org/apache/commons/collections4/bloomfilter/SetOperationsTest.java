@@ -109,7 +109,7 @@ public class SetOperationsTest {
         // build a filter
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        final BloomFilter filter3 = new HasherBloomFilter( hasher, shape );
+        final BloomFilter filter3 = new HasherBloomFilter(hasher, shape);
 
         assertEquals(1.0, SetOperations.cosineDistance(filter1, filter2), 0.0001);
         assertEquals(1.0, SetOperations.cosineDistance(filter2, filter1), 0.0001);
@@ -154,7 +154,7 @@ public class SetOperationsTest {
         // build a filter
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        final BloomFilter filter3 = new HasherBloomFilter( hasher, shape );
+        final BloomFilter filter3 = new HasherBloomFilter(hasher, shape);
 
         assertEquals(0.0, SetOperations.cosineSimilarity(filter1, filter2), 0.0001);
         assertEquals(0.0, SetOperations.cosineSimilarity(filter2, filter1), 0.0001);
@@ -293,7 +293,7 @@ public class SetOperationsTest {
         // build a filter
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        final BloomFilter filter3 = new HasherBloomFilter( hasher, shape );
+        final BloomFilter filter3 = new HasherBloomFilter(hasher, shape);
 
         assertEquals(1.0, SetOperations.jaccardDistance(filter1, filter2), 0.0001);
         assertEquals(1.0, SetOperations.jaccardDistance(filter2, filter1), 0.0001);
@@ -337,7 +337,7 @@ public class SetOperationsTest {
         // build a filter
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        final BloomFilter filter3 = new HasherBloomFilter( hasher, shape );
+        final BloomFilter filter3 = new HasherBloomFilter(hasher, shape);
 
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter1, filter2), 0.0001);
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter2, filter1), 0.0001);

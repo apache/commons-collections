@@ -329,10 +329,10 @@ public class StaticHasherTest {
         StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
 
-        assertTrue( hasher.isEmpty() );
+        assertTrue(hasher.isEmpty());
 
-        lst.add( Integer.valueOf( 1 ));
+        lst.add( Integer.valueOf(1));
         hasher = new StaticHasher(lst.iterator(), shape);
-        assertFalse( hasher.isEmpty() );
+        assertFalse(hasher.isEmpty());
     }
 }

@@ -261,7 +261,7 @@ public class Shape {
             return
                 other.getNumberOfBits() == getNumberOfBits() &&
                 other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
-                HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
+                HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
                     other.getHashFunctionIdentity()) == 0;
         }
         return false;
