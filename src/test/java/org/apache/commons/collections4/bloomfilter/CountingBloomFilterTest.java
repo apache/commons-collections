@@ -88,9 +88,8 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void ConstructorTest_Map_CountsTest() {
-        final Map<Integer,Integer> map = new HashMap<>();
-        for (int i =0;i<17;i++)
-        {
+        final Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < 17; i++) {
             map.put(i, 1);
         }
 
@@ -101,8 +100,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         try {
             bf = new CountingBloomFilter(map, shape);
             fail("Should have thrown IllegalArgumentExceptionW");
-        } catch (final IllegalArgumentException exprected)
-        {
+        } catch (final IllegalArgumentException exprected) {
             // expected
         }
 
@@ -111,8 +109,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         try {
             bf = new CountingBloomFilter(map, shape);
             fail("Should have thrown IllegalArgumentExceptionW");
-        } catch (final IllegalArgumentException exprected)
-        {
+        } catch (final IllegalArgumentException exprected) {
             // expected
         }
 
@@ -121,8 +118,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         try {
             bf = new CountingBloomFilter(map, shape);
             fail("Should have thrown IllegalArgumentExceptionW");
-        } catch (final IllegalArgumentException exprected)
-        {
+        } catch (final IllegalArgumentException exprected) {
             // expected
         }
     }
@@ -152,7 +148,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
         final BloomFilter bf2 = createFilter(hasher2, shape);
 
@@ -164,14 +160,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
-        for (int i=0;i<29;i++)
-        {
-            if (m.get(i) == null)
-            {
-                assertEquals("Wrong value for "+i, expected[i], 0);
-            } else
-            {
-                assertEquals("Wrong value for "+i, expected[i], m.get(i).intValue());
+        for (int i = 0; i < 29; i++) {
+            if (m.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
             }
         }
     }
@@ -191,7 +184,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
         final BloomFilter bf2 = new BitSetBloomFilter(hasher2, shape);
 
@@ -203,14 +196,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
-        for (int i=0;i<29;i++)
-        {
-            if (m.get(i) == null)
-            {
-                assertEquals("Wrong value for "+i, expected[i], 0);
-            } else
-            {
-                assertEquals("Wrong value for "+i, expected[i], m.get(i).intValue());
+        for (int i = 0; i < 29; i++) {
+            if (m.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
             }
         }
     }
@@ -220,13 +210,12 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Overflow() {
-
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final Map<Integer,Integer> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         bf.getCounts().forEach(e -> map.put(e.getKey(), e.getValue()));
         map.put(1, Integer.MAX_VALUE);
 
@@ -242,9 +231,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         try {
             bf.merge(bf2);
             fail("Should have thrown IllegalStateException");
-        }
-        catch (final IllegalStateException expected)
-        {
+        } catch (final IllegalStateException expected) {
             // do nothing
         }
     }
@@ -260,12 +247,12 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 1, 1, 1, 1, 1, 1, 1, 0
         };
 
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         final CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
         bf.merge(hasher2);
@@ -276,14 +263,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final Map<Integer, Integer> m = new HashMap<>();
         bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
-        for (int i=0;i<29;i++)
-        {
-            if (m.get(i) == null)
-            {
-                assertEquals("Wrong value for "+i, expected[i], 0);
-            } else
-            {
-                assertEquals("Wrong value for "+i, expected[i], m.get(i).intValue());
+        for (int i = 0; i < 29; i++) {
+            if (m.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
             }
         }
     }
@@ -306,17 +290,16 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final CountingBloomFilter bf = new CountingBloomFilter(map, shape);
 
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
         final BloomFilter bf2 = new CountingBloomFilter(hasher, shape);
 
         bf.remove(bf2);
         assertEquals(17, bf.cardinality());
-        final Map<Integer,Integer> map2 = new HashMap<>();
+        final Map<Integer, Integer> map2 = new HashMap<>();
         bf.getCounts().forEach(e -> map2.put(e.getKey(), e.getValue()));
 
-        for (int i = 11; i<values.length; i++)
-        {
+        for (int i = 11; i < values.length; i++) {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
@@ -340,16 +323,15 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final CountingBloomFilter bf = new CountingBloomFilter(map, shape);
 
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         bf.remove(hasher);
         assertEquals(17, bf.cardinality());
-        final Map<Integer,Integer> map2 = new HashMap<>();
+        final Map<Integer, Integer> map2 = new HashMap<>();
         bf.getCounts().forEach(e -> map2.put(e.getKey(), e.getValue()));
 
-        for (int i = 11; i<values.length; i++)
-        {
+        for (int i = 11; i < values.length; i++) {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
@@ -373,17 +355,16 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
         final CountingBloomFilter bf = new CountingBloomFilter(map, shape);
 
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
         final BitSetBloomFilter bf2 = new BitSetBloomFilter(hasher, shape);
 
         bf.remove(bf2);
         assertEquals(17, bf.cardinality());
-        final Map<Integer,Integer> map2 = new HashMap<>();
+        final Map<Integer, Integer> map2 = new HashMap<>();
         bf.getCounts().forEach(e -> map2.put(e.getKey(), e.getValue()));
 
-        for (int i = 11; i<values.length; i++)
-        {
+        for (int i = 11; i < values.length; i++) {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
@@ -394,13 +375,12 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Underflow() {
-
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final Map<Integer,Integer> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         bf.getCounts().forEach(e -> map.put(e.getKey(), e.getValue()));
         map.remove(1);
 
@@ -416,9 +396,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         try {
             bf.remove(bf2);
             fail("Should have thrown IllegalStateException");
-        }
-        catch (final IllegalStateException expected)
-        {
+        } catch (final IllegalStateException expected) {
             // do nothing
         }
     }

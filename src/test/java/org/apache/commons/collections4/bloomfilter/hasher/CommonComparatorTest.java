@@ -35,11 +35,11 @@ import org.junit.Test;
  */
 public class CommonComparatorTest {
 
-    private void assertAfter(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
+    private static void assertAfter(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
         assertTrue(0 < HashFunctionIdentity.COMMON_COMPARATOR.compare(identity1, identity2));
     }
 
-    private void assertBefore(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
+    private static void assertBefore(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
         assertTrue(0 > HashFunctionIdentity.COMMON_COMPARATOR.compare(identity1, identity2));
     }
 
