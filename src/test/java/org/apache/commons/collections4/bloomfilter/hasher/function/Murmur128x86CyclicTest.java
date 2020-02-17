@@ -27,7 +27,6 @@ import org.junit.Test;
 
 /**
  * Test that the Murmur3 128 x86 hash function works correctly.
- *
  */
 public class Murmur128x86CyclicTest {
 
@@ -36,11 +35,11 @@ public class Murmur128x86CyclicTest {
      */
     @Test
     public void applyTest() {
-        Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
+        final Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
 
-        long l1 = 0xe7eb60dabb386407L;
-        long l2 = 0xc3ca49f691f73056L;
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country"
+        final long l1 = 0xe7eb60dabb386407L;
+        final long l2 = 0xc3ca49f691f73056L;
+        final byte[] buffer = "Now is the time for all good men to come to the aid of their country"
             .getBytes(StandardCharsets.UTF_8);
 
         long l = murmur.apply(buffer, 0);
@@ -56,11 +55,10 @@ public class Murmur128x86CyclicTest {
      */
     @Test
     public void signatureTest() {
-        Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
-        String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
+        final Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
+        final String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
             murmur.getProcessType());
-        long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, murmur.getSignature());
     }
-
 }

@@ -30,6 +30,12 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
  * @since 4.5
  */
 public final class Murmur128x86Cyclic implements HashFunction {
+
+    /**
+     * The name of this hash method.
+     */
+    public static final String NAME = "Murmur3_x64_128";
+
     /**
      * The result of the hash 0 call.
      */
@@ -41,20 +47,14 @@ public final class Murmur128x86Cyclic implements HashFunction {
     private final long signature;
 
     /**
-     * The name of this hash method.
-     */
-    public static final String NAME = "Murmur3_x64_128";
-
-    /**
      * Constructs a Murmur3 x64 128 hash.
      */
     public Murmur128x86Cyclic() {
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
-
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
         if (parts == null || seed == 0) {
             parts = MurmurHash3.hash128x64(buffer, 0, buffer.length, 0);
         } else {
@@ -69,18 +69,13 @@ public final class Murmur128x86Cyclic implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
+    }
+
+    @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
     }
 
     @Override
@@ -88,4 +83,8 @@ public final class Murmur128x86Cyclic implements HashFunction {
         return signature;
     }
 
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
+    }
 }

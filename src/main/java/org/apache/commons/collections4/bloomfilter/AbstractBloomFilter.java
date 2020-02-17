@@ -33,15 +33,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * This abstract class provides additional functionality not declared in the interface.
  * Specifically:
  * <ul>
- * <li>orCardinality</li>
- * <li>jaccardSimilarity</li>
- * <li>jaccardDistance</li>
- * <li>cosineSimilarity</li>
- * <li>cosineDistance</li>
- * <li>estimateSize</li>
- * <li>estimateUnionSize</li>
- * <li>estimateIntersectionSize</li>
- * <li>isFull</li>
+ * <li>{@link #isFull()}</li>
  * </ul>
  *
  * @since 4.5
@@ -52,6 +44,85 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * The shape used by this BloomFilter
      */
     private final Shape shape;
+
+    /**
+     * Construct a Bloom filter with the specified shape.
+     *
+     * @param shape The shape.
+     */
+    protected AbstractBloomFilter(final Shape shape) {
+        this.shape = shape;
+    }
+
+    /**
+     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
+     * the result.
+     *
+     * @param other the other Bloom filter.
+     * @return the cardinality of the result of {@code ( this AND other )}.
+     */
+    @Override
+    public int andCardinality(final BloomFilter other) {
+        verifyShape(other);
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
+        final int limit = Integer.min(mine.length, theirs.length);
+        final long[] result = new long[limit];
+        for (int i = 0; i < limit; i++) {
+            result[i] = mine[i] & theirs[i];
+        }
+        return BitSet.valueOf(result).cardinality();
+    }
+
+    /**
+     * Gets the cardinality of this Bloom filter.
+     *
+     * @return the cardinality (number of enabled bits) in this filter.
+     */
+    @Override
+    public int cardinality() {
+        return BitSet.valueOf(getBits()).cardinality();
+    }
+
+    /**
+     * Performs a contains check. Effectively this AND other == other.
+     *
+     * @param other the Other Bloom filter.
+     * @return true if this filter matches the other.
+     */
+    @Override
+    public boolean contains(final BloomFilter other) {
+        verifyShape(other);
+        return other.cardinality() == andCardinality(other);
+    }
+
+    /**
+     * Performs a contains check against a decomposed Bloom filter. The shape must match
+     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
+     * decomposed AND this == decomposed.
+     *
+     * @param hasher The hasher containing the bits to check.
+     * @return true if this filter contains the other.
+     * @throws IllegalArgumentException if the shape argument does not match the shape of
+     * this filter, or if the hasher is not the specified one
+     */
+    @Override
+    public boolean contains(final Hasher hasher) {
+        verifyHasher(hasher);
+        final long[] buff = getBits();
+
+        final OfInt iter = hasher.getBits(shape);
+        while (iter.hasNext()) {
+            final int idx = iter.nextInt();
+            final int buffIdx = idx / Long.SIZE;
+            final int pwr = Math.floorMod(idx, Long.SIZE);
+            final long buffOffset = 1L << pwr;
+            if ((buff[buffIdx] & buffOffset) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Gets an array of little-endian long values representing the on bits of this filter.
@@ -72,51 +143,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     public abstract StaticHasher getHasher();
 
     /**
-     * Construct a Bloom filter with the specified shape.
-     *
-     * @param shape The shape.
-     */
-    protected AbstractBloomFilter(Shape shape) {
-        this.shape = shape;
-    }
-
-    /**
-     * Verify the other Bloom filter has the same shape as this Bloom filter.
-     *
-     * @param other the other filter to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    protected void verifyShape(BloomFilter other) {
-        verifyShape(other.getShape());
-    }
-
-    /**
-     * Verify the specified shape has the same shape as this Bloom filter.
-     *
-     * @param shape the other shape to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    protected void verifyShape(Shape shape) {
-        if (!this.shape.equals(shape)) {
-            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
-        }
-    }
-
-    /**
-     * Verifies that the hasher has the same name as the shape.
-     *
-     * @param hasher the Hasher to check
-     */
-    protected void verifyHasher(Hasher hasher) {
-        if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
-            throw new IllegalArgumentException(
-                String.format("Hasher (%s) is not the hasher for shape (%s)",
-                    HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()),
-                    shape.toString()));
-        }
-    }
-
-    /**
      * Gets the shape of this filter.
      *
      * @return The shape of this filter.
@@ -124,6 +150,16 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     @Override
     public final Shape getShape() {
         return shape;
+    }
+
+    /**
+     * Determines if the bloom filter is "full". Full is defined as having no unset
+     * bits.
+     *
+     * @return true if the filter is full.
+     */
+    public final boolean isFull() {
+        return cardinality() == getShape().getNumberOfBits();
     }
 
     /**
@@ -145,41 +181,11 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     @Override
     abstract public void merge(Hasher hasher);
 
-    /**
-     * Gets the cardinality of this Bloom filter.
-     *
-     * @return the cardinality (number of enabled bits) in this filter.
-     */
     @Override
-    public int cardinality() {
-        return BitSet.valueOf(getBits()).cardinality();
-    }
-
-    /**
-     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     */
-    @Override
-    public int andCardinality(BloomFilter other) {
+    public int orCardinality(final BloomFilter other) {
         verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
-        int limit = Integer.min(mine.length, theirs.length);
-        long[] result = new long[limit];
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] & theirs[i];
-        }
-        return BitSet.valueOf(result).cardinality();
-    }
-
-    @Override
-    public int orCardinality(BloomFilter other) {
-        verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
         long[] remainder = null;
         long[] result = null;
         if (mine.length > theirs.length) {
@@ -190,15 +196,50 @@ public abstract class AbstractBloomFilter implements BloomFilter {
             remainder = theirs;
 
         }
-        int limit = Integer.min(mine.length, theirs.length);
+        final int limit = Integer.min(mine.length, theirs.length);
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] | theirs[i];
         }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
+        if (limit < result.length) {
+            System.arraycopy(remainder, limit, result, limit, result.length - limit);
         }
         return BitSet.valueOf(result).cardinality();
+    }
+
+    /**
+     * Verifies that the hasher has the same name as the shape.
+     *
+     * @param hasher the Hasher to check
+     */
+    protected void verifyHasher(final Hasher hasher) {
+        if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
+            throw new IllegalArgumentException(
+                String.format("Hasher (%s) is not the hasher for shape (%s)",
+                    HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()),
+                    shape.toString()));
+        }
+    }
+
+    /**
+     * Verify the other Bloom filter has the same shape as this Bloom filter.
+     *
+     * @param other the other filter to check.
+     * @throws IllegalArgumentException if the shapes are not the same.
+     */
+    protected void verifyShape(final BloomFilter other) {
+        verifyShape(other.getShape());
+    }
+
+    /**
+     * Verify the specified shape has the same shape as this Bloom filter.
+     *
+     * @param shape the other shape to check.
+     * @throws IllegalArgumentException if the shapes are not the same.
+     */
+    protected void verifyShape(final Shape shape) {
+        if (!this.shape.equals(shape)) {
+            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
+        }
     }
 
     /**
@@ -209,10 +250,10 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @return the cardinality of the result of {@code( this XOR other )}
      */
     @Override
-    public int xorCardinality(BloomFilter other) {
+    public int xorCardinality(final BloomFilter other) {
         verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
+        final long[] mine = getBits();
+        final long[] theirs = other.getBits();
         long[] remainder = null;
         long[] result = null;
         if (mine.length > theirs.length) {
@@ -223,65 +264,13 @@ public abstract class AbstractBloomFilter implements BloomFilter {
             remainder = theirs;
 
         }
-        int limit = Integer.min(mine.length, theirs.length);
+        final int limit = Integer.min(mine.length, theirs.length);
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] ^ theirs[i];
         }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
+        if (limit < result.length) {
+            System.arraycopy(remainder, limit, result, limit, result.length - limit);
         }
         return BitSet.valueOf(result).cardinality();
     }
-
-    /**
-     * Performs a contains check. Effectively this AND other == other.
-     *
-     * @param other the Other Bloom filter.
-     * @return true if this filter matches the other.
-     */
-    @Override
-    public boolean contains(BloomFilter other) {
-        verifyShape(other);
-        return other.cardinality() == andCardinality(other);
-    }
-
-    /**
-     * Performs a contains check against a decomposed Bloom filter. The shape must match
-     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
-     * decomposed AND this == decomposed.
-     *
-     * @param hasher The hasher containing the bits to check.
-     * @return true if this filter contains the other.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
-    @Override
-    public boolean contains(Hasher hasher) {
-        verifyHasher( hasher );
-        long[] buff = getBits();
-
-        OfInt iter = hasher.getBits(shape);
-        while (iter.hasNext()) {
-            int idx = iter.nextInt();
-            int buffIdx = idx / Long.SIZE;
-            int pwr = Math.floorMod(idx, Long.SIZE);
-            long buffOffset = 1L << pwr;
-            if ((buff[buffIdx] & buffOffset) == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Determines if the bloom filter is "full". Full is defined as having no unset
-     * bits.
-     *
-     * @return true if the filter is full.
-     */
-    public final boolean isFull() {
-        return cardinality() == getShape().getNumberOfBits();
-    }
-
 }

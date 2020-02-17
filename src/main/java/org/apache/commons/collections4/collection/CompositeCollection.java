@@ -415,7 +415,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollections  the Collections to be appended to the composite
      */
     public void addComposited(final Collection<E>... compositeCollections) {
-        for (Collection<E> compositeCollection : compositeCollections) {
+        for (final Collection<E> compositeCollection : compositeCollections) {
             if (compositeCollection != null) {
                 all.add(compositeCollection);
             }

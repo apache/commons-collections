@@ -22,7 +22,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -30,28 +29,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the Dynamic Hasher
- *
+ * Tests the {@link DynamicHasher}.
  */
 public class DynamicHasherTest {
     private DynamicHasher.Builder builder;
     private Shape shape;
 
-    private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+    private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
         @Override
         public String getName() {
             return "Test Function";
-        }
-
-        @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
         }
 
         @Override
@@ -60,18 +48,26 @@ public class DynamicHasherTest {
         }
 
         @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
         public long getSignature() {
             return 0;
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
         }
     };
 
     /**
      * Sets up the DynamicHasher.
-     *
-     * @throws NoSuchAlgorithmException is MD5 is not available.
      */
     @Before
-    public void setup() throws NoSuchAlgorithmException {
+    public void setup() {
         builder = new DynamicHasher.Builder(new MD5Cyclic());
         shape = new Shape(new MD5Cyclic(), 3, 72, 17);
     }
@@ -82,18 +78,17 @@ public class DynamicHasherTest {
     @Test
     public void testGetBits() {
 
-        int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
+        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
 
-        Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello").build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
-        for (int i = 0; i < expected.length; i++) {
+        for (final int element : expected) {
             assertTrue(iter.hasNext());
-            assertEquals(expected[i], iter.nextInt());
+            assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-
     }
 
     /**
@@ -101,19 +96,18 @@ public class DynamicHasherTest {
      */
     @Test
     public void testGetBits_MultipleHashes() {
-        int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
+        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
             59, 49, 39, 13, 3, 65, 55, 45, 35, 25};
 
-        Hasher hasher = builder.with("Hello").with("World").build();
+        final Hasher hasher = builder.with("Hello").with("World").build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
-        for (int i = 0; i < expected.length; i++) {
+        for (final int element : expected) {
             assertTrue(iter.hasNext());
-            assertEquals(expected[i], iter.nextInt());
+            assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-
     }
 
     /**
@@ -122,12 +116,12 @@ public class DynamicHasherTest {
     @Test
     public void testGetBits_WongShape() {
 
-        Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello").build();
 
         try {
             hasher.getBits(new Shape(testFunction, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // do nothing
         }
     }
@@ -137,8 +131,7 @@ public class DynamicHasherTest {
      */
     @Test
     public void testIsEmpty() {
-        assertTrue( builder.build().isEmpty() );
-        assertFalse( builder.with("Hello").build().isEmpty() );
+        assertTrue(builder.build().isEmpty());
+        assertFalse(builder.with("Hello").build().isEmpty());
     }
-
 }

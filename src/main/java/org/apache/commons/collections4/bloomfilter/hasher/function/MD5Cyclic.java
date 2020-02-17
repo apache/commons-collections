@@ -33,6 +33,11 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 public final class MD5Cyclic implements HashFunction {
 
     /**
+     * The name of this hash function.
+     */
+    public static final String NAME = "MD5";
+
+    /**
      * The MD5 digest implementation.
      */
     private final MessageDigest messageDigest;
@@ -48,24 +53,19 @@ public final class MD5Cyclic implements HashFunction {
     private final long[] result = new long[2];
 
     /**
-     * The name of this hash function.
-     */
-    public static final String NAME = "MD5";
-
-    /**
      * Constructs the MD5 hashing function.
      */
     public MD5Cyclic() {
         try {
             messageDigest = MessageDigest.getInstance(NAME);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException( e.getMessage() );
+        } catch (final NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e.getMessage());
         }
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
-    public long apply(byte[] buffer, int seed) {
+    public long apply(final byte[] buffer, final int seed) {
 
         if (seed == 0) {
             byte[] hash;
@@ -75,7 +75,7 @@ public final class MD5Cyclic implements HashFunction {
                 messageDigest.reset();
             }
 
-            LongBuffer lb = ByteBuffer.wrap(hash).asLongBuffer();
+            final LongBuffer lb = ByteBuffer.wrap(hash).asLongBuffer();
             result[0] = lb.get(0);
             result[1] = lb.get(1);
         } else {
@@ -90,18 +90,13 @@ public final class MD5Cyclic implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
+    }
+
+    @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
     }
 
     @Override
@@ -109,4 +104,8 @@ public final class MD5Cyclic implements HashFunction {
         return signature;
     }
 
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
+    }
 }

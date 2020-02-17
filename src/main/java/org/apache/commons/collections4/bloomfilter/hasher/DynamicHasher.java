@@ -30,56 +30,57 @@ import java.util.PrimitiveIterator;
 public class DynamicHasher implements Hasher {
 
     /**
-     * The list of byte arrays that are to be hashed.
+     * The builder for DynamicHashers.
+     * @since 4.5
      */
-    private final List<byte[]> buffers;
+    public static class Builder implements Hasher.Builder {
 
-    /**
-     * The function to hash the buffers.
-     */
-    private final HashFunction function;
+        /**
+         * The list of byte[] that are to be hashed.
+         */
+        private final List<byte[]> buffers;
 
-    /**
-     * Constructs a DynamicHasher.
-     *
-     * @param function the function to use.
-     * @param buffers the byte buffers that will be hashed.
-     */
-    public DynamicHasher(HashFunction function, List<byte[]> buffers) {
-        this.buffers = new ArrayList<byte[]>(buffers);
-        this.function = function;
-    }
+        /**
+         * The function that the resulting DynamicHasher will use.
+         */
+        private final HashFunction function;
 
-    @Override
-    public HashFunctionIdentity getHashFunctionIdentity() {
-        return function;
-    }
+        /**
+         * Constructs a DynamicHasher builder.
+         *
+         * @param function the function implementation.
+         */
+        public Builder(final HashFunction function) {
+            this.function = function;
+            this.buffers = new ArrayList<>();
 
-    @Override
-    public boolean isEmpty() {
-        return buffers.isEmpty();
-    }
-
-    /**
-     * Return an iterator of integers that are the bits to enable in the Bloom filter
-     * based on the shape. The iterator may return the same value multiple times. There is
-     * no guarantee made as to the order of the integers.
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not equal
-     * {@code getName()}
-     */
-    @Override
-    public PrimitiveIterator.OfInt getBits(Shape shape) {
-        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
-            shape.getHashFunctionIdentity()) != 0) {
-            throw new IllegalArgumentException(
-                String.format("Shape hasher %s is not %s",
-                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
-                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
         }
-        return new Iterator(shape);
+
+        /**
+         * Builds the hasher.
+         *
+         * @return A DynamicHasher with the specified name, function and buffers.
+         */
+        @Override
+        public DynamicHasher build() throws IllegalArgumentException {
+            return new DynamicHasher(function, buffers);
+        }
+
+        @Override
+        public final Builder with(final byte property) {
+            return with(new byte[] {property});
+        }
+
+        @Override
+        public final Builder with(final byte[] property) {
+            buffers.add(property);
+            return this;
+        }
+
+        @Override
+        public final Builder with(final String property) {
+            return with(property.getBytes(StandardCharsets.UTF_8));
+        }
     }
 
     /**
@@ -91,11 +92,11 @@ public class DynamicHasher implements Hasher {
         private final Shape shape;
 
         /**
-         * Creates iterator with the specified shape.
+         * Constructs iterator with the specified shape.
          *
          * @param shape
          */
-        private Iterator(Shape shape) {
+        private Iterator(final Shape shape) {
             this.shape = shape;
         }
 
@@ -115,6 +116,7 @@ public class DynamicHasher implements Hasher {
                     buffer++;
                 }
                 return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
+                    // Cast to long to workaround a bug in animal-sniffer.
                     (long) shape.getNumberOfBits());
             }
             throw new NoSuchElementException();
@@ -122,57 +124,55 @@ public class DynamicHasher implements Hasher {
     }
 
     /**
-     * The builder for DynamicHashers.
-     * @since 4.5
+     * The list of byte arrays that are to be hashed.
      */
-    public static class Builder implements Hasher.Builder {
-        /**
-         * The list of byte[] that are to be hashed.
-         */
-        private final List<byte[]> buffers;
+    private final List<byte[]> buffers;
 
-        /**
-         * The function that the resulting DynamicHasher will use.
-         */
-        private final HashFunction function;
+    /**
+     * The function to hash the buffers.
+     */
+    private final HashFunction function;
 
-        /**
-         * Constructs a DynamicHasher builder.
-         *
-         * @param function the function implementation.
-         */
-        public Builder(HashFunction function) {
-            this.function = function;
-            this.buffers = new ArrayList<byte[]>();
-
-        }
-
-        /**
-         * Builds the hasher.
-         *
-         * @return A DynamicHasher with the specified name, function and buffers.
-         */
-        @Override
-        public DynamicHasher build() throws IllegalArgumentException {
-            return new DynamicHasher(function, buffers);
-        }
-
-        @Override
-        public final Builder with(byte property) {
-            return with(new byte[] {property});
-        }
-
-        @Override
-        public final Builder with(byte[] property) {
-            buffers.add(property);
-            return this;
-        }
-
-        @Override
-        public final Builder with(String property) {
-            return with(property.getBytes(StandardCharsets.UTF_8));
-        }
-
+    /**
+     * Constructs a DynamicHasher.
+     *
+     * @param function the function to use.
+     * @param buffers the byte buffers that will be hashed.
+     */
+    public DynamicHasher(final HashFunction function, final List<byte[]> buffers) {
+        this.buffers = new ArrayList<>(buffers);
+        this.function = function;
     }
 
+    /**
+     * Gets an iterator of integers that are the bits to enable in the Bloom filter
+     * based on the shape. The iterator may return the same value multiple times. There is
+     * no guarantee made as to the order of the integers.
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the Iterator of integers;
+     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not equal
+     * {@code getName()}
+     */
+    @Override
+    public PrimitiveIterator.OfInt getBits(final Shape shape) {
+        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
+            shape.getHashFunctionIdentity()) != 0) {
+            throw new IllegalArgumentException(
+                String.format("Shape hasher %s is not %s",
+                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
+                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
+        }
+        return new Iterator(shape);
+    }
+
+    @Override
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return function;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return buffers.isEmpty();
+    }
 }

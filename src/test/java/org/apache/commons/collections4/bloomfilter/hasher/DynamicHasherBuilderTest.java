@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -29,38 +28,27 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DynamicHasher Builder tests.
- *
+ * {@link DynamicHasher.Builder} tests.
  */
 public class DynamicHasherBuilderTest {
 
     private DynamicHasher.Builder builder;
-    private Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
-
-    /**
-     * Sets up the builder for testing.
-     * @throws NoSuchAlgorithmException if MD5 is not available.
-     */
-    @Before
-    public void setup() throws NoSuchAlgorithmException
-    {
-        builder = new DynamicHasher.Builder( new MD5Cyclic());
-    }
+    private final Shape shape = new Shape(new MD5Cyclic(), 1, Integer.MAX_VALUE, 1);
 
     /**
      * Tests that hashing a byte works as expected.
      */
     @Test
     public void buildTest_byte() {
-        DynamicHasher hasher = builder.with((byte) 0x1).build();
+        final DynamicHasher hasher = builder.with((byte) 0x1).build();
 
-        int expected = 1483089307;
+        final int expected = 1483089307;
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
     }
 
     /**
@@ -68,30 +56,14 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_byteArray() {
-        DynamicHasher hasher = builder.with("Hello".getBytes()).build();
-        int expected = 1519797563;
+        final DynamicHasher hasher = builder.with("Hello".getBytes()).build();
+        final int expected = 1519797563;
 
-        OfInt iter = hasher.getBits(shape);
-
-        assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
-
-    }
-
-    /**
-     * Tests that hashing a string works as expected.
-     */
-    @Test
-    public void buildTest_String() {
-        DynamicHasher hasher = builder.with("Hello").build();
-        int expected = 1519797563;
-
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertTrue(iter.hasNext());
-        assertEquals( expected, iter.nextInt() );
-        assertFalse( iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
     }
 
     /**
@@ -99,10 +71,33 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_Empty() {
-        DynamicHasher hasher = builder.build();
+        final DynamicHasher hasher = builder.build();
 
-        OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.getBits(shape);
 
         assertFalse(iter.hasNext());
+    }
+
+    /**
+     * Tests that hashing a string works as expected.
+     */
+    @Test
+    public void buildTest_String() {
+        final DynamicHasher hasher = builder.with("Hello").build();
+        final int expected = 1519797563;
+
+        final OfInt iter = hasher.getBits(shape);
+
+        assertTrue(iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
+    }
+
+    /**
+     * Sets up the builder for testing.
+     */
+    @Before
+    public void setup() {
+        builder = new DynamicHasher.Builder(new MD5Cyclic());
     }
 }

@@ -35,7 +35,7 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
      * Creates a copy of the HashFunctionIdentity.
      * @param identity the identity to copy.
      */
-    public HashFunctionIdentityImpl( HashFunctionIdentity identity) {
+    public HashFunctionIdentityImpl(final HashFunctionIdentity identity) {
         this.name = identity.getName();
         this.provider = identity.getProvider();
         this.signedness = identity.getSignedness();
@@ -51,27 +51,18 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
      * @param process the processes of the hash function.
      * @param signature the signature for the hash function.
      */
-    public HashFunctionIdentityImpl( String provider, String name, Signedness signedness, ProcessType process,
-        long signature) {
+    public HashFunctionIdentityImpl(final String provider, final String name, final Signedness signedness, final ProcessType process,
+        final long signature) {
         this.name = name;
         this.provider = provider;
         this.signedness = signedness;
         this.process = process;
         this.signature = signature;
     }
+
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String getProvider() {
-        return provider;
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return signedness;
     }
 
     @Override
@@ -80,8 +71,17 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
     }
 
     @Override
+    public String getProvider() {
+        return provider;
+    }
+
+    @Override
     public long getSignature() {
         return signature;
     }
 
+    @Override
+    public Signedness getSignedness() {
+        return signedness;
+    }
 }
