@@ -24,8 +24,8 @@ import org.junit.Test;
 
 public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
 
-    public PropertiesFactoryTest() {
-        super(PropertiesFactory.INSTANCE);
+    public PropertiesFactoryTest(final String fileExtension) {
+        super(PropertiesFactory.INSTANCE, fileExtension);
     }
 
     @Override

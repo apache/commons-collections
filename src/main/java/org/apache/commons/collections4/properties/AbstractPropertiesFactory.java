@@ -28,6 +28,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -38,6 +39,24 @@ import java.util.Properties;
  * @since 4.4
  */
 public abstract class AbstractPropertiesFactory<T extends Properties> {
+
+    /** 
+     * Enumerat5es property formats.
+     *
+     * @since 4.5
+     */
+    public enum PropertyFormat {
+
+        /** Properties file format. */
+        PROPERTIES,
+
+        /** XML file format. */
+        XML;
+
+        static PropertyFormat toPropertyFormat(String fileName) {
+            return Objects.requireNonNull(fileName, "fileName").endsWith(".xml") ? XML : PROPERTIES;
+        }
+    }
 
     /**
      * Constructs an instance.
@@ -64,7 +83,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      */
     public T load(final ClassLoader classLoader, final String name) throws IOException {
         try (final InputStream inputStream = classLoader.getResourceAsStream(name)) {
-            return load(inputStream);
+            return load(inputStream, PropertyFormat.toPropertyFormat(name));
         }
     }
 
@@ -82,7 +101,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      */
     public T load(final File file) throws FileNotFoundException, IOException {
         try (final FileInputStream inputStream = new FileInputStream(file)) {
-            return load(inputStream);
+            return load(inputStream, PropertyFormat.toPropertyFormat(file.getName()));
         }
     }
 
@@ -104,6 +123,29 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
     }
 
     /**
+     * Creates and loads properties from the given input stream.
+     *
+     * @param inputStream the location of the properties file.
+     * @param propertyFormat The format of the given file.
+     * @return a new properties object.
+     * @throws IOException              Thrown if an error occurred reading the input stream.
+     * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
+     * @since 4.5
+     */
+    public T load(final InputStream inputStream, final PropertyFormat propertyFormat) throws IOException {
+        if (inputStream == null) {
+            return null;
+        }
+        final T properties = createProperties();
+        if (propertyFormat == PropertyFormat.XML) {
+            properties.loadFromXML(inputStream);
+        } else {
+            properties.load(inputStream);
+        }
+        return properties;
+    }
+
+    /**
      * Creates and loads properties from the given path.
      *
      * @param path the location of the properties file.
@@ -113,7 +155,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      */
     public T load(final Path path) throws IOException {
         try (final InputStream inputStream = Files.newInputStream(path)) {
-            return load(inputStream);
+            return load(inputStream, PropertyFormat.toPropertyFormat(Objects.toString(path.getFileName(), null)));
         }
     }
 
@@ -141,7 +183,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      */
     public T load(final String name) throws IOException {
         try (final FileInputStream inputStream = new FileInputStream(name)) {
-            return load(inputStream);
+            return load(inputStream, PropertyFormat.toPropertyFormat(name));
         }
     }
 
@@ -167,7 +209,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      */
     public T load(final URL url) throws IOException {
         try (final InputStream inputStream = url.openStream()) {
-            return load(inputStream);
+            return load(inputStream, PropertyFormat.toPropertyFormat(url.getFile()));
         }
     }
 
