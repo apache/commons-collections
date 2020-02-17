@@ -33,7 +33,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
-
 /**
  * A counting Bloom filter.
  * This Bloom filter maintains a count of the number of times a bit has been

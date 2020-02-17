@@ -21,7 +21,6 @@ import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
-
 /**
  * An implementation of HashFunction that
  * performs {@code Objects.hash} hashing using a signed iterative method.

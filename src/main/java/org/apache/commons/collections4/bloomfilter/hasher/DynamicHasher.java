@@ -176,5 +176,4 @@ public class DynamicHasher implements Hasher {
     public boolean isEmpty() {
         return buffers.isEmpty();
     }
-
 }

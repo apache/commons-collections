@@ -53,7 +53,6 @@ public final class Murmur128x86Cyclic implements HashFunction {
         signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
-
     @Override
     public long apply(final byte[] buffer, final int seed) {
         if (parts == null || seed == 0) {
@@ -88,5 +87,4 @@ public final class Murmur128x86Cyclic implements HashFunction {
     public Signedness getSignedness() {
         return Signedness.SIGNED;
     }
-
 }

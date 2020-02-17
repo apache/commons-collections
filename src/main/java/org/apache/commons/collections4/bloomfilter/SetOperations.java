@@ -69,7 +69,6 @@ public final class SetOperations {
         return estimateSize(first) - estimateUnionSize(first,second) + estimateSize(second);
     }
 
-
     /**
      * Estimates the number of items in the Bloom filter based on the shape and the number
      * of bits that are enabled.

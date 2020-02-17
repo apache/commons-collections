@@ -157,5 +157,4 @@ public interface HashFunctionIdentity {
      * @return signedness of this function.
      */
     Signedness getSignedness();
-
 }

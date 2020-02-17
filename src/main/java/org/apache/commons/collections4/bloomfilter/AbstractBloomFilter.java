@@ -273,5 +273,4 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         }
         return BitSet.valueOf(result).cardinality();
     }
-
 }

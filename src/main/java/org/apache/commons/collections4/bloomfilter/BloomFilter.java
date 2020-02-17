@@ -121,8 +121,4 @@ public interface BloomFilter {
      * @return the cardinality of the result of {@code( this XOR other )}
      */
     int xorCardinality(BloomFilter other);
-
-
-
-
 }

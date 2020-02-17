@@ -115,7 +115,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         }
     }
 
-
     @Override
     public void merge(final Hasher hasher) {
         verifyHasher(hasher);
@@ -127,7 +126,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         return bitSet.toString();
     }
 
-
     @Override
     public int xorCardinality(final BloomFilter other) {
         if (other instanceof BitSetBloomFilter) {
@@ -138,5 +136,4 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         }
         return super.xorCardinality(other);
     }
-
 }

@@ -23,7 +23,6 @@ package org.apache.commons.collections4.bloomfilter.hasher;
  */
 public interface HashFunction extends HashFunctionIdentity {
 
-
     /**
      * Applies the hash function to the buffer.
      *
@@ -32,5 +31,4 @@ public interface HashFunction extends HashFunctionIdentity {
      * @return the long value of the hash.
      */
     long apply(byte[] buffer, int seed);
-
 }

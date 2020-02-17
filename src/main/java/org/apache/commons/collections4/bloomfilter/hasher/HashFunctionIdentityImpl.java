@@ -84,5 +84,4 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
     public Signedness getSignedness() {
         return signedness;
     }
-
 }

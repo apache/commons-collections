@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
 
-
 /**
  * The class that performs hashing.
  * <p>

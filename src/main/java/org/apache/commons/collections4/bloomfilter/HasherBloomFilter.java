@@ -139,5 +139,4 @@ public class HasherBloomFilter extends AbstractBloomFilter {
             hasher.getBits(getShape()));
         this.hasher = new StaticHasher(iter, getShape());
     }
-
 }

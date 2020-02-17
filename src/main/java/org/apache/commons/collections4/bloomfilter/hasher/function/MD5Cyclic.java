@@ -108,5 +108,4 @@ public final class MD5Cyclic implements HashFunction {
     public Signedness getSignedness() {
         return Signedness.SIGNED;
     }
-
 }
