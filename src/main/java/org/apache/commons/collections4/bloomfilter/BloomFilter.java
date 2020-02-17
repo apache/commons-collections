@@ -28,6 +28,43 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 public interface BloomFilter {
 
     /**
+     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
+     * the result.
+     *
+     * @param other the other Bloom filter.
+     * @return the cardinality of the result of {@code ( this AND other )}.
+     */
+    int andCardinality(BloomFilter other);
+
+    /**
+     * Gets the cardinality of this Bloom filter.
+     * <p>This is also known as the Hamming value.</p>
+     *
+     * @return the cardinality (number of enabled bits) in this filter.
+     */
+    int cardinality();
+
+    /**
+     * Performs a contains check. Effectively this AND other == other.
+     *
+     * @param other the Other Bloom filter.
+     * @return true if this filter matches the other.
+     */
+    boolean contains(BloomFilter other);
+
+    /**
+     * Performs a contains check against a decomposed Bloom filter. The shape must match
+     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
+     * decomposed AND this == decomposed.
+     *
+     * @param hasher The hasher containing the bits to check.
+     * @return true if this filter contains the other.
+     * @throws IllegalArgumentException if the shape argument does not match the shape of
+     * this filter, or if the hasher is not the specified one
+     */
+    boolean contains(Hasher hasher);
+
+    /**
      * Gets an array of little-endian long values representing the on bits of this filter.
      * bits 0-63 are in the first long.
      *
@@ -51,14 +88,14 @@ public interface BloomFilter {
     Shape getShape();
 
     /**
-     * Merge the other Bloom filter into this one.
+     * Merges the other Bloom filter into this one.
      *
      * @param other the other Bloom filter.
      */
     void merge(BloomFilter other);
 
     /**
-     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
+     * Merges the decomposed Bloom filter defined by the hasher into this Bloom
      * filter. The hasher provides an iterator of bit indexes to enable.
      *
      * @param hasher the hasher to provide the indexes.
@@ -66,23 +103,6 @@ public interface BloomFilter {
      * this filter, or if the hasher is not the specified one
      */
     void merge(Hasher hasher);
-
-    /**
-     * Gets the cardinality of this Bloom filter.
-     * <p>This is also known as the Hamming value.</p>
-     *
-     * @return the cardinality (number of enabled bits) in this filter.
-     */
-    int cardinality();
-
-    /**
-     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     */
-    int andCardinality(BloomFilter other);
 
     /**
      * Performs a logical "OR" with the other Bloom filter and returns the cardinality of
@@ -101,28 +121,4 @@ public interface BloomFilter {
      * @return the cardinality of the result of {@code( this XOR other )}
      */
     int xorCardinality(BloomFilter other);
-
-    /**
-     * Performs a contains check. Effectively this AND other == other.
-     *
-     * @param other the Other Bloom filter.
-     * @return true if this filter matches the other.
-     */
-    boolean contains(BloomFilter other);
-
-    /**
-     * Performs a contains check against a decomposed Bloom filter. The shape must match
-     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
-     * decomposed AND this == decomposed.
-     *
-     * @param hasher The hasher containing the bits to check.
-     * @return true if this filter contains the other.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
-    boolean contains(Hasher hasher);
-
-
-
-
 }

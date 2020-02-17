@@ -22,8 +22,8 @@ import org.junit.Test;
 
 public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
 
-    public SortedPropertiesFactoryTest() {
-        super(SortedPropertiesFactory.INSTANCE);
+    public SortedPropertiesFactoryTest(final String fileExtension) {
+        super(SortedPropertiesFactory.INSTANCE, fileExtension);
     }
 
     @Override

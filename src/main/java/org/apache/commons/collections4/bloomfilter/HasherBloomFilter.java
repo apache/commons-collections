@@ -71,6 +71,29 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
+    public int cardinality() {
+        return hasher.size();
+    }
+
+    @Override
+    public boolean contains(final Hasher hasher) {
+        verifyHasher(hasher);
+        final Set<Integer> set = new TreeSet<>();
+        hasher.getBits(getShape()).forEachRemaining((IntConsumer) idx -> {
+            set.add(idx);
+        });
+        final OfInt iter = this.hasher.getBits(getShape());
+        while (iter.hasNext()) {
+            final int idx = iter.nextInt();
+            set.remove(idx);
+            if (set.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public long[] getBits() {
         if (hasher.size() == 0) {
             return new long[0];
@@ -116,28 +139,4 @@ public class HasherBloomFilter extends AbstractBloomFilter {
             hasher.getBits(getShape()));
         this.hasher = new StaticHasher(iter, getShape());
     }
-
-    @Override
-    public int cardinality() {
-        return hasher.size();
-    }
-
-    @Override
-    public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
-        final Set<Integer> set = new TreeSet<>();
-        hasher.getBits(getShape()).forEachRemaining((IntConsumer) idx -> {
-            set.add(idx);
-        });
-        final OfInt iter = this.hasher.getBits(getShape());
-        while (iter.hasNext()) {
-            final int idx = iter.nextInt();
-            set.remove(idx);
-            if (set.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

@@ -19,12 +19,12 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
 
-
 /**
  * The class that performs hashing.
  * <p>
  * Hashers have a Unique name based on the hashing algorithm used.
- * </p><p>
+ * </p>
+ * <p>
  * Implementations of {@code getBits()} may return duplicate values and may return
  * values in a random order.  See implementation javadoc notes as to the guarantees
  * provided by the specific implementation.
@@ -34,37 +34,13 @@ import java.util.PrimitiveIterator;
 public interface Hasher {
 
     /**
-     * Gets HashFunctionIdentity of the hash function this Hasher uses.
-     *
-     * @return HashFunctionIdentity of the hash function this Hasher uses.
-     */
-    HashFunctionIdentity getHashFunctionIdentity();
-
-    /**
-     * Returns true if the hasher specifies no bits.
-     * @return true if the hasher does not specify any bits.
-     */
-    boolean isEmpty();
-
-    /**
-     * Return an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape.  No guarantee is made as to order
-     * or duplication of values.
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
-     *                                  equal {@code getName()}
-     */
-    PrimitiveIterator.OfInt getBits(Shape shape);
-
-    /**
      * A builder to build a hasher.
      * @since 4.5
      */
     interface Builder {
+
         /**
-         * Build the hasher.
+         * Builds the hasher.
          * @return the fully constructed hasher.
          */
         Hasher build();
@@ -99,6 +75,31 @@ public interface Hasher {
          * @see #getBits(Shape)
          */
         Builder with(String property);
-
     }
+
+    /**
+     * Gets an iterator of integers that are the bits to enable in the Bloom
+     * filter based on the shape.  No guarantee is made as to order
+     * or duplication of values.
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the Iterator of integers;
+     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
+     *                                  equal {@code getName()}
+     */
+    PrimitiveIterator.OfInt getBits(Shape shape);
+
+    /**
+     * Gets HashFunctionIdentity of the hash function this Hasher uses.
+     *
+     * @return HashFunctionIdentity of the hash function this Hasher uses.
+     */
+    HashFunctionIdentity getHashFunctionIdentity();
+
+    /**
+     * Returns true if the hasher specifies no bits.
+     *
+     * @return true if the hasher does not specify any bits.
+     */
+    boolean isEmpty();
 }

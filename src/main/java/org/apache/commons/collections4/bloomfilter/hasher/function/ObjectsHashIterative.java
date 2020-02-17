@@ -21,7 +21,6 @@ import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
-
 /**
  * An implementation of HashFunction that
  * performs {@code Objects.hash} hashing using a signed iterative method.
@@ -53,7 +52,7 @@ public final class ObjectsHashIterative implements HashFunction {
      * Constructs a hash that uses the Objects.hash method to has values.
      */
     public ObjectsHashIterative() {
-        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
@@ -61,7 +60,7 @@ public final class ObjectsHashIterative implements HashFunction {
         if (seed == 0) {
             last = 0;
         }
-        final long result = Arrays.deepHashCode( new Object[] {last, buffer});
+        final long result = Arrays.deepHashCode(new Object[] { last, buffer });
         last += result;
         return result;
     }
@@ -72,22 +71,22 @@ public final class ObjectsHashIterative implements HashFunction {
     }
 
     @Override
-    public String getProvider() {
-        return "Apache Commons Collections";
-    }
-
-    @Override
-    public Signedness getSignedness() {
-        return Signedness.SIGNED;
-    }
-
-    @Override
     public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
     }
 
     @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
     public long getSignature() {
         return signature;
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
     }
 }

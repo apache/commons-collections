@@ -30,33 +30,16 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.S
 import org.junit.Test;
 
 /**
- * Tests of the HashFunctionIdentity.DEEP_COMPARATOR
- *
+ * Tests of the {@link HashFunctionIdentity#DEEP_COMPARATOR}.
  */
 public class DeepComparatorTest {
 
-    private void assertBefore(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
-        assertTrue(0 > HashFunctionIdentity.DEEP_COMPARATOR.compare(identity1, identity2));
-    }
-
-    private void assertAfter(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
+    private static void assertAfter(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
         assertTrue(0 < HashFunctionIdentity.DEEP_COMPARATOR.compare(identity1, identity2));
     }
 
-    /**
-     * Tests that name order is correct.
-     */
-    @Test
-    public void nameOrderTestDifferentNames() {
-        final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
-            ProcessType.CYCLIC, 300L);
-        final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl2", Signedness.SIGNED,
-            ProcessType.CYCLIC, 300L);
-
-        assertBefore(impl1, impl2);
-        assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl1, impl1));
-        assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl2, impl2));
-        assertAfter(impl2, impl1);
+    private static void assertBefore(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
+        assertTrue(0 > HashFunctionIdentity.DEEP_COMPARATOR.compare(identity1, identity2));
     }
 
     /**
@@ -70,17 +53,16 @@ public class DeepComparatorTest {
             ProcessType.CYCLIC, 300L);
 
         assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl1, impl2));
-
     }
 
     /**
-     * Tests that signedness order is correct.
+     * Tests that name order is correct.
      */
     @Test
-    public void signednessOrder() {
+    public void nameOrderTestDifferentNames() {
         final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
             ProcessType.CYCLIC, 300L);
-        final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.UNSIGNED,
+        final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl2", Signedness.SIGNED,
             ProcessType.CYCLIC, 300L);
 
         assertBefore(impl1, impl2);
@@ -113,6 +95,22 @@ public class DeepComparatorTest {
         final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
             ProcessType.CYCLIC, 300L);
         final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite2", "impl1", Signedness.SIGNED,
+            ProcessType.CYCLIC, 300L);
+
+        assertBefore(impl1, impl2);
+        assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl1, impl1));
+        assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl2, impl2));
+        assertAfter(impl2, impl1);
+    }
+
+    /**
+     * Tests that signedness order is correct.
+     */
+    @Test
+    public void signednessOrder() {
+        final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
+            ProcessType.CYCLIC, 300L);
+        final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.UNSIGNED,
             ProcessType.CYCLIC, 300L);
 
         assertBefore(impl1, impl2);
@@ -187,5 +185,4 @@ public class DeepComparatorTest {
                 idx++, id.getSignature());
         }
     }
-
 }

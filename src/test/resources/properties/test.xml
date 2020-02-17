@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>Hello comment!</comment>
+  <entry key="key1">value1</entry>
+  <entry key="key2">value2</entry>
+  <entry key="key3">value3</entry>
+  <entry key="key4">value4</entry>
+  <entry key="key5">value5</entry>
+  <entry key="key6">value6</entry>
+  <entry key="key7">value7</entry>
+  <entry key="key8">value8</entry>
+  <entry key="key9">value9</entry>
+  <entry key="key10">value10</entry>
+  <entry key="key11">value11</entry>
+</properties>

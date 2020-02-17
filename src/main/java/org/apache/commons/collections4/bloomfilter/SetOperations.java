@@ -26,64 +26,16 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 public final class SetOperations {
 
     /**
-     * Do not instantiate.
-     */
-    private SetOperations() {}
-
-    /**
-     * Verifies the Bloom filters have the same shape.
+     * Calculates the Cosine distance between two Bloom filters.
      *
-     * @param first the first filter to check.
-     * @param second the second filter to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    private static void verifyShape(final BloomFilter first, final BloomFilter second) {
-        if (!first.getShape().equals(second.getShape())) {
-            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s",
-                first.getShape(), second.getShape()));
-        }
-    }
-
-    /**
-     * Calculates the Hamming distance between two Bloom filters.
+     * <p>Cosine distance is defined as {@code 1 - Cosine similarity}</p>
      *
      * @param first the first Bloom filter.
      * @param second the second Bloom filter.
-     * @return the Hamming distance.
+     * @return the jaccard distance.
      */
-    public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
-        return first.xorCardinality(second);
-    }
-
-
-    /**
-     * Calculates the Jaccard similarity between two Bloom filters.
-     *
-     * <p>Also known as Jaccard index, Intersection over Union, and Jaccard similarity coefficient</p>
-     *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
-     * @return the Jaccard similarity.
-     */
-    public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
-        final int orCard = first.orCardinality(second);
-        // if the orCard is zero then the hamming distance will also be zero.
-        return orCard==0?0:hammingDistance(first,second) / (double) orCard;
-    }
-
-    /**
-     * Calculates the Jaccard distance between two Bloom filters.
-     *
-     * <p>Jaccard distance is defined as {@code 1 - Jaccard similarity}</p>
-     *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
-     * @return the Jaccard distance.
-     */
-    public static double jaccardDistance(final BloomFilter first, final BloomFilter second) {
-        return 1.0 - jaccardSimilarity(first,second);
+    public static double cosineDistance(final BloomFilter first, final BloomFilter second) {
+        return 1.0 - cosineSimilarity(first,second);
     }
 
     /**
@@ -98,23 +50,23 @@ public final class SetOperations {
      * @return the Cosine similarity.
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         final int numerator = first.andCardinality(second);
-
-        return numerator==0?0:numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
+        return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
     }
 
     /**
-     * Calculates the Cosine distance between two Bloom filters.
-     *
-     * <p>Cosine distance is defined as {@code 1 - Cosine similarity}</p>
+     * Estimates the number of items in the intersection of the sets represented by two
+     * Bloom filters.
      *
      * @param first the first Bloom filter.
      * @param second the second Bloom filter.
-     * @return the jaccard distance.
+     * @return an estimate of the size of the intersection between the two filters.
      */
-    public static double cosineDistance(final BloomFilter first, final BloomFilter second) {
-        return 1.0 - cosineSimilarity(first,second);
+    public static long estimateIntersectionSize(final BloomFilter first, final BloomFilter second) {
+        verifyShape(first,second);
+        // do subtraction early to avoid Long overflow.
+        return estimateSize(first) - estimateUnionSize(first,second) + estimateSize(second);
     }
 
     /**
@@ -150,16 +102,62 @@ public final class SetOperations {
     }
 
     /**
-     * Estimates the number of items in the intersection of the sets represented by two
-     * Bloom filters.
+     * Calculates the Hamming distance between two Bloom filters.
      *
      * @param first the first Bloom filter.
      * @param second the second Bloom filter.
-     * @return an estimate of the size of the intersection between the two filters.
+     * @return the Hamming distance.
      */
-    public static long estimateIntersectionSize(final BloomFilter first, final BloomFilter second) {
+    public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
         verifyShape(first,second);
-        // do subtraction early to avoid Long overflow.
-        return estimateSize(first) - estimateUnionSize(first,second) + estimateSize(second);
+        return first.xorCardinality(second);
     }
+
+    /**
+     * Calculates the Jaccard distance between two Bloom filters.
+     *
+     * <p>Jaccard distance is defined as {@code 1 - Jaccard similarity}</p>
+     *
+     * @param first the first Bloom filter.
+     * @param second the second Bloom filter.
+     * @return the Jaccard distance.
+     */
+    public static double jaccardDistance(final BloomFilter first, final BloomFilter second) {
+        return 1.0 - jaccardSimilarity(first,second);
+    }
+
+    /**
+     * Calculates the Jaccard similarity between two Bloom filters.
+     *
+     * <p>Also known as Jaccard index, Intersection over Union, and Jaccard similarity coefficient</p>
+     *
+     * @param first the first Bloom filter.
+     * @param second the second Bloom filter.
+     * @return the Jaccard similarity.
+     */
+    public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
+        verifyShape(first, second);
+        final int orCard = first.orCardinality(second);
+        // if the orCard is zero then the hamming distance will also be zero.
+        return orCard == 0 ? 0 : hammingDistance(first, second) / (double) orCard;
+    }
+
+    /**
+     * Verifies the Bloom filters have the same shape.
+     *
+     * @param first the first filter to check.
+     * @param second the second filter to check.
+     * @throws IllegalArgumentException if the shapes are not the same.
+     */
+    private static void verifyShape(final BloomFilter first, final BloomFilter second) {
+        if (!first.getShape().equals(second.getShape())) {
+            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s",
+                first.getShape(), second.getShape()));
+        }
+    }
+
+    /**
+     * Do not instantiate.
+     */
+    private SetOperations() {}
 }

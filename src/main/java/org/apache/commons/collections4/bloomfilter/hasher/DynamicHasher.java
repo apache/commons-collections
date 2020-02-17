@@ -30,102 +30,11 @@ import java.util.PrimitiveIterator;
 public class DynamicHasher implements Hasher {
 
     /**
-     * The list of byte arrays that are to be hashed.
-     */
-    private final List<byte[]> buffers;
-
-    /**
-     * The function to hash the buffers.
-     */
-    private final HashFunction function;
-
-    /**
-     * Constructs a DynamicHasher.
-     *
-     * @param function the function to use.
-     * @param buffers the byte buffers that will be hashed.
-     */
-    public DynamicHasher(final HashFunction function, final List<byte[]> buffers) {
-        this.buffers = new ArrayList<>(buffers);
-        this.function = function;
-    }
-
-    @Override
-    public HashFunctionIdentity getHashFunctionIdentity() {
-        return function;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return buffers.isEmpty();
-    }
-
-    /**
-     * Return an iterator of integers that are the bits to enable in the Bloom filter
-     * based on the shape. The iterator may return the same value multiple times. There is
-     * no guarantee made as to the order of the integers.
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not equal
-     * {@code getName()}
-     */
-    @Override
-    public PrimitiveIterator.OfInt getBits(final Shape shape) {
-        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
-            shape.getHashFunctionIdentity()) != 0) {
-            throw new IllegalArgumentException(
-                String.format("Shape hasher %s is not %s",
-                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
-                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
-        }
-        return new Iterator(shape);
-    }
-
-    /**
-     * The iterator of integers.
-     */
-    private class Iterator implements PrimitiveIterator.OfInt {
-        private int buffer = 0;
-        private int funcCount = 0;
-        private final Shape shape;
-
-        /**
-         * Creates iterator with the specified shape.
-         *
-         * @param shape
-         */
-        private Iterator(final Shape shape) {
-            this.shape = shape;
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (buffers.isEmpty()) {
-                return false;
-            }
-            return buffer < buffers.size() - 1 || funcCount < shape.getNumberOfHashFunctions();
-        }
-
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                if (funcCount >= shape.getNumberOfHashFunctions()) {
-                    funcCount = 0;
-                    buffer++;
-                }
-                return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
-                    shape.getNumberOfBits());
-            }
-            throw new NoSuchElementException();
-        }
-    }
-
-    /**
      * The builder for DynamicHashers.
      * @since 4.5
      */
     public static class Builder implements Hasher.Builder {
+
         /**
          * The list of byte[] that are to be hashed.
          */
@@ -172,7 +81,98 @@ public class DynamicHasher implements Hasher {
         public final Builder with(final String property) {
             return with(property.getBytes(StandardCharsets.UTF_8));
         }
-
     }
 
+    /**
+     * The iterator of integers.
+     */
+    private class Iterator implements PrimitiveIterator.OfInt {
+        private int buffer = 0;
+        private int funcCount = 0;
+        private final Shape shape;
+
+        /**
+         * Constructs iterator with the specified shape.
+         *
+         * @param shape
+         */
+        private Iterator(final Shape shape) {
+            this.shape = shape;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (buffers.isEmpty()) {
+                return false;
+            }
+            return buffer < buffers.size() - 1 || funcCount < shape.getNumberOfHashFunctions();
+        }
+
+        @Override
+        public int nextInt() {
+            if (hasNext()) {
+                if (funcCount >= shape.getNumberOfHashFunctions()) {
+                    funcCount = 0;
+                    buffer++;
+                }
+                return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
+                    // Cast to long to workaround a bug in animal-sniffer.
+                    (long) shape.getNumberOfBits());
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+    /**
+     * The list of byte arrays that are to be hashed.
+     */
+    private final List<byte[]> buffers;
+
+    /**
+     * The function to hash the buffers.
+     */
+    private final HashFunction function;
+
+    /**
+     * Constructs a DynamicHasher.
+     *
+     * @param function the function to use.
+     * @param buffers the byte buffers that will be hashed.
+     */
+    public DynamicHasher(final HashFunction function, final List<byte[]> buffers) {
+        this.buffers = new ArrayList<>(buffers);
+        this.function = function;
+    }
+
+    /**
+     * Gets an iterator of integers that are the bits to enable in the Bloom filter
+     * based on the shape. The iterator may return the same value multiple times. There is
+     * no guarantee made as to the order of the integers.
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the Iterator of integers;
+     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not equal
+     * {@code getName()}
+     */
+    @Override
+    public PrimitiveIterator.OfInt getBits(final Shape shape) {
+        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
+            shape.getHashFunctionIdentity()) != 0) {
+            throw new IllegalArgumentException(
+                String.format("Shape hasher %s is not %s",
+                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
+                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
+        }
+        return new Iterator(shape);
+    }
+
+    @Override
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return function;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return buffers.isEmpty();
+    }
 }
