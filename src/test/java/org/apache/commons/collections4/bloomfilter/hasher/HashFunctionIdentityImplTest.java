@@ -89,5 +89,4 @@ public class HashFunctionIdentityImplTest {
         assertEquals(ProcessType.ITERATIVE, impl.getProcessType());
         assertEquals(-2l, impl.getSignature());
     }
-
 }

@@ -60,5 +60,4 @@ public class MD5CyclicTest {
         final long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, md5.getSignature());
     }
-
 }

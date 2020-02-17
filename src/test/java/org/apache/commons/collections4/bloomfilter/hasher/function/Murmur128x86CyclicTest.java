@@ -62,5 +62,4 @@ public class Murmur128x86CyclicTest {
         final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, murmur.getSignature());
     }
-
 }

@@ -74,7 +74,6 @@ public interface Hasher {
          * @see #getBits(Shape)
          */
         Builder with(String property);
-
     }
 
     /**

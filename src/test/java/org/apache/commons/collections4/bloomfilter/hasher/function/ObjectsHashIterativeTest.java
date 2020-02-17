@@ -65,5 +65,4 @@ public class ObjectsHashIterativeTest {
         assertEquals(expected, expected2);
         assertEquals(expected, obj.getSignature());
     }
-
 }

@@ -37,7 +37,6 @@ import org.junit.Test;
  */
 public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
-
     /**
      * Tests that the andCardinality calculation executes correctly when using a
      * CountingBloomFilter argument.
@@ -64,8 +63,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         bf2 = createFilter(hasher2, shape);
         assertEquals(0, bf.andCardinality(bf2));
         assertEquals(0, bf2.andCardinality(bf));
-
-
     }
 
     /**
@@ -80,7 +77,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         final long[] lb = bf.getBits();
         assertEquals(0x1FFFF, lb[0]);
         assertEquals(1, lb.length);
-
 
         assertEquals(17, bf.getCounts().count());
         assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).max(Integer::compare).get());
@@ -129,7 +125,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         {
             // expected
         }
-
     }
 
     @Override
@@ -141,7 +136,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
     protected CountingBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new CountingBloomFilter(hasher, shape);
     }
-
 
     /**
      * Tests that merge correctly updates the counts when a CountingBloomFilter is passed
@@ -219,7 +213,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
                 assertEquals("Wrong value for "+i, expected[i], m.get(i).intValue());
             }
         }
-
     }
 
     /**
@@ -232,7 +225,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         CountingBloomFilter bf = createFilter(hasher, shape);
-
 
         final Map<Integer,Integer> map = new HashMap<>();
         bf.getCounts().forEach(e -> map.put(e.getKey(), e.getValue()));
@@ -328,7 +320,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
-
     }
 
     /**
@@ -352,7 +343,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-
         bf.remove(hasher);
         assertEquals(17, bf.cardinality());
         final Map<Integer,Integer> map2 = new HashMap<>();
@@ -363,7 +353,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
-
     }
 
     /**
@@ -398,7 +387,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
         }
-
     }
 
     /**
@@ -411,7 +399,6 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         CountingBloomFilter bf = createFilter(hasher, shape);
-
 
         final Map<Integer,Integer> map = new HashMap<>();
         bf.getCounts().forEach(e -> map.put(e.getKey(), e.getValue()));
@@ -435,5 +422,4 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             // do nothing
         }
     }
-
 }

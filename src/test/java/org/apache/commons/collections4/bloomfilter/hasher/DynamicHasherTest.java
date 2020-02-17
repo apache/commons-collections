@@ -93,7 +93,6 @@ public class DynamicHasherTest {
             assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-
     }
 
     /**
@@ -113,7 +112,6 @@ public class DynamicHasherTest {
             assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-
     }
 
     /**
@@ -140,5 +138,4 @@ public class DynamicHasherTest {
         assertTrue(builder.build().isEmpty());
         assertFalse(builder.with("Hello").build().isEmpty());
     }
-
 }

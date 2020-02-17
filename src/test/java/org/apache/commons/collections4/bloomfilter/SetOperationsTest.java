@@ -95,7 +95,6 @@ public class SetOperationsTest {
 
         assertEquals(0.514928749927334, SetOperations.cosineDistance(filter1, filter2), 0.000000000000001);
         assertEquals(0.514928749927334, SetOperations.cosineDistance(filter2, filter1), 0.000000000000001);
-
     }
 
     /**
@@ -115,7 +114,6 @@ public class SetOperationsTest {
         assertEquals(1.0, SetOperations.cosineDistance(filter2, filter1), 0.0001);
         assertEquals(1.0, SetOperations.cosineDistance(filter1, filter3), 0.0001);
         assertEquals(1.0, SetOperations.cosineDistance(filter3, filter1), 0.0001);
-
     }
 
     /**
@@ -140,7 +138,6 @@ public class SetOperationsTest {
 
         assertEquals(0.485071250072666, SetOperations.cosineSimilarity(filter1, filter2), 0.000000000000001);
         assertEquals(0.485071250072666, SetOperations.cosineSimilarity(filter2, filter1), 0.000000000000001);
-
     }
 
     /**
@@ -160,7 +157,6 @@ public class SetOperationsTest {
         assertEquals(0.0, SetOperations.cosineSimilarity(filter2, filter1), 0.0001);
         assertEquals(0.0, SetOperations.cosineSimilarity(filter1, filter3), 0.0001);
         assertEquals(0.0, SetOperations.cosineSimilarity(filter3, filter1), 0.0001);
-
     }
 
     /**
@@ -180,7 +176,6 @@ public class SetOperationsTest {
 
         final long estimate = SetOperations.estimateIntersectionSize(filter1, filter2);
         assertEquals(1, estimate);
-
     }
 
     /**
@@ -207,9 +202,7 @@ public class SetOperationsTest {
         final BloomFilter filter2 = new HasherBloomFilter(hasher2, shape);
 
         assertEquals(3, SetOperations.estimateSize(filter2));
-
     }
-
 
     /**
      * Tests that the union size estimate is correctly calculated.
@@ -228,7 +221,6 @@ public class SetOperationsTest {
 
         final long estimate = SetOperations.estimateUnionSize(filter1, filter2);
         assertEquals(3, estimate);
-
     }
 
     /**
@@ -253,9 +245,7 @@ public class SetOperationsTest {
 
         assertEquals(17, SetOperations.hammingDistance(filter1, filter2));
         assertEquals(17, SetOperations.hammingDistance(filter2, filter1));
-
     }
-
 
     /**
      * Tests that the Jaccard distance is correctly calculated.
@@ -279,7 +269,6 @@ public class SetOperationsTest {
 
         assertEquals(0.32, SetOperations.jaccardDistance(filter1, filter2), 0.001);
         assertEquals(0.32, SetOperations.jaccardDistance(filter2, filter1), 0.001);
-
     }
 
     /**
@@ -299,7 +288,6 @@ public class SetOperationsTest {
         assertEquals(1.0, SetOperations.jaccardDistance(filter2, filter1), 0.0001);
         assertEquals(0.0, SetOperations.jaccardDistance(filter1, filter3), 0.0001);
         assertEquals(0.0, SetOperations.jaccardDistance(filter3, filter1), 0.0001);
-
     }
 
     /**
@@ -343,6 +331,5 @@ public class SetOperationsTest {
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter2, filter1), 0.0001);
         assertEquals(1.0, SetOperations.jaccardSimilarity(filter1, filter3), 0.0001);
         assertEquals(1.0, SetOperations.jaccardSimilarity(filter3, filter1), 0.0001);
-
     }
 }

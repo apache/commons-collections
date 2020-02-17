@@ -66,7 +66,6 @@ public class DynamicHasherBuilderTest {
         assertTrue(iter.hasNext());
         assertEquals(expected, iter.nextInt());
         assertFalse(iter.hasNext());
-
     }
 
     /**

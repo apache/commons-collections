@@ -52,7 +52,6 @@ public interface HashFunctionIdentity {
      * HashFunctionIdentity name, signedness, and process.
      */
     Comparator<HashFunctionIdentity> COMMON_COMPARATOR = new Comparator<HashFunctionIdentity>() {
-
         @Override
         public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
             int result = identity1.getName().compareToIgnoreCase(identity2.getName());
@@ -71,7 +70,6 @@ public interface HashFunctionIdentity {
      * HashFunctionIdentity name, signedness, process, and privider..
      */
     Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
-
         @Override
         public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
             int result = COMMON_COMPARATOR.compare(identity1, identity2);
@@ -109,7 +107,6 @@ public interface HashFunctionIdentity {
        return String.format("%s-%s-%s",
            identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),
            identity.getProcessType() ).getBytes(StandardCharsets.UTF_8);
-
     }
 
     /**

@@ -57,7 +57,6 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
         bf2 = createFilter(hasher2, shape);
         assertEquals(0, bf.andCardinality(bf2));
         assertEquals(0, bf2.andCardinality(bf));
-
     }
 
     @Override
@@ -88,7 +87,6 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
         bf.merge(bf2);
 
         assertEquals(27, bf.cardinality());
-
     }
 
     /**
@@ -116,7 +114,5 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
         bf2 = createFilter(hasher2, shape);
         assertEquals(15, bf.xorCardinality(bf2));
         assertEquals(15, bf2.xorCardinality(bf));
-
     }
-
 }

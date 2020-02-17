@@ -54,7 +54,6 @@ public class DeepComparatorTest {
             ProcessType.CYCLIC, 300L);
 
         assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(impl1, impl2));
-
     }
 
     /**
@@ -187,5 +186,4 @@ public class DeepComparatorTest {
                 idx++, id.getSignature());
         }
     }
-
 }

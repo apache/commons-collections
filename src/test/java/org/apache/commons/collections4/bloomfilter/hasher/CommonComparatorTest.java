@@ -54,7 +54,6 @@ public class CommonComparatorTest {
             ProcessType.CYCLIC, 300L);
 
         assertEquals(0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl2));
-
     }
 
     /**
@@ -160,5 +159,4 @@ public class CommonComparatorTest {
             assertEquals("Unexpected order for " + HashFunctionIdentity.asCommonString(id), idx++, id.getSignature());
         }
     }
-
 }

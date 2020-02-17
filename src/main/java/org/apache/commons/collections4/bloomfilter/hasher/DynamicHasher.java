@@ -81,7 +81,6 @@ public class DynamicHasher implements Hasher {
         public final Builder with(final String property) {
             return with(property.getBytes(StandardCharsets.UTF_8));
         }
-
     }
 
     /**

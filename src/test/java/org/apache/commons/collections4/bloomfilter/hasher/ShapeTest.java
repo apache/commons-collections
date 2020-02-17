@@ -182,7 +182,6 @@ public class ShapeTest {
         assertEquals(4, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
-
     }
 
     /**
@@ -200,7 +199,6 @@ public class ShapeTest {
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
-
     }
 
     /**
@@ -260,7 +258,6 @@ public class ShapeTest {
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(5, shape.getNumberOfItems());
         assertEquals(0.100375138, shape.getProbability(), 0.000001);
-
     }
 
     /**
@@ -448,7 +445,6 @@ public class ShapeTest {
         };
 
         assertNotEquals(new Shape(testFunction2, 4, 1.0 / 10), shape);
-
     }
 
     /**
@@ -459,5 +455,4 @@ public class ShapeTest {
         final int hashCode = Objects.hash(testFunction, 24, 3);
         assertEquals(hashCode, shape.hashCode());
     }
-
 }

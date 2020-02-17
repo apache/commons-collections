@@ -167,7 +167,6 @@ public class Shape {
         this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
-
     }
 
     /**
@@ -193,7 +192,6 @@ public class Shape {
         this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
-
     }
 
     /**
@@ -224,7 +222,6 @@ public class Shape {
         this.hashCode = generateHashCode();
         // check that probability is within range
         getProbability();
-
     }
 
     /**

@@ -84,7 +84,6 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
             verifyHasher(hasher);
             hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
         }
-
     }
 
     @Override
@@ -96,5 +95,4 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
     protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new BF(hasher, shape);
     }
-
 }

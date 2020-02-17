@@ -365,7 +365,6 @@ public abstract class AbstractBloomFilterTest {
         hasher2 = new StaticHasher(values.iterator(), shape);
         filter = createFilter(hasher2, shape);
         assertFalse(filter.isFull());
-
     }
 
     /**
@@ -519,5 +518,4 @@ public abstract class AbstractBloomFilterTest {
         assertEquals(20, bf.xorCardinality(bf2));
         assertEquals(20, bf2.xorCardinality(bf));
     }
-
 }

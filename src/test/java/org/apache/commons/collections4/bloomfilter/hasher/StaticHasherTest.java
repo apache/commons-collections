@@ -244,7 +244,6 @@ public class StaticHasherTest {
         final StaticHasher hasher2 = new StaticHasher(hasher, shape);
         assertEquals(shape, hasher2.getShape());
         assertSameBits(hasher, hasher2);
-
     }
 
     /**
@@ -280,7 +279,6 @@ public class StaticHasherTest {
             assertEquals(i, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-
     }
 
     /**
@@ -317,7 +315,6 @@ public class StaticHasherTest {
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
-
     }
 
     /**
@@ -327,7 +324,6 @@ public class StaticHasherTest {
     public void testIsEmpty() {
         final List<Integer> lst = new ArrayList<>();
         StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
-
 
         assertTrue(hasher.isEmpty());
 

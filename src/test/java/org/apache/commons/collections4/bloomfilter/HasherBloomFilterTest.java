@@ -57,5 +57,4 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
     protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
         return new HasherBloomFilter(hasher, shape);
     }
-
 }
