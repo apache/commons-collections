@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -97,11 +96,9 @@ public class DynamicHasherBuilderTest {
 
     /**
      * Sets up the builder for testing.
-     * 
-     * @throws NoSuchAlgorithmException if MD5 is not available.
      */
     @Before
-    public void setup() throws NoSuchAlgorithmException {
+    public void setup() {
         builder = new DynamicHasher.Builder(new MD5Cyclic());
     }
 }
