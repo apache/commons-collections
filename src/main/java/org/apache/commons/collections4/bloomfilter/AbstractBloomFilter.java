@@ -33,15 +33,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * This abstract class provides additional functionality not declared in the interface.
  * Specifically:
  * <ul>
- * <li>orCardinality</li>
- * <li>jaccardSimilarity</li>
- * <li>jaccardDistance</li>
- * <li>cosineSimilarity</li>
- * <li>cosineDistance</li>
- * <li>estimateSize</li>
- * <li>estimateUnionSize</li>
- * <li>estimateIntersectionSize</li>
- * <li>isFull</li>
+ * <li>{@link #isFull()}</li>
  * </ul>
  *
  * @since 4.5
