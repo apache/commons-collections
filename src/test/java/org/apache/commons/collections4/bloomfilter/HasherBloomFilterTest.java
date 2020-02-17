@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.NoSuchAlgorithmException;
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
@@ -34,11 +33,9 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
     /**
      * Tests that the constructor works correctly.
-     * 
-     * @throws NoSuchAlgorithmException
      */
     @Test
-    public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
+    public void constructorTest_NonStatic() {
         final Shape shape = new Shape(new MD5Cyclic(), 3, 72, 17);
         final DynamicHasher hasher = new DynamicHasher.Builder(new MD5Cyclic()).with("Hello").build();
         final HasherBloomFilter filter = createFilter(hasher, shape);
