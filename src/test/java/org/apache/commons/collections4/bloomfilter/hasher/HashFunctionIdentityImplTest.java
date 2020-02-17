@@ -72,12 +72,6 @@ public class HashFunctionIdentityImplTest {
 
     /**
      * Test the constructor from component values.
-     * 
-     * @param provider the name of the provider.
-     * @param name the name of the hash function.
-     * @param signedness the signedness of the hash function.
-     * @param process the processes of the hash function.
-     * @param signature the signature for the hash function.
      */
     @Test
     public void valuesConstructorTest() {
