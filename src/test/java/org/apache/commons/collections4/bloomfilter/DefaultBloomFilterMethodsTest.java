@@ -25,20 +25,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
- * A test that test all the default implementations on the BloomFilter.
- *
+ * Test all the default implementations of the BloomFilter in {@link AbstractBloomFilter}.
  */
 public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
-
-    @Override
-    protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        return new BF( hasher, shape );
-    }
-
-    @Override
-    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
-        return new BF( shape );
-    }
 
     /**
      * A testing class that implements only the abstract methods from BloomFilter.
@@ -91,10 +80,18 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
 
         @Override
         public void merge(final Hasher hasher) {
-            verifyHasher( hasher );
+            verifyHasher(hasher);
             hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
         }
-
     }
 
+    @Override
+    protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
+        return new BF(shape);
+    }
+
+    @Override
+    protected AbstractBloomFilter createFilter(final Hasher hasher, final Shape shape) {
+        return new BF(hasher, shape);
+    }
 }

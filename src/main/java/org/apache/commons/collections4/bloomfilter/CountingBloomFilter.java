@@ -33,7 +33,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
-
 /**
  * A counting Bloom filter.
  * This Bloom filter maintains a count of the number of times a bit has been
@@ -47,7 +46,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 public class CountingBloomFilter extends AbstractBloomFilter {
 
     /**
-     * the count of entries. Each enabled bit is a key with the count for that bit
+     * The count of entries. Each enabled bit is a key with the count for that bit
      * being the value.  Entries with a value of zero are removed.
      */
     private final TreeMap<Integer, Integer> counts;
@@ -68,6 +67,29 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
+     * Constructs a counting Bloom filter with the provided counts and shape
+     *
+     * @param counts A map of data counts.
+     * @param shape  The shape of the resulting filter.
+     */
+    public CountingBloomFilter(final Map<Integer, Integer> counts, final Shape shape) {
+        this(shape);
+        counts.entrySet().stream().forEach(e -> {
+            if (e.getKey() >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(
+                    "dataMap has an item with an index larger than " + (shape.getNumberOfBits() - 1));
+            } else if (e.getKey() < 0) {
+                throw new IllegalArgumentException("dataMap has an item with an index less than 0");
+            }
+            if (e.getValue() < 0) {
+                throw new IllegalArgumentException("dataMap has an item with an value less than 0");
+            } else if (e.getValue() > 0) {
+                this.counts.put(e.getKey(), e.getValue());
+            }
+        });
+    }
+
+    /**
      * Constructs an empty Counting filter with the specified shape.
      *
      * @param shape  The shape of the resulting filter.
@@ -77,30 +99,38 @@ public class CountingBloomFilter extends AbstractBloomFilter {
         this.counts = new TreeMap<>();
     }
 
-    /**
-     * Constructs a counting Bloom filter with the provided counts and shape
-     *
-     * @param counts A map of data counts.
-     * @param shape  The shape of the resulting filter.
-     */
-    public CountingBloomFilter(final Map<Integer,Integer> counts, final Shape shape) {
-        this(shape);
-        counts.entrySet().stream().forEach( e -> {
-            if (e.getKey() >= shape.getNumberOfBits())
-            {
-                throw new IllegalArgumentException( "dataMap has an item with an index larger than "+
-                    (shape.getNumberOfBits()-1) );
+    @Override
+    public int andCardinality(final BloomFilter other) {
+        if (other instanceof CountingBloomFilter) {
+            final Set<Integer> result = new HashSet<>(counts.keySet());
+            result.retainAll(((CountingBloomFilter)other).counts.keySet());
+            return result.size();
+        }
+        return super.andCardinality(other);
+    }
+
+    @Override
+    public int cardinality() {
+        return counts.size();
+    }
+
+    @Override
+    public boolean contains(final Hasher hasher) {
+        verifyHasher(hasher);
+        final OfInt iter = hasher.getBits(getShape());
+        while (iter.hasNext()) {
+            if (counts.get(iter.nextInt()) == null) {
+                return false;
             }
-            else if (e.getKey() < 0)
-            {
-                throw new IllegalArgumentException( "dataMap has an item with an index less than 0" );
-            }
-            if (e.getValue() < 0) {
-                throw new IllegalArgumentException( "dataMap has an item with an value less than 0" );
-            } else if (e.getValue() > 0)
-            {
-                this.counts.put( e.getKey(), e.getValue() );
-            }});
+        }
+        return true;
+    }
+
+    @Override
+    public long[] getBits() {
+        final BitSet bs = new BitSet();
+        counts.keySet().stream().forEach(bs::set);
+        return bs.toLongArray();
     }
 
     /**
@@ -115,12 +145,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{ ");
-        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
-            sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
-        }
-        return sb.append("}").toString();
+    public StaticHasher getHasher() {
+        return new StaticHasher(counts.keySet().iterator(), getShape());
     }
 
     /**
@@ -137,9 +163,8 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter)
-        {
-            merge(((CountingBloomFilter)other).counts.keySet().iterator());
+        if (other instanceof CountingBloomFilter) {
+            merge(((CountingBloomFilter) other).counts.keySet().iterator());
         } else {
             merge(BitSet.valueOf(other.getBits()).stream().iterator());
         }
@@ -147,12 +172,12 @@ public class CountingBloomFilter extends AbstractBloomFilter {
 
     @Override
     public void merge(final Hasher hasher) {
-        verifyHasher( hasher );
-        merge( hasher.getBits(getShape()) );
+        verifyHasher(hasher);
+        merge(hasher.getBits(getShape()));
     }
 
     /**
-     * Merge an iterator of set bits into this filter.
+     * Merges an iterator of set bits into this filter.
      * @param iter the iterator of bits to set.
      */
     private void merge(final Iterator<Integer> iter) {
@@ -161,15 +186,15 @@ public class CountingBloomFilter extends AbstractBloomFilter {
             if (val == null) {
                 counts.put(idx, 1 );
             } else if (val == Integer.MAX_VALUE) {
-                throw new IllegalStateException( "Overflow on index "+idx);
+                throw new IllegalStateException("Overflow on index " + idx);
             } else {
-                counts.put( idx,  val+1 );
+                counts.put(idx, val + 1);
             }
         });
     }
 
     /**
-     * Decrement the counts for the bits that are on in the other BloomFilter from this
+     * Decrements the counts for the bits that are on in the other BloomFilter from this
      * one.
      *
      * <p>
@@ -180,16 +205,15 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public void remove(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter)
-        {
-            remove(((CountingBloomFilter)other).counts.keySet().stream());
+        if (other instanceof CountingBloomFilter) {
+            remove(((CountingBloomFilter) other).counts.keySet().stream());
         } else {
             remove(BitSet.valueOf(other.getBits()).stream().boxed());
         }
     }
 
     /**
-     * Decrement the counts for the bits that are on in the hasher from this
+     * Decrements the counts for the bits that are on in the hasher from this
      * Bloom filter.
      *
      * <p>
@@ -199,9 +223,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param hasher the hasher to generate bits.
      */
     public void remove(final Hasher hasher) {
-        verifyHasher( hasher );
+        verifyHasher(hasher);
         final Set<Integer> lst = new HashSet<>();
-        hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
+        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>)lst::add);
         remove(lst.stream());
     }
 
@@ -221,7 +245,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
                 }
             }
             if (val == null || val == 0) {
-                throw new IllegalStateException( "Underflow on index "+idx);
+                throw new IllegalStateException("Underflow on index " + idx);
             } else if (val - 1 == 0) {
                 counts.remove(idx);
             } else {
@@ -231,41 +255,11 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public long[] getBits() {
-        final BitSet bs = new BitSet();
-        counts.keySet().stream().forEach(bs::set);
-        return bs.toLongArray();
-    }
-
-    @Override
-    public StaticHasher getHasher() {
-        return new StaticHasher(counts.keySet().iterator(), getShape());
-    }
-
-    @Override
-    public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
-        final OfInt iter = hasher.getBits(getShape());
-        while (iter.hasNext()) {
-            if (counts.get(iter.nextInt()) == null) {
-                return false;
-            }
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{ ");
+        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
+            sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
         }
-        return true;
-    }
-
-    @Override
-    public int cardinality() {
-        return counts.size();
-    }
-
-    @Override
-    public int andCardinality(final BloomFilter other) {
-        if (other instanceof CountingBloomFilter) {
-            final Set<Integer> result = new HashSet<>( counts.keySet());
-            result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
-            return result.size();
-        }
-        return super.andCardinality(other);
+        return sb.append("}").toString();
     }
 }

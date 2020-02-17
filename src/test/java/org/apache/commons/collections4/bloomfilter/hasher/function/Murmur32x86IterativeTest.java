@@ -27,7 +27,6 @@ import org.junit.Test;
 
 /**
  * Test that the Murmur3 32 x86 hash function works correctly.
- *
  */
 public class Murmur32x86IterativeTest {
 
@@ -60,5 +59,4 @@ public class Murmur32x86IterativeTest {
         final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, murmur.getSignature());
     }
-
 }

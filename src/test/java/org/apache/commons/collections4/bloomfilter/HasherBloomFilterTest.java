@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.NoSuchAlgorithmException;
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
@@ -27,36 +26,31 @@ import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Test;
 
 /**
- * Tests the HasherBloomFilter implementation.
- *
+ * Tests the {@link HasherBloomFilter}.
  */
 public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
-
-    @Override
-    protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        return new HasherBloomFilter( hasher, shape );
+    /**
+     * Tests that the constructor works correctly.
+     */
+    @Test
+    public void constructorTest_NonStatic() {
+        final Shape shape = new Shape(new MD5Cyclic(), 3, 72, 17);
+        final DynamicHasher hasher = new DynamicHasher.Builder(new MD5Cyclic()).with("Hello").build();
+        final HasherBloomFilter filter = createFilter(hasher, shape);
+        final long[] lb = filter.getBits();
+        assertEquals(2, lb.length);
+        assertEquals(0x6203101001888c44L, lb[0]);
+        assertEquals(0x60L, lb[1]);
     }
 
     @Override
     protected AbstractBloomFilter createEmptyFilter(final Shape shape) {
-        return new HasherBloomFilter( shape );
+        return new HasherBloomFilter(shape);
     }
 
-    /**
-     * Tests that the constructor works correctly.
-     * @throws NoSuchAlgorithmException
-     */
-    @Test
-    public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
-        final Shape shape = new Shape( new MD5Cyclic(), 3, 72, 17 );
-        final DynamicHasher hasher = new DynamicHasher.Builder( new MD5Cyclic() ).with( "Hello").build();
-        final HasherBloomFilter filter = createFilter( hasher, shape );
-        final long[] lb = filter.getBits();
-        assertEquals( 2, lb.length );
-        assertEquals( 0x6203101001888c44L, lb[0]);
-        assertEquals( 0x60L, lb[1]);
+    @Override
+    protected HasherBloomFilter createFilter(final Hasher hasher, final Shape shape) {
+        return new HasherBloomFilter(hasher, shape);
     }
-
-
 }

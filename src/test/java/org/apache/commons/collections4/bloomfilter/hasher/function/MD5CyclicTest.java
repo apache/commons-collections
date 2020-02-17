@@ -27,7 +27,6 @@ import org.junit.Test;
 
 /**
  * Tests the MD5 cyclic hash function.
- *
  */
 public class MD5CyclicTest {
 
@@ -60,5 +59,4 @@ public class MD5CyclicTest {
         final long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, md5.getSignature());
     }
-
 }

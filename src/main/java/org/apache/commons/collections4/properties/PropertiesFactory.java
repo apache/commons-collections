@@ -254,6 +254,7 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
             throw new UnsupportedOperationException();
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void save(final OutputStream out, final String comments) {
             // Implement as super
