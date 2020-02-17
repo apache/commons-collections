@@ -46,7 +46,7 @@ public interface HashFunctionIdentity {
          * Call the underlying hash algorithm for a (buffer, seed) pair passed to
          * {@link HashFunction#apply(byte[], int)} when the state is uninitialised or
          * the seed is zero. This initialises the state. Subsequent calls with a non-zero
-         * seed use the state to generate a new value.</dd>
+         * seed use the state to generate a new value.
          */
         CYCLIC,
         /**
