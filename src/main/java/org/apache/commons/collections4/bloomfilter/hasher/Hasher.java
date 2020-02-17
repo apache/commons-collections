@@ -23,7 +23,8 @@ import java.util.PrimitiveIterator;
  * The class that performs hashing.
  * <p>
  * Hashers have a Unique name based on the hashing algorithm used.
- * </p><p>
+ * </p>
+ * <p>
  * Implementations of {@code getBits()} may return duplicate values and may return
  * values in a random order.  See implementation javadoc notes as to the guarantees
  * provided by the specific implementation.

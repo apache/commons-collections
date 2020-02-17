@@ -22,26 +22,42 @@ import java.util.Comparator;
 import java.util.Locale;
 
 /**
- * Defines the a Hash Function used by Hashers.
+ * Defines the hash function used by a {@link Hasher}.
  *
  * @since 4.5
  */
 public interface HashFunctionIdentity {
 
     /**
-     * An enum that identifies the process type of this function. <dl> <dt>Iterative
-     * processes</dt> <dd>Call the underlying algorithm for each buffer, seed pair call to
-     * {@code apply}.</dd> <dt>Cyclic processes</dt> <dd>Call the underlying algorithm to
-     * generate two values for each buffer. It returns the first value on the call with
-     * seed 0, and increments the result with the second value before returning it on all
-     * subsequent calls.</dd> </dl>
+     * Identifies the process type of this function.
+     *
+     * <dl>
+     *  <dt>Iterative processes</dt>
+     *  <dd>Call the underlying hash algorithm for each (buffer, seed) pair passed to
+     *  {@link HashFunction#apply(byte[], int)}.</dd>
+     *  <dt>Cyclic processes</dt>
+     *  <dd>Call the underlying hash algorithm using a (buffer, seed) pair passed to
+     *  {@link HashFunction#apply(byte[], int)} to initialise the state. Subsequent
+     *  calls can generate hash values without calling the underlying algorithm.</dd>
+     * </dl>
      */
     enum ProcessType {
-        CYCLIC, ITERATIVE
+        /**
+         * Call the underlying hash algorithm for a (buffer, seed) pair passed to
+         * {@link HashFunction#apply(byte[], int)} when the state is uninitialised or
+         * the seed is zero. This initialises the state. Subsequent calls with a non-zero
+         * seed use the state to generate a new value.</dd>
+         */
+        CYCLIC,
+        /**
+         * Call the underlying hash algorithm for each (buffer, seed) pair passed to
+         * {@link HashFunction#apply(byte[], int)}.
+         */
+        ITERATIVE
     }
 
     /**
-     * An enum that identifies the Signedness of the calculations for this function.
+     * Identifies the signedness of the calculations for this function.
      */
     enum Signedness {
         SIGNED, UNSIGNED
@@ -66,8 +82,8 @@ public interface HashFunctionIdentity {
     };
 
     /**
-     * A comparator implementation that performs the most common comparison using the
-     * HashFunctionIdentity name, signedness, process, and privider..
+     * A comparator implementation that performs the comparison using all the properties of the
+     * HashFunctionIdentity: name, signedness, process, and provider.
      */
     Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
         @Override
@@ -121,9 +137,9 @@ public interface HashFunctionIdentity {
     String getName();
 
     /**
-     * Gets the process of this function.
+     * Gets the process type of this function.
      *
-     * @return process of this function.
+     * @return process type of this function.
      */
     ProcessType getProcessType();
 
