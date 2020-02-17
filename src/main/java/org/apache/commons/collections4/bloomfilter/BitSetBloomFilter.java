@@ -114,6 +114,17 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
+    public int orCardinality(final BloomFilter other) {
+        if (other instanceof BitSetBloomFilter) {
+            verifyShape(other);
+            final BitSet result = (BitSet) bitSet.clone();
+            result.or(((BitSetBloomFilter)other).bitSet);
+            return result.cardinality();
+        }
+        return super.orCardinality(other);
+    }
+
+    @Override
     public String toString() {
         return bitSet.toString();
     }
