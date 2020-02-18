@@ -406,9 +406,22 @@ public class ShapeTest {
     @Test
     public void equalsTest() {
 
-        assertEquals(new Shape(testFunction, 5, 1.0 / 10), shape);
-        assertNotEquals(new Shape(testFunction, 5, 1.0 / 11), shape);
-        assertNotEquals(new Shape(testFunction, 4, 1.0 / 10), shape);
+        assertEquals(shape, shape);
+        assertEquals(shape, new Shape(testFunction, 5, 1.0 / 10));
+        assertNotEquals(shape, null);
+        assertNotEquals(shape, new Shape(testFunction, 5, 1.0 / 11));
+        assertNotEquals(shape, new Shape(testFunction, 4, 1.0 / 10));
+        // Number of bits does not change equality,
+        // only the number of bits and the number of hash functions
+        final int numberOfBits = 10000;
+        final int numberOfItems = 15;
+        final int numberOfHashFunctions = 4;
+        assertEquals(new Shape(testFunction, numberOfItems, numberOfBits, numberOfHashFunctions),
+                     new Shape(testFunction, numberOfItems + 1, numberOfBits, numberOfHashFunctions));
+        assertNotEquals(new Shape(testFunction, numberOfItems, numberOfBits, numberOfHashFunctions),
+                        new Shape(testFunction, numberOfItems, numberOfBits + 1, numberOfHashFunctions));
+        assertNotEquals(new Shape(testFunction, numberOfItems, numberOfBits, numberOfHashFunctions),
+                        new Shape(testFunction, numberOfItems, numberOfBits, numberOfHashFunctions + 1));
 
         final HashFunctionIdentity testFunction2 = new HashFunctionIdentity() {
 
@@ -438,7 +451,7 @@ public class ShapeTest {
             }
         };
 
-        assertNotEquals(new Shape(testFunction2, 4, 1.0 / 10), shape);
+        assertNotEquals(shape, new Shape(testFunction2, 4, 1.0 / 10));
     }
 
     /**
