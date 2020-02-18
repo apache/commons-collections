@@ -18,7 +18,6 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Comparator;
 import java.util.Locale;
 
 /**
@@ -64,39 +63,6 @@ public interface HashFunctionIdentity {
     }
 
     /**
-     * A comparator implementation that performs the most common comparison using the
-     * HashFunctionIdentity name, signedness, and process.
-     */
-    Comparator<HashFunctionIdentity> COMMON_COMPARATOR = new Comparator<HashFunctionIdentity>() {
-        @Override
-        public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
-            int result = identity1.getName().compareToIgnoreCase(identity2.getName());
-            if (result == 0) {
-                result = identity1.getSignedness().compareTo(identity2.getSignedness());
-            }
-            if (result == 0) {
-                result = identity1.getProcessType().compareTo(identity2.getProcessType());
-            }
-            return result;
-        }
-    };
-
-    /**
-     * A comparator implementation that performs the comparison using all the properties of the
-     * HashFunctionIdentity: name, signedness, process, and provider.
-     */
-    Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
-        @Override
-        public int compare(final HashFunctionIdentity identity1, final HashFunctionIdentity identity2) {
-            int result = COMMON_COMPARATOR.compare(identity1, identity2);
-            if (result == 0) {
-                result = identity1.getProvider().compareToIgnoreCase(identity2.getProvider());
-            }
-            return result;
-        }
-    };
-
-    /**
      * Gets a common formatted string for general display.
      *
      * @param identity the identity to format.
@@ -119,10 +85,9 @@ public interface HashFunctionIdentity {
      * @return the signature buffer for the identity
      */
     static byte[] prepareSignatureBuffer(final HashFunctionIdentity identity) {
-
        return String.format("%s-%s-%s",
            identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),
-           identity.getProcessType() ).getBytes(StandardCharsets.UTF_8);
+           identity.getProcessType()).getBytes(StandardCharsets.UTF_8);
     }
 
     /**

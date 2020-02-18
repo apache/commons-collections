@@ -232,7 +232,7 @@ public class Shape {
      * @param numberOfBits the number of bits in the filter.
      * @return the optimal number of hash functions.
      */
-    private int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
+    private static int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
         /*
          * k = round((m / n) * log(2)) We change order so that we use real math rather
          * than integer math.
@@ -258,8 +258,8 @@ public class Shape {
             return
                 other.getNumberOfBits() == getNumberOfBits() &&
                 other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
-                HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
-                    other.getHashFunctionIdentity()) == 0;
+                HashFunctionValidator.areEqual(getHashFunctionIdentity(),
+                                               other.getHashFunctionIdentity());
         }
         return false;
     }

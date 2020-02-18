@@ -187,7 +187,11 @@ public class StaticHasherTest {
 
         assertEquals(5, hasher.size());
         assertEquals(shape, hasher.getShape());
-        assertEquals(0, HashFunctionIdentity.DEEP_COMPARATOR.compare(testFunction, hasher.getHashFunctionIdentity()));
+        // All function properties are equal
+        assertEquals(testFunction.getName(), hasher.getHashFunctionIdentity().getName());
+        assertEquals(testFunction.getProcessType(), hasher.getHashFunctionIdentity().getProcessType());
+        assertEquals(testFunction.getProvider(), hasher.getHashFunctionIdentity().getProvider());
+        assertEquals(testFunction.getSignedness(), hasher.getHashFunctionIdentity().getSignedness());
 
         iter = hasher.getBits(shape);
         int idx = 0;

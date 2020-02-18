@@ -48,11 +48,8 @@ public final class StaticHasher implements Hasher {
      */
     public StaticHasher(final Hasher hasher, final Shape shape) {
         this(hasher.getBits(shape), shape);
-        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(hasher.getHashFunctionIdentity(),
-            shape.getHashFunctionIdentity()) != 0) {
-            throw new IllegalArgumentException(String.format("Hasher (%s) is not the same as for shape (%s)",
-                HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()), shape.toString()));
-        }
+        HashFunctionValidator.checkAreEqual(hasher.getHashFunctionIdentity(),
+                                            shape.getHashFunctionIdentity());
     }
 
     /**

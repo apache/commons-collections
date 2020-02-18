@@ -212,6 +212,9 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param hasher the Hasher to check
      */
     protected void verifyHasher(final Hasher hasher) {
+        // It is assumed that the filter and hasher have been constructed using the
+        // same hash function. Use the signature for a fast check the hash function is equal.
+        // Collisions will occur at a rate of 1 in 2^64.
         if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
             throw new IllegalArgumentException(
                 String.format("Hasher (%s) is not the hasher for shape (%s)",

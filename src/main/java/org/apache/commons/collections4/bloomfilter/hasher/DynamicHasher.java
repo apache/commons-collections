@@ -177,13 +177,8 @@ public class DynamicHasher implements Hasher {
      */
     @Override
     public PrimitiveIterator.OfInt getBits(final Shape shape) {
-        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
-            shape.getHashFunctionIdentity()) != 0) {
-            throw new IllegalArgumentException(
-                String.format("Shape hasher %s is not %s",
-                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
-                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
-        }
+        HashFunctionValidator.checkAreEqual(getHashFunctionIdentity(),
+                                            shape.getHashFunctionIdentity());
         // Use optimised iterator for no values
         return buffers.isEmpty() ? NoValuesIterator.INSTANCE : new Iterator(shape);
     }
