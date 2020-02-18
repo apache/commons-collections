@@ -338,8 +338,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {
-            "For","then","despite",/* of */"space","I","would","be","brought",
-            "From","limits","far","remote","where","thou","dost","stay"
+            "For", "then", "despite", /* of */"space", "I", "would", "be", "brought",
+            "From", "limits", "far", "remote", "where", "thou", "dost", "stay"
         };
     }
 
@@ -1437,7 +1437,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<>(entrySet);
         try {
-            assertFalse(entrySet.removeAll(Collections.<Map.Entry<K, V>> emptySet()));
+            assertFalse(entrySet.removeAll(Collections.<Map.Entry<K, V>>emptySet()));
         } catch (final UnsupportedOperationException e) {
             return;
         }
@@ -1478,7 +1478,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
         assertEquals(sampleKeys.length, getMap().size());
         try {
-            assertTrue(entrySet.retainAll(Collections.<Map.Entry<K, V>> emptySet()));
+            assertTrue(entrySet.retainAll(Collections.<Map.Entry<K, V>>emptySet()));
         } catch (final UnsupportedOperationException e) {
             return;
         }

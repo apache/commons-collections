@@ -113,7 +113,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         coll.add("12");
         coll.add("16");
         coll.add("1");
-        coll.addAll(asList("2","3","4"));
+        coll.addAll(asList("2", "3", "4"));
 
         @SuppressWarnings("unchecked")
         final IndexedCollection<Integer, String> indexed = (IndexedCollection<Integer, String>) coll;

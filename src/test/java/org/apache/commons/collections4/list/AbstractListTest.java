@@ -1112,7 +1112,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 // old serialized tests
                 return;
             }
-            assertEquals("List is the right size",list.size(), list2.size());
+            assertEquals("List is the right size", list.size(), list2.size());
             assertEquals(list, list2);
         }
     }

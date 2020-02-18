@@ -62,7 +62,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Override
-    abstract public MultiValuedMap<K, V> makeObject();
+    public abstract MultiValuedMap<K, V> makeObject();
 
     @Override
     public String getCompatibilityVersion() {

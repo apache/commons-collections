@@ -113,7 +113,7 @@ public class FilterListIteratorTest {
     @Test
     public void testWalkLists() {
         // this just confirms that our walkLists method works OK
-        walkLists(list,list.listIterator());
+        walkLists(list, list.listIterator());
     }
 
     @Test
@@ -257,8 +257,8 @@ public class FilterListIteratorTest {
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
             final ListIterator<Integer> expected = threes.listIterator();
-            walkForward(expected,filtered);
-            previousPreviousNext(expected,filtered);
+            walkForward(expected, filtered);
+            previousPreviousNext(expected, filtered);
         }
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), truePred);
@@ -347,10 +347,10 @@ public class FilterListIteratorTest {
         final ListIterator<E> expected = list.listIterator();
 
         // walk all the way forward
-        walkForward(expected,testing);
+        walkForward(expected, testing);
 
         // walk all the way back
-        walkBackward(expected,testing);
+        walkBackward(expected, testing);
 
         // forward,back,forward
         while (expected.hasNext()) {

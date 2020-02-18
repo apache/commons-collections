@@ -605,7 +605,7 @@
           <headerLocation>${basedir}/src/conf/license-header.txt</headerLocation>
           <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
           <enableRulesSummary>false</enableRulesSummary>
-          <includeTestSourceDirectory>false</includeTestSourceDirectory>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/test.properties,**/resolver-status.properties</resourceExcludes>
         </configuration>
       </plugin>

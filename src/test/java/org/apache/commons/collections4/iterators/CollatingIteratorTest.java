@@ -100,7 +100,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         for (int i = 0; i < evens.size(); i++) {
             assertTrue(iter.hasNext());
             assertEquals(evens.get(i), iter.next());
-            assertEquals(0,iter.getIteratorIndex());
+            assertEquals(0, iter.getIteratorIndex());
         }
         assertTrue(!iter.hasNext());
     }
@@ -110,7 +110,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
             assertEquals(Integer.valueOf(i), iter.next());
-            assertEquals(i % 2,iter.getIteratorIndex());
+            assertEquals(i % 2, iter.getIteratorIndex());
         }
         assertTrue(!iter.hasNext());
     }
@@ -119,8 +119,8 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator, odds.iterator(), evens.iterator());
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
-            assertEquals(Integer.valueOf(i),iter.next());
-            assertEquals(i % 2 == 0 ? 1 : 0,iter.getIteratorIndex());
+            assertEquals(Integer.valueOf(i), iter.next());
+            assertEquals(i % 2 == 0 ? 1 : 0, iter.getIteratorIndex());
         }
         assertTrue(!iter.hasNext());
     }
@@ -132,10 +132,10 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         for (int i = 0; i < evens.size(); i++) {
             assertTrue(iter.hasNext());
             assertEquals(evens.get(i), iter.next());
-            assertEquals(0,iter.getIteratorIndex());
+            assertEquals(0, iter.getIteratorIndex());
             assertTrue(iter.hasNext());
             assertEquals(evens.get(i), iter.next());
-            assertEquals(1,iter.getIteratorIndex());
+            assertEquals(1, iter.getIteratorIndex());
         }
         assertTrue(!iter.hasNext());
     }
@@ -146,62 +146,62 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         iter.addIterator(evens.iterator());
         iter.addIterator(odds.iterator());
 
-        assertEquals(Integer.valueOf(0),iter.next());  // even   0
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1),iter.next());  // fib    1
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1),iter.next());  // fib    1
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1),iter.next());  // odd    1
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(2),iter.next());  // fib    2
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(2),iter.next());  // even   2
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(3),iter.next());  // fib    3
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(3),iter.next());  // odd    3
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(4),iter.next());  // even   4
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(5),iter.next());  // fib    5
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(5),iter.next());  // odd    5
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(6),iter.next());  // even   6
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(7),iter.next());  // odd    7
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(8),iter.next());  // fib    8
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(8),iter.next());  // even   8
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(9),iter.next());  // odd    9
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(10),iter.next()); // even  10
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(11),iter.next()); // odd   11
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(12),iter.next()); // even  12
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(13),iter.next()); // fib   13
-        assertEquals(0,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(13),iter.next()); // odd   13
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(14),iter.next()); // even  14
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(15),iter.next()); // odd   15
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(16),iter.next()); // even  16
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(17),iter.next()); // odd   17
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(18),iter.next()); // even  18
-        assertEquals(1,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(19),iter.next()); // odd   19
-        assertEquals(2,iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(21),iter.next()); // fib   21
-        assertEquals(0,iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(0), iter.next()); // even 0
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(1), iter.next()); // fib 1
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(1), iter.next()); // fib 1
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(1), iter.next()); // odd 1
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(2), iter.next()); // fib 2
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(2), iter.next()); // even 2
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(3), iter.next()); // fib 3
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(3), iter.next()); // odd 3
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(4), iter.next()); // even 4
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(5), iter.next()); // fib 5
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(5), iter.next()); // odd 5
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(6), iter.next()); // even 6
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(7), iter.next()); // odd 7
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(8), iter.next()); // fib 8
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(8), iter.next()); // even 8
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(9), iter.next()); // odd 9
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(10), iter.next()); // even 10
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(11), iter.next()); // odd 11
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(12), iter.next()); // even 12
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(13), iter.next()); // fib 13
+        assertEquals(0, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(13), iter.next()); // odd 13
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(14), iter.next()); // even 14
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(15), iter.next()); // odd 15
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(16), iter.next()); // even 16
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(17), iter.next()); // odd 17
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(18), iter.next()); // even 18
+        assertEquals(1, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(19), iter.next()); // odd 19
+        assertEquals(2, iter.getIteratorIndex());
+        assertEquals(Integer.valueOf(21), iter.next()); // fib 21
+        assertEquals(0, iter.getIteratorIndex());
 
         assertTrue(!iter.hasNext());
     }
@@ -218,7 +218,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
                 iter.remove();
             }
         }
-        assertEquals(expectedSize,evens.size());
+        assertEquals(expectedSize, evens.size());
     }
 
     public void testRemoveFromDouble() {

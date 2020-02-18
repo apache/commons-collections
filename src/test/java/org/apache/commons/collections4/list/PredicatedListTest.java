@@ -119,7 +119,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         elements.add((E) "one");
         elements.add((E) "two");
         elements.add((E) "three");
-        list.addAll(1,elements);
+        list.addAll(1, elements);
         assertTrue("List should contain legal element",
          list.contains("zero"));
         assertTrue("List should contain legal element",

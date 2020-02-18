@@ -31,4 +31,13 @@
 
   <!-- Ignore missing javadoc param for unsupported method -->
   <suppress checks="JavadocMethod" files="FilterListIterator.java" lines="116,166" />
+
+  <!-- Be more lenient on tests. -->
+  <suppress checks="Javadoc" files=".*[/\\]test[/\\].*" />
+  <suppress checks="MultipleStringLiterals" files=".*[/\\]test[/\\].*" />
+  <suppress checks="DesignForExtension" files=".*[/\\]test[/\\].*" />
+  <suppress checks="LineLength" files=".*[/\\]test[/\\].*" />
+  <suppress checks="IllegalCatch" files=".*[/\\]test[/\\].*" />
+  <suppress checks="MethodLength" files="(MersenneTwister64|Well44497[ab]|MultiplyWithCarry256)Test" />
+  <suppress checks="AvoidStarImport" files=".*[/\\]test[/\\].*" />
 </suppressions>

@@ -81,14 +81,14 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
         map = lazySortedMap(new TreeMap<Integer, Number>(), FactoryUtils.<Number>nullFactory());
         final Number o = map.get(5);
-        assertEquals(null,o);
+        assertEquals(null, o);
         assertEquals(1, map.size());
 
     }
 
     //-----------------------------------------------------------------------
     public void testSortOrder() {
-        final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String,Number>(), oneFactory);
+        final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String, Number>(), oneFactory);
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
@@ -99,7 +99,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertEquals("Last key in head map should be B",
             "B", map.headMap("C").lastKey());
         assertEquals("Last key in submap should be B",
-            "B", map.subMap("A","C").lastKey());
+            "B", map.subMap("A", "C").lastKey());
 
         final Comparator<?> c = map.comparator();
         assertTrue("natural order, so comparator should be null",
@@ -118,7 +118,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertEquals("Last key in head map should be B",
             "B", map.headMap("A").lastKey());
         assertEquals("Last key in submap should be B",
-            "B", map.subMap("C","A").lastKey());
+            "B", map.subMap("C", "A").lastKey());
 
         final Comparator<?> c = map.comparator();
         assertTrue("natural order, so comparator should be null",
@@ -136,7 +136,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             // expected
         }
         try {
-            map = lazySortedMap((SortedMap<Integer,Number>) null, transformer);
+            map = lazySortedMap((SortedMap<Integer, Number>) null, transformer);
             fail("Expecting NullPointerException for null map");
         } catch (final NullPointerException e) {
             // expected

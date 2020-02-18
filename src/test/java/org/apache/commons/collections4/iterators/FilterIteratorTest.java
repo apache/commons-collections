@@ -150,8 +150,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iterator.next();
             fail("NoSuchElementException expected");
-        }
-        catch (final NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
             // success
         }
     }

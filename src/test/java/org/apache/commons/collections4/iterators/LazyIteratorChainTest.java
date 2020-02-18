@@ -148,9 +148,9 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
             }
         }
 
-        assertTrue("List is empty",list1.size() == 0);
-        assertTrue("List is empty",list2.size() == 1);
-        assertTrue("List is empty",list3.size() == 0);
+        assertTrue("List is empty", list1.size() == 0);
+        assertTrue("List is empty", list2.size() == 1);
+        assertTrue("List is empty", list3.size() == 0);
     }
 
     public void testFirstIteratorIsEmptyBug() {
@@ -171,13 +171,13 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
                 return null;
             }
         };
-        assertTrue("should have next",chain.hasNext());
-        assertEquals("A",chain.next());
-        assertTrue("should have next",chain.hasNext());
-        assertEquals("B",chain.next());
-        assertTrue("should have next",chain.hasNext());
-        assertEquals("C",chain.next());
-        assertTrue("should not have next",!chain.hasNext());
+        assertTrue("should have next", chain.hasNext());
+        assertEquals("A", chain.next());
+        assertTrue("should have next", chain.hasNext());
+        assertEquals("B", chain.next());
+        assertTrue("should have next", chain.hasNext());
+        assertEquals("C", chain.next());
+        assertTrue("should not have next", !chain.hasNext());
     }
 
     public void testEmptyChain() {
@@ -192,5 +192,4 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
             fail();
         } catch (final IllegalStateException ex) {}
     }
-
 }

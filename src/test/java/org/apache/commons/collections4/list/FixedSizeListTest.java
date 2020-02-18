@@ -96,7 +96,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         try {
-            fixedSizeList.add(2,"New Value");
+            fixedSizeList.add(2, "New Value");
             fail();
         } catch (final UnsupportedOperationException ex) {}
     }

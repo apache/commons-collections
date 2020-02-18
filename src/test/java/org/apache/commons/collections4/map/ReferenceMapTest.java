@@ -313,7 +313,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         try (ObjectInputStream in = new ObjectInputStream(bais)) {
             @SuppressWarnings("unchecked")
             final
-            ReferenceMap<String, String> deserialisedMap = (ReferenceMap<String,String>) in.readObject();
+            ReferenceMap<String, String> deserialisedMap = (ReferenceMap<String, String>) in.readObject();
             assertEquals(1, deserialisedMap.size());
             assertEquals(serialiseMap.data.length, deserialisedMap.data.length);
         }
