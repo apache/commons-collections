@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.function.Consumer;
-import java.util.function.IntConsumer;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Stream;
@@ -61,9 +60,12 @@ public class CountingBloomFilter extends AbstractBloomFilter {
         super(shape);
         verifyHasher(hasher);
         counts = new TreeMap<>();
-        final Set<Integer> idxs = new HashSet<>();
-        hasher.getBits(shape).forEachRemaining((IntConsumer) idxs::add);
-        idxs.stream().forEach(idx -> counts.put(idx, 1));
+        // Eliminate duplicates and only set each bit once.
+        hasher.getBits(shape).forEachRemaining((Consumer<Integer>) idx -> {
+            if (!counts.containsKey(idx)) {
+                counts.put(idx, 1);
+            }
+        });
     }
 
     /**
@@ -164,6 +166,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     public void merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter) {
+            // TODO - This should use the entrySet and increment each key by the count
             merge(((CountingBloomFilter) other).counts.keySet().iterator());
         } else {
             merge(BitSet.valueOf(other.getBits()).stream().iterator());
@@ -206,6 +209,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     public void remove(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter) {
+            // TODO - This should use the entrySet and decrement each key by the count
             remove(((CountingBloomFilter) other).counts.keySet().stream());
         } else {
             remove(BitSet.valueOf(other.getBits()).stream().boxed());
@@ -236,6 +240,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     private void remove(final Stream<Integer> idxStream) {
         idxStream.forEach(idx -> {
+            // TODO - This doubles up removal of the index.
+            // The first part will not throw if the count decrements past zero.
+            // The second part will throw if the count decrements past zero.
             final Integer val = counts.get(idx);
             if (val != null) {
                 if (val - 1 == 0) {
@@ -254,12 +261,23 @@ public class CountingBloomFilter extends AbstractBloomFilter {
         });
     }
 
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{ ");
-        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
-            sb.append(String.format("(%s,%s) ", e.getKey(), e.getValue()));
+        if (counts.isEmpty()) {
+            return "{}";
         }
-        return sb.append("}").toString();
+        // Allow 12 digits per entry: "(x,y) "
+        // This will handle up to 6-digit indices x each with a count y of 2-digits
+        // without resizing the buffer. The +1 is for the leading '{'.
+        final StringBuilder sb = new StringBuilder(counts.size() * 12 + 1);
+        sb.append('{');
+        for (final Map.Entry<Integer, Integer> e : counts.entrySet()) {
+            sb.append('(').append(e.getKey()).append(',')
+                          .append(e.getValue()).append(") ");
+        }
+        // Replace the final space with a close bracket
+        sb.setCharAt(sb.length() - 1, '}');
+        return sb.toString();
     }
 }
