@@ -24,6 +24,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -60,6 +61,25 @@ public class SetOperationsTest {
     };
 
     private final Shape shape = new Shape(testFunction, 3, 72, 17);
+
+    @Test
+    public void testDifferentShapesThrows() {
+        List<Integer> lst = Arrays.asList(1, 2);
+        Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        BloomFilter filter1 = new HasherBloomFilter(hasher, shape);
+
+        final Shape shape2 = new Shape(testFunction, 3, 72, 18);
+        List<Integer> lst2 = Arrays.asList(2, 3);
+        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape2);
+        BloomFilter filter2 = new HasherBloomFilter(hasher2, shape2);
+
+        try {
+            SetOperations.cosineDistance(filter1, filter2);
+            Assert.fail("Expected an IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // Ignore
+        }
+    }
 
     /**
      * Tests that the Cosine similarity is correctly calculated.
