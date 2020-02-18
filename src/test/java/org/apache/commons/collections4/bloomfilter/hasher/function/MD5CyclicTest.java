@@ -58,5 +58,6 @@ public class MD5CyclicTest {
             md5.getProcessType());
         final long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, md5.getSignature());
+        assertEquals("Apache Commons Collections", md5.getProvider());
     }
 }

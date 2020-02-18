@@ -63,5 +63,6 @@ public class ObjectsHashIterativeTest {
         final long expected2 = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, expected2);
         assertEquals(expected, obj.getSignature());
+        assertEquals("Apache Commons Collections", obj.getProvider());
     }
 }

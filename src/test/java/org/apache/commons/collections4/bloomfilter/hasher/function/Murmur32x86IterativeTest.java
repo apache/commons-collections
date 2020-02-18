@@ -58,5 +58,6 @@ public class Murmur32x86IterativeTest {
             murmur.getProcessType());
         final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
         assertEquals(expected, murmur.getSignature());
+        assertEquals("Apache Commons Collections", murmur.getProvider());
     }
 }
