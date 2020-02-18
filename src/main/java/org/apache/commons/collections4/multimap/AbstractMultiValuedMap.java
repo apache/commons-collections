@@ -398,7 +398,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         protected final K key;
 
-        public WrappedCollection(final K key) {
+        WrappedCollection(final K key) {
             this.key = key;
         }
 
@@ -636,7 +636,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     private class MultiValuedMapEntry extends AbstractMapEntry<K, V> {
 
-        public MultiValuedMapEntry(final K key, final V value) {
+        MultiValuedMapEntry(final K key, final V value) {
             super(key, value);
         }
 
@@ -656,7 +656,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         private Entry<K, V> current = null;
 
-        public MultiValuedMapIterator() {
+        MultiValuedMapIterator() {
             this.it = AbstractMultiValuedMap.this.entries().iterator();
         }
 
@@ -734,7 +734,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         private final Collection<V> values;
         private final Iterator<V> iterator;
 
-        public ValuesIterator(final Object key) {
+        ValuesIterator(final Object key) {
             this.key = key;
             this.values = getMap().get(key);
             this.iterator = values.iterator();

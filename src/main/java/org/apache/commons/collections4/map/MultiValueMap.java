@@ -91,7 +91,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
-        return MultiValueMap.<K, V, ArrayList> multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
+        return MultiValueMap.<K, V, ArrayList>multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
     }
 
     /**
@@ -517,7 +517,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         private final Collection<V> values;
         private final Iterator<V> iterator;
 
-        public ValuesIterator(final Object key) {
+        ValuesIterator(final Object key) {
             this.key = key;
             this.values = getCollection(key);
             this.iterator = values.iterator();
@@ -552,7 +552,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
 
         private final Class<T> clazz;
 
-        public ReflectionFactory(final Class<T> clazz) {
+        ReflectionFactory(final Class<T> clazz) {
             this.clazz = clazz;
         }
 

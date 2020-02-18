@@ -287,7 +287,7 @@ class BulkTestSuiteMaker {
      *
      * @param startingClass  the starting class
      */
-    public BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
+    BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
         this.startingClass = startingClass;
     }
 
@@ -340,7 +340,7 @@ class BulkTestSuiteMaker {
      * @param m  The simple test method
      */
     void addTest(final BulkTest bulk, final Method m) {
-        final BulkTest bulk2 = (BulkTest)bulk.clone();
+        final BulkTest bulk2 = (BulkTest) bulk.clone();
         bulk2.setName(m.getName());
         bulk2.verboseName = prefix + "." + m.getName();
         if (ignored.contains(bulk2.verboseName)) {
@@ -366,7 +366,7 @@ class BulkTestSuiteMaker {
 
         BulkTest bulk2;
         try {
-            bulk2 = (BulkTest)m.invoke(bulk, (Object[]) null);
+            bulk2 = (BulkTest) m.invoke(bulk, (Object[]) null);
             if (bulk2 == null) {
                 return;
             }

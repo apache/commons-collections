@@ -809,7 +809,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         private final int index;
         private volatile boolean removed;
 
-        public FlatMapEntry(final Flat3Map<K, V> parent, final int index) {
+        FlatMapEntry(final Flat3Map<K, V> parent, final int index) {
             this.parent = parent;
             this.index = index;
             this.removed = false;
@@ -918,7 +918,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
     }
 
-    static abstract class EntryIterator<K, V> {
+    abstract static class EntryIterator<K, V> {
         private final Flat3Map<K, V> parent;
         private int nextIndex = 0;
         private FlatMapEntry<K, V> currentEntry = null;
@@ -926,7 +926,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         /**
          * Create a new Flat3Map.EntryIterator.
          */
-        public EntryIterator(final Flat3Map<K, V> parent) {
+        EntryIterator(final Flat3Map<K, V> parent) {
             this.parent = parent;
         }
 
@@ -1031,7 +1031,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * KeySetIterator
      */
-    static class KeySetIterator<K> extends EntryIterator<K, Object> implements Iterator<K>{
+    static class KeySetIterator<K> extends EntryIterator<K, Object> implements Iterator<K> {
 
         @SuppressWarnings("unchecked")
         KeySetIterator(final Flat3Map<K, ?> parent) {

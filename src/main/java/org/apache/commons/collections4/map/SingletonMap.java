@@ -572,11 +572,11 @@ public class SingletonMap<K, V>
         if (obj instanceof Map == false) {
             return false;
         }
-        final Map<?,?> other = (Map<?,?>) obj;
+        final Map<?, ?> other = (Map<?, ?>) obj;
         if (other.size() != 1) {
             return false;
         }
-        final Map.Entry<?,?> entry = other.entrySet().iterator().next();
+        final Map.Entry<?, ?> entry = other.entrySet().iterator().next();
         return isEqualKey(entry.getKey()) && isEqualValue(entry.getValue());
     }
 

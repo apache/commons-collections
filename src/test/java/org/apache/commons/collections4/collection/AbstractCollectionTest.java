@@ -436,12 +436,12 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             "Eight",
             new String("Nine"),
             Integer.valueOf(10),
-            new Short((short)11),
+            new Short((short) 11),
             new Long(12),
             "Thirteen",
             "14",
             "15",
-            new Byte((byte)16)
+            new Byte((byte) 16)
         };
     }
 
@@ -457,8 +457,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             new Float(0),
             new Double(0),
             "Zero",
-            new Short((short)0),
-            new Byte((byte)0),
+            new Short((short) 0),
+            new Byte((byte) 0),
             new Long(0),
             new Character('\u0000'),
             "0"
@@ -486,7 +486,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {
-            "For", "then", "despite",/* of */"space", "I", "would", "be",
+            "For", "then", "despite", /* of */"space", "I", "would", "be",
                 "brought", "From", "limits", "far", "remote", "where", "thou", "dost", "stay"
         };
     }
@@ -1317,7 +1317,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetFull();
         try {
             final Iterator<E> iter = getCollection().iterator();
-            final List<E> sublist = Arrays.asList(getFullElements()).subList(2,5);
+            final List<E> sublist = Arrays.asList(getFullElements()).subList(2, 5);
             getCollection().removeAll(sublist);
             iter.next();
             fail("next after removeAll should raise ConcurrentModification");
@@ -1328,7 +1328,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetFull();
         try {
             final Iterator<E> iter = getCollection().iterator();
-            final List<E> sublist = Arrays.asList(getFullElements()).subList(2,5);
+            final List<E> sublist = Arrays.asList(getFullElements()).subList(2, 5);
             getCollection().retainAll(sublist);
             iter.next();
             fail("next after retainAll should raise ConcurrentModification");

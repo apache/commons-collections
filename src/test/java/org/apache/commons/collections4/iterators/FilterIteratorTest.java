@@ -168,7 +168,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         initIterator();
         iterator.setPredicate(pred);
         for (int i = 0; i < elements.length; i++) {
-            final String s = (String)iterator.next();
+            final String s = (String) iterator.next();
             assertEquals(elements[i], s);
             assertTrue(i == elements.length - 1 ? !iterator.hasNext() : iterator.hasNext());
         }

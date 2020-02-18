@@ -117,7 +117,7 @@ public class ListUtilsTest {
         two.add("a");
         two.add("b");
         two.add("b");
-        assertEquals(ListUtils.intersection(one,two),ListUtils.intersection(two, one));
+        assertEquals(ListUtils.intersection(one, two), ListUtils.intersection(two, one));
     }
 
     @Test
@@ -328,7 +328,7 @@ public class ListUtilsTest {
         index = ListUtils.indexOf(fullList, testPredicate);
         assertEquals(index, -1);
 
-        assertEquals(ListUtils.indexOf(null,testPredicate), -1);
+        assertEquals(ListUtils.indexOf(null, testPredicate), -1);
         assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 

@@ -60,7 +60,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
 
     @Override
     public MultiValuedMap<K, V> makeObject() {
-        return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(
+        return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(
                 new ArrayListValuedHashMap<K, V>());
     }
 
@@ -68,7 +68,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     protected MultiValuedMap<K, V> makeFullMap() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         addSampleMappings(map);
-        return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(map);
+        return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
     }
 
     // -----------------------------------------------------------------------

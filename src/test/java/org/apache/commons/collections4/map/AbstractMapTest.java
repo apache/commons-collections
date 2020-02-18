@@ -427,7 +427,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * @return the map to be tested
      */
     @Override
-    public abstract Map<K,V> makeObject();
+    public abstract Map<K, V> makeObject();
 
     /**
      * Return a new, populated map.  The mappings in the map should match the
@@ -953,7 +953,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         m2 = makeConfirmedMap();
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
-        for(int i = 0; i < keys.length; i++) {
+        for (int i = 0; i < keys.length; i++) {
             m2.put(keys[i], values[i]);
         }
         getMap().putAll(m2);
@@ -966,7 +966,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         getMap().put(keys[0], values[0]);
         getConfirmed().put(keys[0], values[0]);
         verify();
-        for(int i = 1; i < keys.length; i++) {
+        for (int i = 1; i < keys.length; i++) {
             m2.put(keys[i], values[i]);
         }
         getMap().putAll(m2);
@@ -1234,7 +1234,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             return;
         }
         try {
-            assertFalse(values.removeAll(Collections.<V> emptySet()));
+            assertFalse(values.removeAll(Collections.<V>emptySet()));
         } catch (final UnsupportedOperationException e) {
             // if values.removeAll is unsupported, just skip this test
             return;
@@ -1267,7 +1267,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
         assertEquals(sampleValuesAsList.size(), getMap().size());
         try {
-            assertTrue(values.retainAll(Collections.<V> emptySet()));
+            assertTrue(values.retainAll(Collections.<V>emptySet()));
         } catch (final UnsupportedOperationException e) {
             // if values.retainAll is unsupported, just skip this test
             return;
@@ -1339,7 +1339,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             return;
         }
         try {
-            assertFalse(keys.removeAll(Collections.<K> emptySet()));
+            assertFalse(keys.removeAll(Collections.<K>emptySet()));
         } catch (final UnsupportedOperationException e) {
             return;
         }
@@ -1369,7 +1369,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
         assertEquals(sampleKeysAsList, keys);
         try {
-            assertTrue(keys.retainAll(Collections.<K> emptySet()));
+            assertTrue(keys.retainAll(Collections.<K>emptySet()));
         } catch (final UnsupportedOperationException e) {
             return;
         }
@@ -2046,7 +2046,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Get the map.
-     * @return Map<K,V>
+     * @return Map<K, V>
      */
     public Map<K, V> getMap() {
         return map;
@@ -2054,7 +2054,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Get the confirmed.
-     * @return Map<K,V>
+     * @return Map<K, V>
      */
     public Map<K, V> getConfirmed() {
         return confirmed;

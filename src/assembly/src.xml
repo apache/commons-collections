@@ -38,7 +38,7 @@
         <fileSet>
             <directory>src</directory>
             <excludes>
-                <exclude>**/*.cgi</exclude> 
+                <exclude>**/*.cgi</exclude>
             </excludes>
         </fileSet>
     </fileSets>

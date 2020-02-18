@@ -35,12 +35,12 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-	private class ReverseStringComparator implements Comparator<K> {
-		@Override
-		public int compare(final K arg0, final K arg1) {
-			return ((String) arg1).compareTo((String)arg0);
-		}
-	}
+    private class ReverseStringComparator implements Comparator<K> {
+        @Override
+        public int compare(final K arg0, final K arg1) {
+            return ((String) arg1).compareTo((String) arg0);
+        }
+    }
 
     protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
 

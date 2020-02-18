@@ -454,13 +454,13 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     public void testEmptyMapCompatibility() throws Exception {
-        final Map<?,?> map = makeEmptyMap();
-        final Map<?,?> map2 = (Map<?,?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+        final Map<?, ?> map = makeEmptyMap();
+        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
         assertEquals("Map is empty", 0, map2.size());
     }
     public void testFullMapCompatibility() throws Exception {
-        final Map<?,?> map = (Map<?,?>) makeObject();
-        final Map<?,?> map2 = (Map<?,?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+        final Map<?, ?> map = (Map<?, ?>) makeObject();
+        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
         assertEquals("Map is the right size", map.size(), map2.size());
         for (final Object key : map.keySet()) {
             assertEquals( "Map had inequal elements", map.get(key), map2.get(key) );

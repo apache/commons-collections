@@ -226,7 +226,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
             // testShuffle
             for (int i = 0; i < keys.length && !isInNewOrder; i++) {
-                if( !orderedObjects[i].equals(keys[i])) {
+                if ( !orderedObjects[i].equals(keys[i])) {
                     isInNewOrder = true;
                 }
             }

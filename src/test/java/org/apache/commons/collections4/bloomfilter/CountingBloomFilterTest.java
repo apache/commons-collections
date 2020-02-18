@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,7 +24,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
@@ -147,11 +145,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         final int[] c1 = {1, 10, 100, 0};
         final int[] c2 = {4, 0, 7, 2};
 
-        final Map<Integer,Integer> map1 = new HashMap<>();
+        final Map<Integer, Integer> map1 = new HashMap<>();
         for (int i = 0; i < c1.length; i++) {
             map1.put(i, c1[i]);
         }
-        final Map<Integer,Integer> map2 = new HashMap<>();
+        final Map<Integer, Integer> map2 = new HashMap<>();
         for (int i = 0; i < c2.length; i++) {
             map2.put(i, c2[i]);
         }
@@ -182,7 +180,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 0
         };
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17);
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
         final CountingBloomFilter bf = createFilter(hasher, shape);
@@ -288,11 +286,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         // for (0 - 2). Fix this but the underflow behaviour is subject to change.
         c2[c2.length - 1] = 0;
 
-        final Map<Integer,Integer> map1 = new HashMap<>();
+        final Map<Integer, Integer> map1 = new HashMap<>();
         for (int i = 0; i < c1.length; i++) {
             map1.put(i, c1[i]);
         }
-        final Map<Integer,Integer> map2 = new HashMap<>();
+        final Map<Integer, Integer> map2 = new HashMap<>();
         for (int i = 0; i < c2.length; i++) {
             map2.put(i, c2[i]);
         }
@@ -324,7 +322,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
         };
-        final Map<Integer,Integer> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         for (int i = 1; i < values.length; i++) {
             map.put(i, values[i]);
         }
@@ -355,7 +353,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
             1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1
         };
-        final Map<Integer,Integer> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         for (int i = 1; i < values.length; i++) {
             map.put(i, values[i]);
         }
@@ -414,7 +412,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void testToString() {
-        final Map<Integer,Integer> map = new HashMap<>();
+        final Map<Integer, Integer> map = new HashMap<>();
         CountingBloomFilter bf = new CountingBloomFilter(map, shape);
         Assert.assertEquals("{}", bf.toString());
 

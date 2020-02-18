@@ -1106,7 +1106,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         // test to make sure the canonical form has been preserved
         final List<E> list = makeFullCollection();
-        if(list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+        if (list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
             if (list2.size() == 4) {
                 // old serialized tests

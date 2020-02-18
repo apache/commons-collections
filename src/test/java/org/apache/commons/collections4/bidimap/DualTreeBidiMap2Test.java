@@ -52,8 +52,8 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     @Override
     public DualTreeBidiMap<K, V> makeObject() {
         return new DualTreeBidiMap<>(
-                new ReverseComparator<>(ComparableComparator.<K> comparableComparator()),
-                new ReverseComparator<>(ComparableComparator.<V> comparableComparator()));
+                new ReverseComparator<>(ComparableComparator.<K>comparableComparator()),
+                new ReverseComparator<>(ComparableComparator.<V>comparableComparator()));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
             final Object dest = in.readObject();
             in.close();
 
-            final SortedBidiMap<?,?> bidi = (SortedBidiMap<?,?>) dest;
+            final SortedBidiMap<?, ?> bidi = (SortedBidiMap<?, ?>) dest;
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
             assertTrue(bidi.comparator() instanceof ReverseComparator);

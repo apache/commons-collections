@@ -323,7 +323,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         iter.remove();
         Assert.assertEquals(1, map.size());
         Assert.assertEquals("Akko", iter.next());
-        if(iter.hasNext()) {
+        if (iter.hasNext()) {
             Assert.fail("shouldn't have next (but was: " + iter.next() + ")");
         }
         Assert.assertFalse(iter.hasNext());

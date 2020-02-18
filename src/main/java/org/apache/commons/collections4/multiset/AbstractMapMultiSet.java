@@ -165,7 +165,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
          *
          * @param parent the parent multiset
          */
-        public MapBasedMultiSetIterator(final AbstractMapMultiSet<E> parent) {
+        MapBasedMultiSetIterator(final AbstractMapMultiSet<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
             this.current = null;

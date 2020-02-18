@@ -38,7 +38,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
          */
         private static final long serialVersionUID = 1415013031022962158L;
 
-        public SetUniqueList307(final List<E> list, final Set<E> set) {
+        SetUniqueList307(final List<E> list, final Set<E> set) {
             super(list, set);
         }
     }
@@ -71,12 +71,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
                 "Eight",
                 new String("Nine"),
                 Integer.valueOf(10),
-                new Short((short)11),
+                new Short((short) 11),
                 new Long(12),
                 "Thirteen",
                 "14",
                 "15",
-                new Byte((byte)16)
+                new Byte((byte) 16)
         };
     }
 
@@ -359,12 +359,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         final List<E> list = new ArrayList<>(10);
         final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
         for (int i = 0; i < 10; ++i) {
-            uniqueList.add((E)Integer.valueOf(i));
+            uniqueList.add((E) Integer.valueOf(i));
         }
 
         final Collection<E> retained = new ArrayList<>(5);
         for (int i = 0; i < 5; ++i) {
-            retained.add((E)Integer.valueOf(i * 2));
+            retained.add((E) Integer.valueOf(i * 2));
         }
 
         assertTrue(uniqueList.retainAll(retained));
@@ -381,16 +381,16 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // initialized with empty list
         final List<E> list = new ArrayList<>(10);
         for (int i = 0; i < 5; ++i) {
-            list.add((E)Integer.valueOf(i));
+            list.add((E) Integer.valueOf(i));
         }
         final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
         for (int i = 5; i < 10; ++i) {
-            uniqueList.add((E)Integer.valueOf(i));
+            uniqueList.add((E) Integer.valueOf(i));
         }
 
         final Collection<E> retained = new ArrayList<>(5);
         for (int i = 0; i < 5; ++i) {
-            retained.add((E)Integer.valueOf(i * 2));
+            retained.add((E) Integer.valueOf(i * 2));
         }
 
         assertTrue(uniqueList.retainAll(retained));

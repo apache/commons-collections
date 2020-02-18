@@ -104,7 +104,7 @@
     </action>
     <action issue="COLLECTIONS-739" dev="ggregory" type="fix" due-to="Pengyu Nie">
       Fix inconsistent @throws comments in DefaultedMap #123.
-    </action>    
+    </action>
     <action dev="ggregory" type="fix" due-to="Dominik Stadler">
       Fix links to release notes and update contents for 4.4 #127.
     </action>

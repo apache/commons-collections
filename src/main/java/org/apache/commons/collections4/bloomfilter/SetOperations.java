@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,7 +34,7 @@ public final class SetOperations {
      * @return the jaccard distance.
      */
     public static double cosineDistance(final BloomFilter first, final BloomFilter second) {
-        return 1.0 - cosineSimilarity(first,second);
+        return 1.0 - cosineSimilarity(first, second);
     }
 
     /**
@@ -64,9 +63,9 @@ public final class SetOperations {
      * @return an estimate of the size of the intersection between the two filters.
      */
     public static long estimateIntersectionSize(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         // do subtraction early to avoid Long overflow.
-        return estimateSize(first) - estimateUnionSize(first,second) + estimateSize(second);
+        return estimateSize(first) - estimateUnionSize(first, second) + estimateSize(second);
     }
 
     /**
@@ -93,7 +92,7 @@ public final class SetOperations {
      * @return an estimate of the size of the union between the two filters.
      */
     public static long estimateUnionSize(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         final Shape shape = first.getShape();
         final double estimate = -(shape.getNumberOfBits() *
             Math.log(1.0 - first.orCardinality(second) * 1.0 / shape.getNumberOfBits())) /
@@ -109,7 +108,7 @@ public final class SetOperations {
      * @return the Hamming distance.
      */
     public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first,second);
+        verifyShape(first, second);
         return first.xorCardinality(second);
     }
 
@@ -123,7 +122,7 @@ public final class SetOperations {
      * @return the Jaccard distance.
      */
     public static double jaccardDistance(final BloomFilter first, final BloomFilter second) {
-        return 1.0 - jaccardSimilarity(first,second);
+        return 1.0 - jaccardSimilarity(first, second);
     }
 
     /**

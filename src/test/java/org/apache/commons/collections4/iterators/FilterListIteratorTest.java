@@ -63,11 +63,21 @@ public class FilterListIteratorTest {
         sixes = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             list.add(Integer.valueOf(i));
-            if (i % 2 == 0) { evens.add(Integer.valueOf(i)); }
-            if (i % 2 != 0) { odds.add(Integer.valueOf(i)); }
-            if (i % 3 == 0) { threes.add(Integer.valueOf(i)); }
-            if (i % 4 == 0) { fours.add(Integer.valueOf(i)); }
-            if (i % 6 == 0) { sixes.add(Integer.valueOf(i)); }
+            if (i % 2 == 0) {
+                evens.add(Integer.valueOf(i));
+            }
+            if (i % 2 != 0) {
+                odds.add(Integer.valueOf(i));
+            }
+            if (i % 3 == 0) {
+                threes.add(Integer.valueOf(i));
+            }
+            if (i % 4 == 0) {
+                fours.add(Integer.valueOf(i));
+            }
+            if (i % 6 == 0) {
+                sixes.add(Integer.valueOf(i));
+            }
         }
 
         truePred = x -> true;

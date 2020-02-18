@@ -40,7 +40,7 @@ import java.util.Properties;
  */
 public abstract class AbstractPropertiesFactory<T extends Properties> {
 
-    /** 
+    /**
      * Enumerat5es property formats.
      *
      * @since 4.5
@@ -82,7 +82,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
     public T load(final ClassLoader classLoader, final String name) throws IOException {
-        try (final InputStream inputStream = classLoader.getResourceAsStream(name)) {
+        try (InputStream inputStream = classLoader.getResourceAsStream(name)) {
             return load(inputStream, PropertyFormat.toPropertyFormat(name));
         }
     }
@@ -100,7 +100,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      *                                  the file.
      */
     public T load(final File file) throws FileNotFoundException, IOException {
-        try (final FileInputStream inputStream = new FileInputStream(file)) {
+        try (FileInputStream inputStream = new FileInputStream(file)) {
             return load(inputStream, PropertyFormat.toPropertyFormat(file.getName()));
         }
     }
@@ -154,7 +154,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
     public T load(final Path path) throws IOException {
-        try (final InputStream inputStream = Files.newInputStream(path)) {
+        try (InputStream inputStream = Files.newInputStream(path)) {
             return load(inputStream, PropertyFormat.toPropertyFormat(Objects.toString(path.getFileName(), null)));
         }
     }
@@ -182,7 +182,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
     public T load(final String name) throws IOException {
-        try (final FileInputStream inputStream = new FileInputStream(name)) {
+        try (FileInputStream inputStream = new FileInputStream(name)) {
             return load(inputStream, PropertyFormat.toPropertyFormat(name));
         }
     }
@@ -208,7 +208,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
     public T load(final URL url) throws IOException {
-        try (final InputStream inputStream = url.openStream()) {
+        try (InputStream inputStream = url.openStream()) {
             return load(inputStream, PropertyFormat.toPropertyFormat(url.getFile()));
         }
     }

@@ -269,7 +269,7 @@ public class LRUMap<K, V>
         if (entry.after != header) {
             modCount++;
             // remove
-            if(entry.before == null) {
+            if (entry.before == null) {
                 throw new IllegalStateException("Entry.before is null." +
                     " This should not occur if your keys are immutable, and you have used synchronization properly.");
             }

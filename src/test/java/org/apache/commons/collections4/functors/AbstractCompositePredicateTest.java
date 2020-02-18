@@ -48,7 +48,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      *
      * @return a predicate to test.
      */
-    protected abstract Predicate<T> getPredicateInstance(final Predicate<? super T> ... predicates);
+    protected abstract Predicate<T> getPredicateInstance(Predicate<? super T>... predicates);
 
     /**
      * Creates an instance of the predicate to test.
@@ -57,7 +57,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      *
      * @return a predicate to test.
      */
-    protected abstract Predicate<T> getPredicateInstance(final Collection<Predicate<T>> predicates);
+    protected abstract Predicate<T> getPredicateInstance(Collection<Predicate<T>> predicates);
 
     /**
      * Creates an instance of the predicate to test.

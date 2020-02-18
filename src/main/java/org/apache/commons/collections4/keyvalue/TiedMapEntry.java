@@ -108,7 +108,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
         if (obj instanceof Map.Entry == false) {
             return false;
         }
-        final Map.Entry<?,?> other = (Map.Entry<?,?>) obj;
+        final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
         final Object value = getValue();
         return
             (key == null ? other.getKey() == null : key.equals(other.getKey())) &&

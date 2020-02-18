@@ -44,18 +44,18 @@ This document highlights some key features to get you started.
   </ul>
 <subsection name='Note On Synchronization'>
   <p>
-Commons-collections uses a design approach to synchronization similar 
-to the standard Java collections. The majority of the various implementations 
-of collections, maps and bags are not thread safe without additional 
-synchronization. The appropriate <code>synchronizeXXX</code> method on <code>Collections</code> is one way that these implementations can be synchronized for use in a 
-multithreaded application. 
+Commons-collections uses a design approach to synchronization similar
+to the standard Java collections. The majority of the various implementations
+of collections, maps and bags are not thread safe without additional
+synchronization. The appropriate <code>synchronizeXXX</code> method on <code>Collections</code> is one way that these implementations can be synchronized for use in a
+multithreaded application.
   </p>
   <p>
-The class level javadocs should indicate whether a particular 
+The class level javadocs should indicate whether a particular
 implementation is safe for multithreaded access without additional
 synchronization. Where there is no expicit indication that the implementation
-is thread safe then it should be assumed that synchronization is required. 
-Please report the missing documentation to the commons development team.  
+is thread safe then it should be assumed that synchronization is required.
+Please report the missing documentation to the commons development team.
 </p>
 </subsection>
 
@@ -69,7 +69,7 @@ Thus, the <code>Set</code> and <code>SortedSet</code> interfaces are provided fo
 These classes provide useful methods for working with that collection type.
 </p>
 <p>
-The most methods are found on the two 'root' collection utility classes - 
+The most methods are found on the two 'root' collection utility classes -
 <code>CollectionUtils</code> and <code>MapUtils.</code>
 As all other collection interfaces extend <code>Collection</code> or <code>Map</code> these utilities can be used widely.
 They include intersection, counting, iteration, functor and typecasting operations amongst others.
@@ -92,7 +92,7 @@ MapIterator it = map.mapIterator();
 while (it.hasNext()) {
   Object key = it.next();
   Object value = it.getValue();
-  
+
   it.setValue(newValue);
 }
 </source>

@@ -227,7 +227,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     public void testValuesListIteratorMethods(){
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
-        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V)"F");
+        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
         listA.addAll(0, list);
         final ListIterator<V> it = listMap.get((K) "A").listIterator(1);
         assertTrue(it.hasNext());

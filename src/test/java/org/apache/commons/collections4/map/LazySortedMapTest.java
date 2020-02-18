@@ -39,12 +39,12 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-	private class ReverseStringComparator implements Comparator<String> {
-		@Override
-		public int compare(final String arg0, final String arg1) {
-			return arg1.compareTo(arg0);
-		}
-	}
+    private class ReverseStringComparator implements Comparator<String> {
+        @Override
+        public int compare(final String arg0, final String arg1) {
+            return arg1.compareTo(arg0);
+        }
+    }
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
@@ -55,8 +55,8 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
-    public SortedMap<K,V> makeObject() {
-        return lazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
+    public SortedMap<K, V> makeObject() {
+        return lazySortedMap(new TreeMap<K, V>(), FactoryUtils.<V>nullFactory());
     }
 
     @Override
@@ -73,13 +73,13 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Test
     public void mapGet() {
-        Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer,Number>(), oneFactory);
+        Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get(5);
         assertEquals(1, i1);
         assertEquals(1, map.size());
 
-        map = lazySortedMap(new TreeMap<Integer,Number>(), FactoryUtils.<Number>nullFactory());
+        map = lazySortedMap(new TreeMap<Integer, Number>(), FactoryUtils.<Number>nullFactory());
         final Number o = map.get(5);
         assertEquals(null,o);
         assertEquals(1, map.size());

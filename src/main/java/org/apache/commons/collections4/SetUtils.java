@@ -58,7 +58,7 @@ public class SetUtils {
      * @param <E> the element type
      * @since 4.1
      */
-    public static abstract class SetView<E> extends AbstractSet<E> {
+    public abstract static class SetView<E> extends AbstractSet<E> {
 
         /**
          * Copies the contents of this view into the provided set.

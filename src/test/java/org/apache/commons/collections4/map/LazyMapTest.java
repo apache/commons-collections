@@ -42,8 +42,8 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public LazyMap<K,V> makeObject() {
-        return lazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
+    public LazyMap<K, V> makeObject() {
+        return lazyMap(new HashMap<K, V>(), FactoryUtils.<V>nullFactory());
     }
 
     //-----------------------------------------------------------------------

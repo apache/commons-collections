@@ -543,7 +543,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Base Iterator that iterates in link order.
      */
-    protected static abstract class LinkIterator<K, V> {
+    protected abstract static class LinkIterator<K, V> {
 
         /** The parent map */
         protected final AbstractLinkedMap<K, V> parent;

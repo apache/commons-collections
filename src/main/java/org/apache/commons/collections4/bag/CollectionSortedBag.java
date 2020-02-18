@@ -92,7 +92,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     public boolean containsAll(final Collection<?> coll) {
         final Iterator<?> e = coll.iterator();
         while (e.hasNext()) {
-            if(!contains(e.next())) {
+            if (!contains(e.next())) {
                 return false;
             }
         }

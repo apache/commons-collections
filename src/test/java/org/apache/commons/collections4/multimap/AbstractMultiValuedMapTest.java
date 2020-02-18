@@ -1199,7 +1199,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
             final V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
             final Collection<V>[] colArr = new Collection[3];
-            for(int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 final Collection<V> coll = Arrays.asList(sampleValues[i*2], sampleValues[i*2 + 1]);
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }

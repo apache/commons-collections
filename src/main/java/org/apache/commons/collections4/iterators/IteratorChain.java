@@ -208,7 +208,7 @@ public class IteratorChain<E> implements Iterator<E> {
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
             if (iteratorChain.isEmpty()) {
-                currentIterator = EmptyIterator.<E> emptyIterator();
+                currentIterator = EmptyIterator.<E>emptyIterator();
             } else {
                 currentIterator = iteratorChain.remove();
             }

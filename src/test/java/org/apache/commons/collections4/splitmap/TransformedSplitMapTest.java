@@ -72,7 +72,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(--sz, map.size());
 
         final TransformedSplitMap<String, String, String, Integer> map2 = TransformedSplitMap.transformingMap(
-                new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
+                new HashMap<String, Integer>(), NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map2.size());
         for (int i = 0; i < 6; i++) {
             map2.put(String.valueOf(i), String.valueOf(i));
@@ -93,7 +93,7 @@ public class TransformedSplitMapTest extends BulkTest {
     public void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
-                                                    NOPTransformer.<String> nopTransformer(), stringToInt);
+                                                    NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map.size());
         for (int i = 0; i < 6; i++) {
             map.put(String.valueOf(i), String.valueOf(i));

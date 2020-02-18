@@ -104,7 +104,7 @@ public final class UnmodifiableMultiSet<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E> unmodifiableIterator(decorated().iterator());
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     @Override

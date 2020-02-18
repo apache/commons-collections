@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -105,7 +104,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     public int andCardinality(final BloomFilter other) {
         if (other instanceof CountingBloomFilter) {
             final Set<Integer> result = new HashSet<>(counts.keySet());
-            result.retainAll(((CountingBloomFilter)other).counts.keySet());
+            result.retainAll(((CountingBloomFilter) other).counts.keySet());
             return result.size();
         }
         return super.andCardinality(other);
@@ -229,7 +228,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     public void remove(final Hasher hasher) {
         verifyHasher(hasher);
         final Set<Integer> lst = new HashSet<>();
-        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>)lst::add);
+        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>) lst::add);
         remove(lst.stream());
     }
 

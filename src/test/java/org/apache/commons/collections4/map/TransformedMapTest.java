@@ -40,7 +40,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @Override
     public IterableMap<K, V> makeObject() {
-        return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K> nopTransformer(),
+        return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K>nopTransformer(),
                 TransformerUtils.<V> nopTransformer());
     }
 

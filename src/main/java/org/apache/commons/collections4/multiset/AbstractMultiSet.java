@@ -138,7 +138,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
          *
          * @param parent the parent multiset
          */
-        public MultiSetIterator(final AbstractMultiSet<E> parent) {
+        MultiSetIterator(final AbstractMultiSet<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.entrySet().iterator();
             this.current = null;
@@ -404,7 +404,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Inner class AbstractEntry.
      */
-    protected static abstract class AbstractEntry<E> implements Entry<E> {
+    protected abstract static class AbstractEntry<E> implements Entry<E> {
 
         @Override
         public boolean equals(final Object object) {

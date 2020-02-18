@@ -104,7 +104,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);
-        if(trueFirst) {
+        if (trueFirst) {
             trueFirstTests(comp);
         } else {
             falseFirstTests(comp);

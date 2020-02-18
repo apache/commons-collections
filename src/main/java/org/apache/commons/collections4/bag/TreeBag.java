@@ -88,7 +88,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      */
     @Override
     public boolean add(final E object) {
-        if(comparator() == null && !(object instanceof Comparable)) {
+        if (comparator() == null && !(object instanceof Comparable)) {
             Objects.requireNonNull(object, "object");
             throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " +
                                                "a naturally ordered TreeBag as it does not implement Comparable");
