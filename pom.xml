@@ -532,7 +532,8 @@
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
-    <checkstyle.version>3.0.0</checkstyle.version>
+    <checkstyle.version>3.1.0</checkstyle.version>
+    <checkstyle.dep.version>8.29</checkstyle.dep.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
@@ -592,10 +593,18 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.dep.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
+          <headerLocation>${basedir}/src/conf/license-header.txt</headerLocation>
           <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <enableRulesSummary>false</enableRulesSummary>
         </configuration>
       </plugin>
       <plugin>
