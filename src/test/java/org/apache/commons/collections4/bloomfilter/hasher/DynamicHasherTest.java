@@ -22,6 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -108,6 +109,12 @@ public class DynamicHasherTest {
             assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
+        try {
+            iter.next();
+            fail("Should have thown NoSuchElementException");
+        } catch (final NoSuchElementException ignore) {
+            // do nothing
+        }
     }
 
     /**
@@ -127,11 +134,21 @@ public class DynamicHasherTest {
     }
 
     /**
-     * Tests if isEmpty() reports correctly.
+     * Tests if isEmpty() reports correctly and the iterator returns no values.
      */
     @Test
     public void testIsEmpty() {
-        assertTrue(builder.build().isEmpty());
+        DynamicHasher hasher = builder.build();
+        assertTrue(hasher.isEmpty());
+        final OfInt iter = hasher.getBits(shape);
+        assertFalse(iter.hasNext());
+        try {
+            iter.next();
+            fail("Should have thown NoSuchElementException");
+        } catch (final NoSuchElementException expected) {
+            // do nothing
+        }
+
         assertFalse(builder.with("Hello").build().isEmpty());
     }
 }

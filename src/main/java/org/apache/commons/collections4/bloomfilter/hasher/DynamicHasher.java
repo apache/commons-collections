@@ -102,9 +102,7 @@ public class DynamicHasher implements Hasher {
 
         @Override
         public boolean hasNext() {
-            if (buffers.isEmpty()) {
-                return false;
-            }
+            // Note: This iterator is only used when buffers.size() is not zero
             return buffer < buffers.size() - 1 || funcCount < shape.getNumberOfHashFunctions();
         }
 
@@ -119,6 +117,29 @@ public class DynamicHasher implements Hasher {
                     // Cast to long to workaround a bug in animal-sniffer.
                     (long) shape.getNumberOfBits());
             }
+            throw new NoSuchElementException();
+        }
+    }
+
+    /**
+     * An iterator of integers to use then there are no values.
+     */
+    private static class NoValuesIterator implements PrimitiveIterator.OfInt {
+        /** The singleton instance. */
+        private static final NoValuesIterator INSTANCE = new NoValuesIterator();
+
+        /**
+         * Empty constructor.
+         */
+        private NoValuesIterator() {}
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public int nextInt() {
             throw new NoSuchElementException();
         }
     }
@@ -163,7 +184,8 @@ public class DynamicHasher implements Hasher {
                     HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
                     HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
         }
-        return new Iterator(shape);
+        // Use optimised iterator for no values
+        return buffers.isEmpty() ? NoValuesIterator.INSTANCE : new Iterator(shape);
     }
 
     @Override
