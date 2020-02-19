@@ -58,8 +58,9 @@ public class CachingHasher implements Hasher {
      * <p>
      * The list of hash values comprises a @code{List&lt;long[]&gt;} where each @code{long[]}
      * is comprises two (2) values that are the result of hashing the original buffer.  Thus a
-     * CachingHasher that was built from five (5) buffers will have five arrays of two @code{longs} each.
-     *
+     * CachingHasher that was built from five (5) buffers will have five arrays of two @code{longs} 
+     * each.
+     * </p>
      * @param functionIdentity The identity of the function.
      * @param buffers          a list of @code{long} arrays comprising two (2) values.
      * @throws IllegalArgumentException if the name does not indicate a cyclic
@@ -84,7 +85,7 @@ public class CachingHasher implements Hasher {
     }
 
     /**
-     * Check that the name is valid for this hasher.
+     * Checks that the name is valid for this hasher.
      *
      * @param functionIdentity the Function Identity to check.
      */
