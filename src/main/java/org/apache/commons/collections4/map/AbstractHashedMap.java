@@ -1410,8 +1410,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             final K key = it.next();
             final V value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
-               .append('=')
-               .append(value == this ? "(this Map)" : value);
+                .append('=')
+                .append(value == this ? "(this Map)" : value);
 
             hasNext = it.hasNext();
             if (hasNext) {

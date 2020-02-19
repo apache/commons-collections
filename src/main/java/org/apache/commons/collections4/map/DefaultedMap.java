@@ -200,8 +200,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     public V get(final Object key) {
         V v;
         return (((v = map.get(key)) != null) || map.containsKey(key))
-          ? v
-          : value.transform((K) key);
+            ? v
+            : value.transform((K) key);
     }
 
     // no need to wrap keySet, entrySet or values as they are views of

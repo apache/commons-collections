@@ -130,8 +130,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final Object[] result = new Object[] {
-                "one", "one", "two", "two",
-                "three", "three"
+            "one", "one", "two", "two",
+            "three", "three"
         };
         return (K[]) result;
     }
@@ -145,8 +145,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         final Object[] result = new Object[] {
-                "uno", "un", "dos", "deux",
-                "tres", "trois"
+            "uno", "un", "dos", "deux",
+            "tres", "trois"
         };
         return (V[]) result;
     }
@@ -217,8 +217,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testMultipleValues() {
         final MultiValuedMap<K, V> map = makeFullMap();
         @SuppressWarnings("unchecked")
-        final
-        Collection<V> col = map.get((K) "one");
+        final Collection<V> col = map.get((K) "one");
         assertTrue(col.contains("uno"));
         assertTrue(col.contains("un"));
     }
@@ -287,8 +286,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
         @SuppressWarnings("unchecked")
-        final
-        Iterator<V> it = map.get((K) "one").iterator();
+        final Iterator<V> it = map.get((K) "one").iterator();
         while (it.hasNext()) {
             it.next();
             it.remove();

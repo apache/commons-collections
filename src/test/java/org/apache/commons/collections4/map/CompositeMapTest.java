@@ -134,27 +134,27 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testResolveCollision() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
-            private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1L;
 
-            @Override
-            public void resolveCollision(final CompositeMap<K, V> composite,
-            final Map<K, V> existing,
-            final Map<K, V> added,
-            final Collection<K> intersect) {
-                pass = true;
-            }
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    pass = true;
+                }
 
-            @Override
-            public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
-                final V value) {
-                throw new UnsupportedOperationException();
-            }
+                @Override
+                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
+                    final V value) {
+                    throw new UnsupportedOperationException();
+                }
 
-            @Override
-            public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
-                throw new UnsupportedOperationException();
-            }
-        });
+                @Override
+                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
+                    throw new UnsupportedOperationException();
+                }
+            });
 
         map.addComposited(buildOne());
         assertTrue(pass);
@@ -164,27 +164,27 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testPut() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public void resolveCollision(final CompositeMap<K, V> composite,
-            final Map<K, V> existing,
-            final Map<K, V> added,
-            final Collection<K> intersect) {
-                throw new UnsupportedOperationException();
-            }
+                private static final long serialVersionUID = 1L;
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    throw new UnsupportedOperationException();
+                }
 
-            @Override
-            public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
-                final V value) {
-                pass = true;
-                return (V) "foo";
-            }
+                @Override
+                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
+                    final V value) {
+                    pass = true;
+                    return (V) "foo";
+                }
 
-            @Override
-            public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
-                throw new UnsupportedOperationException();
-            }
-        });
+                @Override
+                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
+                    throw new UnsupportedOperationException();
+                }
+            });
 
         map.put((K) "willy", (V) "wonka");
         assertTrue(pass);
@@ -193,26 +193,26 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testPutAll() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public void resolveCollision(final CompositeMap<K, V> composite,
-            final Map<K, V> existing,
-            final Map<K, V> added,
-            final Collection<K> intersect) {
-                throw new UnsupportedOperationException();
-            }
+                private static final long serialVersionUID = 1L;
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    throw new UnsupportedOperationException();
+                }
 
-            @Override
-            public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
-                final V value) {
-                throw new UnsupportedOperationException();
-            }
+                @Override
+                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
+                    final V value) {
+                    throw new UnsupportedOperationException();
+                }
 
-            @Override
-            public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
-                pass = true;
-            }
-        });
+                @Override
+                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
+                    pass = true;
+                }
+            });
 
         map.putAll(null);
         assertTrue(pass);

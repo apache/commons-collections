@@ -699,11 +699,11 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                ExceptionPredicate.INSTANCE,
-                FalsePredicate.INSTANCE,
-                NotNullPredicate.INSTANCE,
-                NullPredicate.INSTANCE,
-                TruePredicate.INSTANCE
+            ExceptionPredicate.INSTANCE,
+            FalsePredicate.INSTANCE,
+            NotNullPredicate.INSTANCE,
+            NullPredicate.INSTANCE,
+            TruePredicate.INSTANCE
         };
 
         for (final Object original : singletones) {
@@ -718,5 +718,4 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     protected Predicate<?> generatePredicate() {
         return truePredicate();  //Just return something to satisfy super class.
     }
-
 }

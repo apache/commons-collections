@@ -1429,8 +1429,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Object key = it.next();
             final Object value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
-               .append('=')
-               .append(value == this ? "(this Map)" : value);
+                .append('=')
+                .append(value == this ? "(this Map)" : value);
 
             hasNext = it.hasNext();
             if (hasNext) {

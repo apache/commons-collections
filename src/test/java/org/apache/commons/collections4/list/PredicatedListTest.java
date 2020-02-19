@@ -72,8 +72,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-         !list.contains(i));
+        assertTrue("Collection shouldn't contain illegal element", !list.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -90,14 +89,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("List shouldn't contain illegal element",
-         !list.contains("one"));
-        assertTrue("List shouldn't contain illegal element",
-         !list.contains("two"));
-        assertTrue("List shouldn't contain illegal element",
-         !list.contains(Integer.valueOf(3)));
-        assertTrue("List shouldn't contain illegal element",
-         !list.contains("four"));
+        assertTrue("List shouldn't contain illegal element", !list.contains("one"));
+        assertTrue("List shouldn't contain illegal element", !list.contains("two"));
+        assertTrue("List shouldn't contain illegal element", !list.contains(Integer.valueOf(3)));
+        assertTrue("List shouldn't contain illegal element", !list.contains("four"));
     }
 
     @SuppressWarnings("unchecked")
@@ -120,14 +115,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         elements.add((E) "two");
         elements.add((E) "three");
         list.addAll(1, elements);
-        assertTrue("List should contain legal element",
-         list.contains("zero"));
-        assertTrue("List should contain legal element",
-         list.contains("one"));
-        assertTrue("List should contain legal element",
-         list.contains("two"));
-        assertTrue("List should contain legal element",
-         list.contains("three"));
+        assertTrue("List should contain legal element", list.contains("zero"));
+        assertTrue("List should contain legal element", list.contains("one"));
+        assertTrue("List should contain legal element", list.contains("two"));
+        assertTrue("List should contain legal element", list.contains("three"));
     }
 
     public void testSubList() {

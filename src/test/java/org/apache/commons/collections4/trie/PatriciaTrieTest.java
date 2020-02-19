@@ -64,11 +64,11 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = new String[]{
-                "",
-                "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
-                "Alberts", "Allie", "Alliese", "Alabama", "Banane",
-                "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
-                "Amma"
+            "",
+            "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
+            "Alberts", "Allie", "Alliese", "Alabama", "Banane",
+            "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
+            "Amma"
         };
 
         for (final String key : keys) {
@@ -291,10 +291,10 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = new String[]{
-                "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
-                "Alberts", "Allie", "Alliese", "Alabama", "Banane",
-                "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
-                "Amma"
+            "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
+            "Alberts", "Allie", "Alliese", "Alabama", "Banane",
+            "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
+            "Amma"
         };
 
         for (final String key : keys) {

@@ -1834,122 +1834,122 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                                                           K toKey, boolean toInclusive);
     }
 
-   /**
-    * A {@link RangeMap} that deals with {@link Entry}s.
-    */
-   private class RangeEntryMap extends RangeMap {
+    /**
+     * A {@link RangeMap} that deals with {@link Entry}s.
+     */
+    private class RangeEntryMap extends RangeMap {
 
-       /** The key to start from, null if the beginning. */
-       private final K fromKey;
+        /** The key to start from, null if the beginning. */
+        private final K fromKey;
 
-       /** The key to end at, null if till the end. */
-       private final K toKey;
+        /** The key to end at, null if till the end. */
+        private final K toKey;
 
-       /** Whether or not the 'from' is inclusive. */
-       private final boolean fromInclusive;
+        /** Whether or not the 'from' is inclusive. */
+        private final boolean fromInclusive;
 
-       /** Whether or not the 'to' is inclusive. */
-       private final boolean toInclusive;
+        /** Whether or not the 'to' is inclusive. */
+        private final boolean toInclusive;
 
-       /**
-        * Creates a {@link RangeEntryMap} with the fromKey included and
-        * the toKey excluded from the range.
-        */
-       protected RangeEntryMap(final K fromKey, final K toKey) {
-           this(fromKey, true, toKey, false);
-       }
+        /**
+         * Creates a {@link RangeEntryMap} with the fromKey included and
+         * the toKey excluded from the range.
+         */
+        protected RangeEntryMap(final K fromKey, final K toKey) {
+            this(fromKey, true, toKey, false);
+        }
 
-       /**
-        * Creates a {@link RangeEntryMap}.
-        */
-       protected RangeEntryMap(final K fromKey, final boolean fromInclusive,
-                               final K toKey, final boolean toInclusive) {
+        /**
+         * Creates a {@link RangeEntryMap}.
+         */
+        protected RangeEntryMap(final K fromKey, final boolean fromInclusive,
+                                final K toKey, final boolean toInclusive) {
 
-           if (fromKey == null && toKey == null) {
-               throw new IllegalArgumentException("must have a from or to!");
-           }
+            if (fromKey == null && toKey == null) {
+                throw new IllegalArgumentException("must have a from or to!");
+            }
 
-           if (fromKey != null && toKey != null && getKeyAnalyzer().compare(fromKey, toKey) > 0) {
-               throw new IllegalArgumentException("fromKey > toKey");
-           }
+            if (fromKey != null && toKey != null && getKeyAnalyzer().compare(fromKey, toKey) > 0) {
+                throw new IllegalArgumentException("fromKey > toKey");
+            }
 
-           this.fromKey = fromKey;
-           this.fromInclusive = fromInclusive;
-           this.toKey = toKey;
-           this.toInclusive = toInclusive;
-       }
+            this.fromKey = fromKey;
+            this.fromInclusive = fromInclusive;
+            this.toKey = toKey;
+            this.toInclusive = toInclusive;
+        }
 
-       @Override
-    public K firstKey() {
-           Map.Entry<K, V> e = null;
-           if (fromKey == null) {
-               e = firstEntry();
-           } else {
-               if (fromInclusive) {
-                   e = ceilingEntry(fromKey);
-               } else {
-                   e = higherEntry(fromKey);
-               }
-           }
+        @Override
+        public K firstKey() {
+            Map.Entry<K, V> e = null;
+            if (fromKey == null) {
+                e = firstEntry();
+            } else {
+                if (fromInclusive) {
+                    e = ceilingEntry(fromKey);
+                } else {
+                    e = higherEntry(fromKey);
+                }
+            }
 
-           final K first = e != null ? e.getKey() : null;
-           if (e == null || toKey != null && !inToRange(first, false)) {
-               throw new NoSuchElementException();
-           }
-           return first;
-       }
+            final K first = e != null ? e.getKey() : null;
+            if (e == null || toKey != null && !inToRange(first, false)) {
+                throw new NoSuchElementException();
+            }
+            return first;
+        }
 
-       @Override
-    public K lastKey() {
-           Map.Entry<K, V> e;
-           if (toKey == null) {
-               e = lastEntry();
-           } else {
-               if (toInclusive) {
-                   e = floorEntry(toKey);
-               } else {
-                   e = lowerEntry(toKey);
-               }
-           }
+        @Override
+        public K lastKey() {
+            Map.Entry<K, V> e;
+            if (toKey == null) {
+                e = lastEntry();
+            } else {
+                if (toInclusive) {
+                    e = floorEntry(toKey);
+                } else {
+                    e = lowerEntry(toKey);
+                }
+            }
 
-           final K last = e != null ? e.getKey() : null;
-           if (e == null || fromKey != null && !inFromRange(last, false)) {
-               throw new NoSuchElementException();
-           }
-           return last;
-       }
+            final K last = e != null ? e.getKey() : null;
+            if (e == null || fromKey != null && !inFromRange(last, false)) {
+                throw new NoSuchElementException();
+            }
+            return last;
+        }
 
-       @Override
-       protected Set<Entry<K, V>> createEntrySet() {
-           return new RangeEntrySet(this);
-       }
+        @Override
+        protected Set<Entry<K, V>> createEntrySet() {
+            return new RangeEntrySet(this);
+        }
 
-       @Override
-       public K getFromKey() {
-           return fromKey;
-       }
+        @Override
+        public K getFromKey() {
+            return fromKey;
+        }
 
-       @Override
-       public K getToKey() {
-           return toKey;
-       }
+        @Override
+        public K getToKey() {
+            return toKey;
+        }
 
-       @Override
-       public boolean isFromInclusive() {
-           return fromInclusive;
-       }
+        @Override
+        public boolean isFromInclusive() {
+            return fromInclusive;
+        }
 
-       @Override
-       public boolean isToInclusive() {
-           return toInclusive;
-       }
+        @Override
+        public boolean isToInclusive() {
+            return toInclusive;
+        }
 
-       @Override
-       protected SortedMap<K, V> createRangeMap(final K fromKey, final boolean fromInclusive,
-                                                final K toKey, final boolean toInclusive) {
-           return new RangeEntryMap(fromKey, fromInclusive, toKey, toInclusive);
-       }
-   }
+        @Override
+        protected SortedMap<K, V> createRangeMap(final K fromKey, final boolean fromInclusive,
+                                                 final K toKey, final boolean toInclusive) {
+            return new RangeEntryMap(fromKey, fromInclusive, toKey, toInclusive);
+        }
+    }
 
     /**
      * A {@link Set} view of a {@link RangeMap}.

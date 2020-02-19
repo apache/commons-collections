@@ -554,7 +554,7 @@ public class ListUtils {
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
-      return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
+        return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
     }
 
     /**

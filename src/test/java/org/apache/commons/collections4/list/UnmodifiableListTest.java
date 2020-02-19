@@ -101,55 +101,55 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         }
         try {
             list.add((E) Integer.valueOf(0));
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.addAll(0, array);
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.addAll(array);
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.clear();
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.remove(0);
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.remove(Integer.valueOf(0));
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.removeAll(array);
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.retainAll(array);
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.set(0, (E) Integer.valueOf(0));
-             fail("Expecting UnsupportedOperationException.");
+            fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }

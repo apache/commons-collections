@@ -377,39 +377,39 @@ public class ListUtilsTest {
     @Test
     public void testLongestCommonSubsequenceWithString() {
 
-      try {
-          ListUtils.longestCommonSubsequence((String) null, null);
-          fail("failed to check for null argument");
-      } catch (final NullPointerException e) {}
+        try {
+            ListUtils.longestCommonSubsequence((String) null, null);
+            fail("failed to check for null argument");
+        } catch (final NullPointerException e) {}
 
-      try {
-          ListUtils.longestCommonSubsequence("A", null);
-          fail("failed to check for null argument");
-      } catch (final NullPointerException e) {}
+        try {
+            ListUtils.longestCommonSubsequence("A", null);
+            fail("failed to check for null argument");
+        } catch (final NullPointerException e) {}
 
-      try {
-          ListUtils.longestCommonSubsequence(null, "A");
-          fail("failed to check for null argument");
-      } catch (final NullPointerException e) {}
+        try {
+            ListUtils.longestCommonSubsequence(null, "A");
+            fail("failed to check for null argument");
+        } catch (final NullPointerException e) {}
 
-      String lcs = ListUtils.longestCommonSubsequence("", "");
-      assertEquals(0, lcs.length());
+        String lcs = ListUtils.longestCommonSubsequence("", "");
+        assertEquals(0, lcs.length());
 
-      final String banana = "BANANA";
-      final String ananas = "ANANAS";
-      lcs = ListUtils.longestCommonSubsequence(banana, ananas);
+        final String banana = "BANANA";
+        final String ananas = "ANANAS";
+        lcs = ListUtils.longestCommonSubsequence(banana, ananas);
 
-      assertEquals("ANANA", lcs);
+        assertEquals("ANANA", lcs);
 
-      final String atana = "ATANA";
-      lcs = ListUtils.longestCommonSubsequence(banana, atana);
+        final String atana = "ATANA";
+        lcs = ListUtils.longestCommonSubsequence(banana, atana);
 
-      assertEquals("AANA", lcs);
+        assertEquals("AANA", lcs);
 
-      final String zorro = "ZORRO";
-      lcs = ListUtils.longestCommonSubsequence(banana, zorro);
+        final String zorro = "ZORRO";
+        lcs = ListUtils.longestCommonSubsequence(banana, zorro);
 
-      assertEquals(0, lcs.length());
+        assertEquals(0, lcs.length());
     }
 
     @Test

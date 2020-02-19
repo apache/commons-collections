@@ -52,7 +52,7 @@ public class TransformedSplitMapTest extends BulkTest {
 
         final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
         final Object[] v = new Object[] { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
-                new Object[0] };
+            new Object[0] };
 
         assertEquals(0, map.size());
         for (int i = 0; i < k.length; i++) {

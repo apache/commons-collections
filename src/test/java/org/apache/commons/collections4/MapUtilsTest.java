@@ -188,36 +188,36 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         try {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                    {"RED", "#FF0000"},
-                    null,
-                    {"BLUE", "#0000FF"}
+                {"RED", "#FF0000"},
+                null,
+                {"BLUE", "#0000FF"}
             });
             fail();
         } catch (final IllegalArgumentException ex) {}
 
         try {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                    {"RED", "#FF0000"},
-                    {"GREEN"},
-                    {"BLUE", "#0000FF"}
+                {"RED", "#FF0000"},
+                {"GREEN"},
+                {"BLUE", "#0000FF"}
             });
             fail();
         } catch (final IllegalArgumentException ex) {}
 
         try {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                    {"RED", "#FF0000"},
-                    {},
-                    {"BLUE", "#0000FF"}
+                {"RED", "#FF0000"},
+                {},
+                {"BLUE", "#0000FF"}
             });
             fail();
         } catch (final IllegalArgumentException ex) {}
 
         // flat array
         test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
-                "RED", "#FF0000",
-                "GREEN", "#00FF00",
-                "BLUE", "#0000FF"
+            "RED", "#FF0000",
+            "GREEN", "#00FF00",
+            "BLUE", "#0000FF"
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
@@ -228,10 +228,10 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(3, test.size());
 
         test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
-                "RED", "#FF0000",
-                "GREEN", "#00FF00",
-                "BLUE", "#0000FF",
-                "PURPLE" // ignored
+            "RED", "#FF0000",
+            "GREEN", "#00FF00",
+            "BLUE", "#0000FF",
+            "PURPLE" // ignored
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
@@ -246,9 +246,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         // map entry
         test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-                new DefaultMapEntry<>("RED", "#FF0000"),
-                new DefaultMapEntry<>("GREEN", "#00FF00"),
-                new DefaultMapEntry<>("BLUE", "#0000FF")
+            new DefaultMapEntry<>("RED", "#FF0000"),
+            new DefaultMapEntry<>("GREEN", "#00FF00"),
+            new DefaultMapEntry<>("BLUE", "#0000FF")
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
@@ -260,9 +260,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         // key value
         test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-                new DefaultKeyValue<>("RED", "#FF0000"),
-                new DefaultKeyValue<>("GREEN", "#00FF00"),
-                new DefaultKeyValue<>("BLUE", "#0000FF")
+            new DefaultKeyValue<>("RED", "#FF0000"),
+            new DefaultKeyValue<>("GREEN", "#00FF00"),
+            new DefaultKeyValue<>("BLUE", "#0000FF")
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));

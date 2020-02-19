@@ -1870,7 +1870,7 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
-  }
+    }
 
     /**
      * Removes all elements in {@code remove} from {@code collection}.

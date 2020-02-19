@@ -91,8 +91,8 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
             }
 
             if (k != f) {
-               final int x = k ^ f;
-               return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
+                final int x = k ^ f;
+                return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
             }
 
             if (k != 0) {

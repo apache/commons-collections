@@ -30,9 +30,9 @@ class EmptyMapMutator<K, V> implements CompositeMap.MapMutator<K, V> {
 
     @Override
     public void resolveCollision(final CompositeMap<K, V> composite,
-    final Map<K, V> existing,
-    final Map<K, V> added,
-    final Collection<K> intersect) {
+        final Map<K, V> existing,
+        final Map<K, V> added,
+        final Collection<K> intersect) {
         // Do nothing
     }
 

@@ -152,8 +152,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     public void testIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         @SuppressWarnings("unchecked")
-        final
-        Collection<V> values = new ArrayList<>((Collection<V>) map.values());
+        final Collection<V> values = new ArrayList<>((Collection<V>) map.values());
         final Iterator<Map.Entry<K, V>> iterator = map.iterator();
         while (iterator.hasNext()) {
             final Map.Entry<K, V> entry = iterator.next();

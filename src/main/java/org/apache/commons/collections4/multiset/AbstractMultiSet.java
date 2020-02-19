@@ -408,29 +408,28 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
 
         @Override
         public boolean equals(final Object object) {
-          if (object instanceof Entry) {
-            final Entry<?> other = (Entry<?>) object;
-            final E element = this.getElement();
-            final Object otherElement = other.getElement();
+            if (object instanceof Entry) {
+                final Entry<?> other = (Entry<?>) object;
+                final E element = this.getElement();
+                final Object otherElement = other.getElement();
 
-            return this.getCount() == other.getCount() &&
-                   (element == otherElement ||
-                    element != null && element.equals(otherElement));
-          }
-          return false;
+                return this.getCount() == other.getCount() &&
+                       (element == otherElement ||
+                        element != null && element.equals(otherElement));
+            }
+            return false;
         }
 
         @Override
         public int hashCode() {
-          final E element = getElement();
-          return ((element == null) ? 0 : element.hashCode()) ^ getCount();
+            final E element = getElement();
+            return ((element == null) ? 0 : element.hashCode()) ^ getCount();
         }
 
         @Override
         public String toString() {
             return String.format("%s:%d", getElement(), getCount());
         }
-
     }
 
     //-----------------------------------------------------------------------

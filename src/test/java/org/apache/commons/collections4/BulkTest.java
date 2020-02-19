@@ -294,21 +294,21 @@ class BulkTestSuiteMaker {
     /**
      * Makes a hierarchical TestSuite based on the starting class.
      *
-     * @return  the hierarchical TestSuite for startingClass
+     * @return the hierarchical TestSuite for startingClass
      */
     public TestSuite make() {
-         this.result = new TestSuite();
-         this.prefix = getBaseName(startingClass);
-         result.setName(prefix);
+        this.result = new TestSuite();
+        this.prefix = getBaseName(startingClass);
+        result.setName(prefix);
 
-         final BulkTest bulk = makeFirstTestCase(startingClass);
-         ignored = new ArrayList<>();
-         final String[] s = bulk.ignoredTests();
-         if (s != null) {
-             ignored.addAll(Arrays.asList(s));
-         }
-         make(bulk);
-         return result;
+        final BulkTest bulk = makeFirstTestCase(startingClass);
+        ignored = new ArrayList<>();
+        final String[] s = bulk.ignoredTests();
+        if (s != null) {
+            ignored.addAll(Arrays.asList(s));
+        }
+        make(bulk);
+        return result;
     }
 
     /**

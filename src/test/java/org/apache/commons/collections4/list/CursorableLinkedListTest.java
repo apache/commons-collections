@@ -1504,14 +1504,14 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         final String prefix = "CursorableLinkedListTest";
         final String bulk = ".bulkTestSubList";
         final String[] ignored = new String[] {
-                ".testEmptyListSerialization",
-                ".testFullListSerialization",
-                ".testEmptyListCompatibility",
-                ".testFullListCompatibility",
-                ".testSimpleSerialization",
-                ".testCanonicalEmptyCollectionExists",
-                ".testCanonicalFullCollectionExists",
-                ".testSerializeDeserializeThenCompare"
+            ".testEmptyListSerialization",
+            ".testFullListSerialization",
+            ".testEmptyListCompatibility",
+            ".testFullListCompatibility",
+            ".testSimpleSerialization",
+            ".testCanonicalEmptyCollectionExists",
+            ".testCanonicalFullCollectionExists",
+            ".testSerializeDeserializeThenCompare"
         };
         for (final String element : ignored) {
             list.add(prefix + bulk + element);

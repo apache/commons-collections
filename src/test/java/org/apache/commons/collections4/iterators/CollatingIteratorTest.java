@@ -146,61 +146,61 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         iter.addIterator(evens.iterator());
         iter.addIterator(odds.iterator());
 
-        assertEquals(Integer.valueOf(0), iter.next()); // even 0
+        assertEquals(Integer.valueOf(0), iter.next());  // even   0
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1), iter.next()); // fib 1
+        assertEquals(Integer.valueOf(1), iter.next());  // fib    1
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1), iter.next()); // fib 1
+        assertEquals(Integer.valueOf(1), iter.next());  // fib    1
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(1), iter.next()); // odd 1
+        assertEquals(Integer.valueOf(1), iter.next());  // odd    1
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(2), iter.next()); // fib 2
+        assertEquals(Integer.valueOf(2), iter.next());  // fib    2
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(2), iter.next()); // even 2
+        assertEquals(Integer.valueOf(2), iter.next());  // even   2
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(3), iter.next()); // fib 3
+        assertEquals(Integer.valueOf(3), iter.next());  // fib    3
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(3), iter.next()); // odd 3
+        assertEquals(Integer.valueOf(3), iter.next());  // odd    3
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(4), iter.next()); // even 4
+        assertEquals(Integer.valueOf(4), iter.next());  // even   4
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(5), iter.next()); // fib 5
+        assertEquals(Integer.valueOf(5), iter.next());  // fib    5
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(5), iter.next()); // odd 5
+        assertEquals(Integer.valueOf(5), iter.next());  // odd    5
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(6), iter.next()); // even 6
+        assertEquals(Integer.valueOf(6), iter.next());  // even   6
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(7), iter.next()); // odd 7
+        assertEquals(Integer.valueOf(7), iter.next());  // odd    7
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(8), iter.next()); // fib 8
+        assertEquals(Integer.valueOf(8), iter.next());  // fib    8
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(8), iter.next()); // even 8
+        assertEquals(Integer.valueOf(8), iter.next());  // even   8
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(9), iter.next()); // odd 9
+        assertEquals(Integer.valueOf(9), iter.next());  // odd    9
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(10), iter.next()); // even 10
+        assertEquals(Integer.valueOf(10), iter.next()); // even  10
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(11), iter.next()); // odd 11
+        assertEquals(Integer.valueOf(11), iter.next()); // odd   11
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(12), iter.next()); // even 12
+        assertEquals(Integer.valueOf(12), iter.next()); // even  12
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(13), iter.next()); // fib 13
+        assertEquals(Integer.valueOf(13), iter.next()); // fib   13
         assertEquals(0, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(13), iter.next()); // odd 13
+        assertEquals(Integer.valueOf(13), iter.next()); // odd   13
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(14), iter.next()); // even 14
+        assertEquals(Integer.valueOf(14), iter.next()); // even  14
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(15), iter.next()); // odd 15
+        assertEquals(Integer.valueOf(15), iter.next()); // odd   15
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(16), iter.next()); // even 16
+        assertEquals(Integer.valueOf(16), iter.next()); // even  16
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(17), iter.next()); // odd 17
+        assertEquals(Integer.valueOf(17), iter.next()); // odd   17
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(18), iter.next()); // even 18
+        assertEquals(Integer.valueOf(18), iter.next()); // even  18
         assertEquals(1, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(19), iter.next()); // odd 19
+        assertEquals(Integer.valueOf(19), iter.next()); // odd   19
         assertEquals(2, iter.getIteratorIndex());
-        assertEquals(Integer.valueOf(21), iter.next()); // fib 21
+        assertEquals(Integer.valueOf(21), iter.next()); // fib   21
         assertEquals(0, iter.getIteratorIndex());
 
         assertTrue(!iter.hasNext());
@@ -238,24 +238,24 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testNullComparator() {
-       final List<Integer> l1 = Arrays.asList(1, 3, 5);
-       final List<Integer> l2 = Arrays.asList(2, 4, 6);
+        final List<Integer> l1 = Arrays.asList(1, 3, 5);
+        final List<Integer> l2 = Arrays.asList(2, 4, 6);
 
-       final CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
-       try {
-           collatingIterator1.next();
-       } catch (final NullPointerException e) {
-           assertTrue(e.getMessage().startsWith("You must invoke setComparator"));
-       }
+        final CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
+        try {
+            collatingIterator1.next();
+        } catch (final NullPointerException e) {
+            assertTrue(e.getMessage().startsWith("You must invoke setComparator"));
+        }
 
-       int i = 0;
-       final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
-       collatingIterator2.setComparator(new ComparableComparator<Integer>());
-       for ( ; collatingIterator2.hasNext(); i++ ) {
-          final Integer n = collatingIterator2.next();
-          assertEquals("wrong order", (int) n, i + 1);
-       }
-       assertEquals("wrong size", i, l1.size() + l2.size());
+        int i = 0;
+        final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
+        collatingIterator2.setComparator(new ComparableComparator<Integer>());
+        for ( ; collatingIterator2.hasNext(); i++ ) {
+            final Integer n = collatingIterator2.next();
+            assertEquals("wrong order", (int) n, i + 1);
+        }
+        assertEquals("wrong size", i, l1.size() + l2.size());
     }
 }
 

@@ -60,23 +60,23 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public E[] getFullNonNullElements() {
         // override to avoid duplicate "One"
         return (E[]) new Object[] {
-                new String(""),
-                new String("One"),
-                Integer.valueOf(2),
-                "Three",
-                Integer.valueOf(4),
-                new Double(5),
-                new Float(6),
-                "Seven",
-                "Eight",
-                new String("Nine"),
-                Integer.valueOf(10),
-                new Short((short) 11),
-                new Long(12),
-                "Thirteen",
-                "14",
-                "15",
-                new Byte((byte) 16)
+            new String(""),
+            new String("One"),
+            Integer.valueOf(2),
+            "Three",
+            Integer.valueOf(4),
+            new Double(5),
+            new Float(6),
+            "Seven",
+            "Eight",
+            new String("Nine"),
+            Integer.valueOf(10),
+            new Short((short) 11),
+            new Long(12),
+            "Thirteen",
+            "14",
+            "15",
+            new Byte((byte) 16)
         };
     }
 
@@ -252,28 +252,28 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     public void testIntCollectionAddAll() {
-      // make a SetUniqueList with one element
-      final List<Integer> list = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
-      final Integer existingElement = Integer.valueOf(1);
-      list.add(existingElement);
+        // make a SetUniqueList with one element
+        final List<Integer> list = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
+        final Integer existingElement = Integer.valueOf(1);
+        list.add(existingElement);
 
-      // add two new unique elements at index 0
-      final Integer firstNewElement = Integer.valueOf(2);
-      final Integer secondNewElement = Integer.valueOf(3);
-      Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
-      list.addAll(0, collection);
-      assertEquals("Unique elements should be added.", 3, list.size());
-      assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
-      assertEquals("Second new element should be at index 1", secondNewElement, list.get(1));
-      assertEquals("Existing element should shift to index 2", existingElement, list.get(2));
+        // add two new unique elements at index 0
+        final Integer firstNewElement = Integer.valueOf(2);
+        final Integer secondNewElement = Integer.valueOf(3);
+        Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
+        list.addAll(0, collection);
+        assertEquals("Unique elements should be added.", 3, list.size());
+        assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
+        assertEquals("Second new element should be at index 1", secondNewElement, list.get(1));
+        assertEquals("Existing element should shift to index 2", existingElement, list.get(2));
 
-      // add a duplicate element and a unique element at index 0
-      final Integer thirdNewElement = Integer.valueOf(4);
-      collection = Arrays.asList(existingElement, thirdNewElement);
-      list.addAll(0, collection);
-      assertEquals("Duplicate element should not be added, unique element should be added.",
-        4, list.size());
-      assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
+        // add a duplicate element and a unique element at index 0
+        final Integer thirdNewElement = Integer.valueOf(4);
+        collection = Arrays.asList(existingElement, thirdNewElement);
+        list.addAll(0, collection);
+        assertEquals("Duplicate element should not be added, unique element should be added.",
+            4, list.size());
+        assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
     }
 
     @SuppressWarnings("unchecked")

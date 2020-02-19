@@ -93,7 +93,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
-         !bag.contains(i));
+            !bag.contains(i));
     }
 
     @SuppressWarnings("unchecked")

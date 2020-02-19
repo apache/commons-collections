@@ -119,9 +119,9 @@ public class EnumerationUtilsTest {
     public void testToListWithStringTokenizer() {
         final List<String> expectedList1 = new ArrayList<>();
         final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
-             while (st.hasMoreTokens()) {
-                 expectedList1.add(st.nextToken());
-             }
+        while (st.hasMoreTokens()) {
+            expectedList1.add(st.nextToken());
+        }
         final List<String> expectedList2 = new ArrayList<>();
         expectedList2.add("this");
         expectedList2.add("is");

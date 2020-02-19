@@ -474,7 +474,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public Object[] getFullNonNullStringElements() {
         return new Object[] {
             "If", "the", "dull", "substance", "of", "my", "flesh", "were",
-                "thought", "Injurious", "distance", "could", "not", "stop", "my", "way",
+            "thought", "Injurious", "distance", "could", "not", "stop", "my", "way",
         };
     }
 
@@ -487,7 +487,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {
             "For", "then", "despite", /* of */"space", "I", "would", "be",
-                "brought", "From", "limits", "far", "remote", "where", "thou", "dost", "stay"
+            "brought", "From", "limits", "far", "remote", "where", "thou", "dost", "stay"
         };
     }
 

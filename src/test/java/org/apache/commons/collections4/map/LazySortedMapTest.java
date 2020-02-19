@@ -129,7 +129,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
         assertTrue(map instanceof LazySortedMap);
-         try {
+        try {
             map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
             fail("Expecting NullPointerException for null transformer");
         } catch (final NullPointerException e) {
