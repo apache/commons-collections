@@ -22,7 +22,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -79,7 +81,7 @@ public class CachingHasherTest {
     @Test
     public void testGetBits() {
 
-        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
+        final int[] expected = { 6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62 };
 
         final Hasher hasher = builder.with("Hello").build();
 
@@ -97,8 +99,8 @@ public class CachingHasherTest {
      */
     @Test
     public void testGetBits_MultipleHashes() {
-        final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
-            59, 49, 39, 13, 3, 65, 55, 45, 35, 25};
+        final int[] expected = { 6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7,
+                69, 59, 49, 39, 13, 3, 65, 55, 45, 35, 25 };
 
         final Hasher hasher = builder.with("Hello").with("World").build();
 
@@ -150,5 +152,90 @@ public class CachingHasherTest {
         }
 
         assertFalse(builder.with("Hello").build().isEmpty());
+    }
+
+    @Test
+    public void testNonCyclicHashFunction() {
+        HashFunctionIdentity hfi = new HashFunctionIdentity() {
+
+            @Override
+            public String getName() {
+                return "Testing-NonCyclic-Hash";
+            }
+
+            @Override
+            public ProcessType getProcessType() {
+                return ProcessType.ITERATIVE;
+            }
+
+            @Override
+            public String getProvider() {
+                return "Apache Commons Collection Testing";
+            }
+
+            @Override
+            public long getSignature() {
+                return 0;
+            }
+
+            @Override
+            public Signedness getSignedness() {
+                return Signedness.SIGNED;
+            }
+        };
+
+        try {
+            new CachingHasher(hfi, new long[][] { { 1, 4 }, { 3, 6 } });
+            fail("Should have thrown exception");
+        } catch (IllegalArgumentException expected) {
+            // do nothing.
+        }
+
+    }
+
+    @Test
+    public void testGetBuffers() {
+        final CachingHasher hasher = builder.with("Hello").build();
+
+        List<long[]> buffers = hasher.getBuffers();
+        HashFunctionIdentity id = hasher.getHashFunctionIdentity();
+
+        CachingHasher hasher2 = new CachingHasher( id, buffers );
+
+        PrimitiveIterator.OfInt iter1 = hasher.getBits(shape);
+        PrimitiveIterator.OfInt iter2 = hasher2.getBits(shape);
+
+        while (iter1.hasNext())
+        {
+            assertTrue( "Too few values in second hasher", iter2.hasNext());
+            assertEquals( "Wrong value", iter1.next(), iter2.next() );
+        }
+        assertFalse( "Second hasher has too many values", iter2.hasNext());
+    }
+
+    @Test
+    public void testConstructorWithLongArray() {
+        final CachingHasher hasher = builder.with("Hello").build();
+
+        List<long[]> buffers = hasher.getBuffers();
+        assertEquals( 1, buffers.size() );
+
+        long[][] ary = new long[1][];
+        ary[0] = buffers.get(0);
+
+        HashFunctionIdentity id = hasher.getHashFunctionIdentity();
+
+
+        CachingHasher hasher2 = new CachingHasher( id, ary );
+
+        PrimitiveIterator.OfInt iter1 = hasher.getBits(shape);
+        PrimitiveIterator.OfInt iter2 = hasher2.getBits(shape);
+
+        while (iter1.hasNext())
+        {
+            assertTrue( "Too few values in second hasher", iter2.hasNext());
+            assertEquals( "Wrong value", iter1.next(), iter2.next() );
+        }
+        assertFalse( "Second hasher has too many values", iter2.hasNext());
     }
 }

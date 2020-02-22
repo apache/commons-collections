@@ -24,10 +24,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 
 /**
@@ -58,7 +54,7 @@ public class CachingHasher implements Hasher {
      * <p>
      * The list of hash values comprises a @code{List&lt;long[]&gt;} where each @code{long[]}
      * is comprises two (2) values that are the result of hashing the original buffer.  Thus a
-     * CachingHasher that was built from five (5) buffers will have five arrays of two @code{longs} 
+     * CachingHasher that was built from five (5) buffers will have five arrays of two @code{longs}
      * each.
      * </p>
      * @param functionIdentity The identity of the function.
@@ -111,13 +107,25 @@ public class CachingHasher implements Hasher {
     public PrimitiveIterator.OfInt getBits(Shape shape) {
         HashFunctionValidator.checkAreEqual(getHashFunctionIdentity(),
             shape.getHashFunctionIdentity());
-        return new Iterator(shape);
+        return new IntIterator(shape);
+    }
+
+    /**
+     * Gets the long representations of the buffers.
+     * <p>
+     * This method returns the long representations of the buffers.  This is commonly used
+     * to transmit the Hasher from one system to another.
+     * </p>
+     * @return a copy if the long buffer representation.
+     */
+    public List<long[]> getBuffers() {
+        return new ArrayList<long[]>( buffers );
     }
 
     /**
      * The iterator of integers.
      */
-    private class Iterator implements PrimitiveIterator.OfInt {
+    private class IntIterator implements PrimitiveIterator.OfInt {
         private int buffer = 0;
         private int funcCount = 0;
         private final Shape shape;
@@ -128,7 +136,7 @@ public class CachingHasher implements Hasher {
          *
          * @param shape
          */
-        private Iterator(Shape shape) {
+        private IntIterator(Shape shape) {
             this.shape = shape;
             this.accumulator = buffers.isEmpty() ? 0 : buffers.get(0)[0];
         }
@@ -156,6 +164,7 @@ public class CachingHasher implements Hasher {
             }
             throw new NoSuchElementException();
         }
+
     }
 
     /**
