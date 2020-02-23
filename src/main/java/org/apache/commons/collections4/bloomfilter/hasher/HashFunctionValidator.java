@@ -20,7 +20,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 /**
  * Contains validation for hash functions.
  */
-final class HashFunctionValidator {
+public final class HashFunctionValidator {
     /** Do not instantiate. */
     private HashFunctionValidator() {}
 
