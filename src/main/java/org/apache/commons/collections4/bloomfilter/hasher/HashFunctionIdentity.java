@@ -56,9 +56,35 @@ public interface HashFunctionIdentity {
 
     /**
      * Identifies the signedness of the calculations for this function.
+     * <p>
+     * When the hash function executes it typically returns an array of bytes.
+     * That array is converted into one or more numerical values which will be provided
+     * as a {@code long} primitive type.
+     * The signedness identifies if those {@code long} values are signed or unsigned.
+     * For example a hash function that outputs only 32-bits can be unsigned if converted
+     * using {@link Integer#toUnsignedLong(int)}. A hash function that outputs more than
+     * 64-bits is typically signed.
+     * </p>
      */
     enum Signedness {
-        SIGNED, UNSIGNED
+        /**
+         * The result of {@link HashFunction#apply(byte[], int)} is signed,
+         * thus the sign bit may be set.
+         *
+         * <p>The result can be used with {@code Math.floorMod(x, y)} to generate a positive
+         * value if y is positive.
+         *
+         * @see Math#floorMod(int, int)
+         */
+        SIGNED,
+        /**
+         * The result of {@link HashFunction#apply(byte[], int)} is unsigned,
+         * thus the sign bit is never set.
+         *
+         * <p>The result can be used with {@code x % y} to generate a positive
+         * value if y is positive.
+         */
+        UNSIGNED
     }
 
     /**
