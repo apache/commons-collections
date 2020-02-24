@@ -24,12 +24,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PrimitiveIterator.OfInt;
 
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -140,33 +141,35 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
      * Tests that merge correctly updates the counts when a CountingBloomFilter is passed.
      */
     @Test
-    @Ignore
     public void mergeTest_Counts() {
-        final int[] c1 = {1, 10, 100, 0};
-        final int[] c2 = {4, 0, 7, 2};
+        final int[] expected = {
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 0
+        };
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        final Map<Integer, Integer> map1 = new HashMap<>();
-        for (int i = 0; i < c1.length; i++) {
-            map1.put(i, c1[i]);
-        }
-        final Map<Integer, Integer> map2 = new HashMap<>();
-        for (int i = 0; i < c2.length; i++) {
-            map2.put(i, c2[i]);
-        }
+        final CountingBloomFilter bf = createFilter(hasher, shape);
 
-        final CountingBloomFilter bf1 = new CountingBloomFilter(map1, shape);
-        final BloomFilter bf2 = new CountingBloomFilter(map2, shape);
+        final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
+        final BloomFilter bf2 = createFilter(hasher2, shape);
 
-        bf1.merge(bf2);
+        bf.merge(bf2);
 
-        assertEquals(4, bf1.cardinality());
+        assertEquals(27, bf.getCounts().count());
+        assertEquals(Integer.valueOf(2), bf.getCounts().map(Map.Entry::getValue).max(Integer::compare).get());
+        assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).min(Integer::compare).get());
 
         final Map<Integer, Integer> m = new HashMap<>();
-        bf1.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
-
-        // This currently fails as the counts from the second filter are ignored.
-        for (int i = 0; i < c1.length; i++) {
-            assertEquals(c1[i] + c2[i], m.get(i).intValue());
+        bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
+        for (int i = 0; i < 29; i++) {
+            if (m.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
+            }
         }
     }
 
@@ -238,7 +241,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
     }
 
     /**
-     * Test that merge correctly updates the counts when a Hasher is passed
+     * Test that merge correctly updates the counts when a Hasher is passed.
      */
     @Test
     public void mergeTest_Shape_Hasher_Count() {
@@ -274,41 +277,81 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
     }
 
     /**
+     * Test that merge correctly updates the counts when a Hasher is passed with duplicates.
+     */
+    @Test
+    public void mergeTest_Shape_Hasher_Duplicates() {
+        final int[] expected = {
+            0, 2, 1, 2, 1
+        };
+
+        final List<Integer> lst = Arrays.asList(1, 2, 3);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+
+        final CountingBloomFilter bf = createFilter(hasher, shape);
+
+        final Hasher hasher2 = new Hasher() {
+            @Override
+            public OfInt getBits(Shape shape) {
+                // Deliberately return duplicates
+                return Arrays.asList(1, 1, 1, 1, 3, 3, 4).stream().mapToInt(Integer::intValue).iterator();
+            }
+
+            @Override
+            public HashFunctionIdentity getHashFunctionIdentity() {
+                return shape.getHashFunctionIdentity();
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+        };
+
+        bf.merge(hasher2);
+
+        assertEquals(4, bf.getCounts().count());
+
+        final Map<Integer, Integer> m = new HashMap<>();
+        bf.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
+        for (int i = 0; i < expected.length; i++) {
+            if (m.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
+            }
+        }
+    }
+
+    /**
      * Tests that when removing a counting Bloom filter the counts are correctly updated.
      */
     @Test
-    @Ignore
     public void removeTest_Counting() {
-        final int[] c1 = {1, 10, 100, 0};
-        final int[] c2 = {1, 0, 7, 2};
-
-        // If left alone the test fails with an exception as there is underflow
-        // for (0 - 2). Fix this but the underflow behaviour is subject to change.
-        c2[c2.length - 1] = 0;
-
-        final Map<Integer, Integer> map1 = new HashMap<>();
-        for (int i = 0; i < c1.length; i++) {
-            map1.put(i, c1[i]);
+        final int[] values = {
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 2, 2, 2, 2, 2, 2, 2, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1
+        };
+        final Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 1; i < values.length; i++) {
+            map.put(i, values[i]);
         }
+
+        final CountingBloomFilter bf = new CountingBloomFilter(map, shape);
+
+        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter bf2 = new CountingBloomFilter(hasher, shape);
+
+        bf.remove(bf2);
+        assertEquals(17, bf.cardinality());
         final Map<Integer, Integer> map2 = new HashMap<>();
-        for (int i = 0; i < c2.length; i++) {
-            map2.put(i, c2[i]);
-        }
+        bf.getCounts().forEach(e -> map2.put(e.getKey(), e.getValue()));
 
-        final CountingBloomFilter bf1 = new CountingBloomFilter(map1, shape);
-        final BloomFilter bf2 = new CountingBloomFilter(map2, shape);
-
-        bf1.remove(bf2);
-
-        assertEquals(2, bf1.cardinality());
-
-        final Map<Integer, Integer> m = new HashMap<>();
-        bf1.getCounts().forEach(e -> m.put(e.getKey(), e.getValue()));
-
-        // This currently fails as the counts from the second filter are ignored
-        // and only 1 is subtracted for each index.
-        for (int i = 0; i < c1.length; i++) {
-            assertEquals(Math.max(0, c1[i] - c2[i]), m.getOrDefault(i, 0).intValue());
+        for (int i = 11; i < values.length; i++) {
+            assertNotNull(map2.get(i));
+            assertEquals(1, map2.get(i).intValue());
         }
     }
 
@@ -340,6 +383,41 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         for (int i = 11; i < values.length; i++) {
             assertNotNull(map2.get(i));
             assertEquals(1, map2.get(i).intValue());
+        }
+    }
+
+    /**
+     * Tests that removing a hasher update the counts properly if there are duplicates.
+     */
+    @Test
+    public void removeTest_Hasher_Duplicates() {
+        final int[] values = {
+            0, 3, 2, 1
+        };
+        final int[] expected = {
+            0, 2, 1, 0
+        };
+        final Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 1; i < values.length; i++) {
+            map.put(i, values[i]);
+        }
+
+        final CountingBloomFilter bf = new CountingBloomFilter(map, shape);
+
+        final List<Integer> lst = Arrays.asList(1, 1, 1, 1, 1, 1, 2, 3, 3, 3);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+
+        bf.remove(hasher);
+        assertEquals(2, bf.cardinality());
+        final Map<Integer, Integer> map2 = new HashMap<>();
+        bf.getCounts().forEach(e -> map2.put(e.getKey(), e.getValue()));
+
+        for (int i = 0; i < expected.length; i++) {
+            if (map2.get(i) == null) {
+                assertEquals("Wrong value for " + i, expected[i], 0);
+            } else {
+                assertEquals("Wrong value for " + i, expected[i], map2.get(i).intValue());
+            }
         }
     }
 

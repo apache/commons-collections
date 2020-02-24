@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.AbstractMap;
 import java.util.BitSet;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.function.Consumer;
@@ -151,115 +150,117 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     /**
-     * Merge this Bloom filter with the other creating a new filter. The counts for
-     * bits that are on in the other filter are incremented.
+     * {@inheritDoc}
      * <p>
-     * For each bit that is turned on in the other filter; if the other filter is
-     * also a CountingBloomFilter the count is added to this filter, otherwise the
-     * count is incremented by one.
+     * Note: If the other filter is also a CountingBloomFilter the counts are not used.
      * </p>
      *
-     * @param other the other filter.
+     * @throws IllegalStateException If the counts overflow {@link Integer#MAX_VALUE}
      */
     @Override
     public void merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter) {
-            // TODO - This should use the entrySet and increment each key by the count
-            merge(((CountingBloomFilter) other).counts.keySet().iterator());
+            // Only use the keys and not the counts
+            ((CountingBloomFilter) other).counts.keySet().forEach(this::addIndex);
         } else {
-            merge(BitSet.valueOf(other.getBits()).stream().iterator());
+            BitSet.valueOf(other.getBits()).stream().forEach(this::addIndex);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException If the counts overflow {@link Integer#MAX_VALUE}
+     */
     @Override
     public void merge(final Hasher hasher) {
         verifyHasher(hasher);
-        merge(hasher.getBits(getShape()));
+        toStream(hasher).forEach(this::addIndex);
     }
 
     /**
-     * Merges an iterator of set bits into this filter.
-     * @param iter the iterator of bits to set.
-     */
-    private void merge(final Iterator<Integer> iter) {
-        iter.forEachRemaining(idx -> {
-            final Integer val = counts.get(idx);
-            if (val == null) {
-                counts.put(idx, 1 );
-            } else if (val == Integer.MAX_VALUE) {
-                throw new IllegalStateException("Overflow on index " + idx);
-            } else {
-                counts.put(idx, val + 1);
-            }
-        });
-    }
-
-    /**
-     * Decrements the counts for the bits that are on in the other BloomFilter from this
-     * one.
+     * Increments the count for the bit index.
      *
+     * @param idx the index.
+     * @throws IllegalStateException If the counts overflow {@link Integer#MAX_VALUE}
+     */
+    private void addIndex(int idx) {
+        final Integer val = counts.get(idx);
+        if (val == null) {
+            counts.put(idx, 1);
+        } else if (val == Integer.MAX_VALUE) {
+            throw new IllegalStateException("Overflow on index " + idx);
+        } else {
+            counts.put(idx, val + 1);
+        }
+    }
+
+    /**
+     * Removes the other Bloom filter from this one.
      * <p>
      * For each bit that is turned on in the other filter the count is decremented by 1.
      * </p>
      *
      * @param other the other filter.
+     * @throws IllegalStateException If the count for a decremented bit was already at zero
      */
     public void remove(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof CountingBloomFilter) {
-            // TODO - This should use the entrySet and decrement each key by the count
-            remove(((CountingBloomFilter) other).counts.keySet().stream());
+            // Only use the keys and not the counts
+            ((CountingBloomFilter) other).counts.keySet().forEach(this::subtractIndex);
         } else {
-            remove(BitSet.valueOf(other.getBits()).stream().boxed());
+            BitSet.valueOf(other.getBits()).stream().forEach(this::subtractIndex);
         }
     }
 
     /**
      * Decrements the counts for the bits that are on in the hasher from this
      * Bloom filter.
-     *
      * <p>
-     * For each bit that is turned on in the other filter the count is decremented by 1.
+     * For each bit that is identified by the hasher the count is decremented by 1.
+     * Duplicate bits are ignored.
      * </p>
      *
      * @param hasher the hasher to generate bits.
+     * @throws IllegalStateException If the count for a decremented bit was already at zero
      */
     public void remove(final Hasher hasher) {
         verifyHasher(hasher);
-        final Set<Integer> lst = new HashSet<>();
-        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>) lst::add);
-        remove(lst.stream());
+        toStream(hasher).forEach(this::subtractIndex);
     }
 
     /**
-     * Decrements the counts for the bits specified in the Integer stream.
+     * Decrements the count for the bit index.
      *
-     * @param idxStream The stream of bit counts to decrement.
+     * @param idx the index.
+     * @throws IllegalStateException If the count for a decremented bit was already at zero
      */
-    private void remove(final Stream<Integer> idxStream) {
-        idxStream.forEach(idx -> {
-            // TODO - This doubles up removal of the index.
-            // The first part will not throw if the count decrements past zero.
-            // The second part will throw if the count decrements past zero.
-            final Integer val = counts.get(idx);
-            if (val != null) {
-                if (val - 1 == 0) {
-                    counts.remove(idx);
-                } else {
-                    counts.put(idx, val - 1);
-                }
-            }
-            if (val == null || val == 0) {
-                throw new IllegalStateException("Underflow on index " + idx);
-            } else if (val - 1 == 0) {
+    private void subtractIndex(int idx) {
+        final Integer val = counts.get(idx);
+        if (val != null) {
+            if (val == 1) {
                 counts.remove(idx);
             } else {
                 counts.put(idx, val - 1);
             }
-        });
+        } else {
+            throw new IllegalStateException("Underflow on index " + idx);
+        }
     }
 
+    /**
+     * Convert the hasher to a stream. Duplicates indices are removed.
+     *
+     * @param hasher the hasher
+     * @return the stream
+     */
+    private Stream<Integer> toStream(Hasher hasher) {
+        final Set<Integer> lst = new HashSet<>();
+        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>) lst::add);
+        return lst.stream();
+    }
 
     @Override
     public String toString() {
