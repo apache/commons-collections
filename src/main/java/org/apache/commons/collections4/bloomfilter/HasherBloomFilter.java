@@ -101,11 +101,10 @@ public class HasherBloomFilter extends AbstractBloomFilter {
         final long[] result = new long[n];
         final OfInt iter = hasher.getBits(hasher.getShape());
         iter.forEachRemaining((IntConsumer) idx -> {
-            long buff = result[idx / Long.SIZE];
-            final long pwr = Math.floorMod(idx, Long.SIZE);
-            final long buffOffset = 1L << pwr;
-            buff |= buffOffset;
-            result[idx / Long.SIZE] = buff;
+            BloomFilterIndexer.checkPositive(idx);
+            final int buffIdx = BloomFilterIndexer.getLongIndex(idx);
+            final long buffOffset = BloomFilterIndexer.getLongBit(idx);
+            result[buffIdx] |= buffOffset;
         });
 
         int limit = result.length;

@@ -117,9 +117,9 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         final OfInt iter = hasher.getBits(shape);
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
-            final int buffIdx = idx / Long.SIZE;
-            final int pwr = Math.floorMod(idx, Long.SIZE);
-            final long buffOffset = 1L << pwr;
+            BloomFilterIndexer.checkPositive(idx);
+            final int buffIdx = BloomFilterIndexer.getLongIndex(idx);
+            final long buffOffset = BloomFilterIndexer.getLongBit(idx);
             if ((buff[buffIdx] & buffOffset) == 0) {
                 return false;
             }
