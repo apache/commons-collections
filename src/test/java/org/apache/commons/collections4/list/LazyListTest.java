@@ -106,7 +106,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertFalse(list.isEmpty());
         assertNotNull(fourthElement);
         list.remove(3);
-        list.add(3,null);
+        list.add(3, null);
         fourthElement = list.get(3);
         assertNotNull(fourthElement);
     }

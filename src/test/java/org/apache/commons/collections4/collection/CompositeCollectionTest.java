@@ -36,7 +36,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     protected CompositeCollection<E> c;
 
- protected Collection<E> one;
+    protected Collection<E> one;
 
     protected Collection<E> two;
 

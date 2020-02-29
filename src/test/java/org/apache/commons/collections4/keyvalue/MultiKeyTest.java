@@ -40,7 +40,7 @@ public class MultiKeyTest {
 
         private static final long serialVersionUID = 1928896152249821416L;
 
-        public DerivedMultiKey(final T key1, final T key2) {
+        DerivedMultiKey(final T key1, final T key2) {
             super(key1, key2);
         }
 
@@ -53,28 +53,25 @@ public class MultiKeyTest {
         }
 
     }
-    
+
     static class SystemHashCodeSimulatingKey implements Serializable {
 
         private static final long serialVersionUID = -1736147315703444603L;
         private final String name;
         private int hashCode = 1;
 
-        public SystemHashCodeSimulatingKey(final String name)
-        {
+        SystemHashCodeSimulatingKey(final String name) {
             this.name = name;
         }
 
         @Override
-        public boolean equals(final Object obj)
-        {
+        public boolean equals(final Object obj) {
             return obj instanceof SystemHashCodeSimulatingKey
-                && name.equals(((SystemHashCodeSimulatingKey)obj).name);
+                && name.equals(((SystemHashCodeSimulatingKey) obj).name);
         }
 
         @Override
-        public int hashCode()
-        {
+        public int hashCode() {
             return hashCode;
         }
 
@@ -168,8 +165,7 @@ public class MultiKeyTest {
     }
 
     @Test
-    public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException
-    {
+    public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException {
         SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
         final MultiKey<?> mk = new MultiKey<Object>(ONE, sysKey);
         final Map<MultiKey<?>, Integer> map = new HashMap<>();
@@ -185,7 +181,7 @@ public class MultiKeyTest {
         // deserialize
         final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         final ObjectInputStream in = new ObjectInputStream(bais);
-        sysKey = (SystemHashCodeSimulatingKey)in.readObject(); // simulate deserialization in another process
+        sysKey = (SystemHashCodeSimulatingKey) in.readObject(); // simulate deserialization in another process
         final Map<?, ?> map2 = (Map<?, ?>) in.readObject();
         in.close();
 
@@ -196,8 +192,7 @@ public class MultiKeyTest {
     }
 
     @Test
-    public void testEqualsAfterSerializationOfDerivedClass() throws IOException, ClassNotFoundException
-    {
+    public void testEqualsAfterSerializationOfDerivedClass() throws IOException, ClassNotFoundException {
         final DerivedMultiKey<?> mk = new DerivedMultiKey<>("A", "B");
 
         // serialize
@@ -209,7 +204,7 @@ public class MultiKeyTest {
         // deserialize
         final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         final ObjectInputStream in = new ObjectInputStream(bais);
-        final DerivedMultiKey<?> mk2 = (DerivedMultiKey<?>)in.readObject();
+        final DerivedMultiKey<?> mk2 = (DerivedMultiKey<?>) in.readObject();
         in.close();
 
         assertEquals(mk.hashCode(), mk2.hashCode());

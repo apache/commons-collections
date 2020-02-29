@@ -72,7 +72,7 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      */
     @Override
     public boolean evaluate(final T object) {
-       return iPredicate1.evaluate(object) || iPredicate2.evaluate(object);
+        return iPredicate1.evaluate(object) || iPredicate2.evaluate(object);
     }
 
     /**

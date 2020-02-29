@@ -434,7 +434,7 @@ public class TransformerUtilsTest {
     @Test
     public void testStringValueTransformer() {
         assertNotNull( "StringValueTransformer should NEVER return a null value.",
-           TransformerUtils.stringValueTransformer().transform(null));
+            TransformerUtils.stringValueTransformer().transform(null));
         assertEquals( "StringValueTransformer should return \"null\" when given a null argument.", "null",
             TransformerUtils.stringValueTransformer().transform(null));
         assertEquals( "StringValueTransformer should return toString value", "6",
@@ -478,14 +478,13 @@ public class TransformerUtilsTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                ExceptionTransformer.INSTANCE,
-                NOPTransformer.INSTANCE,
-                StringValueTransformer.stringValueTransformer(),
+            ExceptionTransformer.INSTANCE,
+            NOPTransformer.INSTANCE,
+            StringValueTransformer.stringValueTransformer(),
         };
 
         for (final Object original : singletones) {
             TestUtils.assertSameAfterSerialization("Singleton pattern broken for " + original.getClass(), original);
         }
     }
-
 }

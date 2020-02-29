@@ -652,7 +652,7 @@ public class CollectionUtilsTest extends MockTestCase {
         testPredicate = equalPredicate((Number) 45);
         test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test == null);
-        assertNull(CollectionUtils.find(null,testPredicate));
+        assertNull(CollectionUtils.find(null, testPredicate));
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
@@ -1276,7 +1276,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collection.contains(2L) && !collection.contains(1));
     }
 
-    Transformer<Object, Integer> TRANSFORM_TO_INTEGER = input -> Integer.valueOf(((Long)input).intValue());
+    Transformer<Object, Integer> TRANSFORM_TO_INTEGER = input -> Integer.valueOf(((Long) input).intValue());
 
     @Test
     public void transform1() {
@@ -1741,27 +1741,27 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collectionA.contains(5));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getNegative() {
-        CollectionUtils.get((Object)collectionA, -3);
+        CollectionUtils.get((Object) collectionA, -3);
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getPositiveOutOfBounds() {
-        CollectionUtils.get((Object)collectionA.iterator(), 30);
+        CollectionUtils.get((Object) collectionA.iterator(), 30);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void get1() {
-        CollectionUtils.get((Object)null, 0);
+        CollectionUtils.get((Object) null, 0);
     }
 
     @Test
     public void get() {
-        assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
-        assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
+        assertEquals(2, CollectionUtils.get((Object) collectionA, 2));
+        assertEquals(2, CollectionUtils.get((Object) collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
-        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object)map, 0));
+        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object) map, 0));
     }
 
     @Test

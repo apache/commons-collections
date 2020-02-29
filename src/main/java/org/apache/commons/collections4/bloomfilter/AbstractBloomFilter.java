@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.function.LongBinaryOperator;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
@@ -67,11 +66,11 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         final long[] mine = getBits();
         final long[] theirs = other.getBits();
         final int limit = Integer.min(mine.length, theirs.length);
-        final long[] result = new long[limit];
+        int count = 0;
         for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] & theirs[i];
+            count += Long.bitCount(mine[i] & theirs[i]);
         }
-        return BitSet.valueOf(result).cardinality();
+        return count;
     }
 
     /**
@@ -81,7 +80,11 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      */
     @Override
     public int cardinality() {
-        return BitSet.valueOf(getBits()).cardinality();
+        int count = 0;
+        for (final long bits : getBits()) {
+            count += Long.bitCount(bits);
+        }
+        return count;
     }
 
     /**
@@ -114,9 +117,9 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         final OfInt iter = hasher.getBits(shape);
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
-            final int buffIdx = idx / Long.SIZE;
-            final int pwr = Math.floorMod(idx, Long.SIZE);
-            final long buffOffset = 1L << pwr;
+            BloomFilterIndexer.checkPositive(idx);
+            final int buffIdx = BloomFilterIndexer.getLongIndex(idx);
+            final long buffOffset = BloomFilterIndexer.getLongBit(idx);
             if ((buff[buffIdx] & buffOffset) == 0) {
                 return false;
             }
@@ -168,7 +171,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param other the other Bloom filter.
      */
     @Override
-    abstract public void merge(BloomFilter other);
+    public abstract void merge(BloomFilter other);
 
     /**
      * Merge the decomposed Bloom filter defined by the hasher into this Bloom
@@ -179,31 +182,12 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * this filter, or if the hasher is not the specified one
      */
     @Override
-    abstract public void merge(Hasher hasher);
+    public abstract void merge(Hasher hasher);
 
     @Override
     public int orCardinality(final BloomFilter other) {
-        verifyShape(other);
-        final long[] mine = getBits();
-        final long[] theirs = other.getBits();
-        long[] remainder = null;
-        long[] result = null;
-        if (mine.length > theirs.length) {
-            result = new long[mine.length];
-            remainder = mine;
-        } else {
-            result = new long[theirs.length];
-            remainder = theirs;
-
-        }
-        final int limit = Integer.min(mine.length, theirs.length);
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] | theirs[i];
-        }
-        if (limit < result.length) {
-            System.arraycopy(remainder, limit, result, limit, result.length - limit);
-        }
-        return BitSet.valueOf(result).cardinality();
+        // Logical OR
+        return opCardinality(other, (a, b) -> a | b);
     }
 
     /**
@@ -254,26 +238,41 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      */
     @Override
     public int xorCardinality(final BloomFilter other) {
+        // Logical XOR
+        return opCardinality(other, (a, b) -> a ^ b);
+    }
+
+    /**
+     * Perform the operation on the matched longs from this filter and the other filter
+     * and count the cardinality.
+     *
+     * <p>The remaining unmatched longs from the larger filter are always counted. This
+     * method is suitable for OR and XOR cardinality.
+     *
+     * @param other the other Bloom filter.
+     * @param operation the operation (e.g. OR, XOR)
+     * @return the cardinality
+     */
+    private int opCardinality(final BloomFilter other, LongBinaryOperator operation) {
         verifyShape(other);
         final long[] mine = getBits();
         final long[] theirs = other.getBits();
-        long[] remainder = null;
-        long[] result = null;
+        long[] small;
+        long[] big;
         if (mine.length > theirs.length) {
-            result = new long[mine.length];
-            remainder = mine;
+            big = mine;
+            small = theirs;
         } else {
-            result = new long[theirs.length];
-            remainder = theirs;
-
+            small = mine;
+            big = theirs;
         }
-        final int limit = Integer.min(mine.length, theirs.length);
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] ^ theirs[i];
+        int count = 0;
+        for (int i = 0; i < small.length; i++) {
+            count += Long.bitCount(operation.applyAsLong(small[i], big[i]));
         }
-        if (limit < result.length) {
-            System.arraycopy(remainder, limit, result, limit, result.length - limit);
+        for (int i = small.length; i < big.length; i++) {
+            count += Long.bitCount(big[i]);
         }
-        return BitSet.valueOf(result).cardinality();
+        return count;
     }
 }

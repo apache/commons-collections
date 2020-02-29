@@ -104,10 +104,10 @@ Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
 <p>
-<b>Collections 3.2.2</b> Serialization support for unsafe classes in the functor package is disabled by default as 
-this can be exploited for remote code execution attacks. To re-enable the feature the system property 
-"org.apache.commons.collections.enableUnsafeSerialization" needs to be set to "true". Classes considered to be 
-unsafe are: CloneTransformer, ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer, 
+<b>Collections 3.2.2</b> Serialization support for unsafe classes in the functor package is disabled by default as
+this can be exploited for remote code execution attacks. To re-enable the feature the system property
+"org.apache.commons.collections.enableUnsafeSerialization" needs to be set to "true". Classes considered to be
+unsafe are: CloneTransformer, ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer,
 PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure. Fixes COLLECTIONS-580. Other bug fixes as well.
 </p>
 
@@ -130,11 +130,11 @@ API for Iterable instances (FluentIterable).
 </p>
 <p>
 Additionally, serialization support for unsafe classes in the functor package
-has been completely removed (see entry for Collections 3.2.2 for more details). 
+has been completely removed (see entry for Collections 3.2.2 for more details).
 </p>
 
 <p>
-<b>Collections 4.2</b> fixes some bugs in 4.1 and adds a few new enhancements: 
+<b>Collections 4.2</b> fixes some bugs in 4.1 and adds a few new enhancements:
 Updates the platform requirement from Java 6 to 7,
 adds Automatic-Module-Name MANIFEST entry for Java 9 compatibility, and
 adds a few new APIs.

@@ -112,7 +112,7 @@ public class ZippingIterator<E> implements Iterator<E> {
             return true;
         }
 
-        while(iterators.hasNext()) {
+        while (iterators.hasNext()) {
             final Iterator<? extends E> childIterator = iterators.next();
             if (childIterator.hasNext()) {
                 nextIterator = childIterator;

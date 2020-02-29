@@ -300,7 +300,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     public void testInitialCapacityZero() {
-        final LinkedMap<String,String> map = new LinkedMap<>(0);
+        final LinkedMap<String, String> map = new LinkedMap<>(0);
         assertEquals(1, map.data.length);
     }
 }

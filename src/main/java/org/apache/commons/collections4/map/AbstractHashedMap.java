@@ -1164,7 +1164,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param <K> the type of the keys in the map
      * @param <V> the type of the values in the map
      */
-    protected static abstract class HashIterator<K, V> {
+    protected abstract static class HashIterator<K, V> {
 
         /** The parent map */
         private final AbstractHashedMap<K, V> parent;
@@ -1349,11 +1349,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (obj instanceof Map == false) {
             return false;
         }
-        final Map<?,?> map = (Map<?,?>) obj;
+        final Map<?, ?> map = (Map<?, ?>) obj;
         if (map.size() != size()) {
             return false;
         }
-        final MapIterator<?,?> it = mapIterator();
+        final MapIterator<?, ?> it = mapIterator();
         try {
             while (it.hasNext()) {
                 final Object key = it.next();
@@ -1410,8 +1410,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             final K key = it.next();
             final V value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
-               .append('=')
-               .append(value == this ? "(this Map)" : value);
+                .append('=')
+                .append(value == this ? "(this Map)" : value);
 
             hasNext = it.hasNext();
             if (hasNext) {

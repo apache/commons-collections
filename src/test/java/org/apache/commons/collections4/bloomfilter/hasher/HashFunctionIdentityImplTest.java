@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +51,7 @@ public class HashFunctionIdentityImplTest {
 
             @Override
             public long getSignature() {
-                return -1l;
+                return -1L;
             }
 
             @Override
@@ -66,7 +65,7 @@ public class HashFunctionIdentityImplTest {
         assertEquals("Provider", impl.getProvider());
         assertEquals(Signedness.SIGNED, impl.getSignedness());
         assertEquals(ProcessType.CYCLIC, impl.getProcessType());
-        assertEquals(-1l, impl.getSignature());
+        assertEquals(-1L, impl.getSignature());
     }
 
     /**
@@ -75,11 +74,11 @@ public class HashFunctionIdentityImplTest {
     @Test
     public void valuesConstructorTest() {
         final HashFunctionIdentityImpl impl = new HashFunctionIdentityImpl("Provider", "NAME", Signedness.UNSIGNED,
-            ProcessType.ITERATIVE, -2l);
+            ProcessType.ITERATIVE, -2L);
         assertEquals("NAME", impl.getName());
         assertEquals("Provider", impl.getProvider());
         assertEquals(Signedness.UNSIGNED, impl.getSignedness());
         assertEquals(ProcessType.ITERATIVE, impl.getProcessType());
-        assertEquals(-2l, impl.getSignature());
+        assertEquals(-2L, impl.getSignature());
     }
 }

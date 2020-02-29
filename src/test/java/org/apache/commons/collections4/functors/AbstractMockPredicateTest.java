@@ -56,8 +56,7 @@ public abstract class AbstractMockPredicateTest<T> {
      * Creates the list of predicates to verify.
      */
     @Before
-    public final void createVerifyList()
-    {
+    public final void createVerifyList() {
         mockPredicatesToVerify = new ArrayList<>();
     }
 
@@ -65,8 +64,7 @@ public abstract class AbstractMockPredicateTest<T> {
      * Verifies all the mock predicates created for the test.
      */
     @After
-    public final void verifyPredicates()
-    {
+    public final void verifyPredicates() {
         for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
             verify(predicate);
         }

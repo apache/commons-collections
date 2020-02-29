@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,9 +56,35 @@ public interface HashFunctionIdentity {
 
     /**
      * Identifies the signedness of the calculations for this function.
+     * <p>
+     * When the hash function executes it typically returns an array of bytes.
+     * That array is converted into one or more numerical values which will be provided
+     * as a {@code long} primitive type.
+     * The signedness identifies if those {@code long} values are signed or unsigned.
+     * For example a hash function that outputs only 32-bits can be unsigned if converted
+     * using {@link Integer#toUnsignedLong(int)}. A hash function that outputs more than
+     * 64-bits is typically signed.
+     * </p>
      */
     enum Signedness {
-        SIGNED, UNSIGNED
+        /**
+         * The result of {@link HashFunction#apply(byte[], int)} is signed,
+         * thus the sign bit may be set.
+         *
+         * <p>The result can be used with {@code Math.floorMod(x, y)} to generate a positive
+         * value if y is positive.
+         *
+         * @see Math#floorMod(int, int)
+         */
+        SIGNED,
+        /**
+         * The result of {@link HashFunction#apply(byte[], int)} is unsigned,
+         * thus the sign bit is never set.
+         *
+         * <p>The result can be used with {@code x % y} to generate a positive
+         * value if y is positive.
+         */
+        UNSIGNED
     }
 
     /**
@@ -85,9 +110,9 @@ public interface HashFunctionIdentity {
      * @return the signature buffer for the identity
      */
     static byte[] prepareSignatureBuffer(final HashFunctionIdentity identity) {
-       return String.format("%s-%s-%s",
-           identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),
-           identity.getProcessType()).getBytes(StandardCharsets.UTF_8);
+        return String.format("%s-%s-%s",
+            identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),
+            identity.getProcessType()).getBytes(StandardCharsets.UTF_8);
     }
 
     /**

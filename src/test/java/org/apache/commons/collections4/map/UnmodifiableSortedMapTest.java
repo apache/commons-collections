@@ -120,7 +120,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         // "again" is the first key of the map
         assertSame(0, map.subMap((K) "again", (K) "again").size());
 
-        assertSame(map.headMap((K)"you").size(), map.subMap((K) "again", (K) "you").size());
+        assertSame(map.headMap((K) "you").size(), map.subMap((K) "again", (K) "you").size());
     }
 
     //-----------------------------------------------------------------------

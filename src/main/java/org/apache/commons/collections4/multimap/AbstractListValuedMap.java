@@ -109,7 +109,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      */
     private class WrappedList extends WrappedCollection implements List<V> {
 
-        public WrappedList(final K key) {
+        WrappedList(final K key) {
             super(key);
         }
 
@@ -220,13 +220,13 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         private List<V> values;
         private ListIterator<V> iterator;
 
-        public ValuesListIterator(final K key) {
+        ValuesListIterator(final K key) {
             this.key = key;
             this.values = ListUtils.emptyIfNull(getMap().get(key));
             this.iterator = values.listIterator();
         }
 
-        public ValuesListIterator(final K key, final int index) {
+        ValuesListIterator(final K key, final int index) {
             this.key = key;
             this.values = ListUtils.emptyIfNull(getMap().get(key));
             this.iterator = values.listIterator(index);

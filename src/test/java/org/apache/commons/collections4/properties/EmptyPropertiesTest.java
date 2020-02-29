@@ -185,7 +185,7 @@ public class EmptyPropertiesTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testLoadReader() throws IOException {
-        try (final NullReader reader = new NullReader(0)) {
+        try (NullReader reader = new NullReader(0)) {
             PropertiesFactory.EMPTY_PROPERTIES.load(reader);
         }
     }

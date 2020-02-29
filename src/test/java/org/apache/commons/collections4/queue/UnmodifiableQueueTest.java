@@ -106,7 +106,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         } catch (final NullPointerException ex) {}
     }
 
-	public void testOffer() {
+    public void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
         try {

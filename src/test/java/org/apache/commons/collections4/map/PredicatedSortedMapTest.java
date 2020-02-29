@@ -35,12 +35,12 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-	private class ReverseStringComparator implements Comparator<K> {
-		@Override
-		public int compare(final K arg0, final K arg1) {
-			return ((String) arg1).compareTo((String)arg0);
-		}
-	}
+    private class ReverseStringComparator implements Comparator<K> {
+        @Override
+        public int compare(final K arg0, final K arg1) {
+            return ((String) arg1).compareTo((String) arg0);
+        }
+    }
 
     protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
 
@@ -172,7 +172,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertEquals("Last key in head map should be B",
             "B", map.headMap((K) "C").lastKey());
         assertEquals("Last key in submap should be B",
-           "B", map.subMap((K) "A",(K) "C").lastKey());
+            "B", map.subMap((K) "A", (K) "C").lastKey());
 
         final Comparator<? super K> c = map.comparator();
         assertTrue("natural order, so comparator should be null",
@@ -204,7 +204,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertEquals("Last key in head map should be B",
             "B", map.headMap((K) "A").lastKey());
         assertEquals("Last key in submap should be B",
-           "B", map.subMap((K) "C",(K) "A").lastKey());
+            "B", map.subMap((K) "C", (K) "A").lastKey());
 
         final Comparator<? super K> c = map.comparator();
         assertTrue("reverse order, so comparator should be reverseStringComparator",

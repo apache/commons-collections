@@ -55,7 +55,7 @@
 
         <subsection name="Fixed in Apache Commons Collections 3.2.2 and 4.1">
           <p><b>High: Remote Code Execution during object de-serialization</b></p>
-          
+
           <p>The Apache Commons Collections library contains various classes
           in the "functor" package which are serializable and use reflection.
           This can be exploited for remote code execution attacks by injecting
@@ -64,9 +64,9 @@
           library in their classpath and do not perform any kind of input
           validation.</p>
 
-          <p>The implemented fix can be tracked via its related issue  
+          <p>The implemented fix can be tracked via its related issue
           <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>:</p>
-          
+
           <ul>
             <li><b>3.2.2</b>: de-serialization of unsafe classes in the functor package
                 will trigger an "UnsupportedOperationException" by default. In order to re-enable
@@ -83,11 +83,11 @@
           problems prior to their publication. No CVE id was assigned for the Apache Commons
           Collections library, please refer to [1] or [2] for more information about the general
           problem with Java serialization.</p>
-          
+
           <p>Affects: 3.0 - 4.0</p>
-          
+
           <p>Related links:</p>
-          
+
           <ol>
             <li>Vulnerability Report for Oracle Weblogic Server:
                 <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4852">CVE-2015-4852</a></li>

@@ -182,7 +182,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     public void setComparator(final int index, final Comparator<E> comparator, final boolean reverse) {
         checkLocked();
 
-        comparatorChain.set(index,comparator);
+        comparatorChain.set(index, comparator);
         if (reverse == true) {
             orderingBits.set(index);
         } else {
@@ -278,7 +278,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
 
             final Comparator<? super E> comparator = comparators.next();
-            int retval = comparator.compare(o1,o2);
+            int retval = comparator.compare(o1, o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {

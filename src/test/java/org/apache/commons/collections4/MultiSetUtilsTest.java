@@ -112,8 +112,7 @@ public class MultiSetUtilsTest {
         try {
             MultiSetUtils.predicatedMultiSet(multiSet, object -> object.equals("a"));
             fail("Predicate is violated for all elements not being 'a'");
-        }
-        catch (final IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
         }
     }
 }

@@ -67,7 +67,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final Integer i1 = Integer.valueOf(4);
         final Integer i2 = Integer.valueOf(6);
         try {
-            chain.compare(i1,i2);
+            chain.compare(i1, i2);
             fail("An exception should be thrown when a chain contains zero comparators.");
         } catch (final UnsupportedOperationException e) {
         }

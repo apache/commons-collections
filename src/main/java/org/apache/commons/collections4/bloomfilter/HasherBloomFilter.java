@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -102,11 +101,10 @@ public class HasherBloomFilter extends AbstractBloomFilter {
         final long[] result = new long[n];
         final OfInt iter = hasher.getBits(hasher.getShape());
         iter.forEachRemaining((IntConsumer) idx -> {
-            long buff = result[idx / Long.SIZE];
-            final long pwr = Math.floorMod(idx, Long.SIZE);
-            final long buffOffset = 1L << pwr;
-            buff |= buffOffset;
-            result[idx / Long.SIZE] = buff;
+            BloomFilterIndexer.checkPositive(idx);
+            final int buffIdx = BloomFilterIndexer.getLongIndex(idx);
+            final long buffOffset = BloomFilterIndexer.getLongBit(idx);
+            result[buffIdx] |= buffOffset;
         });
 
         int limit = result.length;

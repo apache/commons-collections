@@ -398,7 +398,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         protected final K key;
 
-        public WrappedCollection(final K key) {
+        WrappedCollection(final K key) {
             this.key = key;
         }
 
@@ -636,7 +636,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     private class MultiValuedMapEntry extends AbstractMapEntry<K, V> {
 
-        public MultiValuedMapEntry(final K key, final V value) {
+        MultiValuedMapEntry(final K key, final V value) {
             super(key, value);
         }
 
@@ -656,7 +656,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         private Entry<K, V> current = null;
 
-        public MultiValuedMapIterator() {
+        MultiValuedMapIterator() {
             this.it = AbstractMultiValuedMap.this.entries().iterator();
         }
 
@@ -734,7 +734,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         private final Collection<V> values;
         private final Iterator<V> iterator;
 
-        public ValuesIterator(final Object key) {
+        ValuesIterator(final Object key) {
             this.key = key;
             this.values = getMap().get(key);
             this.iterator = values.iterator();
@@ -766,12 +766,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         final transient Map<K, Collection<V>> decoratedMap;
 
         AsMap(final Map<K, Collection<V>> map) {
-          this.decoratedMap = map;
+            this.decoratedMap = map;
         }
 
         @Override
         public Set<Map.Entry<K, Collection<V>>> entrySet() {
-          return new AsMapEntrySet();
+            return new AsMapEntrySet();
         }
 
         @Override
@@ -781,52 +781,51 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public Collection<V> get(final Object key) {
-          final Collection<V> collection = decoratedMap.get(key);
-          if (collection == null) {
-            return null;
-          }
-          @SuppressWarnings("unchecked")
-        final
-          K k = (K) key;
-          return wrappedCollection(k);
+            final Collection<V> collection = decoratedMap.get(key);
+            if (collection == null) {
+                return null;
+            }
+            @SuppressWarnings("unchecked")
+            final K k = (K) key;
+            return wrappedCollection(k);
         }
 
         @Override
         public Set<K> keySet() {
-          return AbstractMultiValuedMap.this.keySet();
+            return AbstractMultiValuedMap.this.keySet();
         }
 
         @Override
         public int size() {
-          return decoratedMap.size();
+            return decoratedMap.size();
         }
 
         @Override
         public Collection<V> remove(final Object key) {
-          final Collection<V> collection = decoratedMap.remove(key);
-          if (collection == null) {
-            return null;
-          }
+            final Collection<V> collection = decoratedMap.remove(key);
+            if (collection == null) {
+                return null;
+            }
 
-          final Collection<V> output = createCollection();
-          output.addAll(collection);
-          collection.clear();
-          return output;
+            final Collection<V> output = createCollection();
+            output.addAll(collection);
+            collection.clear();
+            return output;
         }
 
         @Override
         public boolean equals(final Object object) {
-          return this == object || decoratedMap.equals(object);
+            return this == object || decoratedMap.equals(object);
         }
 
         @Override
         public int hashCode() {
-          return decoratedMap.hashCode();
+            return decoratedMap.hashCode();
         }
 
         @Override
         public String toString() {
-          return decoratedMap.toString();
+            return decoratedMap.toString();
         }
 
         @Override
@@ -843,7 +842,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
             @Override
             public int size() {
-              return AsMap.this.size();
+                return AsMap.this.size();
             }
 
             @Override
@@ -919,8 +918,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             final int valueSize = in.readInt();
             for (int j = 0; j < valueSize; j++) {
                 @SuppressWarnings("unchecked") // see above
-                final
-                V value = (V) in.readObject();
+                final V value = (V) in.readObject();
                 values.add(value);
             }
         }

@@ -679,7 +679,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
                 return false;
             }
 
-            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             final Object entryKey = entry.getKey();  // convert to hard reference
             final Object entryValue = entry.getValue();  // convert to hard reference
             if (entryKey == null || entryValue == null) {
@@ -794,7 +794,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         int expectedModCount;
 
-        public ReferenceBaseIterator(final AbstractReferenceMap<K, V> parent) {
+        ReferenceBaseIterator(final AbstractReferenceMap<K, V> parent) {
             super();
             this.parent = parent;
             index = parent.size() != 0 ? parent.data.length : 0;
@@ -876,7 +876,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     static class ReferenceEntrySetIterator<K, V>
             extends ReferenceBaseIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 
-        public ReferenceEntrySetIterator(final AbstractReferenceMap<K, V> parent) {
+        ReferenceEntrySetIterator(final AbstractReferenceMap<K, V> parent) {
             super(parent);
         }
 
@@ -973,7 +973,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /** the hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
-        public SoftRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
+        SoftRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
             super(r, q);
             this.hash = hash;
         }
@@ -991,7 +991,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /** the hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
-        public WeakRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
+        WeakRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
             super(r, q);
             this.hash = hash;
         }

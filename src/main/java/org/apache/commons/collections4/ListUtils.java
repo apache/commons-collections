@@ -554,7 +554,7 @@ public class ListUtils {
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
-      return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
+        return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
     }
 
     /**
@@ -611,7 +611,7 @@ public class ListUtils {
     private static final class LcsVisitor<E> implements CommandVisitor<E> {
         private final ArrayList<E> sequence;
 
-        public LcsVisitor() {
+        LcsVisitor() {
             sequence = new ArrayList<>();
         }
 
@@ -639,23 +639,21 @@ public class ListUtils {
      * A simple wrapper to use a CharSequence as List.
      */
     private static final class CharSequenceAsList extends AbstractList<Character> {
+        private final CharSequence sequence;
 
-      private final CharSequence sequence;
+        CharSequenceAsList(final CharSequence sequence) {
+            this.sequence = sequence;
+        }
 
-      public CharSequenceAsList(final CharSequence sequence) {
-        this.sequence = sequence;
-      }
+        @Override
+        public Character get(final int index) {
+            return Character.valueOf(sequence.charAt(index));
+        }
 
-      @Override
-      public Character get( final int index ) {
-        return Character.valueOf(sequence.charAt( index ));
-      }
-
-      @Override
-      public int size() {
-        return sequence.length();
-      }
-
+        @Override
+        public int size() {
+            return sequence.length();
+        }
     }
 
     //-----------------------------------------------------------------------

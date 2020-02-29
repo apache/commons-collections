@@ -72,7 +72,7 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
      */
     @Override
     public boolean evaluate(final T object) {
-       return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
+        return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
     }
 
     /**

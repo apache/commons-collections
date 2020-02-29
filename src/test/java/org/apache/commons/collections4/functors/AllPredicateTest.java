@@ -45,7 +45,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * {@inheritDoc}
      */
     @Override
-    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer> ... predicates) {
+    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer>... predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 

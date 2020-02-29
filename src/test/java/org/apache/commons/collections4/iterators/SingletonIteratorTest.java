@@ -85,7 +85,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     public void testSingletonIteratorRemove() {
         final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
         assertTrue(iter.hasNext());
-        assertEquals("xyzzy",iter.next());
+        assertEquals("xyzzy", iter.next());
         iter.remove();
         iter.reset();
         assertTrue(! iter.hasNext());

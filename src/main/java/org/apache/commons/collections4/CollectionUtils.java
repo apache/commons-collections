@@ -73,7 +73,7 @@ public class CollectionUtils {
          * @param a  the first collection
          * @param b  the second collection
          */
-        public CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
             cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
         }
@@ -140,7 +140,7 @@ public class CollectionUtils {
          * @param a  the first collection
          * @param b  the second collection
          */
-        public SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             super(a, b);
             elements = new HashSet<>();
             addAll(elements, a);
@@ -555,15 +555,15 @@ public class CollectionUtils {
      * @return {@code true} iff the collections contain the same elements with the same cardinalities.
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
-        if(a.size() != b.size()) {
+        if (a.size() != b.size()) {
             return false;
         }
         final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
-        if(helper.cardinalityA.size() != helper.cardinalityB.size()) {
+        if (helper.cardinalityA.size() != helper.cardinalityB.size()) {
             return false;
         }
-        for( final Object obj : helper.cardinalityA.keySet()) {
-            if(helper.freqA(obj) != helper.freqB(obj)) {
+        for (final Object obj : helper.cardinalityA.keySet()) {
+            if (helper.freqA(obj) != helper.freqB(obj)) {
                 return false;
             }
         }
@@ -598,7 +598,7 @@ public class CollectionUtils {
                                                 final Equator<? super E> equator) {
         Objects.requireNonNull(equator, "equator");
 
-        if(a.size() != b.size()) {
+        if (a.size() != b.size()) {
             return false;
         }
 
@@ -622,7 +622,7 @@ public class CollectionUtils {
         private final Equator<? super O> equator;
         private final O object;
 
-        public EquatorWrapper(final Equator<? super O> equator, final O object) {
+        EquatorWrapper(final Equator<? super O> equator, final O object) {
             this.equator = equator;
             this.object = object;
         }
@@ -1318,7 +1318,7 @@ public class CollectionUtils {
         if (i < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
-        if (object instanceof Map<?,?>) {
+        if (object instanceof Map<?, ?>) {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
             return IteratorUtils.get(iterator, i);
@@ -1355,7 +1355,7 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public static <K,V> Map.Entry<K, V> get(final Map<K,V> map, final int index) {
+    public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
         checkIndexBounds(index);
         return get(map.entrySet(), index);
     }
@@ -1383,7 +1383,7 @@ public class CollectionUtils {
             return 0;
         }
         int total = 0;
-        if (object instanceof Map<?,?>) {
+        if (object instanceof Map<?, ?>) {
             total = ((Map<?, ?>) object).size();
         } else if (object instanceof Collection<?>) {
             total = ((Collection<?>) object).size();
@@ -1870,7 +1870,7 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
-  }
+    }
 
     /**
      * Removes all elements in {@code remove} from {@code collection}.

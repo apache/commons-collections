@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,7 +63,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);
             final BitSet result = (BitSet) bitSet.clone();
-            result.and(((BitSetBloomFilter)other).bitSet);
+            result.and(((BitSetBloomFilter) other).bitSet);
             return result.cardinality();
         }
         return super.andCardinality(other);
@@ -101,7 +100,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     public void merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof BitSetBloomFilter) {
-            bitSet.or(((BitSetBloomFilter)other).bitSet);
+            bitSet.or(((BitSetBloomFilter) other).bitSet);
         } else {
             bitSet.or(BitSet.valueOf(other.getBits()));
         }
@@ -118,7 +117,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);
             final BitSet result = (BitSet) bitSet.clone();
-            result.or(((BitSetBloomFilter)other).bitSet);
+            result.or(((BitSetBloomFilter) other).bitSet);
             return result.cardinality();
         }
         return super.orCardinality(other);
@@ -134,7 +133,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);
             final BitSet result = (BitSet) bitSet.clone();
-            result.xor(((BitSetBloomFilter)other).bitSet);
+            result.xor(((BitSetBloomFilter) other).bitSet);
             return result.cardinality();
         }
         return super.xorCardinality(other);

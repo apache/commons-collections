@@ -227,8 +227,7 @@ public class MultiKey<K> implements Serializable {
      * Calculate the hash code of the instance using the provided keys.
      * @param keys the keys to calculate the hash code for
      */
-    private void calculateHashCode(final Object[] keys)
-    {
+    private void calculateHashCode(final Object[] keys) {
         int total = 0;
         for (final Object key : keys) {
             if (key != null) {

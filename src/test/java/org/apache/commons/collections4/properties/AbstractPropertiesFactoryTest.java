@@ -98,7 +98,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         // Can't tell what we are reading
         Assume.assumeFalse(isXmlTest());
         //
-        try (final FileInputStream inputStream = new FileInputStream(pathString)) {
+        try (FileInputStream inputStream = new FileInputStream(pathString)) {
             assertContents(factory.load(inputStream));
         }
     }
@@ -113,7 +113,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         // Can't tell what we are reading
         Assume.assumeFalse(isXmlTest());
         //
-        try (final BufferedReader inputStream = Files.newBufferedReader(Paths.get(pathString))) {
+        try (BufferedReader inputStream = Files.newBufferedReader(Paths.get(pathString))) {
             assertContents(factory.load(inputStream));
         }
     }

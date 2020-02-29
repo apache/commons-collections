@@ -187,8 +187,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashSet()
-    {
+    public void testHashSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
 
@@ -249,8 +248,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSet()
-    {
+    public void testUnmodifiableSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
 
@@ -275,8 +273,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSetWrap()
-    {
+    public void testUnmodifiableSetWrap() {
         final Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         final Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
         assertSame(set1, set2);

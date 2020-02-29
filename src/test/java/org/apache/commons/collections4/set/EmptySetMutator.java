@@ -32,7 +32,7 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
 
     private final Set<E> contained;
 
-    public EmptySetMutator(final Set<E> set) {
+    EmptySetMutator(final Set<E> set) {
         this.contained = set;
     }
 

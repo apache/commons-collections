@@ -222,8 +222,8 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     @Override
     public boolean add(final E obj) {
         if (mutator == null) {
-           throw new UnsupportedOperationException(
-               "add() is not supported on CompositeSet without a SetMutator strategy");
+            throw new UnsupportedOperationException(
+                "add() is not supported on CompositeSet without a SetMutator strategy");
         }
         return mutator.add(this, all, obj);
     }
