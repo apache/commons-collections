@@ -40,7 +40,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  *
  * @since 4.5
  */
-public class CountingBloomFilter extends AbstractBloomFilter {
+public class MapCountingBloomFilter extends AbstractBloomFilter {
 
     /**
      * The count of entries. Each enabled bit is a key with the count for that bit
@@ -54,7 +54,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param hasher The hasher to build the filter from.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(final Hasher hasher, final Shape shape) {
+    public MapCountingBloomFilter(final Hasher hasher, final Shape shape) {
         super(shape);
         verifyHasher(hasher);
         counts = new TreeMap<>();
@@ -72,7 +72,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      * @param counts A map of data counts.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(final Map<Integer, Integer> counts, final Shape shape) {
+    public MapCountingBloomFilter(final Map<Integer, Integer> counts, final Shape shape) {
         this(shape);
         counts.entrySet().stream().forEach(e -> {
             if (e.getKey() >= shape.getNumberOfBits()) {
@@ -94,16 +94,16 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      *
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(final Shape shape) {
+    public MapCountingBloomFilter(final Shape shape) {
         super(shape);
         this.counts = new TreeMap<>();
     }
 
     @Override
     public int andCardinality(final BloomFilter other) {
-        if (other instanceof CountingBloomFilter) {
+        if (other instanceof MapCountingBloomFilter) {
             final Set<Integer> result = new HashSet<>(counts.keySet());
-            result.retainAll(((CountingBloomFilter) other).counts.keySet());
+            result.retainAll(((MapCountingBloomFilter) other).counts.keySet());
             return result.size();
         }
         return super.andCardinality(other);
@@ -160,9 +160,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter) {
+        if (other instanceof MapCountingBloomFilter) {
             // Only use the keys and not the counts
-            ((CountingBloomFilter) other).counts.keySet().forEach(this::addIndex);
+            ((MapCountingBloomFilter) other).counts.keySet().forEach(this::addIndex);
         } else {
             BitSet.valueOf(other.getBits()).stream().forEach(this::addIndex);
         }
@@ -207,9 +207,9 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public void remove(final BloomFilter other) {
         verifyShape(other);
-        if (other instanceof CountingBloomFilter) {
+        if (other instanceof MapCountingBloomFilter) {
             // Only use the keys and not the counts
-            ((CountingBloomFilter) other).counts.keySet().forEach(this::subtractIndex);
+            ((MapCountingBloomFilter) other).counts.keySet().forEach(this::subtractIndex);
         } else {
             BitSet.valueOf(other.getBits()).stream().forEach(this::subtractIndex);
         }
