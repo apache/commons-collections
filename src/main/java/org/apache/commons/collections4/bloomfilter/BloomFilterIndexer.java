@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions.
  */
-public final class BloomFilterIndexer {
+final class BloomFilterIndexer {
     /** A bit shift to apply to an integer to divided by 64 (2^6). */
     private static final int DIVIDE_BY_64 = 6;
 
@@ -32,7 +32,7 @@ public final class BloomFilterIndexer {
      * @param bitIndex the bit index
      * @throws IndexOutOfBoundsException if the index is not positive
      */
-    public static void checkPositive(int bitIndex) {
+    static void checkPositive(int bitIndex) {
         if (bitIndex < 0) {
             throw new IndexOutOfBoundsException("Negative bitIndex: " + bitIndex);
         }
@@ -52,7 +52,7 @@ public final class BloomFilterIndexer {
      * @return the filter index
      * @see #checkPositive(int)
      */
-    public static int getLongIndex(int bitIndex) {
+    static int getLongIndex(int bitIndex) {
         // Use a signed shift. Any negative index will produce a negative value
         // by sign-extension and if used as an index into an array it will throw an exception.
         return bitIndex >> DIVIDE_BY_64;
@@ -72,7 +72,7 @@ public final class BloomFilterIndexer {
      * @return the filter bit
      * @see #checkPositive(int)
      */
-    public static long getLongBit(int bitIndex) {
+    static long getLongBit(int bitIndex) {
         // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
         // using 0x3f (63) or compute bitIndex % 64.
         // If the index is negative the shift will be in the opposite direction.
