@@ -54,8 +54,8 @@ public class CachingHasher implements Hasher {
      * <p>
      * The list of hash values comprises a {@code List&lt;long[]&gt;} where each {@code long[]}
      * is comprises two (2) values that are the result of hashing the original buffer.  Thus a
-     * CachingHasher that was built from five (5) buffers will have five arrays of two {@code longs}
-     * each.
+     * CachingHasher that was built from five (5) buffers will have five arrays of two {@code long}
+     * values each.
      * </p>
      * @param functionIdentity The identity of the function.
      * @param buffers          a list of {@code long} arrays comprising two values.
@@ -232,6 +232,5 @@ public class CachingHasher implements Hasher {
         public final Builder with(String property) {
             return with(property.getBytes(StandardCharsets.UTF_8));
         }
-
     }
 }
