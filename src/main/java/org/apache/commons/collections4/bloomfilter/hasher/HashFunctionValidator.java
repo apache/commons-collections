@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 /**
  * Contains validation for hash functions.
  */
-final class HashFunctionValidator {
+public final class HashFunctionValidator {
     /** Do not instantiate. */
     private HashFunctionValidator() {}
 
@@ -36,7 +36,7 @@ final class HashFunctionValidator {
      * @return true, if successful
      * @see String#equalsIgnoreCase(String)
      */
-    static boolean areEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
+    public static boolean areEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
         return (a.getSignedness() == b.getSignedness() &&
                 a.getProcessType() == b.getProcessType() &&
                 a.getName().equalsIgnoreCase(b.getName()));
@@ -51,7 +51,7 @@ final class HashFunctionValidator {
      * @see #areEqual(HashFunctionIdentity, HashFunctionIdentity)
      * @throws IllegalArgumentException if the hash functions are not equal
      */
-    static void checkAreEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
+    public static void checkAreEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
         if (!areEqual(a, b)) {
             throw new IllegalArgumentException(String.format("Hash functions are not equal: (%s) != (%s)",
                 HashFunctionIdentity.asCommonString(a), HashFunctionIdentity.asCommonString(b)));
