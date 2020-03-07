@@ -30,7 +30,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.P
  * An implementation of Hasher that attempts to leak as little data as possible.
  * Each item in the hasher is represented by two (2) longs.  So this Hasher will
  * still indicate how many items are in the hasher but will not leak the buffers
- * that are being hashed as the @code DynamicHasher} does.
+ * that are being hashed as the {@code DynamicHasher} does.
  * <p>
  * This hasher only accepts HashFunctions that are cyclic in nature.
  * </p>
@@ -52,13 +52,13 @@ public class CachingHasher implements Hasher {
     /**
      * Constructs a CachingHasher from a list of arrays of hash values.
      * <p>
-     * The list of hash values comprises a @code{List&lt;long[]&gt;} where each @code{long[]}
+     * The list of hash values comprises a {@code List&lt;long[]&gt;} where each {@code long[]}
      * is comprises two (2) values that are the result of hashing the original buffer.  Thus a
-     * CachingHasher that was built from five (5) buffers will have five arrays of two @code{longs}
+     * CachingHasher that was built from five (5) buffers will have five arrays of two {@code longs}
      * each.
      * </p>
      * @param functionIdentity The identity of the function.
-     * @param buffers          a list of @code{long} arrays comprising two (2) values.
+     * @param buffers          a list of {@code long} arrays comprising two values.
      * @throws IllegalArgumentException if the name does not indicate a cyclic
      *                                  hashing function.
      */
@@ -68,10 +68,10 @@ public class CachingHasher implements Hasher {
     }
 
     /**
-     * Constructs a CachingHasher from an array of arrys of hash values.
+     * Constructs a CachingHasher from an array of arrays of hash values.
      *
      * @param functionIdentity The identity of the function.
-     * @param buffers          an array of @code{long} arrays comprising two (2) values.
+     * @param buffers          An array of {@code long} arrays comprising two (2) values.
      * @throws IllegalArgumentException if the name does not indicate a cyclic
      *                                  hashing function.
      */
@@ -115,7 +115,11 @@ public class CachingHasher implements Hasher {
      * <p>
      * This method returns the long representations of the buffers.  This is commonly used
      * to transmit the Hasher from one system to another.
-     * </p>
+     * </p><p>
+     *  the List&lt;long[]&gt; will contains zero or more entries, each entry is a non-null array
+     *  of length two containing the 64-bit pair output from the cyclic hash function.
+     *  </p>
+     *
      * @return a copy if the long buffer representation.
      */
     public List<long[]> getBuffers() {
@@ -202,7 +206,7 @@ public class CachingHasher implements Hasher {
          * @return A CachingHashers with the specified name, function and buffers.
          */
         @Override
-        public CachingHasher build() throws IllegalArgumentException {
+        public final CachingHasher build() throws IllegalArgumentException {
             List<long[]> cache = new ArrayList<long[]>();
             for (byte[] buff : buffers) {
                 long[] result = new long[2];

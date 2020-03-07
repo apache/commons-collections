@@ -36,6 +36,14 @@ public class CachingHasherBuilderTest {
     private final Shape shape = new Shape(new MD5Cyclic(), 1, Integer.MAX_VALUE, 1);
 
     /**
+     * Sets up the builder for testing.
+     */
+    @Before
+    public void setup() {
+        builder = new CachingHasher.Builder(new MD5Cyclic());
+    }
+
+    /**
      * Tests that hashing a byte works as expected.
      */
     @Test
@@ -93,11 +101,4 @@ public class CachingHasherBuilderTest {
         assertFalse(iter.hasNext());
     }
 
-    /**
-     * Sets up the builder for testing.
-     */
-    @Before
-    public void setup() {
-        builder = new CachingHasher.Builder(new MD5Cyclic());
-    }
 }

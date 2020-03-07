@@ -27,6 +27,8 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,33 +40,8 @@ public class CachingHasherTest {
     private CachingHasher.Builder builder;
     private Shape shape;
 
-    private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
-
-        @Override
-        public String getName() {
-            return "Test Function";
-        }
-
-        @Override
-        public ProcessType getProcessType() {
-            return ProcessType.CYCLIC;
-        }
-
-        @Override
-        public String getProvider() {
-            return "Apache Commons Collection Tests";
-        }
-
-        @Override
-        public long getSignature() {
-            return 0;
-        }
-
-        @Override
-        public Signedness getSignedness() {
-            return Signedness.SIGNED;
-        }
-    };
+    private final HashFunctionIdentity testFunction =  new HashFunctionIdentityImpl("Apache Commons Collection Testing",
+            "Test Function", Signedness.SIGNED, ProcessType.CYCLIC, 0 );
 
     /**
      * Sets up the CachingHasher.
@@ -80,7 +57,6 @@ public class CachingHasherTest {
      */
     @Test
     public void testGetBits() {
-
         final int[] expected = { 6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62 };
 
         final Hasher hasher = builder.with("Hello").build();
@@ -124,7 +100,6 @@ public class CachingHasherTest {
      */
     @Test
     public void testGetBits_WongShape() {
-
         final Hasher hasher = builder.with("Hello").build();
 
         try {
@@ -156,33 +131,8 @@ public class CachingHasherTest {
 
     @Test
     public void testNonCyclicHashFunction() {
-        HashFunctionIdentity hfi = new HashFunctionIdentity() {
-
-            @Override
-            public String getName() {
-                return "Testing-NonCyclic-Hash";
-            }
-
-            @Override
-            public ProcessType getProcessType() {
-                return ProcessType.ITERATIVE;
-            }
-
-            @Override
-            public String getProvider() {
-                return "Apache Commons Collection Testing";
-            }
-
-            @Override
-            public long getSignature() {
-                return 0;
-            }
-
-            @Override
-            public Signedness getSignedness() {
-                return Signedness.SIGNED;
-            }
-        };
+        HashFunctionIdentity hfi = new HashFunctionIdentityImpl("Apache Commons Collection Testing", "Testing-NonCyclic-Hash",
+                Signedness.SIGNED, ProcessType.ITERATIVE, 0 );
 
         try {
             new CachingHasher(hfi, new long[][] { { 1, 4 }, { 3, 6 } });
@@ -205,8 +155,7 @@ public class CachingHasherTest {
         PrimitiveIterator.OfInt iter1 = hasher.getBits(shape);
         PrimitiveIterator.OfInt iter2 = hasher2.getBits(shape);
 
-        while (iter1.hasNext())
-        {
+        while (iter1.hasNext()) {
             assertTrue( "Too few values in second hasher", iter2.hasNext());
             assertEquals( "Wrong value", iter1.next(), iter2.next() );
         }
@@ -231,8 +180,7 @@ public class CachingHasherTest {
         PrimitiveIterator.OfInt iter1 = hasher.getBits(shape);
         PrimitiveIterator.OfInt iter2 = hasher2.getBits(shape);
 
-        while (iter1.hasNext())
-        {
+        while (iter1.hasNext()) {
             assertTrue( "Too few values in second hasher", iter2.hasNext());
             assertEquals( "Wrong value", iter1.next(), iter2.next() );
         }
