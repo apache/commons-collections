@@ -17,13 +17,10 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.BitSet;
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
-import java.util.Set;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
@@ -324,7 +321,8 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      */
     private void applyAsHasher(final Hasher hasher, final IntConsumer action) {
         verifyHasher(hasher);
-        toSet(hasher).forEach(i -> action.accept(i));
+        // We do not naturally handle duplicates so filter them.
+        IndexFilters.distinctIndexes(hasher, getShape(), action);
     }
 
     /**
@@ -379,18 +377,5 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;
-    }
-
-    /**
-     * Convert the hasher to a set. Duplicates indexes are removed.
-     * The unique indexes can be used to increment or decrement counts by 1.
-     *
-     * @param hasher the hasher
-     * @return the unique indexes
-     */
-    private Set<Integer> toSet(Hasher hasher) {
-        final Set<Integer> lst = new HashSet<>();
-        hasher.getBits(getShape()).forEachRemaining((Consumer<Integer>) lst::add);
-        return lst;
     }
 }

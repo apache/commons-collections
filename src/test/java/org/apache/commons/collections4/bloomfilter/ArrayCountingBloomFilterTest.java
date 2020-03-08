@@ -23,14 +23,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PrimitiveIterator.OfInt;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.ToIntBiFunction;
 
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.junit.Test;
@@ -39,35 +37,6 @@ import org.junit.Test;
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
 public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
-
-    /**
-     * A simple Hasher implementation to return indexes. Duplicates are allowed.
-     */
-    private static class SimpleHasher implements Hasher {
-        private Shape shape;
-        private int[] indexes;
-
-        SimpleHasher(Shape shape, int... indexes) {
-            this.shape = shape;
-            this.indexes = indexes;
-        }
-
-        @Override
-        public OfInt getBits(Shape shape) {
-            // Assume shape is the same
-            return Arrays.stream(indexes).iterator();
-        }
-
-        @Override
-        public HashFunctionIdentity getHashFunctionIdentity() {
-            return shape.getHashFunctionIdentity();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return indexes.length == 0;
-        }
-    }
 
     @Override
     protected ArrayCountingBloomFilter createEmptyFilter(final Shape shape) {
@@ -124,7 +93,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     public void constructorTest_Hasher_Duplicates() {
         final int[] expected = {0, 1, 1, 0, 0, 1};
         // Some indexes with duplicates
-        final Hasher hasher = new SimpleHasher(shape, 1, 2, 2, 5);
+        final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 2, 5);
 
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
         final long[] lb = bf.getBits();
@@ -141,10 +110,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void contains_BloomFilter() {
         // Some indexes with duplicates
-        final Hasher hasher = new SimpleHasher(shape, 1, 2, 5);
+        final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 5);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
-        assertFalse(bf.contains(new BitSetBloomFilter(new SimpleHasher(shape, 3, 4), shape)));
-        assertTrue(bf.contains(new BitSetBloomFilter(new SimpleHasher(shape, 2, 5), shape)));
+        assertFalse(bf.contains(new BitSetBloomFilter(new FixedIndexesTestHasher(shape, 3, 4), shape)));
+        assertTrue(bf.contains(new BitSetBloomFilter(new FixedIndexesTestHasher(shape, 2, 5), shape)));
     }
 
     /**
@@ -153,7 +122,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Counts_CountingBloomFilter() {
-        assertMerge(counts -> createFilter(new SimpleHasher(shape, counts), shape),
+        assertMerge(counts -> createFilter(new FixedIndexesTestHasher(shape, counts), shape),
             BloomFilter::merge);
     }
 
@@ -162,7 +131,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Counts_BloomFilter() {
-        assertMerge(counts -> new BitSetBloomFilter(new SimpleHasher(shape, counts), shape),
+        assertMerge(counts -> new BitSetBloomFilter(new FixedIndexesTestHasher(shape, counts), shape),
             BloomFilter::merge);
     }
 
@@ -171,7 +140,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Counts_Hasher() {
-        assertMerge(counts -> new SimpleHasher(shape, counts),
+        assertMerge(counts -> new FixedIndexesTestHasher(shape, counts),
             BloomFilter::merge);
     }
 
@@ -180,7 +149,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Counts_Hasher_Duplicates() {
-        assertMerge(counts -> new SimpleHasher(shape, createDuplicates(counts)),
+        assertMerge(counts -> new FixedIndexesTestHasher(shape, createDuplicates(counts)),
             BloomFilter::merge);
     }
 
@@ -190,7 +159,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Counts_CountingBloomFilter() {
-        assertRemove(counts -> createFilter(new SimpleHasher(shape, counts), shape),
+        assertRemove(counts -> createFilter(new FixedIndexesTestHasher(shape, counts), shape),
             CountingBloomFilter::remove);
     }
 
@@ -199,7 +168,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Counts_BloomFilter() {
-        assertRemove(counts -> new BitSetBloomFilter(new SimpleHasher(shape, counts), shape),
+        assertRemove(counts -> new BitSetBloomFilter(new FixedIndexesTestHasher(shape, counts), shape),
             CountingBloomFilter::remove);
     }
 
@@ -208,7 +177,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Counts_Hasher() {
-        assertRemove(counts -> new SimpleHasher(shape, counts),
+        assertRemove(counts -> new FixedIndexesTestHasher(shape, counts),
             CountingBloomFilter::remove);
     }
 
@@ -217,7 +186,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Counts_Hasher_Duplicates() {
-        assertRemove(counts -> new SimpleHasher(shape, createDuplicates(counts)),
+        assertRemove(counts -> new FixedIndexesTestHasher(shape, createDuplicates(counts)),
             CountingBloomFilter::remove);
     }
 
@@ -289,7 +258,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
             Function<int[], F> converter,
             BiConsumer<ArrayCountingBloomFilter, F> operation,
             int[] expected) {
-        final Hasher hasher = new SimpleHasher(shape, indexes1);
+        final Hasher hasher = new FixedIndexesTestHasher(shape, indexes1);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
         final F filter = converter.apply(indexes2);
         operation.accept(bf, filter);
@@ -301,7 +270,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Overflow() {
-        final Hasher hasher = new SimpleHasher(shape, 1, 2, 3);
+        final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 3);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
 
         ArrayCountingBloomFilter bf2 = createFromCounts(new int[] {0, 0, Integer.MAX_VALUE});
@@ -328,10 +297,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Negative() {
-        final Hasher hasher = new SimpleHasher(shape, 1, 2, 3);
+        final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 3);
         ArrayCountingBloomFilter bf = createFilter(hasher, shape);
 
-        final Hasher hasher2 = new SimpleHasher(shape, 2);
+        final Hasher hasher2 = new FixedIndexesTestHasher(shape, 2);
         ArrayCountingBloomFilter bf2 = createFilter(hasher2, shape);
 
         // More - Less = OK
