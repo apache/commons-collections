@@ -227,6 +227,12 @@ public class ShapeTest {
         } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
+        try {
+            new Shape(testFunction, 10, Double.NaN);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (final IllegalArgumentException expected) {
+            // do nothing.
+        }
     }
 
     /**
