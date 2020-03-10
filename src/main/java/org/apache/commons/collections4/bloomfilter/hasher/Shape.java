@@ -338,17 +338,21 @@ public final class Shape {
     public boolean equals(final Object o) {
         if (o instanceof Shape) {
             final Shape other = (Shape) o;
-            return
-                getNumberOfBits() == other.getNumberOfBits() &&
-                getNumberOfHashFunctions() == other.getNumberOfHashFunctions() &&
-                HashFunctionValidator.areEqual(getHashFunctionIdentity(),
-                                               other.getHashFunctionIdentity());
+            return numberOfBits == other.numberOfBits &&
+                   numberOfHashFunctions == other.numberOfHashFunctions &&
+                   HashFunctionValidator.areEqual(hashFunctionIdentity,
+                                                  other.hashFunctionIdentity);
         }
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return hashCode;
+    }
+
     private int generateHashCode() {
-        return Objects.hash(hashFunctionIdentity, numberOfBits, numberOfHashFunctions);
+        return Objects.hash(numberOfBits, numberOfHashFunctions, HashFunctionValidator.hash(hashFunctionIdentity));
     }
 
     /**
@@ -408,11 +412,6 @@ public final class Shape {
     public double getProbability() {
         return Math.pow(1.0 - Math.exp(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
             numberOfHashFunctions);
-    }
-
-    @Override
-    public int hashCode() {
-        return hashCode;
     }
 
     @Override

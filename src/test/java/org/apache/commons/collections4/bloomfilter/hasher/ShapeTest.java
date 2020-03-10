@@ -20,7 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
-import java.util.Objects;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -458,11 +461,44 @@ public class ShapeTest {
     }
 
     /**
-     * Test that hashCode equals hashCode of hashFunctionIdentity
+     * Test that hashCode satisfies the contract between {@link Object#hashCode()} and
+     * {@link Object#equals(Object)}. Equal shapes must have the same hash code.
      */
     @Test
     public void hashCodeTest() {
-        final int hashCode = Objects.hash(testFunction, 24, 3);
-        assertEquals(hashCode, shape.hashCode());
+        // Hash function equality is based on process type, signedness and name (case insensitive)
+        final ArrayList<HashFunctionIdentity> list = new ArrayList<>();
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Provider changes
+        list.add(new HashFunctionIdentityImpl("PROVIDER", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider2", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Name changes
+        list.add(new HashFunctionIdentityImpl("Provider", "name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider", "NAME", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider", "Other", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Signedness changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.UNSIGNED, ProcessType.ITERATIVE, 0L));
+        // ProcessType changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.CYCLIC, 0L));
+        // Signature changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 1L));
+
+        // Create shapes that only differ in the hash function.
+        final int numberOfItems = 30;
+        final int numberOfBits = 3000;
+        final int numberOfHashFunctions = 10;
+        final Shape shape1 = new Shape(list.get(0), numberOfItems, numberOfBits, numberOfHashFunctions);
+        assertEquals(shape1, shape1);
+
+        // Try variations
+        for (int i = 1; i < list.size(); i++) {
+            final Shape shape2 = new Shape(list.get(i), numberOfItems, numberOfBits, numberOfHashFunctions);
+            assertEquals(shape2, shape2);
+
+            // Equal shapes must have the same hash code
+            if (shape1.equals(shape2)) {
+                assertEquals(shape1.hashCode(), shape2.hashCode());
+            }
+        }
     }
 }
