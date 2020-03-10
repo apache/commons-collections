@@ -29,7 +29,7 @@ import java.util.Objects;
  *
  * <dl> <dt>Number of Items (AKA: {@code n})</dt>
  * <dd>{@code n = ceil(m / (-k / log(1 - exp(log(p) / k))))}</dd> <dt>Probability of
- * Collision (AKA: {@code p})</dt> <dd>{@code p =  (1 - exp(-kn/m))^k}</dd> <dt>Number
+ * Collision (AKA: {@code p})</dt> <dd>{@code p = pow(1 - exp(-k / (m / n)), k)}</dd> <dt>Number
  * of Bits (AKA: {@code m})</dt>
  * <dd>{@code m = ceil((n * log(p)) / log(1 / pow(2, log(2))))}</dd> <dt>Number of
  * Functions (AKA: {@code k})</dt> <dd>{@code k = round((m / n) * log(2))}</dd> </dl>
@@ -46,14 +46,16 @@ import java.util.Objects;
 public final class Shape {
 
     /**
-     * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180.
+     * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
      */
     private static final double LOG_OF_2 = Math.log(2.0);
 
     /**
-     * 1 / 2^log(2). Used in calculating the number of bits. Approximately -0.090619058.
+     * log(1 / 2^log(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
+     *
+     * <p>log(1 / 2^log(2)) = log(1) - log(2^log(2)) = -log(2) * log(2)
      */
-    private static final double DENOMINATOR = Math.log(1.0 / Math.pow(2.0, LOG_OF_2));
+    private static final double DENOMINATOR = -LOG_OF_2 * LOG_OF_2;
 
     /**
      * Number of items in the filter. AKA: {@code n}.
@@ -402,7 +404,7 @@ public final class Shape {
     /**
      * Calculates the probability of false positives ({@code p}) given
      * numberOfItems ({@code n}), numberOfBits ({@code m}) and numberOfHashFunctions ({@code k}).
-     * <pre>p = (1 - exp(-kn/m))^k</pre>
+     * <pre>p = pow(1 - exp(-k / (m / n)), k)</pre>
      *
      * <p>This is the probability that a Bloom filter will return true for the presence of an item
      * when it does not contain the item.
