@@ -43,7 +43,7 @@ final class BloomFilterIndexer {
      * to store bits starting at index 0.
      *
      * <p>The index is assumed to be positive. For a positive index the result will match
-     * {@code bitIndex / 64}.
+     * {@code bitIndex >> 6}.
      *
      * <p>The divide is performed using bit shifts. If the input is negative the behaviour
      * is not defined.
