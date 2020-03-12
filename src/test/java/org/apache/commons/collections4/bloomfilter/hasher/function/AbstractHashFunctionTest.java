@@ -19,33 +19,32 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.junit.Test;
 
 /**
- * Tests the MD5 cyclic hash function.
+ * Tests the signature of a hash function.
  */
-public class MD5CyclicTest extends AbstractHashFunctionTest {
+public abstract class AbstractHashFunctionTest {
 
     /**
-     * Test that the apply function returns the proper values.
+     * Test that the signature is properly generated.
      */
     @Test
-    public void applyTest() {
-        final MD5Cyclic md5 = new MD5Cyclic();
-        final long l1 = 0x8b1a9953c4611296L;
-        final long l2 = 0xa827abf8c47804d7L;
-        final byte[] buffer = "Hello".getBytes();
-
-        long l = md5.apply(buffer, 0);
-        assertEquals(l1, l);
-        l = md5.apply(buffer, 1);
-        assertEquals(l1 + l2, l);
-        l = md5.apply(buffer, 2);
-        assertEquals(l1 + l2 + l2, l);
+    public void signatureTest() {
+        final HashFunction hf = createHashFunction();
+        final long expected = hf.apply(HashFunctionIdentity.prepareSignatureBuffer(hf), 0);
+        assertEquals(expected, hf.getSignature());
+        // Should be repeatable
+        final long expected2 = hf.apply(HashFunctionIdentity.prepareSignatureBuffer(hf), 0);
+        assertEquals(expected, expected2);
+        assertEquals("Apache Commons Collections", hf.getProvider());
     }
 
-    @Override
-    protected HashFunction createHashFunction() {
-        return new MD5Cyclic();
-    }
+    /**
+     * Creates the hash function.
+     *
+     * @return the hash function
+     */
+    protected abstract HashFunction createHashFunction();
 }
