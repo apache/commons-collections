@@ -22,7 +22,6 @@ import java.nio.LongBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
  * An implementation of HashFunction that
@@ -43,6 +42,8 @@ public final class MD5Cyclic implements HashFunction {
 
     /**
      * The signature for this hash function.
+     *
+     * <p>TODO: Make static akin to a serialVersionUID?
      */
     private final long signature;
 
@@ -61,7 +62,7 @@ public final class MD5Cyclic implements HashFunction {
             // This should not happen
             throw new IllegalStateException("Missing the standard MD5 message digest algorithm", e);
         }
-        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = Signatures.getSignature(this);
     }
 
     @Override

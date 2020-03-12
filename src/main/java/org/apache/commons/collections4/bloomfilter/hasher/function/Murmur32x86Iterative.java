@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
  * An implementation of HashFunction that
@@ -32,11 +31,15 @@ public final class Murmur32x86Iterative implements HashFunction {
 
     /**
      * The name of this hash function.
+     *
+     * <p>TODO: Should this be changed to "Murmur3_32_x86"?
      */
     public static final String NAME = "Murmur3_x86_32";
 
     /**
      * The signature for this hash function.
+     *
+     * <p>TODO: Make static akin to a serialVersionUID?
      */
     private final long signature;
 
@@ -44,7 +47,7 @@ public final class Murmur32x86Iterative implements HashFunction {
      * Constructs a Murmur3 x86 32 hash
      */
     public Murmur32x86Iterative() {
-        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = Signatures.getSignature(this);
     }
 
     @Override

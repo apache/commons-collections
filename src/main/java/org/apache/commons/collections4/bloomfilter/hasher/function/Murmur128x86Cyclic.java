@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
  * An implementation of HashFunction that
@@ -32,6 +31,8 @@ public final class Murmur128x86Cyclic implements HashFunction {
 
     /**
      * The name of this hash method.
+     *
+     * <p>TODO: Should this be changed to "Murmur3_128_x64"?
      */
     public static final String NAME = "Murmur3_x64_128";
 
@@ -42,6 +43,8 @@ public final class Murmur128x86Cyclic implements HashFunction {
 
     /**
      * The signature for this hash function.
+     *
+     * <p>TODO: Make static akin to a serialVersionUID?
      */
     private final long signature;
 
@@ -49,7 +52,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
      * Constructs a Murmur3 x64 128 hash.
      */
     public Murmur128x86Cyclic() {
-        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = Signatures.getSignature(this);
     }
 
     @Override
