@@ -96,10 +96,9 @@ public final class StaticHasher implements Hasher {
      * filter based on the shape.  The iterator will not return the same value multiple
      * times.  Values will be returned in ascending order.
      *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
-     *                                  equal {@code getName()}
+     * @param shape {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws IllegalArgumentException {@inheritDoc}
      */
     @Override
     public OfInt getBits(final Shape shape) {
