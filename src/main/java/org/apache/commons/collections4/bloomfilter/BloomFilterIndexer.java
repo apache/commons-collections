@@ -21,7 +21,7 @@ package org.apache.commons.collections4.bloomfilter;
  */
 final class BloomFilterIndexer {
     /** A bit shift to apply to an integer to divided by 64 (2^6). */
-    private static final int DIVIDE_BY_64 = 64;
+    private static final int DIVIDE_BY_64 = 6;
 
     /** Do not instantiate. */
     private BloomFilterIndexer() {}
