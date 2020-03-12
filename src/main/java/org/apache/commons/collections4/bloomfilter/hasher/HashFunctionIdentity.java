@@ -98,16 +98,18 @@ public interface HashFunctionIdentity {
     }
 
     /**
-     * Gets the signature buffer for a HashFunctionIdentity.
-     * <p>
-     * The signature of this function is calculated as:
-     * {@code
-     * apply( String.format( "%s-%s-%s", getName().toUpperCase( Locale.ROOT ), getSignedness(), getProcess() )
-     *     .getBytes( "UTF-8" ), 0 );
-     * }
-     * </p>
+     * Gets a {@code byte[]} buffer for a HashFunctionIdentity to create a signature. The
+     * {@code byte[]} is composed using properties of the hash function as:
+     *
+     * <pre><code>
+     * String.format("%s-%s-%s",
+     *               getName().toUpperCase(Locale.ROOT), getSignedness(), getProcess())
+     *       .getBytes("UTF-8");
+     * </code></pre>
+     *
      * @param identity The HashFunctionIdentity to create the buffer for.
      * @return the signature buffer for the identity
+     * @see #getSignature()
      */
     static byte[] prepareSignatureBuffer(final HashFunctionIdentity identity) {
         return String.format("%s-%s-%s",
@@ -144,13 +146,13 @@ public interface HashFunctionIdentity {
     String getProvider();
 
     /**
-     * Gets the signature of this function. <p> The signature of this function is
-     * calculated as: {@code
-     * apply( String.format( "%s-%s-%s", getName(), getSignedness(), getProcess() )
-     *     .getBytes( "UTF-8" ), 0 );
-     * } </p>
+     * Gets the signature of this function. The signature is the output of the hash function
+     * when applied to a set of bytes composed using properties of the hash function.
+     *
+     * <p>Implementations should define the method used to generate the signature.
      *
      * @return the signature of this function.
+     * @see #prepareSignatureBuffer(HashFunctionIdentity)
      */
     long getSignature();
 
