@@ -77,7 +77,8 @@ final class BloomFilterIndexer {
     static long getLongBit(int bitIndex) {
         // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
         // using 0x3f (63) or compute bitIndex % 64.
-        // If the index is negative the shift will be in the opposite direction.
+        // Note: If the index is negative the shift will be (64 - (bitIndex & 0x3f)) and
+        // this will identify an incorrect bit.
         return 1L << bitIndex;
     }
 }
