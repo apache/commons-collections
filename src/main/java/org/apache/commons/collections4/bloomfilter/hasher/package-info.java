@@ -16,8 +16,8 @@
  */
 
 /**
- * Implementations of org.apache.commons.collections4.bloomfilter.Hasher
- * interface.
+ * Provides classes and interfaces to define the shape of a Bloom filter and the conversion
+ * of generic bytes to a hash of bit indexes to be used with a Bloom filter.
  *
  * @since 4.5
  */
