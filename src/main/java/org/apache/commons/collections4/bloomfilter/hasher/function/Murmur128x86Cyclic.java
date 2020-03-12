@@ -21,18 +21,20 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 
 /**
  * An implementation of HashFunction that
- * performs Murmur128 hashing using a signed cyclic method.
+ * uses an underlying Murmur3 128-bit hash with a signed cyclic method.
  *
- * <p>Requires the optional commons-codec library.</p>
+ * <p>Requires the optional <a href="https://commons.apache.org/codec/">Apache Commons Codec</a>
+ * library which contains a Java port of the 128-bit hash function
+ * {@code MurmurHash3_x64_128} from Austin Applyby's original {@code c++}
+ * code in SMHasher.</p>
  *
+ * @see <a href="https://github.com/aappleby/smhasher">SMHasher</a>
  * @since 4.5
  */
 public final class Murmur128x86Cyclic implements HashFunction {
 
     /**
      * The name of this hash method.
-     *
-     * <p>TODO: Should this be changed to "Murmur3_128_x64"?
      */
     public static final String NAME = "Murmur3_x64_128";
 

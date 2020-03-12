@@ -21,18 +21,21 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 
 /**
  * An implementation of HashFunction that
- * performs Murmur32 hashing using a signed iterative method.
+ * uses an underlying Murmur3 32-bit hash with a signed iterative method.
  *
- * <p>Requires the optional commons-codec library.</p>
+ * <p>Requires the optional <a href="https://commons.apache.org/codec/">Apache Commons Codec</a>
+ * library which contains a Java port of the 32-bit hash function
+ * {@code MurmurHash3_x86_32} from Austin Applyby's original {@code c++}
+ * code in SMHasher.</p>
  *
+ * @see <a href="https://commons.apache.org/codec/">Apache Commons Codec</a>
+ * @see <a href="https://github.com/aappleby/smhasher">SMHasher</a>
  * @since 4.5
  */
 public final class Murmur32x86Iterative implements HashFunction {
 
     /**
      * The name of this hash function.
-     *
-     * <p>TODO: Should this be changed to "Murmur3_32_x86"?
      */
     public static final String NAME = "Murmur3_x86_32";
 
@@ -59,6 +62,7 @@ public final class Murmur32x86Iterative implements HashFunction {
     public String getName() {
         return NAME;
     }
+
     @Override
     public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
