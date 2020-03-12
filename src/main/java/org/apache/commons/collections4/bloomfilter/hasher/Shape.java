@@ -103,7 +103,7 @@ public class Shape {
             throw new IllegalArgumentException("Number of bits must be greater than or equal to 8");
         }
         if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException("Number of hash functions must be greater than or equal to 8");
+            throw new IllegalArgumentException("Number of hash functions must be greater than or equal to 1");
         }
         this.hashFunctionIdentity = hashFunctionIdentity;
         this.numberOfBits = numberOfBits;
@@ -212,7 +212,7 @@ public class Shape {
             throw new IllegalArgumentException("Number of Bits must be greater than or equal to 8");
         }
         if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException("Number of Hash Functions must be greater than or equal to 8");
+            throw new IllegalArgumentException("Number of Hash Functions must be greater than or equal to 1");
         }
         this.hashFunctionIdentity = hashFunctionIdentity;
         this.numberOfItems = numberOfItems;
@@ -224,7 +224,7 @@ public class Shape {
     }
 
     /**
-     * Calculates the number of hash functions given numberOfItems and numberofBits.
+     * Calculates the number of hash functions given numberOfItems and numberOfBits.
      * This is a method so that the calculation is consistent across all constructors.
      *
      * @param numberOfItems the number of items in the filter.
@@ -242,9 +242,9 @@ public class Shape {
                 String.format("Filter to small: Calculated number of hash functions (%s) was less than 1", k));
         }
         /*
-         * normally we would check that numberofHashFunctions <= Integer.MAX_VALUE but
+         * normally we would check that number of HashFunctions <= Integer.MAX_VALUE but
          * since numberOfBits is at most Integer.MAX_VALUE the numerator of
-         * numberofHashFunctions is log(2) * Integer.MAX_VALUE = 646456992.9449 the
+         * number of HashFunctions is log(2) * Integer.MAX_VALUE = 646456992.9449 the
          * value of k can not be above Integer.MAX_VALUE.
          */
         return (int) k;
