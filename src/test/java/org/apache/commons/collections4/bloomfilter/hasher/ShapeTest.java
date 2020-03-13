@@ -177,7 +177,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 5, 24, 4);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(4, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
@@ -194,7 +193,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 5, 24);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
@@ -258,7 +256,6 @@ public class ShapeTest {
     public void constructor_items_probability_Test() {
 
         assertEquals(24, shape.getNumberOfBits());
-        assertEquals(3, shape.getNumberOfBytes());
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(5, shape.getNumberOfItems());
         assertEquals(0.100375138, shape.getProbability(), 0.000001);
@@ -400,7 +397,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);

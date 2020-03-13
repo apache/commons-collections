@@ -376,15 +376,6 @@ public final class Shape {
     }
 
     /**
-     * Gets the number of bytes in the Bloom filter.
-     *
-     * @return the number of bytes in the Bloom filter.
-     */
-    public int getNumberOfBytes() {
-        return Double.valueOf(Math.ceil(numberOfBits / (double) Byte.SIZE)).intValue();
-    }
-
-    /**
      * Gets the number of hash functions used to construct the filter.
      * This is also known as {@code k}.
      *
