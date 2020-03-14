@@ -28,11 +28,11 @@ import java.util.Objects;
  * <h2>Interrelatedness of values</h2>
  *
  * <dl> <dt>Number of Items ({@code n})</dt>
- * <dd>{@code n = ceil(m / (-k / log(1 - exp(log(p) / k))))}</dd> <dt>Probability of
+ * <dd>{@code n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))}</dd> <dt>Probability of
  * False Positives ({@code p})</dt> <dd>{@code p = pow(1 - exp(-k / (m / n)), k)}</dd> <dt>Number
  * of Bits ({@code m})</dt>
- * <dd>{@code m = ceil((n * log(p)) / log(1 / pow(2, log(2))))}</dd> <dt>Number of
- * Functions ({@code k})</dt> <dd>{@code k = round((m / n) * log(2))}</dd> </dl>
+ * <dd>{@code m = ceil((n * ln(p)) / ln(1 / pow(2, ln(2))))}</dd> <dt>Number of
+ * Functions ({@code k})</dt> <dd>{@code k = round((m / n) * ln(2))}</dd> </dl>
  *
  * <h2>Comparisons</h2> <p> For purposes of equality checking and hashCode
  * calculations a {@code Shape} is defined by the hashing function identity, the number of
@@ -48,14 +48,14 @@ public final class Shape {
     /**
      * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
      */
-    private static final double LOG_OF_2 = Math.log(2.0);
+    private static final double LN_2 = Math.log(2.0);
 
     /**
-     * log(1 / 2^log(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
+     * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
      *
-     * <p>log(1 / 2^log(2)) = log(1) - log(2^log(2)) = -log(2) * log(2)
+     * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
      */
-    private static final double DENOMINATOR = -LOG_OF_2 * LOG_OF_2;
+    private static final double DENOMINATOR = -LN_2 * LN_2;
 
     /**
      * Number of items in the filter ({@code n}).
@@ -87,7 +87,7 @@ public final class Shape {
      * specified number of bits ({@code m}) and hash functions ({@code k}).
      *
      * <p>The number of items ({@code n}) to be stored in the filter is computed.
-     * <pre>n = ceil(m / (-k / log(1 - exp(log(p) / k))))</pre>
+     * <pre>n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))</pre>
      *
      * <p>The actual probability will be approximately equal to the
      * desired probability but will be dependent upon the calculated Bloom filter capacity
@@ -112,7 +112,7 @@ public final class Shape {
         this.numberOfHashFunctions = checkNumberOfHashFunctions(numberOfHashFunctions);
 
         // Number of items (n):
-        // n = ceil(m / (-k / log(1 - exp(log(p) / k))))
+        // n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))
         final double n = Math.ceil(numberOfBits /
             (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
 
@@ -137,10 +137,10 @@ public final class Shape {
      * desired false-positive probability ({@code p}).
      *
      * <p>The number of bits ({@code m}) for the filter is computed.
-     * <pre>m = ceil(n * log(p) / log(1 / 2^log(2)))</pre>
+     * <pre>m = ceil(n * ln(p) / ln(1 / 2^ln(2)))</pre>
      *
      * <p>The optimal number of hash functions ({@code k}) is computed.
-     * <pre>k = round((m / n) * log(2))</pre>
+     * <pre>k = round((m / n) * ln(2))</pre>
      *
      * <p>The actual probability will be approximately equal to the
      * desired probability but will be dependent upon the calculated number of bits and hash
@@ -178,7 +178,7 @@ public final class Shape {
      * bits ({@code m}).
      *
      * <p>The optimal number of hash functions ({@code k}) is computed.
-     * <pre>k = round((m / n) * log(2))</pre>
+     * <pre>k = round((m / n) * ln(2))</pre>
      *
      * <p>The false-positive probability is computed using the number of items, bits and hash
      * functions. An exception is raised if this is greater than or equal to 1 (i.e. the
@@ -317,16 +317,16 @@ public final class Shape {
      * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
      */
     private static int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
-        // k = round((m / n) * log(2)) We change order so that we use real math rather
+        // k = round((m / n) * ln(2)) We change order so that we use real math rather
         // than integer math.
-        final long k = Math.round(LOG_OF_2 * numberOfBits / numberOfItems);
+        final long k = Math.round(LN_2 * numberOfBits / numberOfItems);
         if (k < 1) {
             throw new IllegalArgumentException(
                 String.format("Filter too small: Calculated number of hash functions (%s) was less than 1", k));
         }
         // Normally we would check that numberofHashFunctions <= Integer.MAX_VALUE but
         // since numberOfBits is at most Integer.MAX_VALUE the numerator of
-        // numberofHashFunctions is log(2) * Integer.MAX_VALUE = 646456992.9449 the
+        // numberofHashFunctions is ln(2) * Integer.MAX_VALUE = 646456992.9449 the
         // value of k can not be above Integer.MAX_VALUE.
         return (int) k;
     }
