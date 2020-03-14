@@ -314,10 +314,10 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the number of bits is less than 8 an exception is thrown
+     * Tests that if the number of bits is less than 1 an exception is thrown
      */
     @Test
-    public void constructor_probability_bits_hash__BadNumberOfBitsTest() {
+    public void constructor_probability_bits_hash_BadNumberOfBitsTest() {
         try {
             new Shape(testFunction, 0.5, 0, 1);
             fail("Should have thrown IllegalArgumentException");
