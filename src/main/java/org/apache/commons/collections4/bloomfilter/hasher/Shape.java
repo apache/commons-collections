@@ -99,10 +99,9 @@ public final class Shape {
      * @param numberOfBits The number of bits in the filter
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @throws NullPointerException if the hash function identity is null
-     * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)}
-     * @throws IllegalArgumentException if the number of bits is {@code < 1}
-     * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
-     * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)};
+     * if {@code numberOfBits < 1}; if {@code numberOfHashFunctions < 1}; or if the actual
+     * probability is {@code >= 1.0}
      * @see #getProbability()
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final double probability, final int numberOfBits,
@@ -152,9 +151,8 @@ public final class Shape {
      * @param numberOfItems Number of items to be placed in the filter
      * @param probability The desired false-positive probability in the range {@code (0, 1)}
      * @throws NullPointerException if the hash function identity is null
-     * @throws IllegalArgumentException if the number of items is {@code < 1}
-     * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)}
-     * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}; if the desired probability
+     * is not in the range {@code (0, 1)}; or if the actual probability is {@code >= 1.0}
      * @see #getProbability()
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final double probability) {
@@ -190,10 +188,9 @@ public final class Shape {
      * @param numberOfItems Number of items to be placed in the filter
      * @param numberOfBits The number of bits in the filter
      * @throws NullPointerException if the hash function identity is null
-     * @throws IllegalArgumentException if the number of items is {@code < 1}
-     * @throws IllegalArgumentException if the number of bits is {@code < 1}
-     * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
-     * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}; if {@code numberOfBits < 1};
+     * if the calculated number of hash function is {@code < 1};
+     * or if the actual probability is {@code >= 1.0}
      * @see #getProbability()
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits) {
@@ -219,10 +216,8 @@ public final class Shape {
      * @param numberOfBits The number of bits in the filter.
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @throws NullPointerException if the hash function identity is null
-     * @throws IllegalArgumentException if the number of items is {@code < 1}
-     * @throws IllegalArgumentException if the number of bits is {@code < 1}
-     * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
-     * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}; if {@code numberOfBits < 1};
+     * if {@code numberOfHashFunctions < 1}; or if the actual probability is {@code >= 1.0}
      * @see #getProbability()
      */
     public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits,
