@@ -53,13 +53,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         this.shape = shape;
     }
 
-    /**
-     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     */
     @Override
     public int andCardinality(final BloomFilter other) {
         verifyShape(other);
@@ -73,11 +66,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         return count;
     }
 
-    /**
-     * Gets the cardinality of this Bloom filter.
-     *
-     * @return the cardinality (number of enabled bits) in this filter.
-     */
     @Override
     public int cardinality() {
         int count = 0;
@@ -87,28 +75,12 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         return count;
     }
 
-    /**
-     * Performs a contains check. Effectively this AND other == other.
-     *
-     * @param other the Other Bloom filter.
-     * @return true if this filter matches the other.
-     */
     @Override
     public boolean contains(final BloomFilter other) {
         verifyShape(other);
         return other.cardinality() == andCardinality(other);
     }
 
-    /**
-     * Performs a contains check against a decomposed Bloom filter. The shape must match
-     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
-     * decomposed AND this == decomposed.
-     *
-     * @param hasher The hasher containing the bits to check.
-     * @return true if this filter contains the other.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
     @Override
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
@@ -127,29 +99,12 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         return true;
     }
 
-    /**
-     * Gets an array of little-endian long values representing the on bits of this filter.
-     * bits 0-63 are in the first long.
-     *
-     * @return the LongBuffer representation of this filter.
-     */
     @Override
     public abstract long[] getBits();
 
-    /**
-     * Creates a StaticHasher that contains the indexes of the bits that are on in this
-     * filter.
-     *
-     * @return a StaticHasher for that produces this Bloom filter.
-     */
     @Override
     public abstract StaticHasher getHasher();
 
-    /**
-     * Gets the shape of this filter.
-     *
-     * @return The shape of this filter.
-     */
     @Override
     public final Shape getShape() {
         return shape;
@@ -165,22 +120,9 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         return cardinality() == getShape().getNumberOfBits();
     }
 
-    /**
-     * Merge the other Bloom filter into this one.
-     *
-     * @param other the other Bloom filter.
-     */
     @Override
     public abstract void merge(BloomFilter other);
 
-    /**
-     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
-     * filter. The hasher provides an iterator of bit indexes to enable.
-     *
-     * @param hasher the hasher to provide the indexes.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
     @Override
     public abstract void merge(Hasher hasher);
 
@@ -229,13 +171,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         }
     }
 
-    /**
-     * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code( this XOR other )}
-     */
     @Override
     public int xorCardinality(final BloomFilter other) {
         // Logical XOR

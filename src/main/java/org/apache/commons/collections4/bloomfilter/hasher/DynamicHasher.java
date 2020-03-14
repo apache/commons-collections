@@ -164,16 +164,6 @@ public class DynamicHasher implements Hasher {
         this.function = function;
     }
 
-    /**
-     * Gets an iterator of integers that are the bits to enable in the Bloom filter
-     * based on the shape. The iterator may return the same value multiple times. There is
-     * no guarantee made as to the order of the integers.
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not equal
-     * {@code getName()}
-     */
     @Override
     public PrimitiveIterator.OfInt getBits(final Shape shape) {
         HashFunctionValidator.checkAreEqual(getHashFunctionIdentity(),

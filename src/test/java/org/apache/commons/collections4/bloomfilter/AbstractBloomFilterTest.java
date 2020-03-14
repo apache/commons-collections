@@ -23,8 +23,12 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.function.BiFunction;
+import java.util.function.IntConsumer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
+
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
@@ -35,6 +39,41 @@ import org.junit.Test;
  * Test standard methods in the {@link BloomFilter} interface.
  */
 public abstract class AbstractBloomFilterTest {
+
+    /**
+     * An implementation of BloomFilter that is used to test merge and cardinality
+     * operations with a filter type that does not match the type of the filter
+     * being tested.
+     */
+    private static class TestBloomFilter extends AbstractBloomFilter {
+        /** The bits. */
+        final BitSet bits;
+
+        protected TestBloomFilter(Shape shape, BitSet bits) {
+            super(shape);
+            this.bits = bits;
+        }
+
+        @Override
+        public long[] getBits() {
+            return bits.toLongArray();
+        }
+
+        @Override
+        public StaticHasher getHasher() {
+            return new StaticHasher(bits.stream().iterator(), getShape());
+        }
+
+        @Override
+        public void merge(BloomFilter other) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void merge(Hasher hasher) {
+            throw new UnsupportedOperationException();
+        }
+    }
 
     /**
      * A HashFunctionIdentity for testing.
@@ -108,6 +147,23 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void andCardinalityTest() {
+        andCardinalityTest(this::createFilter);
+    }
+
+    /**
+     * Tests that the andCardinality calculations are correct with a generic BloomFilter.
+     */
+    @Test
+    public final void andCardinalityTest_GenenicBloomFilter() {
+        andCardinalityTest(this::createGenericFilter);
+    }
+
+    /**
+     * Tests that the andCardinality calculations are correct.
+     *
+     * @param filterFactory the factory function to create the filter
+     */
+    private void andCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -116,7 +172,7 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        final BloomFilter bf2 = createFilter(hasher2, shape);
+        final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
         assertEquals(7, bf.andCardinality(bf2));
     }
@@ -303,11 +359,24 @@ public abstract class AbstractBloomFilterTest {
     /**
      * Create the BloomFilter implementation we are testing.
      *
-     * @param hasher the hasher to use to create the filter..
+     * @param hasher the hasher to use to create the filter.
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
     protected abstract AbstractBloomFilter createFilter(Hasher hasher, Shape shape);
+
+    /**
+     * Create a generic BloomFilter implementation.
+     *
+     * @param hasher the hasher to use to create the filter.
+     * @param shape the shape of the filter.
+     * @return a BloomFilter implementation.
+     */
+    private AbstractBloomFilter createGenericFilter(Hasher hasher, Shape shape) {
+        BitSet bits = new BitSet();
+        hasher.getBits(shape).forEachRemaining((IntConsumer) bits::set);
+        return new TestBloomFilter(shape, bits);
+    }
 
     /**
      * Tests that getBits() works correctly when multiple long values are returned.
@@ -370,6 +439,23 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void mergeTest_BloomFilter() {
+        mergeTest_BloomFilter(this::createFilter);
+    }
+
+    /**
+     * Tests that merging bloom filters works as expected with a generic BloomFilter.
+     */
+    @Test
+    public final void mergeTest_GenenicBloomFilter() {
+        mergeTest_BloomFilter(this::createGenericFilter);
+    }
+
+    /**
+     * Tests that merging bloom filters works as expected.
+     *
+     * @param filterFactory the factory function to create the filter
+     */
+    private void mergeTest_BloomFilter(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -377,7 +463,8 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        final BloomFilter bf2 = createFilter(hasher2, shape);
+
+        final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
         bf.merge(bf2);
         assertEquals(27, bf.cardinality());
@@ -450,6 +537,23 @@ public abstract class AbstractBloomFilterTest {
      */
     @Test
     public final void orCardinalityTest() {
+        orCardinalityTest(this::createFilter);
+    }
+
+    /**
+     * Tests that the orCardinality calculations are correct with a generic BloomFilter.
+     */
+    @Test
+    public final void orCardinalityTest_GenenicBloomFilter() {
+        orCardinalityTest(this::createGenericFilter);
+    }
+
+    /**
+     * Tests that the andCardinality calculations are correct.
+     *
+     * @param filterFactory the factory function to create the filter
+     */
+    private void orCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -458,7 +562,7 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        final BloomFilter bf2 = createFilter(hasher2, shape);
+        final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
         assertEquals(27, bf.orCardinality(bf2));
     }
@@ -483,10 +587,27 @@ public abstract class AbstractBloomFilterTest {
     }
 
     /**
-     * Tests that the zorCardinality calculations are correct.
+     * Tests that the xorCardinality calculations are correct.
      */
     @Test
     public final void xorCardinalityTest() {
+        xorCardinalityTest(this::createFilter);
+    }
+
+    /**
+     * Tests that the xorCardinality calculations are correct with a generic BloomFilter.
+     */
+    @Test
+    public final void xorCardinalityTest_GenenicBloomFilter() {
+        xorCardinalityTest(this::createGenericFilter);
+    }
+
+    /**
+     * Tests that the andCardinality calculations are correct.
+     *
+     * @param filterFactory the factory function to create the filter
+     */
+    private void xorCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -494,7 +615,8 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
-        final BloomFilter bf2 = createFilter(hasher2, shape);
+
+        final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
         assertEquals(20, bf.xorCardinality(bf2));
     }

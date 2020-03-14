@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
  * An implementation of HashFunction that
@@ -39,6 +38,8 @@ public final class ObjectsHashIterative implements HashFunction {
 
     /**
      * The signature for this hash function.
+     *
+     * <p>TODO: Make static akin to a serialVersionUID?
      */
     private final long signature;
 
@@ -51,7 +52,7 @@ public final class ObjectsHashIterative implements HashFunction {
      * Constructs a hash that uses the Objects.hash method to has values.
      */
     public ObjectsHashIterative() {
-        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = Signatures.getSignature(this);
     }
 
     @Override

@@ -20,7 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
-import java.util.Objects;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -72,12 +75,12 @@ public class ShapeTest {
     private final Shape shape = new Shape(testFunction, 5, 0.1);
 
     /**
-     * Tests that if the number of bits less than 8 an IllegalArgumentException is thrown.
+     * Tests that if the number of bits less than 1 an IllegalArgumentException is thrown.
      */
     @Test
     public void constructor_items_bits_BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 5, 6);
+            new Shape(testFunction, 5, 0);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -111,12 +114,12 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the number of bits is less than 8 an exception is thrown
+     * Tests that if the number of bits is less than 1 an exception is thrown
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 5, 6, 1);
+            new Shape(testFunction, 5, 0, 1);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -174,7 +177,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 5, 24, 4);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(4, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
@@ -191,7 +193,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 5, 24);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
@@ -227,6 +228,12 @@ public class ShapeTest {
         } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
+        try {
+            new Shape(testFunction, 10, Double.NaN);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (final IllegalArgumentException expected) {
+            // do nothing.
+        }
     }
 
     /**
@@ -249,7 +256,6 @@ public class ShapeTest {
     public void constructor_items_probability_Test() {
 
         assertEquals(24, shape.getNumberOfBits());
-        assertEquals(3, shape.getNumberOfBytes());
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(5, shape.getNumberOfItems());
         assertEquals(0.100375138, shape.getProbability(), 0.000001);
@@ -308,12 +314,12 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the number of bits is less than 8 an exception is thrown
+     * Tests that if the number of bits is less than 1 an exception is thrown
      */
     @Test
-    public void constructor_probability_bits_hash__BadNumberOfBitsTest() {
+    public void constructor_probability_bits_hash_BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 0.5, 6, 1);
+            new Shape(testFunction, 0.5, 0, 1);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -391,7 +397,6 @@ public class ShapeTest {
         final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
 
         assertEquals(24, filterConfig.getNumberOfBits());
-        assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
         assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
@@ -452,11 +457,44 @@ public class ShapeTest {
     }
 
     /**
-     * Test that hashCode equals hashCode of hashFunctionIdentity
+     * Test that hashCode satisfies the contract between {@link Object#hashCode()} and
+     * {@link Object#equals(Object)}. Equal shapes must have the same hash code.
      */
     @Test
     public void hashCodeTest() {
-        final int hashCode = Objects.hash(testFunction, 24, 3);
-        assertEquals(hashCode, shape.hashCode());
+        // Hash function equality is based on process type, signedness and name (case insensitive)
+        final ArrayList<HashFunctionIdentity> list = new ArrayList<>();
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Provider changes
+        list.add(new HashFunctionIdentityImpl("PROVIDER", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider2", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Name changes
+        list.add(new HashFunctionIdentityImpl("Provider", "name", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider", "NAME", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        list.add(new HashFunctionIdentityImpl("Provider", "Other", Signedness.SIGNED, ProcessType.ITERATIVE, 0L));
+        // Signedness changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.UNSIGNED, ProcessType.ITERATIVE, 0L));
+        // ProcessType changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.CYCLIC, 0L));
+        // Signature changes
+        list.add(new HashFunctionIdentityImpl("Provider", "Name", Signedness.SIGNED, ProcessType.ITERATIVE, 1L));
+
+        // Create shapes that only differ in the hash function.
+        final int numberOfItems = 30;
+        final int numberOfBits = 3000;
+        final int numberOfHashFunctions = 10;
+        final Shape shape1 = new Shape(list.get(0), numberOfItems, numberOfBits, numberOfHashFunctions);
+        assertEquals(shape1, shape1);
+
+        // Try variations
+        for (int i = 1; i < list.size(); i++) {
+            final Shape shape2 = new Shape(list.get(i), numberOfItems, numberOfBits, numberOfHashFunctions);
+            assertEquals(shape2, shape2);
+
+            // Equal shapes must have the same hash code
+            if (shape1.equals(shape2)) {
+                assertEquals(shape1.hashCode(), shape2.hashCode());
+            }
+        }
     }
 }

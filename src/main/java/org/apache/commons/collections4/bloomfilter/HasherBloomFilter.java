@@ -36,6 +36,8 @@ import org.apache.commons.collections4.iterators.IteratorChain;
  * @since 4.5
  */
 public class HasherBloomFilter extends AbstractBloomFilter {
+    /** The bit representation for an empty Bloom filter. */
+    private static final long[] EMPTY = new long[0];
 
     /**
      * The internal hasher representation.
@@ -95,9 +97,17 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     @Override
     public long[] getBits() {
         if (hasher.size() == 0) {
-            return new long[0];
+            return EMPTY;
         }
-        final int n = (int) Math.ceil(hasher.getShape().getNumberOfBits() * 1.0 / Long.SIZE);
+
+        // Note: This can be simplified if the StaticHasher exposed a getMaxIndex()
+        // method. Since it maintains an ordered list of unique indices the maximum
+        // is the last value in the iterator. Knowing this value would allow
+        // exact allocation of the long[].
+        // For now we assume that the long[] will have a positive length and at least
+        // 1 bit set in the entire array.
+
+        final int n = (int) Math.ceil(hasher.getShape().getNumberOfBits() * (1.0 / Long.SIZE));
         final long[] result = new long[n];
         final OfInt iter = hasher.getBits(hasher.getShape());
         iter.forEachRemaining((IntConsumer) idx -> {
@@ -108,11 +118,15 @@ public class HasherBloomFilter extends AbstractBloomFilter {
         });
 
         int limit = result.length;
-        while (limit > 0 && result[limit - 1] == 0) {
+
+        // Assume the array has a non-zero length and at least 1 bit set.
+        // This is tested using assertions.
+        assert limit > 0 : "Number of bits in Shape is 0";
+        while (result[limit - 1] == 0) {
             limit--;
-        }
-        if (limit == 0) {
-            return new long[0];
+            // If the hasher was not empty it is not possible to return
+            // an array of length zero.
+            assert limit > 0 : "Hasher reported a non-zero size but has no indices";
         }
         if (limit < result.length) {
             return Arrays.copyOf(result, limit);

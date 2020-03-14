@@ -18,14 +18,17 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
  * An implementation of HashFunction that
- * performs Murmur128 hashing using a signed cyclic method.
+ * uses an underlying Murmur3 128-bit hash with a signed cyclic method.
  *
- * <p>Requires the optional commons-codec library.</p>
+ * <p>Requires the optional <a href="https://commons.apache.org/codec/">Apache Commons Codec</a>
+ * library which contains a Java port of the 128-bit hash function
+ * {@code MurmurHash3_x64_128} from Austin Applyby's original {@code c++}
+ * code in SMHasher.</p>
  *
+ * @see <a href="https://github.com/aappleby/smhasher">SMHasher</a>
  * @since 4.5
  */
 public final class Murmur128x86Cyclic implements HashFunction {
@@ -42,6 +45,8 @@ public final class Murmur128x86Cyclic implements HashFunction {
 
     /**
      * The signature for this hash function.
+     *
+     * <p>TODO: Make static akin to a serialVersionUID?
      */
     private final long signature;
 
@@ -49,7 +54,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
      * Constructs a Murmur3 x64 128 hash.
      */
     public Murmur128x86Cyclic() {
-        signature = apply(HashFunctionIdentity.prepareSignatureBuffer(this), 0);
+        signature = Signatures.getSignature(this);
     }
 
     @Override

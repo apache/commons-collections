@@ -16,36 +16,31 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher.function;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
-import org.junit.Test;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
- * Tests the MD5 cyclic hash function.
+ * Allow computation of HashFunction signatures.
+ * @since 4.5
  */
-public class MD5CyclicTest extends AbstractHashFunctionTest {
+final class Signatures {
+
+    /** No instances. */
+    private Signatures() {}
 
     /**
-     * Test that the apply function returns the proper values.
+     * Gets the standard signature for the hash function. The signature is prepared as:
+     * <pre><code>
+     * int seed = 0;
+     * return hashFunction.apply(HashFunctionIdentity.prepareSignatureBuffer(hashFunction), seed);
+     * </code></pre>
+     *
+     * @param hashFunction the hash function
+     * @return the signature
+     * @see HashFunctionIdentity#prepareSignatureBuffer(HashFunctionIdentity)
+     * @see HashFunction#apply(byte[], int)
      */
-    @Test
-    public void applyTest() {
-        final MD5Cyclic md5 = new MD5Cyclic();
-        final long l1 = 0x8b1a9953c4611296L;
-        final long l2 = 0xa827abf8c47804d7L;
-        final byte[] buffer = "Hello".getBytes();
-
-        long l = md5.apply(buffer, 0);
-        assertEquals(l1, l);
-        l = md5.apply(buffer, 1);
-        assertEquals(l1 + l2, l);
-        l = md5.apply(buffer, 2);
-        assertEquals(l1 + l2 + l2, l);
-    }
-
-    @Override
-    protected HashFunction createHashFunction() {
-        return new MD5Cyclic();
+    static long getSignature(HashFunction hashFunction) {
+        return hashFunction.apply(HashFunctionIdentity.prepareSignatureBuffer(hashFunction), 0);
     }
 }

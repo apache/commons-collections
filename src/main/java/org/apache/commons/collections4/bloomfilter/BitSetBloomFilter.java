@@ -124,11 +124,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public String toString() {
-        return bitSet.toString();
-    }
-
-    @Override
     public int xorCardinality(final BloomFilter other) {
         if (other instanceof BitSetBloomFilter) {
             verifyShape(other);

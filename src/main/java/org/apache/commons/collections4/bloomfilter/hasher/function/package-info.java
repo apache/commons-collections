@@ -16,8 +16,8 @@
  */
 
 /**
- * Implementations of org.apache.commons.collections4.bloomfilter.hasher.HasherFunction
- * interface.
+ * Provides implementations of the Bloom filter
+ * {@link org.apache.commons.collections4.bloomfilter.hasher.HashFunction HashFunction} interface.
  *
  * @since 4.5
  */

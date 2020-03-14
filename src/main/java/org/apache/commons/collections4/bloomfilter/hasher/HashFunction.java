@@ -30,4 +30,20 @@ public interface HashFunction extends HashFunctionIdentity {
      * @return the long value of the hash.
      */
     long apply(byte[] buffer, int seed);
+
+    /**
+     * Gets the signature of this function.
+     *
+     * <p>The signature of this function is calculated as:
+     * <pre><code>
+     * int seed = 0;
+     * apply(String.format("%s-%s-%s",
+     *                     getName().toUpperCase(Locale.ROOT), getSignedness(), getProcess())
+     *             .getBytes("UTF-8"), seed);
+     * </code></pre>
+     *
+     * @see HashFunctionIdentity#prepareSignatureBuffer(HashFunctionIdentity)
+     */
+    @Override
+    long getSignature();
 }

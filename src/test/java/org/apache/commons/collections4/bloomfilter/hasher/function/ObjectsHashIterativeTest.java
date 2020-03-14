@@ -20,13 +20,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Locale;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.junit.Test;
 
 /**
  * Tests that the Objects hash works correctly.
  */
-public class ObjectsHashIterativeTest {
+public class ObjectsHashIterativeTest extends AbstractHashFunctionTest {
 
     /**
      * Test that the apply function returns the proper values.
@@ -49,18 +49,8 @@ public class ObjectsHashIterativeTest {
         assertEquals(Arrays.deepHashCode(new Object[] {prev, buffer}), l);
     }
 
-    /**
-     * Test that the signature is properly generated.
-     */
-    @Test
-    public void signatureTest() {
-        final ObjectsHashIterative obj = new ObjectsHashIterative();
-        final String arg = String.format("%s-%s-%s", obj.getName().toUpperCase(Locale.ROOT), obj.getSignedness(),
-            obj.getProcessType());
-        final long expected = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
-        final long expected2 = obj.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
-        assertEquals(expected, expected2);
-        assertEquals(expected, obj.getSignature());
-        assertEquals("Apache Commons Collections", obj.getProvider());
+    @Override
+    protected HashFunction createHashFunction() {
+        return new ObjectsHashIterative();
     }
 }

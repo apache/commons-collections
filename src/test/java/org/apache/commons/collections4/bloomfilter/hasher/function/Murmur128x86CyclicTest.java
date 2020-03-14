@@ -19,14 +19,13 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 import static org.junit.Assert.assertEquals;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.junit.Test;
 
 /**
  * Test that the Murmur3 128 x86 hash function works correctly.
  */
-public class Murmur128x86CyclicTest {
+public class Murmur128x86CyclicTest extends AbstractHashFunctionTest {
 
     /**
      * Test that the apply function returns the proper values.
@@ -48,16 +47,8 @@ public class Murmur128x86CyclicTest {
         assertEquals(l1 + l2 + l2, l);
     }
 
-    /**
-     * Test that the signature is properly generated.
-     */
-    @Test
-    public void signatureTest() {
-        final Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
-        final String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
-            murmur.getProcessType());
-        final long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
-        assertEquals(expected, murmur.getSignature());
-        assertEquals("Apache Commons Collections", murmur.getProvider());
+    @Override
+    protected HashFunction createHashFunction() {
+        return new Murmur128x86Cyclic();
     }
 }
