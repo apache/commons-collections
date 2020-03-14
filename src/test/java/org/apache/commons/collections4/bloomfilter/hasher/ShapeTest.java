@@ -75,12 +75,12 @@ public class ShapeTest {
     private final Shape shape = new Shape(testFunction, 5, 0.1);
 
     /**
-     * Tests that if the number of bits less than 8 an IllegalArgumentException is thrown.
+     * Tests that if the number of bits less than 1 an IllegalArgumentException is thrown.
      */
     @Test
     public void constructor_items_bits_BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 5, 6);
+            new Shape(testFunction, 5, 0);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -114,12 +114,12 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the number of bits is less than 8 an exception is thrown
+     * Tests that if the number of bits is less than 1 an exception is thrown
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 5, 6, 1);
+            new Shape(testFunction, 5, 0, 1);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -319,7 +319,7 @@ public class ShapeTest {
     @Test
     public void constructor_probability_bits_hash__BadNumberOfBitsTest() {
         try {
-            new Shape(testFunction, 0.5, 6, 1);
+            new Shape(testFunction, 0.5, 0, 1);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected

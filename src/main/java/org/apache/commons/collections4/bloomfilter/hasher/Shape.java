@@ -100,7 +100,7 @@ public final class Shape {
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @throws NullPointerException if the hash function identity is null
      * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)}
-     * @throws IllegalArgumentException if the number of bits is {@code < 8}
+     * @throws IllegalArgumentException if the number of bits is {@code < 1}
      * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
      * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
      * @see #getProbability()
@@ -191,7 +191,7 @@ public final class Shape {
      * @param numberOfBits The number of bits in the filter
      * @throws NullPointerException if the hash function identity is null
      * @throws IllegalArgumentException if the number of items is {@code < 1}
-     * @throws IllegalArgumentException if the number of bits is {@code < 8}
+     * @throws IllegalArgumentException if the number of bits is {@code < 1}
      * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
      * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
      * @see #getProbability()
@@ -220,7 +220,7 @@ public final class Shape {
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @throws NullPointerException if the hash function identity is null
      * @throws IllegalArgumentException if the number of items is {@code < 1}
-     * @throws IllegalArgumentException if the number of bits is {@code < 8}
+     * @throws IllegalArgumentException if the number of bits is {@code < 1}
      * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
      * @throws IllegalArgumentException if the actual probability is {@code >= 1.0}
      * @see #getProbability()
@@ -255,10 +255,10 @@ public final class Shape {
      *
      * @param numberOfBits the number of bits
      * @return the number of bits
-     * @throws IllegalArgumentException if the number of bits is {@code < 8}
+     * @throws IllegalArgumentException if the number of bits is {@code < 1}
      */
     private static int checkNumberOfBits(final int numberOfBits) {
-        if (numberOfBits < 8) {
+        if (numberOfBits < 1) {
             throw new IllegalArgumentException("Number of bits must be greater than or equal to 8: " + numberOfBits);
         }
         return numberOfBits;
