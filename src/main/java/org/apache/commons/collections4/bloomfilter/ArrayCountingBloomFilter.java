@@ -237,13 +237,15 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public void merge(final BloomFilter other) {
+    public boolean merge(final BloomFilter other) {
         applyAsBloomFilter(other, this::increment);
+        return isValid();
     }
 
     @Override
-    public void merge(final Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         applyAsHasher(hasher, this::increment);
+        return isValid();
     }
 
     @Override

@@ -75,20 +75,24 @@ public interface CountingBloomFilter extends BloomFilter {
     /**
      * {@inheritDoc}
      *
-     * <p>Note: If the hasher contains duplicate bit indexes these are ignored.
+     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored.
      * All counts for the indexes identified by the other filter will be incremented by 1.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
      */
     @Override
-    void merge(BloomFilter other);
+    boolean merge(BloomFilter other);
 
     /**
      * {@inheritDoc}
      *
      * <p>Note: If the hasher contains duplicate bit indexes these are ignored.
      * All counts for the indexes identified by the other filter will be incremented by 1.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
      */
     @Override
-    void merge(Hasher other);
+    boolean merge(Hasher other);
 
     /**
      * Removes the other Bloom filter from this one.

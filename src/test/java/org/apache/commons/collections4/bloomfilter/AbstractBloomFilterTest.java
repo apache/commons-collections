@@ -65,12 +65,12 @@ public abstract class AbstractBloomFilterTest {
         }
 
         @Override
-        public void merge(BloomFilter other) {
+        public boolean merge(BloomFilter other) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public void merge(Hasher hasher) {
+        public boolean merge(Hasher hasher) {
             throw new UnsupportedOperationException();
         }
     }
@@ -466,7 +466,7 @@ public abstract class AbstractBloomFilterTest {
 
         final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
-        bf.merge(bf2);
+        assertTrue("Merge should not fail", bf.merge(bf2));
         assertEquals(27, bf.cardinality());
     }
 
@@ -506,7 +506,7 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        bf.merge(hasher2);
+        assertTrue("Merge should not fail", bf.merge(hasher2));
         assertEquals(27, bf.cardinality());
     }
 

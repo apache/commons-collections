@@ -90,18 +90,20 @@ public interface BloomFilter {
      * Merges the other Bloom filter into this one.
      *
      * @param other the other Bloom filter.
+     * @return true if the merge was successful
      */
-    void merge(BloomFilter other);
+    boolean merge(BloomFilter other);
 
     /**
      * Merges the decomposed Bloom filter defined by the hasher into this Bloom
      * filter. The hasher provides an iterator of bit indexes to enable.
      *
      * @param hasher the hasher to provide the indexes.
+     * @return true if the merge was successful
      * @throws IllegalArgumentException if the shape argument does not match the shape of
      * this filter, or if the hasher is not the specified one
      */
-    void merge(Hasher hasher);
+    boolean merge(Hasher hasher);
 
     /**
      * Performs a logical "OR" with the other Bloom filter and returns the cardinality of

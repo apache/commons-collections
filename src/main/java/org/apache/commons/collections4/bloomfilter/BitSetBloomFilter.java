@@ -97,19 +97,21 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public void merge(final BloomFilter other) {
+    public boolean merge(final BloomFilter other) {
         verifyShape(other);
         if (other instanceof BitSetBloomFilter) {
             bitSet.or(((BitSetBloomFilter) other).bitSet);
         } else {
             bitSet.or(BitSet.valueOf(other.getBits()));
         }
+        return true;
     }
 
     @Override
-    public void merge(final Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         verifyHasher(hasher);
         hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
+        return true;
     }
 
     @Override

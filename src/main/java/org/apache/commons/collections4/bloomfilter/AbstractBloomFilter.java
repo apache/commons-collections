@@ -22,7 +22,6 @@ import java.util.function.LongBinaryOperator;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
  * An abstract Bloom filter providing default implementations for most Bloom filter
@@ -100,12 +99,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     }
 
     @Override
-    public abstract long[] getBits();
-
-    @Override
-    public abstract StaticHasher getHasher();
-
-    @Override
     public final Shape getShape() {
         return shape;
     }
@@ -119,12 +112,6 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     public final boolean isFull() {
         return cardinality() == getShape().getNumberOfBits();
     }
-
-    @Override
-    public abstract void merge(BloomFilter other);
-
-    @Override
-    public abstract void merge(Hasher hasher);
 
     @Override
     public int orCardinality(final BloomFilter other) {

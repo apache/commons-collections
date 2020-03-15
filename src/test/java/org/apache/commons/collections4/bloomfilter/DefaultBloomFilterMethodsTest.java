@@ -72,15 +72,17 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         }
 
         @Override
-        public void merge(final BloomFilter other) {
+        public boolean merge(final BloomFilter other) {
             verifyShape(other);
             bitSet.or(BitSet.valueOf(other.getBits()));
+            return true;
         }
 
         @Override
-        public void merge(final Hasher hasher) {
+        public boolean merge(final Hasher hasher) {
             verifyHasher(hasher);
             hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
+            return true;
         }
     }
 

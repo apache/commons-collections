@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.ToIntBiFunction;
@@ -216,11 +215,11 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * @param merge the merge operation
      */
     private <F> void assertMerge(Function<int[], F> converter,
-                                 BiConsumer<ArrayCountingBloomFilter, F> merge) {
+                                 BiPredicate<ArrayCountingBloomFilter, F> merge) {
         final int[] indexes1 = {   1, 2,    4, 5, 6};
         final int[] indexes2 = {         3, 4,    6};
         final int[] expected = {0, 1, 1, 1, 2, 1, 2};
-        assertOperation(indexes1, indexes2, converter, merge, expected);
+        assertOperation(indexes1, indexes2, converter, merge, true, expected);
     }
 
     /**
@@ -232,11 +231,11 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * @param remove the remove operation
      */
     private <F> void assertRemove(Function<int[], F> converter,
-                                  BiConsumer<ArrayCountingBloomFilter, F> remove) {
+                                  BiPredicate<ArrayCountingBloomFilter, F> remove) {
         final int[] indexes1 = {   1, 2,    4, 5, 6};
         final int[] indexes2 = {      2,       5, 6};
         final int[] expected = {0, 1, 0, 0, 1, 0, 0};
-        assertOperation(indexes1, indexes2, converter, remove, expected);
+        assertOperation(indexes1, indexes2, converter, remove, true, expected);
     }
 
     /**
@@ -252,16 +251,19 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * @param indexes2 the second set of indexes
      * @param converter the converter
      * @param operation the operation
+     * @param isValid the expected value for the operation result
      * @param expected the expected counts after the operation
      */
     private <F> void assertOperation(int[] indexes1, int[] indexes2,
             Function<int[], F> converter,
-            BiConsumer<ArrayCountingBloomFilter, F> operation,
-            int[] expected) {
+            BiPredicate<ArrayCountingBloomFilter, F> operation,
+            boolean isValid, int[] expected) {
         final Hasher hasher = new FixedIndexesTestHasher(shape, indexes1);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
         final F filter = converter.apply(indexes2);
-        operation.accept(bf, filter);
+        final boolean result = operation.test(bf, filter);
+        assertEquals(isValid, result);
+        assertEquals(isValid, bf.isValid());
         assertCounts(bf, expected);
     }
 
@@ -277,13 +279,13 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
 
         // Small + 1 = OK
         // should not fail as the counts are ignored
-        bf.merge(bf2);
+        assertTrue(bf.merge(bf2));
         assertTrue(bf.isValid());
         assertCounts(bf, new int[] {0, 1, 2, 1});
 
         // Big + 1 = Overflow
         assertTrue(bf2.isValid());
-        bf2.merge(bf);
+        assertFalse(bf2.merge(bf));
         assertFalse("Merge should overflow and the filter is invalid", bf2.isValid());
 
         // The counts are not clipped to max. They have simply overflowed.

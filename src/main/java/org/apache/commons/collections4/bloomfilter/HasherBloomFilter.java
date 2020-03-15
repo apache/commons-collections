@@ -140,15 +140,16 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public void merge(final BloomFilter other) {
-        merge(other.getHasher());
+    public boolean merge(final BloomFilter other) {
+        return merge(other.getHasher());
     }
 
     @Override
-    public void merge(final Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         verifyHasher(hasher);
         final IteratorChain<Integer> iter = new IteratorChain<>(this.hasher.getBits(getShape()),
             hasher.getBits(getShape()));
         this.hasher = new StaticHasher(iter, getShape());
+        return true;
     }
 }
