@@ -72,86 +72,7 @@ public interface CountingBloomFilter extends BloomFilter {
         void accept(int index, int count);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored.
-     * All counts for the indexes identified by the other filter will be incremented by 1.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     */
-    @Override
-    boolean merge(BloomFilter other);
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Note: If the hasher contains duplicate bit indexes these are ignored.
-     * All counts for the indexes identified by the other filter will be incremented by 1.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     */
-    @Override
-    boolean merge(Hasher other);
-
-    /**
-     * Removes the other Bloom filter from this one.
-     * All counts for the indexes identified by the other filter will be decremented by 1.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param other the other Bloom filter
-     * @return true if the removal was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
-     * @see #isValid()
-     */
-    boolean remove(BloomFilter other);
-
-    /**
-     * Removes the decomposed Bloom filter defined by the hasher from this Bloom filter.
-     * All counts for the indexes identified by the hasher will be decremented by 1.
-     * Duplicate indexes should be ignored.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param hasher the hasher to provide the indexes
-     * @return true if the removal was successful and the state is valid
-     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
-     * this filter
-     * @see #isValid()
-     */
-    boolean remove(Hasher hasher);
-
-    /**
-     * Adds the other counting Bloom filter to this one.
-     * All counts for the indexes identified by the other filter will be incremented by their
-     * corresponding counts in the other filter.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param other the other counting Bloom filter
-     * @return true if the addition was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
-     * @see #isValid()
-     */
-    boolean add(CountingBloomFilter other);
-
-    /**
-     * Subtracts the other counting Bloom filter from this one.
-     * All counts for the indexes identified by the other filter will be decremented by their
-     * corresponding counts in the other filter.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param other the other counting Bloom filter
-     * @return true if the subtraction was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
-     * @see #isValid()
-     */
-    boolean subtract(CountingBloomFilter other);
+    // Query Operations
 
     /**
      * Returns true if the internal state is valid. This flag is a warning that an addition or
@@ -180,4 +101,101 @@ public interface CountingBloomFilter extends BloomFilter {
      * @throws NullPointerException if the specified action is null
      */
     void forEachCount(BitCountConsumer action);
+
+    // Modification Operations
+
+    /**
+     * Merges the specified Bloom filter into this Bloom filter. Specifically all counts for
+     * indexes that are enabled in the {@code other} filter will be incremented by 1.
+     *
+     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored; only
+     * the enabled indexes are used.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param other {@inheritDoc}
+     * @return true if the merge was successful and the state is valid
+     * @throws IllegalArgumentException {@inheritDoc}
+     * @see #isValid()
+     */
+    @Override
+    boolean merge(BloomFilter other);
+
+    /**
+     * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
+     * counts for the <em>distinct</em> indexes that are identified by the {@code hasher} will
+     * be incremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param hasher {@inheritDoc}
+     * @return true if the merge was successful and the state is valid
+     * @throws IllegalArgumentException {@inheritDoc}
+     * @see #isValid()
+     */
+    @Override
+    boolean merge(Hasher hasher);
+
+    /**
+     * Removes the specified Bloom filter from this Bloom filter. Specifically
+     * all counts for the indexes identified by the {@code other} filter will be decremented by 1.
+     *
+     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored; only
+     * the enabled indexes are used.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param other the other Bloom filter
+     * @return true if the removal was successful and the state is valid
+     * @throws IllegalArgumentException if the shape of the other filter does not match
+     * the shape of this filter
+     * @see #isValid()
+     * @see #subtract(CountingBloomFilter)
+     */
+    boolean remove(BloomFilter other);
+
+    /**
+     * Removes the specified decomposed Bloom filter from this Bloom filter. Specifically
+     * all counts for the <em>distinct</em> indexes identified by the {@code hasher} will be
+     * decremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param hasher the hasher to provide the indexes
+     * @return true if the removal was successful and the state is valid
+     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
+     * this filter
+     * @see #isValid()
+     */
+    boolean remove(Hasher hasher);
+
+    /**
+     * Adds the specified counting Bloom filter to this Bloom filter. Specifically
+     * all counts for the indexes identified by the {@code other} filter will be incremented
+     * by their corresponding counts in the {@code other} filter.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param other the other counting Bloom filter
+     * @return true if the addition was successful and the state is valid
+     * @throws IllegalArgumentException if the shape of the other filter does not match
+     * the shape of this filter
+     * @see #isValid()
+     */
+    boolean add(CountingBloomFilter other);
+
+    /**
+     * Adds the specified counting Bloom filter to this Bloom filter. Specifically
+     * all counts for the indexes identified by the {@code other} filter will be decremented
+     * by their corresponding counts in the {@code other} filter.
+     *
+     * <p>This method will return true if the filter is valid after the operation.
+     *
+     * @param other the other counting Bloom filter
+     * @return true if the subtraction was successful and the state is valid
+     * @throws IllegalArgumentException if the shape of the other filter does not match
+     * the shape of this filter
+     * @see #isValid()
+     */
+    boolean subtract(CountingBloomFilter other);
 }
