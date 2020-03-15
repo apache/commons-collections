@@ -29,17 +29,20 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 /**
  * A counting Bloom filter using an array to track counts for each enabled bit
  * index.
- *
- * <p>Any operation that results in negative counts or integer overflow of counts will
- * mark this filter as invalid. This transition is not reversible. The counts for the
- * filter immediately prior to the operation that create invalid counts can be recovered.
- * See the documentation in {@link #isValid()} for details.
- *
- * <p>All the operations in the filter assume the counts are currently valid. Behaviour
- * of an invalid filter is undefined. It will no longer function identically to a standard
+ * 
+ * <p>Any operation that results in negative counts or integer overflow of
+ * counts will mark this filter as invalid. This transition is not reversible.
+ * The operation is completed in full, no exception is raised and the state is
+ * set to invalid. This allows the counts for the filter immediately prior to the
+ * operation that created the invalid state to be recovered. See the documentation
+ * in {@link #isValid()} for details.
+ * 
+ * <p>All the operations in the filter assume the counts are currently valid,
+ * for example cardinality or contains operations. Behaviour of an invalid
+ * filter is undefined. It will no longer function identically to a standard
  * Bloom filter that is the merge of all the Bloom filters that have been added
  * to and not later subtracted from the counting Bloom filter.
- *
+ * 
  * <p>The maximum supported number of items that can be stored in the filter is
  * limited by the maximum array size combined with the {@link Shape}. For
  * example an implementation using a {@link Shape} with a false-positive
@@ -47,8 +50,8 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * approximately 75 million items using 20 hash functions per item with a memory
  * consumption of approximately 8 GB.
  *
- * @since 4.5
  * @see Shape
+ * @since 4.5
  */
 public class ArrayCountingBloomFilter extends AbstractBloomFilter implements CountingBloomFilter {
 
