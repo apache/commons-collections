@@ -40,7 +40,7 @@ public interface Hasher {
 
         /**
          * Builds the hasher.
-         * @return the fully constructed hasher.
+         * @return the fully constructed hasher
          */
         Hasher build();
 
@@ -48,8 +48,8 @@ public interface Hasher {
          * Adds a byte to the hasher.
          *
          * @param property the byte to add
-         * @return {@code this} for chaining.
-         * @throws IllegalStateException if the Hasher is locked.
+         * @return a reference to this object
+         * @throws IllegalStateException if the Hasher is locked
          * @see #getBits(Shape)
          */
         Builder with(byte property);
@@ -57,20 +57,19 @@ public interface Hasher {
         /**
          * Adds an array of bytes to the hasher.
          *
-         * @param property the array of bytes to add.
-         * @return {@code this} for chaining.
-         * @throws IllegalStateException if the Hasher is locked.
+         * @param property the array of bytes to add
+         * @return a reference to this object
+         * @throws IllegalStateException if the Hasher is locked
          * @see #getBits(Shape)
          */
         Builder with(byte[] property);
 
         /**
-         * Adds a string to the hasher. The string is converted to a byte array using
-         * the UTF-8 Character set.
+         * Adds a string to the hasher.
          *
-         * @param property the string to add.
-         * @return {@code this} for chaining.
-         * @throws IllegalStateException if the Hasher is locked.
+         * @param property the string to add
+         * @return a reference to this object
+         * @throws IllegalStateException if the Hasher is locked
          * @see #getBits(Shape)
          */
         Builder with(String property);
@@ -78,27 +77,27 @@ public interface Hasher {
 
     /**
      * Gets an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape.  No guarantee is made as to order
+     * filter based on the shape. No guarantee is made as to order
      * or duplication of values.
      *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the Iterator of integers;
-     * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
-     *                                  equal {@code getName()}
+     * @param shape the shape of the desired Bloom filter
+     * @return the iterator of integers
+     * @throws IllegalArgumentException if the hasher cannot generate indexes for
+     * the specified @{@code shape}
      */
     PrimitiveIterator.OfInt getBits(Shape shape);
 
     /**
-     * Gets HashFunctionIdentity of the hash function this Hasher uses.
+     * Gets the identify of the hash function used by the the hasher.
      *
-     * @return HashFunctionIdentity of the hash function this Hasher uses.
+     * @return the identity of the hash function
      */
     HashFunctionIdentity getHashFunctionIdentity();
 
     /**
      * Returns true if the hasher specifies no bits.
      *
-     * @return true if the hasher does not specify any bits.
+     * @return true if the hasher does not specify any bits
      */
     boolean isEmpty();
 }

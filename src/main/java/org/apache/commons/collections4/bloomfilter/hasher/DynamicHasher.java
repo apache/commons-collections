@@ -76,6 +76,11 @@ public class DynamicHasher implements Hasher {
             return this;
         }
 
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The string is converted to a byte array using the UTF-8 Character set.
+         */
         @Override
         public final Builder with(final String property) {
             return with(property.getBytes(StandardCharsets.UTF_8));
