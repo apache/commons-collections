@@ -52,7 +52,6 @@ public class DynamicHasher implements Hasher {
         public Builder(final HashFunction function) {
             this.function = function;
             this.buffers = new ArrayList<>();
-
         }
 
         /**
