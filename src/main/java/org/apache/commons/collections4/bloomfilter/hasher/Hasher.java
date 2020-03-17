@@ -19,15 +19,27 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 import java.util.PrimitiveIterator;
 
 /**
- * The class that performs hashing.
- * <p>
- * Hashers have a Unique name based on the hashing algorithm used.
- * </p>
- * <p>
- * Implementations of {@code iterator()} may return duplicate values and may return
- * values in a random order.  See implementation javadoc notes as to the guarantees
- * provided by the specific implementation.
- * </p>
+ * A Hasher represents items of arbitrary byte size as a byte representation of
+ * fixed size (a hash). The hash representations can be used to create indexes
+ * for a Bloom filter.
+ *
+ * <p>The hash for each item is created using a hash function; use of different
+ * seeds allows generation of different hashes for the same item. The hashes can
+ * be dynamically converted into the bit index representation used by a Bloom
+ * filter. The shape of the Bloom filter defines the number of indexes per item
+ * and the range of the indexes. The hasher can generate the correct number of
+ * indexes in the range required by the Bloom filter for each item it
+ * represents.
+ *
+ * <p>Note that the process of generating hashes and mapping them to a Bloom
+ * filter shape may create duplicate indexes. The hasher may generate fewer than
+ * the required number of hash functions per item if duplicates have been
+ * removed. Implementations of {@code iterator()} may return duplicate values
+ * and may return values in a random order. See implementation javadoc notes as
+ * to the guarantees provided by the specific implementation.
+ *
+ * <p>Hashers have an identity based on the hashing algorithm used.
+ *
  * @since 4.5
  */
 public interface Hasher {
@@ -49,8 +61,6 @@ public interface Hasher {
          *
          * @param property the byte to add
          * @return a reference to this object
-         * @throws IllegalStateException if the Hasher is locked
-         * @see #iterator(Shape)
          */
         Builder with(byte property);
 
@@ -59,8 +69,6 @@ public interface Hasher {
          *
          * @param property the array of bytes to add
          * @return a reference to this object
-         * @throws IllegalStateException if the Hasher is locked
-         * @see #iterator(Shape)
          */
         Builder with(byte[] property);
 
@@ -69,16 +77,20 @@ public interface Hasher {
          *
          * @param property the string to add
          * @return a reference to this object
-         * @throws IllegalStateException if the Hasher is locked
-         * @see #iterator(Shape)
          */
         Builder with(String property);
     }
 
     /**
      * Gets an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape. No guarantee is made as to order
-     * or duplication of values.
+     * filter based on the shape.
+     *
+     * <p>The iterator will create indexes within the range defined by the number of bits in
+     * the shape. The total number of indexes will respect the number of hash functions per item
+     * defined by the shape. However the count of indexes may not be a multiple of the number of
+     * hash functions if the implementation has removed duplicates.
+     *
+     * <p>No guarantee is made as to order of values.
      *
      * @param shape the shape of the desired Bloom filter
      * @return the iterator of integers
