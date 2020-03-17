@@ -41,12 +41,11 @@ public class ObjectsHashIterativeTest extends AbstractHashFunctionTest {
         long l = obj.apply(buffer, 0);
         long prev = 0;
         assertEquals(Arrays.deepHashCode(new Object[] {prev, buffer}), l);
-        prev += l;
-        l = obj.apply(buffer, 1);
-        assertEquals(Arrays.deepHashCode(new Object[] {prev, buffer}), l);
-        prev += l;
-        l = obj.apply(buffer, 2);
-        assertEquals(Arrays.deepHashCode(new Object[] {prev, buffer}), l);
+        for (int i = 1; i <= 5; i++) {
+            prev += l;
+            l = obj.apply(buffer, i);
+            assertEquals(Arrays.deepHashCode(new Object[] {prev, buffer}), l);
+        }
     }
 
     @Override

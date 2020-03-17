@@ -60,7 +60,14 @@ public final class ObjectsHashIterative implements HashFunction {
         if (seed == 0) {
             last = 0;
         }
-        final long result = Arrays.deepHashCode(new Object[] { last, buffer });
+        // Effectively:
+        // result = Arrays.deepHashCode(new Object[] { last, buffer });
+        // The method loops over items starting with result=1
+        // for i in items:
+        //    result = 31 * result + hashCode(i)
+        // Here we unroll the computation to 2 iterations.
+        // The computation is done using 32-bit integers then cast to a long
+        final long result = 31 * (31 + Long.hashCode(last)) + Arrays.hashCode(buffer);
         last += result;
         return result;
     }
