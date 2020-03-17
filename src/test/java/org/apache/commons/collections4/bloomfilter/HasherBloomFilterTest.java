@@ -78,7 +78,7 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
         // Set the lowest bit index only.
         filter.merge(new Hasher() {
             @Override
-            public OfInt getBits(Shape shape) {
+            public OfInt iterator(Shape shape) {
                 return Arrays.stream(new int[] {0}).iterator();
             }
 

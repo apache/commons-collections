@@ -95,7 +95,7 @@ public class IndexFilterTest {
         Assert.assertEquals(expected.size(), actual.size());
         // Check the array has all the values.
         // We do not currently check the order of indexes from the
-        // hasher.getBits() function.
+        // hasher.iterator() function.
         for (Integer index : actual) {
             Assert.assertTrue(expected.contains(index));
         }

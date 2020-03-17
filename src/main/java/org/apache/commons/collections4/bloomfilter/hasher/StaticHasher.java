@@ -46,7 +46,7 @@ public final class StaticHasher implements Hasher {
      * @throws IllegalArgumentException if the hasher function and the shape function are not the same.
      */
     public StaticHasher(final Hasher hasher, final Shape shape) {
-        this(hasher.getBits(shape), shape);
+        this(hasher.iterator(shape), shape);
         HashFunctionValidator.checkAreEqual(hasher.getHashFunctionIdentity(),
                                             shape.getHashFunctionIdentity());
     }
@@ -101,7 +101,7 @@ public final class StaticHasher implements Hasher {
      * @throws IllegalArgumentException {@inheritDoc}
      */
     @Override
-    public OfInt getBits(final Shape shape) {
+    public OfInt iterator(final Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));

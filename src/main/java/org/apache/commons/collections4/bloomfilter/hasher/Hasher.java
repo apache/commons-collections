@@ -24,7 +24,7 @@ import java.util.PrimitiveIterator;
  * Hashers have a Unique name based on the hashing algorithm used.
  * </p>
  * <p>
- * Implementations of {@code getBits()} may return duplicate values and may return
+ * Implementations of {@code iterator()} may return duplicate values and may return
  * values in a random order.  See implementation javadoc notes as to the guarantees
  * provided by the specific implementation.
  * </p>
@@ -50,7 +50,7 @@ public interface Hasher {
          * @param property the byte to add
          * @return a reference to this object
          * @throws IllegalStateException if the Hasher is locked
-         * @see #getBits(Shape)
+         * @see #iterator(Shape)
          */
         Builder with(byte property);
 
@@ -60,7 +60,7 @@ public interface Hasher {
          * @param property the array of bytes to add
          * @return a reference to this object
          * @throws IllegalStateException if the Hasher is locked
-         * @see #getBits(Shape)
+         * @see #iterator(Shape)
          */
         Builder with(byte[] property);
 
@@ -70,7 +70,7 @@ public interface Hasher {
          * @param property the string to add
          * @return a reference to this object
          * @throws IllegalStateException if the Hasher is locked
-         * @see #getBits(Shape)
+         * @see #iterator(Shape)
          */
         Builder with(String property);
     }
@@ -85,7 +85,7 @@ public interface Hasher {
      * @throws IllegalArgumentException if the hasher cannot generate indexes for
      * the specified @{@code shape}
      */
-    PrimitiveIterator.OfInt getBits(Shape shape);
+    PrimitiveIterator.OfInt iterator(Shape shape);
 
     /**
      * Gets the identify of the hash function used by the the hasher.

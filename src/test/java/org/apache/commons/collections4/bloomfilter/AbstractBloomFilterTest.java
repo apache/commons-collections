@@ -203,8 +203,8 @@ public abstract class AbstractBloomFilterTest {
      * @param hasher2 the second static hasher.
      */
     private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
-        final OfInt iter1 = hasher1.getBits(shape);
-        final OfInt iter2 = hasher2.getBits(shape);
+        final OfInt iter1 = hasher1.iterator(shape);
+        final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
             assertTrue("Not enough data in second hasher", iter2.hasNext());
@@ -374,7 +374,7 @@ public abstract class AbstractBloomFilterTest {
      */
     private AbstractBloomFilter createGenericFilter(Hasher hasher, Shape shape) {
         BitSet bits = new BitSet();
-        hasher.getBits(shape).forEachRemaining((IntConsumer) bits::set);
+        hasher.iterator(shape).forEachRemaining((IntConsumer) bits::set);
         return new TestBloomFilter(shape, bits);
     }
 

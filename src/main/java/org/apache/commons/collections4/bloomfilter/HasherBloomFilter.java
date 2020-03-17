@@ -80,10 +80,10 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
         final Set<Integer> set = new TreeSet<>();
-        hasher.getBits(getShape()).forEachRemaining((IntConsumer) idx -> {
+        hasher.iterator(getShape()).forEachRemaining((IntConsumer) idx -> {
             set.add(idx);
         });
-        final OfInt iter = this.hasher.getBits(getShape());
+        final OfInt iter = this.hasher.iterator(getShape());
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
             set.remove(idx);
@@ -109,7 +109,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
 
         final int n = (int) Math.ceil(hasher.getShape().getNumberOfBits() * (1.0 / Long.SIZE));
         final long[] result = new long[n];
-        final OfInt iter = hasher.getBits(hasher.getShape());
+        final OfInt iter = hasher.iterator(hasher.getShape());
         iter.forEachRemaining((IntConsumer) idx -> {
             BloomFilterIndexer.checkPositive(idx);
             final int buffIdx = BloomFilterIndexer.getLongIndex(idx);
@@ -147,8 +147,8 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     @Override
     public boolean merge(final Hasher hasher) {
         verifyHasher(hasher);
-        final IteratorChain<Integer> iter = new IteratorChain<>(this.hasher.getBits(getShape()),
-            hasher.getBits(getShape()));
+        final IteratorChain<Integer> iter = new IteratorChain<>(this.hasher.iterator(getShape()),
+            hasher.iterator(getShape()));
         this.hasher = new StaticHasher(iter, getShape());
         return true;
     }

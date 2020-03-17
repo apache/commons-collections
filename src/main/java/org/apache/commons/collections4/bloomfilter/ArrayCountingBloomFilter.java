@@ -159,7 +159,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         // Delay array allocation until after hasher is verified
         counts = new int[shape.getNumberOfBits()];
         // All counts are zero. Ignore duplicates by initialising to 1
-        hasher.getBits(shape).forEachRemaining((IntConsumer) idx -> counts[idx] = 1);
+        hasher.iterator(shape).forEachRemaining((IntConsumer) idx -> counts[idx] = 1);
     }
 
     @Override
@@ -194,7 +194,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     @Override
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
-        return contains(hasher.getBits(getShape()));
+        return contains(hasher.iterator(getShape()));
     }
 
     /**

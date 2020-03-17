@@ -85,7 +85,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         verifyHasher(hasher);
         final long[] buff = getBits();
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
             BloomFilterIndexer.checkPositive(idx);

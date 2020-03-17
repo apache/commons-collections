@@ -43,7 +43,7 @@ public class DynamicHasherBuilderTest {
 
         final int expected = 1483089307;
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         assertTrue(iter.hasNext());
         assertEquals(expected, iter.nextInt());
@@ -58,7 +58,7 @@ public class DynamicHasherBuilderTest {
         final DynamicHasher hasher = builder.with("Hello".getBytes()).build();
         final int expected = 1519797563;
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         assertTrue(iter.hasNext());
         assertEquals(expected, iter.nextInt());
@@ -72,7 +72,7 @@ public class DynamicHasherBuilderTest {
     public void buildTest_Empty() {
         final DynamicHasher hasher = builder.build();
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         assertFalse(iter.hasNext());
     }
@@ -85,7 +85,7 @@ public class DynamicHasherBuilderTest {
         final DynamicHasher hasher = builder.with("Hello").build();
         final int expected = 1519797563;
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         assertTrue(iter.hasNext());
         assertEquals(expected, iter.nextInt());

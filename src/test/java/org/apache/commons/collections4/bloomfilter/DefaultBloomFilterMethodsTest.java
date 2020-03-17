@@ -48,7 +48,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         BF(final Hasher hasher, final Shape shape) {
             this(shape);
             verifyHasher(hasher);
-            hasher.getBits(shape).forEachRemaining((IntConsumer) bitSet::set);
+            hasher.iterator(shape).forEachRemaining((IntConsumer) bitSet::set);
         }
 
         /**
@@ -81,7 +81,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         @Override
         public boolean merge(final Hasher hasher) {
             verifyHasher(hasher);
-            hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
+            hasher.iterator(getShape()).forEachRemaining((IntConsumer) bitSet::set);
             return true;
         }
     }

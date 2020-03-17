@@ -47,7 +47,7 @@ class FixedIndexesTestHasher implements Hasher {
     }
 
     @Override
-    public OfInt getBits(Shape shape) {
+    public OfInt iterator(Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));

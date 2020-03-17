@@ -170,7 +170,7 @@ public class DynamicHasher implements Hasher {
     }
 
     @Override
-    public PrimitiveIterator.OfInt getBits(final Shape shape) {
+    public PrimitiveIterator.OfInt iterator(final Shape shape) {
         HashFunctionValidator.checkAreEqual(getHashFunctionIdentity(),
                                             shape.getHashFunctionIdentity());
         // Use optimised iterator for no values

@@ -82,7 +82,7 @@ public class DynamicHasherTest {
 
         final Hasher hasher = builder.with("Hello").build();
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         for (final int element : expected) {
             assertTrue(iter.hasNext());
@@ -101,7 +101,7 @@ public class DynamicHasherTest {
 
         final Hasher hasher = builder.with("Hello").with("World").build();
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
 
         for (final int element : expected) {
             assertTrue(iter.hasNext());
@@ -120,12 +120,12 @@ public class DynamicHasherTest {
      * Tests that retrieving bits for the wrong shape throws an exception.
      */
     @Test
-    public void testGetBits_WongShape() {
+    public void testGetBits_WrongShape() {
 
         final Hasher hasher = builder.with("Hello").build();
 
         try {
-            hasher.getBits(new Shape(testFunction, 3, 72, 17));
+            hasher.iterator(new Shape(testFunction, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing

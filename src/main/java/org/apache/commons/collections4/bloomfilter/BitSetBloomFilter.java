@@ -45,7 +45,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     public BitSetBloomFilter(final Hasher hasher, final Shape shape) {
         this(shape);
         verifyHasher(hasher);
-        hasher.getBits(shape).forEachRemaining((IntConsumer) bitSet::set);
+        hasher.iterator(shape).forEachRemaining((IntConsumer) bitSet::set);
     }
 
     /**
@@ -77,7 +77,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     @Override
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
-        final OfInt iter = hasher.getBits(getShape());
+        final OfInt iter = hasher.iterator(getShape());
         while (iter.hasNext()) {
             if (!bitSet.get(iter.nextInt())) {
                 return false;
@@ -110,7 +110,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     @Override
     public boolean merge(final Hasher hasher) {
         verifyHasher(hasher);
-        hasher.getBits(getShape()).forEachRemaining((IntConsumer) bitSet::set);
+        hasher.iterator(getShape()).forEachRemaining((IntConsumer) bitSet::set);
         return true;
     }
 

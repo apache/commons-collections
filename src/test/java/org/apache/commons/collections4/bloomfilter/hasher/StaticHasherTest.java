@@ -98,8 +98,8 @@ public class StaticHasherTest {
      * @param hasher2 the second static hasher.
      */
     private void assertSameBits(final StaticHasher hasher1, final StaticHasher hasher2) {
-        final OfInt iter1 = hasher1.getBits(shape);
-        final OfInt iter2 = hasher2.getBits(shape);
+        final OfInt iter1 = hasher1.iterator(shape);
+        final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
             assertTrue("Not enough data in second hasher", iter2.hasNext());
@@ -119,7 +119,7 @@ public class StaticHasherTest {
         final Hasher testHasher = new Hasher() {
 
             @Override
-            public OfInt getBits(final Shape shape) {
+            public OfInt iterator(final Shape shape) {
                 final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream(values).iterator();
             }
@@ -131,7 +131,7 @@ public class StaticHasherTest {
         };
 
         final StaticHasher hasher = new StaticHasher(testHasher, shape);
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
         for (final int element : expected) {
             assertTrue(iter.hasNext());
             assertEquals(element, iter.nextInt());
@@ -148,7 +148,7 @@ public class StaticHasherTest {
         final Hasher testHasher = new Hasher() {
 
             @Override
-            public OfInt getBits(final Shape shape) {
+            public OfInt iterator(final Shape shape) {
                 final int[] values = {1, 3, 5, 7, 9, 3, 5, 1};
                 return Arrays.stream(values).iterator();
             }
@@ -185,7 +185,7 @@ public class StaticHasherTest {
         assertEquals(testFunction.getProvider(), hasher.getHashFunctionIdentity().getProvider());
         assertEquals(testFunction.getSignedness(), hasher.getHashFunctionIdentity().getSignedness());
 
-        iter = hasher.getBits(shape);
+        iter = hasher.iterator(shape);
         int idx = 0;
         while (iter.hasNext()) {
             assertEquals("Error at idx " + idx, Integer.valueOf(values[idx]), iter.next());
@@ -261,7 +261,7 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that getBits returns the proper values.
+     * Tests that iterator returns the proper values.
      */
     @Test
     public void testGetBits() {
@@ -269,7 +269,7 @@ public class StaticHasherTest {
 
         final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
         assertEquals(17, hasher.size());
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
         for (int i = 0; i < 17; i++) {
             assertTrue(iter.hasNext());
             assertEquals(i, iter.nextInt());
@@ -278,7 +278,7 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that gitBits does not return duplicates and orders the indices.
+     * Tests that iterator does not return duplicates and orders the indices.
      */
     @Test
     public void testGetBits_DuplicateValues() {
@@ -289,7 +289,7 @@ public class StaticHasherTest {
 
         final StaticHasher hasher = new StaticHasher(Arrays.stream(input).iterator(), shape);
 
-        final OfInt iter = hasher.getBits(shape);
+        final OfInt iter = hasher.iterator(shape);
         for (final int element : expected) {
             assertTrue(iter.hasNext());
             assertEquals(element, iter.nextInt());
@@ -306,7 +306,7 @@ public class StaticHasherTest {
         final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
         try {
-            hasher.getBits(new Shape(testFunctionX, 3, 72, 17));
+            hasher.iterator(new Shape(testFunctionX, 3, 72, 17));
             fail("Should have thown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing

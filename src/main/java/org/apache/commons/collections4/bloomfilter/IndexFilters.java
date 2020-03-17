@@ -43,7 +43,7 @@ final class IndexFilters {
      *
      * <pre>
      *     final Set&lt;Integer&gt; distinct = new TreeSet&lt;&gt;();
-     *     hasher.getBits(shape).forEachRemaining((Consumer&lt;Integer&gt;) i -&gt; {
+     *     hasher.iterator(shape).forEachRemaining((Consumer&lt;Integer&gt;) i -&gt; {
      *         if (distinct.add(i)) {
      *             consumer.accept(i);
      *         }
@@ -54,7 +54,7 @@ final class IndexFilters {
      * @param shape the shape
      * @param consumer the consumer to receive distinct indexes
      * @throws NullPointerException if the hasher, shape or action are null
-     * @see Hasher#getBits(Shape)
+     * @see Hasher#iterator(Shape)
      */
     static void distinctIndexes(Hasher hasher, Shape shape, IntConsumer consumer) {
         Objects.requireNonNull(hasher, "hasher");
@@ -75,7 +75,7 @@ final class IndexFilters {
         // sensitive to knowing the size in advance.
 
         final Set<Integer> distinct = new TreeSet<>();
-        hasher.getBits(shape).forEachRemaining((Consumer<Integer>) i -> {
+        hasher.iterator(shape).forEachRemaining((Consumer<Integer>) i -> {
             if (distinct.add(i)) {
                 consumer.accept(i);
             }
