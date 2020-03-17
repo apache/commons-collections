@@ -246,7 +246,7 @@ public final class Shape {
     }
 
     /**
-     * Check number of bits is above 8.
+     * Check number of bits is strictly positive.
      *
      * @param numberOfBits the number of bits
      * @return the number of bits
@@ -254,7 +254,7 @@ public final class Shape {
      */
     private static int checkNumberOfBits(final int numberOfBits) {
         if (numberOfBits < 1) {
-            throw new IllegalArgumentException("Number of bits must be greater than or equal to 8: " + numberOfBits);
+            throw new IllegalArgumentException("Number of bits must be greater than 0: " + numberOfBits);
         }
         return numberOfBits;
     }
