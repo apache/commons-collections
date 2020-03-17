@@ -181,9 +181,4 @@ public class DynamicHasher implements Hasher {
     public HashFunctionIdentity getHashFunctionIdentity() {
         return function;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return buffers.isEmpty();
-    }
 }

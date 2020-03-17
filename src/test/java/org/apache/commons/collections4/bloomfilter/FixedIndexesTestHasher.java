@@ -59,9 +59,4 @@ class FixedIndexesTestHasher implements Hasher {
     public HashFunctionIdentity getHashFunctionIdentity() {
         return shape.getHashFunctionIdentity();
     }
-
-    @Override
-    public boolean isEmpty() {
-        return indexes.length == 0;
-    }
 }

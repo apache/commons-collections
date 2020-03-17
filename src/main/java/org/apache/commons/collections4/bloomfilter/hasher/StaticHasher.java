@@ -123,11 +123,6 @@ public final class StaticHasher implements Hasher {
         return shape;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return values.length == 0;
-    }
-
     /**
      * Gets the the number of unique values in this hasher.
      * @return the number of unique values.

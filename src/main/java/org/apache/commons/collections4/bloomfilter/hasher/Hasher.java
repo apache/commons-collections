@@ -93,11 +93,4 @@ public interface Hasher {
      * @return the identity of the hash function
      */
     HashFunctionIdentity getHashFunctionIdentity();
-
-    /**
-     * Returns true if the hasher specifies no bits.
-     *
-     * @return true if the hasher does not specify any bits
-     */
-    boolean isEmpty();
 }

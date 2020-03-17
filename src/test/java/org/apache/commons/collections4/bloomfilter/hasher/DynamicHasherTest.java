@@ -131,23 +131,4 @@ public class DynamicHasherTest {
             // do nothing
         }
     }
-
-    /**
-     * Tests if isEmpty() reports correctly and the iterator returns no values.
-     */
-    @Test
-    public void testIsEmpty() {
-        DynamicHasher hasher = builder.build();
-        assertTrue(hasher.isEmpty());
-        final OfInt iter = hasher.getBits(shape);
-        assertFalse(iter.hasNext());
-        try {
-            iter.next();
-            fail("Should have thown NoSuchElementException");
-        } catch (final NoSuchElementException expected) {
-            // do nothing
-        }
-
-        assertFalse(builder.with("Hello").build().isEmpty());
-    }
 }

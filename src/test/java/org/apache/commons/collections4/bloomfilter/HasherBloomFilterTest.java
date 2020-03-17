@@ -86,11 +86,6 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
             public HashFunctionIdentity getHashFunctionIdentity() {
                 return shape.getHashFunctionIdentity();
             }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
         });
         Assert.assertArrayEquals(new long[] {1L}, filter.getBits());
     }
