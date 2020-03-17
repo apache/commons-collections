@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 /**
- * Defines a Hash Function used by Hashers.
+ * Defines a hash function used by a {@link Hasher} .
  * @since 4.5
  */
 public interface HashFunction extends HashFunctionIdentity {
