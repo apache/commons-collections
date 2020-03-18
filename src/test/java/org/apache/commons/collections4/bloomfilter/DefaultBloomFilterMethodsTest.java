@@ -35,7 +35,7 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
     private static class BF extends AbstractBloomFilter {
 
         /**
-         * The bitSet that defines this BloomFilter.
+         * The bits for this BloomFilter.
          */
         private final BitSet bitSet;
 
