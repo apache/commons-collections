@@ -110,7 +110,7 @@ public class DynamicHasherTest {
         assertFalse(iter.hasNext());
         try {
             iter.next();
-            fail("Should have thown NoSuchElementException");
+            fail("Should have thrown NoSuchElementException");
         } catch (final NoSuchElementException ignore) {
             // do nothing
         }
@@ -126,7 +126,7 @@ public class DynamicHasherTest {
 
         try {
             hasher.iterator(new Shape(testFunction, 3, 72, 17));
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }

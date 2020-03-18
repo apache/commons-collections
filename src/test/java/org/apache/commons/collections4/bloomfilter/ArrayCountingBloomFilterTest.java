@@ -322,7 +322,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     /**
      * Tests that counts can be added to a new instance.
      *
-     * <p>Note: This test ensures the CountinBloomFilter
+     * <p>Note: This test ensures the CountingBloomFilter
      * can be created with whatever counts are required for other tests.
      */
     @Test
