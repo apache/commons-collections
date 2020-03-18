@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * Tests of the {@link HashFunctionValidator}.
  */
-public class HashFuctionValidatorTest {
+public class HashFunctionValidatorTest {
 
     /**
      * Tests that name is used in the equality check.

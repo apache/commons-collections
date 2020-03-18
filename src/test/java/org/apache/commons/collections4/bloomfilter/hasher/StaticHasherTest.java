@@ -109,7 +109,7 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that passing a hasher other than a StaticHahser to the constructor works as
+     * Tests that passing a hasher other than a StaticHasher to the constructor works as
      * expected.
      */
     @Test
@@ -140,7 +140,7 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that passing a hasher other than a StaticHahser and the wrong Shape to the
+     * Tests that passing a hasher other than a StaticHasher and the wrong Shape to the
      * constructor throws an IllegalArgumentException.
      */
     @Test
@@ -161,7 +161,7 @@ public class StaticHasherTest {
 
         try {
             new StaticHasher(testHasher, shape);
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
@@ -196,7 +196,7 @@ public class StaticHasherTest {
 
     /**
      * Tests that if the iterator passed to the constructor contains a value greater than
-     * or equal to Shape.numerOfBits() an exception is thrown.
+     * or equal to Shape.numberOfBits() an exception is thrown.
      */
     @Test
     public void testConstructor_Iterator_ValueTooBig() {
@@ -205,7 +205,7 @@ public class StaticHasherTest {
         final Iterator<Integer> iter = Arrays.stream(values).iterator();
         try {
             new StaticHasher(iter, shape);
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
@@ -222,7 +222,7 @@ public class StaticHasherTest {
         final Iterator<Integer> iter = Arrays.stream(values).iterator();
         try {
             new StaticHasher(iter, shape);
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
@@ -254,7 +254,7 @@ public class StaticHasherTest {
 
         try {
             new StaticHasher(hasher, shape);
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
@@ -298,7 +298,7 @@ public class StaticHasherTest {
     }
 
     /**
-     * Tests that gitBits is called with the wrong shape an exeption is thrown.
+     * Tests that gitBits is called with the wrong shape an exception is thrown.
      */
     @Test
     public void testGetBits_WrongShape() {
@@ -307,7 +307,7 @@ public class StaticHasherTest {
 
         try {
             hasher.iterator(new Shape(testFunctionX, 3, 72, 17));
-            fail("Should have thown IllegalArgumentException");
+            fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing
         }
