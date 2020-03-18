@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
+import java.nio.charset.Charset;
 import java.util.PrimitiveIterator;
 
 /**
@@ -46,39 +47,62 @@ public interface Hasher {
 
     /**
      * A builder to build a hasher.
+     *
+     * <p>A hasher represents one or more items of arbitrary byte size. The builder
+     * contains methods to collect byte representations of items. Each method to add
+     * to the builder will add an entire item to the final hasher created by the
+     * {@link #build()} method.
+     *
      * @since 4.5
      */
     interface Builder {
 
         /**
-         * Builds the hasher.
+         * Builds the hasher from all the items.
+         *
+         * <p>This method will clear the builder for future use.
+         *
          * @return the fully constructed hasher
          */
         Hasher build();
 
         /**
-         * Adds a byte to the hasher.
+         * Adds a byte array item to the hasher.
          *
-         * @param property the byte to add
+         * @param item the item to add
          * @return a reference to this object
          */
-        Builder with(byte property);
+        Builder with(byte[] item);
 
         /**
-         * Adds an array of bytes to the hasher.
+         * Adds a character sequence item to the hasher using the specified {@code charset}
+         * encoding.
          *
-         * @param property the array of bytes to add
+         * @param item the item to add
+         * @param charset the character set
          * @return a reference to this object
          */
-        Builder with(byte[] property);
+        default Builder with(CharSequence item, Charset charset) {
+            return with(item.toString().getBytes(charset));
+        }
 
         /**
-         * Adds a string to the hasher.
+         * Adds a character sequence item to the hasher. Each 16-bit character is
+         * converted to 2 bytes using little-endian order.
          *
-         * @param property the string to add
+         * @param item the item to add
          * @return a reference to this object
          */
-        Builder with(String property);
+        default Builder withUnencoded(CharSequence item) {
+            int length = item.length();
+            final byte[] bytes = new byte[length * 2];
+            for (int i = 0; i < length; i++) {
+                final char ch = item.charAt(i);
+                bytes[i * 2] = (byte) ch;
+                bytes[i * 2 + 1] = (byte) (ch >>> 8);
+            }
+            return with(bytes);
+        }
     }
 
     /**

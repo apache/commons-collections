@@ -25,7 +25,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Assert;
 import org.junit.Test;
-
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
 
@@ -40,7 +40,7 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void constructorTest_NonStatic() {
         final Shape shape = new Shape(new MD5Cyclic(), 3, 72, 17);
-        final DynamicHasher hasher = new DynamicHasher.Builder(new MD5Cyclic()).with("Hello").build();
+        final DynamicHasher hasher = new DynamicHasher.Builder(new MD5Cyclic()).with("Hello", StandardCharsets.UTF_8).build();
         final HasherBloomFilter filter = createFilter(hasher, shape);
         final long[] lb = filter.getBits();
         assertEquals(2, lb.length);

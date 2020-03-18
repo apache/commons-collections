@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.nio.charset.StandardCharsets;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -32,31 +33,18 @@ import org.junit.Test;
 public class DynamicHasherBuilderTest {
 
     private DynamicHasher.Builder builder;
-    private final Shape shape = new Shape(new MD5Cyclic(), 1, Integer.MAX_VALUE, 1);
-
-    /**
-     * Tests that hashing a byte works as expected.
-     */
-    @Test
-    public void buildTest_byte() {
-        final DynamicHasher hasher = builder.with((byte) 0x1).build();
-
-        final int expected = 1483089307;
-
-        final OfInt iter = hasher.iterator(shape);
-
-        assertTrue(iter.hasNext());
-        assertEquals(expected, iter.nextInt());
-        assertFalse(iter.hasNext());
-    }
+    private HashFunction hf = new MD5Cyclic();
+    private final Shape shape = new Shape(hf, 1, 345, 1);
+    private String testString = HasherBuilderTest.getExtendedString();
 
     /**
      * Tests that hashing a byte array works as expected.
      */
     @Test
     public void buildTest_byteArray() {
-        final DynamicHasher hasher = builder.with("Hello".getBytes()).build();
-        final int expected = 1519797563;
+        final byte[] bytes = testString.getBytes();
+        final DynamicHasher hasher = builder.with(bytes).build();
+        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -82,8 +70,9 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_String() {
-        final DynamicHasher hasher = builder.with("Hello").build();
-        final int expected = 1519797563;
+        final byte[] bytes = testString.getBytes(StandardCharsets.UTF_8);
+        final DynamicHasher hasher = builder.with(testString, StandardCharsets.UTF_8).build();
+        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -93,10 +82,43 @@ public class DynamicHasherBuilderTest {
     }
 
     /**
+     * Tests that hashing a string works as expected.
+     */
+    @Test
+    public void buildTest_UnencodedString() {
+        final byte[] bytes = testString.getBytes(StandardCharsets.UTF_16LE);
+        final DynamicHasher hasher = builder.withUnencoded(testString).build();
+        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
+
+        final OfInt iter = hasher.iterator(shape);
+
+        assertTrue(iter.hasNext());
+        assertEquals(expected, iter.nextInt());
+        assertFalse(iter.hasNext());
+    }
+
+    /**
+     * Tests that build resets the builder.
+     */
+    @Test
+    public void buildResetTest() {
+        builder.with(new byte[] {123});
+        final OfInt iter = builder.build().iterator(shape);
+
+        assertTrue(iter.hasNext());
+        iter.next();
+        assertFalse(iter.hasNext());
+
+        // Nothing added since last build so it should be an empty hasher
+        final OfInt iter2 = builder.build().iterator(shape);
+        assertFalse(iter2.hasNext());
+    }
+
+    /**
      * Sets up the builder for testing.
      */
     @Before
     public void setup() {
-        builder = new DynamicHasher.Builder(new MD5Cyclic());
+        builder = new DynamicHasher.Builder(hf);
     }
 }

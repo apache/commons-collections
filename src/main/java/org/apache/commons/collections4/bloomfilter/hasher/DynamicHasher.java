@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,7 +35,7 @@ public class DynamicHasher implements Hasher {
     public static class Builder implements Hasher.Builder {
 
         /**
-         * The list of byte[] that are to be hashed.
+         * The list of items (each as a byte[]) that are to be hashed.
          */
         private final List<byte[]> buffers;
 
@@ -54,35 +54,31 @@ public class DynamicHasher implements Hasher {
             this.buffers = new ArrayList<>();
         }
 
-        /**
-         * Builds the hasher.
-         *
-         * @return A DynamicHasher with the specified name, function and buffers.
-         */
         @Override
         public DynamicHasher build() throws IllegalArgumentException {
-            return new DynamicHasher(function, buffers);
+            // Assumes the hasher will create a copy of the buffers
+            final DynamicHasher hasher = new DynamicHasher(function, buffers);
+            // Reset for further use
+            buffers.clear();
+            return hasher;
         }
 
         @Override
-        public final Builder with(final byte property) {
-            return with(new byte[] {property});
-        }
-
-        @Override
-        public final Builder with(final byte[] property) {
+        public final DynamicHasher.Builder with(final byte[] property) {
             buffers.add(property);
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         *
-         * <p>The string is converted to a byte array using the UTF-8 Character set.
-         */
         @Override
-        public final Builder with(final String property) {
-            return with(property.getBytes(StandardCharsets.UTF_8));
+        public DynamicHasher.Builder with(CharSequence item, Charset charset) {
+            Hasher.Builder.super.with(item, charset);
+            return this;
+        }
+
+        @Override
+        public DynamicHasher.Builder withUnencoded(CharSequence item) {
+            Hasher.Builder.super.withUnencoded(item);
+            return this;
         }
     }
 

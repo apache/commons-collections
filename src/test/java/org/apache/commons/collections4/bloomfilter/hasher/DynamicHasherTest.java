@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
@@ -80,7 +81,7 @@ public class DynamicHasherTest {
 
         final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
 
-        final Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello", StandardCharsets.UTF_8).build();
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -99,7 +100,7 @@ public class DynamicHasherTest {
         final int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
             59, 49, 39, 13, 3, 65, 55, 45, 35, 25};
 
-        final Hasher hasher = builder.with("Hello").with("World").build();
+        final Hasher hasher = builder.with("Hello", StandardCharsets.UTF_8).with("World", StandardCharsets.UTF_8).build();
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -122,7 +123,7 @@ public class DynamicHasherTest {
     @Test
     public void testGetBits_WrongShape() {
 
-        final Hasher hasher = builder.with("Hello").build();
+        final Hasher hasher = builder.with("Hello", StandardCharsets.UTF_8).build();
 
         try {
             hasher.iterator(new Shape(testFunction, 3, 72, 17));
