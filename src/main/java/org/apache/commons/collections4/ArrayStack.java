@@ -21,18 +21,18 @@ import java.util.EmptyStackException;
 
 /**
  * An implementation of the {@link java.util.Stack} API that is based on an
- * <code>ArrayList</code> instead of a <code>Vector</code>, so it is not
+ * {@code ArrayList} instead of a {@code Vector}, so it is not
  * synchronized to protect against multi-threaded access.  The implementation
  * is therefore operates faster in environments where you do not need to
  * worry about multiple thread contention.
  * <p>
- * The removal order of an <code>ArrayStack</code> is based on insertion
+ * The removal order of an {@code ArrayStack} is based on insertion
  * order: The most recently added element is removed first.  The iteration
  * order is <i>not</i> the same as the removal order.  The iterator returns
  * elements from the bottom up.
  * </p>
  * <p>
- * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
+ * Unlike {@code Stack}, {@code ArrayStack} accepts null entries.
  * <p>
  * <b>Note:</b> From version 4.0 onwards, this class does not implement the
  * removed {@code Buffer} interface anymore.
@@ -50,15 +50,15 @@ public class ArrayStack<E> extends ArrayList<E> {
     private static final long serialVersionUID = 2130079159931574599L;
 
     /**
-     * Constructs a new empty <code>ArrayStack</code>. The initial size
-     * is controlled by <code>ArrayList</code> and is currently 10.
+     * Constructs a new empty {@code ArrayStack}. The initial size
+     * is controlled by {@code ArrayList} and is currently 10.
      */
     public ArrayStack() {
         super();
     }
 
     /**
-     * Constructs a new empty <code>ArrayStack</code> with an initial size.
+     * Constructs a new empty {@code ArrayStack} with an initial size.
      *
      * @param initialSize  the initial size to use
      * @throws IllegalArgumentException  if the specified initial size
@@ -69,10 +69,10 @@ public class ArrayStack<E> extends ArrayList<E> {
     }
 
     /**
-     * Return <code>true</code> if this stack is currently empty.
+     * Return {@code true} if this stack is currently empty.
      * <p>
-     * This method exists for compatibility with <code>java.util.Stack</code>.
-     * New users of this class should use <code>isEmpty</code> instead.
+     * This method exists for compatibility with {@code java.util.Stack}.
+     * New users of this class should use {@code isEmpty} instead.
      *
      * @return true if the stack is currently empty
      */
@@ -127,7 +127,7 @@ public class ArrayStack<E> extends ArrayList<E> {
 
     /**
      * Pushes a new item onto the top of this stack. The pushed item is also
-     * returned. This is equivalent to calling <code>add</code>.
+     * returned. This is equivalent to calling {@code add}.
      *
      * @param item  the item to be added
      * @return the item just pushed
@@ -140,9 +140,9 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Returns the one-based position of the distance from the top that the
      * specified object exists on this stack, where the top-most element is
-     * considered to be at distance <code>1</code>.  If the object is not
-     * present on the stack, return <code>-1</code> instead.  The
-     * <code>equals()</code> method is used to compare to the items
+     * considered to be at distance {@code 1}.  If the object is not
+     * present on the stack, return {@code -1} instead.  The
+     * {@code equals()} method is used to compare to the items
      * in this stack.
      *
      * @param object  the object to be searched for

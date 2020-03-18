@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.NavigableSet;
 
 /**
- * Decorates another <code>NavigableSet</code> to provide additional behaviour.
+ * Decorates another {@code NavigableSet} to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated set.
  * </p>

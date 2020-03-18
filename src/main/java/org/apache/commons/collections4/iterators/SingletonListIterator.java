@@ -21,9 +21,10 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * <code>SingletonIterator</code> is an {@link java.util.ListIterator} over a single
+ * {@code SingletonIterator} is an {@link java.util.ListIterator} over a single
  * object instance.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 2.1
  */
 public class SingletonListIterator<E> implements ResettableListIterator<E> {
@@ -34,7 +35,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     private E object;
 
     /**
-     * Constructs a new <code>SingletonListIterator</code>.
+     * Constructs a new {@code SingletonListIterator}.
      *
      * @param object  the single object to return from the iterator
      */
@@ -136,7 +137,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
      */
     @Override
     public void remove() {
-        if(!nextCalled || removed) {
+        if (!nextCalled || removed) {
             throw new IllegalStateException();
         }
         object = null;

@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * A case-insensitive <code>Map</code>.
+ * A case-insensitive {@code Map}.
  * <p>
  * Before keys are added to the map or compared to other existing keys, they are converted
  * to all lowercase in a locale-independent fashion by using information from the Unicode
@@ -33,7 +33,7 @@ import java.util.Map;
  * Null keys are supported.
  * </p>
  * <p>
- * The <code>keySet()</code> method returns all lowercase keys, or nulls.
+ * The {@code keySet()} method returns all lowercase keys, or nulls.
  * </p>
  * <p>
  * Example:
@@ -46,12 +46,12 @@ import java.util.Map;
  *  map.put("one", "Four");
  * </code></pre>
  * <p>
- * The example above creates a <code>CaseInsensitiveMap</code> with three entries.
+ * The example above creates a {@code CaseInsensitiveMap} with three entries.
  * </p>
  * <p>
- * <code>map.get(null)</code> returns <code>"Three"</code> and <code>map.get("ONE")</code>
- * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
- * equals <code>{"one", "two", null}.</code>
+ * {@code map.get(null)} returns {@code "Three"} and {@code map.get("ONE")}
+ * returns {@code "Four".}  The {@code Set} returned by {@code keySet()}
+ * equals {@code {"one", "two", null}.}
  * </p>
  * <p>
  * <strong>This map will violate the detail of various Map and map view contracts.</strong>

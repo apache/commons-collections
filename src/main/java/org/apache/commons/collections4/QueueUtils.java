@@ -38,7 +38,7 @@ public class QueueUtils {
     public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
 
     /**
-     * <code>QueueUtils</code> should not normally be instantiated.
+     * {@code QueueUtils} should not normally be instantiated.
      */
     private QueueUtils() {}
 
@@ -127,7 +127,7 @@ public class QueueUtils {
     }
 
     /**
-     * Get an empty <code>Queue</code>.
+     * Get an empty {@code Queue}.
      *
      * @param <E> the type of the elements in the queue
      * @return an empty {@link Queue}

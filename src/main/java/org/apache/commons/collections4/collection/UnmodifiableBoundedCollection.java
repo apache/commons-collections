@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.BoundedCollection;
@@ -54,7 +55,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * Factory method to create an unmodifiable bounded collection.
      *
      * @param <E> the type of the elements in the collection
-     * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
+     * @param coll  the {@code BoundedCollection} to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws NullPointerException if {@code coll} is {@code null}
      * @since 4.0
@@ -75,34 +76,32 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * to find a suitable BoundedCollection.
      *
      * @param <E> the type of the elements in the collection
-     * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
+     * @param collection  the {@code BoundedCollection} to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws NullPointerException if coll is null
      * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}
      * @since 4.0
      */
     @SuppressWarnings("unchecked")
-    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
-        if (coll == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
+    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> collection) {
+        Objects.requireNonNull(collection, "collection");
 
         // handle decorators
         for (int i = 0; i < 1000; i++) {  // counter to prevent infinite looping
-            if (coll instanceof BoundedCollection) {
+            if (collection instanceof BoundedCollection) {
                 break;  // normal loop exit
             }
-            if (coll instanceof AbstractCollectionDecorator) {
-                coll = ((AbstractCollectionDecorator<E>) coll).decorated();
-            } else if (coll instanceof SynchronizedCollection) {
-                coll = ((SynchronizedCollection<E>) coll).decorated();
+            if (collection instanceof AbstractCollectionDecorator) {
+                collection = ((AbstractCollectionDecorator<E>) collection).decorated();
+            } else if (collection instanceof SynchronizedCollection) {
+                collection = ((SynchronizedCollection<E>) collection).decorated();
             }
         }
 
-        if (coll instanceof BoundedCollection == false) {
+        if (collection instanceof BoundedCollection == false) {
             throw new IllegalArgumentException("Collection is not a bounded collection.");
         }
-        return new UnmodifiableBoundedCollection<>((BoundedCollection<E>) coll);
+        return new UnmodifiableBoundedCollection<>((BoundedCollection<E>) collection);
     }
 
     /**

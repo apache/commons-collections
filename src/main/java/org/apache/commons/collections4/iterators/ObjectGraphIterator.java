@@ -28,8 +28,8 @@ import org.apache.commons.collections4.Transformer;
  * <p>
  * This iterator can extract multiple objects from a complex tree-like object graph.
  * The iteration starts from a single root object.
- * It uses a <code>Transformer</code> to extract the iterators and elements.
- * Its main benefit is that no intermediate <code>List</code> is created.
+ * It uses a {@code Transformer} to extract the iterators and elements.
+ * Its main benefit is that no intermediate {@code List} is created.
  * <p>
  * For example, consider an object graph:
  * <pre>
@@ -43,7 +43,7 @@ import org.apache.commons.collections4.Transformer;
  *         |- Tree |         /- Leaf
  *                 |- Branch -- Leaf
  *                 |- Branch -- Leaf</pre>
- * The following <code>Transformer</code>, used in this class, will extract all
+ * The following {@code Transformer}, used in this class, will extract all
  * the Leaf objects without creating a combined intermediate list:
  * <pre>
  * public Object transform(Object input) {
@@ -71,6 +71,7 @@ import org.apache.commons.collections4.Transformer;
  * Under many circumstances, linking Iterators together in this manner is
  * more efficient (and convenient) than using nested for loops to extract a list.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.1
  */
 public class ObjectGraphIterator<E> implements Iterator<E> {

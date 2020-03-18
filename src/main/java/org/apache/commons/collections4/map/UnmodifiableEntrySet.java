@@ -29,7 +29,7 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
 import org.apache.commons.collections4.set.AbstractSetDecorator;
 
 /**
- * Decorates a map entry <code>Set</code> to ensure it can't be altered.
+ * Decorates a map entry {@code Set} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
@@ -98,7 +98,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super Map.Entry<K, V>> filter) {
+    public boolean removeIf(final Predicate<? super Map.Entry<K, V>> filter) {
         throw new UnsupportedOperationException();
     }
 

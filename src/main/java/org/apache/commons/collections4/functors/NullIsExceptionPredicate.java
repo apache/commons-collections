@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.FunctorException;
 import org.apache.commons.collections4.Predicate;
@@ -43,15 +44,12 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new NullIsExceptionPredicate<>(predicate);
+        return new NullIsExceptionPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>nullIsExceptionPredicate</code> if you want that.
+     * Use {@code nullIsExceptionPredicate} if you want that.
      *
      * @param predicate  the predicate to call after the null check
      */

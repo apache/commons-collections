@@ -1,20 +1,24 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with this
- * work for additional information regarding copyright ownership. The ASF
- * licenses this file to You under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law
- * or agreed to in writing, software distributed under the License is
- * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Decorates another iterator to return elements in a specific range.
@@ -28,6 +32,7 @@ import java.util.NoSuchElementException;
  * iterator is immediately advanced to this position, skipping all elements
  * before that position.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.1
  */
 public class BoundedIterator<E> implements Iterator<E> {
@@ -60,9 +65,6 @@ public class BoundedIterator<E> implements Iterator<E> {
      * @throws IllegalArgumentException if either offset or max is negative
      */
     public BoundedIterator(final Iterator<? extends E> iterator, final long offset, final long max) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
         if (offset < 0) {
             throw new IllegalArgumentException("Offset parameter must not be negative.");
         }
@@ -70,7 +72,7 @@ public class BoundedIterator<E> implements Iterator<E> {
             throw new IllegalArgumentException("Max parameter must not be negative.");
         }
 
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
         this.offset = offset;
         this.max = max;
         pos = 0;

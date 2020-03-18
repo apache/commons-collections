@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>48</version>
+    <version>50</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
@@ -438,19 +438,22 @@
     <contributor>
       <name>Vamsi Kavuri</name>
     </contributor>
+    <contributor>
+      <name>Claude Warren</name>
+    </contributor>
   </contributors>
 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
-      <version>4.0.2</version>
+      <version>4.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -458,6 +461,18 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.9</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.14</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -517,7 +532,8 @@
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
-    <checkstyle.version>3.0.0</checkstyle.version>
+    <checkstyle.version>3.1.0</checkstyle.version>
+    <checkstyle.dep.version>8.29</checkstyle.dep.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
@@ -525,19 +541,19 @@
 
     <!-- Override clirr version to enable clirr on Java 8 -->
     <commons.clirr.version>2.8</commons.clirr.version>
-    <commons.jacoco.version>0.8.4</commons.jacoco.version>
-    
+    <commons.jacoco.version>0.8.5</commons.jacoco.version>
+
     <!--Commons Release Plugin -->
-    <commons.bc.version>4.3</commons.bc.version>
+    <commons.bc.version>4.4</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
     <commons.releaseManagerKey>86fdc7e2a11262cb</commons.releaseManagerKey>
-    
+
   </properties>
 
 
   <build>
-    <defaultGoal>clean verify apache-rat:check clirr:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check checkstyle:check clirr:check javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -577,10 +593,20 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.dep.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
+          <headerLocation>${basedir}/src/conf/license-header.txt</headerLocation>
           <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <enableRulesSummary>false</enableRulesSummary>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/test.properties,**/resolver-status.properties</resourceExcludes>
         </configuration>
       </plugin>
       <plugin>

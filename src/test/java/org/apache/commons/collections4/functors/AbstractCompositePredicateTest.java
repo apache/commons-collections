@@ -33,7 +33,7 @@ import org.junit.Test;
 public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPredicateTest<T> {
 
     /**
-     * Creates a new <code>TestCompositePredicate</code>.
+     * Creates a new {@code TestCompositePredicate}.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
@@ -44,20 +44,20 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param predicates the arguments to <code>getInstance</code>.
+     * @param predicates the arguments to {@code getInstance}.
      *
      * @return a predicate to test.
      */
-    protected abstract Predicate<T> getPredicateInstance(final Predicate<? super T> ... predicates);
+    protected abstract Predicate<T> getPredicateInstance(Predicate<? super T>... predicates);
 
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param predicates the argument to <code>getInstance</code>.
+     * @param predicates the argument to {@code getInstance}.
      *
      * @return a predicate to test.
      */
-    protected abstract Predicate<T> getPredicateInstance(final Collection<Predicate<T>> predicates);
+    protected abstract Predicate<T> getPredicateInstance(Collection<Predicate<T>> predicates);
 
     /**
      * Creates an instance of the predicate to test.
@@ -76,7 +76,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests whether <code>getInstance</code> with a one element array returns the first element in the array.
+     * Tests whether {@code getInstance} with a one element array returns the first element in the array.
      */
     @SuppressWarnings("unchecked")
     public void singleElementArrayToGetInstance() {
@@ -86,7 +86,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests that passing a singleton collection to <code>getInstance</code> returns the single element in the
+     * Tests that passing a singleton collection to {@code getInstance} returns the single element in the
      * collection.
      */
     public void singletonCollectionToGetInstance() {
@@ -97,7 +97,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests <code>getInstance</code> with a null predicate array.
+     * Tests {@code getInstance} with a null predicate array.
      */
     @Test(expected = NullPointerException.class)
     public final void nullArrayToGetInstance() {
@@ -105,7 +105,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests <code>getInstance</code> with a single null element in the predicate array.
+     * Tests {@code getInstance} with a single null element in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
     @Test(expected = NullPointerException.class)
@@ -114,7 +114,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests <code>getInstance</code> with two null elements in the predicate array.
+     * Tests {@code getInstance} with two null elements in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
     @Test(expected = NullPointerException.class)
@@ -124,7 +124,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
 
 
     /**
-     * Tests <code>getInstance</code> with a null predicate collection
+     * Tests {@code getInstance} with a null predicate collection
      */
     @Test(expected = NullPointerException.class)
     public final void nullCollectionToGetInstance() {
@@ -132,7 +132,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests <code>getInstance</code> with a predicate collection that contains null elements
+     * Tests {@code getInstance} with a predicate collection that contains null elements
      */
     @Test(expected = NullPointerException.class)
     public final void nullElementsInCollectionToGetInstance() {

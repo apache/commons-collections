@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -102,16 +103,13 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
      *
-     * @param coll  the collection to decorate, must not be null
+     * @param collection  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws NullPointerException if collection or transformer is null
      */
-    protected TransformedCollection(final Collection<E> coll, final Transformer<? super E, ? extends E> transformer) {
-        super(coll);
-        if (transformer == null) {
-            throw new NullPointerException("Transformer must not be null");
-        }
-        this.transformer = transformer;
+    protected TransformedCollection(final Collection<E> collection, final Transformer<? super E, ? extends E> transformer) {
+        super(collection);
+        this.transformer = Objects.requireNonNull(transformer, "transformer");
     }
 
     /**

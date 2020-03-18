@@ -75,8 +75,8 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * return an empty set in case the mapping is not present
      *
      * @param key  the key to retrieve
-     * @return the <code>Set</code> of values, will return an empty
-     *   <code>Set</code> for no mapping
+     * @return the {@code Set} of values, will return an empty
+     *   {@code Set} for no mapping
      */
     @Override
     public Set<V> get(final K key) {
@@ -91,10 +91,10 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * A subsequent <code>get(Object)</code> would return an empty set.
+     * A subsequent {@code get(Object)} would return an empty set.
      *
      * @param key the key to remove values from
-     * @return the <code>Set</code> of values removed, will return an empty,
+     * @return the {@code Set} of values removed, will return an empty,
      *   unmodifiable set for no mapping found.
      */
     @Override
@@ -109,7 +109,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      */
     private class WrappedSet extends WrappedCollection implements Set<V> {
 
-        public WrappedSet(final K key) {
+        WrappedSet(final K key) {
             super(key);
         }
 
@@ -133,5 +133,4 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
         }
 
     }
-
 }

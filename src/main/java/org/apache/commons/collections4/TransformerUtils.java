@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.functors.CloneTransformer;
@@ -36,7 +37,7 @@ import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.SwitchTransformer;
 
 /**
- * <code>TransformerUtils</code> provides reference implementations and
+ * {@code TransformerUtils} provides reference implementations and
  * utilities for the Transformer functor interface. The supplied transformers are:
  * <ul>
  * <li>Invoker - returns the result of a method call on the input object
@@ -54,7 +55,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>Null - always returns null
  * <li>NOP - returns the input object, which should be immutable
  * <li>Exception - always throws an exception
- * <li>StringValue - returns a <code>java.lang.String</code> representation of the input object
+ * <li>StringValue - returns a {@code java.lang.String} representation of the input object
  * </ul>
  * <p>
  * Since v4.1 only transformers which are considered to be safe are
@@ -289,7 +290,7 @@ public class TransformerUtils {
      * @param predicates  an array of predicates to check
      * @param transformers  an array of transformers to call
      * @return the transformer
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
      * @see SwitchTransformer
@@ -312,7 +313,7 @@ public class TransformerUtils {
      * @param transformers  an array of transformers to call
      * @param defaultTransformer  the default to call if no predicate matches, null means return null
      * @return the transformer
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
      * @see SwitchTransformer
@@ -370,9 +371,7 @@ public class TransformerUtils {
     public static <I, O> Transformer<I, O> switchMapTransformer(
             final Map<I, Transformer<I, O>> objectsAndTransformers) {
 
-        if (objectsAndTransformers == null) {
-            throw new NullPointerException("The object and transformer map must not be null");
-        }
+        Objects.requireNonNull(objectsAndTransformers, "objectsAndTransformers");
         final Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
         final int size = objectsAndTransformers.size();
         final Transformer<? super I, ? extends O>[] trs = new Transformer[size];
@@ -434,8 +433,8 @@ public class TransformerUtils {
      * {@code null} is returned.
      *
      * <p>
-     * For example, <code>TransformerUtils.invokerTransformer("getName");</code>
-     * will call the <code>getName</code> method on the input object to
+     * For example, {@code TransformerUtils.invokerTransformer("getName");}
+     * will call the {@code getName} method on the input object to
      * determine the transformer result.
      * </p>
      *
@@ -471,9 +470,9 @@ public class TransformerUtils {
     }
 
     /**
-     * Gets a transformer that returns a <code>java.lang.String</code>
+     * Gets a transformer that returns a {@code java.lang.String}
      * representation of the input object. This is achieved via the
-     * <code>toString</code> method, <code>null</code> returns 'null'.
+     * {@code toString} method, {@code null} returns 'null'.
      *
      * @param <T>  the input type
      * @return the transformer

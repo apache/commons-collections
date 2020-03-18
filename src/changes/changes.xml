@@ -20,7 +20,13 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5" date="2019-MM-DD" description="Maintenance release.">
+  <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-697" dev="eax" type="update" due-to="Ranjan George">
+      JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
+    </action>
+    <action issue="COLLECTIONS-738" dev="kinow" type="update" due-to="Pengyu Nie">
+      Remove the redundant assertNull in IterableUtilsTest.find and update Javadocs.
+    </action>
     <action issue="COLLECTIONS-724" dev="ggregory" type="update" due-to="Eitan Adler">
       Simplify two remove-if loops #77.
     </action>
@@ -83,6 +89,51 @@
     </action>
     <action dev="ggregory" type="add" due-to="dota17">
       Add test cases in UnmodifiableMultiValuedMapTest; #102.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] org.easymock:easymock 4.0.2 -> 4.1.
+    </action>
+    <action issue="COLLECTIONS-734" dev="ggregory" type="fix" due-to="Chen">
+      Encountered an IllegalStateException while traversing with Flat3Map.entrySet(). #115.
+    </action>
+    <action dev="ggregory" type="update" due-to="Chen">
+      Fix inconsistent @throws comments in ListOrderedSet #125.
+    </action>
+    <action issue="COLLECTIONS-740" dev="ggregory" type="fix" due-to="Pengyu Nie">
+      Add missing @throws comment for SwitchTransformer.switchTransformer. #124.
+    </action>
+    <action issue="COLLECTIONS-739" dev="ggregory" type="fix" due-to="Pengyu Nie">
+      Fix inconsistent @throws comments in DefaultedMap #123.
+    </action>
+    <action dev="ggregory" type="fix" due-to="Dominik Stadler">
+      Fix links to release notes and update contents for 4.4 #127.
+    </action>
+    <action issue="COLLECTIONS-744" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.EnumerationUtils.asIterable(Enumeration).
+    </action>
+    <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
+      BloomFilter contribution.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] Update JUnit from 4.12 to 4.13.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [build] Update Apache commons-parent from 48 to 50.
+    </action>
+    <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [build] Update Jacoco from 0.8.4 to 0.8.5.
+    </action>
+    <action dev="ggregory" type="update" due-to="Gary Gregory">
+      [test] Update org.easymock:easymock 4.1 -> 4.2.
+    </action>
+    <action issue="COLLECTIONS-747" dev="ggregory" type="fix" due-to="Gary Gregory, Walter Laan">
+      MultiKey.getKeys class cast exception.
+    </action>
+    <action issue="COLLECTIONS-748" dev="ggregory" type="update" due-to="Gary Gregory">
+    Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

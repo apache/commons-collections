@@ -33,18 +33,18 @@ Commons-Collections and the Java Collections Framework provide a wide variety of
 <script>
 <![CDATA[
 function showHide(showObj,hideObj) {
- if (document.getElementById) { // DOM3 = IE5, NS6 
+ if (document.getElementById) { // DOM3 = IE5, NS6
   document.getElementById(showObj).style.display='block';
   document.getElementById(hideObj).style.display='none';
- } else { 
-  if (document.layers) { // Netscape 4 
+ } else {
+  if (document.layers) { // Netscape 4
    document.layers[showObj].display='block';
    document.layers[hideObj].display='none';
   } else { // IE 4
    eval("document.all."+showObj+".style.display='block'");
    eval("document.all."+hideObj+".style.display='none'");
-  } 
- } 
+  }
+ }
 }
 function showMapMain() {
  showHide('mapmain','collectionmain');

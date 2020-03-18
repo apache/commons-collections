@@ -23,7 +23,7 @@ import java.util.SortedMap;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>SortedMap </code> to transform objects that are added.
+ * Decorates another {@code SortedMap } to transform objects that are added.
  * <p>
  * The Map put methods and Map.Entry setValue method are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.

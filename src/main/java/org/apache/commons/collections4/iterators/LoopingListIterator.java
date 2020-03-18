@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
@@ -34,6 +35,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * collection implementations will throw a
  * ConcurrentModificationException.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.2
  */
 public class LoopingListIterator<E> implements ResettableListIterator<E> {
@@ -54,10 +56,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * @throws NullPointerException if the list it null
      */
     public LoopingListIterator(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("The list must not be null");
-        }
-        this.list = list;
+        this.list = Objects.requireNonNull(list, "collection");
         _reset();
     }
 
@@ -67,7 +66,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
      *
-     * @return <code>true</code> if there are more elements
+     * @return {@code true} if there are more elements
      */
     @Override
     public boolean hasNext() {
@@ -123,7 +122,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
      *
-     * @return <code>true</code> if there are more elements
+     * @return {@code true} if there are more elements
      */
     @Override
     public boolean hasPrevious() {

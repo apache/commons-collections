@@ -53,7 +53,7 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
                 first = colliter.next();
                 last = first;
             } else {
-              last = colliter.next();
+                last = colliter.next();
             }
             assertEquals("Element appears to be out of order.", last, confiter.next());
         }

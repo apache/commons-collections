@@ -22,7 +22,7 @@ import java.util.SortedMap;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another <code>SortedMap</code> to validate that additions
+ * Decorates another {@code SortedMap} to validate that additions
  * match a specified predicate.
  * <p>
  * This map exists to provide validation for the decorated map.

@@ -140,7 +140,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> randomList = getComparableObjectsOrdered();
         randomizeObjects(randomList);
-        sortObjects(randomList,comparator);
+        sortObjects(randomList, comparator);
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
@@ -170,7 +170,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
         retval.append(colName);
         retval.append(".version");
         retval.append(getCompatibilityVersion());

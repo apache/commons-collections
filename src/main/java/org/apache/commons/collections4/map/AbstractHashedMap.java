@@ -40,7 +40,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * subclasses to override.
  * <p>
  * This class implements all the features necessary for a subclass hash-based map.
- * Key-value entries are stored in instances of the <code>HashEntry</code> class,
+ * Key-value entries are stored in instances of the {@code HashEntry} class,
  * which can be overridden and replaced. The iterators can similarly be replaced,
  * without the need to replace the KeySet, EntrySet and Values view classes.
  * <p>
@@ -164,9 +164,10 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     }
 
     /**
-     * Initialise subclasses during construction, cloning or deserialization.
+     * Initialize subclasses during construction, cloning or deserialization.
      */
     protected void init() {
+        // noop
     }
 
     //-----------------------------------------------------------------------
@@ -407,7 +408,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Subclasses can override this to match differently.
      *
      * @param key1  the first key to compare passed in from outside
-     * @param key2  the second key extracted from the entry via <code>entry.key</code>
+     * @param key2  the second key extracted from the entry via {@code entry.key}
      * @return true if equal
      */
     protected boolean isEqualKey(final Object key1, final Object key2) {
@@ -420,7 +421,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Subclasses can override this to match differently.
      *
      * @param value1  the first value to compare passed in from outside
-     * @param value2  the second value extracted from the entry via <code>getValue()</code>
+     * @param value2  the second value extracted from the entry via {@code getValue()}
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value1, final Object value2) {
@@ -468,7 +469,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Updates an existing key-value mapping to change the value.
      * <p>
-     * This implementation calls <code>setValue()</code> on the entry.
+     * This implementation calls {@code setValue()} on the entry.
      * Subclasses could override to handle changes to the map.
      *
      * @param entry  the entry to update
@@ -502,9 +503,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Adds a new key-value mapping into this map.
      * <p>
-     * This implementation calls <code>createEntry()</code>, <code>addEntry()</code>
-     * and <code>checkCapacity()</code>.
-     * It also handles changes to <code>modCount</code> and <code>size</code>.
+     * This implementation calls {@code createEntry()}, {@code addEntry()}
+     * and {@code checkCapacity()}.
+     * It also handles changes to {@code modCount} and {@code size}.
      * Subclasses could override to fully control adds to the map.
      *
      * @param hashIndex  the index into the data array to store at
@@ -554,8 +555,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Removes a mapping from the map.
      * <p>
-     * This implementation calls <code>removeEntry()</code> and <code>destroyEntry()</code>.
-     * It also handles changes to <code>modCount</code> and <code>size</code>.
+     * This implementation calls {@code removeEntry()} and {@code destroyEntry()}.
+     * It also handles changes to {@code modCount} and {@code size}.
      * Subclasses could override to fully control removals from the map.
      *
      * @param entry  the entry to remove
@@ -690,11 +691,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     //-----------------------------------------------------------------------
     /**
-     * Gets the <code>next</code> field from a <code>HashEntry</code>.
+     * Gets the {@code next} field from a {@code HashEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>next</code> field of the entry
+     * @return the {@code next} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -703,11 +704,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     }
 
     /**
-     * Gets the <code>hashCode</code> field from a <code>HashEntry</code>.
+     * Gets the {@code hashCode} field from a {@code HashEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>hashCode</code> field of the entry
+     * @return the {@code hashCode} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -716,11 +717,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     }
 
     /**
-     * Gets the <code>key</code> field from a <code>HashEntry</code>.
+     * Gets the {@code key} field from a {@code HashEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>key</code> field of the entry
+     * @return the {@code key} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -729,11 +730,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     }
 
     /**
-     * Gets the <code>value</code> field from a <code>HashEntry</code>.
+     * Gets the {@code value} field from a {@code HashEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>value</code> field of the entry
+     * @return the {@code value} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -763,6 +764,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * MapIterator implementation.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class HashMapIterator<K, V> extends HashIterator<K, V> implements MapIterator<K, V> {
 
@@ -834,6 +838,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * EntrySet implementation.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
         /** The parent map */
@@ -885,6 +892,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * EntrySet iterator.
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
     protected static class EntrySetIterator<K, V> extends HashIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 
@@ -929,6 +939,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * KeySet implementation.
+     *
+     * @param <K> the type of elements maintained by this set
      */
     protected static class KeySet<K> extends AbstractSet<K> {
         /** The parent map */
@@ -969,6 +981,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * KeySet iterator.
+     *
+     * @param <K> the type of elements maintained by this set
      */
     protected static class KeySetIterator<K> extends HashIterator<K, Object> implements Iterator<K> {
 
@@ -1014,6 +1028,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Values implementation.
+     *
+     * @param <V> the type of elements maintained by this collection
      */
     protected static class Values<V> extends AbstractCollection<V> {
         /** The parent map */
@@ -1047,6 +1063,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Values iterator.
+     *
+     * @param <V> the type of elements maintained by this collection
      */
     protected static class ValuesIterator<V> extends HashIterator<Object, V> implements Iterator<V> {
 
@@ -1065,10 +1083,13 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * HashEntry used to store the data.
      * <p>
-     * If you subclass <code>AbstractHashedMap</code> but not <code>HashEntry</code>
+     * If you subclass {@code AbstractHashedMap} but not {@code HashEntry}
      * then you will not be able to access the protected fields.
-     * The <code>entryXxx()</code> methods on <code>AbstractHashedMap</code> exist
+     * The {@code entryXxx()} methods on {@code AbstractHashedMap} exist
      * to provide the necessary access.
+     *
+     * @param <K> the type of the keys
+     * @param <V> the type of the values
      */
     protected static class HashEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
         /** The next entry in the hash chain */
@@ -1139,8 +1160,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Base Iterator
+     *
+     * @param <K> the type of the keys in the map
+     * @param <V> the type of the values in the map
      */
-    protected static abstract class HashIterator<K, V> {
+    protected abstract static class HashIterator<K, V> {
 
         /** The parent map */
         private final AbstractHashedMap<K, V> parent;
@@ -1219,16 +1243,16 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     //-----------------------------------------------------------------------
     /**
      * Writes the map data to the stream. This method must be overridden if a
-     * subclass must be setup before <code>put()</code> is used.
+     * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
      * initialise the superclass before the subclass. Sometimes however, this isn't
-     * what you want, as in this case the <code>put()</code> method on read can be
+     * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
      * The solution adopted here is to serialize the state data of this class in
      * this protected method. This method must be called by the
-     * <code>writeObject()</code> of the first serializable subclass.
+     * {@code writeObject()} of the first serializable subclass.
      * <p>
      * Subclasses may override if they have a specific field that must be present
      * on read before this implementation will work. Generally, the read determines
@@ -1249,19 +1273,19 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
     /**
      * Reads the map data from the stream. This method must be overridden if a
-     * subclass must be setup before <code>put()</code> is used.
+     * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
      * initialise the superclass before the subclass. Sometimes however, this isn't
-     * what you want, as in this case the <code>put()</code> method on read can be
+     * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
      * The solution adopted here is to deserialize the state data of this class in
      * this protected method. This method must be called by the
-     * <code>readObject()</code> of the first serializable subclass.
+     * {@code readObject()} of the first serializable subclass.
      * <p>
      * Subclasses may override if the subclass has a specific field that must be present
-     * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
+     * before {@code put()} or {@code calculateThreshold()} will work correctly.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -1286,8 +1310,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Clones the map without cloning the keys or values.
      * <p>
-     * To implement <code>clone()</code>, a subclass must implement the
-     * <code>Cloneable</code> interface and make this method public.
+     * To implement {@code clone()}, a subclass must implement the
+     * {@code Cloneable} interface and make this method public.
      *
      * @return a shallow clone
      * @throws InternalError if {@link AbstractMap#clone()} failed
@@ -1325,11 +1349,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (obj instanceof Map == false) {
             return false;
         }
-        final Map<?,?> map = (Map<?,?>) obj;
+        final Map<?, ?> map = (Map<?, ?>) obj;
         if (map.size() != size()) {
             return false;
         }
-        final MapIterator<?,?> it = mapIterator();
+        final MapIterator<?, ?> it = mapIterator();
         try {
             while (it.hasNext()) {
                 final Object key = it.next();
@@ -1386,8 +1410,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             final K key = it.next();
             final V value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
-               .append('=')
-               .append(value == this ? "(this Map)" : value);
+                .append('=')
+                .append(value == this ? "(this Map)" : value);
 
             hasNext = it.hasNext();
             if (hasNext) {

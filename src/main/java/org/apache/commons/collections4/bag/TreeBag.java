@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -87,10 +88,8 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      */
     @Override
     public boolean add(final E object) {
-        if(comparator() == null && !(object instanceof Comparable)) {
-            if (object == null) {
-                throw new NullPointerException();
-            }
+        if (comparator() == null && !(object instanceof Comparable)) {
+            Objects.requireNonNull(object, "object");
             throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " +
                                                "a naturally ordered TreeBag as it does not implement Comparable");
         }

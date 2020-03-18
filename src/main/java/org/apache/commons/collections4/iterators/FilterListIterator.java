@@ -27,6 +27,7 @@ import org.apache.commons.collections4.Predicate;
  * This iterator decorates the underlying iterator, only allowing through
  * those elements that match the specified {@link Predicate Predicate}.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 2.0
  */
 public class FilterListIterator<E> implements ListIterator<E> {
@@ -45,7 +46,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     /**
      * Whether or not the {@link #nextObject} has been set
-     * (possibly to <code>null</code>).
+     * (possibly to {@code null}).
      */
     private boolean nextObjectSet = false;
 
@@ -57,7 +58,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     /**
      * Whether or not the {@link #previousObject} has been set
-     * (possibly to <code>null</code>).
+     * (possibly to {@code null}).
      */
     private boolean previousObjectSet = false;
 
@@ -68,7 +69,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new <code>FilterListIterator</code> that will not function
+     * Constructs a new {@code FilterListIterator} that will not function
      * until {@link #setListIterator(ListIterator) setListIterator}
      * and {@link #setPredicate(Predicate) setPredicate} are invoked.
      */
@@ -77,7 +78,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterListIterator</code> that will not
+     * Constructs a new {@code FilterListIterator} that will not
      * function until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
      * @param iterator  the iterator to use
@@ -88,7 +89,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterListIterator</code>.
+     * Constructs a new {@code FilterListIterator}.
      *
      * @param iterator  the iterator to use
      * @param predicate  the predicate to use
@@ -100,7 +101,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterListIterator</code> that will not function
+     * Constructs a new {@code FilterListIterator} that will not function
      * until {@link #setListIterator(ListIterator) setListIterator} is invoked.
      *
      * @param predicate  the predicate to use.

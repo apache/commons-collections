@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.collections4.iterators.SingletonIterator;
 
@@ -379,7 +380,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Checks if all elements contained in this iterable are matching the
      * provided predicate.
      * <p>
-     * A <code>null</code> or empty iterable returns true.
+     * A {@code null} or empty iterable returns true.
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if all elements contained in this iterable match the predicate,
@@ -393,7 +394,7 @@ public class FluentIterable<E> implements Iterable<E> {
     /**
      * Checks if this iterable contains any element matching the provided predicate.
      * <p>
-     * A <code>null</code> or empty iterable returns false.
+     * A {@code null} or empty iterable returns false.
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if at least one element contained in this iterable matches the predicate,
@@ -465,9 +466,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @throws NullPointerException if collection is null
      */
     public void copyInto(final Collection<? super E> collection) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null");
-        }
+        Objects.requireNonNull(collection, "collection");
         CollectionUtils.addAll(collection, iterable);
     }
 

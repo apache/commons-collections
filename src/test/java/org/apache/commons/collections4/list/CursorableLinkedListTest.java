@@ -56,23 +56,23 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testAdd() {
-        assertEquals("[]",list.toString());
+        assertEquals("[]", list.toString());
         assertTrue(list.add((E) Integer.valueOf(1)));
-        assertEquals("[1]",list.toString());
+        assertEquals("[1]", list.toString());
         assertTrue(list.add((E) Integer.valueOf(2)));
-        assertEquals("[1, 2]",list.toString());
+        assertEquals("[1, 2]", list.toString());
         assertTrue(list.add((E) Integer.valueOf(3)));
-        assertEquals("[1, 2, 3]",list.toString());
+        assertEquals("[1, 2, 3]", list.toString());
         assertTrue(list.addFirst((E) Integer.valueOf(0)));
-        assertEquals("[0, 1, 2, 3]",list.toString());
+        assertEquals("[0, 1, 2, 3]", list.toString());
         assertTrue(list.addLast((E) Integer.valueOf(4)));
-        assertEquals("[0, 1, 2, 3, 4]",list.toString());
-        list.add(0,(E) Integer.valueOf(-2));
-        assertEquals("[-2, 0, 1, 2, 3, 4]",list.toString());
-        list.add(1,(E) Integer.valueOf(-1));
-        assertEquals("[-2, -1, 0, 1, 2, 3, 4]",list.toString());
-        list.add(7,(E) Integer.valueOf(5));
-        assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]",list.toString());
+        assertEquals("[0, 1, 2, 3, 4]", list.toString());
+        list.add(0, (E) Integer.valueOf(-2));
+        assertEquals("[-2, 0, 1, 2, 3, 4]", list.toString());
+        list.add(1, (E) Integer.valueOf(-1));
+        assertEquals("[-2, -1, 0, 1, 2, 3, 4]", list.toString());
+        list.add(7, (E) Integer.valueOf(5));
+        assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]", list.toString());
 
         final List<E> list2 = new LinkedList<>();
         list2.add((E) "A");
@@ -80,34 +80,34 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list2.add((E) "C");
 
         assertTrue(list.addAll(list2));
-        assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5, A, B, C]",list.toString());
-        assertTrue(list.addAll(3,list2));
-        assertEquals("[-2, -1, 0, A, B, C, 1, 2, 3, 4, 5, A, B, C]",list.toString());
+        assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5, A, B, C]", list.toString());
+        assertTrue(list.addAll(3, list2));
+        assertEquals("[-2, -1, 0, A, B, C, 1, 2, 3, 4, 5, A, B, C]", list.toString());
     }
 
     @SuppressWarnings("unchecked")
     public void testClear() {
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         assertTrue(list.isEmpty());
         list.clear();
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         assertTrue(list.isEmpty());
 
         list.add((E) "element");
-        assertEquals(1,list.size());
+        assertEquals(1, list.size());
         assertTrue(!list.isEmpty());
 
         list.clear();
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         assertTrue(list.isEmpty());
 
         list.add((E) "element1");
         list.add((E) "element2");
-        assertEquals(2,list.size());
+        assertEquals(2, list.size());
         assertTrue(!list.isEmpty());
 
         list.clear();
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         assertTrue(list.isEmpty());
 
         for (int i = 0; i < 1000; i++) {
@@ -117,7 +117,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(!list.isEmpty());
 
         list.clear();
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         assertTrue(list.isEmpty());
     }
 
@@ -830,10 +830,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         assertTrue(list.equals(list));
-        assertEquals(list.hashCode(),list.hashCode());
+        assertEquals(list.hashCode(), list.hashCode());
         list.add((E) "A");
         assertTrue(list.equals(list));
-        assertEquals(list.hashCode(),list.hashCode());
+        assertEquals(list.hashCode(), list.hashCode());
 
         final CursorableLinkedList<E> list2 = new CursorableLinkedList<>();
         assertTrue(!list.equals(list2));
@@ -844,7 +844,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(!list3.equals(list));
         assertTrue(list2.equals(list3));
         assertTrue(list3.equals(list2));
-        assertEquals(list2.hashCode(),list3.hashCode());
+        assertEquals(list2.hashCode(), list3.hashCode());
 
         list2.add((E) "A");
         assertTrue(list.equals(list2));
@@ -855,7 +855,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list3.add((E) "A");
         assertTrue(list2.equals(list3));
         assertTrue(list3.equals(list2));
-        assertEquals(list2.hashCode(),list3.hashCode());
+        assertEquals(list2.hashCode(), list3.hashCode());
 
         list.add((E) "B");
         assertTrue(list.equals(list));
@@ -871,7 +871,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(list2.equals(list));
         assertTrue(list2.equals(list3));
         assertTrue(list3.equals(list2));
-        assertEquals(list2.hashCode(),list3.hashCode());
+        assertEquals(list2.hashCode(), list3.hashCode());
 
         list.add((E) "C");
         list2.add((E) "C");
@@ -881,8 +881,8 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(list2.equals(list));
         assertTrue(list2.equals(list3));
         assertTrue(list3.equals(list2));
-        assertEquals(list.hashCode(),list2.hashCode());
-        assertEquals(list2.hashCode(),list3.hashCode());
+        assertEquals(list.hashCode(), list2.hashCode());
+        assertEquals(list2.hashCode(), list3.hashCode());
 
         list.add((E) "D");
         list2.addFirst((E) "D");
@@ -901,10 +901,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         }
 
         assertTrue(list.add((E) "A"));
-        assertEquals("A",list.get(0));
+        assertEquals("A", list.get(0));
         assertTrue(list.add((E) "B"));
-        assertEquals("A",list.get(0));
-        assertEquals("B",list.get(1));
+        assertEquals("A", list.get(0));
+        assertEquals("B", list.get(1));
 
         try {
             list.get(-1);
@@ -923,23 +923,23 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testIndexOf() {
-        assertEquals(-1,list.indexOf("A"));
-        assertEquals(-1,list.lastIndexOf("A"));
+        assertEquals(-1, list.indexOf("A"));
+        assertEquals(-1, list.lastIndexOf("A"));
         list.add((E) "A");
-        assertEquals(0,list.indexOf("A"));
-        assertEquals(0,list.lastIndexOf("A"));
-        assertEquals(-1,list.indexOf("B"));
-        assertEquals(-1,list.lastIndexOf("B"));
+        assertEquals(0, list.indexOf("A"));
+        assertEquals(0, list.lastIndexOf("A"));
+        assertEquals(-1, list.indexOf("B"));
+        assertEquals(-1, list.lastIndexOf("B"));
         list.add((E) "B");
-        assertEquals(0,list.indexOf("A"));
-        assertEquals(0,list.lastIndexOf("A"));
-        assertEquals(1,list.indexOf("B"));
-        assertEquals(1,list.lastIndexOf("B"));
+        assertEquals(0, list.indexOf("A"));
+        assertEquals(0, list.lastIndexOf("A"));
+        assertEquals(1, list.indexOf("B"));
+        assertEquals(1, list.lastIndexOf("B"));
         list.addFirst((E) "B");
-        assertEquals(1,list.indexOf("A"));
-        assertEquals(1,list.lastIndexOf("A"));
-        assertEquals(0,list.indexOf("B"));
-        assertEquals(2,list.lastIndexOf("B"));
+        assertEquals(1, list.indexOf("A"));
+        assertEquals(1, list.lastIndexOf("A"));
+        assertEquals(0, list.indexOf("B"));
+        assertEquals(2, list.lastIndexOf("B"));
     }
 
     @SuppressWarnings("unchecked")
@@ -1122,32 +1122,32 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch(final IllegalStateException e) {
             // expected
         }
-        assertEquals("1",it.next());
-        assertEquals("2",it.next());
-        assertEquals("[1, 2, 3, 4, 5]",list.toString());
+        assertEquals("1", it.next());
+        assertEquals("2", it.next());
+        assertEquals("[1, 2, 3, 4, 5]", list.toString());
         it.remove();
-        assertEquals("[1, 3, 4, 5]",list.toString());
-        assertEquals("3",it.next());
-        assertEquals("3",it.previous());
-        assertEquals("1",it.previous());
+        assertEquals("[1, 3, 4, 5]", list.toString());
+        assertEquals("3", it.next());
+        assertEquals("3", it.previous());
+        assertEquals("1", it.previous());
         it.remove();
-        assertEquals("[3, 4, 5]",list.toString());
+        assertEquals("[3, 4, 5]", list.toString());
         assertTrue(!it.hasPrevious());
-        assertEquals("3",it.next());
+        assertEquals("3", it.next());
         it.remove();
-        assertEquals("[4, 5]",list.toString());
+        assertEquals("[4, 5]", list.toString());
         try {
             it.remove();
-        } catch(final IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // expected
         }
-        assertEquals("4",it.next());
-        assertEquals("5",it.next());
+        assertEquals("4", it.next());
+        assertEquals("5", it.next());
         it.remove();
-        assertEquals("[4]",list.toString());
-        assertEquals("4",it.previous());
+        assertEquals("[4]", list.toString());
+        assertEquals("4", it.previous());
         it.remove();
-        assertEquals("[]",list.toString());
+        assertEquals("[]", list.toString());
     }
 
     @Override
@@ -1504,14 +1504,14 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         final String prefix = "CursorableLinkedListTest";
         final String bulk = ".bulkTestSubList";
         final String[] ignored = new String[] {
-                ".testEmptyListSerialization",
-                ".testFullListSerialization",
-                ".testEmptyListCompatibility",
-                ".testFullListCompatibility",
-                ".testSimpleSerialization",
-                ".testCanonicalEmptyCollectionExists",
-                ".testCanonicalFullCollectionExists",
-                ".testSerializeDeserializeThenCompare"
+            ".testEmptyListSerialization",
+            ".testFullListSerialization",
+            ".testEmptyListCompatibility",
+            ".testFullListCompatibility",
+            ".testSimpleSerialization",
+            ".testCanonicalEmptyCollectionExists",
+            ".testCanonicalFullCollectionExists",
+            ".testSerializeDeserializeThenCompare"
         };
         for (final String element : ignored) {
             list.add(prefix + bulk + element);

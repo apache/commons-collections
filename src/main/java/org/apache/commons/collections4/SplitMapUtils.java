@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
@@ -38,7 +39,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
 public class SplitMapUtils {
 
     /**
-     * <code>SplitMapUtils</code> should not normally be instantiated.
+     * {@code SplitMapUtils} should not normally be instantiated.
      */
     private SplitMapUtils() {}
 
@@ -222,8 +223,8 @@ public class SplitMapUtils {
 
     /**
      * Get the specified {@link Get} as an instance of {@link IterableMap}.
-     * If <code>get</code> implements {@link IterableMap} directly, no conversion will take place.
-     * If <code>get</code> implements {@link Map} but not {@link IterableMap} it will be decorated.
+     * If {@code get} implements {@link IterableMap} directly, no conversion will take place.
+     * If {@code get} implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise an {@link Unmodifiable} {@link IterableMap} will be returned.
      * @param <K> the key type
      * @param <V> the value type
@@ -233,9 +234,7 @@ public class SplitMapUtils {
      */
     @SuppressWarnings("unchecked")
     public static <K, V> IterableMap<K, V> readableMap(final Get<K, V> get) {
-        if (get == null) {
-            throw new NullPointerException("Get must not be null");
-        }
+        Objects.requireNonNull(get, "get");
         if (get instanceof Map) {
             return get instanceof IterableMap ?
                     ((IterableMap<K, V>) get) :
@@ -246,10 +245,10 @@ public class SplitMapUtils {
 
     /**
      * Get the specified {@link Put} as an instanceof {@link Map}.
-     * If <code>put</code> implements {@link Map} directly, no conversion will take place.
+     * If {@code put} implements {@link Map} directly, no conversion will take place.
      * Otherwise a <em>write-only</em> {@link Map} will be returned.  On such a {@link Map}
      * it is recommended that the result of #put(K, V) be discarded as it likely will not
-     * match <code>V</code> at runtime.
+     * match {@code V} at runtime.
      *
      * @param <K> the key type
      * @param <V> the element type
@@ -259,9 +258,7 @@ public class SplitMapUtils {
      */
     @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> writableMap(final Put<K, V> put) {
-        if (put == null) {
-            throw new NullPointerException("Put must not be null");
-        }
+        Objects.requireNonNull(put, "put");
         if (put instanceof Map) {
             return (Map<K, V>) put;
         }

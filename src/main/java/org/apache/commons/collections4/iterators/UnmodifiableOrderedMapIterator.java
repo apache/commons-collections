@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Objects;
+
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -47,10 +49,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      */
     public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(
             final OrderedMapIterator<K, ? extends V> iterator) {
-
-        if (iterator == null) {
-            throw new NullPointerException("OrderedMapIterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast
             final OrderedMapIterator<K, V> tmpIterator = (OrderedMapIterator<K, V>) iterator;

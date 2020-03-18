@@ -29,7 +29,7 @@ import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>NavigableSet</code> to ensure it can't be altered.
+ * Decorates another {@code NavigableSet} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
@@ -100,7 +100,7 @@ public final class UnmodifiableNavigableSet<E>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

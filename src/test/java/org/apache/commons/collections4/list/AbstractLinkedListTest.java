@@ -163,7 +163,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
-         try {
+        try {
             list.getNode(3, true);
             fail("Expecting IndexOutOfBoundsException.");
         } catch (final IndexOutOfBoundsException ex) {

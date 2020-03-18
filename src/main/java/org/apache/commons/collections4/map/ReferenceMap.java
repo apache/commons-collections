@@ -22,10 +22,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- * A <code>Map</code> implementation that allows mappings to be
+ * A {@code Map} implementation that allows mappings to be
  * removed by the garbage collector.
  * <p>
- * When you construct a <code>ReferenceMap</code>, you can specify what kind
+ * When you construct a {@code ReferenceMap}, you can specify what kind
  * of references are used to store the map's keys and values.
  * If non-hard references are used, then the garbage collector can remove
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
@@ -37,28 +37,28 @@ import java.io.Serializable;
  * The keys can be configured to be weak but the values hard,
  * in which case this class will behave like a
  * <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
- * <code>WeakHashMap</code></a>. However, you can also specify hard keys and
+ * {@code WeakHashMap}</a>. However, you can also specify hard keys and
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.
  * </p>
  * <p>
  * This map is similar to
  * {@link org.apache.commons.collections4.map.ReferenceIdentityMap ReferenceIdentityMap}.
- * It differs in that keys and values in this class are compared using <code>equals()</code>.
+ * It differs in that keys and values in this class are compared using {@code equals()}.
  * </p>
  * <p>
  * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
- * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
+ * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to
- * provide synchronized access to a <code>ReferenceMap</code>.
+ * provide synchronized access to a {@code ReferenceMap}.
  * Remember that synchronization will not stop the garbage collector removing entries.
  * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
- * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * {@code ResettableIterator} and calling {@code reset()}.
  * </p>
  * <p>
  * <strong>Note that ReferenceMap is not synchronized and is not thread-safe.</strong>
@@ -68,9 +68,9 @@ import java.io.Serializable;
  * exceptions when accessed by concurrent threads without synchronization.
  * </p>
  * <p>
- * NOTE: As from Commons Collections 3.1 this map extends <code>AbstractReferenceMap</code>
+ * NOTE: As from Commons Collections 3.1 this map extends {@code AbstractReferenceMap}
  * (previously it extended AbstractMap). As a result, the implementation is now
- * extensible and provides a <code>MapIterator</code>.
+ * extensible and provides a {@code MapIterator}.
  * </p>
  *
  * @param <K> the type of the keys in the map
@@ -85,7 +85,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     private static final long serialVersionUID = 1555089888138299607L;
 
     /**
-     * Constructs a new <code>ReferenceMap</code> that will
+     * Constructs a new {@code ReferenceMap} that will
      * use hard references to keys and soft references to values.
      */
     public ReferenceMap() {
@@ -94,7 +94,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     }
 
     /**
-     * Constructs a new <code>ReferenceMap</code> that will
+     * Constructs a new {@code ReferenceMap} that will
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
@@ -111,7 +111,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     }
 
     /**
-     * Constructs a new <code>ReferenceMap</code> that will
+     * Constructs a new {@code ReferenceMap} that will
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
@@ -130,7 +130,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     }
 
     /**
-     * Constructs a new <code>ReferenceMap</code> with the
+     * Constructs a new {@code ReferenceMap} with the
      * specified reference types, load factor and initial
      * capacity.
      *
@@ -151,7 +151,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     }
 
     /**
-     * Constructs a new <code>ReferenceMap</code> with the
+     * Constructs a new {@code ReferenceMap} with the
      * specified reference types, load factor and initial
      * capacity.
      *

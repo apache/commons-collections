@@ -62,7 +62,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Override
-    abstract public MultiValuedMap<K, V> makeObject();
+    public abstract MultiValuedMap<K, V> makeObject();
 
     @Override
     public String getCompatibilityVersion() {
@@ -71,8 +71,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and
-     * {@link #makeFullMap()} support the <code>put</code> and
-     * <code>putAll</code> operations adding new mappings.
+     * {@link #makeFullMap()} support the {@code put} and
+     * {@code putAll} operations adding new mappings.
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support put adding.
@@ -83,8 +83,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and
-     * {@link #makeFullMap()} support the <code>remove</code> and
-     * <code>clear</code> operations.
+     * {@link #makeFullMap()} support the {@code remove} and
+     * {@code clear} operations.
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support removal operations.
@@ -125,13 +125,13 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * must return an array with the same length as {@link #getSampleValues()}
      * and all array elements must be different. The default implementation
      * constructs a set of String keys, and includes a single null key if
-     * {@link #isAllowNullKey()} returns <code>true</code>.
+     * {@link #isAllowNullKey()} returns {@code true}.
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final Object[] result = new Object[] {
-                "one", "one", "two", "two",
-                "three", "three"
+            "one", "one", "two", "two",
+            "three", "three"
         };
         return (K[]) result;
     }
@@ -145,8 +145,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         final Object[] result = new Object[] {
-                "uno", "un", "dos", "deux",
-                "tres", "trois"
+            "uno", "un", "dos", "deux",
+            "tres", "trois"
         };
         return (V[]) result;
     }
@@ -217,8 +217,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testMultipleValues() {
         final MultiValuedMap<K, V> map = makeFullMap();
         @SuppressWarnings("unchecked")
-        final
-        Collection<V> col = map.get((K) "one");
+        final Collection<V> col = map.get((K) "one");
         assertTrue(col.contains("uno"));
         assertTrue(col.contains("un"));
     }
@@ -287,8 +286,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
         @SuppressWarnings("unchecked")
-        final
-        Iterator<V> it = map.get((K) "one").iterator();
+        final Iterator<V> it = map.get((K) "one").iterator();
         while (it.hasNext()) {
             it.next();
             it.remove();
@@ -688,8 +686,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
         assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
 
-        map.remove((K) "A");
-        map.remove((K) "B");
+        map.remove("A");
+        map.remove("B");
         assertEquals("{}", map.toString());
     }
 
@@ -1199,7 +1197,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
             final V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
             final Collection<V>[] colArr = new Collection[3];
-            for(int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 final Collection<V> coll = Arrays.asList(sampleValues[i*2], sampleValues[i*2 + 1]);
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }

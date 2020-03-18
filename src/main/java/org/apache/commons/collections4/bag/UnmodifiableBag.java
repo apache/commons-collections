@@ -108,7 +108,7 @@ public final class UnmodifiableBag<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E> unmodifiableIterator(decorated().iterator());
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     @Override
@@ -135,7 +135,7 @@ public final class UnmodifiableBag<E>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 
@@ -163,7 +163,7 @@ public final class UnmodifiableBag<E>
     @Override
     public Set<E> uniqueSet() {
         final Set<E> set = decorated().uniqueSet();
-        return UnmodifiableSet.<E> unmodifiableSet(set);
+        return UnmodifiableSet.<E>unmodifiableSet(set);
     }
 
 }

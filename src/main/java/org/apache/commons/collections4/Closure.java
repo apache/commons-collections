@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 /**
  * Defines a functor interface implemented by classes that do something.
  * <p>
- * A <code>Closure</code> represents a block of code which is executed from
+ * A {@code Closure} represents a block of code which is executed from
  * inside some block, function or iteration. It operates an input object.
  * </p>
  * <p>

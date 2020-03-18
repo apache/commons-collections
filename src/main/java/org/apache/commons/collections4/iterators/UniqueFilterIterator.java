@@ -25,6 +25,7 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  * the Iterator maintains a Set of objects it has already encountered,
  * and duplicate Objects are skipped.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 2.1
  */
 public class UniqueFilterIterator<E> extends FilterIterator<E> {
@@ -32,7 +33,7 @@ public class UniqueFilterIterator<E> extends FilterIterator<E> {
     //-------------------------------------------------------------------------
 
     /**
-     *  Constructs a new <code>UniqueFilterIterator</code>.
+     *  Constructs a new {@code UniqueFilterIterator}.
      *
      *  @param iterator  the iterator to use
      */

@@ -498,7 +498,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         while (iterator.hasNext()) {
             final E element = iterator.next();
             assertEquals("lastIndexOf should return correct result",
-              list1.lastIndexOf(element), list2.lastIndexOf(element));
+                list1.lastIndexOf(element), list2.lastIndexOf(element));
             verify();
         }
 
@@ -574,7 +574,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         try {
             list.set(Integer.MIN_VALUE, element);
             fail("List.set should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
+                "[Integer.MIN_VALUE]");
         } catch(final IndexOutOfBoundsException e) {
             // expected
         }
@@ -596,7 +596,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         try {
             list.set(Integer.MAX_VALUE, element);
             fail("List.set should throw IndexOutOfBoundsException " +
-              "[Integer.MAX_VALUE]");
+                "[Integer.MAX_VALUE]");
         } catch(final IndexOutOfBoundsException e) {
             // expected
         }
@@ -706,7 +706,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         try {
             list.remove(Integer.MIN_VALUE);
             fail("List.remove should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
+                "[Integer.MIN_VALUE]");
         } catch(final IndexOutOfBoundsException e) {
             // expected
         }
@@ -728,7 +728,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         try {
             list.remove(Integer.MAX_VALUE);
             fail("List.remove should throw IndexOutOfBoundsException " +
-              "[Integer.MAX_VALUE]");
+                "[Integer.MAX_VALUE]");
         } catch(final IndexOutOfBoundsException e) {
             // expected
         }
@@ -1106,13 +1106,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         // test to make sure the canonical form has been preserved
         final List<E> list = makeFullCollection();
-        if(list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+        if (list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
             if (list2.size() == 4) {
                 // old serialized tests
                 return;
             }
-            assertEquals("List is the right size",list.size(), list2.size());
+            assertEquals("List is the right size", list.size(), list2.size());
             assertEquals(list, list2);
         }
     }
@@ -1120,8 +1120,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     //-----------------------------------------------------------------------
     /**
      *  Returns a {@link BulkTest} for testing {@link List#subList(int,int)}.
-     *  The returned bulk test will run through every <code>TestList</code>
-     *  method, <i>including</i> another <code>bulkTestSubList</code>.
+     *  The returned bulk test will run through every {@code TestList}
+     *  method, <i>including</i> another {@code bulkTestSubList}.
      *  Sublists are tested until the size of the sublist is less than 10.
      *  Each sublist is 6 elements smaller than its parent list.
      *  (By default this means that two rounds of sublists will be tested).
@@ -1135,254 +1135,253 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         return new BulkTestSubList<>(this);
     }
 
-   public static class BulkTestSubList<E> extends AbstractListTest<E> {
+    public static class BulkTestSubList<E> extends AbstractListTest<E> {
 
-       private final AbstractListTest<E> outer;
+        private final AbstractListTest<E> outer;
 
-       public BulkTestSubList(final AbstractListTest<E> outer) {
-           super("");
-           this.outer = outer;
-       }
-
-       @Override
-       @SuppressWarnings("unchecked")
-       public E[] getFullElements() {
-           final List<E> l = Arrays.asList(outer.getFullElements());
-           return (E[]) l.subList(3, l.size() - 3).toArray();
-       }
-
-       @Override
-       public E[] getOtherElements() {
-           return outer.getOtherElements();
-       }
-
-       @Override
-       public boolean isAddSupported() {
-           return outer.isAddSupported();
-       }
-
-       @Override
-       public boolean isSetSupported() {
-           return outer.isSetSupported();
-       }
-
-       @Override
-       public boolean isRemoveSupported() {
-           return outer.isRemoveSupported();
-       }
-
-       @Override
-       public List<E> makeObject() {
-           return outer.makeFullCollection().subList(4, 4);
-       }
-
-       @Override
-       public List<E> makeFullCollection() {
-           final int size = getFullElements().length;
-           return outer.makeFullCollection().subList(3, size - 3);
-       }
-
-       @Override
-       public void resetEmpty() {
-           outer.resetFull();
-           this.setCollection(outer.getCollection().subList(4, 4));
-           this.setConfirmed(outer.getConfirmed().subList(4, 4));
-       }
-
-       @Override
-       public void resetFull() {
-           outer.resetFull();
-           final int size = outer.getConfirmed().size();
-           this.setCollection(outer.getCollection().subList(3, size - 3));
-           this.setConfirmed(outer.getConfirmed().subList(3, size - 3));
-       }
-
-       @Override
-       public void verify() {
-           super.verify();
-           outer.verify();
-       }
-
-       @Override
-       public boolean isTestSerialization() {
-           return false;
-       }
-   }
-
-   /**
-    *  Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
-    *  if elements are added to the original list.
-    */
-   public void testListSubListFailFastOnAdd() {
-       if (!isFailFastSupported()) {
-        return;
-    }
-       if (!isAddSupported()) {
-        return;
-    }
-
-       resetFull();
-       final int size = getCollection().size();
-       List<E> sub = getCollection().subList(1, size);
-       getCollection().add(getOtherElements()[0]);
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().add(0, getOtherElements()[0]);
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().addAll(Arrays.asList(getOtherElements()));
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().addAll(0, Arrays.asList(getOtherElements()));
-       failFastAll(sub);
-   }
-
-   /**
-    *  Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
-    *  if elements are removed from the original list.
-    */
-   public void testListSubListFailFastOnRemove() {
-       if (!isFailFastSupported()) {
-        return;
-    }
-       if (!isRemoveSupported()) {
-        return;
-    }
-
-       resetFull();
-       final int size = getCollection().size();
-       List<E> sub = getCollection().subList(1, size);
-       getCollection().remove(0);
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().remove(getFullElements()[2]);
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().removeAll(Arrays.asList(getFullElements()));
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().retainAll(Arrays.asList(getOtherElements()));
-       failFastAll(sub);
-
-       resetFull();
-       sub = getCollection().subList(1, size);
-       getCollection().clear();
-       failFastAll(sub);
-   }
-
-   /**
-    *  Invokes all the methods on the given sublist to make sure they raise
-    *  a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
-    */
-   protected void failFastAll(final List<E> list) {
-       final Method[] methods = List.class.getMethods();
-       for (final Method method : methods) {
-           failFastMethod(list, method);
-       }
-   }
-
-   /**
-    *  Invokes the given method on the given sublist to make sure it raises
-    *  a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
-    *
-    *  Unless the method happens to be the equals() method, in which case
-    *  the test is skipped.  There seems to be a bug in
-    *  java.util.AbstractList.subList(int,int).equals(Object) -- it never
-    *  raises a ConcurrentModificationException.
-    *
-    *  @param list  the sublist to test
-    *  @param m     the method to invoke
-    */
-   protected void failFastMethod(final List<E> list, final Method m) {
-       if (m.getName().equals("equals")) {
-        return;
-    }
-
-       final E element = getOtherElements()[0];
-       final Collection<E> c = Collections.singleton(element);
-
-       final Class<?>[] types = m.getParameterTypes();
-       final Object[] params = new Object[types.length];
-       for (int i = 0; i < params.length; i++) {
-           if (types[i] == Integer.TYPE) {
-            params[i] = Integer.valueOf(0);
-        } else if (types[i] == Collection.class) {
-            params[i] = c;
-        } else if (types[i] == Object.class) {
-            params[i] = element;
-        } else if (types[i] == Object[].class) {
-            params[i] = new Object[0];
+        public BulkTestSubList(final AbstractListTest<E> outer) {
+            super("");
+            this.outer = outer;
         }
-       }
 
-       try {
-           m.invoke(list, params);
-           fail(m.getName() + " should raise ConcurrentModification");
-       } catch (final IllegalAccessException e) {
-           // impossible
-       } catch (final InvocationTargetException e) {
-           final Throwable t = e.getTargetException();
-           if (t instanceof ConcurrentModificationException) {
-               // expected
-               return;
-           }
-        fail(m.getName() + " raised unexpected " + e);
-       }
-   }
+        @Override
+        @SuppressWarnings("unchecked")
+        public E[] getFullElements() {
+            final List<E> l = Arrays.asList(outer.getFullElements());
+            return (E[]) l.subList(3, l.size() - 3).toArray();
+        }
 
-   //-----------------------------------------------------------------------
-   public BulkTest bulkTestListIterator() {
-       return new TestListIterator();
-   }
+        @Override
+        public E[] getOtherElements() {
+            return outer.getOtherElements();
+        }
 
-   public class TestListIterator extends AbstractListIteratorTest<E> {
-       public TestListIterator() {
-           super("TestListIterator");
-       }
+        @Override
+        public boolean isAddSupported() {
+            return outer.isAddSupported();
+        }
 
-       @Override
-       public E addSetValue() {
-           return AbstractListTest.this.getOtherElements()[0];
-       }
+        @Override
+        public boolean isSetSupported() {
+            return outer.isSetSupported();
+        }
 
-       @Override
-       public boolean supportsRemove() {
-           return AbstractListTest.this.isRemoveSupported();
-       }
+        @Override
+        public boolean isRemoveSupported() {
+            return outer.isRemoveSupported();
+        }
 
-       @Override
-       public boolean supportsAdd() {
-           return AbstractListTest.this.isAddSupported();
-       }
+        @Override
+        public List<E> makeObject() {
+            return outer.makeFullCollection().subList(4, 4);
+        }
 
-       @Override
-       public boolean supportsSet() {
-           return AbstractListTest.this.isSetSupported();
-       }
+        @Override
+        public List<E> makeFullCollection() {
+            final int size = getFullElements().length;
+            return outer.makeFullCollection().subList(3, size - 3);
+        }
 
-       @Override
-       public ListIterator<E> makeEmptyIterator() {
-           resetEmpty();
-           return AbstractListTest.this.getCollection().listIterator();
-       }
+        @Override
+        public void resetEmpty() {
+            outer.resetFull();
+            this.setCollection(outer.getCollection().subList(4, 4));
+            this.setConfirmed(outer.getConfirmed().subList(4, 4));
+        }
 
-       @Override
-       public ListIterator<E> makeObject() {
-           resetFull();
-           return AbstractListTest.this.getCollection().listIterator();
-       }
-   }
+        @Override
+        public void resetFull() {
+            outer.resetFull();
+            final int size = outer.getConfirmed().size();
+            this.setCollection(outer.getCollection().subList(3, size - 3));
+            this.setConfirmed(outer.getConfirmed().subList(3, size - 3));
+        }
 
+        @Override
+        public void verify() {
+            super.verify();
+            outer.verify();
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+    }
+
+    /**
+     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * if elements are added to the original list.
+     */
+    public void testListSubListFailFastOnAdd() {
+        if (!isFailFastSupported()) {
+            return;
+        }
+        if (!isAddSupported()) {
+            return;
+        }
+
+        resetFull();
+        final int size = getCollection().size();
+        List<E> sub = getCollection().subList(1, size);
+        getCollection().add(getOtherElements()[0]);
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().add(0, getOtherElements()[0]);
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().addAll(Arrays.asList(getOtherElements()));
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().addAll(0, Arrays.asList(getOtherElements()));
+        failFastAll(sub);
+    }
+
+    /**
+     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * if elements are removed from the original list.
+     */
+    public void testListSubListFailFastOnRemove() {
+        if (!isFailFastSupported()) {
+            return;
+        }
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetFull();
+        final int size = getCollection().size();
+        List<E> sub = getCollection().subList(1, size);
+        getCollection().remove(0);
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().remove(getFullElements()[2]);
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().removeAll(Arrays.asList(getFullElements()));
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().retainAll(Arrays.asList(getOtherElements()));
+        failFastAll(sub);
+
+        resetFull();
+        sub = getCollection().subList(1, size);
+        getCollection().clear();
+        failFastAll(sub);
+    }
+
+    /**
+     * Invokes all the methods on the given sublist to make sure they raise
+     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     */
+    protected void failFastAll(final List<E> list) {
+        final Method[] methods = List.class.getMethods();
+        for (final Method method : methods) {
+            failFastMethod(list, method);
+        }
+    }
+
+    /**
+     * Invokes the given method on the given sublist to make sure it raises
+     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     *
+     * Unless the method happens to be the equals() method, in which case
+     * the test is skipped. There seems to be a bug in
+     * java.util.AbstractList.subList(int,int).equals(Object) -- it never
+     * raises a ConcurrentModificationException.
+     *
+     * @param list the sublist to test
+     * @param m the method to invoke
+     */
+    protected void failFastMethod(final List<E> list, final Method m) {
+        if (m.getName().equals("equals")) {
+            return;
+        }
+
+        final E element = getOtherElements()[0];
+        final Collection<E> c = Collections.singleton(element);
+
+        final Class<?>[] types = m.getParameterTypes();
+        final Object[] params = new Object[types.length];
+        for (int i = 0; i < params.length; i++) {
+            if (types[i] == Integer.TYPE) {
+                params[i] = Integer.valueOf(0);
+            } else if (types[i] == Collection.class) {
+                params[i] = c;
+            } else if (types[i] == Object.class) {
+                params[i] = element;
+            } else if (types[i] == Object[].class) {
+                params[i] = new Object[0];
+            }
+        }
+
+        try {
+            m.invoke(list, params);
+            fail(m.getName() + " should raise ConcurrentModification");
+        } catch (final IllegalAccessException e) {
+            // impossible
+        } catch (final InvocationTargetException e) {
+            final Throwable t = e.getTargetException();
+            if (t instanceof ConcurrentModificationException) {
+                // expected
+                return;
+            }
+            fail(m.getName() + " raised unexpected " + e);
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    public BulkTest bulkTestListIterator() {
+        return new TestListIterator();
+    }
+
+    public class TestListIterator extends AbstractListIteratorTest<E> {
+        public TestListIterator() {
+            super("TestListIterator");
+        }
+
+        @Override
+        public E addSetValue() {
+            return AbstractListTest.this.getOtherElements()[0];
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return AbstractListTest.this.isRemoveSupported();
+        }
+
+        @Override
+        public boolean supportsAdd() {
+            return AbstractListTest.this.isAddSupported();
+        }
+
+        @Override
+        public boolean supportsSet() {
+            return AbstractListTest.this.isSetSupported();
+        }
+
+        @Override
+        public ListIterator<E> makeEmptyIterator() {
+            resetEmpty();
+            return AbstractListTest.this.getCollection().listIterator();
+        }
+
+        @Override
+        public ListIterator<E> makeObject() {
+            resetFull();
+            return AbstractListTest.this.getCollection().listIterator();
+        }
+    }
 }

@@ -44,8 +44,8 @@ All users are strongly encouraged to updated to this release.
 <h3>Compatibility</h3>
 <p>
 This release is fully source and binary compatible with 3.2. For changes since the
-3.1 release see the <a href="release_3_2.html">3.2 Release Notes</a>. Note that the method 
-'protected java.util.Set createSetBasedOnList(java.util.Set, java.util.List)' has been 
+3.1 release see the <a href="release_3_2.html">3.2 Release Notes</a>. Note that the method
+'protected java.util.Set createSetBasedOnList(java.util.Set, java.util.List)' has been
 added.
 </p>
 

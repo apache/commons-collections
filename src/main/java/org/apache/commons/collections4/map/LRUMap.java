@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BoundedMap;
 
 /**
- * A <code>Map</code> implementation with a fixed maximum size which removes
+ * A {@code Map} implementation with a fixed maximum size which removes
  * the least recently used entry if an entry is added when full.
  * <p>
  * The least recently used algorithm works on the get and put operations only.
@@ -42,21 +42,21 @@ import org.apache.commons.collections4.BoundedMap;
  * {@link org.apache.commons.collections4.MapIterator MapIterator} or {@link #entrySet()} iterator.
  * </p>
  * <p>
- * The map implements <code>OrderedMap</code> and entries may be queried using
- * the bidirectional <code>OrderedMapIterator</code>. The order returned is
+ * The map implements {@code OrderedMap} and entries may be queried using
+ * the bidirectional {@code OrderedMapIterator}. The order returned is
  * least recently used to most recently used. Iterators from map views can
- * also be cast to <code>OrderedIterator</code> if required.
+ * also be cast to {@code OrderedIterator} if required.
  * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
- * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * {@code ResettableIterator} and calling {@code reset()}.
  * </p>
  * <p>
  * <strong>Note that LRUMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
- * <code>NullPointerException</code>'s when accessed by concurrent threads.
+ * {@code NullPointerException}'s when accessed by concurrent threads.
  * </p>
  *
  * @param <K> the type of the keys in this map
@@ -269,7 +269,7 @@ public class LRUMap<K, V>
         if (entry.after != header) {
             modCount++;
             // remove
-            if(entry.before == null) {
+            if (entry.before == null) {
                 throw new IllegalStateException("Entry.before is null." +
                     " This should not occur if your keys are immutable, and you have used synchronization properly.");
             }
@@ -308,7 +308,7 @@ public class LRUMap<K, V>
      * discard an entry or not using {@link #removeLRU(AbstractLinkedMap.LinkEntry)}.
      * <p>
      * From Commons Collections 3.1 this method uses {@link #isFull()} rather
-     * than accessing <code>size</code> and <code>maxSize</code> directly.
+     * than accessing {@code size} and {@code maxSize} directly.
      * It also handles the scanUntilRemovable functionality.
      *
      * @param hashIndex  the index into the data array to store at
@@ -345,7 +345,7 @@ public class LRUMap<K, V>
                         "reuse=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " This should not occur if your keys are immutable and you used synchronization properly.");
-            }
+                }
                 reuseMapping(reuse, hashIndex, hashCode, key, value);
             } else {
                 super.addMapping(hashIndex, hashCode, key, value);
@@ -442,7 +442,7 @@ public class LRUMap<K, V>
     /**
      * Returns true if this map is full and no new mappings can be added.
      *
-     * @return <code>true</code> if the map is full
+     * @return {@code true} if the map is full
      */
     @Override
     public boolean isFull() {
@@ -505,7 +505,7 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Writes the data necessary for <code>put()</code> to work in deserialization.
+     * Writes the data necessary for {@code put()} to work in deserialization.
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream
@@ -517,7 +517,7 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Reads the data necessary for <code>put()</code> to work in the superclass.
+     * Reads the data necessary for {@code put()} to work in the superclass.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream

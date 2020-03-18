@@ -83,8 +83,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-         !set.contains(testString));
+        assertTrue("Collection shouldn't contain illegal element", !set.contains(testString));
     }
 
     @SuppressWarnings("unchecked")

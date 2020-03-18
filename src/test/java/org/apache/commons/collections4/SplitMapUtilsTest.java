@@ -46,7 +46,7 @@ public class SplitMapUtilsTest {
     @Before
     public void setUp() throws Exception {
         backingMap = new HashMap<>();
-        transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
+        transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String>nopTransformer(),
                 stringToInt);
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));

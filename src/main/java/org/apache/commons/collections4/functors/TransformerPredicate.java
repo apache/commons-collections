@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.FunctorException;
 import org.apache.commons.collections4.Predicate;
@@ -44,15 +45,12 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @throws NullPointerException if the transformer is null
      */
     public static <T> Predicate<T> transformerPredicate(final Transformer<? super T, Boolean> transformer) {
-        if (transformer == null) {
-            throw new NullPointerException("The transformer to call must not be null");
-        }
-        return new TransformerPredicate<>(transformer);
+        return new TransformerPredicate<>(Objects.requireNonNull(transformer, "transformer"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>transformerPredicate</code> if you want that.
+     * Use {@code transformerPredicate} if you want that.
      *
      * @param transformer  the transformer to decorate
      */

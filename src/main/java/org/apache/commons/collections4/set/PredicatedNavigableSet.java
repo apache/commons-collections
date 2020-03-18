@@ -22,7 +22,7 @@ import java.util.NavigableSet;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another <code>NavigableSet</code> to validate that all additions
+ * Decorates another {@code NavigableSet} to validate that all additions
  * match a specified predicate.
  * <p>
  * This set exists to provide validation for the decorated set.

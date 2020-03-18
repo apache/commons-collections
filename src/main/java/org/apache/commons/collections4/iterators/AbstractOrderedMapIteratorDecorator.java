@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Objects;
+
 import org.apache.commons.collections4.OrderedMapIterator;
 
 /**
@@ -41,10 +43,7 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
      */
     public AbstractOrderedMapIteratorDecorator(final OrderedMapIterator<K, V> iterator) {
         super();
-        if (iterator == null) {
-            throw new NullPointerException("OrderedMapIterator must not be null");
-        }
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
     /**

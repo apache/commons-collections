@@ -26,7 +26,7 @@ import java.util.Map;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another <code>Map</code> to validate that additions
+ * Decorates another {@code Map} to validate that additions
  * match a specified predicate.
  * <p>
  * This map exists to provide validation for the decorated map.
@@ -153,7 +153,7 @@ public class PredicatedMap<K, V>
     }
 
     /**
-     * Override to validate an object set into the map via <code>setValue</code>.
+     * Override to validate an object set into the map via {@code setValue}.
      *
      * @param value  the value to validate
      * @return the value itself

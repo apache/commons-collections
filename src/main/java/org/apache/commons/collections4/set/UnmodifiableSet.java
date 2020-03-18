@@ -25,7 +25,7 @@ import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>Set</code> to ensure it can't be altered.
+ * Decorates another {@code Set} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>
@@ -103,7 +103,7 @@ public final class UnmodifiableSet<E>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

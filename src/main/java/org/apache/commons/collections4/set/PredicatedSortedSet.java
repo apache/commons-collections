@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another <code>SortedSet</code> to validate that all additions
+ * Decorates another {@code SortedSet} to validate that all additions
  * match a specified predicate.
  * <p>
  * This set exists to provide validation for the decorated set.

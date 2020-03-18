@@ -29,6 +29,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @see org.apache.commons.collections4.iterators.ObjectArrayIterator
  * @see java.util.Iterator
  * @see java.util.ListIterator
@@ -39,9 +40,9 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         implements ResettableListIterator<E> {
 
     /**
-     * Holds the index of the last item returned by a call to <code>next()</code>
-     * or <code>previous()</code>. This is set to <code>-1</code> if neither method
-     * has yet been invoked. <code>lastItemIndex</code> is used to to implement the
+     * Holds the index of the last item returned by a call to {@code next()}
+     * or {@code previous()}. This is set to {@code -1} if neither method
+     * has yet been invoked. {@code lastItemIndex} is used to to implement the
      * {@link #set} method.
      */
     private int lastItemIndex = -1;
@@ -52,7 +53,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * specified array.
      *
      * @param array the array to iterate over
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ObjectArrayListIterator(final E... array) {
         super(array);
@@ -64,7 +65,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      *
      * @param array  the array to iterate over
      * @param start  the index to start iterating at
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
     public ObjectArrayListIterator(final E[] array, final int start) {
@@ -80,7 +81,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @param end  the index (exclusive) to finish iterating at
      * @throws IndexOutOfBoundsException if the start or end index is out of bounds
      * @throws IllegalArgumentException if end index is before the start
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ObjectArrayListIterator(final E[] array, final int start, final int end) {
         super(array, start, end);
@@ -167,11 +168,11 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * This method sets the element that was returned by the last call
      * to {@link #next()} of {@link #previous()}.
      *
-     * <b>Note:</b> {@link java.util.ListIterator} implementations that support <code>add()</code>
-     * and <code>remove()</code> only allow <code>set()</code> to be called once per call
-     * to <code>next()</code> or <code>previous</code> (see the {@link java.util.ListIterator}
+     * <b>Note:</b> {@link java.util.ListIterator} implementations that support {@code add()}
+     * and {@code remove()} only allow {@code set()} to be called once per call
+     * to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
      * javadoc for more details). Since this implementation does not support
-     * <code>add()</code> or <code>remove()</code>, <code>set()</code> may be
+     * {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
      *
      * @param obj  the object to set into the array

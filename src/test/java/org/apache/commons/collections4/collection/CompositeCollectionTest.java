@@ -36,7 +36,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     protected CompositeCollection<E> c;
 
- protected Collection<E> one;
+    protected Collection<E> one;
 
     protected Collection<E> two;
 
@@ -253,22 +253,22 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     public void testAddNullList() {
-        ArrayList<String> nullList = null;
-        CompositeCollection<String> cc = new CompositeCollection<>();
+        final ArrayList<String> nullList = null;
+        final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList);
         Assert.assertEquals(0, cc.size());
     }
 
     public void testAddNullLists2Args() {
-        ArrayList<String> nullList = null;
-        CompositeCollection<String> cc = new CompositeCollection<>();
+        final ArrayList<String> nullList = null;
+        final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
         Assert.assertEquals(0, cc.size());
     }
 
     public void testAddNullListsVarArgs() {
-        ArrayList<String> nullList = null;
-        CompositeCollection<String> cc = new CompositeCollection<>();
+        final ArrayList<String> nullList = null;
+        final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
         Assert.assertEquals(0, cc.size());
     }

@@ -24,7 +24,7 @@ import java.util.Iterator;
  * This iterator allows both forward and reverse iteration through the container.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.0
  */
 public interface OrderedIterator<E> extends Iterator<E> {
@@ -32,7 +32,7 @@ public interface OrderedIterator<E> extends Iterator<E> {
     /**
      * Checks to see if there is a previous element that can be iterated to.
      *
-     * @return <code>true</code> if the iterator has a previous element
+     * @return {@code true} if the iterator has a previous element
      */
     boolean hasPrevious();
 

@@ -23,6 +23,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.functors.ConstantFactory;
 
 /**
@@ -34,6 +35,7 @@ import org.apache.commons.collections4.functors.ConstantFactory;
 public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
+    protected final Transformer<K, V> nullTransformer = TransformerUtils.<K, V>nullTransformer();
 
     public DefaultedMapTest(final String testName) {
         super(testName);
@@ -125,6 +127,45 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
+    }
+
+    public void testFactoryMethods() {
+        final HashMap<K, V> base = new HashMap<>();
+
+        try {
+            DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE");
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException e) {
+            // Expected
+        }
+
+        try {
+            DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException e) {
+            // Expected
+        }
+
+        try {
+            DefaultedMap.defaultedMap(base, (Factory<V>) null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException e) {
+            // Expected
+        }
+
+        try {
+            DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException e) {
+            // Expected
+        }
+
+        try {
+            DefaultedMap.defaultedMap(base, (Transformer<K, V>) null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException e) {
+            // Expected
+        }
     }
 
     @Override

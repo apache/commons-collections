@@ -1,9 +1,10 @@
 /*
- * Copyright 2013 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -45,24 +47,19 @@ public class NodeListIterator implements Iterator<Node> {
      * @throws NullPointerException if node is null
      */
     public NodeListIterator(final Node node) {
-        if (node == null) {
-            throw new NullPointerException("Node must not be null.");
-        }
+        Objects.requireNonNull(node, "node");
         this.nodeList = node.getChildNodes();
     }
 
     /**
      * Constructor, that creates a new NodeListIterator from the specified
-     * <code>org.w3c.NodeList</code>
+     * {@code org.w3c.NodeList}
      *
      * @param nodeList node list, which is wrapped by this class. Must not be null
      * @throws NullPointerException if nodeList is null
      */
     public NodeListIterator(final NodeList nodeList) {
-        if (nodeList == null) {
-            throw new NullPointerException("NodeList must not be null.");
-        }
-        this.nodeList = nodeList;
+        this.nodeList = Objects.requireNonNull(nodeList, "nodeList");
     }
 
     @Override

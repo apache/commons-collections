@@ -136,7 +136,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
-            assertTrue("Bag is empty",bag2.size()  == 0);
+            assertTrue("Bag is empty", bag2.size() == 0);
             assertEquals(bag, bag2);
         }
     }

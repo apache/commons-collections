@@ -29,25 +29,25 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A <code>List</code> implementation with a <code>ListIterator</code> that
+ * A {@code List} implementation with a {@code ListIterator} that
  * allows concurrent modifications to the underlying list.
  * <p>
  * This implementation supports all of the optional {@link List} operations.
- * It extends <code>AbstractLinkedList</code> and thus provides the
+ * It extends {@code AbstractLinkedList} and thus provides the
  * stack/queue/dequeue operations available in {@link java.util.LinkedList}.
  * </p>
  * <p>
  * The main feature of this class is the ability to modify the list and the
  * iterator at the same time. Both the {@link #listIterator()} and {@link #cursor()}
- * methods provides access to a <code>Cursor</code> instance which extends
- * <code>ListIterator</code>. The cursor allows changes to the list concurrent
+ * methods provides access to a {@code Cursor} instance which extends
+ * {@code ListIterator}. The cursor allows changes to the list concurrent
  * with changes to the iterator. Note that the {@link #iterator()} method and
  * sublists do <b>not</b> provide this cursor behaviour.
  * </p>
  * <p>
- * The <code>Cursor</code> class is provided partly for backwards compatibility
+ * The {@code Cursor} class is provided partly for backwards compatibility
  * and partly because it allows the cursor to be directly closed. Closing the
- * cursor is optional because references are held via a <code>WeakReference</code>.
+ * cursor is optional because references are held via a {@code WeakReference}.
  * For most purposes, simply modify the iterator and list at will, and then let
  * the garbage collector to the rest.
  * </p>
@@ -86,7 +86,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
 
     /**
      * The equivalent of a default constructor called
-     * by any constructor and by <code>readObject</code>.
+     * by any constructor and by {@code readObject}.
      */
     @Override
     protected void init() {
@@ -153,10 +153,10 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Returns a {@link Cursor} for iterating through the elements of this list.
      * <p>
-     * A <code>Cursor</code> is a <code>ListIterator</code> with an additional
-     * <code>close()</code> method. Calling this method immediately discards the
+     * A {@code Cursor} is a {@code ListIterator} with an additional
+     * {@code close()} method. Calling this method immediately discards the
      * references to the cursor. If it is not called, then the garbage collector
-     * will still remove the reference as it is held via a <code>WeakReference</code>.
+     * will still remove the reference as it is held via a {@code WeakReference}.
      * <p>
      * The cursor enables iteration and list changes to occur in any order without
      * invalidating the iterator (from one thread). When elements are added to the
@@ -169,7 +169,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * last returned value such that it cannot be removed).
      * <p>
      * The {@link #listIterator()} method returns the same as this method, and can
-     * be cast to a <code>Cursor</code> if the <code>close</code> method is required.
+     * be cast to a {@code Cursor} if the {@code close} method is required.
      *
      * @return a new cursor iterator
      */
@@ -181,10 +181,10 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Returns a {@link Cursor} for iterating through the elements of this list
      * starting from a specified index.
      * <p>
-     * A <code>Cursor</code> is a <code>ListIterator</code> with an additional
-     * <code>close()</code> method. Calling this method immediately discards the
+     * A {@code Cursor} is a {@code ListIterator} with an additional
+     * {@code close()} method. Calling this method immediately discards the
      * references to the cursor. If it is not called, then the garbage collector
-     * will still remove the reference as it is held via a <code>WeakReference</code>.
+     * will still remove the reference as it is held via a {@code WeakReference}.
      * <p>
      * The cursor enables iteration and list changes to occur in any order without
      * invalidating the iterator (from one thread). When elements are added to the
@@ -197,7 +197,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * last returned value such that it cannot be removed).
      * <p>
      * The {@link #listIterator(int)} method returns the same as this method, and can
-     * be cast to a <code>Cursor</code> if the <code>close</code> method is required.
+     * be cast to a {@code Cursor} if the {@code close} method is required.
      *
      * @param fromIndex  the index to start from
      * @return a new cursor iterator
@@ -242,7 +242,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Removes the specified node from the list.
      *
      * @param node  the node to remove
-     * @throws NullPointerException if <code>node</code> is null
+     * @throws NullPointerException if {@code node} is null
      */
     @Override
     protected void removeNode(final Node<E> node) {
@@ -399,7 +399,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
 
     //-----------------------------------------------------------------------
     /**
-     * An extended <code>ListIterator</code> that allows concurrent changes to
+     * An extended {@code ListIterator} that allows concurrent changes to
      * the underlying list.
      */
     public static class Cursor<E> extends AbstractLinkedList.LinkedListIterator<E> {

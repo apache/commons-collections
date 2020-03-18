@@ -30,7 +30,7 @@ public class EqualPredicateTest extends AbstractPredicateTest {
 
     @Override
     protected Predicate<Object> generatePredicate() {
-       return equalPredicate(null);
+        return equalPredicate(null);
     }
 
     @Test

@@ -49,7 +49,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     public IterableMap<K, V> getMap() {
         final IterableMap<K, V> testMap = new DualHashBidiMap<>();
         testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V)"b");
+        testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");
         return testMap;
     }
@@ -59,7 +59,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     public Map<K, V> getConfirmedMap() {
         final Map<K, V> testMap = new HashMap<>();
         testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V)"b");
+        testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");
         return testMap;
     }
@@ -83,7 +83,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         MapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
-        it = getMap().mapIterator() ;
+        it = getMap().mapIterator();
         assertTrue(it != UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         try {

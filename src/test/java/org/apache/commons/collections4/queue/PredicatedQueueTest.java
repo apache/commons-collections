@@ -72,8 +72,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     //------------------------------------------------------------
 
-    protected Predicate<E> testPredicate =
-            o -> o instanceof String;
+    protected Predicate<E> testPredicate = o -> o instanceof String;
 
     public Queue<E> makeTestQueue() {
         return decorateCollection(new LinkedList<E>(), testPredicate);

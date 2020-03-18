@@ -1,15 +1,18 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with this
- * work for additional information regarding copyright ownership. The ASF
- * licenses this file to You under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law
- * or agreed to in writing, software distributed under the License is
- * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.commons.collections4.iterators;
 
@@ -88,7 +91,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test a decorated iterator bounded such that the <code>offset</code> is
+     * Test a decorated iterator bounded such that the {@code offset} is
      * zero, in that the SkippingIterator should return all the same elements
      * as its decorated iterator.
      */
@@ -120,7 +123,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if the <code>offset</code> passed to the constructor is
+     * Test the case if the {@code offset} passed to the constructor is
      * greater than the decorated iterator's size. The SkippingIterator should
      * behave as if there are no more elements to return.
      */
@@ -136,7 +139,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if a negative <code>offset</code> is passed to the
+     * Test the case if a negative {@code offset} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
@@ -149,8 +152,8 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called without
-     * <code>next()</code> being called first.
+     * Test the {@code remove()} method being called without
+     * {@code next()} being called first.
      */
     @Test
     public void testRemoveWithoutCallingNext() {
@@ -165,8 +168,8 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called twice without calling
-     * <code>next()</code> in between.
+     * Test the {@code remove()} method being called twice without calling
+     * {@code next()} in between.
      */
     @Test
     public void testRemoveCalledTwice() {
@@ -276,7 +279,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /**
      * Test the case if the decorated iterator does not support the
-     * <code>remove()</code> method and throws an {@link UnsupportedOperationException}.
+     * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
     @Test
     public void testRemoveUnsupported() {

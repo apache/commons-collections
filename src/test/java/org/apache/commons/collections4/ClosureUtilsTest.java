@@ -182,7 +182,7 @@ public class ClosureUtilsTest {
 
         a = new MockClosure<>();
         b = new MockClosure<>();
-        ClosureUtils.<Object>chainedClosure(new Closure[] {a, b, a}).execute(null);
+        ClosureUtils.<Object>chainedClosure(a, b, a).execute(null);
         assertEquals(2, a.count);
         assertEquals(1, b.count);
 
@@ -196,7 +196,7 @@ public class ClosureUtilsTest {
         assertEquals(1, a.count);
         assertEquals(2, b.count);
 
-        assertSame(NOPClosure.INSTANCE, ClosureUtils.<Object>chainedClosure(new Closure[0]));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.<Object>chainedClosure());
         assertSame(NOPClosure.INSTANCE, ClosureUtils.<Object>chainedClosure(Collections.<Closure<Object>>emptyList()));
 
         try {
@@ -212,7 +212,7 @@ public class ClosureUtilsTest {
             fail();
         } catch (final NullPointerException ex) {}
         try {
-            ClosureUtils.<Object>chainedClosure(new Closure[] {null, null});
+            ClosureUtils.<Object>chainedClosure(null, null);
             fail();
         } catch (final NullPointerException ex) {}
         try {
@@ -411,8 +411,8 @@ public class ClosureUtilsTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                ExceptionClosure.INSTANCE,
-                NOPClosure.INSTANCE,
+            ExceptionClosure.INSTANCE,
+            NOPClosure.INSTANCE,
         };
 
         for (final Object original : singletones) {

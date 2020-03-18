@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -41,20 +42,18 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
-     * @return the <code>and</code> predicate
+     * @return the {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
-                                                final Predicate<? super T> predicate2) {
-        if (predicate1 == null || predicate2 == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new AndPredicate<>(predicate1, predicate2);
+            final Predicate<? super T> predicate2) {
+        return new AndPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
+                Objects.requireNonNull(predicate2, "predicate2"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>andPredicate</code> if you want that.
+     * Use {@code andPredicate} if you want that.
      *
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
@@ -73,7 +72,7 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
      */
     @Override
     public boolean evaluate(final T object) {
-       return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
+        return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
     }
 
     /**

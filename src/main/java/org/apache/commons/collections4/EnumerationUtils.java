@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.IteratorIterable;
 
 /**
  * Provides utility methods for {@link Enumeration} instances.
@@ -33,14 +34,29 @@ public class EnumerationUtils {
     /**
      * EnumerationUtils is not normally instantiated.
      */
-    private EnumerationUtils() {}
+    private EnumerationUtils() {
+        // no instances.
+    }
 
     /**
-     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
+     * single iteration.
+     *
+     * @param <T> the element type
+     * @param enumeration the enumeration to use, may not be null
+     * @return a new, single use {@link Iterable}
+     * @since 4.5
+     */
+    public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
+        return new IteratorIterable<>(new EnumerationIterator<>(enumeration));
+    }
+
+    /**
+     * Returns the {@code index}-th value in the {@link Enumeration}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Enumeration is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     * The Enumeration is advanced to {@code index} (or to the end, if
+     * {@code index} exceeds the number of entries) as a side effect of this method.
      *
      * @param e  the enumeration to get a value from
      * @param index  the index to get
@@ -51,8 +67,8 @@ public class EnumerationUtils {
      * @since 4.1
      */
     public static <T> T get(final Enumeration<T> e, final int index) {
+        CollectionUtils.checkIndexBounds(index);
         int i = index;
-        CollectionUtils.checkIndexBounds(i);
         while (e.hasMoreElements()) {
             i--;
             if (i == -1) {
@@ -70,9 +86,9 @@ public class EnumerationUtils {
      * created. The new list is returned.</p>
      *
      * @param <E> the element type
-     * @param enumeration  the enumeration to traverse, which should not be <code>null</code>.
+     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
      * @return a list containing all elements of the given enumeration
-     * @throws NullPointerException if the enumeration parameter is <code>null</code>.
+     * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
         return IteratorUtils.toList(new EnumerationIterator<>(enumeration));
@@ -92,4 +108,5 @@ public class EnumerationUtils {
         }
         return result;
     }
+
 }

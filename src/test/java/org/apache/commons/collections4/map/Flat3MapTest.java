@@ -24,12 +24,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+
+import junit.framework.Test;
 
 /**
  * JUnit tests.
@@ -334,6 +334,29 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(TEN, map.get(ONE));
         assertEquals(TWENTY, map.get(TWO));
         assertEquals("NewValue", map.get(THREE));
+    }
+
+    public void testEntrySet() {
+        // Sanity check
+        putAndRemove(new HashMap<>());
+        // Actual test
+        putAndRemove(new Flat3Map<>());
+    }
+
+    private void putAndRemove(final Map<K, V> map) {
+        map.put((K) "A", (V) "one");
+        map.put((K) "B", (V) "two");
+        map.put((K) "C", (V) "three");
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+
+        final Map.Entry<K, V> mapEntry1 = it.next();
+        final Map.Entry<K, V> mapEntry2 = it.next();
+        final Map.Entry<K, V> mapEntry3 = it.next();
+        it.remove();
+        assertEquals(2, map.size());
+        assertEquals("one", map.get("A"));
+        assertEquals("two", map.get("B"));
+        assertEquals(null, map.get("C"));
     }
 
     //-----------------------------------------------------------------------

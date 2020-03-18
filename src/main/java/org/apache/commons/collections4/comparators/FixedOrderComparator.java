@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A Comparator which imposes a specific order on a specific set of Objects.
@@ -34,7 +35,7 @@ import java.util.Map;
  * Arrays.sort(planets, distanceFromSun);    // Back to original order
  * </pre>
  * <p>
- * Once <code>compare</code> has been called, the FixedOrderComparator is locked
+ * Once {@code compare} has been called, the FixedOrderComparator is locked
  * and attempts to modify it yield an UnsupportedOperationException.
  * </p>
  * <p>
@@ -94,10 +95,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public FixedOrderComparator(final T... items) {
         super();
-        if (items == null) {
-            throw new NullPointerException("The list of items must not be null");
-        }
-        for (final T item : items) {
+        for (final T item : Objects.requireNonNull(items, "items")) {
             add(item);
         }
     }
@@ -113,10 +111,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public FixedOrderComparator(final List<T> items) {
         super();
-        if (items == null) {
-            throw new NullPointerException("The list of items must not be null");
-        }
-        for (final T t : items) {
+        for (final T t : Objects.requireNonNull(items, "items")) {
             add(t);
         }
     }
@@ -164,10 +159,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
         checkLocked();
-        if (unknownObjectBehavior == null) {
-            throw new NullPointerException("Unknown object behavior must not be null");
-        }
-        this.unknownObjectBehavior = unknownObjectBehavior;
+        this.unknownObjectBehavior = Objects.requireNonNull(unknownObjectBehavior, "unknownObjectBehavior");
     }
 
     // Methods for adding items
@@ -268,12 +260,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is
+     * Returns {@code true} iff <i>that</i> Object is
      * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
-     * This implementation returns <code>true</code>
-     * iff <code><i>that</i></code> is a {@link FixedOrderComparator}
+     * This implementation returns {@code true}
+     * iff {@code <i>that</i>} is a {@link FixedOrderComparator}
      * whose attributes are equal to mine.
      *
      * @param object  the object to compare to

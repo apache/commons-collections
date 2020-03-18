@@ -27,6 +27,7 @@ import org.apache.commons.collections4.Predicate;
  * This iterator decorates the underlying iterator, only allowing through
  * those elements that match the specified {@link Predicate Predicate}.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 1.0
  */
 public class FilterIterator<E> implements Iterator<E> {
@@ -42,7 +43,7 @@ public class FilterIterator<E> implements Iterator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new <code>FilterIterator</code> that will not function
+     * Constructs a new {@code FilterIterator} that will not function
      * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public FilterIterator() {
@@ -50,7 +51,7 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterIterator</code> that will not function
+     * Constructs a new {@code FilterIterator} that will not function
      * until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
      * @param iterator  the iterator to use
@@ -61,7 +62,7 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterIterator</code> that will use the
+     * Constructs a new {@code FilterIterator} that will use the
      * given iterator and predicate.
      *
      * @param iterator  the iterator to use
@@ -107,11 +108,11 @@ public class FilterIterator<E> implements Iterator<E> {
      * Removes from the underlying collection of the base iterator the last
      * element returned by this iterator.
      * This method can only be called
-     * if <code>next()</code> was called, but not after
-     * <code>hasNext()</code>, because the <code>hasNext()</code> call
+     * if {@code next()} was called, but not after
+     * {@code hasNext()}, because the {@code hasNext()} call
      * changes the base iterator.
      *
-     * @throws IllegalStateException if <code>hasNext()</code> has already
+     * @throws IllegalStateException if {@code hasNext()} has already
      *  been called.
      */
     @Override

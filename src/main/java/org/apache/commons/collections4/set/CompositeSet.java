@@ -69,7 +69,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Create a CompositeSet with just <code>set</code> composited.
+     * Create a CompositeSet with just {@code set} composited.
      *
      * @param set  the initial set in the composite
      */
@@ -92,7 +92,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Gets the size of this composite set.
      * <p>
-     * This implementation calls <code>size()</code> on each set.
+     * This implementation calls {@code size()} on each set.
      *
      * @return total number of elements in all contained containers
      */
@@ -108,7 +108,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Checks whether this composite set is empty.
      * <p>
-     * This implementation calls <code>isEmpty()</code> on each set.
+     * This implementation calls {@code isEmpty()} on each set.
      *
      * @return true if all of the contained sets are empty
      */
@@ -125,7 +125,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Checks whether this composite set contains the object.
      * <p>
-     * This implementation calls <code>contains()</code> on each set.
+     * This implementation calls {@code contains()} on each set.
      *
      * @param obj  the object to search for
      * @return true if obj is contained in any of the contained sets
@@ -143,10 +143,10 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Gets an iterator over all the sets in this composite.
      * <p>
-     * This implementation uses an <code>IteratorChain</code>.
+     * This implementation uses an {@code IteratorChain}.
      *
-     * @return an <code>IteratorChain</code> instance which supports
-     *  <code>remove()</code>. Iteration occurs over contained collections in
+     * @return an {@code IteratorChain} instance which supports
+     *  {@code remove()}. Iteration occurs over contained collections in
      *  the order they were added, but this behavior should not be relied upon.
      * @see IteratorChain
      */
@@ -179,7 +179,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * Returns an object array, populating the supplied array if possible.
-     * See <code>Collection</code> interface for full details.
+     * See {@code Collection} interface for full details.
      *
      * @param <T>  the type of the elements in the collection
      * @param array  the array to use, populating if possible
@@ -222,14 +222,14 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     @Override
     public boolean add(final E obj) {
         if (mutator == null) {
-           throw new UnsupportedOperationException(
-               "add() is not supported on CompositeSet without a SetMutator strategy");
+            throw new UnsupportedOperationException(
+                "add() is not supported on CompositeSet without a SetMutator strategy");
         }
         return mutator.add(this, all, obj);
     }
 
     /**
-     * If a <code>CollectionMutator</code> is defined for this CompositeSet then this
+     * If a {@code CollectionMutator} is defined for this CompositeSet then this
      * method will be called anyway.
      *
      * @param obj  object to be removed
@@ -248,7 +248,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Checks whether this composite contains all the elements in the specified collection.
      * <p>
-     * This implementation calls <code>contains()</code> for each element in the
+     * This implementation calls {@code contains()} for each element in the
      * specified collection.
      *
      * @param coll  the collection to check for
@@ -291,7 +291,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         if (Objects.isNull(filter)) {
             return false;
         }
@@ -305,7 +305,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Removes the elements in the specified collection from this composite set.
      * <p>
-     * This implementation calls <code>removeAll</code> on each collection.
+     * This implementation calls {@code removeAll} on each collection.
      *
      * @param coll  the collection to remove
      * @return true if the composite was modified
@@ -327,7 +327,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * Retains all the elements in the specified collection in this composite set,
      * removing all others.
      * <p>
-     * This implementation calls <code>retainAll()</code> on each collection.
+     * This implementation calls {@code retainAll()} on each collection.
      *
      * @param coll  the collection to remove
      * @return true if the composite was modified
@@ -345,7 +345,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Removes all of the elements from this composite set.
      * <p>
-     * This implementation calls <code>clear()</code> on each set.
+     * This implementation calls {@code clear()} on each set.
      *
      * @throws UnsupportedOperationException if clear is unsupported
      */
@@ -521,7 +521,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
          * Called when a Set is added to the CompositeSet and there is a
          * collision between existing and added sets.
          * <p>
-         * If <code>added</code> and <code>existing</code> still have any intersects
+         * If {@code added} and {@code existing} still have any intersects
          * after this method returns an IllegalArgumentException will be thrown.
          *
          * @param comp  the CompositeSet being modified

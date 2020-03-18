@@ -374,7 +374,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
         // test to make sure the canonical form has been preserved
         final Queue<E> queue = makeFullCollection();
-        if(queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+        if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
             assertEquals("Queues are not the right size", queue.size(), queue2.size());
         }

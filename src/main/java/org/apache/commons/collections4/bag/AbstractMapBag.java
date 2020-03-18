@@ -135,7 +135,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Determines if the bag contains the given elements.
      *
      * @param coll the collection to check against
-     * @return <code>true</code> if the Bag contains all the collection
+     * @return {@code true} if the Bag contains all the collection
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
@@ -146,11 +146,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Returns <code>true</code> if the bag contains all elements in the given
+     * Returns {@code true} if the bag contains all elements in the given
      * collection, respecting cardinality.
      *
      * @param other the bag to check against
-     * @return <code>true</code> if the Bag contains all the collection
+     * @return {@code true} if the Bag contains all the collection
      */
     boolean containsAll(final Bag<?> other) {
         final Iterator<?> it = other.uniqueSet().iterator();
@@ -191,7 +191,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
          *
          * @param parent the parent bag
          */
-        public BagIterator(final AbstractMapBag<E> parent) {
+        BagIterator(final AbstractMapBag<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
             this.current = null;
@@ -245,7 +245,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Adds a new element to the bag, incrementing its count in the underlying map.
      *
      * @param object the object to add
-     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
+     * @return {@code true} if the object was not already in the {@code uniqueSet}
      */
     @Override
     public boolean add(final E object) {
@@ -257,7 +257,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @param object the object to search for
      * @param nCopies the number of copies to add
-     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
+     * @return {@code true} if the object was not already in the {@code uniqueSet}
      */
     @Override
     public boolean add(final E object, final int nCopies) {
@@ -279,7 +279,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Invokes {@link #add(Object)} for each element in the given collection.
      *
      * @param coll the collection to add
-     * @return <code>true</code> if this call changed the bag
+     * @return {@code true} if this call changed the bag
      */
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
@@ -389,7 +389,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @see #retainAll(Collection)
      *
      * @param other the bag to retain
-     * @return <code>true</code> if this call changed the collection
+     * @return {@code true} if this call changed the collection
      */
     boolean retainAll(final Bag<?> other) {
         boolean result = false;
@@ -507,7 +507,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public Set<E> uniqueSet() {
         if (uniqueSet == null) {
-            uniqueSet = UnmodifiableSet.<E> unmodifiableSet(map.keySet());
+            uniqueSet = UnmodifiableSet.<E>unmodifiableSet(map.keySet());
         }
         return uniqueSet;
     }
@@ -579,7 +579,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Gets a hash code for the Bag compatible with the definition of equals.
      * The hash code is defined as the sum total of a hash code for each
      * element. The per element hash code is defined as
-     * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>. This hash code
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurances)}. This hash code
      * is compatible with the Set interface.
      *
      * @return the hash code of the Bag

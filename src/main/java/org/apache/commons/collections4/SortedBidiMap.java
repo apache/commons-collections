@@ -40,11 +40,11 @@ public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, 
      * This enables both directions of the map to be accessed equally.
      * <p>
      * Implementations should seek to avoid creating a new object every time this
-     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
+     * method is called. See {@code AbstractMap.values()} etc. Calling this
      * method on the inverse map should return the original.
      * <p>
-     * Implementations must return a <code>SortedBidiMap</code> instance,
-     * usually by forwarding to <code>inverseSortedBidiMap()</code>.
+     * Implementations must return a {@code SortedBidiMap} instance,
+     * usually by forwarding to {@code inverseSortedBidiMap()}.
      *
      * @return an inverted bidirectional map
      */

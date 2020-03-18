@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * <p>
  * This class implements all the features necessary for a subclass linked
  * hash-based map. Key-value entries are stored in instances of the
- * <code>LinkEntry</code> class which can be overridden and replaced.
+ * {@code LinkEntry} class which can be overridden and replaced.
  * The iterators can similarly be replaced, without the need to replace the KeySet,
  * EntrySet and Values view classes.
  * </p>
@@ -45,17 +45,17 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * </p>
  * <p>
  * This implementation maintains order by original insertion, but subclasses
- * may work differently. The <code>OrderedMap</code> interface is implemented
+ * may work differently. The {@code OrderedMap} interface is implemented
  * to provide access to bidirectional iteration and extra convenience methods.
  * </p>
  * <p>
- * The <code>orderedMapIterator()</code> method provides direct access to a
+ * The {@code orderedMapIterator()} method provides direct access to a
  * bidirectional iterator. The iterators from the other views can also be cast
- * to <code>OrderedIterator</code> if required.
+ * to {@code OrderedIterator} if required.
  * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
- * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * {@code ResettableIterator} and calling {@code reset()}.
  * </p>
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
@@ -317,11 +317,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     //-----------------------------------------------------------------------
     /**
-     * Gets the <code>before</code> field from a <code>LinkEntry</code>.
+     * Gets the {@code before} field from a {@code LinkEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>before</code> field of the entry
+     * @return the {@code before} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -330,11 +330,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     }
 
     /**
-     * Gets the <code>after</code> field from a <code>LinkEntry</code>.
+     * Gets the {@code after} field from a {@code LinkEntry}.
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the <code>after</code> field of the entry
+     * @return the {@code after} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -516,9 +516,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * LinkEntry that stores the data.
      * <p>
-     * If you subclass <code>AbstractLinkedMap</code> but not <code>LinkEntry</code>
+     * If you subclass {@code AbstractLinkedMap} but not {@code LinkEntry}
      * then you will not be able to access the protected fields.
-     * The <code>entryXxx()</code> methods on <code>AbstractLinkedMap</code> exist
+     * The {@code entryXxx()} methods on {@code AbstractLinkedMap} exist
      * to provide the necessary access.
      */
     protected static class LinkEntry<K, V> extends HashEntry<K, V> {
@@ -543,7 +543,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Base Iterator that iterates in link order.
      */
-    protected static abstract class LinkIterator<K, V> {
+    protected abstract static class LinkIterator<K, V> {
 
         /** The parent map */
         protected final AbstractLinkedMap<K, V> parent;

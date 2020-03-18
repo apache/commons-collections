@@ -77,7 +77,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     transient Set<Map.Entry<K, V>> entrySet = null;
 
     /**
-     * Creates an empty map, initialised by <code>createMap</code>.
+     * Creates an empty map, initialised by {@code createMap}.
      * <p>
      * This constructor remains in place for deserialization.
      * All other usage is deprecated in favour of
@@ -95,7 +95,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * <p>
      * Neither map is validated, so nulls may be passed in.
      * If you choose to do this then the subclass constructor must populate
-     * the <code>maps[]</code> instance variable itself.
+     * the {@code maps[]} instance variable itself.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
@@ -109,7 +109,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Constructs a map that decorates the specified maps,
-     * used by the subclass <code>createBidiMap</code> implementation.
+     * used by the subclass {@code createBidiMap} implementation.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
@@ -218,8 +218,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     // BidiMap
     //-----------------------------------------------------------------------
     /**
-     * Obtains a <code>MapIterator</code> over the map.
-     * The iterator implements <code>ResetableMapIterator</code>.
+     * Obtains a {@code MapIterator} over the map.
+     * The iterator implements {@code ResetableMapIterator}.
      * This implementation relies on the entrySet iterator.
      * <p>
      * The setValue() methods only allow a new value to be set.
@@ -344,7 +344,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * Inner class View.
      */
-    protected static abstract class View<K, V, E> extends AbstractCollectionDecorator<E> {
+    protected abstract static class View<K, V, E> extends AbstractCollectionDecorator<E> {
 
         /** Generated serial version ID. */
         private static final long serialVersionUID = 4621510560119690639L;
@@ -377,7 +377,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @since 4.4
          */
         @Override
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(final Predicate<? super E> filter) {
             if (parent.isEmpty() || Objects.isNull(filter)) {
                 return false;
             }
@@ -411,9 +411,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * {@inheritDoc}
          * <p>
          * This implementation iterates over the elements of this bidi map, checking each element in
-         * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
+         * turn to see if it's contained in {@code coll}. If it's not contained, it's removed
          * from this bidi map. As a consequence, it is advised to use a collection type for
-         * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+         * {@code coll} that provides a fast (e.g. O(1)) implementation of
          * {@link Collection#contains(Object)}.
          */
         @Override

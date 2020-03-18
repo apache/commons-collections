@@ -23,6 +23,7 @@ import java.util.Iterator;
  * Adapter to make an {@link Iterator Iterator} instance appear to be an
  * {@link Enumeration Enumeration} instance.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 1.0
  */
 public class IteratorEnumeration<E> implements Enumeration<E> {
@@ -31,14 +32,14 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     private Iterator<? extends E> iterator;
 
     /**
-     * Constructs a new <code>IteratorEnumeration</code> that will not function
+     * Constructs a new {@code IteratorEnumeration} that will not function
      * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public IteratorEnumeration() {
     }
 
     /**
-     * Constructs a new <code>IteratorEnumeration</code> that will use the given
+     * Constructs a new {@code IteratorEnumeration} that will use the given
      * iterator.
      *
      * @param iterator the iterator to use

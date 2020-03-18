@@ -76,7 +76,7 @@ have changed.
    <li>BoundedBuffer: use either ArrayBlockingBuffer(capacity) or LinkedBlockingBuffer(capacity) in java.util.concurrent</li>
    <li>UnboundedFifoBuffer: use either java.util.LinkedList or java.util.concurrent.LinkedBlockingBuffer</li>
    </ul>
-</li>                     
+</li>
 <li>Removed features now supported by the JDK or other Apache Commons libraries
   <ul>
   <li>FastArrayList: use java.util.concurrent.CopyOnWriteArrayList</li>
@@ -126,20 +126,20 @@ have changed.
 <li>CollectionUtils#isEqualCollection(Collection, Collection, Equator). Thanks to Matt Lachman.</li>
 <li>*Utils#emptyIfNull(*) methods in classes CollectionUtils, ListUtils, SetUtils and MapUtils. Thanks to Arman Sharif.</li>
 <li>CollectionUtils#containsAll(Collection, Collection) with guaranteed runtime complexity of O(n + m) and space complexity of O(n). This method may yield much better performance than Collection.containsAll(Collection) depending on the use-case and type of collection used. Thanks to Adrian Nistor, Mert Guldur.</li>
-<li>CollectionUtils#permutations(Collection) to generate all permutations of a collection. Thanks to Benoit Corne.</li> 
+<li>CollectionUtils#permutations(Collection) to generate all permutations of a collection. Thanks to Benoit Corne.</li>
 <li>ListUtils#select() and ListUtils#selectRejected() methods. Thanks to Adam Dyga.</li>
 <li>ListUtils#partition() to split a List into consecutive sublists. Thanks to Chris Shayan.</li>
 <li>CollectionUtils#forAllDo(Iterator, Closure). Thanks to Adrian Cumiskey.</li>
 <li>ListUtils#defaultIfNull(List, List). Thanks to Ivan Hristov.</li>
 <li>CollectionUtils#filterInverse(Iterable, Predicate). Thanks to Jean-Noel Rouvignac.</li>
 <li>CollectionUtils#subtract(Iterable, Iterable, Predicate). Thanks to Chris Shayan.</li>
-<li>CollectionUtils#collate(...) to merge two sorted Collections using the standard O(n) merge algorithm. Thanks to Julius Davies.</li>  
+<li>CollectionUtils#collate(...) to merge two sorted Collections using the standard O(n) merge algorithm. Thanks to Julius Davies.</li>
 <li>CollectionUtils#extractSingleton(Collection). Thanks to Geoffrey De Smet.</li>
 <li>MapUtils#populateMap(MultiMap, ...) to support also "MultiMap" instances as input. Thanks to John Hunsley.</li>
 <li>ListUtils#indexOf(List, Predicate). Thanks to Nathan Egge.</li>
 <li>MapUtils#populateMap(Map, Iterable, Transformer, ...). Thanks to Dave Meikle.</li>
 <li>Added new method "get(int)" to "CircularFifoQueue". Thanks to Sebb.</li>
-<li>Added serialVersionUID fields for "CompositeCollection", "CompositeSet", "EmptyMapMutator", "EmptySetMutator". Thanks to sebb.</li> 
+<li>Added serialVersionUID fields for "CompositeCollection", "CompositeSet", "EmptyMapMutator", "EmptySetMutator". Thanks to sebb.</li>
 <li>Added support for using custom "Equator" objects in "EqualPredicate". Thanks to Stephen Kestle.</li>
 <li>Added method "CollatingIterator#getIteratorIndex()". Thanks to Fredrik Kjellberg.</li>
 <li>Added serialization support for "TreeBidiMap". Thanks to Christian Gruenberg.</li>
@@ -161,7 +161,7 @@ have changed.
 <li>Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
     to avoid future conflicts with a default method of the Map interface in Java 8.</li>
 <li>Refactored the test framework for Bag implementations to extend from "AbstractCollectionTest" by decorating
-    the concrete Bag instance with a CollectionBag or CollectionSortedBag.</li> 
+    the concrete Bag instance with a CollectionBag or CollectionSortedBag.</li>
 <li>"UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
     similar as all other unmodifiable decorators.</li>
 <li>"UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
@@ -213,66 +213,66 @@ have changed.
 <li>Tree traversal with a TreeListIterator will not be affected anymore by the removal of an element directly after a call to previous(). Thanks to Jeffrey Barnes.</li>
 <li>Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0) due to a faulty "java.util.TreeMap" implementation.</li>
 <li>SetUniqueList.set(int, E) now works correctly if the object to be inserted is already placed at the given position. Thanks to Thomas Vahrst, John Vasileff.</li>
-<li>MultiKeyMap.clone() now correctly calls super.clone(). Thanks to Thomas Vahrst.</li> 
-<li>Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting the input collection into an AVL tree and efficiently merge it into the existing tree. Thanks to Jeffrey Barnes.</li> 
-<li>Fixed performance issue in "SetUniqueList#retainAll" method for large collections. Thanks to Mert Guldur.</li> 
+<li>MultiKeyMap.clone() now correctly calls super.clone(). Thanks to Thomas Vahrst.</li>
+<li>Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting the input collection into an AVL tree and efficiently merge it into the existing tree. Thanks to Jeffrey Barnes.</li>
+<li>Fixed performance issue in "SetUniqueList#retainAll" method for large collections. Thanks to Mert Guldur.</li>
 <li>Fixed performance issue in "ListOrderedSet#retainAll" method for large collections. Thanks to Adrian Nistor.</li>
 <li>Improved performance of "ListOrderedMap#remove(Object)" method. Thanks to Adrian Nistor.</li>
-<li>Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()". Thanks to Benedikt Ritter.</li> 
-<li>Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll". Thanks to Adrian Nistor.</li> 
+<li>Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()". Thanks to Benedikt Ritter.</li>
+<li>Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll". Thanks to Adrian Nistor.</li>
 <li>Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll". Thanks to Adrian Nistor.</li>
-<li>Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll". Thanks to Adrian Nistor.</li> 
+<li>Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll". Thanks to Adrian Nistor.</li>
 <li>Fixed several compilation issues with older Java 1.6 compilers.</li>
-<li>Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()". Thanks to Adrian Nistor.</li> 
+<li>Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()". Thanks to Adrian Nistor.</li>
 <li>Improved performance of "CollectionUtils#subtract" methods. Thanks to Adrian Nistor.</li>
-<li>Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll". Thanks to Adrian Nistor.</li> 
+<li>Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll". Thanks to Adrian Nistor.</li>
 <li>Improved performance of "SetUniqueList#addAll" method. Thanks to Adrian Nistor.</li>
-<li>Improved performance of "ListOrderedSet#addAll" method. Thanks to Adrian Nistor.</li> 
+<li>Improved performance of "ListOrderedSet#addAll" method. Thanks to Adrian Nistor.</li>
 <li>Improved performance of "SetUniqueList#removeAll". Thanks to Adrian Nistor.</li>
-<li>Improved performance of "ListOrderedSet#remove(Object)" in case the object is not contained in the Set. Thanks to Adrian Nistor.</li> 
+<li>Improved performance of "ListOrderedSet#remove(Object)" in case the object is not contained in the Set. Thanks to Adrian Nistor.</li>
 <li>Improved performance of "ListUtils#subtract" method. Thanks to Adrian Nistor.</li>
-<li>Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)". Thanks to Shin Hwei Tan.</li> 
+<li>Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)". Thanks to Shin Hwei Tan.</li>
 <li>Fixed javadoc for "MapUtils#toProperties(Map)". Thanks to Shin Hwei Tan.</li>
 <li>Clarified javadoc for "TransformerUtils#mapTransformer" for null input. Thanks to Shin Hwei Tan.</li>
-<li>Clarified javadoc for "FactoryUtils#prototypeFactory" for null input. Thanks to Shin Hwei Tan.</li> 
+<li>Clarified javadoc for "FactoryUtils#prototypeFactory" for null input. Thanks to Shin Hwei Tan.</li>
 <li>Fixed inconsistent javadoc for "MapUtils#synchronizedMap(Map)". Thanks to Shin Hwei Tan.</li>
-<li>Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()". Thanks to Dave Brosius.</li> 
-<li>Fixed javadoc for several methods wrt expected NullPointerExceptions. Thanks to Shin Hwei Tan.</li> 
-<li>"DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization.</li> 
+<li>Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()". Thanks to Dave Brosius.</li>
+<li>Fixed javadoc for several methods wrt expected NullPointerExceptions. Thanks to Shin Hwei Tan.</li>
+<li>"DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization.</li>
 <li>"TransformedMap" in the package "splitmap" can now be serialized.</li>
 <li>"FilterListIterator#hasNext" does not throw a NullPointerException anymore to comply to the Java iterator specification. Thanks to Sai Zhang.</li>
 <li>"ListUtils#intersection(List, List)" will now also work correctly if there are duplicate elements in the provided lists. Thanks to Mark Shead.</li>
-<li>"AbstractCollectionDecorator" will now use internally "decorated()" to access the decorated collection. Thanks to Adam Gent.</li> 
-<li>Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman.</li> 
+<li>"AbstractCollectionDecorator" will now use internally "decorated()" to access the decorated collection. Thanks to Adam Gent.</li>
+<li>Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman.</li>
 <li>Fixed javadoc for all "transformedXXX(XXX)" methods in the respective Utils classes to clarify that existing objects in the list are not transformed. Thanks to Paul Benedict.</li>
 <li>Singleton classes in package "functors" are now correctly de-serialized. Thanks to Goran Hacek.</li>
-<li>Removed broken methods "equals(Object)" and "hashCode()" in class "NOPClosure". Thanks to Goran Hacek.</li> 
-<li>Simplified exceptions as the cause is available from the parent. Thanks to sebb.</li> 
+<li>Removed broken methods "equals(Object)" and "hashCode()" in class "NOPClosure". Thanks to Goran Hacek.</li>
+<li>Simplified exceptions as the cause is available from the parent. Thanks to sebb.</li>
 <li>Fixed cache assignment for "TreeBidiMap#entrySet". Thanks to sebb.</li>
-<li>Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb.</li> 
-<li>Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and "CaseInsensitiveMap" are not supported. Thanks to Tom Parker.</li> 
+<li>Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb.</li>
+<li>Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and "CaseInsensitiveMap" are not supported. Thanks to Tom Parker.</li>
 <li>Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a NullPointerException in "CollatingIterator#least" if no comparator is set. Thanks to Michael Krkoska.</li>
-<li>"LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore. Thanks to Joerg Schaible.</li> 
-<li>Improved performance of "ListUtils#intersection(List, List)". Thanks to Thomas Rogan, Jilles van Gurp.</li> 
+<li>"LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore. Thanks to Joerg Schaible.</li>
+<li>Improved performance of "ListUtils#intersection(List, List)". Thanks to Thomas Rogan, Jilles van Gurp.</li>
 <li>Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap" in case the initial capacity is set to zero. Thanks to Maarten Brak.</li>
-<li>Improved performance of "StaticBucketMap#putAll(Map)" by iterating over the entry set. Thanks to sebb.</li> 
+<li>Improved performance of "StaticBucketMap#putAll(Map)" by iterating over the entry set. Thanks to sebb.</li>
 <li>Avoid redundant null check in "IteratorUtils#getIterator(Object)". Thanks to sebb.</li>
 <li>Use a private method to populate the object in "AbstractHashedMap(Map)". Thanks to sebb.</li>
-<li>Fixed javadoc of "LRUMap" wrt to the maxSize parameter of the constructor. Thanks to ori.</li> 
+<li>Fixed javadoc of "LRUMap" wrt to the maxSize parameter of the constructor. Thanks to ori.</li>
 <li>Use of final keyword where applicable, minor performance improvements by properly initializing the capacity of newly created collections when known in advance. Thanks to Peter Lawrey, Gary Gregory.</li>
 <li>"SetUniqueList#subList()#contains(Object)" will now correctly check the subList rather than the parent list. Thanks to Christian Semrau.</li>
-<li>"SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint. Thanks to Rafał Figas,Bjorn Townsend.</li> 
-<li>Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries to modify the collection. Thanks to Emmanuel Bourg.</li> 
+<li>"SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint. Thanks to Rafał Figas,Bjorn Townsend.</li>
+<li>Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries to modify the collection. Thanks to Emmanuel Bourg.</li>
 <li>"CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independant manner. Thanks to Benjamin Bentmann.</li>
 <li>Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects in the list are not transformed. Thanks to Paul Benedict.</li>
 <li>"MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible.</li>
-<li>Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap". Thanks to Lisen Mu.</li> 
+<li>Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap". Thanks to Lisen Mu.</li>
 <li>"Flat3Map#remove(Object)" will now return the correct value mapped to the removed key if the size of the map is less or equal 3. Thanks to ori.</li>
 <li>Removed unused variables in "TreeBidiMap". Thanks to Henri Yandell.</li>
 <li>"SetUniqueList.addAll(int, Collection)" now correctly add the collection at the provided index. Thanks to Joe Kelly.</li>
-<li>Fixed several unit tests which were using parameters to "assertEquals(...)" in wrong order. Thanks to Mark Hindess.</li> 
+<li>Fixed several unit tests which were using parameters to "assertEquals(...)" in wrong order. Thanks to Mark Hindess.</li>
 <li>"MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)" now correctly return if the map has changed by this operation.</li>
-<li>"CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese.</li> 
+<li>"CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese.</li>
 <li>Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now correctly set the value for the current entry. Thanks to Matt Bishop.</li>
 <li>"MultiKey#toString()" will now use "Arrays#toString(List)". Thanks to Hendrik Maryns.</li>
 </ul>

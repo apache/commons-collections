@@ -77,8 +77,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-         !set.contains(i));
+        assertTrue("Collection shouldn't contain illegal element", !set.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -95,14 +94,10 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Set shouldn't contain illegal element",
-         !set.contains("one"));
-        assertTrue("Set shouldn't contain illegal element",
-         !set.contains("two"));
-        assertTrue("Set shouldn't contain illegal element",
-         !set.contains(Integer.valueOf(3)));
-        assertTrue("Set shouldn't contain illegal element",
-         !set.contains("four"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("one"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("two"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains(Integer.valueOf(3)));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("four"));
     }
 
     @Override

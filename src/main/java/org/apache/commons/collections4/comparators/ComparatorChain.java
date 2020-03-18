@@ -182,7 +182,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     public void setComparator(final int index, final Comparator<E> comparator, final boolean reverse) {
         checkLocked();
 
-        comparatorChain.set(index,comparator);
+        comparatorChain.set(index, comparator);
         if (reverse == true) {
             orderingBits.set(index);
         } else {
@@ -278,7 +278,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
 
             final Comparator<? super E> comparator = comparators.next();
-            int retval = comparator.compare(o1,o2);
+            int retval = comparator.compare(o1, o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {
@@ -317,13 +317,13 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is
+     * Returns {@code true} iff <i>that</i> Object is
      * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
-     * This implementation returns <code>true</code>
-     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
-     * equals <code>this.getClass()</code>, and the underlying
+     * This implementation returns {@code true}
+     * iff {@code <i>object</i>.{@link Object#getClass() getClass()}}
+     * equals {@code this.getClass()}, and the underlying
      * comparators and order bits are equal.
      * Subclasses may want to override this behavior to remain consistent
      * with the {@link Comparator#equals(Object)} contract.

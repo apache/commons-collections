@@ -31,7 +31,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>SortedMap</code> to ensure it can't be altered.
+ * Decorates another {@code SortedMap} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>

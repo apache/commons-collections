@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>SortedMap</code> to create objects in the map on demand.
+ * Decorates another {@code SortedMap} to create objects in the map on demand.
  * <p>
  * When the {@link #get(Object)} method is called with a key that does not
  * exist in the map, the factory is used to create the object. The created
@@ -44,8 +44,8 @@ import org.apache.commons.collections4.Transformer;
  * </pre>
  *
  * <p>
- * After the above code is executed, <code>date</code> will refer to
- * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+ * After the above code is executed, {@code date} will refer to
+ * a new {@code Date} instance. Furthermore, that {@code Date}
  * instance is mapped to the "NOW" key in the map.
  * </p>
  * <p>
@@ -63,7 +63,7 @@ import org.apache.commons.collections4.Transformer;
  * @param <V> the type of the values in this map
  * @since 3.0
  */
-public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
+public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2715322183617658933L;
@@ -108,7 +108,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
      * @param factory  the factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
-    protected LazySortedMap(final SortedMap<K,V> map, final Factory<? extends V> factory) {
+    protected LazySortedMap(final SortedMap<K, V> map, final Factory<? extends V> factory) {
         super(map, factory);
     }
 
@@ -119,7 +119,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
      * @param factory  the factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
-    protected LazySortedMap(final SortedMap<K,V> map, final Transformer<? super K, ? extends V> factory) {
+    protected LazySortedMap(final SortedMap<K, V> map, final Transformer<? super K, ? extends V> factory) {
         super(map, factory);
     }
 
@@ -129,8 +129,8 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
      *
      * @return the decorated map
      */
-    protected SortedMap<K,V> getSortedMap() {
-        return (SortedMap<K,V>) map;
+    protected SortedMap<K, V> getSortedMap() {
+        return (SortedMap<K, V>) map;
     }
 
     //-----------------------------------------------------------------------
@@ -150,20 +150,20 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
     }
 
     @Override
-    public SortedMap<K,V> subMap(final K fromKey, final K toKey) {
-        final SortedMap<K,V> map = getSortedMap().subMap(fromKey, toKey);
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
         return new LazySortedMap<>(map, factory);
     }
 
     @Override
-    public SortedMap<K,V> headMap(final K toKey) {
-        final SortedMap<K,V> map = getSortedMap().headMap(toKey);
+    public SortedMap<K, V> headMap(final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
         return new LazySortedMap<>(map, factory);
     }
 
     @Override
-    public SortedMap<K,V> tailMap(final K fromKey) {
-        final SortedMap<K,V> map = getSortedMap().tailMap(fromKey);
+    public SortedMap<K, V> tailMap(final K fromKey) {
+        final SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
         return new LazySortedMap<>(map, factory);
     }
 
