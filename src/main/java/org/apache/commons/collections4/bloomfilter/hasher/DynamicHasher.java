@@ -84,11 +84,20 @@ public class DynamicHasher implements Hasher {
 
     /**
      * The iterator of integers.
+     *
+     * <p>This assumes that the list of buffers is not empty.
      */
     private class Iterator implements PrimitiveIterator.OfInt {
-        private int buffer = 0;
-        private int funcCount = 0;
-        private final Shape shape;
+        /** The number of hash functions per item. */
+        private final int k;
+        /** The number of bits in the shape. */
+        private final int m;
+        /** The current item. */
+        private byte[] item;
+        /** The index of the next item. */
+        private int nextItem;
+        /** The count of hash functions for the current item. */
+        private int functionCount;
 
         /**
          * Constructs iterator with the specified shape.
@@ -96,32 +105,45 @@ public class DynamicHasher implements Hasher {
          * @param shape
          */
         private Iterator(final Shape shape) {
-            this.shape = shape;
+            // Assumes that shape returns non-zero positive values for hash functions and bits
+            k = shape.getNumberOfHashFunctions();
+            m = shape.getNumberOfBits();
+            // Assume non-empty
+            item = buffers.get(0);
+            nextItem = 1;
         }
 
         @Override
         public boolean hasNext() {
-            // Note: This iterator is only used when buffers.size() is not zero
-            return buffer < buffers.size() - 1 || funcCount < shape.getNumberOfHashFunctions();
+            if (functionCount != k) {
+                return true;
+            }
+            // Reached the number of hash functions for the current item.
+            // Try and advance to the next item.
+            if (nextItem != buffers.size()) {
+                item = buffers.get(nextItem++);
+                functionCount = 0;
+                return true;
+            }
+            // Finished.
+            // functionCount == shape.getNumberOfHashFunctions()
+            // nextItem == buffers.size()
+            return false;
         }
 
         @Override
         public int nextInt() {
             if (hasNext()) {
-                if (funcCount >= shape.getNumberOfHashFunctions()) {
-                    funcCount = 0;
-                    buffer++;
-                }
-                return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
+                return (int) Math.floorMod(function.apply(item, functionCount++),
                     // Cast to long to workaround a bug in animal-sniffer.
-                    (long) shape.getNumberOfBits());
+                    (long) m);
             }
             throw new NoSuchElementException();
         }
     }
 
     /**
-     * An iterator of integers to use then there are no values.
+     * An iterator of integers to use when there are no values.
      */
     private static class NoValuesIterator implements PrimitiveIterator.OfInt {
         /** The singleton instance. */
@@ -145,13 +167,15 @@ public class DynamicHasher implements Hasher {
 
     /**
      * The list of byte arrays that are to be hashed.
+     * Package private for access by the iterator.
      */
-    private final List<byte[]> buffers;
+    final List<byte[]> buffers;
 
     /**
      * The function to hash the buffers.
+     * Package private for access by the iterator.
      */
-    private final HashFunction function;
+    final HashFunction function;
 
     /**
      * Constructs a DynamicHasher.
