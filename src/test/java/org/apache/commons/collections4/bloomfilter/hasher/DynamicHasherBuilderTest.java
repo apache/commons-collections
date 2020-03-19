@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
@@ -63,6 +64,12 @@ public class DynamicHasherBuilderTest {
         final OfInt iter = hasher.iterator(shape);
 
         assertFalse(iter.hasNext());
+        try {
+            iter.nextInt();
+            fail("Should have thrown NoSuchElementException");
+        } catch (final NoSuchElementException ignore) {
+            // do nothing
+        }
     }
 
     /**
