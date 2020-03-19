@@ -23,16 +23,16 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.junit.Test;
 
 /**
- * Test that the Murmur3 128 x86 hash function works correctly.
+ * Test that the Murmur3 128 x64 hash function works correctly.
  */
-public class Murmur128x86CyclicTest extends AbstractHashFunctionTest {
+public class Murmur128x64CyclicTest extends AbstractHashFunctionTest {
 
     /**
      * Test that the apply function returns the proper values.
      */
     @Test
     public void applyTest() {
-        final Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
+        final Murmur128x64Cyclic murmur = new Murmur128x64Cyclic();
 
         final long l1 = 0xe7eb60dabb386407L;
         final long l2 = 0xc3ca49f691f73056L;
@@ -49,6 +49,6 @@ public class Murmur128x86CyclicTest extends AbstractHashFunctionTest {
 
     @Override
     protected HashFunction createHashFunction() {
-        return new Murmur128x86Cyclic();
+        return new Murmur128x64Cyclic();
     }
 }

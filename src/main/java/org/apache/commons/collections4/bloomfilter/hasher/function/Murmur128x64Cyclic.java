@@ -31,7 +31,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
  * @see <a href="https://github.com/aappleby/smhasher">SMHasher</a>
  * @since 4.5
  */
-public final class Murmur128x86Cyclic implements HashFunction {
+public final class Murmur128x64Cyclic implements HashFunction {
 
     /**
      * The name of this hash method.
@@ -53,7 +53,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
     /**
      * Constructs a Murmur3 x64 128 hash.
      */
-    public Murmur128x86Cyclic() {
+    public Murmur128x64Cyclic() {
         signature = Signatures.getSignature(this);
     }
 
