@@ -1089,7 +1089,8 @@ public class CollectionUtils {
      * @param inputCollection  the collection to get the input from, may not be null
      * @param transformer  the transformer to use, may be null
      * @return the transformed result (new list)
-     * @throws NullPointerException if the input collection is null
+     * @throws NullPointerException if the outputCollection is null and both, inputCollection and
+     *   transformer are not null
      */
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
                                                final Transformer<? super I, ? extends O> transformer) {
@@ -1202,7 +1203,7 @@ public class CollectionUtils {
      * @param collection  the collection to add to, must not be null
      * @param iterable  the iterable of elements to add, must not be null
      * @return a boolean indicating whether the collection has changed or not.
-     * @throws NullPointerException if the collection or iterator is null
+     * @throws NullPointerException if the collection or iterable is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
         Objects.requireNonNull(collection, "The collection must not be null.");
@@ -1258,7 +1259,7 @@ public class CollectionUtils {
      * @param collection  the collection to add to, must not be null
      * @param elements  the array of elements to add, must not be null
      * @return {@code true} if the collection was changed, {@code false} otherwise
-     * @throws NullPointerException if the collection or array is null
+     * @throws NullPointerException if the collection or elements is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
         Objects.requireNonNull(collection, "The collection must not be null.");
@@ -1735,7 +1736,7 @@ public class CollectionUtils {
      * @see PermutationIterator
      *
      * @param <E>  the element type
-     * @param collection  the collection to create permutations for, may not be null
+     * @param collection  the collection to create permutations for, must not be null
      * @return an unordered collection of all permutations of the input collection
      * @throws NullPointerException if collection is null
      * @since 4.0
@@ -2026,7 +2027,7 @@ public class CollectionUtils {
      * @param collection  the collection to predicate, must not be null
      * @param predicate  the predicate for the collection, must not be null
      * @return a predicated collection backed by the given collection
-     * @throws NullPointerException if the Collection is null
+     * @throws NullPointerException if the collection or predicate is null
      */
     public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
                                                          final Predicate<? super C> predicate) {
@@ -2051,7 +2052,7 @@ public class CollectionUtils {
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null
      * @return a transformed collection backed by the given collection
-     * @throws NullPointerException if the Collection or Transformer is null
+     * @throws NullPointerException if the collection or transformer is null
      */
     public static <E> Collection<E> transformingCollection(final Collection<E> collection,
             final Transformer<? super E, ? extends E> transformer) {
