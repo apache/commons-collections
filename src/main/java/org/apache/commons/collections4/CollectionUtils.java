@@ -610,15 +610,16 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the hash code of Collection through the hash method of Equator.
+     * Returns the hash code the the input collection using the hash method of the equator.
      * <p>
-     * If the input collection is null return 1.
+     * If the input collection is null return 0.
      * </p>
      *
      * @param <E>  the element type
      * @param collection  the input collection
      * @param equator  the Equator used for generate hashCode
      * @return the hashCode of Collection through the hash method of Equator
+     * @throws NullPointerException if the equator is null
      * @since 4.5
      */
     public static <E> int hashCode(final Collection<? extends E> collection,
