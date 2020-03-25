@@ -446,7 +446,7 @@ public abstract class AbstractBloomFilterTest {
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
      */
     @Test
-    public final void mergeTest_GenenicBloomFilter() {
+    public final void mergeTest_GenericBloomFilter() {
         mergeTest_BloomFilter(this::createGenericFilter);
     }
 
@@ -598,7 +598,7 @@ public abstract class AbstractBloomFilterTest {
      * Tests that the xorCardinality calculations are correct with a generic BloomFilter.
      */
     @Test
-    public final void xorCardinalityTest_GenenicBloomFilter() {
+    public final void xorCardinalityTest_GenericBloomFilter() {
         xorCardinalityTest(this::createGenericFilter);
     }
 
