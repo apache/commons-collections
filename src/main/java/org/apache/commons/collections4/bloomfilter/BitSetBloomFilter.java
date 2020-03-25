@@ -32,7 +32,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 public class BitSetBloomFilter extends AbstractBloomFilter {
 
     /**
-     * The bitset that defines this BloomFilter.
+     * The bitSet that defines this BloomFilter.
      */
     private final BitSet bitSet;
 

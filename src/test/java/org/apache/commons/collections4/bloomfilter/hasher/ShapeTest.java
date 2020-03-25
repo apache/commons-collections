@@ -88,7 +88,7 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the number of hash functions is less than 1 an exception is thrown.
+     * Tests that if the number of hash functions is less than 1 an IllegalArgumentException is thrown.
      */
     @Test
     public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
@@ -212,7 +212,7 @@ public class ShapeTest {
     }
 
     /**
-     * Tests that if the probability is less than or equal to 0 an IllegalArgumentException is thrown.
+     * Tests that if the probability is less than or equal to 0 or more than or equal to 1 an IllegalArgumentException is thrown.
      */
     @Test
     public void constructor_items_probability_BadProbabilityTest() {
@@ -392,7 +392,7 @@ public class ShapeTest {
     @Test
     public void constructor_probability_bits_hashTest() {
         /*
-         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
         final Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
 
