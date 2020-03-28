@@ -582,7 +582,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * do the actual lookup of a piece of data
+     * Does the actual lookup of a piece of data.
      *
      * @param data the key or value to be looked up
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -616,7 +616,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get the next larger node from the specified node
+     * Gets the next larger node from the specified node.
      *
      * @param node the node to be searched from
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -651,7 +651,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get the next larger node from the specified node
+     * Gets the next smaller node from the specified node.
      *
      * @param node the node to be searched from
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -688,7 +688,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     //-----------------------------------------------------------------------
 
     /**
-     * Compare two objects
+     * Compare two objects.
      *
      * @param o1  the first object
      * @param o2  the second object
@@ -738,8 +738,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * copy the color from one node to another, dealing with the fact
-     * that one or both nodes may, in fact, be null
+     * Copy the color from one node to another, dealing with the fact
+     * that one or both nodes may, in fact, be null.
      *
      * @param from the node whose color we're copying; may be null
      * @param to the node whose color we're changing; may be null
@@ -758,8 +758,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * is the specified node red? if the node does not exist, no, it's
-     * black, thank you
+     * Is the specified node red? If the node does not exist, no, it's
+     * black, thank you.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -770,8 +770,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * is the specified black red? if the node does not exist, sure,
-     * it's black, thank you
+     * Is the specified black red? If the node does not exist, sure,
+     * it's black, thank you.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -782,7 +782,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * force a node (if it exists) red
+     * Force a node (if it exists) red.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -795,7 +795,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * force a node (if it exists) black
+     * Force a node (if it exists) black.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -808,8 +808,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get a node's grandparent. mind you, the node, its parent, or
-     * its grandparent may not exist. no problem
+     * Get a node's grandparent. mind you, the node, its parent, or
+     * its grandparent may not exist. No problem.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -820,8 +820,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get a node's parent. mind you, the node, or its parent, may not
-     * exist. no problem
+     * Get a node's parent. mind you, the node, or its parent, may not
+     * exist. no problem.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -832,8 +832,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get a node's right child. mind you, the node may not exist. no
-     * problem
+     * Get a node's right child. mind you, the node may not exist. no
+     * problem.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -844,8 +844,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * get a node's left child. mind you, the node may not exist. no
-     * problem
+     * Get a node's left child. mind you, the node may not exist. no
+     * problem.
      *
      * @param node the node (may be null) in question
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -856,7 +856,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * do a rotate left. standard fare in the world of balanced trees
+     * Do a rotate left. standard fare in the world of balanced trees.
      *
      * @param node the node to be rotated
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -885,7 +885,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * do a rotate right. standard fare in the world of balanced trees
+     * Do a rotate right. standard fare in the world of balanced trees.
      *
      * @param node the node to be rotated
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -913,8 +913,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * complicated red-black insert stuff. Based on Sun's TreeMap
-     * implementation, though it's barely recognizable any more
+     * Complicated red-black insert stuff. Based on Sun's TreeMap
+     * implementation, though it's barely recognizable any more.
      *
      * @param insertedNode the node to be inserted
      * @param dataElement  the KEY or VALUE int
@@ -983,8 +983,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * complicated red-black delete stuff. Based on Sun's TreeMap
-     * implementation, though it's barely recognizable any more
+     * Complicated red-black delete stuff. Based on Sun's TreeMap
+     * implementation, though it's barely recognizable any more.
      *
      * @param deletedNode the node to be deleted
      */
@@ -1047,7 +1047,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * complicated red-black delete stuff. Based on Sun's TreeMap
+     * Complicated red-black delete stuff. Based on Sun's TreeMap
      * implementation, though it's barely recognizable any more. This
      * rebalances the tree (somewhat, as red-black trees are not
      * perfectly balanced -- perfect balancing takes longer)
@@ -1130,7 +1130,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * swap two nodes (except for their content), taking care of
+     * Swap two nodes (except for their content), taking care of
      * special cases where one is the other's parent ... hey, it
      * happens.
      *
@@ -1230,8 +1230,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * check if an object is fit to be proper input ... has to be
-     * Comparable and non-null
+     * Check if an object is fit to be proper input ... has to be
+     * Comparable and non-null.
      *
      * @param obj the object being checked
      * @param dataElement  either {@link DataElement#KEY} key}
@@ -1248,7 +1248,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * check a key for validity (non-null and implements Comparable)
+     * Check a key for validity (non-null and implements Comparable)
      *
      * @param key the key to be checked
      *
@@ -1260,7 +1260,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * check a value for validity (non-null and implements Comparable)
+     * Check a value for validity (non-null and implements Comparable)
      *
      * @param value the value to be checked
      *
@@ -1272,7 +1272,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * check a key and a value for validity (non-null and implements
+     * Check a key and a value for validity (non-null and implements
      * Comparable)
      *
      * @param key the key to be checked
@@ -1287,16 +1287,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * increment the modification count -- used to check for
+     * Increment the modification count -- used to check for
      * concurrent modification of the map through the map and through
-     * an Iterator from one of its Set or Collection views
+     * an Iterator from one of its Set or Collection views.
      */
     private void modify() {
         modifications++;
     }
 
     /**
-     * bump up the size and note that the map has changed
+     * Bump up the size and note that the map has changed.
      */
     private void grow() {
         modify();
@@ -1304,7 +1304,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * decrement the size and note that the map has changed
+     * Decrement the size and note that the map has changed.
      */
     private void shrink() {
         modify();
@@ -1312,7 +1312,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * insert a node by its value
+     * Insert a node by its value.
      *
      * @param newNode the node to be inserted
      *
@@ -2021,7 +2021,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         /**
-         * Make this node the same color as another
+         * Make this node the same color as another.
          *
          * @param node  the node whose color we're adopting
          * @param dataElement  either {@link DataElement#KEY} key}
@@ -2063,7 +2063,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         /**
-         * Optional operation that is not permitted in this implementation
+         * Optional operation that is not permitted in this implementation.
          *
          * @param ignored this parameter is ignored.
          * @return does not return
