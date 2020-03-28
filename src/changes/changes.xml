@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-737" dev="kinow" type="update" due-to="Prodigysov">
+      Return 0 immeditaly if the given iterable is null in IterableUtils#size. Update tests.
+    </action>
     <action issue="COLLECTIONS-697" dev="eax" type="update" due-to="Ranjan George">
       JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
     </action>
