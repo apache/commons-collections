@@ -256,7 +256,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * @return the uniqueSet iterator
      */
     protected Iterator<E> createUniqueSetIterator() {
-        final Transformer<Entry<E>, E> transformer = entry -> entry.getElement();
+        final Transformer<Entry<E>, E> transformer = Entry::getElement;
         return IteratorUtils.transformedIterator(entrySet().iterator(), transformer);
     }
 

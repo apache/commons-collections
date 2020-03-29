@@ -35,11 +35,11 @@ import org.apache.commons.collections4.functors.NOPTransformer;
 @SuppressWarnings("boxing")
 public class TransformedSplitMapTest extends BulkTest {
 
-    private final Transformer<Integer, String> intToString = input -> String.valueOf(input);
+    private final Transformer<Integer, String> intToString = String::valueOf;
 
     private final Transformer<Object, Class<?>> objectToClass = input -> input == null ? null : input.getClass();
 
-    private final Transformer<String, Integer> stringToInt = input -> Integer.valueOf(input);
+    private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
     public TransformedSplitMapTest(final String testName) {
         super(testName);

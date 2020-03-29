@@ -41,7 +41,7 @@ public class SplitMapUtilsTest {
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
-    private final Transformer<String, Integer> stringToInt = input -> Integer.valueOf(input);
+    private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
     @Before
     public void setUp() throws Exception {

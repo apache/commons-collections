@@ -939,7 +939,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(2.0, MapUtils.getDoubleValue(in, "key", 0.0), 0);
         assertEquals(2.0, MapUtils.getDoubleValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getDoubleValue(in, "noKey", 1.0), 0);
-        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", (key)->{
+        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> {
             //sometimes the default value need to be calculated,such as System.currentTimeMillis()
             return 5.0D;
         }), 0);
@@ -947,7 +947,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(0, MapUtils.getDoubleValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getDouble(in, "key", 0.0), 0);
         assertEquals(1.0, MapUtils.getDouble(in, "noKey", 1.0), 0);
-        assertEquals(1.0, MapUtils.getDouble(in, "noKey", (key)->{
+        assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> {
             return 1.0;
         }), 0);
 
@@ -967,13 +967,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(2.0, MapUtils.getFloatValue(in, "key", 0.0f), 0);
         assertEquals(2.0, MapUtils.getFloatValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", (key) -> {
+        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> {
             return 1.0F;
         }), 0);
         assertEquals(0, MapUtils.getFloatValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getFloat(in, "key", 0.0f), 0);
         assertEquals(1.0, MapUtils.getFloat(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloat(in, "noKey", (key) -> {
+        assertEquals(1.0, MapUtils.getFloat(in, "noKey", key -> {
             return 1.0F;
         }), 0);
 
@@ -992,13 +992,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(2.0, MapUtils.getLongValue(in, "key", 0L), 0);
         assertEquals(2.0, MapUtils.getLongValue(in, "key"), 0);
         assertEquals(1, MapUtils.getLongValue(in, "noKey", 1L), 0);
-        assertEquals(1, MapUtils.getLongValue(in, "noKey", (key) -> {
+        assertEquals(1, MapUtils.getLongValue(in, "noKey", key -> {
             return 1L;
         }), 0);
         assertEquals(0, MapUtils.getLongValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getLong(in, "key", 0L), 0);
         assertEquals(1, MapUtils.getLong(in, "noKey", 1L), 0);
-        assertEquals(1, MapUtils.getLong(in, "noKey", (key) -> {
+        assertEquals(1, MapUtils.getLong(in, "noKey", key -> {
             return 1L;
         }), 0);
 
@@ -1018,13 +1018,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", (key)->{
+        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> {
             return 0;
         }), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
         assertEquals(2, MapUtils.getInteger(in, "key", 0), 0);
         assertEquals(0, MapUtils.getInteger(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getInteger(in, "noKey", (key)->{
+        assertEquals(0, MapUtils.getInteger(in, "noKey", key -> {
             return 0;
         }), 0);
 
@@ -1043,13 +1043,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", (key)->{
+        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> {
             return val;
         }), 0);
         assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getShort(in, "key", val), 0);
         assertEquals(val, MapUtils.getShort(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShort(in, "noKey", (key)->{
+        assertEquals(val, MapUtils.getShort(in, "noKey", key -> {
             return val;
         }), 0);
 
@@ -1068,13 +1068,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(val, MapUtils.getByteValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
         assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "noKey", (key) -> {
+        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> {
             return (byte) 100;
         }), 0);
         assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getByte(in, "key", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByte(in, "noKey", (key)->{
+        assertEquals(val, MapUtils.getByte(in, "noKey", key -> {
             return val;
         }), 0);
 
@@ -1093,7 +1093,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         assertEquals(val.intValue(), MapUtils.getNumber(in, "key", val).intValue(), 0);
         assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", val).intValue(), 0);
-        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", (key) -> {
+        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", key -> {
             if (true) {
                 return val;
             } else {
@@ -1112,7 +1112,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals("str", MapUtils.getString(in, "key"));
         assertEquals(null, MapUtils.getString(null, "key"));
         assertEquals("default", MapUtils.getString(in, "noKey", "default"));
-        assertEquals("default", MapUtils.getString(in, "noKey", (key)->{
+        assertEquals("default", MapUtils.getString(in, "noKey", key -> {
             if ("noKey".equals(key)) {
                 return "default";
             } else {
@@ -1149,22 +1149,22 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertTrue(MapUtils.getBooleanValue(in, "key", true));
         assertTrue(MapUtils.getBooleanValue(in, "key"));
         assertTrue(MapUtils.getBooleanValue(in, "noKey", true));
-        assertTrue(MapUtils.getBooleanValue(in, "noKey", (key) -> {
+        assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> {
             return true;
         }));
         assertTrue(!MapUtils.getBooleanValue(in, "noKey"));
         assertTrue(MapUtils.getBoolean(in, "key", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", true));
-        assertTrue(MapUtils.getBoolean(in, "noKey", (key)->{
+        assertTrue(MapUtils.getBoolean(in, "noKey", key -> {
             if (System.currentTimeMillis() > 0) {
                 return true;
             }
             return false;
         }));
-        assertNull(MapUtils.getBoolean(in, "noKey", (key) -> {
+        assertNull(MapUtils.getBoolean(in, "noKey", key -> {
             return null;
         }));
-        assertFalse(MapUtils.getBooleanValue(in, "noKey", (key) -> {
+        assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> {
             return null;
         }));
         assertEquals(null, MapUtils.getBoolean(null, "noKey"));
