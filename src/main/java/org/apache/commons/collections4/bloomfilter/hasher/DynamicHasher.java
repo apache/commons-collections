@@ -131,6 +131,7 @@ public class DynamicHasher implements Hasher {
             return false;
         }
 
+        @SuppressWarnings("cast") // Cast to long to workaround a bug in animal-sniffer.
         @Override
         public int nextInt() {
             if (hasNext()) {
