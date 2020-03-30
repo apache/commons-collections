@@ -36,7 +36,7 @@
 <p>
    Many Jakarta projects have needs or design criteria that extend
    beyond the core Collections API, such as introducing new abstract
-   data types (e.g., Avalon's BinaryHeap) or changing the behaviour of
+   data types (e.g., Avalon's BinaryHeap) or changing the behavior of
    existing abstract data types (e.g., Struts' FastHashMap).
 </p>
 <p>

@@ -39,7 +39,7 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * EntrySet and Values view classes.
  * </p>
  * <p>
- * Overridable methods are provided to change the default hashing behaviour, and
+ * Overridable methods are provided to change the default hashing behavior, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
  * </p>

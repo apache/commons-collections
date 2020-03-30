@@ -44,7 +44,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * which can be overridden and replaced. The iterators can similarly be replaced,
  * without the need to replace the KeySet, EntrySet and Values view classes.
  * <p>
- * Overridable methods are provided to change the default hashing behaviour, and
+ * Overridable methods are provided to change the default hashing behavior, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
  * <p>

@@ -113,7 +113,7 @@ public class QueueUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified queue will not be transformed.
-     * If you want that behaviour, see {@link TransformedQueue#transformedQueue}.
+     * If you want that behavior, see {@link TransformedQueue#transformedQueue}.
      *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to predicate, must not be null

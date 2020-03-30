@@ -106,7 +106,7 @@ public class ListOrderedSet<E>
     /**
      * Factory method to create an ordered set using the supplied list to retain order.
      * <p>
-     * A {@code HashSet} is used for the set behaviour.
+     * A {@code HashSet} is used for the set behavior.
      * <p>
      * NOTE: If the list contains duplicates, the duplicates are removed,
      * altering the specified list.

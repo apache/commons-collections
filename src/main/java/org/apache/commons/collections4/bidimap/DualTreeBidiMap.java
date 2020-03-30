@@ -190,7 +190,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * Obtains an ordered map iterator.
      * <p>
      * This implementation copies the elements to an ArrayList in order to
-     * provide the forward/backward behaviour.
+     * provide the forward/backward behavior.
      *
      * @return a new ordered map iterator
      */

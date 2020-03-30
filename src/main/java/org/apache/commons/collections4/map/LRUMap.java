@@ -73,7 +73,7 @@ public class LRUMap<K, V>
 
     /** Maximum size */
     private transient int maxSize;
-    /** Scan behaviour */
+    /** Scan behavior */
     private boolean scanUntilRemovable;
 
     /**

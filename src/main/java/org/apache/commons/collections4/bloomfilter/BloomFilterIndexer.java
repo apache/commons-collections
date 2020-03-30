@@ -45,7 +45,7 @@ final class BloomFilterIndexer {
      * <p>The index is assumed to be positive. For a positive index the result will match
      * {@code bitIndex / 64}.
      *
-     * <p>The divide is performed using bit shifts. If the input is negative the behaviour
+     * <p>The divide is performed using bit shifts. If the input is negative the behavior
      * is not defined.
      *
      * @param bitIndex the bit index (assumed to be positive)
@@ -68,7 +68,7 @@ final class BloomFilterIndexer {
      * <p>The index is assumed to be positive. For a positive index the result will match
      * {@code 1L << (bitIndex % 64)}.
      *
-     * <p>If the input is negative the behaviour is not defined.
+     * <p>If the input is negative the behavior is not defined.
      *
      * @param bitIndex the bit index (assumed to be positive)
      * @return the filter bit

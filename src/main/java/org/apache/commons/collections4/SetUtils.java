@@ -494,7 +494,7 @@ public class SetUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedNavigableSet#transformedNavigableSet}.
+     * If you want that behavior, see {@link TransformedNavigableSet#transformedNavigableSet}.
      *
      * @param <E> the element type
      * @param set  the navigable set to transform, must not be null
@@ -516,7 +516,7 @@ public class SetUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedSet#transformedSet}.
+     * If you want that behavior, see {@link TransformedSet#transformedSet}.
      *
      * @param <E> the element type
      * @param set  the set to transform, must not be null
@@ -537,7 +537,7 @@ public class SetUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedSortedSet#transformedSortedSet}.
+     * If you want that behavior, see {@link TransformedSortedSet#transformedSortedSet}.
      *
      * @param <E> the element type
      * @param set  the set to transform, must not be null

@@ -41,7 +41,7 @@ public class BloomFilterIndexerTest {
             // getLongIndex is expected to identify a block of 64-bits (starting from zero)
             Assert.assertEquals(index / Long.SIZE, BloomFilterIndexer.getLongIndex(index));
 
-            // Verify the behaviour for negatives. It should produce a negative (invalid)
+            // Verify the behavior for negatives. It should produce a negative (invalid)
             // as a simple trip for incorrect usage.
             Assert.assertTrue(BloomFilterIndexer.getLongIndex(-index) < 0);
 
@@ -60,7 +60,7 @@ public class BloomFilterIndexerTest {
             // getLongBit is expected to identify a single bit in a 64-bit block
             Assert.assertEquals(1L << (index % Long.SIZE), BloomFilterIndexer.getLongBit(index));
 
-            // Verify the behaviour for negatives
+            // Verify the behavior for negatives
             Assert.assertEquals(1L << (64 - (index & 0x3f)), BloomFilterIndexer.getLongBit(-index));
         }
     }

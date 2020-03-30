@@ -41,7 +41,7 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * </p>
  * <p>
  * The defaulted value is not added to the map.
- * Compare this behaviour with {@link LazyMap}, which does add the value
+ * Compare this behavior with {@link LazyMap}, which does add the value
  * to the map (via a Transformer).
  * </p>
  * <p>

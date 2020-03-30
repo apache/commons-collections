@@ -22,7 +22,7 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
 
 /**
- * Decorates another {@link Bag} to synchronize its behaviour
+ * Decorates another {@link Bag} to synchronize its behavior
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.

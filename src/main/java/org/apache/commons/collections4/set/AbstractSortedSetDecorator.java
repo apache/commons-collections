@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.SortedSet;
 
 /**
- * Decorates another {@code SortedSet} to provide additional behaviour.
+ * Decorates another {@code SortedSet} to provide additional behavior.
  * <p>
  * Methods are forwarded directly to the decorated set.
  * </p>

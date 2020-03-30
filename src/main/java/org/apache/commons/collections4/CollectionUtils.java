@@ -1994,7 +1994,7 @@ public class CollectionUtils {
      * </p>
      * <p>
      * Existing entries in the specified collection will not be transformed.
-     * If you want that behaviour, see {@link TransformedCollection#transformedCollection}.
+     * If you want that behavior, see {@link TransformedCollection#transformedCollection}.
      * </p>
      *
      * @param <E> the type of object the {@link Collection} contains

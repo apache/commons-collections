@@ -105,7 +105,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Decorate the add method to perform the growth behaviour.
+     * Decorate the add method to perform the growth behavior.
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested
@@ -133,7 +133,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Decorate the addAll method to perform the growth behaviour.
+     * Decorate the addAll method to perform the growth behavior.
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested
@@ -164,7 +164,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Decorate the set method to perform the growth behaviour.
+     * Decorate the set method to perform the growth behavior.
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested

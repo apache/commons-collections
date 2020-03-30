@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * Provides basic behaviour for decorating an iterator with extra functionality
+ * Provides basic behavior for decorating an iterator with extra functionality
  * without committing the generic type of the Iterator implementation.
  * <p>
  * All methods are forwarded to the decorated iterator.

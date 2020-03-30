@@ -227,7 +227,7 @@ public class ListUtils {
      * different implementations of the {@code List} interface.
      * </blockquote>
      *
-     * <b>Note:</b> The behaviour of this method is undefined if the lists are
+     * <b>Note:</b> The behavior of this method is undefined if the lists are
      * modified during the equals comparison.
      *
      * @see java.util.List
@@ -425,7 +425,7 @@ public class ListUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified list will not be transformed.
-     * If you want that behaviour, see {@link TransformedList#transformedList}.
+     * If you want that behavior, see {@link TransformedList#transformedList}.
      *
      * @param <E> the element type
      * @param list  the list to predicate, must not be null

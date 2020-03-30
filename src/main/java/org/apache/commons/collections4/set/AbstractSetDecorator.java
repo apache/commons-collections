@@ -21,7 +21,7 @@ import java.util.Set;
 import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
 
 /**
- * Decorates another {@code Set} to provide additional behaviour.
+ * Decorates another {@code Set} to provide additional behavior.
  * <p>
  * Methods are forwarded directly to the decorated set.
  * </p>

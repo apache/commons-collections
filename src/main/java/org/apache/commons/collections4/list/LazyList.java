@@ -132,7 +132,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Decorate the get method to perform the lazy behaviour.
+     * Decorate the get method to perform the lazy behavior.
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size and a new object will be returned from the factory

@@ -24,7 +24,7 @@ package org.apache.commons.collections4;
  * <p>
  * This class tries to handle {@code null} input gracefully. An exception will not be thrown for a {@code null} array
  * input. However, an Object array that contains a {@code null} element may throw an exception. Each method documents
- * its behaviour.
+ * its behavior.
  * </p>
  * <p>
  * Package private, might move to an internal package if this needs to be public.

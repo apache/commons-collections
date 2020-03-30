@@ -113,7 +113,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Override
     public void testCollectionAddAll() {
-        // override for set behaviour
+        // override for set behavior
         resetEmpty();
         E[] elements = getFullElements();
         boolean r = getCollection().addAll(Arrays.asList(elements));
@@ -300,7 +300,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Override
     public void testListIteratorAdd() {
-        // override to cope with Set behaviour
+        // override to cope with Set behavior
         resetEmpty();
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
@@ -343,7 +343,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public void testListSetByIndex() {
-        // override for set behaviour
+        // override for set behavior
         resetFull();
         final int size = getCollection().size();
         getCollection().set(0, (E) new Long(1000));

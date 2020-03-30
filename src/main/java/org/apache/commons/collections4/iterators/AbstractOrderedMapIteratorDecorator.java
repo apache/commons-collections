@@ -21,7 +21,7 @@ import java.util.Objects;
 import org.apache.commons.collections4.OrderedMapIterator;
 
 /**
- * Provides basic behaviour for decorating an ordered map iterator with extra functionality.
+ * Provides basic behavior for decorating an ordered map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
  *

@@ -475,7 +475,7 @@ public class PredicateUtils {
     /**
      * Gets a Predicate that throws an exception if the input object is null,
      * otherwise it calls the specified Predicate. This allows null handling
-     * behaviour to be added to Predicates that don't support nulls.
+     * behavior to be added to Predicates that don't support nulls.
      *
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
@@ -489,7 +489,7 @@ public class PredicateUtils {
 
     /**
      * Gets a Predicate that returns false if the input object is null, otherwise
-     * it calls the specified Predicate. This allows null handling behaviour to
+     * it calls the specified Predicate. This allows null handling behavior to
      * be added to Predicates that don't support nulls.
      *
      * @param <T>  the type that the predicate queries
@@ -504,7 +504,7 @@ public class PredicateUtils {
 
     /**
      * Gets a Predicate that returns true if the input object is null, otherwise
-     * it calls the specified Predicate. This allows null handling behaviour to
+     * it calls the specified Predicate. This allows null handling behavior to
      * be added to Predicates that don't support nulls.
      *
      * @param <T>  the type that the predicate queries

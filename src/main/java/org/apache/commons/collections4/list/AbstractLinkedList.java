@@ -784,7 +784,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * #previous()} haven't been called, or if the node has been removed
          * with {@link #remove()} or a new node added with {@link #add(Object)}.
          * Should be accessed through {@link #getLastNodeReturned()} to enforce
-         * this behaviour.
+         * this behavior.
          */
         protected Node<E> current;
 

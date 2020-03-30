@@ -46,7 +46,7 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * </p>
  * <p>
  * This map is implemented as a decorator of a {@code AbstractHashedMap} which
- * enables extra behaviour to be added easily.
+ * enables extra behavior to be added easily.
  * </p>
  * <ul>
  * <li>{@code MultiKeyMap.decorate(new LinkedMap())} creates an ordered map.

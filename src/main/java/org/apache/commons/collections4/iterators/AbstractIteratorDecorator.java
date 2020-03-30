@@ -19,7 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 
 /**
- * Provides basic behaviour for decorating an iterator with extra functionality.
+ * Provides basic behavior for decorating an iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated iterator.
  *

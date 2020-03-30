@@ -29,7 +29,7 @@ import java.util.List;
  * 1) any single Comparator returns a non-zero result (and that result is then
  * returned), or 2) the ComparatorChain is exhausted (and zero is returned).
  * This type of sorting is very similar to multi-column sorting in SQL, and this
- * class allows Java classes to emulate that kind of behaviour when sorting a
+ * class allows Java classes to emulate that kind of behavior when sorting a
  * List.
  * <p>
  * To further facilitate SQL-like sorting, the order of any single Comparator in
