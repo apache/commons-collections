@@ -62,14 +62,14 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     private final List<Set<E>> all = new ArrayList<>();
 
     /**
-     * Create an empty CompositeSet.
+     * Creates an empty CompositeSet.
      */
     public CompositeSet() {
         super();
     }
 
     /**
-     * Create a CompositeSet with just {@code set} composited.
+     * Creates a CompositeSet with just {@code set} composited.
      *
      * @param set  the initial set in the composite
      */
@@ -79,7 +79,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Create a composite set with sets as the initial set of composited Sets.
+     * Creates a composite set with sets as the initial set of composited Sets.
      *
      * @param sets  the initial sets in the composite
      */
@@ -367,7 +367,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Add a Set to this composite.
+     * Adds a Set to this composite.
      *
      * @param set  the set to add
      * @throws IllegalArgumentException if a SetMutator is set, but fails to resolve a collision
@@ -396,7 +396,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Add these Sets to the list of sets in this composite.
+     * Adds these Sets to the list of sets in this composite.
      *
      * @param set1  the first Set to be appended to the composite
      * @param set2  the second Set to be appended to the composite
@@ -407,7 +407,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Add these Sets to the list of sets in this composite
+     * Adds these Sets to the list of sets in this composite
      *
      * @param sets  the Sets to be appended to the composite
      */
@@ -449,7 +449,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Get the set mutator to be used for this CompositeSet.
+     * Gets the set mutator to be used for this CompositeSet.
      * @return the set mutator
      */
     protected SetMutator<E> getMutator() {
@@ -483,7 +483,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     }
 
     /**
-     * Define callbacks for mutation operations.
+     * Defines callbacks for mutation operations.
      */
     public interface SetMutator<E> extends Serializable {
 
