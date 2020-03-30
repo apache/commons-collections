@@ -730,8 +730,9 @@ public class BidirectionalHashMapTest {
     
     @Test
     public void testEntrySetThrowsOnNullGenericArray() {
+        String[] a = null;
         try {
-            map.entrySet().toArray(null);
+            map.entrySet().toArray(a);
             fail("NullPointerException");
         } catch (NullPointerException expected) {
             //expected
@@ -740,8 +741,9 @@ public class BidirectionalHashMapTest {
     
     @Test
     public void testKeySetThrowsOnNullGenericArray() {
+        String[] a = null;
         try {
-            map.keySet().toArray(null);
+            map.keySet().toArray(a);
             fail("NullPointerException");
         } catch (NullPointerException expected) {
             //expected
