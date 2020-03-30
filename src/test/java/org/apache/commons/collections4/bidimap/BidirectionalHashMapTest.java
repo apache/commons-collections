@@ -959,7 +959,8 @@ public class BidirectionalHashMapTest {
         
         assertEquals(Integer.valueOf(1), inverse.put("Hey", 11));
         assertEquals(Integer.valueOf(2), inverse.put("yo!", 12));
-        
+        assertEquals(Integer.valueOf(12), inverse.put("yo!", 12));
+
         assertEquals(Integer.valueOf(12), inverse.remove("yo!"));
         assertEquals(Integer.valueOf(11), inverse.remove("Hey"));
     }
@@ -1126,7 +1127,6 @@ public class BidirectionalHashMapTest {
         inverse2.put(1, "yea");
         assertTrue("yea", keySet.remove(1));
         assertFalse(keySet.remove(10));
-        assertFalse("yea", keySet.remove(1));
     }
 
     @Test
@@ -1182,23 +1182,14 @@ public class BidirectionalHashMapTest {
     public void testInverseMapKeySetRemoveAll() {
         List<Integer> aux = new ArrayList<>();
 
-        assertFalse(inverse2.keySet().removeAll(aux));
-
-        for (int i = 0; i < strings.length; ++i) {
-            inverse2.put(i, strings[i]);
+        try {
+            assertFalse(inverse2.keySet().removeAll(aux));
+            fail("UnsupportedOperationException");
+        } catch (UnsupportedOperationException expected) {
+            //expected
         }
 
-        assertFalse(inverse2.keySet().removeAll(aux));
 
-        aux.add(-1);
-        assertFalse(inverse2.keySet().removeAll(aux));
-
-        aux.add(1);
-        aux.add(2);
-
-        assertTrue(inverse2.keySet().removeAll(aux));
-
-        assertEquals(strings.length - 2, inverse2.keySet().size());
     }
 
     @Test
