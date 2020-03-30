@@ -162,18 +162,33 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
             super.list(out);
         }
 
+        /**
+         * Throws {@link UnsupportedOperationException}.
+         * Caller should use try-with-resources statement.
+         */
+        @SuppressWarnings("resource")
         @Override
         public synchronized void load(final InputStream inStream) throws IOException {
             Objects.requireNonNull(inStream);
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Throws {@link UnsupportedOperationException}.
+         * Caller should use try-with-resources statement.
+         */
+        @SuppressWarnings("resource")
         @Override
         public synchronized void load(final Reader reader) throws IOException {
             Objects.requireNonNull(reader);
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Throws {@link UnsupportedOperationException}.
+         * Caller should use try-with-resources statement.
+         */
+        @SuppressWarnings("resource")
         @Override
         public synchronized void loadFromXML(final InputStream in)
             throws IOException, InvalidPropertiesFormatException {
