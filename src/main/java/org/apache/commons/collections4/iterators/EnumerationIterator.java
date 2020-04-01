@@ -24,6 +24,7 @@ import java.util.Iterator;
  * Adapter to make {@link Enumeration Enumeration} instances appear
  * to be {@link Iterator Iterator} instances.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 1.0
  */
 public class EnumerationIterator<E> implements Iterator<E> {

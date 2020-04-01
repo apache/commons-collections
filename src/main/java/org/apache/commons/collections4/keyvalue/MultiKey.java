@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -51,8 +52,69 @@ public class MultiKey<K> implements Serializable {
     /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
 
+    @SuppressWarnings("unchecked")
+    private static <T> Class<? extends T> getClass(final T value) {
+        return (Class<? extends T>) (value == null ? Object.class : value.getClass());
+    }
+
+    private static <T> Class<? extends T> getComponentType(final T... values) {
+        @SuppressWarnings("unchecked")
+        final Class<? extends T> rootClass = (Class<? extends T>) Object.class;
+        if (values == null) {
+            return rootClass;
+        }
+        Class<? extends T> prevClass = values.length > 0 ? getClass(values[0]) : rootClass;
+        for (int i = 1; i < values.length; i++) {
+            final Class<? extends T> classI = getClass(values[i]);
+            if (prevClass != classI) {
+                return rootClass;
+            }
+            prevClass = classI;
+        }
+        return prevClass;
+    }
+
+    private static <T> T[] newArray(final T key1, final T key2) {
+        @SuppressWarnings("unchecked")
+        final T[] array = (T[]) Array.newInstance(getComponentType(key1, key2), 2);
+        array[0] = key1;
+        array[1] = key2;
+        return array;
+    }
+
+    private static <T> T[] newArray(final T key1, final T key2, final T key3) {
+        @SuppressWarnings("unchecked")
+        final T[] array = (T[]) Array.newInstance(getComponentType(key1, key2, key3), 3);
+        array[0] = key1;
+        array[1] = key2;
+        array[2] = key3;
+        return array;
+    }
+
+    private static <T> T[] newArray(final T key1, final T key2, final T key3, final T key4) {
+        @SuppressWarnings("unchecked")
+        final T[] array = (T[]) Array.newInstance(getComponentType(key1, key2, key3, key4), 4);
+        array[0] = key1;
+        array[1] = key2;
+        array[2] = key3;
+        array[3] = key4;
+        return array;
+    }
+
+    private static <T> T[] newArray(final T key1, final T key2, final T key3, final T key4, final T key5) {
+        @SuppressWarnings("unchecked")
+        final T[] array = (T[]) Array.newInstance(getComponentType(key1, key2, key3, key4, key5), 5);
+        array[0] = key1;
+        array[1] = key2;
+        array[2] = key3;
+        array[3] = key4;
+        array[4] = key5;
+        return array;
+    }
+
     /** The individual keys */
     private final K[] keys;
+
     /** The cached hashCode */
     private transient int hashCode;
 
@@ -65,10 +127,10 @@ public class MultiKey<K> implements Serializable {
      * @param key1  the first key
      * @param key2  the second key
      */
-    @SuppressWarnings("unchecked")
     public MultiKey(final K key1, final K key2) {
-        this((K[]) new Object[] { key1, key2 }, false);
+        this(newArray(key1, key2), false);
     }
+
 
     /**
      * Constructor taking three keys.
@@ -80,9 +142,8 @@ public class MultiKey<K> implements Serializable {
      * @param key2  the second key
      * @param key3  the third key
      */
-    @SuppressWarnings("unchecked")
     public MultiKey(final K key1, final K key2, final K key3) {
-        this((K[]) new Object[] {key1, key2, key3}, false);
+        this(newArray(key1, key2, key3), false);
     }
 
     /**
@@ -96,9 +157,8 @@ public class MultiKey<K> implements Serializable {
      * @param key3  the third key
      * @param key4  the fourth key
      */
-    @SuppressWarnings("unchecked")
     public MultiKey(final K key1, final K key2, final K key3, final K key4) {
-        this((K[]) new Object[] {key1, key2, key3, key4}, false);
+        this(newArray(key1, key2, key3, key4), false);
     }
 
     /**
@@ -113,9 +173,8 @@ public class MultiKey<K> implements Serializable {
      * @param key4  the fourth key
      * @param key5  the fifth key
      */
-    @SuppressWarnings("unchecked")
     public MultiKey(final K key1, final K key2, final K key3, final K key4, final K key5) {
-        this((K[]) new Object[] {key1, key2, key3, key4, key5}, false);
+        this(newArray(key1, key2, key3, key4, key5), false);
     }
 
     /**
@@ -160,51 +219,22 @@ public class MultiKey<K> implements Serializable {
     public MultiKey(final K[] keys, final boolean makeClone) {
         super();
         Objects.requireNonNull(keys, "keys");
-        if (makeClone) {
-            this.keys = keys.clone();
-        } else {
-            this.keys = keys;
-        }
-
+        this.keys = makeClone ? keys.clone() : keys;
         calculateHashCode(keys);
     }
 
-    //-----------------------------------------------------------------------
     /**
-     * Gets a clone of the array of keys.
-     * <p>
-     * The keys should be immutable
-     * If they are not then they must not be changed.
-     *
-     * @return the individual keys
+     * Calculate the hash code of the instance using the provided keys.
+     * @param keys the keys to calculate the hash code for
      */
-    public K[] getKeys() {
-        return keys.clone();
-    }
-
-    /**
-     * Gets the key at the specified index.
-     * <p>
-     * The key should be immutable.
-     * If it is not then it must not be changed.
-     *
-     * @param index  the index to retrieve
-     * @return the key at the index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @since 3.1
-     */
-    public K getKey(final int index) {
-        return keys[index];
-    }
-
-    /**
-     * Gets the size of the list of keys.
-     *
-     * @return the size of the list of keys
-     * @since 3.1
-     */
-    public int size() {
-        return keys.length;
+    private void calculateHashCode(final Object[] keys) {
+        int total = 0;
+        for (final Object key : keys) {
+            if (key != null) {
+                total ^= key.hashCode();
+            }
+        }
+        hashCode = total;
     }
 
     //-----------------------------------------------------------------------
@@ -230,6 +260,34 @@ public class MultiKey<K> implements Serializable {
     }
 
     /**
+     * Gets the key at the specified index.
+     * <p>
+     * The key should be immutable.
+     * If it is not then it must not be changed.
+     *
+     * @param index  the index to retrieve
+     * @return the key at the index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @since 3.1
+     */
+    public K getKey(final int index) {
+        return keys[index];
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets a clone of the array of keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed.
+     *
+     * @return the individual keys
+     */
+    public K[] getKeys() {
+        return keys.clone();
+    }
+
+    /**
      * Gets the combined hash code that is computed from all the keys.
      * <p>
      * This value is computed once and then cached, so elements should not
@@ -245,31 +303,6 @@ public class MultiKey<K> implements Serializable {
     }
 
     /**
-     * Gets a debugging string version of the key.
-     *
-     * @return a debugging string
-     */
-    @Override
-    public String toString() {
-        return "MultiKey" + Arrays.toString(keys);
-    }
-
-    /**
-     * Calculate the hash code of the instance using the provided keys.
-     * @param keys the keys to calculate the hash code for
-     */
-    private void calculateHashCode(final Object[] keys)
-    {
-        int total = 0;
-        for (final Object key : keys) {
-            if (key != null) {
-                total ^= key.hashCode();
-            }
-        }
-        hashCode = total;
-    }
-
-    /**
      * Recalculate the hash code after deserialization. The hash code of some
      * keys might have change (hash codes based on the system hash code are
      * only stable for the same process).
@@ -278,5 +311,25 @@ public class MultiKey<K> implements Serializable {
     protected Object readResolve() {
         calculateHashCode(keys);
         return this;
+    }
+
+    /**
+     * Gets the size of the list of keys.
+     *
+     * @return the size of the list of keys
+     * @since 3.1
+     */
+    public int size() {
+        return keys.length;
+    }
+
+    /**
+     * Gets a debugging string version of the key.
+     *
+     * @return a debugging string
+     */
+    @Override
+    public String toString() {
+        return "MultiKey" + Arrays.toString(keys);
     }
 }

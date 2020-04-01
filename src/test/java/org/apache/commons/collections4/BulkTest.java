@@ -80,11 +80,11 @@ import junit.framework.TestSuite;
  *      }
  *
  *      public BulkTest bulkTestKeySet() {
- *          return new TestSet(makeFullMap().keySet());
+ *          return new SetTest(makeFullMap().keySet());
  *      }
  *
  *      public BulkTest bulkTestEntrySet() {
- *          return new TestSet(makeFullMap().entrySet());
+ *          return new SetTest(makeFullMap().entrySet());
  *      }
  *  }
  *  </Pre>
@@ -287,28 +287,28 @@ class BulkTestSuiteMaker {
      *
      * @param startingClass  the starting class
      */
-    public BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
+    BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
         this.startingClass = startingClass;
     }
 
     /**
      * Makes a hierarchical TestSuite based on the starting class.
      *
-     * @return  the hierarchical TestSuite for startingClass
+     * @return the hierarchical TestSuite for startingClass
      */
     public TestSuite make() {
-         this.result = new TestSuite();
-         this.prefix = getBaseName(startingClass);
-         result.setName(prefix);
+        this.result = new TestSuite();
+        this.prefix = getBaseName(startingClass);
+        result.setName(prefix);
 
-         final BulkTest bulk = makeFirstTestCase(startingClass);
-         ignored = new ArrayList<>();
-         final String[] s = bulk.ignoredTests();
-         if (s != null) {
-             ignored.addAll(Arrays.asList(s));
-         }
-         make(bulk);
-         return result;
+        final BulkTest bulk = makeFirstTestCase(startingClass);
+        ignored = new ArrayList<>();
+        final String[] s = bulk.ignoredTests();
+        if (s != null) {
+            ignored.addAll(Arrays.asList(s));
+        }
+        make(bulk);
+        return result;
     }
 
     /**
@@ -340,7 +340,7 @@ class BulkTestSuiteMaker {
      * @param m  The simple test method
      */
     void addTest(final BulkTest bulk, final Method m) {
-        final BulkTest bulk2 = (BulkTest)bulk.clone();
+        final BulkTest bulk2 = (BulkTest) bulk.clone();
         bulk2.setName(m.getName());
         bulk2.verboseName = prefix + "." + m.getName();
         if (ignored.contains(bulk2.verboseName)) {
@@ -366,7 +366,7 @@ class BulkTestSuiteMaker {
 
         BulkTest bulk2;
         try {
-            bulk2 = (BulkTest)m.invoke(bulk, (Object[]) null);
+            bulk2 = (BulkTest) m.invoke(bulk, (Object[]) null);
             if (bulk2 == null) {
                 return;
             }

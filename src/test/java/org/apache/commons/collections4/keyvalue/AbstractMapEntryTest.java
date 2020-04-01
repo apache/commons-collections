@@ -91,7 +91,7 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     /**
      * Subclasses should override this method to test the
-     * desired behaviour of the class with respect to
+     * desired behavior of the class with respect to
      * handling of self-references.
      *
      */

@@ -472,9 +472,9 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset.add((T) "A");
         final MultiSet.Entry<T> entry = multiset.entrySet().iterator().next();
         assertEquals(2, entry.getCount());
-        multiset.remove((T) "A");
+        multiset.remove("A");
         assertEquals(1, entry.getCount());
-        multiset.remove((T) "A");
+        multiset.remove("A");
         assertEquals(0, entry.getCount());
     }
 
@@ -696,7 +696,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset));
-            assertTrue("MultiSet is empty",multiset2.size()  == 0);
+            assertTrue("MultiSet is empty", multiset2.size() == 0);
             assertEquals(multiset, multiset2);
         }
     }
@@ -710,7 +710,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeFullCollection();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(multiset));
-            assertEquals("MultiSet is the right size",multiset.size(), multiset2.size());
+            assertEquals("MultiSet is the right size", multiset.size(), multiset2.size());
             assertEquals(multiset, multiset2);
         }
     }

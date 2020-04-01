@@ -42,7 +42,7 @@ import java.util.ListIterator;
  * methods provides access to a {@code Cursor} instance which extends
  * {@code ListIterator}. The cursor allows changes to the list concurrent
  * with changes to the iterator. Note that the {@link #iterator()} method and
- * sublists do <b>not</b> provide this cursor behaviour.
+ * sublists do <b>not</b> provide this cursor behavior.
  * </p>
  * <p>
  * The {@code Cursor} class is provided partly for backwards compatibility
@@ -100,7 +100,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * <p>
      * If the underlying list is modified while iterating using this iterator
      * a ConcurrentModificationException will occur.
-     * The cursor behaviour is available via {@link #listIterator()}.
+     * The cursor behavior is available via {@link #listIterator()}.
      *
      * @return a new iterator that does <b>not</b> support concurrent modification
      */

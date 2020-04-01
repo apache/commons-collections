@@ -121,7 +121,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Test normal iteration behaviour.
+     * Test normal iteration behavior.
      */
     public void testFullIterator() {
         if (!supportsFullIterator()) {
@@ -157,7 +157,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Test remove behaviour.
+     * Test remove behavior.
      */
     public void testRemove() {
         final Iterator<E> it = makeObject();

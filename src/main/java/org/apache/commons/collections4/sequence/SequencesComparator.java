@@ -183,7 +183,7 @@ public class SequencesComparator<T> {
         vDown[1+offset] = start1;
         vUp[1+offset]   = end1 + 1;
 
-        for (int d = 0; d <= offset ; ++d) {
+        for (int d = 0; d <= offset; ++d) {
             // Down
             for (int k = -d; k <= d; k += 2) {
                 // First step
@@ -314,7 +314,7 @@ public class SequencesComparator<T> {
          * @param end  end index of the snake
          * @param diag  diagonal number
          */
-        public Snake(final int start, final int end, final int diag) {
+        Snake(final int start, final int end, final int diag) {
             this.start = start;
             this.end   = end;
             this.diag  = diag;

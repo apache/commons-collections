@@ -261,14 +261,14 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testCustomPurge() {
-        List<Integer> expiredValues = new ArrayList<>();
+        final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
         final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) v -> expiredValues.add(v);
         final Map<Integer, Integer> map = new ReferenceMap<Integer, Integer>(ReferenceStrength.WEAK, ReferenceStrength.HARD, false) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected ReferenceEntry<Integer, Integer> createEntry(HashEntry<Integer, Integer> next, int hashCode, Integer key, Integer value) {
+            protected ReferenceEntry<Integer, Integer> createEntry(final HashEntry<Integer, Integer> next, final int hashCode, final Integer key, final Integer value) {
                 return new AccessibleEntry<>(this, next, hashCode, key, value, consumer);
             }
         };
@@ -301,7 +301,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      */
     public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
 
-        final ReferenceMap<String,String> serialiseMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
+        final ReferenceMap<String, String> serialiseMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
         serialiseMap.put("KEY", "VALUE");
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -312,8 +312,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         try (ObjectInputStream in = new ObjectInputStream(bais)) {
             @SuppressWarnings("unchecked")
-            final
-            ReferenceMap<String,String> deserialisedMap = (ReferenceMap<String,String>) in.readObject();
+            final ReferenceMap<String, String> deserialisedMap = (ReferenceMap<String, String>) in.readObject();
             assertEquals(1, deserialisedMap.size());
             assertEquals(serialiseMap.data.length, deserialisedMap.data.length);
         }
@@ -335,7 +334,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final AbstractReferenceMap<K, V> parent;
         final Consumer<V> consumer;
 
-        public AccessibleEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next, final int hashCode, final K key, final V value, final Consumer<V> consumer) {
+        AccessibleEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next, final int hashCode, final K key, final V value, final Consumer<V> consumer) {
             super(parent, next, hashCode, key, value);
             this.parent = parent;
             this.consumer = consumer;

@@ -73,7 +73,7 @@ public class LRUMap<K, V>
 
     /** Maximum size */
     private transient int maxSize;
-    /** Scan behaviour */
+    /** Scan behavior */
     private boolean scanUntilRemovable;
 
     /**
@@ -269,7 +269,7 @@ public class LRUMap<K, V>
         if (entry.after != header) {
             modCount++;
             // remove
-            if(entry.before == null) {
+            if (entry.before == null) {
                 throw new IllegalStateException("Entry.before is null." +
                     " This should not occur if your keys are immutable, and you have used synchronization properly.");
             }
@@ -345,7 +345,7 @@ public class LRUMap<K, V>
                         "reuse=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " This should not occur if your keys are immutable and you used synchronization properly.");
-            }
+                }
                 reuseMapping(reuse, hashIndex, hashCode, key, value);
             } else {
                 super.addMapping(hashIndex, hashCode, key, value);

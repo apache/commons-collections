@@ -228,7 +228,7 @@ public class MultiMapUtils {
      * This method returns a new {@code MultiValuedMap} (decorating the
      * specified map) that will transform any new entries added to it. Existing
      * entries in the specified map will not be transformed. If you want that
-     * behaviour, see {@link TransformedMultiValuedMap#transformedMap}.
+     * behavior, see {@link TransformedMultiValuedMap#transformedMap}.
      * <p>
      * Each object is passed through the transformers as it is added to the Map.
      * It is important not to use the original map after invoking this method,

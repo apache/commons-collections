@@ -104,7 +104,7 @@ public final class UnmodifiableMultiSet<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E> unmodifiableIterator(decorated().iterator());
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     @Override
@@ -131,7 +131,7 @@ public final class UnmodifiableMultiSet<E>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

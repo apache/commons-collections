@@ -187,28 +187,27 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashSet()
-    {
-        Set<?> set1 = SetUtils.unmodifiableSet();
+    public void testHashSet() {
+        final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
 
-        Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
+        final Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
         assertTrue("set contains 1", set2.contains(1));
         assertTrue("set contains 2", set2.contains(2));
         assertTrue("set contains 3", set2.contains(3));
 
-        Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
+        final Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
         assertTrue("set contains 1", set3.contains("1"));
         assertTrue("set contains 2", set3.contains("2"));
         assertTrue("set contains 3", set3.contains("3"));
 
-        Set<?> set4 = SetUtils.hashSet(null, null);
+        final Set<?> set4 = SetUtils.hashSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
         assertTrue("set contains null", set4.contains(null));
 
-        Set<?> set5 = SetUtils.hashSet((Object[]) null);
+        final Set<?> set5 = SetUtils.hashSet((Object[]) null);
         assertEquals("set is null", null, set5);
     }
 
@@ -249,36 +248,34 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSet()
-    {
-        Set<?> set1 = SetUtils.unmodifiableSet();
+    public void testUnmodifiableSet() {
+        final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
 
-        Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
+        final Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
         assertTrue("set contains 1", set2.contains(1));
         assertTrue("set contains 2", set2.contains(2));
         assertTrue("set contains 3", set2.contains(3));
 
-        Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
+        final Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
         assertTrue("set contains 1", set3.contains("1"));
         assertTrue("set contains 2", set3.contains("2"));
         assertTrue("set contains 3", set3.contains("3"));
 
-        Set<?> set4 = SetUtils.unmodifiableSet(null, null);
+        final Set<?> set4 = SetUtils.unmodifiableSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
         assertTrue("set contains null", set4.contains(null));
 
-        Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
+        final Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
         assertEquals("set is null", null, set5);
     }
 
     @Test
-    public void testUnmodifiableSetWrap()
-    {
-        Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
-        Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
+    public void testUnmodifiableSetWrap() {
+        final Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
+        final Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
         assertSame(set1, set2);
     }
 

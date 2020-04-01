@@ -152,8 +152,8 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     public void testArrayListValuedHashMap() {
         ListValuedMap<K, V> listMap = null;
         ListValuedMap<K, V> listMap1 = null;
-        Map<K, V> map = new HashMap<>();
-        Map<K, V> map1 = new HashMap<>();
+        final Map<K, V> map = new HashMap<>();
+        final Map<K, V> map1 = new HashMap<>();
         map.put((K) "A", (V) "W");
         map.put((K) "B", (V) "X");
         map.put((K) "C", (V) "F");
@@ -184,7 +184,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     public void testWrappedListAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
-        List<V> listA = listMap.get((K) "A");
+        final List<V> listA = listMap.get((K) "A");
         listA.add(0, (V) "W");
         listA.add(1, (V) "X");
         listA.add(2, (V) "F");
@@ -195,12 +195,12 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     public void testWrappedListAddAll() {
         final ListValuedMap<K, V> listMap = makeObject();
-        List<V> listA = listMap.get((K) "A");
-        List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");
+        final List<V> listA = listMap.get((K) "A");
+        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");
         listA.addAll(0, list);
         assertEquals("{A=[W, X, F]}", listMap.toString());
 
-        List<V> list1 = Arrays.asList((V) "Q", (V) "Q", (V) "L");
+        final List<V> list1 = Arrays.asList((V) "Q", (V) "Q", (V) "L");
         listA.addAll(3, list1);
         assertEquals("{A=[W, X, F, Q, Q, L]}", listMap.toString());
         assertEquals("W", listMap.get((K) "A").get(0));
@@ -216,20 +216,20 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals(4, listMap.get((K) "A").lastIndexOf("Q"));
         assertEquals(-1, listMap.get((K) "A").lastIndexOf("A"));
 
-        List<V> list2 = new ArrayList<>();
+        final List<V> list2 = new ArrayList<>();
         listMap.get((K) "B").addAll(0, list2);
         assertEquals("{A=[W, X, F, Q, Q, L]}", listMap.toString());
-        List<V> list3 = listMap.get((K) "A").subList(1, 4);
+        final List<V> list3 = listMap.get((K) "A").subList(1, 4);
         assertEquals(3, list3.size());
         assertEquals("Q", list3.get(2));
     }
 
     public void testValuesListIteratorMethods(){
         final ListValuedMap<K, V> listMap = makeObject();
-        List<V> listA = listMap.get((K) "A");
-        List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V)"F");
+        final List<V> listA = listMap.get((K) "A");
+        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
         listA.addAll(0, list);
-        ListIterator<V> it = listMap.get((K) "A").listIterator(1);
+        final ListIterator<V> it = listMap.get((K) "A").listIterator(1);
         assertTrue(it.hasNext());
         assertEquals("X", it.next());
         assertEquals("F", it.next());

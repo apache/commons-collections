@@ -93,7 +93,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
-         !c.contains(i));
+            !c.contains(i));
     }
 
     @SuppressWarnings("unchecked")

@@ -44,8 +44,8 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 
     @Override
     public Comparator<Integer> makeObject() {
-       final Comparator<String> decorated = new ComparableComparator<>();
-       return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
+        final Comparator<String> decorated = new ComparableComparator<>();
+        return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
     }
 
     @Override

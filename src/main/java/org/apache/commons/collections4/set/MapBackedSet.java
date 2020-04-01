@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * Decorates a {@code Map} to obtain {@code Set} behaviour.
+ * Decorates a {@code Map} to obtain {@code Set} behavior.
  * <p>
  * This class is used to create a {@code Set} with the same properties as
  * the key set of any map. Thus, a ReferenceSet can be created by wrapping a
@@ -147,7 +147,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         return map.keySet().removeIf(filter);
     }
 

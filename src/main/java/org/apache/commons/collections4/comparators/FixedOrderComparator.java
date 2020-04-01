@@ -72,7 +72,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     /** Is the comparator locked against further change */
     private boolean isLocked = false;
 
-    /** The behaviour in the case of an unknown object */
+    /** The behavior in the case of an unknown object */
     private UnknownObjectBehavior unknownObjectBehavior = UnknownObjectBehavior.EXCEPTION;
 
     // Constructors
@@ -152,7 +152,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     /**
      * Sets the behavior for comparing unknown objects.
      *
-     * @param unknownObjectBehavior  the flag for unknown behaviour -
+     * @param unknownObjectBehavior  the flag for unknown behavior -
      * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
      * @throws UnsupportedOperationException if a comparison has been performed
      * @throws NullPointerException if unknownObjectBehavior is null

@@ -146,7 +146,7 @@ public class FixedSizeList<E>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw unsupportedOperationException();
     }
 

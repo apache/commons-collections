@@ -74,7 +74,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         // then figure out which bit makes the difference
         // and return it.
         char k = 0, f = 0;
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             final int index1 = beginIndex1 + i;
             final int index2 = beginIndex2 + i;
 
@@ -91,8 +91,8 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
             }
 
             if (k != f) {
-               final int x = k ^ f;
-               return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
+                final int x = k ^ f;
+                return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
             }
 
             if (k != 0) {

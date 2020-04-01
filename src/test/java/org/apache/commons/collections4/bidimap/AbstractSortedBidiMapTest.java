@@ -53,7 +53,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         sortedValues.addAll(map.values());
         sortedValues = Collections.unmodifiableList(sortedValues);
 
-        sortedNewValues.addAll(this.<V> getAsList(getNewSampleValues()));
+        sortedNewValues.addAll(this.<V>getAsList(getNewSampleValues()));
     }
 
 //    public AbstractTestSortedBidiMap() {

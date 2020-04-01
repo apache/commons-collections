@@ -272,7 +272,7 @@ public class IterableUtilsTest {
         testPredicate = equalPredicate((Number) 45);
         test = IterableUtils.find(iterableA, testPredicate);
         assertTrue(test == null);
-        assertNull(IterableUtils.find(null,testPredicate));
+        assertNull(IterableUtils.find(null, testPredicate));
         try {
             IterableUtils.find(iterableA, null);
             fail("expecting NullPointerException");
@@ -578,5 +578,10 @@ public class IterableUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
+    }
+
+    @Test
+    public void size() {
+        assertEquals(0, IterableUtils.size(null));
     }
 }

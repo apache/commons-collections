@@ -38,7 +38,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
          */
         private static final long serialVersionUID = 1415013031022962158L;
 
-        public SetUniqueList307(final List<E> list, final Set<E> set) {
+        SetUniqueList307(final List<E> list, final Set<E> set) {
             super(list, set);
         }
     }
@@ -60,23 +60,23 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public E[] getFullNonNullElements() {
         // override to avoid duplicate "One"
         return (E[]) new Object[] {
-                new String(""),
-                new String("One"),
-                Integer.valueOf(2),
-                "Three",
-                Integer.valueOf(4),
-                new Double(5),
-                new Float(6),
-                "Seven",
-                "Eight",
-                new String("Nine"),
-                Integer.valueOf(10),
-                new Short((short)11),
-                new Long(12),
-                "Thirteen",
-                "14",
-                "15",
-                new Byte((byte)16)
+            new String(""),
+            new String("One"),
+            Integer.valueOf(2),
+            "Three",
+            Integer.valueOf(4),
+            new Double(5),
+            new Float(6),
+            "Seven",
+            "Eight",
+            new String("Nine"),
+            Integer.valueOf(10),
+            new Short((short) 11),
+            new Long(12),
+            "Thirteen",
+            "14",
+            "15",
+            new Byte((byte) 16)
         };
     }
 
@@ -113,7 +113,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Override
     public void testCollectionAddAll() {
-        // override for set behaviour
+        // override for set behavior
         resetEmpty();
         E[] elements = getFullElements();
         boolean r = getCollection().addAll(Arrays.asList(elements));
@@ -252,28 +252,28 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     public void testIntCollectionAddAll() {
-      // make a SetUniqueList with one element
-      final List<Integer> list = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
-      final Integer existingElement = Integer.valueOf(1);
-      list.add(existingElement);
+        // make a SetUniqueList with one element
+        final List<Integer> list = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
+        final Integer existingElement = Integer.valueOf(1);
+        list.add(existingElement);
 
-      // add two new unique elements at index 0
-      final Integer firstNewElement = Integer.valueOf(2);
-      final Integer secondNewElement = Integer.valueOf(3);
-      Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
-      list.addAll(0, collection);
-      assertEquals("Unique elements should be added.", 3, list.size());
-      assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
-      assertEquals("Second new element should be at index 1", secondNewElement, list.get(1));
-      assertEquals("Existing element should shift to index 2", existingElement, list.get(2));
+        // add two new unique elements at index 0
+        final Integer firstNewElement = Integer.valueOf(2);
+        final Integer secondNewElement = Integer.valueOf(3);
+        Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
+        list.addAll(0, collection);
+        assertEquals("Unique elements should be added.", 3, list.size());
+        assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
+        assertEquals("Second new element should be at index 1", secondNewElement, list.get(1));
+        assertEquals("Existing element should shift to index 2", existingElement, list.get(2));
 
-      // add a duplicate element and a unique element at index 0
-      final Integer thirdNewElement = Integer.valueOf(4);
-      collection = Arrays.asList(existingElement, thirdNewElement);
-      list.addAll(0, collection);
-      assertEquals("Duplicate element should not be added, unique element should be added.",
-        4, list.size());
-      assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
+        // add a duplicate element and a unique element at index 0
+        final Integer thirdNewElement = Integer.valueOf(4);
+        collection = Arrays.asList(existingElement, thirdNewElement);
+        list.addAll(0, collection);
+        assertEquals("Duplicate element should not be added, unique element should be added.",
+            4, list.size());
+        assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
     }
 
     @SuppressWarnings("unchecked")
@@ -300,7 +300,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Override
     public void testListIteratorAdd() {
-        // override to cope with Set behaviour
+        // override to cope with Set behavior
         resetEmpty();
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
@@ -343,7 +343,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public void testListSetByIndex() {
-        // override for set behaviour
+        // override for set behavior
         resetFull();
         final int size = getCollection().size();
         getCollection().set(0, (E) new Long(1000));
@@ -359,12 +359,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         final List<E> list = new ArrayList<>(10);
         final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
         for (int i = 0; i < 10; ++i) {
-            uniqueList.add((E)Integer.valueOf(i));
+            uniqueList.add((E) Integer.valueOf(i));
         }
 
         final Collection<E> retained = new ArrayList<>(5);
         for (int i = 0; i < 5; ++i) {
-            retained.add((E)Integer.valueOf(i * 2));
+            retained.add((E) Integer.valueOf(i * 2));
         }
 
         assertTrue(uniqueList.retainAll(retained));
@@ -381,16 +381,16 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // initialized with empty list
         final List<E> list = new ArrayList<>(10);
         for (int i = 0; i < 5; ++i) {
-            list.add((E)Integer.valueOf(i));
+            list.add((E) Integer.valueOf(i));
         }
         final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
         for (int i = 5; i < 10; ++i) {
-            uniqueList.add((E)Integer.valueOf(i));
+            uniqueList.add((E) Integer.valueOf(i));
         }
 
         final Collection<E> retained = new ArrayList<>(5);
         for (int i = 0; i < 5; ++i) {
-            retained.add((E)Integer.valueOf(i * 2));
+            retained.add((E) Integer.valueOf(i * 2));
         }
 
         assertTrue(uniqueList.retainAll(retained));

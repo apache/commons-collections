@@ -35,6 +35,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * collection implementations will throw a
  * ConcurrentModificationException.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.2
  */
 public class LoopingListIterator<E> implements ResettableListIterator<E> {

@@ -65,7 +65,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Factory method to create a SetList using the supplied list to retain order.
      * <p>
      * If the list contains duplicates, these are removed (first indexed one
-     * kept). A {@code HashSet} is used for the set behaviour.
+     * kept). A {@code HashSet} is used for the set behavior.
      *
      * @param <E>  the element type
      * @param list  the list to decorate, must not be null
@@ -116,7 +116,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <p>
      * <i>(Violation)</i> The {@code List} interface requires that this
      * method returns {@code true} always. However this class may return
-     * {@code false} because of the {@code Set} behaviour.
+     * {@code false} because of the {@code Set} behavior.
      *
      * @param object  the object to add
      * @return true if object was added
@@ -246,8 +246,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super E> filter) {
-        boolean result = super.removeIf(filter);
+    public boolean removeIf(final Predicate<? super E> filter) {
+        final boolean result = super.removeIf(filter);
         set.removeIf(filter);
         return result;
     }

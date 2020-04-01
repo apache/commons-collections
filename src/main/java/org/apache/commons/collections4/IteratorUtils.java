@@ -808,7 +808,7 @@ public class IteratorUtils {
      * Convenience method, allows easy iteration over NodeLists:
      * <pre>
      *   Iterator&lt;Node&gt; iterator = IteratorUtils.nodeListIterator(node);
-     *   for(Node childNode : IteratorUtils.asIterable(iterator)) {
+     *   for (Node childNode : IteratorUtils.asIterable(iterator)) {
      *     ...
      *   }
      * </pre>
@@ -1247,7 +1247,7 @@ public class IteratorUtils {
         Objects.requireNonNull(predicate, "predicate");
 
         if (iterator != null) {
-            for(int index = 0; iterator.hasNext(); index++) {
+            for (int index = 0; iterator.hasNext(); index++) {
                 final E element = iterator.next();
                 if (predicate.evaluate(element)) {
                     return index;
@@ -1469,7 +1469,7 @@ public class IteratorUtils {
                 stringBuilder.append(transformer.transform(element));
                 stringBuilder.append(delimiter);
             }
-            if(stringBuilder.length() > prefix.length()) {
+            if (stringBuilder.length() > prefix.length()) {
                 stringBuilder.setLength(stringBuilder.length() - delimiter.length());
             }
         }

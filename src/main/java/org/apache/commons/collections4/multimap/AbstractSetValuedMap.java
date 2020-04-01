@@ -109,7 +109,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      */
     private class WrappedSet extends WrappedCollection implements Set<V> {
 
-        public WrappedSet(final K key) {
+        WrappedSet(final K key) {
             super(key);
         }
 
@@ -133,5 +133,4 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
         }
 
     }
-
 }

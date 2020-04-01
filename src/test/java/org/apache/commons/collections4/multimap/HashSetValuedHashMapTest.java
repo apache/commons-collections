@@ -146,7 +146,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     public void testHashSetValueHashMap_1() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         SetValuedMap<K, V> map1 = null;
-        SetValuedMap<K, V> map2 = makeObject();
+        final SetValuedMap<K, V> map2 = makeObject();
         SetValuedMap<K, V> map3 = null;
 
         map.put((K) "A", (V) "W");

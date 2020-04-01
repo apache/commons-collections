@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
- * Decorates another {@link Collection} to synchronize its behaviour
+ * Decorates another {@link Collection} to synchronize its behavior
  * for a multi-threaded environment.
  * <p>
  * Iterators must be manually synchronized:

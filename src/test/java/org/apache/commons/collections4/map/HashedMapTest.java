@@ -73,7 +73,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     public void testInitialCapacityZero() {
-        final HashedMap<String,String> map = new HashedMap<>(0);
+        final HashedMap<String, String> map = new HashedMap<>(0);
         assertEquals(1, map.data.length);
     }
 }

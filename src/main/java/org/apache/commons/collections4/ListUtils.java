@@ -227,7 +227,7 @@ public class ListUtils {
      * different implementations of the {@code List} interface.
      * </blockquote>
      *
-     * <b>Note:</b> The behaviour of this method is undefined if the lists are
+     * <b>Note:</b> The behavior of this method is undefined if the lists are
      * modified during the equals comparison.
      *
      * @see java.util.List
@@ -425,7 +425,7 @@ public class ListUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified list will not be transformed.
-     * If you want that behaviour, see {@link TransformedList#transformedList}.
+     * If you want that behavior, see {@link TransformedList#transformedList}.
      *
      * @param <E> the element type
      * @param list  the list to predicate, must not be null
@@ -554,7 +554,7 @@ public class ListUtils {
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
-      return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
+        return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
     }
 
     /**
@@ -611,7 +611,7 @@ public class ListUtils {
     private static final class LcsVisitor<E> implements CommandVisitor<E> {
         private final ArrayList<E> sequence;
 
-        public LcsVisitor() {
+        LcsVisitor() {
             sequence = new ArrayList<>();
         }
 
@@ -639,23 +639,21 @@ public class ListUtils {
      * A simple wrapper to use a CharSequence as List.
      */
     private static final class CharSequenceAsList extends AbstractList<Character> {
+        private final CharSequence sequence;
 
-      private final CharSequence sequence;
+        CharSequenceAsList(final CharSequence sequence) {
+            this.sequence = sequence;
+        }
 
-      public CharSequenceAsList(final CharSequence sequence) {
-        this.sequence = sequence;
-      }
+        @Override
+        public Character get(final int index) {
+            return Character.valueOf(sequence.charAt(index));
+        }
 
-      @Override
-      public Character get( final int index ) {
-        return Character.valueOf(sequence.charAt( index ));
-      }
-
-      @Override
-      public int size() {
-        return sequence.length();
-      }
-
+        @Override
+        public int size() {
+            return sequence.length();
+        }
     }
 
     //-----------------------------------------------------------------------

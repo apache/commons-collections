@@ -39,7 +39,7 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * EntrySet and Values view classes.
  * </p>
  * <p>
- * Overridable methods are provided to change the default hashing behaviour, and
+ * Overridable methods are provided to change the default hashing behavior, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
  * </p>
@@ -543,7 +543,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Base Iterator that iterates in link order.
      */
-    protected static abstract class LinkIterator<K, V> {
+    protected abstract static class LinkIterator<K, V> {
 
         /** The parent map */
         protected final AbstractLinkedMap<K, V> parent;

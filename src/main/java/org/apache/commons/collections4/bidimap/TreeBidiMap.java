@@ -1429,8 +1429,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Object key = it.next();
             final Object value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
-               .append('=')
-               .append(value == this ? "(this Map)" : value);
+                .append('=')
+                .append(value == this ? "(this Map)" : value);
 
             hasNext = it.hasNext();
             if (hasNext) {
@@ -1465,7 +1465,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         stream.defaultReadObject();
         rootNode = new Node[2];
         final int size = stream.readInt();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++){
             final K k =(K) stream.readObject();
             final V v =(V) stream.readObject();
             put(k, v);
@@ -1521,7 +1521,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Create a new TreeBidiMap.KeyView.
          */
-        public KeyView(final DataElement orderType) {
+        KeyView(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1548,7 +1548,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Create a new TreeBidiMap.ValueView.
          */
-        public ValueView(final DataElement orderType) {
+        ValueView(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1792,7 +1792,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Create a new TreeBidiMap.InverseViewMapIterator.
          */
-        public InverseViewMapIterator(final DataElement orderType) {
+        InverseViewMapIterator(final DataElement orderType) {
             super(orderType);
         }
 

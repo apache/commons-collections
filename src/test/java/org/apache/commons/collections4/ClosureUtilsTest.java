@@ -411,8 +411,8 @@ public class ClosureUtilsTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                ExceptionClosure.INSTANCE,
-                NOPClosure.INSTANCE,
+            ExceptionClosure.INSTANCE,
+            NOPClosure.INSTANCE,
         };
 
         for (final Object original : singletones) {

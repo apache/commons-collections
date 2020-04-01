@@ -21,7 +21,7 @@ import java.util.Queue;
 import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
 
 /**
- * Decorates another {@link Queue} to provide additional behaviour.
+ * Decorates another {@link Queue} to provide additional behavior.
  * <p>
  * Methods are forwarded directly to the decorated queue.
  * </p>

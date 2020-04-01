@@ -41,7 +41,7 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * </p>
  * <p>
  * The defaulted value is not added to the map.
- * Compare this behaviour with {@link LazyMap}, which does add the value
+ * Compare this behavior with {@link LazyMap}, which does add the value
  * to the map (via a Transformer).
  * </p>
  * <p>
@@ -200,8 +200,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     public V get(final Object key) {
         V v;
         return (((v = map.get(key)) != null) || map.containsKey(key))
-          ? v
-          : value.transform((K) key);
+            ? v
+            : value.transform((K) key);
     }
 
     // no need to wrap keySet, entrySet or values as they are views of

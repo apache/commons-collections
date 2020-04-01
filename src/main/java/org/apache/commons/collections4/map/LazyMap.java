@@ -86,7 +86,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      * @throws NullPointerException if map or factory is null
      * @since 4.0
      */
-    public static <K, V> LazyMap<K, V> lazyMap(final Map<K, V> map, final Factory< ? extends V> factory) {
+    public static <K, V> LazyMap<K, V> lazyMap(final Map<K, V> map, final Factory<? extends V> factory) {
         return new LazyMap<>(map, factory);
     }
 
@@ -113,7 +113,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      * @param factory  the factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
-    protected LazyMap(final Map<K,V> map, final Factory<? extends V> factory) {
+    protected LazyMap(final Map<K, V> map, final Factory<? extends V> factory) {
         super(map);
         this.factory = FactoryTransformer.factoryTransformer(Objects.requireNonNull(factory, "factory"));
     }
@@ -125,7 +125,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      * @param factory  the factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
-    protected LazyMap(final Map<K,V> map, final Transformer<? super K, ? extends V> factory) {
+    protected LazyMap(final Map<K, V> map, final Transformer<? super K, ? extends V> factory) {
         super(map);
         this.factory = Objects.requireNonNull(factory, "factory");
     }

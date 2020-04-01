@@ -652,7 +652,7 @@ public class CollectionUtilsTest extends MockTestCase {
         testPredicate = equalPredicate((Number) 45);
         test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test == null);
-        assertNull(CollectionUtils.find(null,testPredicate));
+        assertNull(CollectionUtils.find(null, testPredicate));
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
@@ -1276,7 +1276,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collection.contains(2L) && !collection.contains(1));
     }
 
-    Transformer<Object, Integer> TRANSFORM_TO_INTEGER = input -> Integer.valueOf(((Long)input).intValue());
+    Transformer<Object, Integer> TRANSFORM_TO_INTEGER = input -> Integer.valueOf(((Long) input).intValue());
 
     @Test
     public void transform1() {
@@ -1474,7 +1474,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testRemoveRange() {
-        List<Integer> list = new ArrayList<>();
+        final List<Integer> list = new ArrayList<>();
         list.add(1);
         Collection<Integer> result = CollectionUtils.removeRange(list, 0, 0);
         assertEquals(1, list.size());
@@ -1492,42 +1492,42 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeNull() {
-        Collection<Integer> list = null;
-        Collection result = CollectionUtils.removeRange(list, 0, 0);
+        final Collection<Integer> list = null;
+        final Collection result = CollectionUtils.removeRange(list, 0, 0);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveRangeStartIndexNegative() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, -1, 1);
+        final Collection result = CollectionUtils.removeRange(list, -1, 1);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeEndIndexNegative() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, 0, -1);
+        final Collection result = CollectionUtils.removeRange(list, 0, -1);
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveRangeEndLowStart() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
-        Collection result = CollectionUtils.removeRange(list, 1, 0);
+        final Collection result = CollectionUtils.removeRange(list, 1, 0);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveRangeWrongEndIndex() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeRange(list, 0, 2);
+        final Collection result = CollectionUtils.removeRange(list, 0, 2);
     }
 
     @Test
     public void testRemoveCount() {
-        List<Integer> list = new ArrayList<>();
+        final List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -1558,27 +1558,27 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testRemoveCountWithNull() {
-        Collection<Integer> list = null;
-        Collection result = CollectionUtils.removeCount(list, 0, 1);
+        final Collection<Integer> list = null;
+        final Collection result = CollectionUtils.removeCount(list, 0, 1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountStartNegative() {
-        Collection<Integer> list = new ArrayList<>();
-        Collection result = CollectionUtils.removeCount(list, -1, 1);
+        final Collection<Integer> list = new ArrayList<>();
+        final Collection result = CollectionUtils.removeCount(list, -1, 1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountNegative() {
-        Collection<Integer> list = new ArrayList<>();
-        Collection result = CollectionUtils.removeCount(list, 0, -1);
+        final Collection<Integer> list = new ArrayList<>();
+        final Collection result = CollectionUtils.removeCount(list, 0, -1);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testRemoveCountWrongCount() {
-        Collection<Integer> list = new ArrayList<>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        Collection result = CollectionUtils.removeCount(list, 0, 2);
+        final Collection result = CollectionUtils.removeCount(list, 0, 2);
     }
 
     @Test
@@ -1741,27 +1741,27 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collectionA.contains(5));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getNegative() {
-        CollectionUtils.get((Object)collectionA, -3);
+        CollectionUtils.get((Object) collectionA, -3);
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getPositiveOutOfBounds() {
-        CollectionUtils.get((Object)collectionA.iterator(), 30);
+        CollectionUtils.get((Object) collectionA.iterator(), 30);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void get1() {
-        CollectionUtils.get((Object)null, 0);
+        CollectionUtils.get((Object) null, 0);
     }
 
     @Test
     public void get() {
-        assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
-        assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
+        assertEquals(2, CollectionUtils.get((Object) collectionA, 2));
+        assertEquals(2, CollectionUtils.get((Object) collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
-        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object)map, 0));
+        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object) map, 0));
     }
 
     @Test

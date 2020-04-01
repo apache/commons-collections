@@ -35,11 +35,11 @@ import org.apache.commons.collections4.functors.NOPTransformer;
 @SuppressWarnings("boxing")
 public class TransformedSplitMapTest extends BulkTest {
 
-    private final Transformer<Integer, String> intToString = input -> String.valueOf(input);
+    private final Transformer<Integer, String> intToString = String::valueOf;
 
     private final Transformer<Object, Class<?>> objectToClass = input -> input == null ? null : input.getClass();
 
-    private final Transformer<String, Integer> stringToInt = input -> Integer.valueOf(input);
+    private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
     public TransformedSplitMapTest(final String testName) {
         super(testName);
@@ -52,7 +52,7 @@ public class TransformedSplitMapTest extends BulkTest {
 
         final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
         final Object[] v = new Object[] { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
-                new Object[0] };
+            new Object[0] };
 
         assertEquals(0, map.size());
         for (int i = 0; i < k.length; i++) {
@@ -72,7 +72,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(--sz, map.size());
 
         final TransformedSplitMap<String, String, String, Integer> map2 = TransformedSplitMap.transformingMap(
-                new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
+                new HashMap<String, Integer>(), NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map2.size());
         for (int i = 0; i < 6; i++) {
             map2.put(String.valueOf(i), String.valueOf(i));
@@ -93,7 +93,7 @@ public class TransformedSplitMapTest extends BulkTest {
     public void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
-                                                    NOPTransformer.<String> nopTransformer(), stringToInt);
+                                                    NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map.size());
         for (int i = 0; i < 6; i++) {
             map.put(String.valueOf(i), String.valueOf(i));

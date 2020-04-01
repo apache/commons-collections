@@ -279,16 +279,16 @@ public class SingletonMap<K, V>
     @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
         switch (map.size()) {
-            case 0:
-                return;
+        case 0:
+            return;
 
-            case 1:
-                final Map.Entry<? extends K, ? extends V> entry = map.entrySet().iterator().next();
-                put(entry.getKey(), entry.getValue());
-                return;
+        case 1:
+            final Map.Entry<? extends K, ? extends V> entry = map.entrySet().iterator().next();
+            put(entry.getKey(), entry.getValue());
+            return;
 
-            default:
-                throw new IllegalArgumentException("The map size must be 0 or 1");
+        default:
+            throw new IllegalArgumentException("The map size must be 0 or 1");
         }
     }
 
@@ -572,11 +572,11 @@ public class SingletonMap<K, V>
         if (obj instanceof Map == false) {
             return false;
         }
-        final Map<?,?> other = (Map<?,?>) obj;
+        final Map<?, ?> other = (Map<?, ?>) obj;
         if (other.size() != 1) {
             return false;
         }
-        final Map.Entry<?,?> entry = other.entrySet().iterator().next();
+        final Map.Entry<?, ?> entry = other.entrySet().iterator().next();
         return isEqualKey(entry.getKey()) && isEqualValue(entry.getValue());
     }
 

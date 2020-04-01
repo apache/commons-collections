@@ -500,7 +500,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * The lock object, which also includes a count of the nodes in this lock.
      */
-    private final static class Lock {
+    private static final class Lock {
         public int size;
     }
 

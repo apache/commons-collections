@@ -344,7 +344,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * Inner class View.
      */
-    protected static abstract class View<K, V, E> extends AbstractCollectionDecorator<E> {
+    protected abstract static class View<K, V, E> extends AbstractCollectionDecorator<E> {
 
         /** Generated serial version ID. */
         private static final long serialVersionUID = 4621510560119690639L;
@@ -377,7 +377,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @since 4.4
          */
         @Override
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(final Predicate<? super E> filter) {
             if (parent.isEmpty() || Objects.isNull(filter)) {
                 return false;
             }

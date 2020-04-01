@@ -150,11 +150,11 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
 
         protected V value;
 
-        public BasicEntry(final K key) {
+        BasicEntry(final K key) {
             this.key = key;
         }
 
-        public BasicEntry(final K key, final V value) {
+        BasicEntry(final K key, final V value) {
             this.key = key;
             this.value = value;
         }
@@ -198,7 +198,7 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
                 return false;
             }
 
-            final Map.Entry<?, ?> other = (Map.Entry<?, ?>)o;
+            final Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
             if (compare(key, other.getKey())
                     && compare(value, other.getValue())) {
                 return true;

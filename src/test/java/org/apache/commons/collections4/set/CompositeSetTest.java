@@ -132,8 +132,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         try {
             set.addComposited(three);
             fail("IllegalArgumentException should have been thrown");
-        }
-        catch (final IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
     }

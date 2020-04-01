@@ -191,7 +191,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
          *
          * @param parent the parent bag
          */
-        public BagIterator(final AbstractMapBag<E> parent) {
+        BagIterator(final AbstractMapBag<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
             this.current = null;
@@ -507,7 +507,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public Set<E> uniqueSet() {
         if (uniqueSet == null) {
-            uniqueSet = UnmodifiableSet.<E> unmodifiableSet(map.keySet());
+            uniqueSet = UnmodifiableSet.<E>unmodifiableSet(map.keySet());
         }
         return uniqueSet;
     }

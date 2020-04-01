@@ -156,7 +156,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
-     * Test add behaviour.
+     * Test add behavior.
      */
     public void testAdd() {
         ListIterator<E> it = makeObject();
@@ -193,7 +193,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
-     * Test set behaviour.
+     * Test set behavior.
      */
     public void testSet() {
         final ListIterator<E> it = makeObject();
@@ -250,7 +250,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
-     * Test remove after add behaviour.
+     * Test remove after add behavior.
      */
     public void testAddThenRemove() {
         final ListIterator<E> it = makeObject();

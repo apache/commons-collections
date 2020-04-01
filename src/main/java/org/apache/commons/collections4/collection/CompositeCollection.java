@@ -225,8 +225,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     @Override
     public boolean add(final E obj) {
         if (mutator == null) {
-           throw new UnsupportedOperationException(
-               "add() is not supported on CompositeCollection without a CollectionMutator strategy");
+            throw new UnsupportedOperationException(
+                "add() is not supported on CompositeCollection without a CollectionMutator strategy");
         }
         return mutator.add(this, all, obj);
     }
@@ -415,7 +415,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollections  the Collections to be appended to the composite
      */
     public void addComposited(final Collection<E>... compositeCollections) {
-        for (Collection<E> compositeCollection : compositeCollections) {
+        for (final Collection<E> compositeCollection : compositeCollections) {
             if (compositeCollection != null) {
                 all.add(compositeCollection);
             }

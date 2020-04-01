@@ -76,7 +76,7 @@ public class BagUtilsTest {
         assertTrue("Returned object should be a PredicatedBag.",
             bag instanceof PredicatedBag);
         try {
-            BagUtils.predicatedBag(null,truePredicate);
+            BagUtils.predicatedBag(null, truePredicate);
             fail("Expecting NullPointerException for null bag.");
         } catch (final NullPointerException ex) {
             // expected

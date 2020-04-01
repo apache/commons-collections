@@ -45,7 +45,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     @Override
     public MultiValuedMap<K, V> makeObject() {
         return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
-                TransformerUtils.<K> nopTransformer(), TransformerUtils.<V> nopTransformer());
+                TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
     // -----------------------------------------------------------------------

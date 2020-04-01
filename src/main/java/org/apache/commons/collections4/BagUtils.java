@@ -127,7 +127,7 @@ public class BagUtils {
      * </p>
      * <p>
      * Existing entries in the specified bag will not be transformed.
-     * If you want that behaviour, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
+     * If you want that behavior, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
      * </p>
      *
      * @param <E> the element type
@@ -230,7 +230,7 @@ public class BagUtils {
      * </p>
      * <p>
      * Existing entries in the specified bag will not be transformed.
-     * If you want that behaviour, see
+     * If you want that behavior, see
      * {@link TransformedSortedBag#transformedSortedBag(SortedBag, Transformer)}.
      * </p>
      *

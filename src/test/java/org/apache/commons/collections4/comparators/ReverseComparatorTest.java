@@ -90,7 +90,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         final Object dest = in.readObject();
         in.close();
-        assertEquals("obj != deserialize(serialize(obj))",comp,dest);
+        assertEquals("obj != deserialize(serialize(obj))", comp, dest);
     }
 
 }

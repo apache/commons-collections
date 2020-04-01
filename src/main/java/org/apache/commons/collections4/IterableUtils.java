@@ -478,7 +478,7 @@ public class IterableUtils {
     private static final class UnmodifiableIterable<E> extends FluentIterable<E> {
         private final Iterable<E> unmodifiable;
 
-        public UnmodifiableIterable(final Iterable<E> iterable) {
+        UnmodifiableIterable(final Iterable<E> iterable) {
             super();
             this.unmodifiable = iterable;
         }
@@ -797,6 +797,9 @@ public class IterableUtils {
      * @return the number of elements contained in the iterable
      */
     public static int size(final Iterable<?> iterable) {
+        if (iterable == null) {
+            return 0;
+        }
         if (iterable instanceof Collection<?>) {
             return ((Collection<?>) iterable).size();
         }

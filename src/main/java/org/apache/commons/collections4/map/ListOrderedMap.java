@@ -600,7 +600,7 @@ public class ListOrderedMap<K, V>
         private final List<K> insertOrder;
         private Set<Map.Entry<K, V>> entrySet;
 
-        public EntrySetView(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
+        EntrySetView(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
             super();
             this.parent = parent;
             this.insertOrder = insertOrder;

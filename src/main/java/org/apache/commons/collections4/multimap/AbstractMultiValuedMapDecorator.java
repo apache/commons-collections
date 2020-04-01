@@ -28,11 +28,11 @@ import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
- * Decorates another {@code MultiValuedMap} to provide additional behaviour.
+ * Decorates another {@code MultiValuedMap} to provide additional behavior.
  * <p>
  * Each method call made on this {@code MultiValuedMap} is forwarded to the
  * decorated {@code MultiValuedMap}. This class is used as a framework to build
- * to extensions such as synchronized and unmodifiable behaviour.
+ * to extensions such as synchronized and unmodifiable behavior.
  * </p>
  *
  * @param <K> the type of key elements

@@ -98,7 +98,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @since 4.4
      */
     @Override
-    public boolean removeIf(Predicate<? super Map.Entry<K, V>> filter) {
+    public boolean removeIf(final Predicate<? super Map.Entry<K, V>> filter) {
         throw new UnsupportedOperationException();
     }
 

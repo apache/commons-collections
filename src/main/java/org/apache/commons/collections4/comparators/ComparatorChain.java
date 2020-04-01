@@ -29,7 +29,7 @@ import java.util.List;
  * 1) any single Comparator returns a non-zero result (and that result is then
  * returned), or 2) the ComparatorChain is exhausted (and zero is returned).
  * This type of sorting is very similar to multi-column sorting in SQL, and this
- * class allows Java classes to emulate that kind of behaviour when sorting a
+ * class allows Java classes to emulate that kind of behavior when sorting a
  * List.
  * <p>
  * To further facilitate SQL-like sorting, the order of any single Comparator in
@@ -182,7 +182,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     public void setComparator(final int index, final Comparator<E> comparator, final boolean reverse) {
         checkLocked();
 
-        comparatorChain.set(index,comparator);
+        comparatorChain.set(index, comparator);
         if (reverse == true) {
             orderingBits.set(index);
         } else {
@@ -278,7 +278,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
 
             final Comparator<? super E> comparator = comparators.next();
-            int retval = comparator.compare(o1,o2);
+            int retval = comparator.compare(o1, o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {

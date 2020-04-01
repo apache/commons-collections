@@ -261,7 +261,7 @@ public class FactoryUtilsTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                ExceptionFactory.INSTANCE,
+            ExceptionFactory.INSTANCE,
         };
 
         for (final Object original : singletones) {

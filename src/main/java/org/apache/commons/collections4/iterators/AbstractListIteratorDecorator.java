@@ -20,7 +20,7 @@ import java.util.ListIterator;
 import java.util.Objects;
 
 /**
- * Provides basic behaviour for decorating a list iterator with extra functionality.
+ * Provides basic behavior for decorating a list iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated list iterator.
  *

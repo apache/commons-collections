@@ -73,7 +73,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
             // expected;
         }
 
-        final Bag<String> bag2 = new TreeBag<>((o1, o2) -> o1.compareTo(o2));
+        final Bag<String> bag2 = new TreeBag<>(String::compareTo);
         try {
             // jdk bug: adding null to an empty TreeMap works
             // thus ensure that the bag is not empty before adding null

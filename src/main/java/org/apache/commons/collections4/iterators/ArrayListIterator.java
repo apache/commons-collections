@@ -32,6 +32,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the array
  * cannot be changed in size. The {@link #set(Object)} method is supported however.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @see org.apache.commons.collections4.iterators.ArrayIterator
  * @see java.util.Iterator
  * @see java.util.ListIterator

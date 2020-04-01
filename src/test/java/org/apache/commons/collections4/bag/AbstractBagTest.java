@@ -684,7 +684,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
-            assertTrue("Bag is empty",bag2.size()  == 0);
+            assertTrue("Bag is empty", bag2.size() == 0);
             assertEquals(bag, bag2);
         }
     }
@@ -698,7 +698,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
-            assertEquals("Bag is the right size",bag.size(), bag2.size());
+            assertEquals("Bag is the right size", bag.size(), bag2.size());
             assertEquals(bag, bag2);
         }
     }

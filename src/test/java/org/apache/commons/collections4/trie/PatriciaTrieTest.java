@@ -64,11 +64,11 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = new String[]{
-                "",
-                "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
-                "Alberts", "Allie", "Alliese", "Alabama", "Banane",
-                "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
-                "Amma"
+            "",
+            "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
+            "Alberts", "Allie", "Alliese", "Alabama", "Banane",
+            "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
+            "Amma"
         };
 
         for (final String key : keys) {
@@ -291,10 +291,10 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = new String[]{
-                "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
-                "Alberts", "Allie", "Alliese", "Alabama", "Banane",
-                "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
-                "Amma"
+            "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
+            "Alberts", "Allie", "Alliese", "Alabama", "Banane",
+            "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
+            "Amma"
         };
 
         for (final String key : keys) {
@@ -323,7 +323,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         iter.remove();
         Assert.assertEquals(1, map.size());
         Assert.assertEquals("Akko", iter.next());
-        if(iter.hasNext()) {
+        if (iter.hasNext()) {
             Assert.fail("shouldn't have next (but was: " + iter.next() + ")");
         }
         Assert.assertFalse(iter.hasNext());

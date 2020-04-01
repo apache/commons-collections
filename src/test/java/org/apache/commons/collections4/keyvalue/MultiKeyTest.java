@@ -36,12 +36,56 @@ import static org.junit.Assert.*;
  */
 public class MultiKeyTest {
 
+    static class DerivedMultiKey<T> extends MultiKey<T> {
+
+        private static final long serialVersionUID = 1928896152249821416L;
+
+        DerivedMultiKey(final T key1, final T key2) {
+            super(key1, key2);
+        }
+
+        public T getFirst() {
+            return getKey(0);
+        }
+
+        public T getSecond() {
+            return getKey(1);
+        }
+
+    }
+
+    static class SystemHashCodeSimulatingKey implements Serializable {
+
+        private static final long serialVersionUID = -1736147315703444603L;
+        private final String name;
+        private int hashCode = 1;
+
+        SystemHashCodeSimulatingKey(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            return obj instanceof SystemHashCodeSimulatingKey
+                && name.equals(((SystemHashCodeSimulatingKey) obj).name);
+        }
+
+        @Override
+        public int hashCode() {
+            return hashCode;
+        }
+
+        private Object readResolve() {
+            hashCode=2; // simulate different hashCode after deserialization in another process
+            return this;
+        }
+    }
     Integer ONE = Integer.valueOf(1);
+
     Integer TWO = Integer.valueOf(2);
     Integer THREE = Integer.valueOf(3);
     Integer FOUR = Integer.valueOf(4);
     Integer FIVE = Integer.valueOf(5);
-
     //-----------------------------------------------------------------------
     @Test
     public void testConstructors() throws Exception {
@@ -108,20 +152,62 @@ public class MultiKeyTest {
     }
 
     @Test
-    public void testSize() {
-        assertEquals(2, new MultiKey<>(ONE, TWO).size());
-        assertEquals(2, new MultiKey<>(null, null).size());
-        assertEquals(3, new MultiKey<>(ONE, TWO, THREE).size());
-        assertEquals(3, new MultiKey<>(null, null, null).size());
-        assertEquals(4, new MultiKey<>(ONE, TWO, THREE, FOUR).size());
-        assertEquals(4, new MultiKey<>(null, null, null, null).size());
-        assertEquals(5, new MultiKey<>(ONE, TWO, THREE, FOUR, FIVE).size());
-        assertEquals(5, new MultiKey<>(null, null, null, null, null).size());
+    public void testEquals() {
+        final MultiKey<Integer> mk1 = new MultiKey<>(ONE, TWO);
+        final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
+        final MultiKey<Object> mk3 = new MultiKey<>(ONE, "TWO");
 
-        assertEquals(0, new MultiKey<>(new Object[] {}).size());
-        assertEquals(1, new MultiKey<>(new Integer[] { ONE }).size());
-        assertEquals(2, new MultiKey<>(new Integer[] { ONE, TWO }).size());
-        assertEquals(7, new MultiKey<>(new Integer[] { ONE, TWO, ONE, TWO, ONE, TWO, ONE }).size());
+        assertEquals(mk1, mk1);
+        assertEquals(mk1, mk2);
+        assertFalse(mk1.equals(mk3));
+        assertFalse(mk1.equals(""));
+        assertFalse(mk1.equals(null));
+    }
+
+    @Test
+    public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException {
+        SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
+        final MultiKey<?> mk = new MultiKey<Object>(ONE, sysKey);
+        final Map<MultiKey<?>, Integer> map = new HashMap<>();
+        map.put(mk, TWO);
+
+        // serialize
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(baos);
+        out.writeObject(sysKey);
+        out.writeObject(map);
+        out.close();
+
+        // deserialize
+        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        final ObjectInputStream in = new ObjectInputStream(bais);
+        sysKey = (SystemHashCodeSimulatingKey) in.readObject(); // simulate deserialization in another process
+        final Map<?, ?> map2 = (Map<?, ?>) in.readObject();
+        in.close();
+
+        assertEquals(2, sysKey.hashCode()); // different hashCode now
+
+        final MultiKey<?> mk2 = new MultiKey<Object>(ONE, sysKey);
+        assertEquals(TWO, map2.get(mk2));
+    }
+
+    @Test
+    public void testEqualsAfterSerializationOfDerivedClass() throws IOException, ClassNotFoundException {
+        final DerivedMultiKey<?> mk = new DerivedMultiKey<>("A", "B");
+
+        // serialize
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(baos);
+        out.writeObject(mk);
+        out.close();
+
+        // deserialize
+        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        final ObjectInputStream in = new ObjectInputStream(bais);
+        final DerivedMultiKey<?> mk2 = (DerivedMultiKey<?>) in.readObject();
+        in.close();
+
+        assertEquals(mk.hashCode(), mk2.hashCode());
     }
 
     @Test
@@ -137,15 +223,6 @@ public class MultiKeyTest {
             mk.getKey(2);
             fail();
         } catch (final IndexOutOfBoundsException ex) {}
-    }
-
-    @Test
-    public void testGetKeysSimpleConstructor() {
-        final MultiKey<Integer> mk = new MultiKey<>(ONE, TWO);
-        final Object[] array = mk.getKeys();
-        assertSame(ONE, array[0]);
-        assertSame(TWO, array[1]);
-        assertEquals(2, array.length);
     }
 
     @Test
@@ -173,6 +250,15 @@ public class MultiKeyTest {
     }
 
     @Test
+    public void testGetKeysSimpleConstructor() {
+        final MultiKey<Integer> mk = new MultiKey<>(ONE, TWO);
+        final Object[] array = mk.getKeys();
+        assertSame(ONE, array[0]);
+        assertSame(TWO, array[1]);
+        assertEquals(2, array.length);
+    }
+
+    @Test
     public void testHashCode() {
         final MultiKey<Integer> mk1 = new MultiKey<>(ONE, TWO);
         final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
@@ -187,112 +273,28 @@ public class MultiKeyTest {
     }
 
     @Test
-    public void testEquals() {
-        final MultiKey<Integer> mk1 = new MultiKey<>(ONE, TWO);
-        final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
-        final MultiKey<Object> mk3 = new MultiKey<>(ONE, "TWO");
+    public void testSize() {
+        assertEquals(2, new MultiKey<>(ONE, TWO).size());
+        assertEquals(2, new MultiKey<>(null, null).size());
+        assertEquals(3, new MultiKey<>(ONE, TWO, THREE).size());
+        assertEquals(3, new MultiKey<>(null, null, null).size());
+        assertEquals(4, new MultiKey<>(ONE, TWO, THREE, FOUR).size());
+        assertEquals(4, new MultiKey<>(null, null, null, null).size());
+        assertEquals(5, new MultiKey<>(ONE, TWO, THREE, FOUR, FIVE).size());
+        assertEquals(5, new MultiKey<>(null, null, null, null, null).size());
 
-        assertEquals(mk1, mk1);
-        assertEquals(mk1, mk2);
-        assertFalse(mk1.equals(mk3));
-        assertFalse(mk1.equals(""));
-        assertFalse(mk1.equals(null));
-    }
-
-    static class SystemHashCodeSimulatingKey implements Serializable {
-
-        private static final long serialVersionUID = -1736147315703444603L;
-        private final String name;
-        private int hashCode = 1;
-
-        public SystemHashCodeSimulatingKey(final String name)
-        {
-            this.name = name;
-        }
-
-        @Override
-        public boolean equals(final Object obj)
-        {
-            return obj instanceof SystemHashCodeSimulatingKey
-                && name.equals(((SystemHashCodeSimulatingKey)obj).name);
-        }
-
-        @Override
-        public int hashCode()
-        {
-            return hashCode;
-        }
-
-        private Object readResolve() {
-            hashCode=2; // simulate different hashCode after deserialization in another process
-            return this;
-        }
+        assertEquals(0, new MultiKey<>(new Object[] {}).size());
+        assertEquals(1, new MultiKey<>(new Integer[] { ONE }).size());
+        assertEquals(2, new MultiKey<>(new Integer[] { ONE, TWO }).size());
+        assertEquals(7, new MultiKey<>(new Integer[] { ONE, TWO, ONE, TWO, ONE, TWO, ONE }).size());
     }
 
     @Test
-    public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException
-    {
-        SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
-        final MultiKey<?> mk = new MultiKey<Object>(ONE, sysKey);
-        final Map<MultiKey<?>, Integer> map = new HashMap<>();
-        map.put(mk, TWO);
-
-        // serialize
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(baos);
-        out.writeObject(sysKey);
-        out.writeObject(map);
-        out.close();
-
-        // deserialize
-        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        final ObjectInputStream in = new ObjectInputStream(bais);
-        sysKey = (SystemHashCodeSimulatingKey)in.readObject(); // simulate deserialization in another process
-        final Map<?, ?> map2 = (Map<?, ?>) in.readObject();
-        in.close();
-
-        assertEquals(2, sysKey.hashCode()); // different hashCode now
-
-        final MultiKey<?> mk2 = new MultiKey<Object>(ONE, sysKey);
-        assertEquals(TWO, map2.get(mk2));
-    }
-
-    static class DerivedMultiKey<T> extends MultiKey<T> {
-
-        private static final long serialVersionUID = 1928896152249821416L;
-
-        public DerivedMultiKey(final T key1, final T key2) {
-            super(key1, key2);
-        }
-
-        public T getFirst() {
-            return getKey(0);
-        }
-
-        public T getSecond() {
-            return getKey(1);
-        }
-
-    }
-
-    @Test
-    public void testEqualsAfterSerializationOfDerivedClass() throws IOException, ClassNotFoundException
-    {
-        final DerivedMultiKey<?> mk = new DerivedMultiKey<>("A", "B");
-
-        // serialize
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(baos);
-        out.writeObject(mk);
-        out.close();
-
-        // deserialize
-        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        final ObjectInputStream in = new ObjectInputStream(bais);
-        final DerivedMultiKey<?> mk2 = (DerivedMultiKey<?>)in.readObject();
-        in.close();
-
-        assertEquals(mk.hashCode(), mk2.hashCode());
+    public void testTwoArgCtor() {
+        MultiKeyTest key1 = new MultiKeyTest();
+        MultiKeyTest key2 = new MultiKeyTest();
+        MultiKeyTest[] keys = new MultiKey<>(key1, key2).getKeys();
+        assertNotNull(keys);
     }
 
 }

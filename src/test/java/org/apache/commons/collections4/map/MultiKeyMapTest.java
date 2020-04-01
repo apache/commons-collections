@@ -147,7 +147,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
             final V value = values[i];
 
             switch (key.size()) {
-                case 2:
+            case 2:
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1)));
                 assertEquals(null, multimap.get(null, key.getKey(1)));
                 assertEquals(null, multimap.get(key.getKey(0), null));
@@ -156,7 +156,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), null, null));
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), null, null, null));
                 break;
-                case 3:
+            case 3:
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(null, multimap.get(null, key.getKey(1), key.getKey(2)));
                 assertEquals(null, multimap.get(key.getKey(0), null, key.getKey(2)));
@@ -165,7 +165,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), null));
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), null, null));
                 break;
-                case 4:
+            case 4:
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(null, multimap.get(null, key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(null, multimap.get(key.getKey(0), null, key.getKey(2), key.getKey(3)));
@@ -174,7 +174,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(null, null, null, null));
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), null));
                 break;
-                case 5:
+            case 5:
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(null, multimap.get(null, key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(null, multimap.get(key.getKey(0), null, key.getKey(2), key.getKey(3), key.getKey(4)));
@@ -183,7 +183,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), null));
                 assertEquals(null, multimap.get(null, null, null, null, null));
                 break;
-                default:
+            default:
                 fail("Invalid key size");
             }
         }
@@ -196,7 +196,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
         for (final MultiKey<K> key : keys) {
             switch (key.size()) {
-                case 2:
+            case 2:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1)));
                 assertEquals(false, multimap.containsKey(null, key.getKey(1)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), null));
@@ -205,7 +205,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), null, null));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), null, null, null));
                 break;
-                case 3:
+            case 3:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(false, multimap.containsKey(null, key.getKey(1), key.getKey(2)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), null, key.getKey(2)));
@@ -214,7 +214,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), null));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), null, null));
                 break;
-                case 4:
+            case 4:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(false, multimap.containsKey(null, key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), null, key.getKey(2), key.getKey(3)));
@@ -223,7 +223,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(false, multimap.containsKey(null, null, null, null));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), null));
                 break;
-                case 5:
+            case 5:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(false, multimap.containsKey(null, key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), null, key.getKey(2), key.getKey(3), key.getKey(4)));
@@ -232,7 +232,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), null));
                 assertEquals(false, multimap.containsKey(null, null, null, null, null));
                 break;
-                default:
+            default:
                 fail("Invalid key size");
             }
         }
@@ -249,7 +249,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
             final V value = values[i];
 
             switch (key.size()) {
-                case 2:
+            case 2:
                 assertEquals(null, multimap.put(key.getKey(0), key.getKey(1), value));
                 assertEquals(1, multimap.size());
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1)));
@@ -260,7 +260,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1)));
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1)));
                 break;
-                case 3:
+            case 3:
                 assertEquals(null, multimap.put(key.getKey(0), key.getKey(1), key.getKey(2), value));
                 assertEquals(1, multimap.size());
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2)));
@@ -271,7 +271,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 break;
-                case 4:
+            case 4:
                 assertEquals(null, multimap.put(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), value));
                 assertEquals(1, multimap.size());
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
@@ -282,7 +282,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 break;
-                case 5:
+            case 5:
                 assertEquals(null, multimap.put(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4), value));
                 assertEquals(1, multimap.size());
                 assertEquals(value, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
@@ -293,7 +293,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.get(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 break;
-                default:
+            default:
                 fail("Invalid key size");
             }
         }
@@ -328,7 +328,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
             final V value = values[i];
 
             switch (key.size()) {
-                case 2:
+            case 2:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1)));
                 assertEquals(value, multimap.removeMultiKey(key.getKey(0), key.getKey(1)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1)));
@@ -336,7 +336,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.removeMultiKey(key.getKey(0), key.getKey(1)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1)));
                 break;
-                case 3:
+            case 3:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(value, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2)));
@@ -344,7 +344,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2)));
                 break;
-                case 4:
+            case 4:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(value, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
@@ -352,7 +352,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3)));
                 break;
-                case 5:
+            case 5:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(value, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
@@ -360,7 +360,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
                 assertEquals(null, multimap.removeMultiKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 assertEquals(false, multimap.containsKey(key.getKey(0), key.getKey(1), key.getKey(2), key.getKey(3), key.getKey(4)));
                 break;
-                default:
+            default:
                 fail("Invalid key size");
             }
         }
