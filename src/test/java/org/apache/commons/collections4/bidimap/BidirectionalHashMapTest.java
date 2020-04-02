@@ -137,7 +137,7 @@ public class BidirectionalHashMapTest {
         
         assertEquals(map.get(100), "100");
         assertEquals(map.get(200), "200");
-        
+        assertEquals(map.get(300), null);
         map.put(200, "blah");
         
         assertEquals(map.get(200), "blah");
@@ -368,14 +368,14 @@ public class BidirectionalHashMapTest {
         
         for (int i = 0; i < 3; ++i) {
             map.put(i, strings[i]);
-            assertFalse(map.isEmpty());
+            assertFalse(map.keySet().isEmpty());
         }
         
         for (int i = 0; i < 3; ++i) {
-            assertFalse(map.isEmpty());
+            assertFalse(map.keySet().isEmpty());
             map.remove(i);
         }
-        
+        assertTrue(map.keySet().isEmpty());
         assertTrue(map.isEmpty());
     }
     
@@ -1027,14 +1027,14 @@ public class BidirectionalHashMapTest {
 
         for (int i = 0; i < 3; ++i) {
             inverse2.put(i, strings[i]);
-            assertFalse(inverse2.isEmpty());
+            assertFalse(inverse2.keySet().isEmpty());
         }
 
         for (int i = 0; i < 3; ++i) {
-            assertFalse(inverse2.isEmpty());
+            assertFalse(inverse2.keySet().isEmpty());
             inverse2.remove(i);
         }
-
+        assertFalse(inverse2.keySet().isEmpty());
         assertTrue(inverse2.isEmpty());
     }
 
