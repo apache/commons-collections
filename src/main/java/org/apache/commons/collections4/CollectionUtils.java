@@ -388,8 +388,8 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
-        Objects.requireNonNull(coll1, "The first collection must not be null.");
-        Objects.requireNonNull(coll2, "The second collection must not be null.");
+        Objects.requireNonNull(coll1, "coll1");
+        Objects.requireNonNull(coll2, "coll2");
         if (coll2.isEmpty()) {
             return true;
         }
@@ -432,8 +432,8 @@ public class CollectionUtils {
      * @see #intersection
      */
     public static <T> boolean containsAny(final Collection<?> coll1, @SuppressWarnings("unchecked") final T... coll2) {
-        Objects.requireNonNull(coll1, "The collection must not be null.");
-        Objects.requireNonNull(coll2, "The elements must not be null.");
+        Objects.requireNonNull(coll1, "coll1");
+        Objects.requireNonNull(coll2, "coll2");
         if (coll1.size() < coll2.length) {
             for (final Object aColl1 : coll1) {
                 if (ArrayUtils.contains(coll2, aColl1)) {
@@ -464,8 +464,8 @@ public class CollectionUtils {
      * @see #intersection
      */
     public static boolean containsAny(final Collection<?> coll1, final Collection<?> coll2) {
-        Objects.requireNonNull(coll1, "The first collection must not be null.");
-        Objects.requireNonNull(coll2, "The second collection must not be null.");
+        Objects.requireNonNull(coll1, "coll1");
+        Objects.requireNonNull(coll2, "coll2");
         if (coll1.size() < coll2.size()) {
             for (final Object aColl1 : coll1) {
                 if (coll2.contains(aColl1)) {
@@ -496,7 +496,7 @@ public class CollectionUtils {
      * @return the populated cardinality map
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
-        Objects.requireNonNull(coll, "The collection must not be null.");
+        Objects.requireNonNull(coll, "coll");
         final Map<O, Integer> count = new HashMap<>();
         for (final O obj : coll) {
             final Integer c = count.get(obj);
@@ -1206,8 +1206,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or iterable is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(iterable, "The iterable of elements to add must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(iterable, "iterable");
         if (iterable instanceof Collection<?>) {
             return collection.addAll((Collection<? extends C>) iterable);
         }
@@ -1224,8 +1224,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or iterator is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterator<? extends C> iterator) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(iterator, "The iterator of elements to add must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(iterator, "iterator");
         boolean changed = false;
         while (iterator.hasNext()) {
             changed |= collection.add(iterator.next());
@@ -1243,8 +1243,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or enumeration is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Enumeration<? extends C> enumeration) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(enumeration, "The enumeration of elements to add must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(enumeration, "enumeration");
         boolean changed = false;
         while (enumeration.hasMoreElements()) {
             changed |= collection.add(enumeration.nextElement());
@@ -1262,8 +1262,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or elements is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(elements, "The array of elements to add must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(elements, "elements");
         boolean changed = false;
         for (final C element : elements) {
             changed |= collection.add(element);
@@ -1289,7 +1289,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
-        Objects.requireNonNull(iterator, "The iterator must not be null.");
+        Objects.requireNonNull(iterator, "iterator");
         return IteratorUtils.get(iterator, index);
     }
 
@@ -1320,7 +1320,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
-        Objects.requireNonNull(iterable, "The iterable must not be null.");
+        Objects.requireNonNull(iterable, "iterable");
         return IterableUtils.get(iterable, index);
     }
 
@@ -1398,7 +1398,7 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
-        Objects.requireNonNull(map, "The map must not be null.");
+        Objects.requireNonNull(map, "map");
         checkIndexBounds(index);
         return get(map.entrySet(), index);
     }
@@ -1534,7 +1534,7 @@ public class CollectionUtils {
      * @param array  the array to reverse
      */
     public static void reverseArray(final Object[] array) {
-        Objects.requireNonNull(array, "The array must not be null.");
+        Objects.requireNonNull(array, "array");
         int i = 0;
         int j = array.length - 1;
         Object tmp;
@@ -1742,7 +1742,7 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(collection, "collection");
         final PermutationIterator<E> it = new PermutationIterator<>(collection);
         final Collection<List<E>> result = new ArrayList<>();
         while (it.hasNext()) {
@@ -1776,8 +1776,8 @@ public class CollectionUtils {
      * @since 3.2
      */
     public static <C> Collection<C> retainAll(final Collection<C> collection, final Collection<?> retain) {
-        Objects.requireNonNull(collection, "The first collection must not be null.");
-        Objects.requireNonNull(retain, "The second collection must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(retain, "retain");
         return ListUtils.retainAll(collection, retain);
     }
 
@@ -1810,9 +1810,9 @@ public class CollectionUtils {
     public static <E> Collection<E> retainAll(final Iterable<E> collection,
                                               final Iterable<? extends E> retain,
                                               final Equator<? super E> equator) {
-        Objects.requireNonNull(collection, "The first collection must not be null.");
-        Objects.requireNonNull(retain, "The second collection must not be null.");
-        Objects.requireNonNull(equator, "The equator must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(retain, "retain");
+        Objects.requireNonNull(equator, "equator");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
@@ -1840,7 +1840,7 @@ public class CollectionUtils {
      * @since 4.5
      */
     public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
-        Objects.requireNonNull(input, "The collection must not be null.");
+        Objects.requireNonNull(input, "input");
         if (endIndex < startIndex) {
             throw new IllegalArgumentException("The end index can't be less than the start index.");
         }
@@ -1862,7 +1862,7 @@ public class CollectionUtils {
      * @since 4.5
      */
     public static <E> Collection<E> removeCount(final Collection<E> input, int startIndex, int count) {
-        Objects.requireNonNull(input, "The collection must not be null.");
+        Objects.requireNonNull(input, "input");
         if (startIndex < 0) {
             throw new IndexOutOfBoundsException("The start index can't be less than 0.");
         }
@@ -1947,9 +1947,9 @@ public class CollectionUtils {
     public static <E> Collection<E> removeAll(final Iterable<E> collection,
                                               final Iterable<? extends E> remove,
                                               final Equator<? super E> equator) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(remove, "The items to be removed must not be null.");
-        Objects.requireNonNull(equator, "The equator must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(remove, "remove");
+        Objects.requireNonNull(equator, "equator");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
@@ -1992,7 +1992,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(collection, "collection");
         return SynchronizedCollection.synchronizedCollection(collection);
     }
 
@@ -2010,7 +2010,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(collection, "collection");
         return UnmodifiableCollection.unmodifiableCollection(collection);
     }
 
@@ -2031,8 +2031,8 @@ public class CollectionUtils {
      */
     public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
                                                          final Predicate<? super C> predicate) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(predicate, "The predicate must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(predicate, "predicate");
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
@@ -2056,8 +2056,8 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> transformingCollection(final Collection<E> collection,
             final Transformer<? super E, ? extends E> transformer) {
-        Objects.requireNonNull(collection, "The collection must not be null.");
-        Objects.requireNonNull(transformer, "The transformer must not be null.");
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(transformer, "transformer");
         return TransformedCollection.transformingCollection(collection, transformer);
     }
 
