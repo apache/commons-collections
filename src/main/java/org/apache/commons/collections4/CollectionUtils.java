@@ -1818,6 +1818,72 @@ public class CollectionUtils {
     }
 
     /**
+     * Removes elements whose index are between startIndex, inclusive and endIndex,
+     * exclusive in the collection and returns them.
+     * This method modifies the input collections.
+     *
+     * @param <E>  the type of object the {@link Collection} contains
+     * @param input  the collection will be operated, can't be null
+     * @param startIndex  the start index (inclusive) to remove element, can't be less than 0
+     * @param endIndex  the end index (exclusive) to remove, can't be less than startIndex
+     * @return collection of elements that removed from the input collection
+     * @since 4.5
+     */
+    public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
+        if (null == input) {
+            throw new IllegalArgumentException("The collection can't be null.");
+        }
+        if (endIndex < startIndex) {
+            throw new IllegalArgumentException("The end index can't be less than the start index.");
+        }
+        if (input.size() < endIndex) {
+            throw new IndexOutOfBoundsException("The end index can't be greater than the size of collection.");
+        }
+        return CollectionUtils.removeCount(input, startIndex, endIndex - startIndex);
+    }
+
+    /**
+     * Removes the specified number of elements from the start index in the collection and returns them.
+     * This method modifies the input collections.
+     *
+     * @param <E>  the type of object the {@link Collection} contains
+     * @param input  the collection will be operated, can't be null
+     * @param startIndex  the start index (inclusive) to remove element, can't be less than 0
+     * @param count  the specified number to remove, can't be less than 1
+     * @return collection of elements that removed from the input collection
+     * @since 4.5
+     */
+    public static <E> Collection<E> removeCount(final Collection<E> input, int startIndex, int count) {
+        if (null == input) {
+            throw new IllegalArgumentException("The collection can't be null.");
+        }
+        if (startIndex < 0) {
+            throw new IndexOutOfBoundsException("The start index can't be less than 0.");
+        }
+        if (count < 0) {
+            throw new IndexOutOfBoundsException("The count can't be less than 0.");
+        }
+        if (input.size() < startIndex + count) {
+            throw new IndexOutOfBoundsException(
+                    "The sum of start index and count can't be greater than the size of collection.");
+        }
+
+        Collection<E> result = new ArrayList<E>(count);
+        Iterator<E> iterator = input.iterator();
+        while (count > 0) {
+            if (startIndex > 0) {
+                startIndex = startIndex - 1;
+                iterator.next();
+                continue;
+            }
+            count = count - 1;
+            result.add(iterator.next());
+            iterator.remove();
+        }
+        return result;
+    }
+
+    /**
      * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
      * method returns a collection containing all the elements in <code>c</code>
      * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
