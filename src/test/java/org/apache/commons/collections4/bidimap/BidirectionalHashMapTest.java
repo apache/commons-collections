@@ -1034,7 +1034,7 @@ public class BidirectionalHashMapTest {
             assertFalse(inverse2.keySet().isEmpty());
             inverse2.remove(i);
         }
-        assertFalse(inverse2.keySet().isEmpty());
+        assertTrue(inverse2.keySet().isEmpty());
         assertTrue(inverse2.isEmpty());
     }
 
