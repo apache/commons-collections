@@ -1314,11 +1314,11 @@ public final class BidirectionalHashMap<K extends Comparable<? super K>,
     private static <K extends Comparable<? super K>,
             V extends Comparable<? super V>> AbstractCollisionTreeNode<K, V>
         getMinimumNode(AbstractCollisionTreeNode<K, V> node) {
-            while (node.leftChild != null) {
-                node = node.leftChild;
-            }
+        while (node.leftChild != null) {
+            node = node.leftChild;
+        }
 
-            return node;
+        return node;
     }
 
     private static <K extends Comparable<? super K>,
