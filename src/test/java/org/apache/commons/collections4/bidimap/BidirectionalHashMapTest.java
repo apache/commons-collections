@@ -53,8 +53,7 @@ public class BidirectionalHashMapTest {
     private Map<String, Integer> inverse;
     private Map<Integer, String> inverse2;
 
-    private final String[] strings = {"Hello", "World",
-            "How", "Is", "It", "Going", "?"};
+    private final String[] strings = {"Hello", "World", "How", "Is", "It", "Going", "?"};
 
     @Before
     public void setUp() {
