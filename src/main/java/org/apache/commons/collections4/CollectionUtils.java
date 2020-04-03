@@ -624,9 +624,7 @@ public class CollectionUtils {
      */
     public static <E> int hashCode(final Collection<? extends E> collection,
                                 final Equator<? super E> equator) {
-        if (null == equator) {
-            throw new NullPointerException( "Equator must not be null." );
-        }
+        Objects.requireNonNull(equator, "Equator");
         if (null == collection) {
             return 0;
         }
@@ -636,7 +634,7 @@ public class CollectionUtils {
         }
         return hashCode;
     }
-    
+
     /**
      * Wraps another object and uses the provided Equator to implement
      * {@link #equals(Object)} and {@link #hashCode()}.

@@ -621,7 +621,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testIsEqualCollectionNullEquator() {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
-    
+
     @Test
     public void testHashCode() {
         final Equator<Integer> e = new Equator<Integer>() {
