@@ -136,10 +136,13 @@
       MultiKey.getKeys class cast exception.
     </action>
     <action issue="COLLECTIONS-748" dev="ggregory" type="update" due-to="Gary Gregory">
-    Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
+      Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-    Update tests from Apache Commons Lang 3.9 to 3.10.
+      Update tests from Apache Commons Lang 3.9 to 3.10.
+    </action>
+    <action dev="ggregory" type="update" due-to="Chen">
+      Fixed the typo and deal the NPE with Objects.requireNonNull #118.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
