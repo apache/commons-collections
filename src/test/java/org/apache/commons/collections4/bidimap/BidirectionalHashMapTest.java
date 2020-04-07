@@ -1216,8 +1216,7 @@ public class BidirectionalHashMapTest {
         try {
             inverse2.keySet().iterator().next();
             fail("NoSuchElementException");
-        } catch (NoSuchElementException expected)
-        {
+        } catch (NoSuchElementException expected){
             //expected
         }
     }
@@ -1227,8 +1226,7 @@ public class BidirectionalHashMapTest {
         try {
             inverse2.keySet().iterator().remove();
             fail("IllegalStateException");
-        } catch (IllegalStateException expected)
-        {
+        } catch (IllegalStateException expected) {
             //expected
         }
     }
