@@ -1211,6 +1211,28 @@ public class BidirectionalHashMapTest {
         assertEquals(0, inverse2.keySet().size());
     }
 
+    @Test
+    public void testInverseMapKeySetIteratorNext() {
+        try {
+            inverse2.keySet().iterator().next();
+            fail("NoSuchElementException");
+        } catch (NoSuchElementException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void testInverseMapKeySetIteratorRemove() {
+        try {
+            inverse2.keySet().iterator().remove();
+            fail("IllegalStateException");
+        } catch (IllegalStateException expected)
+        {
+            //expected
+        }
+    }
+
 
     private void loadMap() {
         for (int i = 0; i < strings.length; ++i) {
