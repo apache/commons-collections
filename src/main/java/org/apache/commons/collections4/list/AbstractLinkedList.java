@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.OrderedIterator;
 
@@ -385,9 +386,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         final ListIterator<?> it1 = listIterator();
         final ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
-            final Object o1 = it1.next();
-            final Object o2 = it2.next();
-            if (!(o1 == null ? o2 == null : o1.equals(o2))) {
+            if (!(Objects.equals(it1.next(), it2.next()))) {
                 return false;
             }
         }
@@ -436,7 +435,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value1, final Object value2) {
-        return value1 == value2 || (value1 != null && value1.equals(value2));
+        return Objects.equals(value1, value2);
     }
 
     /**
@@ -514,6 +513,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @throws NullPointerException if either node is null
      */
     protected void addNode(final Node<E> nodeToInsert, final Node<E> insertBeforeNode) {
+        Objects.requireNonNull(nodeToInsert, "nodeToInsert");
+        Objects.requireNonNull(insertBeforeNode, "insertBeforeNode");
         nodeToInsert.next = insertBeforeNode;
         nodeToInsert.previous = insertBeforeNode.previous;
         insertBeforeNode.previous.next = nodeToInsert;
@@ -529,6 +530,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @throws NullPointerException if {@code node} is null
      */
     protected void removeNode(final Node<E> node) {
+        Objects.requireNonNull(node, "node");
         node.previous.next = node.next;
         node.next.previous = node.previous;
         size--;
@@ -925,7 +927,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      */
     protected static class LinkedSubListIterator<E> extends LinkedListIterator<E> {
 
-        /** The parent list */
+        /** The sub list */
         protected final LinkedSubList<E> sub;
 
         protected LinkedSubListIterator(final LinkedSubList<E> sub, final int startIndex) {
