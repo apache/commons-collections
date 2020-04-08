@@ -617,14 +617,14 @@ public class CollectionUtils {
      *
      * @param <E>  the element type
      * @param collection  the input collection
-     * @param equator  the Equator used for generate hashCode
+     * @param equator  the equator used for generate hashCode
      * @return the hashCode of Collection through the hash method of Equator
      * @throws NullPointerException if the equator is null
      * @since 4.5
      */
     public static <E> int hashCode(final Collection<? extends E> collection,
                                 final Equator<? super E> equator) {
-        Objects.requireNonNull(equator, "Equator");
+        Objects.requireNonNull(equator, "equator");
         if (null == collection) {
             return 0;
         }
