@@ -144,6 +144,10 @@
     <action dev="ggregory" type="update" due-to="Chen">
       Fixed the typo and deal the NPE with Objects.requireNonNull #118.
     </action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">
+      Update build from checkstyle.version 3.1.0 to 3.1.1.
+      Update build from checkstyle.dep.version 8.29 to 8.31.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
