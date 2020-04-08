@@ -228,11 +228,12 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return the union of the two collections
+     * @throws NullPointerException if either collection is null
      * @see Collection#addAll
      */
     public static <O> Collection<O> union(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj));
@@ -254,12 +255,13 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return the intersection of the two collections
+     * @throws NullPointerException if either collection is null
      * @see Collection#retainAll
      * @see #containsAny
      */
     public static <O> Collection<O> intersection(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.min(obj));
@@ -288,10 +290,11 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return the symmetric difference of the two collections
+     * @throws NullPointerException if either collection is null
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
@@ -339,15 +342,16 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return a new collection with the results
+     * @throws NullPointerException if either collection or p is null
      * @since 4.0
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a,
                                              final Iterable<? extends O> b,
                                              final Predicate<O> p) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
-        Objects.requireNonNull(p, "The predicate must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
+        Objects.requireNonNull(p, "p");
         final ArrayList<O> list = new ArrayList<>();
         final HashBag<O> bag = new HashBag<>();
         for (final O element : b) {
@@ -385,6 +389,7 @@ public class CollectionUtils {
      * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections has the same cardinality
      *   as the set of unique elements from the second collection
+     * @throws NullPointerException if coll1 or coll2 is null
      * @since 4.0
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
@@ -428,6 +433,7 @@ public class CollectionUtils {
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections is non-empty
+     * @throws NullPointerException if coll1 or coll2 is null
      * @since 4.2
      * @see #intersection
      */
@@ -460,6 +466,7 @@ public class CollectionUtils {
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections is non-empty
+     * @throws NullPointerException if coll1 or coll2 is null
      * @since 2.1
      * @see #intersection
      */
@@ -494,6 +501,7 @@ public class CollectionUtils {
      * @param <O>  the type of object in the returned {@link Map}. This is a super type of &lt;I&gt;.
      * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
+     * @throws NullPointerException if coll is null
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
         Objects.requireNonNull(coll, "coll");
@@ -518,12 +526,13 @@ public class CollectionUtils {
      * @param a the first (sub?) collection, must not be null
      * @param b the second (super?) collection, must not be null
      * @return {@code true} iff <i>a</i> is a sub-collection of <i>b</i>
+     * @throws NullPointerException if either collection is null
      * @see #isProperSubCollection
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
         for (final Object obj : a) {
             if (helper.freqA(obj) > helper.freqB(obj)) {
@@ -552,12 +561,13 @@ public class CollectionUtils {
      * @param a  the first (sub?) collection, must not be null
      * @param b  the second (super?) collection, must not be null
      * @return {@code true} iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>
+     * @throws NullPointerException if either collection is null
      * @see #isSubCollection
      * @see Collection#containsAll
      */
     public static boolean isProperSubCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         return a.size() < b.size() && CollectionUtils.isSubCollection(a, b);
     }
 
@@ -573,10 +583,11 @@ public class CollectionUtils {
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
      * @return {@code true} iff the collections contain the same elements with the same cardinalities.
+     * @throws NullPointerException if either collection is null
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         if (a.size() != b.size()) {
             return false;
         }
@@ -612,14 +623,14 @@ public class CollectionUtils {
      * @param b  the second collection, must not be null
      * @param equator  the Equator used for testing equality
      * @return {@code true} iff the collections contain the same elements with the same cardinalities.
-     * @throws NullPointerException if the equator is null
+     * @throws NullPointerException if either collection or equator is null
      * @since 4.0
      */
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
-        Objects.requireNonNull(a, "The first collection must not be null.");
-        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(a, "a");
+        Objects.requireNonNull(b, "b");
         Objects.requireNonNull(equator, "equator");
 
         if (a.size() != b.size()) {
@@ -678,7 +689,7 @@ public class CollectionUtils {
      * @param collection the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the number of occurrences of obj in coll
-     * @throws NullPointerException if coll is null
+     * @throws NullPointerException if collection is null
      * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.
      */
@@ -1285,6 +1296,7 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
+     * @throws NullPointerException if iterator is null
      * @deprecated since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
      */
     @Deprecated
@@ -1837,6 +1849,7 @@ public class CollectionUtils {
      * @param startIndex  the start index (inclusive) to remove element, must not be less than 0
      * @param endIndex  the end index (exclusive) to remove, must not be less than startIndex
      * @return collection of elements that removed from the input collection
+     * @throws NullPointerException if input is null
      * @since 4.5
      */
     public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
@@ -1859,6 +1872,7 @@ public class CollectionUtils {
      * @param startIndex  the start index (inclusive) to remove element, can't be less than 0
      * @param count  the specified number to remove, can't be less than 1
      * @return collection of elements that removed from the input collection
+     * @throws NullPointerException if input is null
      * @since 4.5
      */
     public static <E> Collection<E> removeCount(final Collection<E> input, int startIndex, int count) {
