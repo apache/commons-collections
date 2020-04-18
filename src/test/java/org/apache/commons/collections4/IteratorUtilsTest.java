@@ -157,10 +157,10 @@ public class IteratorUtilsTest {
     public void testArrayIterator() {
         final Object[] objArray = { "a", "b", "c" };
         ResettableIterator<Object> iterator = IteratorUtils.arrayIterator(objArray);
-        assertTrue(iterator.next().equals("a"));
-        assertTrue(iterator.next().equals("b"));
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
         iterator.reset();
-        assertTrue(iterator.next().equals("a"));
+        assertEquals("a", iterator.next());
 
         try {
             iterator = IteratorUtils.arrayIterator(Integer.valueOf(0));
@@ -177,7 +177,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayIterator(objArray, 1);
-        assertTrue(iterator.next().equals("b"));
+        assertEquals("b", iterator.next());
 
         try {
             iterator = IteratorUtils.arrayIterator(objArray, -1);
@@ -187,7 +187,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayIterator(objArray, 3);
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
         iterator.reset();
 
         try {
@@ -198,7 +198,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayIterator(objArray, 2, 3);
-        assertTrue(iterator.next().equals("c"));
+        assertEquals("c", iterator.next());
 
         try {
             iterator = IteratorUtils.arrayIterator(objArray, 2, 4);
@@ -223,13 +223,13 @@ public class IteratorUtilsTest {
 
         final int[] intArray = { 0, 1, 2 };
         iterator = IteratorUtils.arrayIterator(intArray);
-        assertTrue(iterator.next().equals(Integer.valueOf(0)));
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
+        assertEquals(0, iterator.next());
+        assertEquals(1, iterator.next());
         iterator.reset();
-        assertTrue(iterator.next().equals(Integer.valueOf(0)));
+        assertEquals(0, iterator.next());
 
         iterator = IteratorUtils.arrayIterator(intArray, 1);
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
+        assertEquals(1, iterator.next());
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, -1);
@@ -239,7 +239,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayIterator(intArray, 3);
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
         iterator.reset();
 
         try {
@@ -250,7 +250,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayIterator(intArray, 2, 3);
-        assertTrue(iterator.next().equals(Integer.valueOf(2)));
+        assertEquals(2, iterator.next());
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, 2, 4);
@@ -278,19 +278,19 @@ public class IteratorUtilsTest {
     public void testArrayListIterator() {
         final Object[] objArray = { "a", "b", "c", "d" };
         ResettableListIterator<Object> iterator = IteratorUtils.arrayListIterator(objArray);
-        assertTrue(!iterator.hasPrevious());
-        assertTrue(iterator.previousIndex() == -1);
-        assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals("a"));
-        assertTrue(iterator.previous().equals("a"));
-        assertTrue(iterator.next().equals("a"));
-        assertTrue(iterator.previousIndex() == 0);
-        assertTrue(iterator.nextIndex() == 1);
-        assertTrue(iterator.next().equals("b"));
-        assertTrue(iterator.next().equals("c"));
-        assertTrue(iterator.next().equals("d"));
-        assertTrue(iterator.nextIndex() == 4); // size of list
-        assertTrue(iterator.previousIndex() == 3);
+        assertFalse(iterator.hasPrevious());
+        assertEquals(-1, iterator.previousIndex());
+        assertEquals(0, iterator.nextIndex());
+        assertEquals("a", iterator.next());
+        assertEquals("a", iterator.previous());
+        assertEquals("a", iterator.next());
+        assertEquals(0, iterator.previousIndex());
+        assertEquals(1, iterator.nextIndex());
+        assertEquals("b", iterator.next());
+        assertEquals("c", iterator.next());
+        assertEquals("d", iterator.next());
+        assertEquals(4, iterator.nextIndex()); // size of list
+        assertEquals(3, iterator.previousIndex());
 
         try {
             iterator = IteratorUtils.arrayListIterator(Integer.valueOf(0));
@@ -307,11 +307,11 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayListIterator(objArray, 1);
-        assertTrue(iterator.previousIndex() == -1);
-        assertTrue(!iterator.hasPrevious());
-        assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals("b"));
-        assertTrue(iterator.previousIndex() == 0);
+        assertEquals(-1, iterator.previousIndex());
+        assertFalse(iterator.hasPrevious());
+        assertEquals(0, iterator.nextIndex());
+        assertEquals("b", iterator.next());
+        assertEquals(0, iterator.previousIndex());
 
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, -1);
@@ -337,7 +337,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayListIterator(objArray, 2, 3);
-        assertTrue(iterator.next().equals("c"));
+        assertEquals("c", iterator.next());
 
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, 2, 5);
@@ -362,33 +362,33 @@ public class IteratorUtilsTest {
 
         final int[] intArray = { 0, 1, 2 };
         iterator = IteratorUtils.arrayListIterator(intArray);
-        assertTrue(iterator.previousIndex() == -1);
-        assertTrue(!iterator.hasPrevious());
-        assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals(Integer.valueOf(0)));
-        assertTrue(iterator.previousIndex() == 0);
-        assertTrue(iterator.nextIndex() == 1);
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
-        assertTrue(iterator.previousIndex() == 1);
-        assertTrue(iterator.nextIndex() == 2);
-        assertTrue(iterator.previous().equals(Integer.valueOf(1)));
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
+        assertEquals(iterator.previousIndex(), -1);
+        assertFalse(iterator.hasPrevious());
+        assertEquals(0, iterator.nextIndex());
+        assertEquals(0, iterator.next());
+        assertEquals(0, iterator.previousIndex());
+        assertEquals(1, iterator.nextIndex());
+        assertEquals(1, iterator.next());
+        assertEquals(1, iterator.previousIndex());
+        assertEquals(2, iterator.nextIndex());
+        assertEquals(1, iterator.previous());
+        assertEquals(1, iterator.next());
 
         iterator = IteratorUtils.arrayListIterator(intArray, 1);
-        assertTrue(iterator.previousIndex() == -1);
-        assertTrue(!iterator.hasPrevious());
-        assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
-        assertTrue(iterator.previous().equals(Integer.valueOf(1)));
-        assertTrue(iterator.next().equals(Integer.valueOf(1)));
-        assertTrue(iterator.previousIndex() == 0);
-        assertTrue(iterator.nextIndex() == 1);
-        assertTrue(iterator.next().equals(Integer.valueOf(2)));
-        assertTrue(iterator.previousIndex() == 1);
-        assertTrue(iterator.nextIndex() == 2);
-        assertTrue(iterator.previous().equals(Integer.valueOf(2)));
-        assertTrue(iterator.previousIndex() == 0);
-        assertTrue(iterator.nextIndex() == 1);
+        assertEquals(-1, iterator.previousIndex());
+        assertFalse(iterator.hasPrevious());
+        assertEquals(0, iterator.nextIndex());
+        assertEquals(1, iterator.next());
+        assertEquals(1, iterator.previous());
+        assertEquals(1, iterator.next());
+        assertEquals(0, iterator.previousIndex());
+        assertEquals(1, iterator.nextIndex());
+        assertEquals(2, iterator.next());
+        assertEquals(1, iterator.previousIndex());
+        assertEquals(2, iterator.nextIndex());
+        assertEquals(2, iterator.previous());
+        assertEquals(0, iterator.previousIndex());
+        assertEquals(1, iterator.nextIndex());
 
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, -1);
@@ -398,7 +398,7 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayListIterator(intArray, 3);
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
 
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, 4);
@@ -408,11 +408,11 @@ public class IteratorUtilsTest {
         }
 
         iterator = IteratorUtils.arrayListIterator(intArray, 2, 3);
-        assertTrue(!iterator.hasPrevious());
-        assertTrue(iterator.previousIndex() == -1);
-        assertTrue(iterator.next().equals(Integer.valueOf(2)));
+        assertFalse(iterator.hasPrevious());
+        assertEquals(-1, iterator.previousIndex());
+        assertEquals(2, iterator.next());
         assertTrue(iterator.hasPrevious());
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
 
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, 2, 4);
@@ -643,12 +643,12 @@ public class IteratorUtilsTest {
     public void testEmptyIterator() {
         assertSame(EmptyIterator.INSTANCE, IteratorUtils.EMPTY_ITERATOR);
         assertSame(EmptyIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_ITERATOR);
-        assertEquals(true, IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
-        assertEquals(true, IteratorUtils.EMPTY_ITERATOR instanceof ResettableIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof OrderedIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof ListIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof MapIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ITERATOR.hasNext());
+        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof ResettableIterator);
+        assertFalse(IteratorUtils.EMPTY_ITERATOR instanceof OrderedIterator);
+        assertFalse(IteratorUtils.EMPTY_ITERATOR instanceof ListIterator);
+        assertFalse(IteratorUtils.EMPTY_ITERATOR instanceof MapIterator);
+        assertFalse(IteratorUtils.EMPTY_ITERATOR.hasNext());
         IteratorUtils.EMPTY_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.EMPTY_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.emptyIterator());
@@ -672,12 +672,12 @@ public class IteratorUtilsTest {
     public void testEmptyListIterator() {
         assertSame(EmptyListIterator.INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
         assertSame(EmptyListIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
-        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
-        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ListIterator);
-        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableIterator);
-        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableListIterator);
-        assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR instanceof MapIterator);
-        assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR.hasNext());
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ListIterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableIterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableListIterator);
+        assertFalse(IteratorUtils.EMPTY_LIST_ITERATOR instanceof MapIterator);
+        assertFalse(IteratorUtils.EMPTY_LIST_ITERATOR.hasNext());
         assertEquals(0, IteratorUtils.EMPTY_LIST_ITERATOR.nextIndex());
         assertEquals(-1, IteratorUtils.EMPTY_LIST_ITERATOR.previousIndex());
         IteratorUtils.EMPTY_LIST_ITERATOR.reset();
@@ -718,13 +718,13 @@ public class IteratorUtilsTest {
     @SuppressWarnings("unchecked")
     public void testEmptyMapIterator() {
         assertSame(EmptyMapIterator.INSTANCE, IteratorUtils.EMPTY_MAP_ITERATOR);
-        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
-        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
-        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResettableIterator);
-        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof ListIterator);
-        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedIterator);
-        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedMapIterator);
-        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR.hasNext());
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResettableIterator);
+        assertFalse(IteratorUtils.EMPTY_MAP_ITERATOR instanceof ListIterator);
+        assertFalse(IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedIterator);
+        assertFalse(IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedMapIterator);
+        assertFalse(IteratorUtils.EMPTY_MAP_ITERATOR.hasNext());
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_MAP_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.EMPTY_MAP_ITERATOR);
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.emptyMapIterator());
@@ -763,13 +763,13 @@ public class IteratorUtilsTest {
     @SuppressWarnings("unchecked")
     public void testEmptyOrderedIterator() {
         assertSame(EmptyOrderedIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResettableIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ListIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof MapIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasNext());
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasPrevious());
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResettableIterator);
+        assertFalse(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ListIterator);
+        assertFalse(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof MapIterator);
+        assertFalse(IteratorUtils.EMPTY_ORDERED_ITERATOR.hasNext());
+        assertFalse(IteratorUtils.EMPTY_ORDERED_ITERATOR.hasPrevious());
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_ORDERED_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.EMPTY_ORDERED_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.emptyOrderedIterator());
@@ -798,13 +798,13 @@ public class IteratorUtilsTest {
     @SuppressWarnings("unchecked")
     public void testEmptyOrderedMapIterator() {
         assertSame(EmptyOrderedMapIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
-        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResettableIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ListIterator);
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasNext());
-        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasPrevious());
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResettableIterator);
+        assertFalse(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ListIterator);
+        assertFalse(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasNext());
+        assertFalse(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasPrevious());
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.emptyOrderedMapIterator());
@@ -879,10 +879,10 @@ public class IteratorUtilsTest {
     public void testFind() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         Integer test = IteratorUtils.find(iterableA.iterator(), testPredicate);
-        assertTrue(test.equals(4));
+        assertEquals(4, (int) test);
         testPredicate = equalPredicate((Number) 45);
         test = IteratorUtils.find(iterableA.iterator(), testPredicate);
-        assertTrue(test == null);
+        assertNull(test);
         assertNull(IteratorUtils.find(null, testPredicate));
         try {
             assertNull(IteratorUtils.find(iterableA.iterator(), null));
@@ -975,7 +975,7 @@ public class IteratorUtilsTest {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -1295,7 +1295,7 @@ public class IteratorUtilsTest {
 
         assertEquals("d", iterator.next());
 
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     /**
@@ -1363,7 +1363,7 @@ public class IteratorUtilsTest {
     public void testUnmodifiableListIteratorIteration() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
-        assertTrue(!listIterator.hasPrevious());
+        assertFalse(listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
 
         assertEquals("a", listIterator.next());
@@ -1384,7 +1384,7 @@ public class IteratorUtilsTest {
         assertEquals("d", listIterator.next());
 
         assertTrue(listIterator.hasPrevious());
-        assertTrue(!listIterator.hasNext());
+        assertFalse(listIterator.hasNext());
 
         assertEquals("d", listIterator.previous());
 
@@ -1403,7 +1403,7 @@ public class IteratorUtilsTest {
 
         assertEquals("a", listIterator.previous());
 
-        assertTrue(!listIterator.hasPrevious());
+        assertFalse(listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
     }
 
