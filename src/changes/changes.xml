@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
+      Add tests for MapUtils
+    </action>
     <action issue="COLLECTIONS-737" dev="kinow" type="update" due-to="Prodigysov">
       Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests.
     </action>
