@@ -203,13 +203,13 @@ public class ListUtilsTest {
         final List<String> a = new ArrayList<>( data );
         final List<String> b = new ArrayList<>( data );
 
-        assertEquals(true, a.equals(b));
-        assertEquals(true, ListUtils.isEqualList(a, b));
+        assertEquals(a, b);
+        assertTrue(ListUtils.isEqualList(a, b));
         a.clear();
-        assertEquals(false, ListUtils.isEqualList(a, b));
-        assertEquals(false, ListUtils.isEqualList(a, null));
-        assertEquals(false, ListUtils.isEqualList(null, b));
-        assertEquals(true, ListUtils.isEqualList(null, null));
+        assertFalse(ListUtils.isEqualList(a, b));
+        assertFalse(ListUtils.isEqualList(a, null));
+        assertFalse(ListUtils.isEqualList(null, b));
+        assertTrue(ListUtils.isEqualList(null, null));
     }
 
     @Test
@@ -219,12 +219,12 @@ public class ListUtilsTest {
         final List<String> a = new ArrayList<>(data);
         final List<String> b = new ArrayList<>(data);
 
-        assertEquals(true, a.hashCode() == b.hashCode());
-        assertEquals(true, a.hashCode() == ListUtils.hashCodeForList(a));
-        assertEquals(true, b.hashCode() == ListUtils.hashCodeForList(b));
-        assertEquals(true, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
+        assertEquals(a.hashCode(), b.hashCode());
+        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
+        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
+        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
         a.clear();
-        assertEquals(false, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
+        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
         assertEquals(0, ListUtils.hashCodeForList(null));
     }
 
@@ -236,11 +236,11 @@ public class ListUtilsTest {
         sub.add(x);
 
         final List<String> retained = ListUtils.retainAll(fullList, sub);
-        assertTrue(retained.size() == 2);
+        assertEquals(2, retained.size());
         sub.remove(x);
-        assertTrue(retained.equals(sub));
+        assertEquals(retained, sub);
         fullList.retainAll(sub);
-        assertTrue(retained.equals(fullList));
+        assertEquals(retained, fullList);
 
         try {
             ListUtils.retainAll(null, null);
@@ -256,9 +256,9 @@ public class ListUtilsTest {
         sub.add(x);
 
         final List<String> remainder = ListUtils.removeAll(fullList, sub);
-        assertTrue(remainder.size() == 3);
+        assertEquals(3, remainder.size());
         fullList.removeAll(sub);
-        assertTrue(remainder.equals(fullList));
+        assertEquals(remainder, fullList);
 
         try {
             ListUtils.removeAll(null, null);
@@ -278,7 +278,7 @@ public class ListUtilsTest {
         sub.add(a);
 
         final List<String> result = ListUtils.subtract(list, sub);
-        assertTrue(result.size() == 3);
+        assertEquals(3, result.size());
 
         final List<String> expected = new ArrayList<>();
         expected.add(b);
@@ -305,7 +305,7 @@ public class ListUtilsTest {
         sub.add(null);
 
         final List<String> result = ListUtils.subtract(list, sub);
-        assertTrue(result.size() == 3);
+        assertEquals(3, result.size());
 
         final List<String> expected = new ArrayList<>();
         expected.add(a);
