@@ -93,3 +93,4 @@ public abstract class AbstractAvailableLocalesTest {
         return locale;
     }
 }
+

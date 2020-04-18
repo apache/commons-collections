@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-759" dev="kinow" type="fix">
+      Fix checkstyle issues regarding missing newline at end of file, and CRLF vs LF.
+    </action>
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils
     </action>
