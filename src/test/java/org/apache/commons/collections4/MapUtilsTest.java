@@ -151,8 +151,8 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Set<String> outKeySet = new HashSet<>(out.keySet());
         final Set<String> outValSet = new HashSet<>(out.values());
 
-        assertTrue( inKeySet.equals( outValSet ));
-        assertTrue( inValSet.equals( outKeySet ));
+        assertEquals(inKeySet, outValSet);
+        assertEquals(inValSet, outKeySet);
 
         assertEquals( "1", out.get("A"));
         assertEquals( "2", out.get("B"));
@@ -181,11 +181,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
                 {"GREEN", "#00FF00"},
                 {"BLUE", "#0000FF"}
         });
-        assertEquals(true, test.containsKey("RED"));
+        assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
-        assertEquals(true, test.containsKey("GREEN"));
+        assertTrue(test.containsKey("GREEN"));
         assertEquals("#00FF00", test.get("GREEN"));
-        assertEquals(true, test.containsKey("BLUE"));
+        assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
@@ -222,11 +222,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             "GREEN", "#00FF00",
             "BLUE", "#0000FF"
         });
-        assertEquals(true, test.containsKey("RED"));
+        assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
-        assertEquals(true, test.containsKey("GREEN"));
+        assertTrue(test.containsKey("GREEN"));
         assertEquals("#00FF00", test.get("GREEN"));
-        assertEquals(true, test.containsKey("BLUE"));
+        assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
@@ -236,11 +236,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             "BLUE", "#0000FF",
             "PURPLE" // ignored
         });
-        assertEquals(true, test.containsKey("RED"));
+        assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
-        assertEquals(true, test.containsKey("GREEN"));
+        assertTrue(test.containsKey("GREEN"));
         assertEquals("#00FF00", test.get("GREEN"));
-        assertEquals(true, test.containsKey("BLUE"));
+        assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
@@ -253,11 +253,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             new DefaultMapEntry<>("GREEN", "#00FF00"),
             new DefaultMapEntry<>("BLUE", "#0000FF")
         });
-        assertEquals(true, test.containsKey("RED"));
+        assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
-        assertEquals(true, test.containsKey("GREEN"));
+        assertTrue(test.containsKey("GREEN"));
         assertEquals("#00FF00", test.get("GREEN"));
-        assertEquals(true, test.containsKey("BLUE"));
+        assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
@@ -267,11 +267,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             new DefaultKeyValue<>("GREEN", "#00FF00"),
             new DefaultKeyValue<>("BLUE", "#0000FF")
         });
-        assertEquals(true, test.containsKey("RED"));
+        assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
-        assertEquals(true, test.containsKey("GREEN"));
+        assertTrue(test.containsKey("GREEN"));
         assertEquals("#00FF00", test.get("GREEN"));
-        assertEquals(true, test.containsKey("BLUE"));
+        assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
     }
@@ -304,7 +304,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         final Map<String, Object> out = MapUtils.toMap(b);
 
-        assertTrue( in.equals(out));
+        assertEquals(in, out);
     }
 
     @Test
@@ -748,39 +748,39 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     @Test
     public void testIsEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<>();
-        assertEquals(true, MapUtils.isEmpty(map));
+        assertTrue(MapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
-        assertEquals(false, MapUtils.isEmpty(map));
+        assertFalse(MapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsEmptyWithNull() {
         final Map<Object, Object> map = null;
-        assertEquals(true, MapUtils.isEmpty(map));
+        assertTrue(MapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsNotEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<>();
-        assertEquals(false, MapUtils.isNotEmpty(map));
+        assertFalse(MapUtils.isNotEmpty(map));
     }
 
     @Test
     public void testIsNotEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
-        assertEquals(true, MapUtils.isNotEmpty(map));
+        assertTrue(MapUtils.isNotEmpty(map));
     }
 
     @Test
     public void testIsNotEmptyWithNull() {
         final Map<Object, Object> map = null;
-        assertEquals(false, MapUtils.isNotEmpty(map));
+        assertFalse(MapUtils.isNotEmpty(map));
     }
 
     @Test
@@ -801,9 +801,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(list.size(), map.size());
 
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(Integer.valueOf(list.get(i))));
-            assertEquals(false, map.containsKey(list.get(i)));
-            assertEquals(true, map.containsValue(list.get(i)));
+            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
+            assertFalse(map.containsKey(list.get(i)));
+            assertTrue(map.containsValue(list.get(i)));
             assertEquals(list.get(i), map.get(Integer.valueOf(list.get(i))));
         }
 
@@ -813,9 +813,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         assertEquals(list.size(), map.size());
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(Integer.valueOf(list.get(i))));
-            assertEquals(false, map.containsKey(list.get(i)));
-            assertEquals(true, map.containsValue(Integer.valueOf(list.get(i))));
+            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
+            assertFalse(map.containsKey(list.get(i)));
+            assertTrue(map.containsValue(Integer.valueOf(list.get(i))));
             assertEquals(Integer.valueOf(list.get(i)), map.get(Integer.valueOf(list.get(i))));
         }
     }
@@ -854,8 +854,8 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(list.size(), map.totalSize());
 
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(list.get(i).key));
-            assertEquals(true, map.containsValue(list.get(i)));
+            assertTrue(map.containsKey(list.get(i).key));
+            assertTrue(map.containsValue(list.get(i)));
         }
     }
 
@@ -1209,7 +1209,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         assertEquals("str", MapUtils.getString(in, "key", "defualt"));
         assertEquals("str", MapUtils.getString(in, "key"));
-        assertEquals(null, MapUtils.getString(null, "key"));
+        assertNull(MapUtils.getString(null, "key"));
         assertEquals("default", MapUtils.getString(in, "noKey", "default"));
         assertEquals("default", MapUtils.getString(in, "noKey", key -> {
             if ("noKey".equals(key)) {
@@ -1229,7 +1229,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         assertEquals("str", MapUtils.getObject(in, "key", "defualt"));
         assertEquals("str", MapUtils.getObject(in, "key"));
-        assertEquals(null, MapUtils.getObject(null, "key"));
+        assertNull(MapUtils.getObject(null, "key"));
         assertEquals("default", MapUtils.getObject(in, "noKey", "default"));
         assertEquals("default", MapUtils.getObject(null, "noKey", "default"));
     }
@@ -1251,7 +1251,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> {
             return true;
         }));
-        assertTrue(!MapUtils.getBooleanValue(in, "noKey"));
+        assertFalse(MapUtils.getBooleanValue(in, "noKey"));
         assertTrue(MapUtils.getBoolean(in, "key", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", key -> {
@@ -1266,7 +1266,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> {
             return null;
         }));
-        assertEquals(null, MapUtils.getBoolean(null, "noKey"));
+        assertNull(MapUtils.getBoolean(null, "noKey"));
         // Values are Numbers
         assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));
         assertTrue(MapUtils.getBoolean(in, "keyNumberTrue"));
@@ -1291,9 +1291,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<?, ?> outValue =  MapUtils.getMap(in, "key1", (Map<?, ?>) null);
 
         assertEquals("value1", outValue.get("key1"));
-        assertEquals(null, outValue.get("key2"));
-        assertEquals(null, MapUtils.getMap(in, "key2", (Map<?, ?>) null));
-        assertEquals(null, MapUtils.getMap(null, "key2", (Map<?, ?>) null));
+        assertNull(outValue.get("key2"));
+        assertNull(MapUtils.getMap(in, "key2", (Map<?, ?>) null));
+        assertNull(MapUtils.getMap(null, "key2", (Map<?, ?>) null));
     }
 
     @Test
