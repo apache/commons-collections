@@ -63,9 +63,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
     @Override
     public Collection<Object> makeConfirmedFullCollection() {
-        final List<Object> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     @Override
@@ -75,8 +73,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
     @Override
     public Collection<Object> makeFullCollection() {
-        final List<Object> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final List<Object> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
 
@@ -99,11 +96,11 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         for (int i = 0; i < elements.length; i++) {
             coll.add(elements[i]);
             assertEquals(i + 1, coll.size());
-            assertEquals(true, coll.contains(Integer.valueOf((String) elements[i])));
-            assertEquals(false, coll.contains(elements[i]));
+            assertTrue(coll.contains(Integer.valueOf((String) elements[i])));
+            assertFalse(coll.contains(elements[i]));
         }
 
-        assertEquals(true, coll.remove(Integer.valueOf((String) elements[0])));
+        assertTrue(coll.remove(Integer.valueOf((String) elements[0])));
     }
 
     public void testTransformedCollection_decorateTransform() {
@@ -113,12 +110,12 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         final Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(elements.length, collection.size());
         for (final Object element : elements) {
-            assertEquals(true, collection.contains(Integer.valueOf((String) element)));
-            assertEquals(false, collection.contains(element));
+            assertTrue(collection.contains(Integer.valueOf((String) element)));
+            assertFalse(collection.contains(element));
         }
 
-        assertEquals(false, collection.remove(elements[0]));
-        assertEquals(true, collection.remove(Integer.valueOf((String) elements[0])));
+        assertFalse(collection.remove(elements[0]));
+        assertTrue(collection.remove(Integer.valueOf((String) elements[0])));
     }
 
     @Override

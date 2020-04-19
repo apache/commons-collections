@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
@@ -75,10 +76,10 @@ public class TransformerUtilsTest {
     public void testNullTransformer() {
         assertNotNull(TransformerUtils.nullTransformer());
         assertSame(TransformerUtils.nullTransformer(), TransformerUtils.nullTransformer());
-        assertEquals(null, TransformerUtils.nullTransformer().transform(null));
-        assertEquals(null, TransformerUtils.nullTransformer().transform(cObject));
-        assertEquals(null, TransformerUtils.nullTransformer().transform(cString));
-        assertEquals(null, TransformerUtils.nullTransformer().transform(cInteger));
+        assertNull(TransformerUtils.nullTransformer().transform(null));
+        assertNull(TransformerUtils.nullTransformer().transform(cObject));
+        assertNull(TransformerUtils.nullTransformer().transform(cString));
+        assertNull(TransformerUtils.nullTransformer().transform(cInteger));
     }
 
     // nopTransformer
@@ -88,7 +89,7 @@ public class TransformerUtilsTest {
     public void testNopTransformer() {
         assertNotNull(TransformerUtils.nullTransformer());
         assertSame(TransformerUtils.nullTransformer(), TransformerUtils.nullTransformer());
-        assertEquals(null, TransformerUtils.nopTransformer().transform(null));
+        assertNull(TransformerUtils.nopTransformer().transform(null));
         assertEquals(cObject, TransformerUtils.nopTransformer().transform(cObject));
         assertEquals(cString, TransformerUtils.nopTransformer().transform(cString));
         assertEquals(cInteger, TransformerUtils.nopTransformer().transform(cInteger));
@@ -111,7 +112,7 @@ public class TransformerUtilsTest {
 
     @Test
     public void testCloneTransformer() {
-        assertEquals(null, TransformerUtils.cloneTransformer().transform(null));
+        assertNull(TransformerUtils.cloneTransformer().transform(null));
         assertEquals(cString, TransformerUtils.cloneTransformer().transform(cString));
         assertEquals(cInteger, TransformerUtils.cloneTransformer().transform(cInteger));
         try {
@@ -135,7 +136,7 @@ public class TransformerUtilsTest {
         assertEquals(Integer.valueOf(0), TransformerUtils.mapTransformer(map).transform(null));
         assertEquals(Integer.valueOf(1), TransformerUtils.mapTransformer(map).transform(cObject));
         assertEquals(Integer.valueOf(2), TransformerUtils.mapTransformer(map).transform(cString));
-        assertEquals(null, TransformerUtils.mapTransformer(map).transform(cInteger));
+        assertNull(TransformerUtils.mapTransformer(map).transform(cInteger));
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.mapTransformer(null));
     }
 
@@ -144,7 +145,7 @@ public class TransformerUtilsTest {
 
     @Test
     public void testExecutorTransformer() {
-        assertEquals(null, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(null));
+        assertNull(TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(null));
         assertEquals(cObject, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cObject));
         assertEquals(cString, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cString));
         assertEquals(cInteger, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cInteger));
@@ -178,10 +179,10 @@ public class TransformerUtilsTest {
 
     @Test
     public void testFactoryTransformer() {
-        assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(null));
-        assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cObject));
-        assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cString));
-        assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cInteger));
+        assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(null));
+        assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cObject));
+        assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cString));
+        assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cInteger));
         try {
             TransformerUtils.asTransformer((Factory<Object>) null);
         } catch (final NullPointerException ex) {
@@ -249,13 +250,13 @@ public class TransformerUtilsTest {
 
         final Predicate<Integer> lessThanFivePredicate = value -> value < 5;
         // if/else tests
-        assertEquals("A", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(1));
-        assertEquals("B", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(5));
+        assertEquals("A", TransformerUtils.ifTransformer(lessThanFivePredicate, a, b).transform(1));
+        assertEquals("B", TransformerUtils.ifTransformer(lessThanFivePredicate, a, b).transform(5));
 
         // if tests
         final Predicate<String> equalsAPredicate = EqualPredicate.equalPredicate("A");
-        assertEquals("C", TransformerUtils.<String>ifTransformer(equalsAPredicate, c).transform("A"));
-        assertEquals("B", TransformerUtils.<String>ifTransformer(equalsAPredicate, c).transform("B"));
+        assertEquals("C", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("A"));
+        assertEquals("B", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("B"));
 
         try {
             TransformerUtils.ifTransformer(null, null);
@@ -288,9 +289,9 @@ public class TransformerUtilsTest {
         assertEquals("A", TransformerUtils.switchTransformer(TruePredicate.truePredicate(), a, b).transform(null));
         assertEquals("B", TransformerUtils.switchTransformer(FalsePredicate.falsePredicate(), a, b).transform(null));
 
-        assertEquals(null, TransformerUtils.<Object, String>switchTransformer(
-            new Predicate[] { EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE") },
-            new Transformer[] { a, b }).transform("WELL"));
+        assertNull(TransformerUtils.<Object, String>switchTransformer(
+                new Predicate[]{EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")},
+                new Transformer[]{a, b}).transform("WELL"));
         assertEquals("A", TransformerUtils.switchTransformer(
             new Predicate[] { EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE") },
             new Transformer[] { a, b }).transform("HELLO"));
@@ -305,7 +306,7 @@ public class TransformerUtilsTest {
         Map<Predicate<String>, Transformer<String, String>> map = new HashMap<>();
         map.put(EqualPredicate.equalPredicate("HELLO"), a);
         map.put(EqualPredicate.equalPredicate("THERE"), b);
-        assertEquals(null, TransformerUtils.switchTransformer(map).transform("WELL"));
+        assertNull(TransformerUtils.switchTransformer(map).transform("WELL"));
         assertEquals("A", TransformerUtils.switchTransformer(map).transform("HELLO"));
         assertEquals("B", TransformerUtils.switchTransformer(map).transform("THERE"));
         map.put(null, c);
@@ -322,11 +323,11 @@ public class TransformerUtilsTest {
             fail();
         } catch (final NullPointerException ex) {}
         try {
-            TransformerUtils.switchTransformer((Predicate[]) null, (Transformer[]) null);
+            TransformerUtils.switchTransformer(null, (Transformer[]) null);
             fail();
         } catch (final NullPointerException ex) {}
         try {
-            TransformerUtils.switchTransformer((Map<Predicate<Object>, Transformer<Object, Object>>) null);
+            TransformerUtils.switchTransformer(null);
             fail();
         } catch (final NullPointerException ex) {}
         try {
@@ -353,7 +354,7 @@ public class TransformerUtilsTest {
         Map<String, Transformer<String, String>> map = new HashMap<>();
         map.put("HELLO", a);
         map.put("THERE", b);
-        assertEquals(null, TransformerUtils.switchMapTransformer(map).transform("WELL"));
+        assertNull(TransformerUtils.switchMapTransformer(map).transform("WELL"));
         assertEquals("A", TransformerUtils.switchMapTransformer(map).transform("HELLO"));
         assertEquals("B", TransformerUtils.switchMapTransformer(map).transform("THERE"));
         map.put(null, c);
@@ -376,10 +377,10 @@ public class TransformerUtilsTest {
     @Test
     public void testInvokerTransformer() {
         final List<Object> list = new ArrayList<>();
-        assertEquals(Integer.valueOf(0), TransformerUtils.invokerTransformer("size").transform(list));
+        assertEquals(0, TransformerUtils.invokerTransformer("size").transform(list));
         list.add(new Object());
-        assertEquals(Integer.valueOf(1), TransformerUtils.invokerTransformer("size").transform(list));
-        assertEquals(null, TransformerUtils.invokerTransformer("size").transform(null));
+        assertEquals(1, TransformerUtils.invokerTransformer("size").transform(list));
+        assertNull(TransformerUtils.invokerTransformer("size").transform(null));
 
         try {
             TransformerUtils.invokerTransformer(null);
@@ -402,8 +403,8 @@ public class TransformerUtilsTest {
         list.add(cString);
         assertEquals(Boolean.TRUE, TransformerUtils.invokerTransformer("contains",
                 new Class[] { Object.class }, new Object[] { cString }).transform(list));
-        assertEquals(null, TransformerUtils.invokerTransformer("contains",
-                new Class[] { Object.class }, new Object[] { cString }).transform(null));
+        assertNull(TransformerUtils.invokerTransformer("contains",
+                new Class[]{Object.class}, new Object[]{cString}).transform(null));
 
         try {
             TransformerUtils.invokerTransformer(null, null, null);
@@ -438,7 +439,7 @@ public class TransformerUtilsTest {
         assertEquals( "StringValueTransformer should return \"null\" when given a null argument.", "null",
             TransformerUtils.stringValueTransformer().transform(null));
         assertEquals( "StringValueTransformer should return toString value", "6",
-            TransformerUtils.stringValueTransformer().transform(Integer.valueOf(6)));
+            TransformerUtils.stringValueTransformer().transform(6));
     }
 
     // instantiateFactory
@@ -464,7 +465,7 @@ public class TransformerUtilsTest {
         trans = TransformerUtils.instantiateTransformer();
         assertEquals("", trans.transform(String.class));
 
-        trans = TransformerUtils.instantiateTransformer(new Class[] { Long.TYPE }, new Object[] { new Long(1000L) });
+        trans = TransformerUtils.instantiateTransformer(new Class[] { Long.TYPE }, new Object[] {1000L});
         assertEquals(new Date(1000L), trans.transform(Date.class));
     }
 

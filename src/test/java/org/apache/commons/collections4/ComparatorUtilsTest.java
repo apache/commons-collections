@@ -29,17 +29,16 @@ import org.junit.Test;
  *
  */
 public class ComparatorUtilsTest {
-
     @Test
     public void booleanComparator() {
         Comparator<Boolean> comp = ComparatorUtils.booleanComparator(true);
         assertTrue(comp.compare(Boolean.TRUE, Boolean.FALSE) < 0);
-        assertTrue(comp.compare(Boolean.TRUE, Boolean.TRUE) == 0);
+        assertEquals(0, comp.compare(Boolean.TRUE, Boolean.TRUE));
         assertTrue(comp.compare(Boolean.FALSE, Boolean.TRUE) > 0);
 
         comp = ComparatorUtils.booleanComparator(false);
         assertTrue(comp.compare(Boolean.TRUE, Boolean.FALSE) > 0);
-        assertTrue(comp.compare(Boolean.TRUE, Boolean.TRUE) == 0);
+        assertEquals(0, comp.compare(Boolean.TRUE, Boolean.TRUE));
         assertTrue(comp.compare(Boolean.FALSE, Boolean.TRUE) < 0);
     }
 
@@ -47,9 +46,9 @@ public class ComparatorUtilsTest {
     public void chainedComparator() {
         // simple test: chain 2 natural comparators
         final Comparator<Integer> comp = ComparatorUtils.chainedComparator(ComparatorUtils.<Integer>naturalComparator(),
-                                                                     ComparatorUtils.<Integer>naturalComparator());
+                ComparatorUtils.naturalComparator());
         assertTrue(comp.compare(1, 2) < 0);
-        assertTrue(comp.compare(1, 1) == 0);
+        assertEquals(0, comp.compare(1, 1));
         assertTrue(comp.compare(2, 1) > 0);
     }
 
@@ -109,7 +108,7 @@ public class ComparatorUtilsTest {
     public void nullLowComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
         assertTrue(comp.compare(null, 10) < 0);
-        assertTrue(comp.compare(null, null) == 0);
+        assertEquals(0, comp.compare(null, null));
         assertTrue(comp.compare(10, null) > 0);
     }
 
@@ -117,8 +116,7 @@ public class ComparatorUtilsTest {
     public void nullHighComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
         assertTrue(comp.compare(null, 10) > 0);
-        assertTrue(comp.compare(null, null) == 0);
+        assertEquals(0, comp.compare(null, null));
         assertTrue(comp.compare(10, null) < 0);
     }
-
 }

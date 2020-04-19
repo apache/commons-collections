@@ -18,6 +18,8 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -161,13 +163,13 @@ public class SetUtilsTest {
         final Set<String> a = new HashSet<>(data);
         final Set<String> b = new HashSet<>(data);
 
-        assertEquals(true, a.equals(b));
-        assertEquals(true, SetUtils.isEqualSet(a, b));
+        assertEquals(a, b);
+        assertTrue(SetUtils.isEqualSet(a, b));
         a.clear();
-        assertEquals(false, SetUtils.isEqualSet(a, b));
-        assertEquals(false, SetUtils.isEqualSet(a, null));
-        assertEquals(false, SetUtils.isEqualSet(null, b));
-        assertEquals(true, SetUtils.isEqualSet(null, null));
+        assertFalse(SetUtils.isEqualSet(a, b));
+        assertFalse(SetUtils.isEqualSet(a, null));
+        assertFalse(SetUtils.isEqualSet(null, b));
+        assertTrue(SetUtils.isEqualSet(null, null));
     }
 
     @Test
@@ -177,12 +179,12 @@ public class SetUtilsTest {
         final Set<String> a = new HashSet<>(data);
         final Set<String> b = new HashSet<>(data);
 
-        assertEquals(true, a.hashCode() == b.hashCode());
-        assertEquals(true, a.hashCode() == SetUtils.hashCodeForSet(a));
-        assertEquals(true, b.hashCode() == SetUtils.hashCodeForSet(b));
-        assertEquals(true, SetUtils.hashCodeForSet(a) == SetUtils.hashCodeForSet(b));
+        assertEquals(a.hashCode(), b.hashCode());
+        assertEquals(a.hashCode(), SetUtils.hashCodeForSet(a));
+        assertEquals(b.hashCode(), SetUtils.hashCodeForSet(b));
+        assertEquals(SetUtils.hashCodeForSet(a), SetUtils.hashCodeForSet(b));
         a.clear();
-        assertEquals(false, SetUtils.hashCodeForSet(a) == SetUtils.hashCodeForSet(b));
+        assertNotEquals(SetUtils.hashCodeForSet(a), SetUtils.hashCodeForSet(b));
         assertEquals(0, SetUtils.hashCodeForSet(null));
     }
 
@@ -208,7 +210,7 @@ public class SetUtilsTest {
         assertTrue("set contains null", set4.contains(null));
 
         final Set<?> set5 = SetUtils.hashSet((Object[]) null);
-        assertEquals("set is null", null, set5);
+        assertNull("set is null", set5);
     }
 
     @Test
@@ -269,7 +271,7 @@ public class SetUtilsTest {
         assertTrue("set contains null", set4.contains(null));
 
         final Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
-        assertEquals("set is null", null, set5);
+        assertNull("set is null", set5);
     }
 
     @Test

@@ -22,7 +22,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -70,61 +72,54 @@ public class MultiMapUtilsTest {
 
     @Test
     public void testIsEmptyWithEmptyMap() {
-        final MultiValuedMap<Object, Object> map = new ArrayListValuedHashMap<>();
-        assertEquals(true, MultiMapUtils.isEmpty(map));
+        assertTrue(MultiMapUtils.isEmpty(new ArrayListValuedHashMap<>()));
     }
 
     @Test
     public void testIsEmptyWithNonEmptyMap() {
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         map.put("item", "value");
-        assertEquals(false, MultiMapUtils.isEmpty(map));
+        assertFalse(MultiMapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsEmptyWithNull() {
-        final MultiValuedMap<Object, Object> map = null;
-        assertEquals(true, MultiMapUtils.isEmpty(map));
+        assertTrue(MultiMapUtils.isEmpty(null));
     }
 
     @Test
     public void testGetCollection() {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
 
-        final String values[] = { "v1", "v2", "v3" };
+        final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
         }
 
         final Collection<String> col = MultiMapUtils.getCollection(map, "key1");
-        for (final String val : values) {
-            assertTrue(col.contains(val));
-        }
+        assertEquals(Arrays.asList(values), col);
     }
 
     @Test
     public void testGetValuesAsList() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
-        final String values[] = { "v1", "v2", "v3" };
+        final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
         }
 
         final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
-        int i = 0;
-        for (final String val : list) {
-            assertTrue(val.equals(values[i++]));
-        }
+        assertEquals(Arrays.asList(values), list);
     }
 
     @Test
     public void testGetValuesAsSet() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
-        final String values[] = { "v1", "v2", "v3" };
+        final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
@@ -132,10 +127,7 @@ public class MultiMapUtilsTest {
         }
 
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
-        assertEquals(3, set.size());
-        for (final String val : values) {
-            assertTrue(set.contains(val));
-        }
+        assertEquals(new HashSet<>(Arrays.asList(values)), set);
     }
 
     @Test

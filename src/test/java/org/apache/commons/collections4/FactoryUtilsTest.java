@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -103,7 +104,7 @@ public class FactoryUtilsTest {
         final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
         final Date created = factory.create();
-        assertTrue(proto != created);
+        assertNotSame(proto, created);
         assertEquals(proto, created);
     }
 
@@ -113,17 +114,17 @@ public class FactoryUtilsTest {
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
         final Object created = factory.create();
-        assertTrue(proto != created);
+        assertNotSame(proto, created);
         assertEquals(proto, created);
     }
 
     @Test
     public void testPrototypeFactoryPublicSerialization() throws Exception {
-        final Integer proto = Integer.valueOf(9);
+        final Integer proto = 9;
         final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
         final Integer created = factory.create();
-        assertTrue(proto != created);
+        assertNotSame(proto, created);
         assertEquals(proto, created);
     }
 
