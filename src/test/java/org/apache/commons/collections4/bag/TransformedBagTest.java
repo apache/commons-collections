@@ -53,17 +53,17 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         //T had better be Object!
         final Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(0, bag.size());
+        assertTrue(bag.isEmpty());
         final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
-            assertEquals(true, bag.contains(Integer.valueOf((String) els[i])));
-            assertEquals(false, bag.contains(els[i]));
+            assertTrue(bag.contains(Integer.valueOf((String) els[i])));
+            assertFalse(bag.contains(els[i]));
         }
 
-        assertEquals(false, bag.remove(els[0]));
-        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
+        assertFalse(bag.remove(els[0]));
+        assertTrue(bag.remove(Integer.valueOf((String) els[0])));
     }
 
     @SuppressWarnings("unchecked")
@@ -77,12 +77,12 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (final Object el : els) {
-            assertEquals(true, bag.contains(Integer.valueOf((String) el)));
-            assertEquals(false, bag.contains(el));
+            assertTrue(bag.contains(Integer.valueOf((String) el)));
+            assertFalse(bag.contains(el));
         }
 
-        assertEquals(false, bag.remove(els[0]));
-        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
+        assertFalse(bag.remove(els[0]));
+        assertTrue(bag.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override
