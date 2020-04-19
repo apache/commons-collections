@@ -41,15 +41,15 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     @Test
     public void objectFactoryUsesEqualsForTest() throws Exception {
         final Predicate<EqualsTestObject> predicate = equalPredicate(FALSE_OBJECT);
-        assertFalse(predicate, FALSE_OBJECT);
-        assertTrue(equalPredicate(TRUE_OBJECT), TRUE_OBJECT);
+        assertPredicateFalse(predicate, FALSE_OBJECT);
+        assertPredicateTrue(equalPredicate(TRUE_OBJECT), TRUE_OBJECT);
     }
 
     @SuppressWarnings("boxing")
     @Test
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         final Predicate<Number> predicate = equalPredicate((Number) 4);
-        assertTrue(predicate, 4);
+        assertPredicateTrue(predicate, 4);
     }
 
     public static class EqualsTestObject {

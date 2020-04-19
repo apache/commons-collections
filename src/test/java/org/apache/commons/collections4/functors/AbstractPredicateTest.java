@@ -44,11 +44,11 @@ public abstract class AbstractPredicateTest {
      */
     protected abstract Predicate<?> generatePredicate();
 
-    protected <T> void assertFalse(final Predicate<T> predicate, final T testObject) {
+    protected <T> void assertPredicateFalse(final Predicate<T> predicate, final T testObject) {
         Assert.assertFalse(predicate.evaluate(testObject));
     }
 
-    protected <T> void assertTrue(final Predicate<T> predicate, final T testObject) {
+    protected <T> void assertPredicateTrue(final Predicate<T> predicate, final T testObject) {
         Assert.assertTrue(predicate.evaluate(testObject));
     }
 }
