@@ -81,9 +81,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final Collection<E> collection = new HashSet<>();
-        collection.addAll(Arrays.asList(getFullElements()));
-        return collection;
+        return new HashSet<>(Arrays.asList(getFullElements()));
     }
     /**
      * Full collection consists of 4 collections, each with one element
@@ -188,8 +186,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         one.add((E) "1");
         two.add((E) "2");
         c.addComposited(one, two);
-        final Collection<E> toCollection = new HashSet<>();
-        toCollection.addAll(c);
+        final Collection<E> toCollection = new HashSet<>(c);
         assertTrue(toCollection.containsAll(c));
         assertEquals(c.size(), toCollection.size());
     }
@@ -281,7 +278,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         c.addComposited(empty);
         assertTrue(c.isEmpty());
         empty.add((E) "a");
-        assertTrue(!c.isEmpty());
+        assertFalse(c.isEmpty());
     }
 
     @SuppressWarnings("unchecked")
@@ -297,8 +294,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(one.contains(next));
         next = i.next();
         i.remove();
-        assertTrue(!c.contains(next));
-        assertTrue(!two.contains(next));
+        assertFalse(c.contains(next));
+        assertFalse(two.contains(next));
     }
 
     @SuppressWarnings("unchecked")
@@ -322,9 +319,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "1");
         c.addComposited(one, two);
         c.remove("1");
-        assertTrue(!c.contains("1"));
-        assertTrue(!one.contains("1"));
-        assertTrue(!two.contains("1"));
+        assertFalse(c.contains("1"));
+        assertFalse(one.contains("1"));
+        assertFalse(two.contains("1"));
     }
 
     @SuppressWarnings("unchecked")
@@ -341,9 +338,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(!one.contains("1"));
         assertTrue(!two.contains("1"));
         c.removeAll(null);
-        assertTrue(!c.contains("1"));
-        assertTrue(!one.contains("1"));
-        assertTrue(!two.contains("1"));
+        assertFalse(c.contains("1"));
+        assertFalse(one.contains("1"));
+        assertFalse(two.contains("1"));
     }
 
     /**
@@ -388,13 +385,13 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "1");
         c.addComposited(one);
         c.retainAll(two);
-        assertTrue(!c.contains("2"));
-        assertTrue(!one.contains("2"));
+        assertFalse(c.contains("2"));
+        assertFalse(one.contains("2"));
         assertTrue(c.contains("1"));
         assertTrue(one.contains("1"));
         c.retainAll(null);
-        assertTrue(!c.contains("2"));
-        assertTrue(!one.contains("2"));
+        assertFalse(c.contains("2"));
+        assertFalse(one.contains("2"));
         assertTrue(c.contains("1"));
         assertTrue(one.contains("1"));
     }
@@ -419,7 +416,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(foo.containsAll(c));
         assertEquals(c.size(), foo.size());
         one.add((E) "3");
-        assertTrue(!foo.containsAll(c));
+        assertFalse(foo.containsAll(c));
     }
 
     /**
