@@ -132,10 +132,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         final Set<V> keys2 = map2.keySet();
         final Collection<V> values1 = map1.values();
         final Collection<K> values2 = map2.values();
-        assertEquals(true, keys1.containsAll(values2));
-        assertEquals(true, values2.containsAll(keys1));
-        assertEquals(true, values1.containsAll(keys2));
-        assertEquals(true, keys2.containsAll(values1));
+        assertTrue(keys1.containsAll(values2));
+        assertTrue(values2.containsAll(keys1));
+        assertTrue(values1.containsAll(keys2));
+        assertTrue(keys2.containsAll(values1));
     }
 
     // testGetKey
@@ -254,18 +254,18 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         removeValue(makeFullMap(), getSampleValues()[0]);
         removeValue(makeFullMap().inverseBidiMap(), getSampleKeys()[0]);
 
-        assertEquals(null, makeFullMap().removeValue("NotPresent"));
+        assertNull(makeFullMap().removeValue("NotPresent"));
     }
 
     private void remove(final BidiMap<?, ?> map, final Object key) {
         final Object value = map.remove(key);
-        assertTrue("Key was not removed.", !map.containsKey(key));
+        assertFalse("Key was not removed.", map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
     }
 
     private void removeValue(final BidiMap<?, ?> map, final Object value) {
         final Object key = map.removeValue(value);
-        assertTrue("Key was not removed.", !map.containsKey(key));
+        assertFalse("Key was not removed.", map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
     }
 
@@ -274,13 +274,13 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         resetFull();
         final Iterator<K> keys = map.keySet().iterator();
         final Iterator<V> values = map.values().iterator();
-        for (; keys.hasNext() && values.hasNext();) {
+        while (keys.hasNext() && values.hasNext()) {
             final K key = keys.next();
             final V value = values.next();
             assertSame(map.get(key), value);
         }
-        assertEquals(false, keys.hasNext());
-        assertEquals(false, values.hasNext());
+        assertFalse(keys.hasNext());
+        assertFalse(values.hasNext());
     }
 
     //-----------------------------------------------------------------------
@@ -296,15 +296,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
         map.keySet().remove(key);
 
-        assertTrue("Key was not removed.", !map.containsKey(key));
-        assertTrue("Value was not removed.", !map.containsValue(value));
+        assertFalse("Key was not removed.", map.containsKey(key));
+        assertFalse("Value was not removed.", map.containsValue(value));
 
-        assertTrue(
-            "Key was not removed from inverse map.",
-            !map.inverseBidiMap().containsValue(key));
-        assertTrue(
-            "Value was not removed from inverse map.",
-            !map.inverseBidiMap().containsKey(value));
+        assertFalse("Key was not removed from inverse map.", map.inverseBidiMap().containsValue(key));
+        assertFalse("Value was not removed from inverse map.", map.inverseBidiMap().containsKey(value));
     }
 
     //-----------------------------------------------------------------------
@@ -322,15 +318,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         temp.put(key, value);
         map.entrySet().remove(temp.entrySet().iterator().next());
 
-        assertTrue("Key was not removed.", !map.containsKey(key));
-        assertTrue("Value was not removed.", !map.containsValue(value));
+        assertFalse("Key was not removed.", map.containsKey(key));
+        assertFalse("Value was not removed.", map.containsValue(value));
 
-        assertTrue(
-            "Key was not removed from inverse map.",
-            !map.inverseBidiMap().containsValue(key));
-        assertTrue(
-            "Value was not removed from inverse map.",
-            !map.inverseBidiMap().containsKey(value));
+        assertFalse("Key was not removed from inverse map.", map.inverseBidiMap().containsValue(key));
+        assertFalse("Value was not removed from inverse map.", map.inverseBidiMap().containsKey(value));
     }
 
     /**
@@ -394,11 +386,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             entryConfirmed2.setValue(newValue1);
             AbstractBidiMapTest.this.getConfirmed().remove(key1);
             assertEquals(newValue1, entry2.getValue());
-            assertEquals(true, AbstractBidiMapTest.this.getMap().containsKey(entry2.getKey()));
-            assertEquals(true, AbstractBidiMapTest.this.getMap().containsValue(newValue1));
+            assertTrue(AbstractBidiMapTest.this.getMap().containsKey(entry2.getKey()));
+            assertTrue(AbstractBidiMapTest.this.getMap().containsValue(newValue1));
             assertEquals(newValue1, AbstractBidiMapTest.this.getMap().get(entry2.getKey()));
-            assertEquals(false, AbstractBidiMapTest.this.getMap().containsKey(key1));
-            assertEquals(false, AbstractBidiMapTest.this.getMap().containsValue(newValue2));
+            assertFalse(AbstractBidiMapTest.this.getMap().containsKey(key1));
+            assertFalse(AbstractBidiMapTest.this.getMap().containsValue(newValue2));
             TestBidiMapEntrySet.this.verify();
 
             // check for ConcurrentModification
@@ -541,7 +533,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         resetFull();
         final BidiMap<K, V> bidi = getMap();
         final MapIterator<K, V> it = bidi.mapIterator();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key1 = it.next();
 
         if (!isSetValueSupported()) {
@@ -557,8 +549,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         confirmed.put(key1, newValue1);
         assertSame(key1, it.getKey());
         assertSame(newValue1, it.getValue());
-        assertEquals(true, bidi.containsKey(key1));
-        assertEquals(true, bidi.containsValue(newValue1));
+        assertTrue(bidi.containsKey(key1));
+        assertTrue(bidi.containsValue(newValue1));
         assertEquals(newValue1, bidi.get(key1));
         verify();
 
@@ -566,8 +558,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         confirmed.put(key1, newValue1);
         assertSame(key1, it.getKey());
         assertSame(newValue1, it.getValue());
-        assertEquals(true, bidi.containsKey(key1));
-        assertEquals(true, bidi.containsValue(newValue1));
+        assertTrue(bidi.containsKey(key1));
+        assertTrue(bidi.containsValue(newValue1));
         assertEquals(newValue1, bidi.get(key1));
         verify();
 
@@ -576,8 +568,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         confirmed.put(key2, newValue2);
         assertSame(key2, it.getKey());
         assertSame(newValue2, it.getValue());
-        assertEquals(true, bidi.containsKey(key2));
-        assertEquals(true, bidi.containsValue(newValue2));
+        assertTrue(bidi.containsKey(key2));
+        assertTrue(bidi.containsValue(newValue2));
         assertEquals(newValue2, bidi.get(key2));
         verify();
 
@@ -592,11 +584,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         confirmed.put(key2, newValue1);
         AbstractBidiMapTest.this.getConfirmed().remove(key1);
         assertEquals(newValue1, it.getValue());
-        assertEquals(true, bidi.containsKey(it.getKey()));
-        assertEquals(true, bidi.containsValue(newValue1));
+        assertTrue(bidi.containsKey(it.getKey()));
+        assertTrue(bidi.containsValue(newValue1));
         assertEquals(newValue1, bidi.get(it.getKey()));
-        assertEquals(false, bidi.containsKey(key1));
-        assertEquals(false, bidi.containsValue(newValue2));
+        assertFalse(bidi.containsKey(key1));
+        assertFalse(bidi.containsValue(newValue2));
         verify();
 
         // check for ConcurrentModification
