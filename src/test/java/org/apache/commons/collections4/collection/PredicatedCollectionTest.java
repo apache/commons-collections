@@ -62,16 +62,13 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     //-----------------------------------------------------------------------
@@ -85,15 +82,14 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Collection<E> c = makeTestCollection();
-        final Integer i = Integer.valueOf(3);
+        final Integer i = 3;
         try {
             c.add((E) i);
             fail("Integer should fail string predicate.");
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-            !c.contains(i));
+        assertFalse("Collection shouldn't contain illegal element", c.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -110,10 +106,10 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", !c.contains("one"));
-        assertTrue("Collection shouldn't contain illegal element", !c.contains("two"));
-        assertTrue("Collection shouldn't contain illegal element", !c.contains(Integer.valueOf(3)));
-        assertTrue("Collection shouldn't contain illegal element", !c.contains("four"));
+        assertFalse("Collection shouldn't contain illegal element", c.contains("one"));
+        assertFalse("Collection shouldn't contain illegal element", c.contains("two"));
+        assertFalse("Collection shouldn't contain illegal element", c.contains(3));
+        assertFalse("Collection shouldn't contain illegal element", c.contains("four"));
     }
 
     @Override

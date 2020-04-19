@@ -97,7 +97,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Sort the list.
      */
     protected void sortObjects(final List<T> list, final Comparator<? super T> comparator) {
-        Collections.sort(list, comparator);
+        list.sort(comparator);
     }
 
     //-----------------------------------------------------------------------
@@ -111,7 +111,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> list2 = new LinkedList<>();
 
-        assertTrue("Comparator cannot sort empty lists", list2.equals(list));
+        assertEquals("Comparator cannot sort empty lists", list2, list);
     }
 
     /**
@@ -127,8 +127,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
-        assertTrue("Comparator did not reorder the List correctly",
-                   orderedList.equals(randomList));
+        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
     }
 
     /**
@@ -151,9 +150,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         }
         */
 
-        assertTrue("Comparator did not reorder the List correctly",
-                   orderedList.equals(randomList));
-
+        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
     }
 
     /**
@@ -216,9 +213,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
             final List<T> orderedList = getComparableObjectsOrdered();
 
-            assertTrue("Comparator did not reorder the List correctly",
-                       orderedList.equals(randomList));
+            assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
         }
     }
-
 }

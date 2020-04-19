@@ -91,7 +91,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertEquals("first element", bag.first(), one);
         assertEquals("last element", bag.last(), two);
         final Comparator<? super T> c = bag.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
     @Override

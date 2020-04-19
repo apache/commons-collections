@@ -72,28 +72,26 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         for (int i = 0; i < els.length; i++) {
             bag.add(els[i]);
             assertEquals(i + 1, bag.size());
-            assertEquals(true, bag.contains(els[i]));
+            assertTrue(bag.contains(els[i]));
         }
-        Set<T> set = ((PredicatedBag<T>) bag).uniqueSet();
+        Set<T> set = bag.uniqueSet();
         assertTrue("Unique set contains the first element", set.contains(els[0]));
-        assertEquals(true, bag.remove(els[0]));
-        set = ((PredicatedBag<T>) bag).uniqueSet();
-        assertTrue("Unique set now does not contain the first element",
-            !set.contains(els[0]));
+        assertTrue(bag.remove(els[0]));
+        set = bag.uniqueSet();
+        assertFalse("Unique set now does not contain the first element", set.contains(els[0]));
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
-        final Integer i = Integer.valueOf(3);
+        final Integer i = 3;
         try {
             bag.add((T) i);
             fail("Integer should fail string predicate.");
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-            !bag.contains(i));
+        assertFalse("Collection shouldn't contain illegal element", bag.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -101,7 +99,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         final HashBag<Object> elements = new HashBag<>();
         elements.add("one");
         elements.add("two");
-        elements.add(Integer.valueOf(3));
+        elements.add(3);
         elements.add("four");
         try {
             decorateBag((HashBag<T>) elements, stringPredicate());
