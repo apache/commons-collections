@@ -33,6 +33,8 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 
+import static org.junit.Assert.assertNotEquals;
+
 /**
  * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.
  * <p>
@@ -76,8 +78,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
-        final ArrayList<T> list = new ArrayList<>();
-        return list;
+        return new ArrayList<>();
     }
 
     /**
@@ -155,18 +156,18 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     @SuppressWarnings("unchecked")
     public void testBagEqualsSelf() {
         final Bag<T> bag = makeObject();
-        assertTrue(bag.equals(bag));
+        assertEquals(bag, bag);
 
         if (!isAddSupported()) {
             return;
         }
 
         bag.add((T) "elt");
-        assertTrue(bag.equals(bag));
+        assertEquals(bag, bag);
         bag.add((T) "elt"); // again
-        assertTrue(bag.equals(bag));
+        assertEquals(bag, bag);
         bag.add((T) "elt2");
-        assertTrue(bag.equals(bag));
+        assertEquals(bag, bag);
     }
 
     @SuppressWarnings("unchecked")
@@ -223,20 +224,20 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
         final Bag<T> bag = makeObject();
 
-        assertEquals("Bag does not have at least 1 'A'", false, bag.contains("A"));
-        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        assertFalse("Bag does not have at least 1 'A'", bag.contains("A"));
+        assertFalse("Bag does not have at least 1 'B'", bag.contains("B"));
 
         bag.add((T) "A");  // bag 1A
-        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
-        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        assertTrue("Bag has at least 1 'A'", bag.contains("A"));
+        assertFalse("Bag does not have at least 1 'B'", bag.contains("B"));
 
         bag.add((T) "A");  // bag 2A
-        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
-        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        assertTrue("Bag has at least 1 'A'", bag.contains("A"));
+        assertFalse("Bag does not have at least 1 'B'", bag.contains("B"));
 
         bag.add((T) "B");  // bag 2A,1B
-        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
-        assertEquals("Bag has at least 1 'B'", true, bag.contains("B"));
+        assertTrue("Bag has at least 1 'A'", bag.contains("A"));
+        assertTrue("Bag has at least 1 'B'", bag.contains("B"));
     }
 
     @SuppressWarnings("unchecked")
@@ -258,39 +259,39 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         known1A1B.add("A");
         known1A1B.add("B");
 
-        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
-        assertEquals("Bag does not containsAll of 1 'A'", false, bag.containsAll(known1A));
-        assertEquals("Bag does not containsAll of 2 'A'", false, bag.containsAll(known2A));
-        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
-        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        assertTrue("Bag containsAll of empty", bag.containsAll(known));
+        assertFalse("Bag does not containsAll of 1 'A'", bag.containsAll(known1A));
+        assertFalse("Bag does not containsAll of 2 'A'", bag.containsAll(known2A));
+        assertFalse("Bag does not containsAll of 1 'B'", bag.containsAll(known1B));
+        assertFalse("Bag does not containsAll of 1 'A' 1 'B'", bag.containsAll(known1A1B));
 
         bag.add((T) "A");  // bag 1A
-        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
-        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
-        assertEquals("Bag does not containsAll of 2 'A'", false, bag.containsAll(known2A));
-        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
-        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        assertTrue("Bag containsAll of empty", bag.containsAll(known));
+        assertTrue("Bag containsAll of 1 'A'", bag.containsAll(known1A));
+        assertFalse("Bag does not containsAll of 2 'A'", bag.containsAll(known2A));
+        assertFalse("Bag does not containsAll of 1 'B'", bag.containsAll(known1B));
+        assertFalse("Bag does not containsAll of 1 'A' 1 'B'", bag.containsAll(known1A1B));
 
         bag.add((T) "A");  // bag 2A
-        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
-        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
-        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
-        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
-        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        assertTrue("Bag containsAll of empty", bag.containsAll(known));
+        assertTrue("Bag containsAll of 1 'A'", bag.containsAll(known1A));
+        assertTrue("Bag containsAll of 2 'A'", bag.containsAll(known2A));
+        assertFalse("Bag does not containsAll of 1 'B'", bag.containsAll(known1B));
+        assertFalse("Bag does not containsAll of 1 'A' 1 'B'", bag.containsAll(known1A1B));
 
         bag.add((T) "A");  // bag 3A
-        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
-        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
-        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
-        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
-        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        assertTrue("Bag containsAll of empty", bag.containsAll(known));
+        assertTrue("Bag containsAll of 1 'A'", bag.containsAll(known1A));
+        assertTrue("Bag containsAll of 2 'A'", bag.containsAll(known2A));
+        assertFalse("Bag does not containsAll of 1 'B'", bag.containsAll(known1B));
+        assertFalse("Bag does not containsAll of 1 'A' 1 'B'", bag.containsAll(known1A1B));
 
         bag.add((T) "B");  // bag 3A1B
-        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
-        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
-        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
-        assertEquals("Bag containsAll of 1 'B'", true, bag.containsAll(known1B));
-        assertEquals("Bag containsAll of 1 'A' 1 'B'", true, bag.containsAll(known1A1B));
+        assertTrue("Bag containsAll of empty", bag.containsAll(known));
+        assertTrue("Bag containsAll of 1 'A'", bag.containsAll(known1A));
+        assertTrue("Bag containsAll of 2 'A'", bag.containsAll(known2A));
+        assertTrue("Bag containsAll of 1 'B'", bag.containsAll(known1B));
+        assertTrue("Bag containsAll of 1 'A' 1 'B'", bag.containsAll(known1A1B));
     }
 
     @SuppressWarnings("unchecked")
@@ -452,18 +453,18 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(2, bag.size());
         final Iterator<T> it = bag.iterator();
         assertEquals("A", it.next());
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         it.remove();
         assertEquals(1, bag.size());
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("A", it.next());
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
         it.remove();
         assertEquals(0, bag.size());
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
 
         final Iterator<T> it2 = bag.iterator();
-        assertEquals(false, it2.hasNext());
+        assertFalse(it2.hasNext());
     }
 
     @SuppressWarnings("unchecked")
@@ -523,11 +524,11 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
         final Bag<T> bag = makeObject();
         final Bag<T> bag2 = makeObject();
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
         bag.add((T) "A");
-        assertEquals(false, bag.equals(bag2));
+        assertNotEquals(bag, bag2);
         bag2.add((T) "A");
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
         bag.add((T) "A");
         bag.add((T) "B");
         bag.add((T) "B");
@@ -536,7 +537,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag2.add((T) "B");
         bag2.add((T) "B");
         bag2.add((T) "C");
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
     }
 
     @SuppressWarnings("unchecked")
@@ -547,11 +548,11 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
         final Bag<T> bag = makeObject();
         final Bag<T> bag2 = new HashBag<>();
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
         bag.add((T) "A");
-        assertEquals(false, bag.equals(bag2));
+        assertNotEquals(bag, bag2);
         bag2.add((T) "A");
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
         bag.add((T) "A");
         bag.add((T) "B");
         bag.add((T) "B");
@@ -560,7 +561,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag2.add((T) "B");
         bag2.add((T) "B");
         bag2.add((T) "C");
-        assertEquals(true, bag.equals(bag2));
+        assertEquals(bag, bag2);
     }
 
     @SuppressWarnings("unchecked")
@@ -684,7 +685,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
-            assertTrue("Bag is empty", bag2.size() == 0);
+            assertTrue("Bag is empty", bag2.isEmpty());
             assertEquals(bag, bag2);
         }
     }
