@@ -17,10 +17,13 @@
 package org.apache.commons.collections4.comparators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Tests for {@link BooleanComparator}.
@@ -46,14 +49,8 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     @Override
     public List<Boolean> getComparableObjectsOrdered() {
-        final List<Boolean> list = new ArrayList<>();
-        list.add(new Boolean(false));
-        list.add(Boolean.FALSE);
-        list.add(new Boolean(false));
-        list.add(Boolean.TRUE);
-        list.add(new Boolean(true));
-        list.add(true);
-        return list;
+        return new ArrayList<>(Arrays.asList(Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.TRUE,
+                true));
     }
 
     @Override
@@ -95,8 +92,8 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         assertEquals(new BooleanComparator(true), BooleanComparator.getTrueFirstComparator());
         assertSame(BooleanComparator.getTrueFirstComparator(), BooleanComparator.booleanComparator(true));
 
-        assertTrue(!new BooleanComparator().equals(new BooleanComparator(true)));
-        assertTrue(!new BooleanComparator(true).equals(new BooleanComparator(false)));
+        assertNotEquals(new BooleanComparator(), new BooleanComparator(true));
+        assertNotEquals(new BooleanComparator(true), new BooleanComparator(false));
     }
 
     // utilities
