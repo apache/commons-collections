@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -304,19 +305,19 @@ public class CollectionUtilsTest extends MockTestCase {
         multiples.add("3");
         multiples.add("1");
 
-        assertTrue("containsAll({1},{1,3}) should return false.", !CollectionUtils.containsAll(one, odds));
+        assertFalse("containsAll({1},{1,3}) should return false.", CollectionUtils.containsAll(one, odds));
         assertTrue("containsAll({1,3},{1}) should return true.", CollectionUtils.containsAll(odds, one));
-        assertTrue("containsAll({3},{1,3}) should return false.", !CollectionUtils.containsAll(three, odds));
+        assertFalse("containsAll({3},{1,3}) should return false.", CollectionUtils.containsAll(three, odds));
         assertTrue("containsAll({1,3},{3}) should return true.", CollectionUtils.containsAll(odds, three));
         assertTrue("containsAll({2},{2}) should return true.", CollectionUtils.containsAll(two, two));
         assertTrue("containsAll({1,3},{1,3}) should return true.", CollectionUtils.containsAll(odds, odds));
 
-        assertTrue("containsAll({2},{1,3}) should return false.", !CollectionUtils.containsAll(two, odds));
-        assertTrue("containsAll({1,3},{2}) should return false.", !CollectionUtils.containsAll(odds, two));
-        assertTrue("containsAll({1},{3}) should return false.", !CollectionUtils.containsAll(one, three));
-        assertTrue("containsAll({3},{1}) should return false.", !CollectionUtils.containsAll(three, one));
+        assertFalse("containsAll({2},{1,3}) should return false.", CollectionUtils.containsAll(two, odds));
+        assertFalse("containsAll({1,3},{2}) should return false.", CollectionUtils.containsAll(odds, two));
+        assertFalse("containsAll({1},{3}) should return false.", CollectionUtils.containsAll(one, three));
+        assertFalse("containsAll({3},{1}) should return false.", CollectionUtils.containsAll(three, one));
         assertTrue("containsAll({1,3},{}) should return true.", CollectionUtils.containsAll(odds, empty));
-        assertTrue("containsAll({},{1,3}) should return false.", !CollectionUtils.containsAll(empty, odds));
+        assertFalse("containsAll({},{1,3}) should return false.", CollectionUtils.containsAll(empty, odds));
         assertTrue("containsAll({},{}) should return true.", CollectionUtils.containsAll(empty, empty));
 
         assertTrue("containsAll({1,3},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, multiples));
@@ -343,13 +344,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, two));
         assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, odds));
 
-        assertTrue("containsAny({2},{1,3}) should return false.", !CollectionUtils.containsAny(two, odds));
-        assertTrue("containsAny({1,3},{2}) should return false.", !CollectionUtils.containsAny(odds, two));
-        assertTrue("containsAny({1},{3}) should return false.", !CollectionUtils.containsAny(one, three));
-        assertTrue("containsAny({3},{1}) should return false.", !CollectionUtils.containsAny(three, one));
-        assertTrue("containsAny({1,3},{}) should return false.", !CollectionUtils.containsAny(odds, empty));
-        assertTrue("containsAny({},{1,3}) should return false.", !CollectionUtils.containsAny(empty, odds));
-        assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, empty));
+        assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, odds));
+        assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, two));
+        assertFalse("containsAny({1},{3}) should return false.", CollectionUtils.containsAny(one, three));
+        assertFalse("containsAny({3},{1}) should return false.", CollectionUtils.containsAny(three, one));
+        assertFalse("containsAny({1,3},{}) should return false.", CollectionUtils.containsAny(odds, empty));
+        assertFalse("containsAny({},{1,3}) should return false.", CollectionUtils.containsAny(empty, odds));
+        assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, empty));
     }
 
     @Test(expected = NullPointerException.class)
@@ -400,13 +401,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, twoArr));
         assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, oddsArr));
 
-        assertTrue("containsAny({2},{1,3}) should return false.", !CollectionUtils.containsAny(two, oddsArr));
-        assertTrue("containsAny({1,3},{2}) should return false.", !CollectionUtils.containsAny(odds, twoArr));
-        assertTrue("containsAny({1},{3}) should return false.", !CollectionUtils.containsAny(one, threeArr));
-        assertTrue("containsAny({3},{1}) should return false.", !CollectionUtils.containsAny(three, oneArr));
-        assertTrue("containsAny({1,3},{}) should return false.", !CollectionUtils.containsAny(odds, emptyArr));
-        assertTrue("containsAny({},{1,3}) should return false.", !CollectionUtils.containsAny(empty, oddsArr));
-        assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, emptyArr));
+        assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, oddsArr));
+        assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, twoArr));
+        assertFalse("containsAny({1},{3}) should return false.", CollectionUtils.containsAny(one, threeArr));
+        assertFalse("containsAny({3},{1}) should return false.", CollectionUtils.containsAny(three, oneArr));
+        assertFalse("containsAny({1,3},{}) should return false.", CollectionUtils.containsAny(odds, emptyArr));
+        assertFalse("containsAny({},{1,3}) should return false.", CollectionUtils.containsAny(empty, oddsArr));
+        assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, emptyArr));
     }
 
     @Test(expected = NullPointerException.class)
@@ -601,47 +602,47 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testIsSubCollection() {
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, collectionC));
-        assertTrue(!CollectionUtils.isSubCollection(collectionC, collectionA));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, collectionC));
+        assertFalse(CollectionUtils.isSubCollection(collectionC, collectionA));
     }
 
     @Test
     public void testIsSubCollection2() {
         final Collection<Integer> c = new ArrayList<>();
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(1);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(2);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(2);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(3);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(3);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(3);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(4);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(4);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(4);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
-        assertTrue(!CollectionUtils.isSubCollection(collectionA, c));
+        assertFalse(CollectionUtils.isSubCollection(collectionA, c));
         c.add(4);
         assertTrue(CollectionUtils.isSubCollection(c, collectionA));
         assertTrue(CollectionUtils.isSubCollection(collectionA, c));
         c.add(5);
-        assertTrue(!CollectionUtils.isSubCollection(c, collectionA));
+        assertFalse(CollectionUtils.isSubCollection(c, collectionA));
         assertTrue(CollectionUtils.isSubCollection(collectionA, c));
     }
 
@@ -667,8 +668,8 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testIsEqualCollection() {
-        assertTrue(!CollectionUtils.isEqualCollection(collectionA, collectionC));
-        assertTrue(!CollectionUtils.isEqualCollection(collectionC, collectionA));
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, collectionC));
+        assertFalse(CollectionUtils.isEqualCollection(collectionC, collectionA));
     }
 
     @Test
@@ -688,20 +689,20 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(a, b));
         assertTrue(CollectionUtils.isEqualCollection(b, a));
         a.add("1");
-        assertTrue(!CollectionUtils.isEqualCollection(a, b));
-        assertTrue(!CollectionUtils.isEqualCollection(b, a));
+        assertFalse(CollectionUtils.isEqualCollection(a, b));
+        assertFalse(CollectionUtils.isEqualCollection(b, a));
         b.add("1");
         assertTrue(CollectionUtils.isEqualCollection(a, b));
         assertTrue(CollectionUtils.isEqualCollection(b, a));
         a.add("2");
-        assertTrue(!CollectionUtils.isEqualCollection(a, b));
-        assertTrue(!CollectionUtils.isEqualCollection(b, a));
+        assertFalse(CollectionUtils.isEqualCollection(a, b));
+        assertFalse(CollectionUtils.isEqualCollection(b, a));
         b.add("2");
         assertTrue(CollectionUtils.isEqualCollection(a, b));
         assertTrue(CollectionUtils.isEqualCollection(b, a));
         a.add("1");
-        assertTrue(!CollectionUtils.isEqualCollection(a, b));
-        assertTrue(!CollectionUtils.isEqualCollection(b, a));
+        assertFalse(CollectionUtils.isEqualCollection(a, b));
+        assertFalse(CollectionUtils.isEqualCollection(b, a));
         b.add("1");
         assertTrue(CollectionUtils.isEqualCollection(a, b));
         assertTrue(CollectionUtils.isEqualCollection(b, a));
@@ -791,22 +792,22 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testIsProperSubCollection() {
         final Collection<String> a = new ArrayList<>();
         final Collection<String> b = new ArrayList<>();
-        assertTrue(!CollectionUtils.isProperSubCollection(a, b));
+        assertFalse(CollectionUtils.isProperSubCollection(a, b));
         b.add("1");
         assertTrue(CollectionUtils.isProperSubCollection(a, b));
-        assertTrue(!CollectionUtils.isProperSubCollection(b, a));
-        assertTrue(!CollectionUtils.isProperSubCollection(b, b));
-        assertTrue(!CollectionUtils.isProperSubCollection(a, a));
+        assertFalse(CollectionUtils.isProperSubCollection(b, a));
+        assertFalse(CollectionUtils.isProperSubCollection(b, b));
+        assertFalse(CollectionUtils.isProperSubCollection(a, a));
         a.add("1");
         a.add("2");
         b.add("2");
-        assertTrue(!CollectionUtils.isProperSubCollection(b, a));
-        assertTrue(!CollectionUtils.isProperSubCollection(a, b));
+        assertFalse(CollectionUtils.isProperSubCollection(b, a));
+        assertFalse(CollectionUtils.isProperSubCollection(a, b));
         a.add("1");
         assertTrue(CollectionUtils.isProperSubCollection(b, a));
         assertTrue(CollectionUtils.isProperSubCollection(CollectionUtils.intersection(collectionA, collectionC), collectionA));
         assertTrue(CollectionUtils.isProperSubCollection(CollectionUtils.subtract(a, b), a));
-        assertTrue(!CollectionUtils.isProperSubCollection(a, CollectionUtils.subtract(a, b)));
+        assertFalse(CollectionUtils.isProperSubCollection(a, CollectionUtils.subtract(a, b)));
     }
 
     @Test(expected = NullPointerException.class)
@@ -828,10 +829,10 @@ public class CollectionUtilsTest extends MockTestCase {
     public void find() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         Integer test = CollectionUtils.find(collectionA, testPredicate);
-        assertTrue(test.equals(4));
+        assertEquals(4, (int) test);
         testPredicate = equalPredicate((Number) 45);
         test = CollectionUtils.find(collectionA, testPredicate);
-        assertTrue(test == null);
+        assertNull(test);
         assertNull(CollectionUtils.find(null, testPredicate));
         assertNull(CollectionUtils.find(collectionA, null));
     }
@@ -900,7 +901,7 @@ public class CollectionUtilsTest extends MockTestCase {
         col.add(collectionB);
         lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
         assertSame(lastElement, collectionB);
-        assertTrue(!collectionB.isEmpty() );
+        assertFalse(collectionB.isEmpty());
 
         col.clear();
         lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
@@ -1008,7 +1009,7 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
-        assertTrue(!iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -1030,7 +1031,7 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
-        assertTrue(!en.hasMoreElements());
+        assertFalse(en.hasMoreElements());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -1157,15 +1158,15 @@ public class CollectionUtilsTest extends MockTestCase {
     // -----------------------------------------------------------------------
     @Test
     public void testSizeIsEmpty_Null() {
-        assertEquals(true, CollectionUtils.sizeIsEmpty(null));
+        assertTrue(CollectionUtils.sizeIsEmpty(null));
     }
 
     @Test
     public void testSizeIsEmpty_List() {
         final List<String> list = new ArrayList<>();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(list));
+        assertTrue(CollectionUtils.sizeIsEmpty(list));
         list.add("a");
-        assertEquals(false, CollectionUtils.sizeIsEmpty(list));
+        assertFalse(CollectionUtils.sizeIsEmpty(list));
     }
 
     @Test
@@ -1179,49 +1180,49 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void testSizeIsEmpty_Array() {
         final Object[] objectArray = new Object[0];
-        assertEquals(true, CollectionUtils.sizeIsEmpty(objectArray));
+        assertTrue(CollectionUtils.sizeIsEmpty(objectArray));
 
         final String[] stringArray = new String[3];
-        assertEquals(false, CollectionUtils.sizeIsEmpty(stringArray));
+        assertFalse(CollectionUtils.sizeIsEmpty(stringArray));
         stringArray[0] = "a";
         stringArray[1] = "b";
         stringArray[2] = "c";
-        assertEquals(false, CollectionUtils.sizeIsEmpty(stringArray));
+        assertFalse(CollectionUtils.sizeIsEmpty(stringArray));
     }
 
     @Test
     public void testSizeIsEmpty_PrimitiveArray() {
         final int[] intArray = new int[0];
-        assertEquals(true, CollectionUtils.sizeIsEmpty(intArray));
+        assertTrue(CollectionUtils.sizeIsEmpty(intArray));
 
         final double[] doubleArray = new double[3];
-        assertEquals(false, CollectionUtils.sizeIsEmpty(doubleArray));
+        assertFalse(CollectionUtils.sizeIsEmpty(doubleArray));
         doubleArray[0] = 0.0d;
         doubleArray[1] = 1.0d;
         doubleArray[2] = 2.5d;
-        assertEquals(false, CollectionUtils.sizeIsEmpty(doubleArray));
+        assertFalse(CollectionUtils.sizeIsEmpty(doubleArray));
     }
 
     @Test
     public void testSizeIsEmpty_Enumeration() {
         final Vector<String> list = new Vector<>();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(list.elements()));
+        assertTrue(CollectionUtils.sizeIsEmpty(list.elements()));
         list.add("a");
-        assertEquals(false, CollectionUtils.sizeIsEmpty(list.elements()));
+        assertFalse(CollectionUtils.sizeIsEmpty(list.elements()));
         final Enumeration<String> en = list.elements();
         en.nextElement();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(en));
+        assertTrue(CollectionUtils.sizeIsEmpty(en));
     }
 
     @Test
     public void testSizeIsEmpty_Iterator() {
         final List<String> list = new ArrayList<>();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(list.iterator()));
+        assertTrue(CollectionUtils.sizeIsEmpty(list.iterator()));
         list.add("a");
-        assertEquals(false, CollectionUtils.sizeIsEmpty(list.iterator()));
+        assertFalse(CollectionUtils.sizeIsEmpty(list.iterator()));
         final Iterator<String> it = list.iterator();
         it.next();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(it));
+        assertTrue(CollectionUtils.sizeIsEmpty(it));
     }
 
     @Test
@@ -1236,40 +1237,32 @@ public class CollectionUtilsTest extends MockTestCase {
     // -----------------------------------------------------------------------
     @Test
     public void testIsEmptyWithEmptyCollection() {
-        final Collection<Object> coll = new ArrayList<>();
-        assertEquals(true, CollectionUtils.isEmpty(coll));
+        assertTrue(CollectionUtils.isEmpty(new ArrayList<>()));
     }
 
     @Test
     public void testIsEmptyWithNonEmptyCollection() {
-        final Collection<String> coll = new ArrayList<>();
-        coll.add("item");
-        assertEquals(false, CollectionUtils.isEmpty(coll));
+        assertFalse(CollectionUtils.isEmpty(Collections.singletonList("item")));
     }
 
     @Test
     public void testIsEmptyWithNull() {
-        final Collection<?> coll = null;
-        assertEquals(true, CollectionUtils.isEmpty(coll));
+        assertTrue(CollectionUtils.isEmpty(null));
     }
 
     @Test
     public void testIsNotEmptyWithEmptyCollection() {
-        final Collection<Object> coll = new ArrayList<>();
-        assertEquals(false, CollectionUtils.isNotEmpty(coll));
+        assertFalse(CollectionUtils.isNotEmpty(new ArrayList<>()));
     }
 
     @Test
     public void testIsNotEmptyWithNonEmptyCollection() {
-        final Collection<String> coll = new ArrayList<>();
-        coll.add("item");
-        assertEquals(true, CollectionUtils.isNotEmpty(coll));
+        assertTrue(CollectionUtils.isNotEmpty(Collections.singletonList("item")));
     }
 
     @Test
     public void testIsNotEmptyWithNull() {
-        final Collection<?> coll = null;
-        assertEquals(false, CollectionUtils.isNotEmpty(coll));
+        assertFalse(CollectionUtils.isNotEmpty(null));
     }
 
     // -----------------------------------------------------------------------
@@ -1349,7 +1342,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.exists(list, EQUALS_TWO));
 
         list.add(2);
-        assertEquals(true, CollectionUtils.exists(list, EQUALS_TWO));
+        assertTrue(CollectionUtils.exists(list, EQUALS_TWO));
     }
 
     @Test
@@ -1504,9 +1497,9 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, set.size());
         assertFalse(CollectionUtils.addIgnoreNull(set, "1"));
         assertEquals(3, set.size());
-        assertEquals(true, CollectionUtils.addIgnoreNull(set, "4"));
+        assertTrue(CollectionUtils.addIgnoreNull(set, "4"));
         assertEquals(4, set.size());
-        assertEquals(true, set.contains("4"));
+        assertTrue(set.contains("4"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -1543,11 +1536,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.isFull(set));
 
         final CircularFifoQueue<String> buf = new CircularFifoQueue<>(set);
-        assertEquals(false, CollectionUtils.isFull(buf));
+        assertFalse(CollectionUtils.isFull(buf));
         buf.remove("2");
         assertFalse(CollectionUtils.isFull(buf));
         buf.add("2");
-        assertEquals(false, CollectionUtils.isFull(buf));
+        assertFalse(CollectionUtils.isFull(buf));
     }
 
     @Test(expected = NullPointerException.class)
@@ -1585,15 +1578,15 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void intersectionUsesMethodEquals() {
         // Let elta and eltb be objects...
-        final Integer elta = new Integer(17); // Cannot use valueOf here
-        final Integer eltb = new Integer(17);
+        final Integer elta = 17; // Cannot use valueOf here
+        final Integer eltb = 17;
 
         // ...which are equal...
         assertEquals(elta, eltb);
         assertEquals(eltb, elta);
 
         // ...but not the same (==).
-        assertTrue(elta != eltb);
+        assertNotSame(elta, eltb);
 
         // Let cola and colb be collections...
         final Collection<Number> cola = new ArrayList<>();
@@ -1638,17 +1631,17 @@ public class CollectionUtilsTest extends MockTestCase {
 
         final Collection<String> result = CollectionUtils.retainAll(base, sub);
         assertEquals(2, result.size());
-        assertEquals(true, result.contains("A"));
+        assertTrue(result.contains("A"));
         assertFalse(result.contains("B"));
-        assertEquals(true, result.contains("C"));
+        assertTrue(result.contains("C"));
         assertEquals(3, base.size());
-        assertEquals(true, base.contains("A"));
-        assertEquals(true, base.contains("B"));
-        assertEquals(true, base.contains("C"));
+        assertTrue(base.contains("A"));
+        assertTrue(base.contains("B"));
+        assertTrue(base.contains("C"));
         assertEquals(3, sub.size());
-        assertEquals(true, sub.contains("A"));
-        assertEquals(true, sub.contains("C"));
-        assertEquals(true, sub.contains("X"));
+        assertTrue(sub.contains("A"));
+        assertTrue(sub.contains("C"));
+        assertTrue(sub.contains("X"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -1788,16 +1781,16 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> result = CollectionUtils.removeAll(base, sub);
         assertEquals(1, result.size());
         assertFalse(result.contains("A"));
-        assertEquals(true, result.contains("B"));
+        assertTrue(result.contains("B"));
         assertFalse(result.contains("C"));
         assertEquals(3, base.size());
-        assertEquals(true, base.contains("A"));
-        assertEquals(true, base.contains("B"));
-        assertEquals(true, base.contains("C"));
+        assertTrue(base.contains("A"));
+        assertTrue(base.contains("B"));
+        assertTrue(base.contains("C"));
         assertEquals(3, sub.size());
-        assertEquals(true, sub.contains("A"));
-        assertEquals(true, sub.contains("C"));
-        assertEquals(true, sub.contains("X"));
+        assertTrue(sub.contains("A"));
+        assertTrue(sub.contains("C"));
+        assertTrue(sub.contains("X"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -1841,9 +1834,9 @@ public class CollectionUtilsTest extends MockTestCase {
         list.add("2");
         list.add("3");
         final Collection<Object> result = CollectionUtils.transformingCollection(list, TRANSFORM_TO_INTEGER);
-        assertEquals(true, result.contains("1")); // untransformed
-        assertEquals(true, result.contains("2")); // untransformed
-        assertEquals(true, result.contains("3")); // untransformed
+        assertTrue(result.contains("1")); // untransformed
+        assertTrue(result.contains("2")); // untransformed
+        assertTrue(result.contains("3")); // untransformed
     }
 
     @Test
@@ -2196,13 +2189,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(result.contains("BB"));
         assertFalse(result.contains("CA"));
         assertEquals(3, base.size());
-        assertEquals(true, base.contains("AC"));
-        assertEquals(true, base.contains("BB"));
-        assertEquals(true, base.contains("CA"));
+        assertTrue(base.contains("AC"));
+        assertTrue(base.contains("BB"));
+        assertTrue(base.contains("CA"));
         assertEquals(3, remove.size());
-        assertEquals(true, remove.contains("AA"));
-        assertEquals(true, remove.contains("CX"));
-        assertEquals(true, remove.contains("XZ"));
+        assertTrue(remove.contains("AA"));
+        assertTrue(remove.contains("CX"));
+        assertTrue(remove.contains("XZ"));
 
         try {
             CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
