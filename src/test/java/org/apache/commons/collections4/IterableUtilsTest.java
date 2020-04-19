@@ -266,12 +266,12 @@ public class IterableUtilsTest {
 
     @Test
     public void find() {
-        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Predicate<Number> testPredicate = equalPredicate(4);
         Integer test = IterableUtils.find(iterableA, testPredicate);
-        assertTrue(test.equals(4));
-        testPredicate = equalPredicate((Number) 45);
+        assertEquals(4, (int) test);
+        testPredicate = equalPredicate(45);
         test = IterableUtils.find(iterableA, testPredicate);
-        assertTrue(test == null);
+        assertNull(test);
         assertNull(IterableUtils.find(null, testPredicate));
         try {
             IterableUtils.find(iterableA, null);
@@ -344,7 +344,7 @@ public class IterableUtilsTest {
         assertFalse(IterableUtils.matchesAny(list, EQUALS_TWO));
 
         list.add(2);
-        assertEquals(true, IterableUtils.matchesAny(list, EQUALS_TWO));
+        assertTrue(IterableUtils.matchesAny(list, EQUALS_TWO));
     }
 
     @Test
