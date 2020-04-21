@@ -154,6 +154,12 @@
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
     </action>
+    <action issue="COLLECTIONS-754" type="update" dev="ggregory" due-to="John Patrick">
+      Upgrade to JUnit v5.6.0 #136
+    </action>
+    <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
+      Upgrade Hamcrest to 2.2.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
