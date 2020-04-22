@@ -38,3 +38,4 @@ public final class ObjectToStringComparator implements Comparator<Object>, Seria
         return o1.toString().compareTo(o2.toString());
     }
 }
+
