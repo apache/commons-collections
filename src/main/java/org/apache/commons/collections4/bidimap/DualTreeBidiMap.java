@@ -40,7 +40,7 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * Implementation of {@link BidiMap} that uses two {@link TreeMap} instances.
  * <p>
  * The setValue() method on iterators will succeed only if the new value being set is
- * not already in the bidimap.
+ * not already in the bidi map.
  * </p>
  * <p>
  * When considering whether to use this class, the {@link TreeBidiMap} class should
@@ -69,7 +69,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     private final Comparator<? super V> valueComparator;
 
     /**
-     * Creates an empty {@code DualTreeBidiMap}
+     * Creates an empty {@link DualTreeBidiMap}.
      */
     public DualTreeBidiMap() {
         super(new TreeMap<K, V>(), new TreeMap<V, K>());
@@ -78,8 +78,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     /**
-     * Constructs a {@code DualTreeBidiMap} and copies the mappings from
-     * specified {@code Map}.
+     * Constructs a {@link DualTreeBidiMap} and copies the mappings from
+     * specified {@link Map}.
      *
      * @param map  the map whose mappings are to be placed in this map
      */

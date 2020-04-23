@@ -26,9 +26,9 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 
 /**
- * Implementation of {@code BidiMap} that uses two {@code LinkedHashMap} instances.
+ * Implementation of {@link BidiMap} that uses two {@link LinkedHashMap} instances.
  * <p>
- * Two {@code LinkedHashMap} instances are used in this class.
+ * Two {@link LinkedHashMap} instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries and two linked lists.
  * </p>
  *
@@ -51,7 +51,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
 
     /**
      * Constructs a {@code LinkedHashBidiMap} and copies the mappings from
-     * specified {@code Map}.
+     * specified {@link Map}.
      *
      * @param map the map whose mappings are to be placed in this map
      */
