@@ -153,7 +153,7 @@ public class MapUtils {
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map. Each map entry will be printed with key, value
-     * and value classname. When the value is a Map, recursive behaviour occurs.
+     * and value classname. When the value is a Map, recursive behavior occurs.
      * </p>
      * <p>
      * This method is NOT thread-safe in any special way. You must manually synchronize on either this class or the
@@ -1861,7 +1861,7 @@ public class MapUtils {
      * Returns a transformed map backed by the given map.
      * <p>
      * This method returns a new map (decorating the specified map) that will transform any new entries added to it.
-     * Existing entries in the specified map will not be transformed. If you want that behaviour, see
+     * Existing entries in the specified map will not be transformed. If you want that behavior, see
      * {@link TransformedMap#transformedMap}.
      * </p>
      * <p>
@@ -1890,7 +1890,7 @@ public class MapUtils {
      * Returns a transformed sorted map backed by the given map.
      * <p>
      * This method returns a new sorted map (decorating the specified map) that will transform any new entries added to
-     * it. Existing entries in the specified map will not be transformed. If you want that behaviour, see
+     * it. Existing entries in the specified map will not be transformed. If you want that behavior, see
      * {@link TransformedSortedMap#transformedSortedMap}.
      * </p>
      * <p>
@@ -1953,7 +1953,7 @@ public class MapUtils {
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map. Each map entry will be printed with key and
-     * value. When the value is a Map, recursive behaviour occurs.
+     * value. When the value is a Map, recursive behavior occurs.
      * </p>
      * <p>
      * This method is NOT thread-safe in any special way. You must manually synchronize on either this class or the
