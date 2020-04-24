@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -169,14 +170,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(emptyMap, resultMap);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testInvertMapNull() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.invertMap(null);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("map"));
     }
 
     @Test
