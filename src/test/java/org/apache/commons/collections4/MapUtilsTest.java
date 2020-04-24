@@ -16,13 +16,13 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
@@ -52,19 +52,15 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MapUtils.
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest extends AbstractAvailableLocalesTest {
+public class MapUtilsTest {
     private static final String THREE = "Three";
     private static final String TWO = "Two";
-
-    public MapUtilsTest(final Locale locale) {
-        super(locale);
-    }
 
     public Predicate<Object> getPredicate() {
         return o -> o instanceof String;
@@ -74,7 +70,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
         final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
-        assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
+        assertTrue(map instanceof PredicatedMap);
         try {
             MapUtils.predicatedMap(null, p, p);
             fail("Expecting NullPointerException for null map.");
@@ -170,10 +166,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(emptyMap, resultMap);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void testInvertMapNull() {
+        Map<String, String> nullMap = null;
         Exception exception = assertThrows(NullPointerException.class, () -> {
-            MapUtils.invertMap(null);
+            MapUtils.invertMap(nullMap);
         });
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("map"));
@@ -1019,24 +1016,32 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(entrySet, transformedSortedMap.entrySet());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testUnmodifiableMap() {
-        MapUtils.unmodifiableMap(new HashMap<>()).clear();
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+            MapUtils.unmodifiableMap(new HashMap<>()).clear();
+        });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testUnmodifiableSortedMap() {
-        MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+            MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFixedSizeMap() {
-        MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFixedSizeSortedMap() {
-        MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
+        });
     }
 
     @Test
@@ -1330,7 +1335,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         inMap.put("key1", "value1");
         inMap.put("key2", "value2");
         final Map<String, String> map = MapUtils.orderedMap(inMap);
-        assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
+        assertTrue(map instanceof OrderedMap);
     }
 
     private char getDecimalSeparator() {
