@@ -1287,7 +1287,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * Increment the modification count -- used to check for
+     * Increments the modification count -- used to check for
      * concurrent modification of the map through the map and through
      * an Iterator from one of its Set or Collection views.
      */
@@ -1304,7 +1304,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * Decrement the size and note that the map has changed.
+     * Decrements the size and note that the map has changed.
      */
     private void shrink() {
         modify();
