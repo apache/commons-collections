@@ -166,6 +166,9 @@
     <action issue="COLLECTIONS-759" dev="ggregory" type="update" due-to="Bruno P. Kinoshita">
       Add newline at end of file, and convert to unix (LF instead of CRLF) fixing checkstyle #147.
     </action>
+    <action issue="COLLECTIONS-757" dev="ggregory" type="update" due-to="Chen">
+      Update the Javadoc of the BidiMap #146.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
