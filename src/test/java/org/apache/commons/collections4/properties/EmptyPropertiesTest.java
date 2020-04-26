@@ -247,18 +247,26 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testSave() {
+    public void testSave() throws IOException {
         final String comments = "Hello world!";
         // actual
-        final ByteArrayOutputStream actual = new ByteArrayOutputStream();
-        PropertiesFactory.EMPTY_PROPERTIES.save(new PrintStream(actual), comments);
-        // expected
-        final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        PropertiesFactory.INSTANCE.createProperties().save(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
-        expected.reset();
-        new Properties().save(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (final ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
+            try (final PrintStream out = new PrintStream(actual)) {
+                PropertiesFactory.EMPTY_PROPERTIES.save(out, comments);
+            }
+            // expected
+            try (final ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
+                try (final PrintStream out = new PrintStream(expected)) {
+                    PropertiesFactory.INSTANCE.createProperties().save(out, comments);
+                }
+                Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+                expected.reset();
+                try (final PrintStream out = new PrintStream(expected)) {
+                    new Properties().save(out, comments);
+                }
+                Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+            }
+        }
     }
 
     @Test(expected = UnsupportedOperationException.class)
