@@ -167,7 +167,7 @@
       Add newline at end of file, and convert to unix (LF instead of CRLF) fixing checkstyle #147.
     </action>
     <action issue="COLLECTIONS-757" dev="ggregory" type="update" due-to="Chen">
-      Update the Javadoc of the BidiMap #146.
+      Update Javadoc in BidiMap classes #146.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
