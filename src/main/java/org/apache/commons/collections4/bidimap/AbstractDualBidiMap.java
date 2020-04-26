@@ -129,7 +129,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
      * @param inverseMap  this map, which is the inverse in the new map
-     * @return the inverse map
+     * @return the bidi map
      */
     protected abstract BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseMap);
 
@@ -219,12 +219,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     //-----------------------------------------------------------------------
     /**
      * Obtains a {@code MapIterator} over the map.
-     * The iterator implements {@code ResetableMapIterator}.
+     * The iterator implements {@link BidiMapIterator}.
      * This implementation relies on the entrySet iterator.
      * <p>
-     * The setValue() methods only allow a new value to be set.
-     * If the value being set is already in the map, an IllegalArgumentException
-     * is thrown (as setValue cannot change the size of the map).
      *
      * @return a map iterator
      */
@@ -353,7 +350,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<K, V> parent;
 
         /**
-         * Constructs a new view of the BidiMap.
+         * Constructor.
          *
          * @param coll  the collection view being decorated
          * @param parent  the parent BidiMap
@@ -452,7 +449,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = -7107935777385040694L;
 
         /**
-         * Constructs a new view of the BidiMap.
+         * Constructor.
          *
          * @param parent  the parent BidiMap
          */
@@ -536,7 +533,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = 4023777119829639864L;
 
         /**
-         * Constructs a new view of the BidiMap.
+         * Constructor.
          *
          * @param parent  the parent BidiMap
          */
@@ -620,7 +617,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = 4040410962603292348L;
 
         /**
-         * Constructs a new view of the BidiMap.
+         * Constructor.
          *
          * @param parent  the parent BidiMap
          */
