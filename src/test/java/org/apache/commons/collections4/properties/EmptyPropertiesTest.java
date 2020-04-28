@@ -250,18 +250,18 @@ public class EmptyPropertiesTest {
     public void testSave() throws IOException {
         final String comments = "Hello world!";
         // actual
-        try (final ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
-            try (final PrintStream out = new PrintStream(actual)) {
+        try (ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
+            try (PrintStream out = new PrintStream(actual)) {
                 PropertiesFactory.EMPTY_PROPERTIES.save(out, comments);
             }
             // expected
-            try (final ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-                try (final PrintStream out = new PrintStream(expected)) {
+            try (ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
+                try (PrintStream out = new PrintStream(expected)) {
                     PropertiesFactory.INSTANCE.createProperties().save(out, comments);
                 }
                 Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
                 expected.reset();
-                try (final PrintStream out = new PrintStream(expected)) {
+                try (PrintStream out = new PrintStream(expected)) {
                     new Properties().save(out, comments);
                 }
                 Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
