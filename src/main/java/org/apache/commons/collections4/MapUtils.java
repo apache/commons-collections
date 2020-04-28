@@ -1187,11 +1187,12 @@ public class MapUtils {
      *
      * @param <K> the key type
      * @param <V> the value type
-     * @param map the map to invert, may not be null
+     * @param map the map to invert, must not be null
      * @return a new HashMap containing the inverted data
      * @throws NullPointerException if the map is null
      */
     public static <K, V> Map<V, K> invertMap(final Map<K, V> map) {
+        Objects.requireNonNull(map, "map");
         final Map<V, K> out = new HashMap<>(map.size());
         for (final Entry<K, V> entry : map.entrySet()) {
             out.put(entry.getValue(), entry.getKey());
@@ -1614,6 +1615,7 @@ public class MapUtils {
      * Writes indentation to the given stream.
      *
      * @param out the stream to indent
+     * @param indent the index of the indentation
      */
     private static void printIndent(final PrintStream out, final int indent) {
         for (int i = 0; i < indent; i++) {
@@ -1722,13 +1724,14 @@ public class MapUtils {
      * </p>
      *
      * @param <K> the key type
-     * @param map the map to add to, may not be null
+     * @param map the map to add to, must not be null
      * @param key the key
      * @param value the value, null converted to ""
      * @throws NullPointerException if the map is null
      */
     public static <K> void safeAddToMap(final Map<? super K, Object> map, final K key, final Object value)
             throws NullPointerException {
+        Objects.requireNonNull(map, "map");
         map.put(key, value == null ? "" : value);
     }
 
@@ -1808,11 +1811,12 @@ public class MapUtils {
     /**
      * Creates a new HashMap using data copied from a ResourceBundle.
      *
-     * @param resourceBundle the resource bundle to convert, may not be null
-     * @return the hashmap containing the data
+     * @param resourceBundle the resource bundle to convert, must not be null
+     * @return the HashMap containing the data
      * @throws NullPointerException if the bundle is null
      */
     public static Map<String, Object> toMap(final ResourceBundle resourceBundle) {
+        Objects.requireNonNull(resourceBundle, "resourceBundle");
         final Enumeration<String> enumeration = resourceBundle.getKeys();
         final Map<String, Object> map = new HashMap<>();
 

@@ -16,13 +16,14 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -36,7 +37,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -44,25 +44,21 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.apache.commons.collections4.junit.AbstractAvailableLocalesTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MapUtils.
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest extends AbstractAvailableLocalesTest {
+public class MapUtilsTest {
     private static final String THREE = "Three";
-
-    public MapUtilsTest(final Locale locale) {
-        super(locale);
-    }
+    private static final String TWO = "Two";
 
     public Predicate<Object> getPredicate() {
         return o -> o instanceof String;
@@ -72,7 +68,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
         final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
-        assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
+        assertTrue(map instanceof PredicatedMap);
         try {
             MapUtils.predicatedMap(null, p, p);
             fail("Expecting NullPointerException for null map.");
@@ -87,13 +83,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertTrue(map instanceof LazyMap);
         try {
-            map = MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null);
+            MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null);
             fail("Expecting NullPointerException for null factory");
         } catch (final NullPointerException e) {
             // expected
         }
         try {
-            map = MapUtils.lazyMap((Map<Object, Object>) null, factory);
+            MapUtils.lazyMap((Map<Object, Object>) null, factory);
             fail("Expecting NullPointerException for null map");
         } catch (final NullPointerException e) {
             // expected
@@ -102,13 +98,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         map = MapUtils.lazyMap(new HashMap<>(), transformer);
         assertTrue(map instanceof LazyMap);
         try {
-            map = MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null);
+            MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null);
             fail("Expecting NullPointerException for null transformer");
         } catch (final NullPointerException e) {
             // expected
         }
         try {
-            map = MapUtils.lazyMap((Map<Object, Object>) null, transformer);
+            MapUtils.lazyMap((Map<Object, Object>) null, transformer);
             fail("Expecting NullPointerException for null map");
         } catch (final NullPointerException e) {
             // expected
@@ -146,7 +142,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Set<String> inKeySet = new HashSet<>(in.keySet());
         final Set<String> inValSet = new HashSet<>(in.values());
 
-        final Map<String, String> out =  MapUtils.invertMap(in);
+        final Map<String, String> out = MapUtils.invertMap(in);
 
         final Set<String> outKeySet = new HashSet<>(out.keySet());
         final Set<String> outValSet = new HashSet<>(out.values());
@@ -154,11 +150,28 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(inKeySet, outValSet);
         assertEquals(inValSet, outKeySet);
 
-        assertEquals( "1", out.get("A"));
-        assertEquals( "2", out.get("B"));
-        assertEquals( "3", out.get("C"));
-        assertEquals( "4", out.get("D"));
-        assertEquals( "5", out.get("E"));
+        assertEquals("1", out.get("A"));
+        assertEquals("2", out.get("B"));
+        assertEquals("3", out.get("C"));
+        assertEquals("4", out.get("D"));
+        assertEquals("5", out.get("E"));
+    }
+
+    @Test
+    public void testInvertEmptyMap() {
+        Map<String, String> emptyMap = new HashMap<>();
+        Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
+        assertEquals(emptyMap, resultMap);
+    }
+
+    @Test
+    public void testInvertMapNull() {
+        Map<String, String> nullMap = null;
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            MapUtils.invertMap(nullMap);
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("map"));
     }
 
     @Test
@@ -288,14 +301,14 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final ResourceBundle b = new ListResourceBundle() {
             @Override
             public Object[][] getContents() {
-                final Object[][] contents = new Object[ in.size() ][2];
+                final Object[][] contents = new Object[in.size()][2];
                 final Iterator<String> i = in.keySet().iterator();
                 int n = 0;
-                while ( i.hasNext() ) {
+                while (i.hasNext()) {
                     final Object key = i.next();
-                    final Object val = in.get( key );
-                    contents[ n ][ 0 ] = key;
-                    contents[ n ][ 1 ] = val;
+                    final Object val = in.get(key);
+                    contents[n][0] = key;
+                    contents[n][1] = val;
                     ++n;
                 }
                 return contents;
@@ -552,7 +565,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final String INDENT = "    ";
 
         final Map<Object, Object> map = new HashMap<>();
-        final Map<Object, Object> map2= new HashMap<>();
+        final Map<Object, Object> map2 = new HashMap<>();
         map.put(null, map2);
         map2.put("2", "B");
 
@@ -897,23 +910,23 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     @Test
     public void testLazyMap() {
         final Map<String, Integer> lazyMap = MapUtils.lazyMap(new HashMap<>(), () -> 1);
-        lazyMap.put("Two", 2);
+        lazyMap.put(TWO, 2);
 
-        assertEquals(Integer.valueOf(2), lazyMap.get("Two"));
+        assertEquals(Integer.valueOf(2), lazyMap.get(TWO));
         assertEquals(Integer.valueOf(1), lazyMap.get(THREE));
     }
 
     @Test
     public void testLazySortedMapFactory() {
         final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), () -> 1);
-        lazySortedMap.put("Two", 2);
+        lazySortedMap.put(TWO, 2);
 
-        assertEquals(Integer.valueOf(2), lazySortedMap.get("Two"));
+        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
         assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
 
         final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
         entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
-        entrySet.add(new AbstractMap.SimpleEntry<>("Two", 2));
+        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
 
         assertEquals(entrySet, lazySortedMap.entrySet());
     }
@@ -921,14 +934,14 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     @Test
     public void testLazySortedMapTransformer() {
         final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), s -> 1);
-        lazySortedMap.put("Two", 2);
+        lazySortedMap.put(TWO, 2);
 
-        assertEquals(Integer.valueOf(2), lazySortedMap.get("Two"));
+        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
         assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
 
         final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
         entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
-        entrySet.add(new AbstractMap.SimpleEntry<>("Two", 2));
+        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
 
         assertEquals(entrySet, lazySortedMap.entrySet());
     }
@@ -1001,24 +1014,32 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(entrySet, transformedSortedMap.entrySet());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testUnmodifiableMap() {
-        MapUtils.unmodifiableMap(new HashMap<>()).clear();
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+            MapUtils.unmodifiableMap(new HashMap<>()).clear();
+        });
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testUnmodifiableSortedMap() {
-        MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+            MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFixedSizeMap() {
-        MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testFixedSizeSortedMap() {
-        MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
+        });
     }
 
     @Test
@@ -1030,7 +1051,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetDoubleValue() {
+    public void testGetDoubleValue() {
         final Map<String, Double> in = new HashMap<>();
         in.put("key", 2.0);
 
@@ -1058,7 +1079,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetFloatValue() {
+    public void testGetFloatValue() {
         final Map<String, Float> in = new HashMap<>();
         in.put("key", 2.0f);
 
@@ -1083,7 +1104,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetLongValue() {
+    public void testGetLongValue() {
         final Map<String, Long> in = new HashMap<>();
         in.put("key", 2L);
 
@@ -1110,7 +1131,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetIntValue() {
+    public void testGetIntValue() {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
 
@@ -1134,7 +1155,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetShortValue() {
+    public void testGetShortValue() {
         final Map<String, Short> in = new HashMap<>();
         final short val = 10;
         in.put("key", val);
@@ -1159,7 +1180,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetByteValue() {
+    public void testGetByteValue() {
         final Map<String, Byte> in = new HashMap<>();
         final byte val = 100;
         in.put("key", val);
@@ -1185,7 +1206,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetNumber() {
+    public void testGetNumber() {
         final Map<String, Number> in = new HashMap<>();
         final Number val = 1000;
         in.put("key", val);
@@ -1203,7 +1224,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetString() {
+    public void testGetString() {
         final Map<String, String> in = new HashMap<>();
         in.put("key", "str");
 
@@ -1219,11 +1240,10 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             }
         }));
         assertEquals("default", MapUtils.getString(null, "noKey", "default"));
-
     }
 
     @Test
-    public void testgetObject() {
+    public void testGetObject() {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", "str");
 
@@ -1235,7 +1255,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetBooleanValue() {
+    public void testGetBooleanValue() {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", true);
         in.put("keyNumberTrue", 1);
@@ -1283,7 +1303,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     @Test
-    public void testgetMap() {
+    public void testGetMap() {
         final Map<String, Map<String, String>> in = new HashMap<>();
         final Map<String, String> valMap = new HashMap<>();
         valMap.put("key1", "value1");
@@ -1313,7 +1333,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         inMap.put("key1", "value1");
         inMap.put("key2", "value2");
         final Map<String, String> map = MapUtils.orderedMap(inMap);
-        assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
+        assertTrue(map instanceof OrderedMap);
     }
 
     private char getDecimalSeparator() {
