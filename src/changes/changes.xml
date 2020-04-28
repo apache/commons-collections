@@ -169,6 +169,9 @@
     <action issue="COLLECTIONS-757" dev="ggregory" type="update" due-to="Chen">
       Update Javadoc in BidiMap classes #146.
     </action>
+    <action dev="ggregory" type="update" due-to="Chen">
+      Improve MapUtils with the null checks, add JUnit for it and add Javadoc for the parameter indent. #126.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
