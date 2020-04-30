@@ -878,8 +878,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             @Override
             public Map.Entry<K, Collection<V>> next() {
                 final Map.Entry<K, Collection<V>> entry = super.next();
-                final K key = entry.getKey();
-                return new UnmodifiableMapEntry<>(key, wrappedCollection(key));
+                return new UnmodifiableMapEntry<>(entry.getKey(), entry.getValue());
             }
         }
     }

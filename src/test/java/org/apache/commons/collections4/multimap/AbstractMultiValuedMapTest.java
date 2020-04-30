@@ -531,14 +531,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @SuppressWarnings("unchecked")
     public void testContainsValue_Key() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        assertEquals(true, map.containsMapping("one", "uno"));
-        assertEquals(false, map.containsMapping("two", "2"));
+        assertTrue(map.containsMapping("one", "uno"));
+        assertFalse(map.containsMapping("two", "2"));
         if (!isAddSupported()) {
             return;
         }
         map.put((K) "A", (V) "AA");
-        assertEquals(true, map.containsMapping("A", "AA"));
-        assertEquals(false, map.containsMapping("A", "AB"));
+        assertTrue(map.containsMapping("A", "AA"));
+        assertFalse(map.containsMapping("A", "AB"));
     }
 
     @SuppressWarnings("unchecked")
@@ -567,10 +567,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(4, test.size());
         assertEquals(1, test.get((K) "keyA").size());
         assertEquals(3, test.get((K) "key").size());
-        assertEquals(true, test.containsValue("objectA"));
-        assertEquals(true, test.containsValue("object0"));
-        assertEquals(true, test.containsValue("object1"));
-        assertEquals(true, test.containsValue("object2"));
+        assertTrue(test.containsValue("objectA"));
+        assertTrue(test.containsValue("object0"));
+        assertTrue(test.containsValue("object1"));
+        assertTrue(test.containsValue("object2"));
     }
 
     @SuppressWarnings("unchecked")
@@ -600,10 +600,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(1, test.get((K) "keyA").size());
         assertEquals(2, test.get((K) "keyX").size());
         assertEquals(1, test.get((K) "keyY").size());
-        assertEquals(true, test.containsValue("objectA"));
-        assertEquals(true, test.containsValue("object0"));
-        assertEquals(true, test.containsValue("object1"));
-        assertEquals(true, test.containsValue("object2"));
+        assertTrue(test.containsValue("objectA"));
+        assertTrue(test.containsValue("object0"));
+        assertTrue(test.containsValue("object1"));
+        assertTrue(test.containsValue("object2"));
     }
 
     @SuppressWarnings("unchecked")
@@ -614,11 +614,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         final MultiValuedMap<K, V> map = makeObject();
         Collection<V> coll = (Collection<V>) Arrays.asList("X", "Y", "Z");
 
-        assertEquals(true, map.putAll((K) "A", coll));
+        assertTrue(map.putAll((K) "A", coll));
         assertEquals(3, map.get((K) "A").size());
-        assertEquals(true, map.containsMapping("A", "X"));
-        assertEquals(true, map.containsMapping("A", "Y"));
-        assertEquals(true, map.containsMapping("A", "Z"));
+        assertTrue(map.containsMapping("A", "X"));
+        assertTrue(map.containsMapping("A", "Y"));
+        assertTrue(map.containsMapping("A", "Z"));
 
         try {
             map.putAll((K) "A", null);
@@ -628,23 +628,23 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
 
         assertEquals(3, map.get((K) "A").size());
-        assertEquals(true, map.containsMapping("A", "X"));
-        assertEquals(true, map.containsMapping("A", "Y"));
-        assertEquals(true, map.containsMapping("A", "Z"));
+        assertTrue(map.containsMapping("A", "X"));
+        assertTrue(map.containsMapping("A", "Y"));
+        assertTrue(map.containsMapping("A", "Z"));
 
-        assertEquals(false, map.putAll((K) "A", new ArrayList<V>()));
+        assertFalse(map.putAll((K) "A", new ArrayList<V>()));
         assertEquals(3, map.get((K) "A").size());
-        assertEquals(true, map.containsMapping("A", "X"));
-        assertEquals(true, map.containsMapping("A", "Y"));
-        assertEquals(true, map.containsMapping("A", "Z"));
+        assertTrue(map.containsMapping("A", "X"));
+        assertTrue(map.containsMapping("A", "Y"));
+        assertTrue(map.containsMapping("A", "Z"));
 
         coll = (Collection<V>) Arrays.asList("M");
-        assertEquals(true, map.putAll((K) "A", coll));
+        assertTrue(map.putAll((K) "A", coll));
         assertEquals(4, map.get((K) "A").size());
-        assertEquals(true, map.containsMapping("A", "X"));
-        assertEquals(true, map.containsMapping("A", "Y"));
-        assertEquals(true, map.containsMapping("A", "Z"));
-        assertEquals(true, map.containsMapping("A", "M"));
+        assertTrue(map.containsMapping("A", "X"));
+        assertTrue(map.containsMapping("A", "Y"));
+        assertTrue(map.containsMapping("A", "Z"));
+        assertTrue(map.containsMapping("A", "M"));
     }
 
     @SuppressWarnings("unchecked")
@@ -656,11 +656,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         map.put((K) "A", (V) "AA");
         map.put((K) "A", (V) "AB");
         map.put((K) "A", (V) "AC");
-        assertEquals(false, map.removeMapping("C", "CA"));
-        assertEquals(false, map.removeMapping("A", "AD"));
-        assertEquals(true, map.removeMapping("A", "AC"));
-        assertEquals(true, map.removeMapping("A", "AB"));
-        assertEquals(true, map.removeMapping("A", "AA"));
+        assertFalse(map.removeMapping("C", "CA"));
+        assertFalse(map.removeMapping("A", "AD"));
+        assertTrue(map.removeMapping("A", "AC"));
+        assertTrue(map.removeMapping("A", "AB"));
+        assertTrue(map.removeMapping("A", "AA"));
         //assertEquals(new MultiValuedHashMap<K, V>(), map);
     }
 
@@ -748,6 +748,50 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(4, getMap().size());
     }
 
+    public void testAsMapValues() {
+        if (!isAddSupported() || isHashSetValue()) {
+            return;
+        }
+        final MultiValuedMap<K, V> multiMap = makeObject();
+        multiMap.put((K) "A", (V) "W");
+        multiMap.put((K) "A", (V) "X");
+        multiMap.put((K) "A", (V) "F");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "L");
+        assertEquals("{A=[W, X, F], B=[Q, Q, L]}", multiMap.toString());
+        for (Collection<V> list : multiMap.asMap().values()) {
+            for (Iterator<V> it = list.iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
+        }
+        assertEquals("{A=[], B=[]}", multiMap.toString());
+    }
+
+    public void testAsMapEntrySet() {
+        if (!isAddSupported() || isHashSetValue()) {
+            return;
+        }
+
+        final MultiValuedMap<K, V> multiMap = makeObject();
+        multiMap.put((K) "A", (V) "W");
+        multiMap.put((K) "A", (V) "X");
+        multiMap.put((K) "A", (V) "F");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "L");
+        assertEquals("{A=[W, X, F], B=[Q, Q, L]}", multiMap.toString());
+        Map<K, Collection<V>> asMap = multiMap.asMap();
+        for (Map.Entry<K, Collection<V>> entry : asMap.entrySet()) {
+            for (Iterator<V> it = entry.getValue().iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
+        }
+        assertEquals("{A=[], B=[]}", multiMap.toString());
+    }
+
     public void testMapIterator() {
         resetEmpty();
         MapIterator<K, V> mapIt  = getMap().mapIterator();
@@ -810,7 +854,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
 
         if (!isHashSetValue() && isAddSupported()) {
-            assertTrue(it.hasNext() );
+            assertTrue(it.hasNext());
             assertEquals("one", it.next());
             assertEquals("one", it.getKey());
             assertEquals("uno", it.getValue());
@@ -1198,7 +1242,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             final V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
             final Collection<V>[] colArr = new Collection[3];
             for (int i = 0; i < 3; i++) {
-                final Collection<V> coll = Arrays.asList(sampleValues[i*2], sampleValues[i*2 + 1]);
+                final Collection<V> coll = Arrays.asList(sampleValues[i * 2], sampleValues[i * 2 + 1]);
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }
             return colArr;
@@ -1210,7 +1254,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             // See comment in getSampleValues() to understand why we are calling makeObject() and not
             // getMap(). See COLLECTIONS-661 for more.
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
-            final Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen" };
+            final Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen"};
             final Collection<V>[] colArr = new Collection[3];
             for (int i = 0; i < 3; i++) {
                 final Collection<V> coll = Arrays.asList((V) sampleValues[i * 2], (V) sampleValues[i * 2 + 1]);
