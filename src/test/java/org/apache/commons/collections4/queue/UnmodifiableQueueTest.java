@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -85,10 +89,10 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     public void testQueueRemove() {
         resetEmpty();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().remove();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testUnmodifiable() {
@@ -100,27 +104,27 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableQueue.unmodifiableQueue(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     public void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             queue.offer(e);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testPoll() {
         final Queue<E> queue = makeFullCollection();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             queue.poll();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
