@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.queue;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
