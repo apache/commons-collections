@@ -1,3 +1,19 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.Function;
@@ -26,7 +42,20 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
      * If the object T is to be considered as several items then the function must
      * create the {@code SimpleBuilder} and call the {@code with()} method once for each item.</p>
      */
-    private Function<T,SimpleBuilder> func;
+    private Function<T, SimpleBuilder> func;
+
+    /**
+     * Constructs a SimpleBloomFilter from the shape and function.  This constructor
+     * creates an empty Bloom filter.
+     * @param hasher the Hasher to use.
+     * @param shape the Shape of the Bloom filter.
+     * @param func a Function to convert T to a SimpleBuilder.
+     * @see #func
+     */
+    public SimpleBloomFilter(Hasher hasher, Shape shape, Function<T, SimpleBuilder> func) {
+        super(hasher, shape);
+        this.func = func;
+    }
 
     /**
      * Constructs a SimpleBloomFilter from the shape and function.  This constructor
@@ -35,7 +64,7 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
      * @param func a Function to convert T to a SimpleBuilder.
      * @see #func
      */
-    public SimpleBloomFilter(Shape shape, Function<T,SimpleBuilder> func) {
+    public SimpleBloomFilter(Shape shape, Function<T, SimpleBuilder> func) {
         super(shape);
         this.func = func;
     }
@@ -49,7 +78,7 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
      * @param data the data object to populate the filter with.
      * @see #func
      */
-    public SimpleBloomFilter(Shape shape, Function<T,SimpleBuilder> func, T data) {
+    public SimpleBloomFilter(Shape shape, Function<T, SimpleBuilder> func, T data) {
         this(shape, func);
         this.merge( data );
     }
@@ -70,13 +99,26 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
         return this.merge( this.func.apply( data ).build() );
     }
 
+
+    /**
+     * Returns {@code true} if this filter contains the object.
+     * Specifically this returns {@code true} if this filter is enabled for all bit indexes
+     * identified by the hashing of the object {@code data}.
+     *
+     * @param data the data to check for.
+     * @return true if this filter is enabled for all bits specified by the data object.
+     */
+    public boolean contains( T data ) {
+        return this.contains( this.func.apply( data ).build() );
+    }
+
     /**
      * A Hasher.Builder for the SimpleBloom filter.
      * This builder uses the Murmur 128 x64 cyclic hash.
      *
      * @see Murmur128x64Cyclic
      */
-    public static class SimpleBuilder extends DynamicHasher.Builder implements Hasher.Builder {
+    public static class SimpleBuilder extends DynamicHasher.Builder {
 
         public SimpleBuilder() {
             super(new Murmur128x64Cyclic());

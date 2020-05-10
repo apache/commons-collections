@@ -56,9 +56,11 @@ public interface Hasher {
      * to the builder will add an entire item to the final hasher created by the
      * {@link #build()} method.</p>
      *
+     * @param H the Hasher implementation that the builder will build.
+     * @param B the Builder implementation that is returned from the {@code with()} methods.
      * @since 4.5
      */
-    interface Builder {
+    interface Builder<H extends Hasher, B extends Hasher.Builder<H, ?>> {
 
         /**
          * Builds the hasher from all the items.
@@ -67,7 +69,7 @@ public interface Hasher {
          *
          * @return the fully constructed hasher
          */
-        Hasher build();
+        H build();
 
         /**
          * Adds a byte array item to the hasher.
@@ -75,7 +77,7 @@ public interface Hasher {
          * @param item the item to add
          * @return a reference to this object
          */
-        Builder with(byte[] item);
+        B with(byte[] item);
 
         /**
          * Adds a character sequence item to the hasher using the specified {@code charset}
@@ -85,7 +87,7 @@ public interface Hasher {
          * @param charset the character set
          * @return a reference to this object
          */
-        default Builder with(CharSequence item, Charset charset) {
+        default B with(CharSequence item, Charset charset) {
             return with(item.toString().getBytes(charset));
         }
 
@@ -96,7 +98,7 @@ public interface Hasher {
          * @param item the item to add
          * @return a reference to this object
          */
-        default Builder withUnencoded(CharSequence item) {
+        default B withUnencoded(CharSequence item) {
             int length = item.length();
             final byte[] bytes = new byte[length * 2];
             for (int i = 0; i < length; i++) {
@@ -114,7 +116,7 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putInt
          */
-        default Builder with(int data) {
+        default B with(int data) {
             return with( ByteBuffer.allocate(Integer.BYTES).putInt( data ).array());
         }
 
@@ -125,7 +127,7 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putLong
          */
-        default Builder with(long data) {
+        default B with(long data) {
             return with( ByteBuffer.allocate(Long.BYTES).putLong( data ).array());
         }
 
@@ -136,7 +138,7 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putDouble
          */
-        default Builder with(double data) {
+        default B with(double data) {
             return with( ByteBuffer.allocate(Double.BYTES).putDouble( data ).array());
         }
 
@@ -147,7 +149,7 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putFloat
          */
-        default Builder with(float data) {
+        default B with(float data) {
             return with( ByteBuffer.allocate(Float.BYTES).putFloat( data ).array());
         }
 
@@ -158,8 +160,8 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putChar
          */
-        default  Builder with(char data) {
-            return with( ByteBuffer.allocate(Character.BYTES).putFloat( data ).array());
+        default  B with(char data) {
+            return with( ByteBuffer.allocate(Character.BYTES).putChar( data ).array());
         }
 
         /**
@@ -169,8 +171,8 @@ public interface Hasher {
          * @return a reference to this object
          * @see ByteBuffer#putShort
          */
-        default Builder with(short data) {
-            return with( ByteBuffer.allocate(Short.BYTES).putFloat( data ).array());
+        default B with(short data) {
+            return with( ByteBuffer.allocate(Short.BYTES).putShort( data ).array());
         }
 
         /**
@@ -178,7 +180,7 @@ public interface Hasher {
          * @param data the BigInteger to add.
          * @return a reference to this object
          */
-        default Builder with(BigInteger data) {
+        default B with(BigInteger data) {
             return with( data.toByteArray() );
         }
 
@@ -189,7 +191,7 @@ public interface Hasher {
          * @param data the BigDecimal to add.
          * @return a reference to this object
          */
-        default Builder with(BigDecimal data) {
+        default B with(BigDecimal data) {
             byte[] value = data.unscaledValue().toByteArray();
             return with( ByteBuffer.allocate( Integer.BYTES+value.length )
                     .putInt( data.scale() ).put( value ).array() );

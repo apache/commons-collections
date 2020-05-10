@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +31,7 @@ public class DynamicHasher implements Hasher {
      * The builder for DynamicHashers.
      * @since 4.5
      */
-    public static class Builder implements Hasher.Builder {
+    public static class Builder implements Hasher.Builder<DynamicHasher, DynamicHasher.Builder> {
 
         /**
          * The list of items (each as a byte[]) that are to be hashed.
@@ -69,17 +68,6 @@ public class DynamicHasher implements Hasher {
             return this;
         }
 
-        @Override
-        public DynamicHasher.Builder with(CharSequence item, Charset charset) {
-            Hasher.Builder.super.with(item, charset);
-            return this;
-        }
-
-        @Override
-        public DynamicHasher.Builder withUnencoded(CharSequence item) {
-            Hasher.Builder.super.withUnencoded(item);
-            return this;
-        }
     }
 
     /**
