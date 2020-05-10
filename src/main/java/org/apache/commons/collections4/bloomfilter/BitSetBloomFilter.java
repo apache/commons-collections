@@ -25,7 +25,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
- * A bloom filter using a Java BitSet to track enabled bits. This is a standard
+ * A bloom filter uses a Java BitSet to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
