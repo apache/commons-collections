@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.PrimitiveIterator;
 
@@ -51,7 +54,7 @@ public interface Hasher {
      * <p>A hasher represents one or more items of arbitrary byte size. The builder
      * contains methods to collect byte representations of items. Each method to add
      * to the builder will add an entire item to the final hasher created by the
-     * {@link #build()} method.
+     * {@link #build()} method.</p>
      *
      * @since 4.5
      */
@@ -103,6 +106,95 @@ public interface Hasher {
             }
             return with(bytes);
         }
+
+        /**
+         * Adds an integer into the hasher.  The integer is converted into 4 bytes
+         * through the use of ByteBuffer.putInt.
+         * @param data the integer to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putInt
+         */
+        default Builder with(int data) {
+            return with( ByteBuffer.allocate(Integer.BYTES).putInt( data ).array());
+        }
+
+        /**
+         * Adds a long into the hasher.  The long is converted into 8 bytes
+         * through the use of ByteBuffer.putLong.
+         * @param data the long to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putLong
+         */
+        default Builder with(long data) {
+            return with( ByteBuffer.allocate(Long.BYTES).putLong( data ).array());
+        }
+
+        /**
+         * Adds a double into the hasher.  The double is converted into 8 bytes
+         * through the use of ByteBuffer.putDouble.
+         * @param data the double to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putDouble
+         */
+        default Builder with(double data) {
+            return with( ByteBuffer.allocate(Double.BYTES).putDouble( data ).array());
+        }
+
+        /**
+         * Adds a float into the hasher.  The float is converted into 4 bytes
+         * through the use of ByteBuffer.putFloat.
+         * @param data the float to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putFloat
+         */
+        default Builder with(float data) {
+            return with( ByteBuffer.allocate(Float.BYTES).putFloat( data ).array());
+        }
+
+        /**
+         * Adds a char into the hasher.  The char is converted into 2 bytes
+         * through the use of ByteBuffer.putChar.
+         * @param data the char to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putChar
+         */
+        default  Builder with(char data) {
+            return with( ByteBuffer.allocate(Character.BYTES).putFloat( data ).array());
+        }
+
+        /**
+         * Adds a short into the hasher.  The short is converted into 2 bytes
+         * through the use of ByteBuffer.putShort.
+         * @param data the short to add.
+         * @return a reference to this object
+         * @see ByteBuffer#putShort
+         */
+        default Builder with(short data) {
+            return with( ByteBuffer.allocate(Short.BYTES).putFloat( data ).array());
+        }
+
+        /**
+         * Adds a BigInteger into the hasher.
+         * @param data the BigInteger to add.
+         * @return a reference to this object
+         */
+        default Builder with(BigInteger data) {
+            return with( data.toByteArray() );
+        }
+
+        /**
+         * Adds a BigDecimal into the hasher.
+         * The scale of the BigDecimal is placed in the buffer followed by the
+         * byte array for the unscaled value.
+         * @param data the BigDecimal to add.
+         * @return a reference to this object
+         */
+        default Builder with(BigDecimal data) {
+            byte[] value = data.unscaledValue().toByteArray();
+            return with( ByteBuffer.allocate( Integer.BYTES+value.length )
+                    .putInt( data.scale() ).put( value ).array() );
+        }
+
     }
 
     /**
