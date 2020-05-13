@@ -56,8 +56,8 @@ public interface Hasher {
      * to the builder will add an entire item to the final hasher created by the
      * {@link #build()} method.</p>
      *
-     * @param H the Hasher implementation that the builder will build.
-     * @param B the Builder implementation that is returned from the {@code with()} methods.
+     * @param <H> the Hasher implementation that the builder will build.
+     * @param <B> the Builder implementation that is returned from the {@code with()} methods.
      * @since 4.5
      */
     interface Builder<H extends Hasher, B extends Hasher.Builder<H, ?>> {
