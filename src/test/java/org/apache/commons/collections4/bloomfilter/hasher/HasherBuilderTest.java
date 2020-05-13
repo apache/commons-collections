@@ -222,7 +222,7 @@ public class HasherBuilderTest {
     @Test
     public void withBigIngeterTest() {
         TestBuilder builder = new TestBuilder();
-        BigInteger[] values = { BigInteger.ZERO, BigInteger.ONE, BigInteger.TWO, BigInteger.TEN,
+        BigInteger[] values = { BigInteger.ZERO, BigInteger.ONE, BigInteger.TEN,
                 BigInteger.valueOf(Long.MAX_VALUE), BigInteger.valueOf(Long.MIN_VALUE),
                 BigInteger.valueOf(Long.MAX_VALUE).pow(3) };
         for (BigInteger bi : values) {
