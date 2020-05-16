@@ -40,7 +40,7 @@ public class HasherBuilderTest {
     /**
      * Simple class to collect byte[] items added to the builder.
      */
-    private static class TestBuilder implements Hasher.Builder {
+    private static class TestBuilder implements Hasher.Builder<Hasher, Hasher.Builder<Hasher, ?>> {
         ArrayList<byte[]> items = new ArrayList<>();
 
         @Override
@@ -49,7 +49,7 @@ public class HasherBuilderTest {
         }
 
         @Override
-        public Builder with(byte[] item) {
+        public Builder<Hasher, ?> with(byte[] item) {
             items.add(item);
             return this;
         }
@@ -101,12 +101,12 @@ public class HasherBuilderTest {
      */
     static String getExtendedString() {
         final char[] data = { 'e', 'x', 't', 'e', 'n', 'd', 'e', 'd', ' ',
-            // Add some characters that are non standard
-            // non-ascii
+                // Add some characters that are non standard
+                // non-ascii
             0xCA98,
-            // UTF-16 surrogate pair
+                // UTF-16 surrogate pair
             0xD803, 0xDE6D
-            // Add other cases here ...
+                // Add other cases here ...
         };
         return String.valueOf(data);
     }
@@ -123,7 +123,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Integer.BYTES).putInt(values[i]).array(),
+            Assert.assertArrayEquals(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(values[i]).array(),
                     builder.items.get(i));
         }
     }
@@ -140,7 +140,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Long.BYTES).putLong(values[i]).array(), builder.items.get(i));
+            Assert.assertArrayEquals(ByteBuffer.allocate(Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).putLong(values[i]).array(), builder.items.get(i));
         }
     }
 
@@ -157,7 +157,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Double.BYTES).putDouble(values[i]).array(),
+            Assert.assertArrayEquals(ByteBuffer.allocate(Double.BYTES).order(ByteOrder.LITTLE_ENDIAN).putDouble(values[i]).array(),
                     builder.items.get(i));
         }
     }
@@ -175,7 +175,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Float.BYTES).putFloat(values[i]).array(),
+            Assert.assertArrayEquals(ByteBuffer.allocate(Float.BYTES).order(ByteOrder.LITTLE_ENDIAN).putFloat(values[i]).array(),
                     builder.items.get(i));
         }
     }
@@ -194,7 +194,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Character.BYTES).putChar(values[i]).array(),
+            Assert.assertArrayEquals(ByteBuffer.allocate(Character.BYTES).order( ByteOrder.LITTLE_ENDIAN).putChar(values[i]).array(),
                     builder.items.get(i));
         }
     }
@@ -211,7 +211,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            Assert.assertArrayEquals(ByteBuffer.allocate(Short.BYTES).putShort(values[i]).array(),
+            Assert.assertArrayEquals(ByteBuffer.allocate(Short.BYTES).order(ByteOrder.LITTLE_ENDIAN).putShort(values[i]).array(),
                     builder.items.get(i));
         }
     }
@@ -222,9 +222,8 @@ public class HasherBuilderTest {
     @Test
     public void withBigIngeterTest() {
         TestBuilder builder = new TestBuilder();
-        BigInteger[] values = { BigInteger.ZERO, BigInteger.ONE, BigInteger.TEN,
-                BigInteger.valueOf(Long.MAX_VALUE), BigInteger.valueOf(Long.MIN_VALUE),
-                BigInteger.valueOf(Long.MAX_VALUE).pow(3) };
+        BigInteger[] values = { BigInteger.ZERO, BigInteger.ONE, BigInteger.TEN, BigInteger.valueOf(Long.MAX_VALUE),
+                BigInteger.valueOf(Long.MIN_VALUE), BigInteger.valueOf(Long.MAX_VALUE).pow(3) };
         for (BigInteger bi : values) {
             builder.with(bi);
         }
@@ -254,7 +253,7 @@ public class HasherBuilderTest {
         }
 
         for (int i = 0; i < values.length; i++) {
-            ByteBuffer buff = ByteBuffer.wrap(builder.items.get(i));
+            ByteBuffer buff = ByteBuffer.wrap(builder.items.get(i)).order(ByteOrder.LITTLE_ENDIAN);
             Assert.assertEquals("Error in value " + i, values[i].scale(), buff.getInt());
             byte[] part = new byte[builder.items.get(i).length - Integer.BYTES];
             buff.get(part);

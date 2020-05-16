@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.PrimitiveIterator;
 
@@ -33,16 +32,16 @@ import java.util.PrimitiveIterator;
  * filter. The shape of the Bloom filter defines the number of indexes per item
  * and the range of the indexes. The hasher can generate the correct number of
  * indexes in the range required by the Bloom filter for each item it
- * represents.
+ * represents.</p>
  *
  * <p>Note that the process of generating hashes and mapping them to a Bloom
  * filter shape may create duplicate indexes. The hasher may generate fewer than
  * the required number of hash functions per item if duplicates have been
  * removed. Implementations of {@code iterator()} may return duplicate values
  * and may return values in a random order. See implementation javadoc notes as
- * to the guarantees provided by the specific implementation.
+ * to the guarantees provided by the specific implementation.</p>
  *
- * <p>Hashers have an identity based on the hashing algorithm used.
+ * <p>Hashers have an identity based on the hashing algorithm used.</p>
  *
  * @since 4.5
  */
@@ -111,74 +110,86 @@ public interface Hasher {
 
         /**
          * Adds an integer into the hasher.  The integer is converted into 4 bytes
-         * through the use of ByteBuffer.putInt.
+         * using little-endian order.
          * @param data the integer to add.
          * @return a reference to this object
-         * @see ByteBuffer#putInt
          */
         default B with(int data) {
-            return with( ByteBuffer.allocate(Integer.BYTES).putInt( data ).array());
+            return with(new byte[]{(byte) (data      ),
+                                   (byte) (data >>  8),
+                                   (byte) (data >> 16),
+                                   (byte) (data >> 24)});
         }
 
         /**
          * Adds a long into the hasher.  The long is converted into 8 bytes
-         * through the use of ByteBuffer.putLong.
+         * using little-endian order.
          * @param data the long to add.
          * @return a reference to this object
-         * @see ByteBuffer#putLong
          */
         default B with(long data) {
-            return with( ByteBuffer.allocate(Long.BYTES).putLong( data ).array());
+            return with(new byte[]{(byte) (data      ),
+                                   (byte) (data >>  8),
+                                   (byte) (data >> 16),
+                                   (byte) (data >> 24),
+                                   (byte) (data >> 32),
+                                   (byte) (data >> 40),
+                                   (byte) (data >> 48),
+                                   (byte) (data >> 56)});
         }
 
         /**
          * Adds a double into the hasher.  The double is converted into 8 bytes
-         * through the use of ByteBuffer.putDouble.
+         * through the use of {@code Double.doubleToRawLongBits()} and then added
+         * using little-endian order.
          * @param data the double to add.
          * @return a reference to this object
-         * @see ByteBuffer#putDouble
+         * @see #wait(long)
          */
         default B with(double data) {
-            return with( ByteBuffer.allocate(Double.BYTES).putDouble( data ).array());
+            return with( Double.doubleToRawLongBits(data) );
         }
 
         /**
          * Adds a float into the hasher.  The float is converted into 4 bytes
-         * through the use of ByteBuffer.putFloat.
+         * through the use of {@code Float.floatToRawIntBits()} and then added
+         * using little-endian order.
          * @param data the float to add.
          * @return a reference to this object
-         * @see ByteBuffer#putFloat
+         * @see #with(int)
          */
         default B with(float data) {
-            return with( ByteBuffer.allocate(Float.BYTES).putFloat( data ).array());
+            return with( Float.floatToRawIntBits(data));
         }
 
         /**
-         * Adds a char into the hasher.  The char is converted into 2 bytes
-         * through the use of ByteBuffer.putChar.
+         * Adds a char into the hasher as 2 bytes using little-endian order.
          * @param data the char to add.
          * @return a reference to this object
          * @see ByteBuffer#putChar
          */
         default  B with(char data) {
-            return with( ByteBuffer.allocate(Character.BYTES).putChar( data ).array());
+            return with(new byte[]{(byte) (data      ),
+                                   (byte) (data >>  8)});
         }
 
         /**
          * Adds a short into the hasher.  The short is converted into 2 bytes
-         * through the use of ByteBuffer.putShort.
+         * using little-endian order.
          * @param data the short to add.
          * @return a reference to this object
-         * @see ByteBuffer#putShort
          */
         default B with(short data) {
-            return with( ByteBuffer.allocate(Short.BYTES).putShort( data ).array());
+            return with(new byte[]{(byte) (data      ),
+                                   (byte) (data >>  8)});
         }
 
         /**
-         * Adds a BigInteger into the hasher.
+         * Adds a BigInteger into the hasher.  The BigInteger is converted into a
+         * byte array using BigInteger.toByteArray().
          * @param data the BigInteger to add.
          * @return a reference to this object
+         * @see BigInteger#toByteArray()
          */
         default B with(BigInteger data) {
             return with( data.toByteArray() );
@@ -186,15 +197,23 @@ public interface Hasher {
 
         /**
          * Adds a BigDecimal into the hasher.
-         * The scale of the BigDecimal is placed in the buffer followed by the
-         * byte array for the unscaled value.
+         * The byte[] equivalent is the scale of the BigDecimal converted into 4 bytes
+         * using little-endian order followed by the byte array from the unscaled value.
          * @param data the BigDecimal to add.
          * @return a reference to this object
+         * @see BigDecimal#scale()
+         * @see BigInteger#toByteArray()
          */
         default B with(BigDecimal data) {
             byte[] value = data.unscaledValue().toByteArray();
-            return with( ByteBuffer.allocate( Integer.BYTES+value.length )
-                    .putInt( data.scale() ).put( value ).array() );
+            byte[] scale = new byte[] {(byte) (data.scale()      ),
+                                       (byte) (data.scale() >>  8),
+                                       (byte) (data.scale() >> 16),
+                                       (byte) (data.scale() >> 24)};
+            byte[] buff = new byte[value.length + scale.length];
+            System.arraycopy( scale, 0, buff, 0, scale.length);
+            System.arraycopy( value, 0, buff, scale.length, value.length);
+            return with( buff );
         }
 
     }
