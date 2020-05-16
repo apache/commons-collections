@@ -28,25 +28,24 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for the {@link SimpleBloomFilter} when T represents a single
- * item in the filter.
+ * Tests for the {@link SimpleBloomFilter} when T represents a single item in
+ * the filter.
  */
 public class SimpleBloomFilterMultipleItemTest extends AbstractBloomFilterTest {
 
     public SimpleBloomFilterMultipleItemTest() {
-        shape = new Shape( new Murmur128x64Cyclic(), 3, 72, 17);
+        shape = new Shape(new Murmur128x64Cyclic(), 3, 72, 17);
     }
 
     protected Function<TypedObject, SimpleBuilder> getFunc() {
-        return new Function<TypedObject, SimpleBuilder>(){
+        return new Function<TypedObject, SimpleBuilder>() {
 
             @Override
             public SimpleBuilder apply(TypedObject t) {
-                return (SimpleBuilder) new SimpleBuilder()
-                        .withUnencoded( t.hello)
-                        .withUnencoded( t.world );
+                return (SimpleBuilder) new SimpleBuilder().withUnencoded(t.hello).withUnencoded(t.world);
 
-            }};
+            }
+        };
     }
 
     @Override
@@ -64,33 +63,31 @@ public class SimpleBloomFilterMultipleItemTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTTest() {
-        SimpleBloomFilter<TypedObject> bloomFilter = createEmptyFilter( shape );
-        bloomFilter.merge( new TypedObject() );
+        SimpleBloomFilter<TypedObject> bloomFilter = createEmptyFilter(shape);
+        bloomFilter.merge(new TypedObject());
 
-        Hasher hasher = new DynamicHasher.Builder(new Murmur128x64Cyclic() )
-                .withUnencoded("hello")
+        Hasher hasher = new DynamicHasher.Builder(new Murmur128x64Cyclic()).withUnencoded("hello")
                 .withUnencoded("world").build();
 
-        BloomFilter other = new BitSetBloomFilter( hasher, shape );
-        Assert.assertArrayEquals( other.getBits(), bloomFilter.getBits() );
+        BloomFilter other = new BitSetBloomFilter(hasher, shape);
+        Assert.assertArrayEquals(other.getBits(), bloomFilter.getBits());
 
     }
-
 
     /**
      * Tests that contains {@code TypedObject} works as expected.
      */
     @Test
     public void containsTTest() {
-        SimpleBloomFilter<TypedObject> bloomFilter = createEmptyFilter( shape );
-        bloomFilter.merge( new TypedObject() );
+        SimpleBloomFilter<TypedObject> bloomFilter = createEmptyFilter(shape);
+        bloomFilter.merge(new TypedObject());
 
         TypedObject t = new TypedObject();
 
-        Assert.assertTrue( bloomFilter.contains(t));
+        Assert.assertTrue(bloomFilter.contains(t));
 
-        t.hello="hola";
-        Assert.assertFalse( bloomFilter.contains( t ));
+        t.hello = "hola";
+        Assert.assertFalse(bloomFilter.contains(t));
     }
 
     /**
