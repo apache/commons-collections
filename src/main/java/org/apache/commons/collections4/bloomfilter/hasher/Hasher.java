@@ -144,7 +144,7 @@ public interface Hasher {
          * using little-endian order.
          * @param data the double to add.
          * @return a reference to this object
-         * @see #wait(long)
+         * @see #with(long)
          */
         default B with(double data) {
             return with( Double.doubleToRawLongBits(data) );
@@ -166,7 +166,6 @@ public interface Hasher {
          * Adds a char into the hasher as 2 bytes using little-endian order.
          * @param data the char to add.
          * @return a reference to this object
-         * @see ByteBuffer#putChar
          */
         default  B with(char data) {
             return with(new byte[]{(byte) (data      ),

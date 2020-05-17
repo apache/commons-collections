@@ -78,7 +78,7 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
     /**
      * Constructs a SimpleBloomFilter from the shape and function. This constructor
      * creates an empty Bloom filter.
-     * </p><p>
+     * <p>
      * If the object {@code T} is to be considered as a
      * single item in the filter then function must create the {@code SimpleBuilder}
      * and only call a single {@code with()} method. In this use case the
