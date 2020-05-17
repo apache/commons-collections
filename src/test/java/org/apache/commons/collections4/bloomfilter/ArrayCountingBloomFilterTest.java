@@ -37,6 +37,19 @@ import org.junit.Test;
  */
 public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
 
+    /**
+     * Function to convert int arrays to BloomFilters for testing.
+     */
+    private Function<int[], BloomFilter> converter = new Function<int[], BloomFilter>() {
+
+        @Override
+        public BloomFilter apply(int[] counts) {
+            BloomFilter testingFilter = new BitSetBloomFilter(shape);
+            testingFilter.merge(new FixedIndexesTestHasher(shape, counts));
+            return testingFilter;
+        }
+    };
+
     @Override
     protected ArrayCountingBloomFilter createEmptyFilter(final Shape shape) {
         return new ArrayCountingBloomFilter(shape);
@@ -44,7 +57,9 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
 
     @Override
     protected ArrayCountingBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        return new ArrayCountingBloomFilter(hasher, shape);
+        ArrayCountingBloomFilter result = new ArrayCountingBloomFilter(shape);
+        result.merge( hasher );
+        return result;
     }
 
     private ArrayCountingBloomFilter createFromCounts(int[] counts) {
@@ -111,8 +126,12 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
         // Some indexes with duplicates
         final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 5);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
-        assertFalse(bf.contains(new BitSetBloomFilter(new FixedIndexesTestHasher(shape, 3, 4), shape)));
-        assertTrue(bf.contains(new BitSetBloomFilter(new FixedIndexesTestHasher(shape, 2, 5), shape)));
+        BitSetBloomFilter testingFilter = new BitSetBloomFilter(shape);
+        testingFilter.merge( new FixedIndexesTestHasher(shape, 3, 4));
+        assertFalse(bf.contains(testingFilter));
+        testingFilter = new BitSetBloomFilter(shape);
+        testingFilter.merge( new FixedIndexesTestHasher(shape, 2, 5));
+        assertTrue(bf.contains(testingFilter));
     }
 
     /**
@@ -122,7 +141,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void mergeTest_Counts_CountingBloomFilter() {
         assertMerge(counts -> createFilter(new FixedIndexesTestHasher(shape, counts), shape),
-            BloomFilter::merge);
+                BloomFilter::merge);
     }
 
     /**
@@ -130,8 +149,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void mergeTest_Counts_BloomFilter() {
-        assertMerge(counts -> new BitSetBloomFilter(new FixedIndexesTestHasher(shape, counts), shape),
-            BloomFilter::merge);
+        assertMerge(converter, BloomFilter::merge);
     }
 
     /**
@@ -140,7 +158,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void mergeTest_Counts_Hasher() {
         assertMerge(counts -> new FixedIndexesTestHasher(shape, counts),
-            BloomFilter::merge);
+                BloomFilter::merge);
     }
 
     /**
@@ -149,7 +167,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void mergeTest_Counts_Hasher_Duplicates() {
         assertMerge(counts -> new FixedIndexesTestHasher(shape, createDuplicates(counts)),
-            BloomFilter::merge);
+                BloomFilter::merge);
     }
 
     /**
@@ -159,7 +177,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void removeTest_Counts_CountingBloomFilter() {
         assertRemove(counts -> createFilter(new FixedIndexesTestHasher(shape, counts), shape),
-            CountingBloomFilter::remove);
+                CountingBloomFilter::remove);
     }
 
     /**
@@ -167,8 +185,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void removeTest_Counts_BloomFilter() {
-        assertRemove(counts -> new BitSetBloomFilter(new FixedIndexesTestHasher(shape, counts), shape),
-            CountingBloomFilter::remove);
+        assertRemove(converter, CountingBloomFilter::remove);
     }
 
     /**
@@ -177,7 +194,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void removeTest_Counts_Hasher() {
         assertRemove(counts -> new FixedIndexesTestHasher(shape, counts),
-            CountingBloomFilter::remove);
+                CountingBloomFilter::remove);
     }
 
     /**
@@ -186,7 +203,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void removeTest_Counts_Hasher_Duplicates() {
         assertRemove(counts -> new FixedIndexesTestHasher(shape, createDuplicates(counts)),
-            CountingBloomFilter::remove);
+                CountingBloomFilter::remove);
     }
 
     /**
@@ -215,7 +232,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * @param merge the merge operation
      */
     private <F> void assertMerge(Function<int[], F> converter,
-                                 BiPredicate<ArrayCountingBloomFilter, F> merge) {
+            BiPredicate<ArrayCountingBloomFilter, F> merge) {
         final int[] indexes1 = {   1, 2,    4, 5, 6};
         final int[] indexes2 = {         3, 4,    6};
         final int[] expected = {0, 1, 1, 1, 2, 1, 2};
@@ -231,7 +248,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * @param remove the remove operation
      */
     private <F> void assertRemove(Function<int[], F> converter,
-                                  BiPredicate<ArrayCountingBloomFilter, F> remove) {
+            BiPredicate<ArrayCountingBloomFilter, F> remove) {
         final int[] indexes1 = {   1, 2,    4, 5, 6};
         final int[] indexes2 = {      2,       5, 6};
         final int[] expected = {0, 1, 0, 0, 1, 0, 0};
@@ -345,10 +362,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void addTest_Empty() {
         assertCountingOperation(new int[] {5, 2, 1},
-                                new int[0],
-                                CountingBloomFilter::add,
-                                true,
-                                new int[] {5, 2, 1});
+                new int[0],
+                CountingBloomFilter::add,
+                true,
+                new int[] {5, 2, 1});
     }
 
     /**
@@ -358,10 +375,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void addTest_Counts() {
         assertCountingOperation(new int[] {5, 2, 1},
-                                new int[] {0, 6, 4, 1},
-                                CountingBloomFilter::add,
-                                true,
-                                new int[] {5, 8, 5, 1});
+                new int[] {0, 6, 4, 1},
+                CountingBloomFilter::add,
+                true,
+                new int[] {5, 8, 5, 1});
     }
 
     /**
@@ -371,10 +388,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void addTest_Overflow() {
         assertCountingOperation(new int[] {5, 2, 1},
-                                new int[] {0, 6, Integer.MAX_VALUE},
-                                CountingBloomFilter::add,
-                                false,
-                                new int[] {5, 8, 1 + Integer.MAX_VALUE});
+                new int[] {0, 6, Integer.MAX_VALUE},
+                CountingBloomFilter::add,
+                false,
+                new int[] {5, 8, 1 + Integer.MAX_VALUE});
     }
 
     /**
@@ -383,10 +400,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void subtractTest_Empty() {
         assertCountingOperation(new int[] {5, 2, 1},
-                                new int[0],
-                                CountingBloomFilter::subtract,
-                                true,
-                                new int[] {5, 2, 1});
+                new int[0],
+                CountingBloomFilter::subtract,
+                true,
+                new int[] {5, 2, 1});
     }
 
     /**
@@ -396,10 +413,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void subtractTest_Counts() {
         assertCountingOperation(new int[] {5, 9, 1, 1},
-                                new int[] {0, 2, 1},
-                                CountingBloomFilter::subtract,
-                                true,
-                                new int[] {5, 7, 0, 1});
+                new int[] {0, 2, 1},
+                CountingBloomFilter::subtract,
+                true,
+                new int[] {5, 7, 0, 1});
     }
 
     /**
@@ -409,10 +426,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void subtractTest_Negative() {
         assertCountingOperation(new int[] {5, 2, 1},
-                                new int[] {0, 6, 1},
-                                CountingBloomFilter::subtract,
-                                false,
-                                new int[] {5, -4, 0});
+                new int[] {0, 6, 1},
+                CountingBloomFilter::subtract,
+                false,
+                new int[] {5, -4, 0});
     }
 
     /**
@@ -446,17 +463,17 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void andCardinalityTest_CountingBloomFilter() {
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {1, 1},
-                                   BloomFilter::andCardinality,
-                                   2);
+                new int[] {1, 1},
+                BloomFilter::andCardinality,
+                2);
         assertCardinalityOperation(new int[] {0, 1, 0, 1, 1, 1, 0, 1, 0},
-                                   new int[] {1, 1, 0, 0, 0, 1},
-                                   BloomFilter::andCardinality,
-                                   2);
+                new int[] {1, 1, 0, 0, 0, 1},
+                BloomFilter::andCardinality,
+                2);
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {0, 0, 1, 1, 1},
-                                   BloomFilter::andCardinality,
-                                   0);
+                new int[] {0, 0, 1, 1, 1},
+                BloomFilter::andCardinality,
+                0);
     }
 
     /**
@@ -466,17 +483,17 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void orCardinalityTest_CountingBloomFilter() {
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {1, 1},
-                                   BloomFilter::orCardinality,
-                                   2);
+                new int[] {1, 1},
+                BloomFilter::orCardinality,
+                2);
         assertCardinalityOperation(new int[] {0, 1, 0, 1, 1, 1, 0, 1, 0},
-                                   new int[] {1, 1, 0, 0, 0, 1},
-                                   BloomFilter::orCardinality,
-                                   6);
+                new int[] {1, 1, 0, 0, 0, 1},
+                BloomFilter::orCardinality,
+                6);
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {0, 0, 1, 1, 1},
-                                   BloomFilter::orCardinality,
-                                   5);
+                new int[] {0, 0, 1, 1, 1},
+                BloomFilter::orCardinality,
+                5);
     }
 
     /**
@@ -486,17 +503,17 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void xorCardinalityTest_CountingBloomFilter() {
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {1, 1},
-                                   BloomFilter::xorCardinality,
-                                   0);
+                new int[] {1, 1},
+                BloomFilter::xorCardinality,
+                0);
         assertCardinalityOperation(new int[] {0, 1, 0, 1, 1, 1, 0, 1, 0},
-                                   new int[] {1, 1, 0, 0, 0, 1},
-                                   BloomFilter::xorCardinality,
-                                   4);
+                new int[] {1, 1, 0, 0, 0, 1},
+                BloomFilter::xorCardinality,
+                4);
         assertCardinalityOperation(new int[] {1, 1},
-                                   new int[] {0, 0, 1, 1, 1},
-                                   BloomFilter::xorCardinality,
-                                   5);
+                new int[] {0, 0, 1, 1, 1},
+                BloomFilter::xorCardinality,
+                5);
     }
 
     /**
