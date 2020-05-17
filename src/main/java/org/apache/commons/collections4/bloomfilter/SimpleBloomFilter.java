@@ -33,30 +33,38 @@ import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur128x64C
 public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilter {
 
     /**
-     * The function that converts the instance of T to the SimpleBuilder. <p> If the
+     * The function that converts the instance of T to the SimpleBuilder.
+     * <p>
+     * If the
      * object T is to be considered as a single item in the filter then function
      * must create the {@code SimpleBuilder} and only call a single {@code with()}
-     * method.</p> <p> If the object T is to be considered as several items then the
+     * method.
+     * </p> <p>
+     * If the object T is to be considered as several items then the
      * function must create the {@code SimpleBuilder} and call the {@code with()}
      * method once for each item.</p>
      */
     private Function<T, SimpleBuilder> func;
 
     /**
-     * Constructs a SimpleBloomFilter from the shape and function.
+     * Constructs a SimpleBloomFilter from the shape and function containing the
+     * items specified in the hasher.
      *
      * <p> The function {@code func} converts the instance of {@code T} into the
-     * SimpleBuilder. </p><p> If the object {@code T} is to be considered as a
+     * SimpleBuilder.
+     * </p><p>
+     * If the object {@code T} is to be considered as a
      * single item in the filter then function must create the {@code SimpleBuilder}
      * and only call a single {@code with()} method. In this use case the
      * {@code Shape} is generally configured with the number of items equal to the
-     * expected number of {@code T} to be added to the Bloom filter.</p> <p> If the
-     * object {@code T} is to be considered as several items then the function must
+     * expected number of {@code T} to be added to the Bloom filter.
+     * </p> <p>
+     * If the object {@code T} is to be considered as several items then the function must
      * create the {@code SimpleBuilder} and call the {@code with()} method once for
      * each item. In this use case the {@code Shape} is generally configured with
      * the number of items equal to the expected number of {@code T} multiplied by
-     * the number of times {@code with()} is called.</p> </p>
-     *
+     * the number of times {@code with()} is called.
+     * </p>
      * @param hasher the Hasher to use.
      * @param shape  the Shape of the Bloom filter.
      * @param func   a Function to convert T to a SimpleBuilder.
@@ -70,6 +78,20 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
     /**
      * Constructs a SimpleBloomFilter from the shape and function. This constructor
      * creates an empty Bloom filter.
+     * </p><p>
+     * If the object {@code T} is to be considered as a
+     * single item in the filter then function must create the {@code SimpleBuilder}
+     * and only call a single {@code with()} method. In this use case the
+     * {@code Shape} is generally configured with the number of items equal to the
+     * expected number of {@code T} to be added to the Bloom filter.
+     * </p> <p>
+     * If the object {@code T} is to be considered as several items then the function must
+     * create the {@code SimpleBuilder} and call the {@code with()} method once for
+     * each item. In this use case the {@code Shape} is generally configured with
+     * the number of items equal to the expected number of {@code T} multiplied by
+     * the number of times {@code with()} is called.
+     * </p>
+
      * @param shape the Shape of the Bloom filter.
      * @param func  a Function to convert T to a SimpleBuilder.
      * @see #func
@@ -85,7 +107,7 @@ public class SimpleBloomFilter<T> extends BitSetBloomFilter implements BloomFilt
      * <p>Note: This method should return {@code true} even if no additional bit
      * indexes were enabled. A {@code false} result indicates that this filter is
      * not ensured to contain the {@code data}.
-     *
+     * </p>
      * @param data the data to merge.
      * @return true if the merge was successful
      * @throws IllegalArgumentException if the shape of the other filter does not
