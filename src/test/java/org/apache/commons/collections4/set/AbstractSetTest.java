@@ -63,7 +63,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
                      getConfirmed().hashCode(), getCollection().hashCode());
         final Collection<E> set = makeConfirmedCollection();
         for (final E element : getCollection()) {
-            assertTrue("Set.iterator should only return unique elements", set.add(element));
+            assertTrue(set.add(element));
         }
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 
         final Collection<E> set2 = makeConfirmedCollection();
         set2.add((E) "foo");
-        assertTrue("Empty set shouldn't equal nonempty set", !getCollection().equals(set2));
+        assertTrue(!getCollection().equals(set2));
 
         resetFull();
         assertEquals("Full sets should be equal", getCollection(), getConfirmed());
@@ -158,7 +158,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 
         set2.clear();
         set2.addAll(Arrays.asList(getOtherElements()));
-        assertTrue("Sets with different contents shouldn't be equal", !getCollection().equals(set2));
+        assertTrue(!getCollection().equals(set2));
     }
 
     /**

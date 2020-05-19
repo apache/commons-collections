@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -87,31 +92,25 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
-        assertTrue("returned entryset should not be null",
-            map.entrySet() != null);
+        assertTrue(map.entrySet() != null);
         map = decorateMap(new TreeMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertTrue("returned entryset should contain one entry",
-            map.entrySet().size() == 1);
+        assertTrue(map.entrySet().size() == 1);
         map = decorateMap(map, null, null);
     }
 
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) "Hi", (V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) Integer.valueOf(3), (V) "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add key - Predicate rejected it"));
 
         assertTrue(!map.containsKey(Integer.valueOf(3)));
         assertTrue(!map.containsValue(Integer.valueOf(3)));
@@ -122,26 +121,22 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map2.put((K) "C", (V) "c");
         map2.put((K) "c", (V) Integer.valueOf(3));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
 
         map.put((K) "E", (V) "e");
-        Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-        try {
+        final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             final Map.Entry<K, V> entry = iterator.next();
             entry.setValue((V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot set value - Predicate rejected it"));
 
         map.put((K) "F", (V) "f");
-        iterator = map.entrySet().iterator();
-        final Map.Entry<K, V> entry = iterator.next();
+        Iterator<Map.Entry<K, V>> iterator2 = map.entrySet().iterator();
+        final Map.Entry<K, V> entry = iterator2.next();
         entry.setValue((V) "x");
 
     }
@@ -152,19 +147,16 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final SortedMap<K, V> map = makeTestMap();
         map.put((K) "A",  (V) "a");
         map.put((K) "B", (V) "b");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put(null, (V) "c");
-            fail("Null key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add key - Predicate rejected it"));
+
         map.put((K) "C", (V) "c");
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) "D", null);
-            fail("Null value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
         assertEquals("First key should be A", "A", map.firstKey());
         assertEquals("Last key should be C", "C", map.lastKey());
         assertEquals("First key in tail map should be B",
@@ -175,8 +167,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap((K) "A", (K) "C").lastKey());
 
         final Comparator<? super K> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == null);
+        assertNull(c);
     }
 
     @SuppressWarnings("unchecked")
@@ -184,19 +175,15 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final SortedMap<K, V> map = makeTestMapWithComparator();
         map.put((K) "A",  (V) "a");
         map.put((K) "B", (V) "b");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put(null, (V) "c");
-            fail("Null key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add key - Predicate rejected it"));
         map.put((K) "C", (V) "c");
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) "D", null);
-            fail("Null value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
         assertEquals("Last key should be A", "A", map.lastKey());
         assertEquals("First key should be C", "C", map.firstKey());
         assertEquals("First key in tail map should be B",
@@ -207,8 +194,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap((K) "C", (K) "A").lastKey());
 
         final Comparator<? super K> c = map.comparator();
-        assertTrue("reverse order, so comparator should be reverseStringComparator",
-            c == reverseStringComparator);
+        assertTrue(c == reverseStringComparator);
     }
 
     @Override

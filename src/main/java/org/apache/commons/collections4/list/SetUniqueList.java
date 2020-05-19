@@ -146,6 +146,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public void add(final int index, final E object) {
+        checkInterval(index, 0, size());
         // adds element if it is not contained already
         if (set.contains(object) == false) {
             set.add(object);
@@ -429,5 +430,17 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             throw new UnsupportedOperationException("ListIterator does not support set");
         }
     }
-
+    /**
+     * Checks whether the index is valid.
+     *
+     * @param index  the index to check
+     * @param startIndex  the first allowed index
+     * @param endIndex  the last allowed index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    private void checkInterval(final int index, final int startIndex, final int endIndex) {
+        if (index < startIndex || index > endIndex) {
+            throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size());
+        }
+    }
 }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -75,10 +78,10 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         final Set<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSet.unmodifiableSet(set));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableSet.unmodifiableSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     //-----------------------------------------------------------------------

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -130,35 +133,25 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(Boolean.TRUE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(Boolean.FALSE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, Boolean.TRUE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, Boolean.FALSE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 }

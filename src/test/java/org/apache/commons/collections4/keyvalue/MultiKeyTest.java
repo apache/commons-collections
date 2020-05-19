@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -28,7 +35,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 
 /**
  * Unit tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
@@ -137,18 +143,18 @@ public class MultiKeyTest {
     @Test
     public void testConstructorsByArrayNull() throws Exception {
         final Integer[] keys = null;
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new MultiKey<>(keys);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("keys"));
+        exception = assertThrows(NullPointerException.class, () -> {
             new MultiKey<>(keys, true);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("keys"));
+        exception = assertThrows(NullPointerException.class, () -> {
             new MultiKey<>(keys, false);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("keys"));
     }
 
     @Test
@@ -215,14 +221,14 @@ public class MultiKeyTest {
         final MultiKey<Integer> mk = new MultiKey<>(ONE, TWO);
         assertSame(ONE, mk.getKey(0));
         assertSame(TWO, mk.getKey(1));
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             mk.getKey(-1);
-            fail();
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("-1"));
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             mk.getKey(2);
-            fail();
-        } catch (final IndexOutOfBoundsException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("2"));
     }
 
     @Test

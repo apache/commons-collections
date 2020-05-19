@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Comparator;
 
 import junit.framework.Test;
@@ -69,14 +72,14 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     public void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             decorateBag(new TreeBag<T>(), null);
-            fail("Expecting NullPointerException for null predicate");
-        } catch (final NullPointerException e) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
+        exception = assertThrows(NullPointerException.class, () -> {
             decorateBag(nullBag, stringPredicate());
-            fail("Expecting NullPointerException for null bag");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @SuppressWarnings("unchecked")

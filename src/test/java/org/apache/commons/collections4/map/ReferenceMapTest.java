@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -84,25 +90,25 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
-        assertEquals(null, map.get(null));
-        assertEquals(false, map.containsKey(null));
-        assertEquals(false, map.containsValue(null));
-        assertEquals(null, map.remove(null));
-        assertEquals(false, map.entrySet().contains(null));
-        assertEquals(false, map.keySet().contains(null));
-        assertEquals(false, map.values().contains(null));
-        try {
+        assertNull(map.get(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertNull(map.remove(null));
+        assertFalse(map.entrySet().contains(null));
+        assertFalse(map.keySet().contains(null));
+        assertFalse(map.values().contains(null));
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             map.put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("key"));
+        exception = assertThrows(NullPointerException.class, () -> {
             map.put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("value"));
+        exception = assertThrows(NullPointerException.class, () -> {
             map.put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("key"));
     }
 
     //-----------------------------------------------------------------------
@@ -291,7 +297,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             final byte[] b = new byte[bytz];
             bytz = bytz * 2;
         }
-        assertFalse("Value should be stored", expiredValues.isEmpty());
+        assertFalse(expiredValues.isEmpty());
     }
 
     /**

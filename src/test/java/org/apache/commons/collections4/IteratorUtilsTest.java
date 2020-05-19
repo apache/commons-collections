@@ -23,10 +23,10 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,64 +162,50 @@ public class IteratorUtilsTest {
         iterator.reset();
         assertEquals("a", iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayIterator(Integer.valueOf(0));
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayIterator(Integer.valueOf(0));
+        });
+        assertTrue(exception.getMessage().contains("Argument is not an array"));
 
-        try {
-            iterator = IteratorUtils.arrayIterator((Object[]) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.arrayIterator((Object[]) null);
+        });
+        assertNull(exception.getMessage());
 
         iterator = IteratorUtils.arrayIterator(objArray, 1);
         assertEquals("b", iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayIterator(objArray, -1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(objArray, -1);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be less than zero"));
 
         iterator = IteratorUtils.arrayIterator(objArray, 3);
         assertFalse(iterator.hasNext());
         iterator.reset();
 
-        try {
-            iterator = IteratorUtils.arrayIterator(objArray, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(objArray, 4);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be greater than the array length"));
 
         iterator = IteratorUtils.arrayIterator(objArray, 2, 3);
         assertEquals("c", iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayIterator(objArray, 2, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(objArray, 2, 4);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be greater than the array length"));
 
-        try {
-            iterator = IteratorUtils.arrayIterator(objArray, -1, 1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(objArray, -1, 1);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be less than zero"));
 
-        try {
-            iterator = IteratorUtils.arrayIterator(objArray, 2, 1);
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayIterator(objArray, 2, 1);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be less than start index"));
 
         final int[] intArray = { 0, 1, 2 };
         iterator = IteratorUtils.arrayIterator(intArray);
@@ -231,47 +217,37 @@ public class IteratorUtilsTest {
         iterator = IteratorUtils.arrayIterator(intArray, 1);
         assertEquals(1, iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayIterator(intArray, -1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(intArray, -1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts before the start of the array."));
 
         iterator = IteratorUtils.arrayIterator(intArray, 3);
         assertFalse(iterator.hasNext());
         iterator.reset();
 
-        try {
-            iterator = IteratorUtils.arrayIterator(intArray, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(intArray, 4);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts beyond the end of the array."));
 
         iterator = IteratorUtils.arrayIterator(intArray, 2, 3);
         assertEquals(2, iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayIterator(intArray, 2, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(intArray, 2, 4);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that ends beyond the end of the array."));
 
-        try {
-            iterator = IteratorUtils.arrayIterator(intArray, -1, 1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayIterator(intArray, -1, 1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts before the start of the array."));
 
-        try {
-            iterator = IteratorUtils.arrayIterator(intArray, 2, 1);
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayIterator(intArray, 2, 1);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be less than start index."));
     }
 
     @Test
@@ -292,19 +268,15 @@ public class IteratorUtilsTest {
         assertEquals(4, iterator.nextIndex()); // size of list
         assertEquals(3, iterator.previousIndex());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(Integer.valueOf(0));
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayListIterator(Integer.valueOf(0));
+        });
+        assertTrue(exception.getMessage().contains("Argument is not an array"));
 
-        try {
-            iterator = IteratorUtils.arrayListIterator((Object[]) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.arrayListIterator((Object[]) null);
+        });
+        assertNull(exception.getMessage());
 
         iterator = IteratorUtils.arrayListIterator(objArray, 1);
         assertEquals(-1, iterator.previousIndex());
@@ -313,52 +285,40 @@ public class IteratorUtilsTest {
         assertEquals("b", iterator.next());
         assertEquals(0, iterator.previousIndex());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(objArray, -1);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(objArray, -1);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be less than zero"));
 
-        iterator = IteratorUtils.arrayListIterator(objArray, 3);
-        assertTrue(iterator.hasNext());
-        try {
-            iterator.previous();
-            fail("Expecting NoSuchElementException.");
-        } catch (final NoSuchElementException ex) {
-            // expected
-        }
+        final ResettableListIterator<Object> listIterator = IteratorUtils.arrayListIterator(objArray, 3);
+        assertTrue(listIterator.hasNext());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            listIterator.previous();
+        });
+        assertNull(exception.getMessage());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(objArray, 5);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(objArray, 5);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be greater than the array length"));
 
         iterator = IteratorUtils.arrayListIterator(objArray, 2, 3);
         assertEquals("c", iterator.next());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(objArray, 2, 5);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(objArray, 2, 5);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be greater than the array length"));
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(objArray, -1, 1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(objArray, -1, 1);
+        });
+        assertTrue(exception.getMessage().contains("Start index must not be less than zero"));
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(objArray, 2, 1);
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayListIterator(objArray, 2, 1);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be less than start index"));
 
         final int[] intArray = { 0, 1, 2 };
         iterator = IteratorUtils.arrayListIterator(intArray);
@@ -390,22 +350,17 @@ public class IteratorUtilsTest {
         assertEquals(0, iterator.previousIndex());
         assertEquals(1, iterator.nextIndex());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(intArray, -1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(intArray, -1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts before the start of the array."));
 
         iterator = IteratorUtils.arrayListIterator(intArray, 3);
-        assertFalse(iterator.hasNext());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(intArray, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(intArray, 4);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts beyond the end of the array."));
 
         iterator = IteratorUtils.arrayListIterator(intArray, 2, 3);
         assertFalse(iterator.hasPrevious());
@@ -414,26 +369,20 @@ public class IteratorUtilsTest {
         assertTrue(iterator.hasPrevious());
         assertFalse(iterator.hasNext());
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(intArray, 2, 4);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(intArray, 2, 4);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that ends beyond the end of the array."));
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(intArray, -1, 1);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.arrayListIterator(intArray, -1, 1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts before the start of the array."));
 
-        try {
-            iterator = IteratorUtils.arrayListIterator(intArray, 2, 1);
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            IteratorUtils.arrayListIterator(intArray, 2, 1);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be less than start index."));
     }
 
     @Test(expected = NullPointerException.class)
@@ -464,12 +413,10 @@ public class IteratorUtilsTest {
 
     @Test
     public void testAsIterableNull() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.asIterable(null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -478,7 +425,7 @@ public class IteratorUtilsTest {
         vector.addElement("zero");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
-        assertTrue("create instance fail", IteratorUtils.asIterator(en) instanceof Iterator);
+        assertTrue(IteratorUtils.asIterator(en) instanceof Iterator);
         IteratorUtils.asIterator(null);
     }
 
@@ -490,7 +437,7 @@ public class IteratorUtilsTest {
         vector.addElement("test");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
-        assertTrue("create instance fail", IteratorUtils.asIterator(en, coll) instanceof Iterator);
+        assertTrue(IteratorUtils.asIterator(en, coll) instanceof Iterator);
         try {
             IteratorUtils.asIterator(null, coll);
         } catch (final NullPointerException npe) {
@@ -532,21 +479,19 @@ public class IteratorUtilsTest {
 
     @Test
     public void testAsMultipleIterableNull() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.asMultipleUseIterable(null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
     public void testChainedIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.chainedIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.chainedIterator(ie) instanceof Iterator);
         final Collection<Iterator<?>> coll = new ArrayList();
-        assertTrue("create instance fail", IteratorUtils.chainedIterator(coll) instanceof Iterator);
+        assertTrue(IteratorUtils.chainedIterator(coll) instanceof Iterator);
 
     }
 
@@ -555,19 +500,15 @@ public class IteratorUtilsTest {
      */
     @Test
     public void testCollatedIterator() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.collatedIterator(null, collectionOdd.iterator(), null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.collatedIterator(null, null, collectionEven.iterator());
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
 
         // natural ordering
         Iterator<Integer> it = IteratorUtils.collatedIterator(null, collectionOdd.iterator(),
@@ -652,16 +593,15 @@ public class IteratorUtilsTest {
         IteratorUtils.EMPTY_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.EMPTY_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.emptyIterator());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_ITERATOR.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_ITERATOR.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
     }
 
     // -----------------------------------------------------------------------
@@ -683,31 +623,26 @@ public class IteratorUtilsTest {
         IteratorUtils.EMPTY_LIST_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_LIST_ITERATOR, IteratorUtils.EMPTY_LIST_ITERATOR);
         assertSame(IteratorUtils.EMPTY_LIST_ITERATOR, IteratorUtils.emptyListIterator());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_LIST_ITERATOR.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_LIST_ITERATOR.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_LIST_ITERATOR.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.emptyListIterator().set(null);
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             IteratorUtils.emptyListIterator().add(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("add() not supported for empty Iterator"));
     }
 
     // -----------------------------------------------------------------------
@@ -728,31 +663,26 @@ public class IteratorUtilsTest {
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_MAP_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.EMPTY_MAP_ITERATOR);
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.emptyMapIterator());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_MAP_ITERATOR.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_MAP_ITERATOR.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_MAP_ITERATOR.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_MAP_ITERATOR.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_MAP_ITERATOR.setValue(null);
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
     }
 
     // -----------------------------------------------------------------------
@@ -773,21 +703,18 @@ public class IteratorUtilsTest {
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_ORDERED_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.EMPTY_ORDERED_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.emptyOrderedIterator());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
     }
 
     // -----------------------------------------------------------------------
@@ -808,36 +735,30 @@ public class IteratorUtilsTest {
         ((ResettableIterator<Object>) IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
         assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.emptyOrderedMapIterator());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(NoSuchElementException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            IteratorUtils.EMPTY_ORDERED_ITERATOR.previous();
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
-        try {
-            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.setValue(null);
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
     }
 
     @Test
@@ -861,8 +782,7 @@ public class IteratorUtilsTest {
         final List arrayList = new ArrayList();
         arrayList.add("test");
         final Predicate predicate = INSTANCE;
-        assertTrue("create instance fail",
-                IteratorUtils.filteredListIterator(arrayList.listIterator(), predicate) instanceof ListIterator);
+        assertTrue(IteratorUtils.filteredListIterator(arrayList.listIterator(), predicate) instanceof ListIterator);
         try {
             IteratorUtils.filteredListIterator(null, predicate);
         } catch (final NullPointerException npe) {
@@ -884,12 +804,10 @@ public class IteratorUtilsTest {
         test = IteratorUtils.find(iterableA.iterator(), testPredicate);
         assertNull(test);
         assertNull(IteratorUtils.find(null, testPredicate));
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             assertNull(IteratorUtils.find(iterableA.iterator(), null));
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -914,12 +832,10 @@ public class IteratorUtilsTest {
         col.add(listB);
         IteratorUtils.forEach(col.iterator(), testClosure);
         assertTrue(listA.isEmpty() && listB.isEmpty());
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.forEach(col.iterator(), null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("closure"));
 
         IteratorUtils.forEach(null, testClosure);
 
@@ -944,12 +860,10 @@ public class IteratorUtilsTest {
         assertTrue(listA.isEmpty() && !listB.isEmpty());
         assertSame(listB, last);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.forEachButLast(col.iterator(), null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("closure"));
 
         IteratorUtils.forEachButLast(null, testClosure);
 
@@ -968,14 +882,13 @@ public class IteratorUtilsTest {
         iterator = iterableA.iterator();
         assertEquals(2, (int) IteratorUtils.get(iterator, 1));
 
+        final Iterator<Integer> iteratorInteger = iterableA.iterator();
         // Iterator, non-existent entry
-        try {
-            IteratorUtils.get(iterator, 10);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertFalse(iterator.hasNext());
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            IteratorUtils.get(iteratorInteger, 10);
+        });
+        assertTrue(exception.getMessage().contains("Entry does not exist: 0"));
+        assertFalse(iteratorInteger.hasNext());
     }
 
     @Test
@@ -985,25 +898,19 @@ public class IteratorUtilsTest {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
 
-        assertTrue("returns empty iterator when null passed", IteratorUtils.getIterator(null) instanceof EmptyIterator);
-        assertTrue("returns Iterator when Iterator directly ",
-                IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator);
-        assertTrue("returns Iterator when iterable passed", IteratorUtils.getIterator(iterableA) instanceof Iterator);
-        assertTrue("returns ObjectArrayIterator when Object array passed",
-                IteratorUtils.getIterator(objArray) instanceof ObjectArrayIterator);
-        assertTrue("returns Iterator when Map passed", IteratorUtils.getIterator(inMap) instanceof Iterator);
-        assertTrue("returns NodeListIterator when nodeList passed",
-                IteratorUtils.getIterator(nodeList) instanceof NodeListIterator);
-        assertTrue("returns EnumerationIterator when Enumeration passed",
-                IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator);
+        assertTrue(IteratorUtils.getIterator(null) instanceof EmptyIterator);
+        assertTrue(IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator);
+        assertTrue(IteratorUtils.getIterator(iterableA) instanceof Iterator);
+        assertTrue(IteratorUtils.getIterator(objArray) instanceof ObjectArrayIterator);
+        assertTrue(IteratorUtils.getIterator(inMap) instanceof Iterator);
+        assertTrue(IteratorUtils.getIterator(nodeList) instanceof NodeListIterator);
+        assertTrue(IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator);
         final Node node1 = createMock(Node.class);
-        assertTrue("returns NodeListIterator when nodeList passed",
-                IteratorUtils.getIterator(node1) instanceof NodeListIterator);
+        assertTrue(IteratorUtils.getIterator(node1) instanceof NodeListIterator);
         final Dictionary dic = createMock(Dictionary.class);
-        assertTrue("returns EnumerationIterator when Dictionary passed",
-                IteratorUtils.getIterator(dic) instanceof EnumerationIterator);
+        assertTrue(IteratorUtils.getIterator(dic) instanceof EnumerationIterator);
         final int[] arr = new int[8];
-        assertTrue("returns ArrayIterator when array passed", IteratorUtils.getIterator(arr) instanceof ArrayIterator);
+        assertTrue(IteratorUtils.getIterator(arr) instanceof ArrayIterator);
     }
 
     @Test
@@ -1015,12 +922,10 @@ public class IteratorUtilsTest {
         index = IteratorUtils.indexOf(iterableA.iterator(), testPredicate);
         assertEquals(-1, index);
         assertEquals(-1, IteratorUtils.indexOf(null, testPredicate));
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.indexOf(iterableA.iterator(), null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -1030,7 +935,7 @@ public class IteratorUtilsTest {
         final Collection coll = new ArrayList();
         coll.add("test");
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
         IteratorUtils.loopingIterator(null);
     }
 
@@ -1039,7 +944,7 @@ public class IteratorUtilsTest {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
         IteratorUtils.loopingListIterator(null);
     }
 
@@ -1067,12 +972,10 @@ public class IteratorUtilsTest {
         // single use iterator
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.nodeListIterator((Node) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("node"));
     }
 
     /**
@@ -1096,24 +999,22 @@ public class IteratorUtilsTest {
         // single use iterator
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.nodeListIterator((NodeList) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("nodeList"));
     }
 
     @Test
     public void testObjectGraphIterator() {
-        assertTrue("create instance fail", IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
+        assertTrue(IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
     }
 
     @Test(expected = NullPointerException.class)
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.peekingIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.peekingIterator(ie) instanceof Iterator);
         IteratorUtils.peekingIterator(null);
 
     }
@@ -1122,18 +1023,18 @@ public class IteratorUtilsTest {
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.pushbackIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.pushbackIterator(ie) instanceof Iterator);
         IteratorUtils.pushbackIterator(null);
     }
 
     @Test
     public void testSingletonIterator() {
-        assertTrue("create instance fail", IteratorUtils.singletonIterator(new Object()) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.singletonIterator(new Object()) instanceof ResettableIterator);
     }
 
     @Test
     public void testSingletonListIterator() {
-        assertTrue("create instance fail", IteratorUtils.singletonListIterator(new Object()) instanceof Iterator);
+        assertTrue(IteratorUtils.singletonListIterator(new Object()) instanceof Iterator);
     }
 
     @Test
@@ -1145,12 +1046,10 @@ public class IteratorUtilsTest {
         final Object[] result = IteratorUtils.toArray(list.iterator());
         assertEquals(list, Arrays.asList(result));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.toArray(null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
@@ -1162,19 +1061,15 @@ public class IteratorUtilsTest {
         final String[] result = IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.toArray(list.iterator(), null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("arrayClass"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.toArray(null, String.class);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
@@ -1186,20 +1081,15 @@ public class IteratorUtilsTest {
         final List<Object> result = IteratorUtils.toList(list.iterator());
         assertEquals(list, result);
         // add
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.toList(null, 10);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             IteratorUtils.toList(list.iterator(), -1);
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-            // success
-        }
-
+        });
+        assertTrue(exception.getMessage().contains("Estimated size must be greater than 0"));
     }
 
     @Test
@@ -1220,12 +1110,10 @@ public class IteratorUtilsTest {
 
     @Test
     public void testToListIteratorNull() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.toListIterator(null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
@@ -1251,23 +1139,17 @@ public class IteratorUtilsTest {
     public void testUnmodifiableIteratorImmutability() {
         final Iterator<String> iterator = getImmutableIterator();
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             iterator.remove();
-            // We shouldn't get to here.
-            fail("remove() should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
-
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
         iterator.next();
 
-        try {
+        // We shouldn't get to here.
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             iterator.remove();
-            // We shouldn't get to here.
-            fail("remove() should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
 
     }
 
@@ -1305,55 +1187,37 @@ public class IteratorUtilsTest {
     public void testUnmodifiableListIteratorImmutability() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.remove();
-            // We shouldn't get to here.
-            fail("remove() should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.set("a");
-            // We shouldn't get to here.
-            fail("set(Object) should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("set() is not supported"));
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.add("a");
-            // We shouldn't get to here.
-            fail("add(Object) should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("add() is not supported"));
 
         listIterator.next();
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.remove();
-            // We shouldn't get to here.
-            fail("remove() should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.set("a");
-            // We shouldn't get to here.
-            fail("set(Object) should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("set() is not supported"));
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             listIterator.add("a");
-            // We shouldn't get to here.
-            fail("add(Object) should throw an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // This is correct; ignore the exception.
-        }
+        });
+        assertTrue(exception.getMessage().contains("add() is not supported"));
     }
 
     /**
@@ -1411,7 +1275,7 @@ public class IteratorUtilsTest {
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
-        assertTrue("create instance fail", IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
+        assertTrue(IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
         IteratorUtils.unmodifiableMapIterator(null);
 
     }
@@ -1420,7 +1284,7 @@ public class IteratorUtilsTest {
     public void testZippingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator);
-        assertTrue("create instance fail", IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator);
+        assertTrue(IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator);
+        assertTrue(IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator);
     }
 }

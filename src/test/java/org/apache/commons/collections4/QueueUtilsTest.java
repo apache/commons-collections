@@ -17,8 +17,9 @@
 package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -44,25 +45,21 @@ public class QueueUtilsTest {
     @Test
     public void testSynchronizedQueue() {
         final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
-        assertTrue("Returned object should be a SynchronizedQueue.", queue instanceof SynchronizedQueue);
-        try {
+        assertTrue(queue instanceof SynchronizedQueue);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.synchronizedQueue(null);
-            fail("Expecting NullPointerException for null queue.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
     public void testUnmodifiableQueue() {
         final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
-        assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
-        try {
+        assertTrue(queue instanceof UnmodifiableQueue);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.unmodifiableQueue(null);
-            fail("Expecting NullPointerException for null queue.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
 
         assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
     }
@@ -70,51 +67,42 @@ public class QueueUtilsTest {
     @Test
     public void testPredicatedQueue() {
         final Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
-        assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
-        try {
+        assertTrue( queue instanceof PredicatedQueue);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.predicatedQueue(null, truePredicate);
-            fail("Expecting NullPointerException for null queue.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.predicatedQueue(new LinkedList<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
     public void testTransformedQueue() {
         final Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
-        assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
-        try {
+        assertTrue(queue instanceof TransformedQueue);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.transformingQueue(null, nopTransformer);
-            fail("Expecting NullPointerException for null queue.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             QueueUtils.transformingQueue(new LinkedList<>(), null);
-            fail("Expecting NullPointerException for null transformer.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("transformer"));
     }
 
     @Test
     public void testEmptyQueue() {
         final Queue<Object> queue = QueueUtils.emptyQueue();
-        assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
-        assertTrue("Returned queue is not empty.", queue.isEmpty());
+        assertTrue(queue instanceof UnmodifiableQueue);
+        assertTrue(queue.isEmpty());
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             queue.add(new Object());
-            fail("Expecting UnsupportedOperationException for empty queue.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
-
 }

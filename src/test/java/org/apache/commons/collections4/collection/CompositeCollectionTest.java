@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,8 +28,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
-
-import org.junit.Assert;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -253,21 +256,21 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList);
-        Assert.assertEquals(0, cc.size());
+        assertEquals(0, cc.size());
     }
 
     public void testAddNullLists2Args() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        assertEquals(0, cc.size());
     }
 
     public void testAddNullListsVarArgs() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        assertEquals(0, cc.size());
     }
 
     @SuppressWarnings("unchecked")
@@ -426,12 +429,10 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @Override
     public void testUnsupportedRemove() {
         resetFull();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().remove(null);
-            fail("remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported on CompositeCollection without a CollectionMutator strategy"));
         verify();
     }
 

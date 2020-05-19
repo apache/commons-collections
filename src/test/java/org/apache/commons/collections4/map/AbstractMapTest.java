@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -596,11 +603,13 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapClear() {
         if (!isRemoveSupported()) {
-            try {
-                resetFull();
+            resetFull();
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 getMap().clear();
-                fail("Expected UnsupportedOperationException on clear");
-            } catch (final UnsupportedOperationException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("Map is fixed size"));
+            }
             return;
         }
 
@@ -828,21 +837,20 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     }
                 }
             } else {
-                try {
-                    // two possible exception here, either valid
+                // two possible exception here, either valid
+                Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     getMap().put(keys[0], newValues[0]);
-                    fail("Expected IllegalArgumentException or UnsupportedOperationException on put (change)");
-                } catch (final IllegalArgumentException ex) {
-                } catch (final UnsupportedOperationException ex) {}
+                });
+                assertNull(exception.getMessage());
             }
 
         } else if (isPutChangeSupported()) {
             resetEmpty();
-            try {
+            Exception exception = assertThrows(Exception.class, () -> {
                 getMap().put(keys[0], values[0]);
-                fail("Expected UnsupportedOperationException or IllegalArgumentException on put (add) when fixed size");
-            } catch (final IllegalArgumentException ex) {
-            } catch (final UnsupportedOperationException ex) {
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("Map is fixed size"));
             }
 
             resetFull();
@@ -866,10 +874,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 }
             }
         } else {
-            try {
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 getMap().put(keys[0], values[0]);
-                fail("Expected UnsupportedOperationException on put (add)");
-            } catch (final UnsupportedOperationException ex) {}
+            });
+            assertNull(exception.getMessage());
         }
     }
 
@@ -884,11 +892,12 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             if (isAllowNullKey()) {
                 getMap().put(null, values[0]);
             } else {
-                try {
+                Exception exception = assertThrows(Exception.class, () -> {
                     getMap().put(null, values[0]);
-                    fail("put(null, value) should throw NPE/IAE");
-                } catch (final NullPointerException ex) {
-                } catch (final IllegalArgumentException ex) {}
+                });
+                if (null != exception.getMessage()) {
+                    assertNotNull(exception.getMessage());
+                }
             }
         }
     }
@@ -904,11 +913,12 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             if (isAllowNullValue()) {
                 getMap().put(keys[0], null);
             } else {
-                try {
+                Exception exception = assertThrows(NullPointerException.class, () -> {
                     getMap().put(keys[0], null);
-                    fail("put(key, null) should throw NPE/IAE");
-                } catch (final NullPointerException ex) {
-                } catch (final IllegalArgumentException ex) {}
+                });
+                if (null != exception.getMessage()) {
+                    assertNotNull(exception.getMessage());
+                }
             }
         }
     }
@@ -921,10 +931,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             if (!isPutChangeSupported()) {
                 final Map<K, V> temp = makeFullMap();
                 resetEmpty();
-                try {
+                Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                     getMap().putAll(temp);
-                    fail("Expected UnsupportedOperationException on putAll");
-                } catch (final UnsupportedOperationException ex) {}
+                });
+                assertNull(exception.getMessage());
             }
             return;
         }
@@ -979,11 +989,13 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapRemove() {
         if (!isRemoveSupported()) {
-            try {
-                resetFull();
+            resetFull();
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 getMap().remove(getMap().keySet().iterator().next());
-                fail("Expected UnsupportedOperationException on remove");
-            } catch (final UnsupportedOperationException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("Map is fixed size"));
+            }
             return;
         }
 
@@ -993,7 +1005,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] values = getSampleValues();
         for (final Object key : keys) {
             final Object o = getMap().remove(key);
-            assertTrue("First map.remove should return null", o == null);
+            assertNull(o);
         }
         verify();
 
@@ -1014,7 +1026,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final int size = getMap().size();
         for (final Object element : other) {
             final Object o = getMap().remove(element);
-            assertNull("map.remove for nonexistent key should return null", o);
+            assertNull(o);
             assertEquals("map.remove for nonexistent key should not " +
                          "shrink map", size, getMap().size());
         }
@@ -1215,10 +1227,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     }
                     j++;
                 }
-                assertTrue("values().remove(obj) is broken", j < 10000);
-                assertTrue(
-                    "Value should have been removed from the underlying map.",
-                    !getMap().containsValue(sampleValue));
+                assertTrue(j < 10000);
+                assertTrue(!getMap().containsValue(sampleValue));
             }
         }
     }
@@ -1322,9 +1332,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 // if key.remove is unsupported, just skip this test
                 return;
             }
-            assertTrue(
-                "Key should have been removed from the underlying map.",
-                !getMap().containsKey(sampleKey));
+            assertTrue(!getMap().containsKey(sampleKey));
         }
     }
 
@@ -1409,9 +1417,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 // if entrySet removal is unsupported, just skip this test
                 return;
             }
-            assertTrue(
-                    "Entry should have been removed from the underlying map.",
-                    !getMap().containsKey(sampleKeys[i]));
+            assertTrue(!getMap().containsKey(sampleKeys[i]));
         }
     }
 
@@ -1962,7 +1968,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // concurrent modification exceptions.
         // Because of this we have assertEquals(map, confirmed), and not the other way around.
         assertEquals("Map should still equal HashMap", map, confirmed);
-        assertTrue("Map should still equal HashMap", getMap().equals(getConfirmed()));
+        assertTrue(getMap().equals(getConfirmed()));
     }
 
     public void verifyEntrySet() {
@@ -1974,9 +1980,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertEquals("entrySet should be empty if HashMap is" +
                      "\nTest: " + entrySet + "\nReal: " + getConfirmed().entrySet(),
                      empty, entrySet.isEmpty());
-        assertTrue("entrySet should contain all HashMap's elements" +
-                   "\nTest: " + entrySet + "\nReal: " + getConfirmed().entrySet(),
-                   entrySet.containsAll(getConfirmed().entrySet()));
+        assertTrue(entrySet.containsAll(getConfirmed().entrySet()));
         assertEquals("entrySet hashCodes should be the same" +
                      "\nTest: " + entrySet + "\nReal: " + getConfirmed().entrySet(),
                      getConfirmed().entrySet().hashCode(), entrySet.hashCode());
@@ -1993,9 +1997,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertEquals("keySet should be empty if HashMap is" +
                      "\nTest: " + keySet + "\nReal: " + getConfirmed().keySet(),
                      empty, keySet.isEmpty());
-        assertTrue("keySet should contain all HashMap's elements" +
-                   "\nTest: " + keySet + "\nReal: " + getConfirmed().keySet(),
-                   keySet.containsAll(getConfirmed().keySet()));
+        assertTrue(keySet.containsAll(getConfirmed().keySet()));
         assertEquals("keySet hashCodes should be the same" +
                      "\nTest: " + keySet + "\nReal: " + getConfirmed().keySet(),
                      getConfirmed().keySet().hashCode(), keySet.hashCode());
@@ -2018,18 +2020,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertEquals("values should be empty if HashMap is" +
                      "\nTest: " + test + "\nReal: " + known,
                      empty, values.isEmpty());
-        assertTrue("values should contain all HashMap's elements" +
-                   "\nTest: " + test + "\nReal: " + known,
-                    test.containsAll(known));
-        assertTrue("values should contain all HashMap's elements" +
-                   "\nTest: " + test + "\nReal: " + known,
-                   known.containsAll(test));
+        assertTrue(test.containsAll(known));
+        assertTrue(known.containsAll(test));
         // originally coded to use a HashBag, but now separate jar so...
         for (final V v : known) {
             final boolean removed = test.remove(v);
-            assertTrue("Map's values should still equal HashMap's", removed);
+            assertTrue(removed);
         }
-        assertTrue("Map's values should still equal HashMap's", test.isEmpty());
+        assertTrue(test.isEmpty());
     }
 
     /**

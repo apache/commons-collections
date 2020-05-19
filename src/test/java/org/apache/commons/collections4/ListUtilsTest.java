@@ -16,7 +16,14 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +65,7 @@ public class ListUtilsTest {
     @Test
     public void testIntersectNonEmptyWithEmptyList() {
         final List<String> empty = Collections.<String>emptyList();
-        assertTrue("result not empty", ListUtils.intersection(empty, fullList).isEmpty());
+        assertTrue(ListUtils.intersection(empty, fullList).isEmpty());
     }
 
     /**
@@ -67,7 +74,7 @@ public class ListUtilsTest {
     @Test
     public void testIntersectEmptyWithEmptyList() {
         final List<?> empty = Collections.EMPTY_LIST;
-        assertTrue("result not empty", ListUtils.intersection(empty, empty).isEmpty());
+        assertTrue(ListUtils.intersection(empty, empty).isEmpty());
     }
 
     /**
@@ -124,19 +131,16 @@ public class ListUtilsTest {
     public void testPredicatedList() {
         final Predicate<Object> predicate = o -> o instanceof String;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
-        assertTrue("returned object should be a PredicatedList", list instanceof PredicatedList);
-        try {
+        assertTrue(list instanceof PredicatedList);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.predicatedList(new ArrayList<>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.predicatedList(null, predicate);
-            fail("Expecting IllegalArgumentException for null list.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
@@ -242,10 +246,11 @@ public class ListUtilsTest {
         fullList.retainAll(sub);
         assertEquals(retained, fullList);
 
-        try {
+        // this is what we want
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.retainAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe){} // this is what we want
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
@@ -260,10 +265,11 @@ public class ListUtilsTest {
         fullList.removeAll(sub);
         assertEquals(remainder, fullList);
 
-        try {
+        // this is what we want
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.removeAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
@@ -287,10 +293,11 @@ public class ListUtilsTest {
 
         assertEquals(expected, result);
 
-        try {
+        // this is what we want
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.subtract(list, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
@@ -335,21 +342,20 @@ public class ListUtilsTest {
     @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testLongestCommonSubsequence() {
-
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence((List<?>) null, null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("listA"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence(Arrays.asList('A'), null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("listB"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("listA"));
 
         @SuppressWarnings("unchecked")
         List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
@@ -376,21 +382,20 @@ public class ListUtilsTest {
 
     @Test
     public void testLongestCommonSubsequenceWithString() {
-
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence((String) null, null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("charSequenceA"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence("A", null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("charSequenceB"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.longestCommonSubsequence(null, "A");
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("charSequenceA"));
 
         String lcs = ListUtils.longestCommonSubsequence("", "");
         assertEquals(0, lcs.length());
@@ -426,20 +431,20 @@ public class ListUtilsTest {
         assertEquals(3, partition.size());
         assertEquals(1, partition.get(2).size());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListUtils.partition(null, 3);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        });
+        assertTrue(exception.getMessage().contains("list"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             ListUtils.partition(strings, 0);
-            fail("failed to check for size argument");
-        } catch (final IllegalArgumentException e) {}
+        });
+        assertTrue(exception.getMessage().contains("Size must be greater than 0"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             ListUtils.partition(strings, -10);
-            fail("failed to check for size argument");
-        } catch (final IllegalArgumentException e) {}
+        });
+        assertTrue(exception.getMessage().contains("Size must be greater than 0"));
 
         final List<List<Integer>> partitionMax = ListUtils.partition(strings, Integer.MAX_VALUE);
         assertEquals(1, partitionMax.size());

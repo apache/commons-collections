@@ -19,10 +19,10 @@ package org.apache.commons.collections4;
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -305,22 +305,22 @@ public class CollectionUtilsTest extends MockTestCase {
         multiples.add("1");
 
         assertFalse("containsAll({1},{1,3}) should return false.", CollectionUtils.containsAll(one, odds));
-        assertTrue("containsAll({1,3},{1}) should return true.", CollectionUtils.containsAll(odds, one));
+        assertTrue(CollectionUtils.containsAll(odds, one));
         assertFalse("containsAll({3},{1,3}) should return false.", CollectionUtils.containsAll(three, odds));
-        assertTrue("containsAll({1,3},{3}) should return true.", CollectionUtils.containsAll(odds, three));
-        assertTrue("containsAll({2},{2}) should return true.", CollectionUtils.containsAll(two, two));
-        assertTrue("containsAll({1,3},{1,3}) should return true.", CollectionUtils.containsAll(odds, odds));
+        assertTrue(CollectionUtils.containsAll(odds, three));
+        assertTrue(CollectionUtils.containsAll(two, two));
+        assertTrue(CollectionUtils.containsAll(odds, odds));
 
         assertFalse("containsAll({2},{1,3}) should return false.", CollectionUtils.containsAll(two, odds));
         assertFalse("containsAll({1,3},{2}) should return false.", CollectionUtils.containsAll(odds, two));
         assertFalse("containsAll({1},{3}) should return false.", CollectionUtils.containsAll(one, three));
         assertFalse("containsAll({3},{1}) should return false.", CollectionUtils.containsAll(three, one));
-        assertTrue("containsAll({1,3},{}) should return true.", CollectionUtils.containsAll(odds, empty));
+        assertTrue(CollectionUtils.containsAll(odds, empty));
         assertFalse("containsAll({},{1,3}) should return false.", CollectionUtils.containsAll(empty, odds));
-        assertTrue("containsAll({},{}) should return true.", CollectionUtils.containsAll(empty, empty));
+        assertTrue(CollectionUtils.containsAll(empty, empty));
 
-        assertTrue("containsAll({1,3},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, multiples));
-        assertTrue("containsAll({1,3,1},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, odds));
+        assertTrue(CollectionUtils.containsAll(odds, multiples));
+        assertTrue(CollectionUtils.containsAll(odds, odds));
     }
 
     @Test
@@ -336,12 +336,12 @@ public class CollectionUtilsTest extends MockTestCase {
         odds.add("1");
         odds.add("3");
 
-        assertTrue("containsAny({1},{1,3}) should return true.", CollectionUtils.containsAny(one, odds));
-        assertTrue("containsAny({1,3},{1}) should return true.", CollectionUtils.containsAny(odds, one));
-        assertTrue("containsAny({3},{1,3}) should return true.", CollectionUtils.containsAny(three, odds));
-        assertTrue("containsAny({1,3},{3}) should return true.", CollectionUtils.containsAny(odds, three));
-        assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, two));
-        assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, odds));
+        assertTrue(CollectionUtils.containsAny(one, odds));
+        assertTrue(CollectionUtils.containsAny(odds, one));
+        assertTrue(CollectionUtils.containsAny(three, odds));
+        assertTrue(CollectionUtils.containsAny(odds, three));
+        assertTrue(CollectionUtils.containsAny(two, two));
+        assertTrue(CollectionUtils.containsAny(odds, odds));
 
         assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, odds));
         assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, two));
@@ -393,12 +393,12 @@ public class CollectionUtilsTest extends MockTestCase {
         odds.add("3");
         final String[] oddsArr = {"1", "3"};
 
-        assertTrue("containsAny({1},{1,3}) should return true.", CollectionUtils.containsAny(one, oddsArr));
-        assertTrue("containsAny({1,3},{1}) should return true.", CollectionUtils.containsAny(odds, oneArr));
-        assertTrue("containsAny({3},{1,3}) should return true.", CollectionUtils.containsAny(three, oddsArr));
-        assertTrue("containsAny({1,3},{3}) should return true.", CollectionUtils.containsAny(odds, threeArr));
-        assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, twoArr));
-        assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, oddsArr));
+        assertTrue(CollectionUtils.containsAny(one, oddsArr));
+        assertTrue(CollectionUtils.containsAny(odds, oneArr));
+        assertTrue(CollectionUtils.containsAny(three, oddsArr));
+        assertTrue(CollectionUtils.containsAny(odds, threeArr));
+        assertTrue(CollectionUtils.containsAny(two, twoArr));
+        assertTrue(CollectionUtils.containsAny(odds, oddsArr));
 
         assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, oddsArr));
         assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, twoArr));
@@ -949,18 +949,15 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(expected, found);
 
         // Map index out of range
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             CollectionUtils.get(expected, 2);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Entry does not exist: 0"));
+
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             CollectionUtils.get(expected, -2);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Index cannot be negative: -2"));
 
         // Sorted map, entries exist, should respect order
         final SortedMap<String, String> map = new TreeMap<>();
@@ -1002,13 +999,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, (int) CollectionUtils.get(iterator, 1));
 
         // Iterator, non-existent entry
-        try {
-            CollectionUtils.get(iterator, 10);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertFalse(iterator.hasNext());
+        final Iterator<Integer> iteratorInteger = iterableA.iterator();
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            CollectionUtils.get(iteratorInteger, 10);
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("Entry does not exist: 0"));
+        assertFalse(iteratorInteger.hasNext());
     }
 
     @Test
@@ -1024,13 +1021,12 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("one", CollectionUtils.get(en, 1));
 
         // Enumerator, non-existent entry
-        try {
-            CollectionUtils.get(en, 3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertFalse(en.hasMoreElements());
+        Enumeration<String> enumerator = vector.elements();
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            CollectionUtils.get(enumerator, 3);
+        });
+        assertTrue(exception.getMessage().contains("Entry does not exist:"));
+        assertFalse(enumerator.hasMoreElements());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -1226,11 +1222,10 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_Other() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             CollectionUtils.sizeIsEmpty("not a list");
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("Unsupported object type: java.lang.String"));
     }
 
     // -----------------------------------------------------------------------
@@ -1511,7 +1506,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void predicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
         final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<Number>(), predicate);
-        assertTrue("returned object should be a PredicatedCollection", collection instanceof PredicatedCollection);
+        assertTrue(collection instanceof PredicatedCollection);
     }
 
     @Test(expected = NullPointerException.class)
@@ -1807,7 +1802,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testTransformedCollection() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
         final Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<>(), transformer);
-        assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
+        assertTrue(collection instanceof TransformedCollection);
     }
 
     @Test(expected = NullPointerException.class)
@@ -1838,26 +1833,22 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
-        assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
-        try {
+        assertTrue(col instanceof SynchronizedCollection);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.synchronizedCollection(null);
-            fail("Expecting NullPointerException for null collection.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
     @Deprecated
     public void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
-        assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
-        try {
+        assertTrue(col instanceof UnmodifiableCollection);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.unmodifiableCollection(null);
-            fail("Expecting NullPointerException for null collection.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
@@ -2023,26 +2014,25 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void extractSingleton() {
-        ArrayList<String> coll = null;
-        try {
+        final ArrayList<String> coll = null;
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.extractSingleton(coll);
-            fail("expected NullPointerException from extractSingleton(null)");
-        } catch (final NullPointerException e) {
-        }
-        coll = new ArrayList<>();
-        try {
-            CollectionUtils.extractSingleton(coll);
-            fail("expected IllegalArgumentException from extractSingleton(empty)");
-        } catch (final IllegalArgumentException e) {
-        }
-        coll.add("foo");
-        assertEquals("foo", CollectionUtils.extractSingleton(coll));
-        coll.add("bar");
-        try {
-            CollectionUtils.extractSingleton(coll);
-            fail("expected IllegalArgumentException from extractSingleton(size == 2)");
-        } catch (final IllegalArgumentException e) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
+
+        final ArrayList<String> coll2 = new ArrayList<>();
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            CollectionUtils.extractSingleton(coll2);
+        });
+        assertTrue(exception.getMessage().contains("Can extract singleton only when collection size == 1"));
+
+        coll2.add("foo");
+        assertEquals("foo", CollectionUtils.extractSingleton(coll2));
+        coll2.add("bar");
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            CollectionUtils.extractSingleton(coll2);
+        });
+        assertTrue(exception.getMessage().contains("Can extract singleton only when collection size == 1"));
     }
 
     /**
@@ -2192,17 +2182,15 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(remove.contains("CX"));
         assertTrue(remove.contains("XZ"));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        });
+        assertTrue(exception.getMessage().contains("collection"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.removeAll(base, remove, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        });
+        assertTrue(exception.getMessage().contains("equator"));
     }
 
     @Test
@@ -2245,17 +2233,15 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(retain.contains("CX"));
         assertTrue(retain.contains("XZ"));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.retainAll(null, null, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        });
+        assertTrue(exception.getMessage().contains("collection"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             CollectionUtils.retainAll(base, retain, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        });
+        assertTrue(exception.getMessage().contains("equator"));
     }
 
 }

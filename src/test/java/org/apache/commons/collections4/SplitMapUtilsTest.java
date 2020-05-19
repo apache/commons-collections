@@ -20,7 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -165,11 +166,9 @@ public class SplitMapUtilsTest {
     }
 
     private void attemptMapOperation(final String s, final Runnable r) {
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             r.run();
-            fail(s);
-        } catch (final UnsupportedOperationException e) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
-
 }

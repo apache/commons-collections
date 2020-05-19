@@ -18,7 +18,11 @@ package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.NullPredicate.*;
 import static org.apache.commons.collections4.functors.TruePredicate.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,13 +60,11 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         try {
             PredicateUtils.exceptionPredicate().evaluate(null);
         } catch (final FunctorException ex) {
-            try {
+            Exception exception = assertThrows(FunctorException.class, () -> {
                 PredicateUtils.exceptionPredicate().evaluate(cString);
-            } catch (final FunctorException ex2) {
-                return;
-            }
+            });
+            assertTrue(exception.getMessage().contains("ExceptionPredicate invoked"));
         }
-        fail();
     }
 
     // notNullPredicate
@@ -660,10 +662,10 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         final Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");
         assertFalse(PredicateUtils.transformedPredicate(t, p).evaluate(null));
         assertTrue(PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             PredicateUtils.transformedPredicate(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("transformer"));
     }
 
     // misc tests

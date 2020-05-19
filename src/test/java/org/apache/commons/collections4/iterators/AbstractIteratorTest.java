@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -107,13 +112,14 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeEmptyIterator();
 
         // hasNext() should return false
-        assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
+        assertFalse(it.hasNext());
 
         // next() should throw a NoSuchElementException
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (final NoSuchElementException e) {
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
         verify();
 
@@ -131,14 +137,10 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeObject();
 
         // hasNext() must be true (ensure makeFullIterator is correct!)
-        assertEquals("hasNext() should return true for at least one element", true, it.hasNext());
+        assertTrue(it.hasNext());
 
         // next() must not throw exception (ensure makeFullIterator is correct!)
-        try {
-            it.next();
-        } catch (final NoSuchElementException e) {
-            fail("Full iterators must have at least one element");
-        }
+        it.next();
 
         // iterate through
         while (it.hasNext()) {
@@ -147,10 +149,11 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         }
 
         // next() must throw NoSuchElementException now
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (final NoSuchElementException e) {
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
 
         assertNotNull(it.toString());
@@ -164,17 +167,22 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
         if (!supportsRemove()) {
             // check for UnsupportedOperationException if not supported
-            try {
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 it.remove();
-            } catch (final UnsupportedOperationException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertNotNull(exception.getMessage());
+            }
             return;
         }
 
         // should throw IllegalStateException before next() called
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
+        }
         verify();
 
         // remove after next should be fine
@@ -182,10 +190,12 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         it.remove();
 
         // should throw IllegalStateException for second remove()
-        try {
+        exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
+        }
     }
 
 }

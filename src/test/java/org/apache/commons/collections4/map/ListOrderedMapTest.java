@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -181,24 +186,25 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             final Object value = lom.get(key);
             assertEquals(value, lom.remove(i));
             list.remove(i);
-            assertEquals(false, lom.containsKey(key));
+            assertFalse(lom.containsKey(key));
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testPut_intObjectObject() {
         resetEmpty();
+        final ListOrderedMap<K, V> lom1 = getMap();
+
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            lom1.put(1, (K) "testInsert1", (V) "testInsert1v");
+        });
+        assertTrue(exception.getMessage().contains("Index: 1, Size: 0"));
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            lom1.put(-1, (K) "testInsert-1", (V) "testInsert-1v");
+        });
+        assertTrue(exception.getMessage().contains("Index: -1, Size: 0"));
+
         ListOrderedMap<K, V> lom = getMap();
-
-        try {
-            lom.put(1, (K) "testInsert1", (V) "testInsert1v");
-            fail("should not be able to insert at pos 1 in empty Map");
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.put(-1, (K) "testInsert-1", (V) "testInsert-1v");
-            fail("should not be able to insert at pos -1 in empty Map");
-        } catch (final IndexOutOfBoundsException ex) {}
-
         // put where key doesn't exist
         lom.put(0, (K) "testInsert1", (V) "testInsert1v");
         assertEquals("testInsert1v", lom.getValue(0));

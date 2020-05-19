@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -67,11 +73,13 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         super.testEmptyMapIterator();
 
         final OrderedMapIterator<K, V> it = makeEmptyIterator();
-        assertEquals(false, it.hasPrevious());
-        try {
+        assertFalse(it.hasPrevious());
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        });
+        if (null != exception.getMessage()) {
+            assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -89,24 +97,24 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         final OrderedMapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
 
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
         final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
             final K key = it.next();
             assertSame("it.next() should equals getKey()", key, it.getKey());
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Key must be unique", set.add(key));
+            assertTrue(map.containsKey(key));
+            assertTrue(set.add(key));
 
             // getValue
             final V value = it.getValue();
             if (!isGetStructuralModify()) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
-            assertTrue("Value must be in map",  map.containsValue(value));
+            assertTrue(map.containsValue(value));
 
-            assertEquals(true, it.hasPrevious());
+            assertTrue(it.hasPrevious());
 
             verify();
         }
@@ -114,17 +122,17 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
             // getKey
             final Object key = it.previous();
             assertSame("it.previous() should equals getKey()", key, it.getKey());
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Key must be unique", set.remove(key));
+            assertTrue(map.containsKey(key));
+            assertTrue(set.remove(key));
 
             // getValue
             final Object value = it.getValue();
             if (!isGetStructuralModify()) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
-            assertTrue("Value must be in map",  map.containsValue(value));
+            assertTrue(map.containsValue(value));
 
-            assertEquals(true, it.hasNext());
+            assertTrue(it.hasNext());
 
             verify();
         }
@@ -145,8 +153,8 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         assertEquals("keySet() not consistent", new ArrayList<>(map.keySet()), new ArrayList<>(map.keySet()));
 
         final Iterator<K> it2 = map.keySet().iterator();
-        assertEquals(true, it.hasNext());
-        assertEquals(true, it2.hasNext());
+        assertTrue(it.hasNext());
+        assertTrue(it2.hasNext());
         final List<K> list = new ArrayList<>();
         while (it.hasNext()) {
             final K key = it.next();

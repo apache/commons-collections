@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
@@ -93,29 +100,29 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         map.put((K) I1A, (V) I2A);
         assertEquals(1, map.size());
         assertSame(I2A, map.get(I1A));
-        assertSame(null, map.get(I1B));
-        assertEquals(true, map.containsKey(I1A));
-        assertEquals(false, map.containsKey(I1B));
-        assertEquals(true, map.containsValue(I2A));
-        assertEquals(false, map.containsValue(I2B));
+        assertNull(map.get(I1B));
+        assertTrue(map.containsKey(I1A));
+        assertFalse(map.containsKey(I1B));
+        assertTrue(map.containsValue(I2A));
+        assertFalse(map.containsValue(I2B));
 
         map.put((K) I1A, (V) I2B);
         assertEquals(1, map.size());
         assertSame(I2B, map.get(I1A));
-        assertSame(null, map.get(I1B));
-        assertEquals(true, map.containsKey(I1A));
-        assertEquals(false, map.containsKey(I1B));
-        assertEquals(false, map.containsValue(I2A));
-        assertEquals(true, map.containsValue(I2B));
+        assertNull(map.get(I1B));
+        assertTrue(map.containsKey(I1A));
+        assertFalse(map.containsKey(I1B));
+        assertFalse(map.containsValue(I2A));
+        assertTrue(map.containsValue(I2B));
 
         map.put((K) I1B, (V) I2B);
         assertEquals(2, map.size());
         assertSame(I2B, map.get(I1A));
         assertSame(I2B, map.get(I1B));
-        assertEquals(true, map.containsKey(I1A));
-        assertEquals(true, map.containsKey(I1B));
-        assertEquals(false, map.containsValue(I2A));
-        assertEquals(true, map.containsValue(I2B));
+        assertTrue(map.containsKey(I1A));
+        assertTrue(map.containsKey(I1B));
+        assertFalse(map.containsValue(I2A));
+        assertTrue(map.containsValue(I2B));
     }
 
     //-----------------------------------------------------------------------
@@ -131,34 +138,34 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         final Map.Entry<K, V> entry2 = it.next();
         final Map.Entry<K, V> entry3 = it.next();
 
-        assertEquals(true, entry1.equals(entry2));
-        assertEquals(true, entry2.equals(entry1));
-        assertEquals(false, entry1.equals(entry3));
+        assertTrue(entry1.equals(entry2));
+        assertTrue(entry2.equals(entry1));
+        assertFalse(entry1.equals(entry3));
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
-        assertEquals(null, getMap().get(null));
-        assertEquals(false, getMap().containsKey(null));
-        assertEquals(false, getMap().containsValue(null));
-        assertEquals(null, getMap().remove(null));
-        assertEquals(false, getMap().entrySet().contains(null));
-        assertEquals(false, getMap().keySet().contains(null));
-        assertEquals(false, getMap().values().contains(null));
-        try {
+        assertNull(getMap().get(null));
+        assertFalse(getMap().containsKey(null));
+        assertFalse(getMap().containsValue(null));
+        assertNull(getMap().remove(null));
+        assertFalse(getMap().entrySet().contains(null));
+        assertFalse(getMap().keySet().contains(null));
+        assertFalse(getMap().values().contains(null));
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             getMap().put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("key"));
+        exception = assertThrows(NullPointerException.class, () -> {
             getMap().put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("value"));
+        exception = assertThrows(NullPointerException.class, () -> {
             getMap().put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("key"));
     }
 
     //-----------------------------------------------------------------------

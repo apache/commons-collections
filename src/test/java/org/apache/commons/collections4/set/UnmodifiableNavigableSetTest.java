@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -97,10 +102,10 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         final NavigableSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableNavigableSet.unmodifiableNavigableSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     /**
@@ -108,48 +113,36 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
      */
     @SuppressWarnings("unchecked")
     public void verifyUnmodifiable(final Set<E> set) {
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.add((E) "value");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.addAll(new TreeSet<E>());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.remove("x");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull(c);
     }
 
     //-----------------------------------------------------------------------

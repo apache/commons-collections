@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Abstract tests that can be extended to test any Map.Entry implementation.
@@ -83,10 +87,10 @@ public abstract class AbstractMapEntryTest<K, V> {
 
         // check that null doesn't do anything funny
         entry = makeMapEntry(null, null);
-        assertTrue(entry.getKey() == null);
+        assertNull(entry.getKey());
 
         entry.setValue(null);
-        assertTrue(entry.getValue() == null);
+        assertNull(entry.getValue());
     }
 
     /**
@@ -105,15 +109,13 @@ public abstract class AbstractMapEntryTest<K, V> {
 
         final Map.Entry<K, V> entry = makeMapEntry();
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             entry.setValue((V) entry);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(entry.getKey() == null && entry.getValue() == null);
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot set value to this map entry"));
+        // expected to happen...
+        // check that the KVP's state has not changed
+        assertTrue(entry.getKey() == null && entry.getValue() == null);
     }
 
     /**
@@ -129,18 +131,18 @@ public abstract class AbstractMapEntryTest<K, V> {
         Map.Entry<K, V> e1 = makeMapEntry((K) key, (V) value);
         Map.Entry<K, V> e2 = makeKnownMapEntry((K) key, (V) value);
 
-        assertTrue(e1.equals(e1));
-        assertTrue(e2.equals(e1));
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e1);
+        assertEquals(e2, e1);
+        assertEquals(e1, e2);
         assertTrue(e1.hashCode() == e2.hashCode());
 
         // 2. test with nulls
         e1 = makeMapEntry();
         e2 = makeKnownMapEntry();
 
-        assertTrue(e1.equals(e1));
-        assertTrue(e2.equals(e1));
-        assertTrue(e1.equals(e2));
+        assertEquals(e1, e1);
+        assertEquals(e2, e1);
+        assertEquals(e1, e2);
         assertTrue(e1.hashCode() == e2.hashCode());
     }
 
@@ -148,11 +150,11 @@ public abstract class AbstractMapEntryTest<K, V> {
     @Test
     public void testToString() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
-        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
+        assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());
 
         // test with nulls
         entry = makeMapEntry();
-        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
+        assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());
     }
 
 }

@@ -17,6 +17,8 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
@@ -112,12 +114,10 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
     //-----------------------------------------------------------------------
     public void testNullConstructor(){
-        try{
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new NodeListIterator((Node) null);
-            fail("NullPointerException expected!");
-        }catch(final NullPointerException e){
-            // expected.
-        }
+        });
+        assertTrue(exception.getMessage().contains("node"));
     }
 
     /**

@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -102,29 +109,23 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     public void testConstructors() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             final Map<String, String> map = null;
             new PassiveExpiringMap<>(map);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             final ExpirationPolicy<String, String> policy = null;
             new PassiveExpiringMap<>(policy);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("expiringPolicy"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             final TimeUnit unit = null;
             new PassiveExpiringMap<String, String>(10L, unit);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertTrue(exception.getMessage().contains("timeUnit"));
     }
 
     public void testContainsKey() {
@@ -251,8 +252,8 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         try {
             Thread.sleep(2 * timeout);
-        } catch (final InterruptedException e) {
-            fail();
+        } catch (InterruptedException ex) {
+            //expected
         }
 
         assertNull(map.get("a"));

@@ -19,10 +19,10 @@ package org.apache.commons.collections4;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -56,19 +56,15 @@ public class SetUtilsTest {
         final Set<Integer> set2 = SetUtils.difference(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.difference(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.difference(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
     }
 
     @Test
@@ -86,19 +82,15 @@ public class SetUtilsTest {
         final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.disjunction(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.disjunction(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
     }
 
     @Test
@@ -116,19 +108,15 @@ public class SetUtilsTest {
         final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
         assertEquals(SetUtils.<Integer>emptySet(), set2);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.intersection(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.intersection(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
     }
 
     @Before
@@ -191,26 +179,26 @@ public class SetUtilsTest {
     @Test
     public void testHashSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
-        assertTrue("set is empty", set1.isEmpty());
+        assertTrue(set1.isEmpty());
 
         final Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
-        assertTrue("set contains 1", set2.contains(1));
-        assertTrue("set contains 2", set2.contains(2));
-        assertTrue("set contains 3", set2.contains(3));
+        assertTrue(set2.contains(1));
+        assertTrue(set2.contains(2));
+        assertTrue(set2.contains(3));
 
         final Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
-        assertTrue("set contains 1", set3.contains("1"));
-        assertTrue("set contains 2", set3.contains("2"));
-        assertTrue("set contains 3", set3.contains("3"));
+        assertTrue(set3.contains("1"));
+        assertTrue(set3.contains("2"));
+        assertTrue(set3.contains("3"));
 
         final Set<?> set4 = SetUtils.hashSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
-        assertTrue("set contains null", set4.contains(null));
+        assertTrue(set4.contains(null));
 
         final Set<?> set5 = SetUtils.hashSet((Object[]) null);
-        assertNull("set is null", set5);
+        assertNull(set5);
     }
 
     @Test
@@ -234,44 +222,41 @@ public class SetUtilsTest {
     public void testpredicatedSet() {
         final Predicate<Object> predicate = o -> o instanceof String;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
-        assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
-        try {
+        assertTrue(set instanceof PredicatedSet);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.predicatedSet(new HashSet<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.predicatedSet(null, predicate);
-            fail("Expecting NullPointerException for null set.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
     public void testUnmodifiableSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
-        assertTrue("set is empty", set1.isEmpty());
+        assertTrue(set1.isEmpty());
 
         final Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
-        assertTrue("set contains 1", set2.contains(1));
-        assertTrue("set contains 2", set2.contains(2));
-        assertTrue("set contains 3", set2.contains(3));
+        assertTrue(set2.contains(1));
+        assertTrue(set2.contains(2));
+        assertTrue(set2.contains(3));
 
         final Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
-        assertTrue("set contains 1", set3.contains("1"));
-        assertTrue("set contains 2", set3.contains("2"));
-        assertTrue("set contains 3", set3.contains("3"));
+        assertTrue(set3.contains("1"));
+        assertTrue(set3.contains("2"));
+        assertTrue(set3.contains("3"));
 
         final Set<?> set4 = SetUtils.unmodifiableSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
-        assertTrue("set contains null", set4.contains(null));
+        assertTrue( set4.contains(null));
 
         final Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
-        assertNull("set is null", set5);
+        assertNull(set5);
     }
 
     @Test
@@ -291,19 +276,15 @@ public class SetUtilsTest {
         final Set<Integer> set2 = SetUtils.union(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.union(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("setB"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             SetUtils.union(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("setA"));
     }
 
 }

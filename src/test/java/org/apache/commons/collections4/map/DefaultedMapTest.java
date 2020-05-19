@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,14 +59,14 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> map = new DefaultedMap<>((V) "NULL");
 
         assertEquals(0, map.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -72,15 +77,15 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -91,15 +96,15 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -115,16 +120,16 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }
@@ -132,40 +137,30 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE");
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             DefaultedMap.defaultedMap(base, (Factory<V>) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Factory must not be null"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             DefaultedMap.defaultedMap(base, (Transformer<K, V>) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Transformer must not be null"));
     }
 
     @Override

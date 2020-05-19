@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
 /**
@@ -139,36 +143,28 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         final AbstractLinkedList<E> list = getCollection();
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.getNode(0, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index (0) is the size of the list."));
         list.addAll( Arrays.asList((E[]) new String[]{"value1", "value2"}));
         checkNodes();
         list.addFirst((E) "value0");
         checkNodes();
         list.removeNode(list.getNode(1, false));
         checkNodes();
-        try {
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.getNode(2, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index"));
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.getNode(-1, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index"));
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.getNode(3, true);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index"));
     }
 
     protected void checkNodes() {

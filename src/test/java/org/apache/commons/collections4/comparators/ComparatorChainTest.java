@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -67,11 +70,10 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("ComparatorChains must contain at least one Comparator"));
     }
 
     @Test
@@ -92,11 +94,10 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("ComparatorChains must contain at least one Comparator"));
     }
 
     @Test

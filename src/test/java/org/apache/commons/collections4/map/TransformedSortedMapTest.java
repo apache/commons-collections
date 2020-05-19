@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -69,31 +73,34 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
     public void testTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
-        SortedMap<K, V> map = TransformedSortedMap
+        final SortedMap<K, V> map1 = TransformedSortedMap
                 .transformingSortedMap(
                         new TreeMap<K, V>(),
                         (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                         null);
-        assertEquals(0, map.size());
+        assertEquals(0, map1.size());
         for (int i = 0; i < els.length; i++) {
-            map.put((K) els[i], (V) els[i]);
-            assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
-            try {
-                map.containsKey(els[i]);
-                fail();
-            } catch (final ClassCastException ex) {}
-            assertEquals(true, map.containsValue(els[i]));
-            assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
+            map1.put((K) els[i], (V) els[i]);
+            assertEquals(i + 1, map1.size());
+            assertTrue(map1.containsKey(Integer.valueOf((String) els[i])));
+            final Object key = els[i];
+            Exception exception = assertThrows(ClassCastException.class, () -> {
+                map1.containsKey(key);
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("cannot be cast to"));
+            }
+            assertTrue(map1.containsValue(els[i]));
+            assertEquals(els[i], map1.get(Integer.valueOf((String) els[i])));
         }
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             map.remove(els[0]);
-            fail();
-        } catch (final ClassCastException ex) {}
-        assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
+        });
+        assertNull(exception.getMessage());
+        assertEquals(els[0], map1.remove(Integer.valueOf((String) els[0])));
 
-        map = TransformedSortedMap
+        SortedMap<K, V>  map = TransformedSortedMap
                 .transformingSortedMap(
                         new TreeMap<K, V>(),
                         null,

@@ -19,10 +19,10 @@ package org.apache.commons.collections4;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -50,13 +50,11 @@ public class FactoryUtilsTest {
         try {
             FactoryUtils.exceptionFactory().create();
         } catch (final FunctorException ex) {
-            try {
+            Exception exception = assertThrows(FunctorException.class, () -> {
                 FactoryUtils.exceptionFactory().create();
-            } catch (final FunctorException ex2) {
-                return;
-            }
+            });
+            assertTrue(exception.getMessage().contains("ExceptionFactory invoked"));
         }
-        fail();
     }
 
     // nullFactory
@@ -139,18 +137,15 @@ public class FactoryUtilsTest {
             assertTrue(ex.getCause() instanceof IOException);
             return;
         }
-        fail();
     }
 
     @Test
     public void testPrototypeFactoryPublicBad() {
         final Object proto = new Object();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             FactoryUtils.prototypeFactory(proto);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The prototype must be cloneable via a public clone method"));
     }
 
     public static class Mock1 {

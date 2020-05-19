@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -119,10 +126,9 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         boolean r = getCollection().addAll(Arrays.asList(elements));
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
-        assertTrue("Empty collection should change after addAll", r);
+        assertTrue(r);
         for (final E element : elements) {
-            assertTrue("Collection should contain added element",
-                    getCollection().contains(element));
+            assertTrue(getCollection().contains(element));
         }
 
         resetFull();
@@ -131,10 +137,9 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         r = getCollection().addAll(Arrays.asList(elements));
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
-        assertTrue("Full collection should change after addAll", r);
+        assertTrue(r);
         for (int i = 0; i < elements.length; i++) {
-            assertTrue("Full collection should contain added element " + i,
-                    getCollection().contains(elements[i]));
+            assertTrue(getCollection().contains(elements[i]));
         }
         assertEquals("Size should increase after addAll",
                 size + elements.length, getCollection().size());
@@ -334,10 +339,10 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         resetFull();
         final ListIterator<E> it = getCollection().listIterator();
         it.next();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             it.set(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("ListIterator does not support set"));
     }
 
     @Override
@@ -463,8 +468,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testSetDownwardsInList() {
         /*
          * Checks the following semantics
-         * [a,b]
-         * set(0,b): [b]->a
+         * [a, b]
+         * set (0, b) : [b] -> a
          * So UniqList contains [b] and a is returned
          */
         final ArrayList<E> l = new ArrayList<>();
@@ -491,9 +496,9 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testSetInBiggerList() {
         /*
          * Checks the following semantics
-         * [a,b,c]
-         * set(0,b): [b,c]->a
-         * So UniqList contains [b,c] and a is returned
+         * [a, b, c]
+         * set (0, b) : [b, c] -> a
+         * So UniqList contains [b, c] and a is returned
          */
         final ArrayList<E> l = new ArrayList<>();
         final HashSet<E> s = new HashSet<>();
@@ -562,12 +567,10 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testSubListIsUnmodifiable() {
         resetFull();
         final List<E> subList = getCollection().subList(1, 3);
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             subList.remove(0);
-            fail("subList should be unmodifiable");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")

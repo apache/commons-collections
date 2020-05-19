@@ -16,13 +16,17 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests the LoopingListIterator class.
@@ -35,11 +39,10 @@ public class LoopingListIteratorTest {
      */
     @Test
     public void testConstructorEx() throws Exception {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new LoopingListIterator<>(null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     /**
@@ -52,17 +55,15 @@ public class LoopingListIteratorTest {
         assertFalse(loop.hasNext());
         assertFalse(loop.hasPrevious());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             loop.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("There are no elements for this iterator to loop on"));
 
-        try {
+        exception = assertThrows(NoSuchElementException.class, () -> {
             loop.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("There are no elements for this iterator to loop on"));
     }
 
     /**
@@ -189,11 +190,10 @@ public class LoopingListIteratorTest {
         assertEquals(0, list.size());
 
         assertFalse(loop.hasNext());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             loop.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("There are no elements for this iterator to loop on"));
     }
 
     /**
@@ -220,11 +220,10 @@ public class LoopingListIteratorTest {
         assertEquals(0, list.size());
 
         assertFalse(loop.hasPrevious());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             loop.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("There are no elements for this iterator to loop on"));
     }
 
     /**

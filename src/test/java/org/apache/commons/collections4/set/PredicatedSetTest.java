@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,20 +67,18 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
-        assertTrue("returned set should not be null", set.decorated() != null);
+        assertTrue(set.decorated() != null);
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
         final Integer i = Integer.valueOf(3);
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             set.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element", !set.contains(i));
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object '3'"));
+        assertTrue(!set.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -88,16 +89,14 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             set.addAll(elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Set shouldn't contain illegal element", !set.contains("one"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("two"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains(Integer.valueOf(3)));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("four"));
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object '3'"));
+        assertTrue(!set.contains("one"));
+        assertTrue(!set.contains("two"));
+        assertTrue(!set.contains(Integer.valueOf(3)));
+        assertTrue(!set.contains("four"));
     }
 
     @Override

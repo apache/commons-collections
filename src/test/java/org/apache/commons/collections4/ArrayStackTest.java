@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.EmptyStackException;
 
 import junit.framework.Test;
@@ -46,20 +49,15 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", 0, stack.size());
 
-        try {
+        Exception exception = assertThrows(EmptyStackException.class, () -> {
             stack.peek();
-            fail("peek() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
+        });
+        assertNull(exception.getMessage());
 
-        try {
+        exception = assertThrows(EmptyStackException.class, () -> {
             stack.pop();
-            fail("pop() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
-
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")

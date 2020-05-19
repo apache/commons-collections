@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
@@ -69,12 +68,10 @@ public class MapUtilsTest {
         final Predicate<Object> p = getPredicate();
         final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertTrue(map instanceof PredicatedMap);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.predicatedMap(null, p, p);
-            fail("Expecting NullPointerException for null map.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
     @Test
@@ -82,33 +79,28 @@ public class MapUtilsTest {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertTrue(map instanceof LazyMap);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null);
-            fail("Expecting NullPointerException for null factory");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("factory"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.lazyMap((Map<Object, Object>) null, factory);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
+
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
         map = MapUtils.lazyMap(new HashMap<>(), transformer);
         assertTrue(map instanceof LazyMap);
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null);
-            fail("Expecting NullPointerException for null transformer");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("factory"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.lazyMap((Map<Object, Object>) null, transformer);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
     @Test
@@ -176,14 +168,15 @@ public class MapUtilsTest {
 
     @Test
     public void testPutAll_Map_array() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.putAll(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("map"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.putAll(null, new Object[0]);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
 
         Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), new String[0]);
         assertEquals(0, test.size());
@@ -202,32 +195,32 @@ public class MapUtilsTest {
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
                 {"RED", "#FF0000"},
                 null,
                 {"BLUE", "#0000FF"}
             });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("Invalid array element: 1"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
                 {"RED", "#FF0000"},
                 {"GREEN"},
                 {"BLUE", "#0000FF"}
             });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("Invalid array element: 1"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
                 {"RED", "#FF0000"},
                 {},
                 {"BLUE", "#0000FF"}
             });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("Invalid array element: 1"));
 
         // flat array
         test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
@@ -333,11 +326,7 @@ public class MapUtilsTest {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
-        try {
-            MapUtils.debugPrint(outPrint, "Print Map", outer);
-        } catch (final ClassCastException e) {
-            fail("No Casting should be occurring!");
-        }
+        MapUtils.debugPrint(outPrint, "Print Map", outer);
     }
 
     @Test
@@ -436,20 +425,18 @@ public class MapUtilsTest {
 
     @Test
     public void testVerbosePrintNullStream() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.verbosePrint(null, "Map", new HashMap<>());
-            fail("Should generate NullPointerException");
-        } catch (final NullPointerException expected) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
     public void testDebugPrintNullStream() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.debugPrint(null, "Map", new HashMap<>());
-            fail("Should generate NullPointerException");
-        } catch (final NullPointerException expected) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
@@ -874,11 +861,11 @@ public class MapUtilsTest {
 
     @Test
     public void testIterableMap() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.iterableMap(null);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException e) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("map"));
+
         final HashMap<String, String> map = new HashMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");
@@ -892,11 +879,11 @@ public class MapUtilsTest {
 
     @Test
     public void testIterableSortedMap() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.iterableSortedMap(null);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException e) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("sortedMap"));
+
         final TreeMap<String, String> map = new TreeMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");

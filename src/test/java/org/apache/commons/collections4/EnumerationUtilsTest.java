@@ -17,9 +17,10 @@
 package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -50,13 +51,13 @@ public class EnumerationUtilsTest {
         en = vector.elements();
         assertEquals("one", EnumerationUtils.get(en, 1));
 
+        final Enumeration<String> enumeration = vector.elements();
         // Enumerator, non-existent entry
-        try {
-            EnumerationUtils.get(en, 3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            EnumerationUtils.get(enumeration, 3);
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("Entry does not exist: 1"));
         assertTrue(!en.hasMoreElements());
     }
 
@@ -76,12 +77,10 @@ public class EnumerationUtilsTest {
 
     @Test
     public void testAsIterableForNull() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             EnumerationUtils.asIterable((Enumeration) null).iterator().next();
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test

@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -106,12 +112,10 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
         assertNull(it.peek());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.element();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
@@ -123,12 +127,10 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertTrue(it.hasNext());
         assertEquals("b", it.peek());
 
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("peek() or element() called before remove()"));
     }
 
     private void validate(final Iterator<E> iter, final E... items) {

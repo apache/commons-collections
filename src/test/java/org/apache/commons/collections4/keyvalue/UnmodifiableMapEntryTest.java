@@ -16,13 +16,16 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertSame;
+
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 /**
  * Test the UnmodifiableMapEntry class.
@@ -103,10 +106,10 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @Test
     public void testUnmodifiable() {
         final Map.Entry<K, V> entry = makeMapEntry();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             entry.setValue(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("setValue() is not supported"));
     }
 
 }

@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -85,74 +90,54 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         final List<E> list = makeObject();
         assertSame(list, UnmodifiableList.unmodifiableList(list));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableList.unmodifiableList(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @SuppressWarnings("unchecked")
     protected void verifyUnmodifiable(final List<E> list) {
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.add(0, (E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.add((E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.addAll(0, array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.addAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.remove(0);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.remove(Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             list.set(0, (E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     /**
@@ -161,13 +146,11 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     public void testUnmodifiableIterator() {
         setupList();
         final Iterator<E> iterator = list.iterator();
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             iterator.next();
             iterator.remove();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
     }
 
     //-----------------------------------------------------------------------

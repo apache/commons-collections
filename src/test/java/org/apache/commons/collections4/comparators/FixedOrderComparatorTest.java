@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -143,39 +146,33 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertFalse(comparator.isLocked());
         comparator.compare("New York", "Tokyo");
         assertTrue(comparator.isLocked());
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             comparator.add("Minneapolis");
-            fail("Should have thrown an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // success -- ignore
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot modify a FixedOrderComparator after a comparison"));
 
-        try {
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             comparator.addAsEqual("New York", "Minneapolis");
-            fail("Should have thrown an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // success -- ignore
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot modify a FixedOrderComparator after a comparison"));
     }
 
     @Test
     public void testUnknownObjectBehavior() {
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
-        try {
-            comparator.compare("New York", "Minneapolis");
-            fail("Should have thrown a IllegalArgumentException");
-        } catch (final IllegalArgumentException e) {
-            // success-- ignore
-        }
-        try {
-            comparator.compare("Minneapolis", "New York");
-            fail("Should have thrown a IllegalArgumentException");
-        } catch (final IllegalArgumentException e) {
-            // success-- ignore
-        }
-        assertEquals(FixedOrderComparator.UnknownObjectBehavior.EXCEPTION, comparator.getUnknownObjectBehavior());
+        final FixedOrderComparator<String> fixedOrderComparator = new FixedOrderComparator<>(topCities);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            fixedOrderComparator.compare("New York", "Minneapolis");
+        });
+        assertTrue(exception.getMessage().contains("Attempting to compare unknown object Minneapolis"));
 
-        comparator = new FixedOrderComparator<>(topCities);
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            fixedOrderComparator.compare("Minneapolis", "New York");
+        });
+        assertTrue(exception.getMessage().contains("Attempting to compare unknown object Minneapolis"));
+
+        assertEquals(FixedOrderComparator.UnknownObjectBehavior.EXCEPTION, fixedOrderComparator.getUnknownObjectBehavior());
+
+        FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
         comparator.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.BEFORE);
         assertEquals(FixedOrderComparator.UnknownObjectBehavior.BEFORE, comparator.getUnknownObjectBehavior());
         LinkedList<String> keys = new LinkedList<>(Arrays.asList(topCities));

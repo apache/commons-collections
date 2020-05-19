@@ -21,8 +21,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,12 +122,10 @@ public class FluentIterableTest {
         assertTrue(result.isEmpty());
 
         final Iterable<Integer> it = null;
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(it).toList();
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterable"));
     }
 
     @Test
@@ -164,12 +163,10 @@ public class FluentIterableTest {
         Collections.sort(combinedList);
         assertEquals(combinedList, result);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableOdd).collate(null).toList();
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterable"));
     }
 
     @Test
@@ -202,12 +199,10 @@ public class FluentIterableTest {
         result = FluentIterable.of(emptyIterable).filter(smallerThan3).toList();
         assertEquals(0, result.size());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableA).filter(null).toList();
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -222,12 +217,10 @@ public class FluentIterableTest {
         }
         assertEquals(expectedSum, sum.get());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableA).forEach((Closure<Integer>) null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("closure"));
     }
 
     @Test
@@ -250,12 +243,10 @@ public class FluentIterableTest {
         result = FluentIterable.of(emptyIterable).limit(3).toList();
         assertEquals(0, result.size());
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             FluentIterable.of(iterableA).limit(-2).toList();
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("MaxSize parameter must not be negative."));
     }
 
     @Test
@@ -290,12 +281,10 @@ public class FluentIterableTest {
         result = FluentIterable.of(emptyIterable).skip(3).toList();
         assertEquals(0, result.size());
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             FluentIterable.of(iterableA).skip(-4).toList();
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("ElementsToSkip parameter must not be negative"));
     }
 
     @Test
@@ -309,12 +298,10 @@ public class FluentIterableTest {
         result = FluentIterable.of(emptyIterable).transform(squared).toList();
         assertEquals(0, result.size());
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableA).transform(null).toList();
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("transformer"));
     }
 
     @Test
@@ -333,12 +320,10 @@ public class FluentIterableTest {
         final FluentIterable<Integer> iterable1 = FluentIterable.of(iterableA).unmodifiable();
         final Iterator<Integer> it = iterable1.iterator();
         assertEquals(1, it.next().intValue());
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             it.remove();
-            fail("expecting UnsupportedOperationException");
-        } catch (final UnsupportedOperationException ise) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("remove() is not supported"));
 
         // calling unmodifiable on an already unmodifiable iterable shall return the same instance
         final FluentIterable<Integer> iterable2 = iterable1.unmodifiable();
@@ -355,12 +340,10 @@ public class FluentIterableTest {
         Collections.sort(combinedList);
         assertEquals(combinedList, result);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList();
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("iterable"));
 
         result = FluentIterable
                     .of(Arrays.asList(1, 4, 7))
@@ -386,12 +369,10 @@ public class FluentIterableTest {
         assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
         assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableEven).allMatch(null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -400,12 +381,10 @@ public class FluentIterableTest {
         assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
         assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableEven).anyMatch(null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -464,12 +443,10 @@ public class FluentIterableTest {
         assertEquals(expected.size(), result.size());
         assertEquals(expected, result);
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             FluentIterable.of(iterableA).copyInto(null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     @Test
@@ -485,18 +462,18 @@ public class FluentIterableTest {
     public void get() {
         assertEquals(2, FluentIterable.of(iterableEven).get(0).intValue());
 
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             FluentIterable.of(iterableEven).get(-1);
-            fail("expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioe) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Index cannot be negative: -1"));
 
-        try {
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             FluentIterable.of(iterableEven).get(IterableUtils.size(iterableEven));
-            fail("expecting IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException ioe) {
-            // expected
+        });
+        if (null == exception.getMessage()) {
+            assertNull(exception.getMessage());
+        } else {
+            assertTrue(exception.getMessage().contains("6"));
         }
     }
 

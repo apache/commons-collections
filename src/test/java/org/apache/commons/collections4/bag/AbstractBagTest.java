@@ -34,6 +34,9 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.
@@ -383,12 +386,10 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         final Iterator<T> it = bag.iterator();
         it.next();
         bag.remove("A");
-        try {
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
             it.next();
-            fail("Should throw ConcurrentModificationException");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -405,12 +406,10 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         it.next();
         it.next();
         it.next();
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail("Should throw NoSuchElementException");
-        } catch (final NoSuchElementException ex) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -429,12 +428,10 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(3, bag.size());
         it.remove();
         assertEquals(2, bag.size());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail("Should throw IllegalStateException");
-        } catch (final IllegalStateException ex) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
         assertEquals(2, bag.size());
         it.next();
         it.remove();

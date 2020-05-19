@@ -18,9 +18,9 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,22 +43,20 @@ public class MultiMapUtilsTest {
     public void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
         assertTrue(map.isEmpty());
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             map.put("key", "value");
-            fail("Should throw UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test
     public void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             map.put("key", "value");
-            fail("Should throw UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Test

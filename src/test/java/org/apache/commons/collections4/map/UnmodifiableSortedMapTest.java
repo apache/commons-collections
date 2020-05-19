@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -73,10 +76,10 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         final SortedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedMap.unmodifiableSortedMap(map));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableSortedMap.unmodifiableSortedMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
     //-----------------------------------------------------------------------

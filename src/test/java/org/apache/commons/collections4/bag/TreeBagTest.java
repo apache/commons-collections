@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.Bag;
@@ -56,33 +59,28 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
     public void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             bag.add(new Object());
-            fail("IllegalArgumentException expected");
-        } catch(final IllegalArgumentException iae) {
-            // expected;
-        }
+        });
+        assertTrue(exception.getMessage().contains(
+                "Objects of type class java.lang.Object cannot be added to a naturally ordered TreeBag as it does not implement Comparable"));
     }
 
     public void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             bag.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+        });
+        assertTrue(exception.getMessage().contains("object"));
 
         final Bag<String> bag2 = new TreeBag<>(String::compareTo);
-        try {
-            // jdk bug: adding null to an empty TreeMap works
-            // thus ensure that the bag is not empty before adding null
+        // jdk bug: adding null to an empty TreeMap works
+        // thus ensure that the bag is not empty before adding null
+        exception = assertThrows(NullPointerException.class, () -> {
             bag2.add("a");
             bag2.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testOrdering() {

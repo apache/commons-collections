@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -71,8 +76,7 @@ public class ListOrderedSetTest<E>
         }
 
         for (int i = 0; i < 10; i += 2) {
-            assertTrue("Must be able to remove int",
-                       set.remove(Integer.toString(i)));
+            assertTrue(set.remove(Integer.toString(i)));
         }
 
         it = set.iterator();
@@ -249,31 +253,26 @@ public class ListOrderedSetTest<E>
     }
 
     public void testDecorator() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             ListOrderedSet.listOrderedSet((List<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("list"));
+        exception = assertThrows(NullPointerException.class, () -> {
             ListOrderedSet.listOrderedSet((Set<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("collection"));
+        exception = assertThrows(NullPointerException.class, () -> {
             ListOrderedSet.listOrderedSet(null, null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("set"));
+        exception = assertThrows(NullPointerException.class, () -> {
             ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("list"));
+        exception = assertThrows(NullPointerException.class, () -> {
             ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("set"));
     }
 
     @Override

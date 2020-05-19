@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -129,12 +133,10 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
         final HashSet<E> three = new HashSet<>();
         three.add((E) "1");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             set.addComposited(three);
-            fail("IllegalArgumentException should have been thrown");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Attempt to add illegal entry unresolved by SetMutator.resolveCollision()"));
     }
 
     @SuppressWarnings("unchecked")
@@ -159,12 +161,10 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final CompositeSet<E> set5 = new CompositeSet<>(set3);
         set5.addComposited(set4);
         assertTrue(set.equals(set5));
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             set.addComposited(set3);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Collision adding composited set with no SetMutator set"));
     }
 
     @SuppressWarnings("unchecked")
@@ -176,18 +176,14 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final HashSet<E> set2 = new HashSet<>();
         set2.add((E) "4");
         final CompositeSet<E> set3 = new CompositeSet<>(set1);
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             set3.addComposited(set1, buildOne());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Collision adding composited set with no SetMutator set"));
+        exception = assertThrows(UnsupportedOperationException.class, () -> {
             set3.addComposited(set1, buildOne(), buildTwo());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Collision adding composited set with no SetMutator set"));
     }
 
     @Override

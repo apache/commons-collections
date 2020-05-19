@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -59,31 +62,25 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();
-        assertTrue("returned entryset should not be null",
-            map.entrySet() != null);
+        assertTrue(map.entrySet() != null);
         map = decorateMap(new HashMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertTrue("returned entryset should contain one entry",
-            map.entrySet().size() == 1);
+        assertTrue(map.entrySet().size() == 1);
         map = decorateMap(map, null, null);
     }
 
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) "Hi", (V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.put((K) Integer.valueOf(3), (V) "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add key - Predicate rejected it"));
 
         assertTrue(!map.containsKey(Integer.valueOf(3)));
         assertTrue(!map.containsValue(Integer.valueOf(3)));
@@ -94,26 +91,22 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map2.put((K) "C", (V) "c");
         map2.put((K) "c", (V) Integer.valueOf(3));
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot add value - Predicate rejected it"));
 
         map.put((K) "E", (V) "e");
-        Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-        try {
+        final Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             final Map.Entry<K, V> entry = iterator.next();
             entry.setValue((V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Cannot set value - Predicate rejected it"));
 
         map.put((K) "F", (V) "f");
-        iterator = map.entrySet().iterator();
-        final Map.Entry<K, V> entry = iterator.next();
+        Iterator<Map.Entry<K, V>> iterator2 = map.entrySet().iterator();
+        final Map.Entry<K, V> entry = iterator2.next();
         entry.setValue((V) "x");
 
     }

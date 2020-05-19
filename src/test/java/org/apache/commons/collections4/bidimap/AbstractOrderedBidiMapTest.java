@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -45,28 +49,36 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     //-----------------------------------------------------------------------
     public void testFirstKey() {
         resetEmpty();
-        OrderedBidiMap<K, V> bidi = getMap();
-        try {
-            bidi.firstKey();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        final OrderedBidiMap<K, V> bidiMap = getMap();
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
+            bidiMap.firstKey();
+        });
+        if (null == exception.getMessage()) {
+            assertNull(exception.getMessage());
+        } else {
+            assertTrue(exception.getMessage().contains("Map is empty"));
+        }
 
         resetFull();
-        bidi = getMap();
+        OrderedBidiMap<K, V> bidi = getMap();
         final K confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, bidi.firstKey());
     }
 
     public void testLastKey() {
         resetEmpty();
-        OrderedBidiMap<K, V> bidi = getMap();
-        try {
-            bidi.lastKey();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        final OrderedBidiMap<K, V> bidiMap = getMap();
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
+            bidiMap.lastKey();
+        });
+        if (null == exception.getMessage()) {
+            assertNull(exception.getMessage());
+        } else {
+            assertTrue(exception.getMessage().contains("Map is empty"));
+        }
 
         resetFull();
-        bidi = getMap();
+        OrderedBidiMap<K, V> bidi = getMap();
         K confirmedLast = null;
         for (final Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
@@ -81,10 +93,10 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         assertEquals(null, bidi.nextKey(getOtherKeys()[0]));
         if (!isAllowNullKey()) {
             try {
-                assertEquals(null, bidi.nextKey(null)); // this is allowed too
+                assertNull(bidi.nextKey(null)); // this is allowed too
             } catch (final NullPointerException ex) {}
         } else {
-            assertEquals(null, bidi.nextKey(null));
+            assertNull(bidi.nextKey(null));
         }
 
         resetFull();
@@ -96,15 +108,20 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             assertEquals(confirmedObject, bidi.nextKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
-        assertEquals(null, bidi.nextKey(confirmedLast));
+        assertNull(bidi.nextKey(confirmedLast));
 
+        final OrderedBidiMap<K, V> bidiMap = (OrderedBidiMap<K, V>) map;
         if (!isAllowNullKey()) {
-            try {
-                bidi.nextKey(null);
-                fail();
-            } catch (final NullPointerException ex) {}
+            Exception exception = assertThrows(NullPointerException.class, () -> {
+                bidiMap.nextKey(null);
+            });
+            if (null == exception.getMessage()) {
+                assertNull(exception.getMessage());
+            } else {
+                assertTrue(exception.getMessage().contains("key"));
+            }
         } else {
-            assertEquals(null, bidi.nextKey(null));
+            assertNull(bidiMap.nextKey(null));
         }
     }
 
@@ -114,10 +131,10 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         assertEquals(null, bidi.previousKey(getOtherKeys()[0]));
         if (!isAllowNullKey()) {
             try {
-                assertEquals(null, bidi.previousKey(null)); // this is allowed too
+                assertNull(bidi.previousKey(null)); // this is allowed too
             } catch (final NullPointerException ex) {}
         } else {
-            assertEquals(null, bidi.previousKey(null));
+            assertNull(bidi.previousKey(null));
         }
 
         resetFull();
@@ -131,15 +148,20 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             assertEquals(confirmedObject, bidi.previousKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
-        assertEquals(null, bidi.previousKey(confirmedLast));
+        assertNull(bidi.previousKey(confirmedLast));
 
+        final OrderedBidiMap<K, V> bidiMap = getMap();
         if (!isAllowNullKey()) {
-            try {
-                bidi.previousKey(null);
-                fail();
-            } catch (final NullPointerException ex) {}
+            Exception exception = assertThrows(NullPointerException.class, () -> {
+                bidiMap.previousKey(null);
+            });
+            if (null == exception.getMessage()) {
+                assertNull(exception.getMessage());
+            } else {
+                assertTrue(exception.getMessage().contains("key"));
+            }
         } else {
-            assertEquals(null, bidi.previousKey(null));
+            assertNull(bidiMap.previousKey(null));
         }
     }
 

@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+
 
 /**
  * Test the DefaultKeyValue class.
@@ -66,10 +71,10 @@ public class DefaultKeyValueTest<K, V> {
 
         // check that null doesn't do anything funny
         kv.setKey(null);
-        assertTrue(kv.getKey() == null);
+        assertNull(kv.getKey());
 
         kv.setValue(null);
-        assertTrue(kv.getValue() == null);
+        assertNull(kv.getValue());
 
     }
 
@@ -82,25 +87,23 @@ public class DefaultKeyValueTest<K, V> {
 
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             kv.setKey((K) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
+        });
+        assertTrue(exception.getMessage().contains("DefaultKeyValue may not contain itself as a key."));
+        // expected to happen...
 
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
 
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             kv.setValue((V) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
+        });
+        assertTrue(exception.getMessage().contains("DefaultKeyValue may not contain itself as a value."));
+        // expected to happen...
 
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
     }
 
     /**
@@ -148,16 +151,16 @@ public class DefaultKeyValueTest<K, V> {
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         DefaultKeyValue<K, V> kv2 = makeDefaultKeyValue((K) key, (V) value);
 
-        assertTrue(kv.equals(kv));
-        assertTrue(kv.equals(kv2));
+        assertEquals(kv, kv);
+        assertEquals(kv, kv2);
         assertTrue(kv.hashCode() == kv2.hashCode());
 
         // 2. test with nulls
         kv = makeDefaultKeyValue(null, null);
         kv2 = makeDefaultKeyValue(null, null);
 
-        assertTrue(kv.equals(kv));
-        assertTrue(kv.equals(kv2));
+        assertEquals(kv, kv);
+        assertEquals(kv, kv2);
         assertTrue(kv.hashCode() == kv2.hashCode());
     }
 
@@ -181,7 +184,7 @@ public class DefaultKeyValueTest<K, V> {
         map.put(kv.getKey(), kv.getValue());
         final Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
-        assertTrue(entry.equals(kv.toMapEntry()));
+        assertEquals(entry, kv.toMapEntry());
         assertTrue(entry.hashCode() == kv.hashCode());
     }
 

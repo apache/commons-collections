@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -206,45 +210,43 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             newValue,
             map.get(key));
 
-        assertNull(
-            "Modifying entrySet did not affect inverse Map.",
-            map.getKey(oldValue));
+        assertNull(map.getKey(oldValue));
     }
 
     //-----------------------------------------------------------------------
     public void testBidiClear() {
         if (!isRemoveSupported()) {
-            try {
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 makeFullMap().clear();
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            });
+            assertNull(exception.getMessage());
             return;
         }
 
         BidiMap<?, ?> map = makeFullMap();
         map.clear();
-        assertTrue("Map was not cleared.", map.isEmpty());
-        assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
+        assertTrue(map.isEmpty());
+        assertTrue(map.inverseBidiMap().isEmpty());
 
         // Tests clear on inverse
         map = makeFullMap().inverseBidiMap();
         map.clear();
-        assertTrue("Map was not cleared.", map.isEmpty());
-        assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
+        assertTrue(map.isEmpty());
+        assertTrue(map.inverseBidiMap().isEmpty());
 
     }
 
     //-----------------------------------------------------------------------
     public void testBidiRemove() {
         if (!isRemoveSupported()) {
-            try {
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 makeFullMap().remove(getSampleKeys()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
-            try {
+            });
+            assertNull(exception.getMessage());
+            exception = assertThrows(UnsupportedOperationException.class, () -> {
                 makeFullMap().removeValue(getSampleValues()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            });
+            assertNull(exception.getMessage());
             return;
         }
 
@@ -260,13 +262,13 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     private void remove(final BidiMap<?, ?> map, final Object key) {
         final Object value = map.remove(key);
         assertFalse("Key was not removed.", map.containsKey(key));
-        assertNull("Value was not removed.", map.getKey(value));
+        assertNull(map.getKey(value));
     }
 
     private void removeValue(final BidiMap<?, ?> map, final Object value) {
         final Object key = map.removeValue(value);
         assertFalse("Key was not removed.", map.containsKey(key));
-        assertNull("Value was not removed.", map.getKey(value));
+        assertNull(map.getKey(value));
     }
 
     //-----------------------------------------------------------------------
@@ -537,10 +539,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         final K key1 = it.next();
 
         if (!isSetValueSupported()) {
-            try {
+            Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
                 it.setValue(newValue1);
-                fail();
-            } catch (final UnsupportedOperationException ex) {
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("setValue() is not supported"));
             }
             return;
         }
@@ -575,12 +578,14 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
         // at this point
         // key1=newValue1, key2=newValue2
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             it.setValue(newValue1);  // should remove key1
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            return;  // simplest way of dealing with tricky situation
+        });
+        if (null != exception.getMessage()) {
+            assertTrue(exception.getMessage().contains("Cannot use setValue() when the object being set is already in the map")); // simplest way of dealing with tricky situation
+            return;
         }
+
         confirmed.put(key2, newValue1);
         AbstractBidiMapTest.this.getConfirmed().remove(key1);
         assertEquals(newValue1, it.getValue());

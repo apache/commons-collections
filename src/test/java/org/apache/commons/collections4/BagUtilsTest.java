@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bag.PredicatedBag;
@@ -45,27 +47,23 @@ public class BagUtilsTest {
     @Test
     public void testSynchronizedBag() {
         final Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<>());
-        assertTrue("Returned object should be a SynchronizedBag.",
-            bag instanceof SynchronizedBag);
-        try {
+        assertTrue(bag instanceof SynchronizedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.synchronizedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
     }
 
     @Test
     public void testUnmodifiableBag() {
         final Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<>());
-        assertTrue("Returned object should be an UnmodifiableBag.",
-            bag instanceof UnmodifiableBag);
-        try {
+        assertTrue(bag instanceof UnmodifiableBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.unmodifiableBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
 
         assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
     }
@@ -73,65 +71,57 @@ public class BagUtilsTest {
     @Test
     public void testPredicatedBag() {
         final Bag<Object> bag = BagUtils.predicatedBag(new HashBag<>(), truePredicate);
-        assertTrue("Returned object should be a PredicatedBag.",
-            bag instanceof PredicatedBag);
-        try {
+        assertTrue(bag instanceof PredicatedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.predicatedBag(null, truePredicate);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.predicatedBag(new HashBag<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("predicate"));
     }
 
     @Test
     public void testTransformedBag() {
         final Bag<Object> bag = BagUtils.transformingBag(new HashBag<>(), nopTransformer);
-        assertTrue("Returned object should be an TransformedBag.",
-            bag instanceof TransformedBag);
-        try {
+        assertTrue(bag instanceof TransformedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.transformingBag(null, nopTransformer);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.transformingBag(new HashBag<>(), null);
-            fail("Expecting NullPointerException for null transformer.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("transformer"));
     }
 
     @Test
     public void testSynchronizedSortedBag() {
         final Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<>());
-        assertTrue("Returned object should be a SynchronizedSortedBag.",
-            bag instanceof SynchronizedSortedBag);
-        try {
+        assertTrue(bag instanceof SynchronizedSortedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.synchronizedSortedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
     }
 
     @Test
     public void testUnmodifiableSortedBag() {
         final SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<>());
-        assertTrue("Returned object should be an UnmodifiableSortedBag.",
-            bag instanceof UnmodifiableSortedBag);
-        try {
+        assertTrue(bag instanceof UnmodifiableSortedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.unmodifiableSortedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
 
         assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
     }
@@ -139,39 +129,35 @@ public class BagUtilsTest {
     @Test
     public void testPredicatedSortedBag() {
         final Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<>(), truePredicate);
-        assertTrue("Returned object should be a PredicatedSortedBag.",
-            bag instanceof PredicatedSortedBag);
-        try {
+        assertTrue(bag instanceof PredicatedSortedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.predicatedSortedBag(null, truePredicate);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.predicatedSortedBag(new TreeBag<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("predicate"));
     }
 
     @Test
     public void testTransformedSortedBag() {
         final Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<>(), nopTransformer);
-        assertTrue("Returned object should be an TransformedSortedBag",
-            bag instanceof TransformedSortedBag);
-        try {
+        assertTrue(bag instanceof TransformedSortedBag);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.transformingSortedBag(null, nopTransformer);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
+        });
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("collection"));
+
+        exception = assertThrows(NullPointerException.class, () -> {
             BagUtils.transformingSortedBag(new TreeBag<>(), null);
-            fail("Expecting NullPointerException for null transformer.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+        });
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("transformer"));
     }
 }
 
