@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 
 import org.apache.commons.collections4.Closure;
-import org.apache.commons.collections4.FunctorException;
 import org.junit.Test;
 
 public class CatchAndRethrowClosureTest extends AbstractClosureTest {
