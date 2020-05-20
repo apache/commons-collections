@@ -53,9 +53,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             bidiMap.firstKey();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("Map is empty"));
         }
 
@@ -71,9 +69,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             bidiMap.lastKey();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("Map is empty"));
         }
 
@@ -115,9 +111,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             Exception exception = assertThrows(NullPointerException.class, () -> {
                 bidiMap.nextKey(null);
             });
-            if (null == exception.getMessage()) {
-                assertNull(exception.getMessage());
-            } else {
+            if (null != exception.getMessage()) {
                 assertTrue(exception.getMessage().contains("key"));
             }
         } else {
@@ -155,9 +149,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             Exception exception = assertThrows(NullPointerException.class, () -> {
                 bidiMap.previousKey(null);
             });
-            if (null == exception.getMessage()) {
-                assertNull(exception.getMessage());
-            } else {
+            if (null != exception.getMessage()) {
                 assertTrue(exception.getMessage().contains("key"));
             }
         } else {

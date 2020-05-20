@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.trie;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
@@ -200,13 +204,13 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         Assert.assertEquals("Amma", iterator.next());
         Assert.assertEquals("Ammun", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        iterator = map.keySet().iterator();
+        final Iterator<String> iterator1 = map.keySet().iterator();
         map.put("Amber", "Amber");
         Assert.assertEquals(3, map.size());
-        try {
-            iterator.next();
-            Assert.fail("CME expected");
-        } catch(final ConcurrentModificationException expected) {}
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
+            iterator1.next();
+        });
+        assertNull(exception.getMessage());
         Assert.assertEquals("Amber", map.firstKey());
         Assert.assertEquals("Ammun", map.lastKey());
 
@@ -241,49 +245,49 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         Assert.assertEquals("Akka", iterator.next());
         Assert.assertFalse(iterator.hasNext());
 
-        map = trie.prefixMap("Ab");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        iterator = map.values().iterator();
+        final SortedMap<String, String> map1 = trie.prefixMap("Ab");
+        Assert.assertTrue(map1.isEmpty());
+        Assert.assertEquals(0, map1.size());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map1.firstKey();
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map1.lastKey();
+        });
+        assertNull(exception.getMessage());
+        iterator = map1.values().iterator();
         Assert.assertFalse(iterator.hasNext());
 
-        map = trie.prefixMap("Albertooo");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        iterator = map.values().iterator();
+        final SortedMap<String, String> map2 = trie.prefixMap("Albertooo");
+        Assert.assertTrue(map2.isEmpty());
+        Assert.assertEquals(0, map2.size());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map2.firstKey();
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map2.lastKey();
+        });
+        assertNull(exception.getMessage());
+        iterator = map2.values().iterator();
         Assert.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("");
         Assert.assertSame(trie, map); // stricter than necessary, but a good check
 
-        map = trie.prefixMap("\0");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        iterator = map.values().iterator();
+        final SortedMap<String, String> map3 = trie.prefixMap("\0");
+        Assert.assertTrue(map3.isEmpty());
+        Assert.assertEquals(0, map3.size());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map3.firstKey();
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NoSuchElementException.class, () -> {
+            final Object o = map3.lastKey();
+        });
+        assertNull(exception.getMessage());
+        iterator = map3.values().iterator();
         Assert.assertFalse(iterator.hasNext());
     }
 

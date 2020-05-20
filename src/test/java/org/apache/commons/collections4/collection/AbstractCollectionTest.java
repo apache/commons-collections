@@ -586,9 +586,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().add(getFullNonNullElements()[0]);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         // make sure things didn't change even if the expected exception was
@@ -598,9 +596,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().addAll(Arrays.asList(getFullElements()));
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         // make sure things didn't change even if the expected exception was
@@ -611,9 +607,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().add(getFullNonNullElements()[0]);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         // make sure things didn't change even if the expected exception was
@@ -623,9 +617,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().addAll(Arrays.asList(getOtherElements()));
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         // make sure things didn't change even if the expected exception was
@@ -752,9 +744,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("element"));
         }
         // make sure nothing has changed after non-modification
@@ -778,9 +768,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(NoSuchElementException.class, () -> {
             it2.next();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         // make sure nothing has changed after non-modification
@@ -800,9 +788,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             getCollection().iterator().remove();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("Iterator"));
         }
         verify();
@@ -812,9 +798,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(IllegalStateException.class, () -> {
             iter1.remove();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("Iterator"));
         }
         verify();
@@ -857,9 +841,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(IllegalStateException.class, () -> {
             iter2.remove();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
     }
@@ -1121,9 +1103,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         Exception exception = assertThrows(ArrayStoreException.class, () -> {
             getCollection().toArray(new Void[0]);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertNotNull(exception.getMessage());
         }
         verify();
@@ -1187,9 +1167,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().clear();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("List is fixed size"));
         }
         verify();
@@ -1197,9 +1175,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().remove(null);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("List is fixed size"));
         }
         verify();
@@ -1207,9 +1183,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().removeIf(e -> true);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("List is fixed size"));
         }
         verify();
@@ -1217,9 +1191,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().removeAll(null);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("List is fixed size"));
         }
         verify();
@@ -1227,9 +1199,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             getCollection().retainAll(null);
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("List is fixed size"));
         }
         verify();
@@ -1240,9 +1210,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         exception = assertThrows(UnsupportedOperationException.class, () -> {
             iterator.remove();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("remove() is not supported"));
         }
         verify();

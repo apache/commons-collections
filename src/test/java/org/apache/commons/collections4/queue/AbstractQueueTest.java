@@ -176,9 +176,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("queue is empty"));
         }
 
@@ -209,9 +207,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("queue is empty"));
         }
     }
@@ -264,9 +260,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().remove();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("queue is empty"));
         }
 
@@ -283,9 +277,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("queue is empty"));
         }
     }

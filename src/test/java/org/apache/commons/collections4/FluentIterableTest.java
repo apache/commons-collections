@@ -470,9 +470,7 @@ public class FluentIterableTest {
         exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             FluentIterable.of(iterableEven).get(IterableUtils.size(iterableEven));
         });
-        if (null == exception.getMessage()) {
-            assertNull(exception.getMessage());
-        } else {
+        if (null != exception.getMessage()) {
             assertTrue(exception.getMessage().contains("6"));
         }
     }

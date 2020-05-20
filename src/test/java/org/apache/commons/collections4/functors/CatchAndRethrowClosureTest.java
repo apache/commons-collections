@@ -16,11 +16,14 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.FunctorException;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class CatchAndRethrowClosureTest extends AbstractClosureTest {
@@ -61,33 +64,19 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
 
     @Test
     public void testThrowingClosure() {
-        Closure<Integer> closure = generateNoExceptionClosure();
-        try {
-            closure.execute(Integer.valueOf(0));
-        } catch (final FunctorException ex) {
-            Assert.fail();
-        } catch (final RuntimeException ex) {
-            Assert.fail();
-        }
+        final Closure<Integer> closure = generateNoExceptionClosure();
+        closure.execute(Integer.valueOf(0));
 
-        closure = generateIOExceptionClosure();
-        try {
-            closure.execute(Integer.valueOf(0));
-            Assert.fail();
-        } catch (final FunctorException ex) {
-            Assert.assertTrue(ex.getCause() instanceof IOException);
-        } catch (final RuntimeException ex) {
-            Assert.fail();
-        }
+        final Closure<Integer> closure1 = generateIOExceptionClosure();
+        Exception exception = assertThrows(Exception.class, () -> {
+            closure1.execute(Integer.valueOf(0));
+        });
+        assertTrue(exception.getMessage().contains("IOException"));
 
-        closure = generateNullPointerExceptionClosure();
-        try {
-            closure.execute(Integer.valueOf(0));
-            Assert.fail();
-        } catch (final FunctorException ex) {
-            Assert.fail();
-        } catch (final RuntimeException ex) {
-            Assert.assertTrue(ex instanceof NullPointerException);
-        }
+        final Closure<Integer> closure2 = generateNullPointerExceptionClosure();
+        exception = assertThrows(Exception.class, () -> {
+            closure2.execute(Integer.valueOf(0));
+        });
+        assertNull(exception.getMessage());
     }
 }
