@@ -136,7 +136,6 @@ import junit.framework.TestSuite;
  */
 public class BulkTest extends TestCase implements Cloneable {
 
-
     // Note:  BulkTest is Cloneable to make it easier to construct
     // BulkTest instances for simple test methods that are defined in
     // anonymous inner classes.  Basically we don't have to worry about
@@ -145,9 +144,11 @@ public class BulkTest extends TestCase implements Cloneable {
     // Given one BulkTest instance, we can just clone it and reset the
     // method name for every simple test it defines.
 
-
     /** Path to test data resources */
-    protected static final String TEST_DATA_PATH = "src/test/resources/data/test/";
+    protected static final String TEST_DATA_PATH = "src/test/resources/org/apache/commons/collections4/data/test/";
+
+    /** Path to test properties resources */
+    public static final String TEST_PROPERTIES_PATH = "src/test/resources/org/apache/commons/collections4/properties/";
 
     /**
      *  The full name of this bulk test instance.  This is the full name
@@ -156,7 +157,6 @@ public class BulkTest extends TestCase implements Cloneable {
      *  to ease debugging.
      */
     String verboseName;
-
 
     /**
      *  Constructs a new {@code BulkTest} instance that will run the
@@ -168,7 +168,6 @@ public class BulkTest extends TestCase implements Cloneable {
         super(name);
         this.verboseName = getClass().getName();
     }
-
 
     /**
      *  Creates a clone of this {@code BulkTest}.<P>
@@ -183,7 +182,6 @@ public class BulkTest extends TestCase implements Cloneable {
             throw new Error(); // should never happen
         }
     }
-
 
     /**
      *  Returns an array of test names to ignore.<P>
@@ -222,7 +220,6 @@ public class BulkTest extends TestCase implements Cloneable {
         return null;
     }
 
-
     /**
      *  Returns the display name of this {@code BulkTest}.
      *
@@ -232,7 +229,6 @@ public class BulkTest extends TestCase implements Cloneable {
     public String toString() {
         return getName() + "(" + verboseName + ") ";
     }
-
 
     /**
      *  Returns a {@link TestSuite} for testing all of the simple tests
@@ -260,7 +256,6 @@ public class BulkTest extends TestCase implements Cloneable {
     }
 
 }
-
 
 // It was easier to use a separate class to do all the reflection stuff
 // for making the TestSuite instances.  Having permanent state around makes

@@ -747,7 +747,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Compare the current serialized form of the Map
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testEmptyMapCompatibility() throws Exception {
         /**
@@ -769,7 +769,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Compare the current serialized form of the Map
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testFullMapCompatibility() throws Exception {
         /**

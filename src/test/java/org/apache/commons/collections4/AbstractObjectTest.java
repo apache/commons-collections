@@ -37,7 +37,6 @@ import java.io.Serializable;
  * If your {@link Object} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
- *
  */
 public abstract class AbstractObjectTest extends BulkTest {
 
@@ -173,7 +172,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     /**
-     * Tests serialization by comparing against a previously stored version in SVN.
+     * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalEmptyCollectionExists() {
@@ -182,14 +181,14 @@ public abstract class AbstractObjectTest extends BulkTest {
             if (object instanceof Serializable) {
                 final String name = getCanonicalEmptyCollectionName(object);
                 assertTrue(
-                    "Canonical empty collection (" + name + ") is not in SVN",
+                    "Canonical empty collection (" + name + ") is not in SCM",
                     new File(name).exists());
             }
         }
     }
 
     /**
-     * Tests serialization by comparing against a previously stored version in SVN.
+     * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalFullCollectionExists() {
@@ -198,7 +197,7 @@ public abstract class AbstractObjectTest extends BulkTest {
             if (object instanceof Serializable) {
                 final String name = getCanonicalFullCollectionName(object);
                 assertTrue(
-                    "Canonical full collection (" + name + ") is not in SVN",
+                    "Canonical full collection (" + name + ") is not in SCM",
                     new File(name).exists());
             }
         }
@@ -212,7 +211,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * the package change to collections4 introduced in version 4.
      *
      * This constant makes it possible for TestMap (and other subclasses,
-     * if necessary) to automatically check SVN for a versionX copy of a
+     * if necessary) to automatically check SCM for a versionX copy of a
      * Serialized object, so we can make sure that compatibility is maintained.
      * See, for example, TestMap.getCanonicalFullMapName(Map map).
      * Subclasses can override this variable, indicating compatibility
@@ -253,7 +252,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Writes a Serializable or Externalizable object as
      * a file at the given path.  NOT USEFUL as part
      * of a unit test; this is just a utility method
-     * for creating disk-based objects in SVN that can become
+     * for creating disk-based objects in SCM that can become
      * the basis for compatibility tests using
      * readExternalFormFromDisk(String path)
      *
@@ -287,7 +286,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Reads a Serialized or Externalized Object from disk.
      * Useful for creating compatibility tests between
-     * different SVN versions of the same class
+     * different SCM versions of the same class
      *
      * @param path path to the serialized Object
      * @return the Object at the given path

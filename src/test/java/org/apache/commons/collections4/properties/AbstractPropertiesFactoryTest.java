@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import org.apache.commons.collections4.BulkTest;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         super();
         this.factory = factory;
         this.fileExtention = fileExtension;
-        this.pathString = "src/test/resources/properties/test" + fileExtention;
+        this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtention;
     }
 
     private void assertContents(final T properties) {
@@ -80,7 +81,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @Test
     public void testLoadClassLoaderResource() throws Exception {
-        assertContents(factory.load(ClassLoader.getSystemClassLoader(), "properties/test" + fileExtention));
+        assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtention));
     }
 
     @Test

@@ -1068,7 +1068,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Compare the current serialized form of the List
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
     public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
@@ -1092,7 +1092,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Compare the current serialized form of the List
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
     public void testFullListCompatibility() throws IOException, ClassNotFoundException {

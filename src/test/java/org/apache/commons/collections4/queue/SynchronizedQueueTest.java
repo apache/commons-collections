@@ -25,8 +25,7 @@ import org.junit.Ignore;
 import junit.framework.Test;
 
 /**
- * Extension of {@link AbstractQueueTest} for exercising the
- * {@link SynchronizedQueue} implementation.
+ * Extension of {@link AbstractQueueTest} for exercising the {@link SynchronizedQueue} implementation.
  *
  * @since 4.2
  */
@@ -40,7 +39,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {
@@ -55,10 +54,11 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
     @Ignore("Run once")
     public void testCreate() throws Exception {
         Queue<T> queue = makeObject();
-        writeExternalFormToDisk((java.io.Serializable) queue, "src/test/resources/data/test/SynchronizedQueue.emptyCollection.version4.2.obj");
+        writeExternalFormToDisk((java.io.Serializable) queue,
+            BulkTest.TEST_DATA_PATH + "SynchronizedQueue.emptyCollection.version4.2.obj");
         queue = makeFullCollection();
-        writeExternalFormToDisk((java.io.Serializable) queue, "src/test/resources/data/test/SynchronizedQueue.fullCollection.version4.2.obj");
+        writeExternalFormToDisk((java.io.Serializable) queue,
+            BulkTest.TEST_DATA_PATH + "SynchronizedQueue.fullCollection.version4.2.obj");
     }
 
 }
-

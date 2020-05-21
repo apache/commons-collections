@@ -177,7 +177,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
     /**
      * Compare the current serialized form of the Comparator
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
     @Test

@@ -614,7 +614,7 @@
         <configuration>
           <excludes>
             <exclude>site-content/**/*</exclude>
-            <exclude>src/test/resources/data/test/*</exclude>
+            <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
           </excludes>
         </configuration>
       </plugin>

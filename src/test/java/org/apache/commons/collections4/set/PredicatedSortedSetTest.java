@@ -44,8 +44,6 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return BulkTest.makeSuite(PredicatedSortedSetTest.class);
     }
 
- //-------------------------------------------------------------------
-
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     @Override
@@ -60,7 +58,6 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return PredicatedSortedSet.predicatedSortedSet(set, truePredicate);
     }
 
-//--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         o -> o instanceof String && ((String) o).startsWith("A");
 
