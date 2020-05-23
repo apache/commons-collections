@@ -17,6 +17,9 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.List;
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
@@ -72,12 +75,10 @@ public class SetOperationsTest {
         Hasher hasher2 = new StaticHasher(lst2.iterator(), shape2);
         BloomFilter filter2 = new HasherBloomFilter(hasher2, shape2);
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             SetOperations.cosineDistance(filter1, filter2);
-            Assert.fail("Expected an IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // Ignore
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentityImpl;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
@@ -50,26 +53,20 @@ public class IndexFilterTest {
         final ArrayList<Integer> actual = new ArrayList<>();
         final IntConsumer consumer = actual::add;
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             IndexFilters.distinctIndexes(null, shape, consumer);
-            Assert.fail("null hasher");
-        } catch (NullPointerException expected) {
-            // Ignore
-        }
+        });
+        assertTrue(exception.getMessage().contains("hasher"));
 
-        try {
-            IndexFilters.distinctIndexes(hasher, null, consumer);
-            Assert.fail("null shape");
-        } catch (NullPointerException expected) {
-            // Ignore
-        }
+        exception = assertThrows(NullPointerException.class, () -> {
+             IndexFilters.distinctIndexes(hasher, null, consumer);
+        });
+        assertTrue(exception.getMessage().contains("shape"));
 
-        try {
+        exception = assertThrows(NullPointerException.class, () -> {
             IndexFilters.distinctIndexes(hasher, shape, null);
-            Assert.fail("null consumer");
-        } catch (NullPointerException expected) {
-            // Ignore
-        }
+        });
+        assertTrue(exception.getMessage().contains("consumer"));
 
         // All OK together
         IndexFilters.distinctIndexes(hasher, shape, consumer);

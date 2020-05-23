@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -91,12 +94,10 @@ public class PredicatedCollectionBuilderTest {
         collection.add("test2");
         Assert.assertEquals(2, collection.size());
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             collection.add(null);
-            Assert.fail("Expecting IllegalArgumentException for failing predicate!");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     @Test
@@ -124,11 +125,10 @@ public class PredicatedCollectionBuilderTest {
     private void checkPredicatedCollection2(final Collection<Integer> collection) {
         Assert.assertEquals(2, collection.size());
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             collection.add(4);
-            Assert.fail("Expecting IllegalArgumentException for failing predicate!");
-        } catch (final IllegalArgumentException iae) {
-        }
+        });
+        assertNotNull(exception.getMessage());
         Assert.assertEquals(2, collection.size());
 
         collection.add(5);
