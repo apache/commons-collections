@@ -59,7 +59,7 @@ public class IndexFilterTest {
         assertTrue(exception.getMessage().contains("hasher"));
 
         exception = assertThrows(NullPointerException.class, () -> {
-             IndexFilters.distinctIndexes(hasher, null, consumer);
+            IndexFilters.distinctIndexes(hasher, null, consumer);
         });
         assertTrue(exception.getMessage().contains("shape"));
 
