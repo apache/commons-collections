@@ -16,10 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
@@ -207,10 +209,10 @@ public abstract class AbstractBloomFilterTest {
         final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
-            assertTrue("Not enough data in second hasher", iter2.hasNext());
+            assertTrue(iter2.hasNext());
             assertEquals(iter1.nextInt(), iter2.nextInt());
         }
-        assertFalse("Too much data in second hasher", iter2.hasNext());
+        assertFalse(iter2.hasNext());
     }
 
     /**
@@ -261,12 +263,10 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         final Hasher hasher = new StaticHasher(lst.iterator(), anotherShape);
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             createFilter(hasher, shape);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -297,12 +297,10 @@ public abstract class AbstractBloomFilterTest {
         final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
         final Hasher hasher2 = new StaticHasher(lst.iterator(), anotherShape);
         final BloomFilter bf2 = createFilter(hasher2, anotherShape);
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             bf.contains(bf2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -340,12 +338,10 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             bf.contains(hasher2);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -466,7 +462,7 @@ public abstract class AbstractBloomFilterTest {
 
         final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
-        assertTrue("Merge should not fail", bf.merge(bf2));
+        assertTrue(bf.merge(bf2));
         assertEquals(27, bf.cardinality());
     }
 
@@ -485,12 +481,10 @@ public abstract class AbstractBloomFilterTest {
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
         final BloomFilter bf2 = createFilter(hasher2, anotherShape);
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             bf.merge(bf2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -506,7 +500,7 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        assertTrue("Merge should not fail", bf.merge(hasher2));
+        assertTrue(bf.merge(hasher2));
         assertEquals(27, bf.cardinality());
     }
 
@@ -524,12 +518,10 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             bf.merge(hasher2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**

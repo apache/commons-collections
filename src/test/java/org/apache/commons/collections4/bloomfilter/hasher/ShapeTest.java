@@ -16,9 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
@@ -79,12 +81,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfBitsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 5, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of bits must be greater than 0: 0"));
     }
 
     /**
@@ -92,12 +92,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 16, 8);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Filter too small: Calculated number of hash functions (0) was less than 1"));
     }
 
     /**
@@ -105,12 +103,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfItemsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0, 24);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of items must be greater than 0: 0"));
     }
 
     /**
@@ -118,12 +114,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfBitsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 5, 0, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of bits must be greater than 0: 0"));
     }
 
     /**
@@ -131,12 +125,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 5, 24, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of hash functions must be greater than 0: 0"));
     }
 
     /**
@@ -144,12 +136,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfItemsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of items must be greater than 0: 0"));
     }
 
     /**
@@ -157,12 +147,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadProbabilityTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 4000, 8, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Calculated probability is greater than or equal to 1: 1.0"));
     }
 
     /**
@@ -203,12 +191,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_BadNumberOfItemsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0, 1.0 / 10);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of items must be greater than 0: 0"));
     }
 
     /**
@@ -216,23 +202,21 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_BadProbabilityTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 10, 0.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Probability must be greater than 0 and less than 1: 0.0"));
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 10, 1.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 10, Double.NaN);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
     }
 
@@ -241,12 +225,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_NumberOfBitsOverflowTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, Integer.MAX_VALUE, 1.0 / 10);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        });
+        assertTrue(exception.getMessage().contains("Resulting filter has more than 2147483647 bits:"));
     }
 
     /**
@@ -266,12 +248,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nm_noName() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new Shape(null, 5, 72);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        });
+        assertTrue(exception.getMessage().contains("hashFunctionIdentity"));
     }
 
     /**
@@ -279,12 +259,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nmk_noName() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new Shape(null, 5, 72, 17);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        });
+        assertTrue(exception.getMessage().contains("hashFunctionIdentity"));
     }
 
     /**
@@ -292,12 +270,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_np_noName() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new Shape(null, 5, 0.1);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        });
+        assertTrue(exception.getMessage().contains("hashFunctionIdentity"));
     }
 
     /**
@@ -305,12 +281,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_pmk_noName() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new Shape(null, 0.1, 72, 17);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        });
+        assertTrue(exception.getMessage().contains("hashFunctionIdentity"));
     }
 
     /**
@@ -318,12 +292,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_probability_bits_hash_BadNumberOfBitsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0.5, 0, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of bits must be greater than 0: 0"));
     }
 
     /**
@@ -331,12 +303,10 @@ public class ShapeTest {
      */
     @Test
     public void constructor_probability_bits_hash_BadNumberOfHashFunctionsTest() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0.5, 24, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Number of hash functions must be greater than 0: 0"));
     }
 
     /**
@@ -345,43 +315,39 @@ public class ShapeTest {
     @Test
     public void constructor_probability_bits_hash_BadProbabilityTest() {
         // probability should not be 0
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 0.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Probability must be greater than 0 and less than 1: 0.0"));
 
         // probability should not be = -1
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, -1.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Probability must be greater than 0 and less than 1: -1.0"));
 
         // probability should not be < -1
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, -1.5, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
 
         // probability should not be = 1
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 1.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
 
         // probability should not be > 1
-        try {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             new Shape(testFunction, 2.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
     }
 
@@ -410,7 +376,7 @@ public class ShapeTest {
 
         assertEquals(shape, shape);
         assertEquals(shape, new Shape(testFunction, 5, 1.0 / 10));
-        assertNotEquals(shape, null);
+        assertNotNull(shape);
         assertNotEquals(shape, new Shape(testFunction, 5, 1.0 / 11));
         assertNotEquals(shape, new Shape(testFunction, 4, 1.0 / 10));
         // Number of bits does not change equality,

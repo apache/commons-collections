@@ -16,10 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -102,10 +103,10 @@ public class StaticHasherTest {
         final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
-            assertTrue("Not enough data in second hasher", iter2.hasNext());
+            assertTrue(iter2.hasNext());
             assertEquals(iter1.nextInt(), iter2.nextInt());
         }
-        assertFalse("Too much data in second hasher", iter2.hasNext());
+        assertFalse(iter2.hasNext());
     }
 
     /**
@@ -159,12 +160,10 @@ public class StaticHasherTest {
             }
         };
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new StaticHasher(testHasher, shape);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -188,7 +187,7 @@ public class StaticHasherTest {
         iter = hasher.iterator(shape);
         int idx = 0;
         while (iter.hasNext()) {
-            assertEquals("Error at idx " + idx, Integer.valueOf(values[idx]), iter.next());
+            assertEquals(Integer.valueOf(values[idx]), iter.next());
             idx++;
         }
         assertEquals(5, idx);
@@ -203,12 +202,10 @@ public class StaticHasherTest {
 
         final int[] values = {shape.getNumberOfBits(), 3, 5, 7, 9, 3, 5, 1};
         final Iterator<Integer> iter = Arrays.stream(values).iterator();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new StaticHasher(iter, shape);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -220,12 +217,10 @@ public class StaticHasherTest {
 
         final int[] values = {-1, 3, 5, 7, 9, 3, 5, 1};
         final Iterator<Integer> iter = Arrays.stream(values).iterator();
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new StaticHasher(iter, shape);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -252,12 +247,10 @@ public class StaticHasherTest {
         final Iterator<Integer> iter = Arrays.stream(values).iterator();
         final StaticHasher hasher = new StaticHasher(iter, new Shape(testFunctionX, 3, 72, 17));
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new StaticHasher(hasher, shape);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 
     /**
@@ -305,11 +298,9 @@ public class StaticHasherTest {
         final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         final StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             hasher.iterator(new Shape(testFunctionX, 3, 72, 17));
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 }

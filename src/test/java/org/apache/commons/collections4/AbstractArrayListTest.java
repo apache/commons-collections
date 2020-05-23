@@ -17,7 +17,6 @@
 package org.apache.commons.collections4;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,11 +49,8 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
         Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(1);
         });
-        String actualMessage = exception.getMessage();
-        if (null == actualMessage) {
-            assertNull(actualMessage);
-        } else {
-            assertNotNull(actualMessage);
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
     }
 
