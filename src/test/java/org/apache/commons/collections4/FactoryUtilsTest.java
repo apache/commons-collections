@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -209,9 +209,12 @@ public class FactoryUtilsTest {
     // instantiateFactory
     //------------------------------------------------------------------
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void instantiateFactoryNull() {
-        FactoryUtils.instantiateFactory(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            FactoryUtils.instantiateFactory(null);
+        });
+        assertTrue(exception.getMessage().contains("classToInstantiate"));
     }
 
     @Test
@@ -224,14 +227,20 @@ public class FactoryUtilsTest {
         assertEquals(1, created.getValue());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryMismatch() {
-        FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
+        });
+        assertTrue(exception.getMessage().contains("Parameter types must match the arguments"));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryNoConstructor() {
-        FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
+        });
+        assertTrue(exception.getMessage().contains("InstantiateFactory: The constructor must exist and be public"));
     }
 
     @Test

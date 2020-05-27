@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,40 +31,43 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class BloomFilterIndexerTest {
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testCheckPositiveThrows() {
-        BloomFilterIndexer.checkPositive(-1);
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
+            BloomFilterIndexer.checkPositive(-1);
+        });
+        assertTrue(exception.getMessage().contains("Negative bitIndex: -1"));
     }
 
     @Test
     public void testGetLongIndex() {
-        Assert.assertEquals(0, BloomFilterIndexer.getLongIndex(0));
+        assertEquals(0, BloomFilterIndexer.getLongIndex(0));
 
         for (final int index : getIndexes()) {
             // getLongIndex is expected to identify a block of 64-bits (starting from zero)
-            Assert.assertEquals(index / Long.SIZE, BloomFilterIndexer.getLongIndex(index));
+            assertEquals(index / Long.SIZE, BloomFilterIndexer.getLongIndex(index));
 
             // Verify the behavior for negatives. It should produce a negative (invalid)
             // as a simple trip for incorrect usage.
-            Assert.assertTrue(BloomFilterIndexer.getLongIndex(-index) < 0);
+            assertTrue(BloomFilterIndexer.getLongIndex(-index) < 0);
 
             // If index is not zero then when negated this is what a signed shift
             // of 6-bits actually does
-            Assert.assertEquals(((1 - index) / Long.SIZE) - 1,
+            assertEquals(((1 - index) / Long.SIZE) - 1,
                     BloomFilterIndexer.getLongIndex(-index));
         }
     }
 
     @Test
     public void testGetLongBit() {
-        Assert.assertEquals(1L, BloomFilterIndexer.getLongBit(0));
+        assertEquals(1L, BloomFilterIndexer.getLongBit(0));
 
         for (final int index : getIndexes()) {
             // getLongBit is expected to identify a single bit in a 64-bit block
-            Assert.assertEquals(1L << (index % Long.SIZE), BloomFilterIndexer.getLongBit(index));
+            assertEquals(1L << (index % Long.SIZE), BloomFilterIndexer.getLongBit(index));
 
             // Verify the behavior for negatives
-            Assert.assertEquals(1L << (64 - (index & 0x3f)), BloomFilterIndexer.getLongBit(-index));
+            assertEquals(1L << (64 - (index & 0x3f)), BloomFilterIndexer.getLongBit(-index));
         }
     }
 

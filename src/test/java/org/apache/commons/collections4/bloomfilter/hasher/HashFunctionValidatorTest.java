@@ -16,8 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
@@ -108,12 +109,15 @@ public class HashFunctionValidatorTest {
     /**
      * Test the check method throws when the two hash functions are not equal.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCheckThrows() {
         final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
             ProcessType.CYCLIC, 300L);
         final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.UNSIGNED,
             ProcessType.CYCLIC, 300L);
-        HashFunctionValidator.checkAreEqual(impl1, impl2);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            HashFunctionValidator.checkAreEqual(impl1, impl2);
+        });
+        assertTrue(exception.getMessage().contains("Hash functions are not equal"));
     }
 }

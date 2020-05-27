@@ -21,10 +21,10 @@ import static org.apache.commons.collections4.functors.TruePredicate.INSTANCE;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -385,9 +385,12 @@ public class IteratorUtilsTest {
         assertTrue(exception.getMessage().contains("End index must not be less than start index."));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsEnumerationNull() {
-        IteratorUtils.asEnumeration(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.asEnumeration(null);
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
@@ -408,7 +411,7 @@ public class IteratorUtilsTest {
         assertTrue(expected > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext());
     }
 
     @Test
@@ -419,14 +422,17 @@ public class IteratorUtilsTest {
         assertTrue(exception.getMessage().contains("iterator"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsIterator() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
         assertTrue(IteratorUtils.asIterator(en) instanceof Iterator);
-        IteratorUtils.asIterator(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.asIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("enumeration"));
     }
 
     @Test
@@ -540,7 +546,7 @@ public class IteratorUtilsTest {
         assertEquals(combinedList, result);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorCollectionNull() {
         final Collection<Iterator<?>> coll = new ArrayList<>();
         coll.add(collectionOdd.iterator());
@@ -548,10 +554,13 @@ public class IteratorUtilsTest {
         final Iterator<?> it = IteratorUtils.collatedIterator(null, coll);
         final List<?> result = IteratorUtils.toList(it);
         assertEquals(6, result.size());
-        IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null);
+        });
+        assertNull(exception.getMessage());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorNull() {
         final ArrayList arrayList = new ArrayList();
         // natural ordering
@@ -573,7 +582,10 @@ public class IteratorUtilsTest {
         it = IteratorUtils.collatedIterator(reverseComparator, collectionOdd.iterator());
         result = IteratorUtils.toList(it);
         assertEquals(collectionOdd, result);
-        IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     // -----------------------------------------------------------------------
@@ -928,7 +940,7 @@ public class IteratorUtilsTest {
         assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
@@ -936,16 +948,22 @@ public class IteratorUtilsTest {
         coll.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue(IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
-        IteratorUtils.loopingIterator(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.loopingIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingListIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue(IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
-        IteratorUtils.loopingListIterator(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.loopingListIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("list"));
     }
 
     /**
@@ -970,7 +988,7 @@ public class IteratorUtilsTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext());
 
         Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.nodeListIterator((Node) null);
@@ -997,7 +1015,7 @@ public class IteratorUtilsTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext());
 
         Exception exception = assertThrows(NullPointerException.class, () -> {
             IteratorUtils.nodeListIterator((NodeList) null);
@@ -1010,21 +1028,26 @@ public class IteratorUtilsTest {
         assertTrue(IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue(IteratorUtils.peekingIterator(ie) instanceof Iterator);
-        IteratorUtils.peekingIterator(null);
-
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.peekingIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue(IteratorUtils.pushbackIterator(ie) instanceof Iterator);
-        IteratorUtils.pushbackIterator(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.pushbackIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test
@@ -1271,13 +1294,15 @@ public class IteratorUtilsTest {
         assertTrue(listIterator.hasNext());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
         assertTrue(IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
-        IteratorUtils.unmodifiableMapIterator(null);
-
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            IteratorUtils.unmodifiableMapIterator(null);
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
     @Test

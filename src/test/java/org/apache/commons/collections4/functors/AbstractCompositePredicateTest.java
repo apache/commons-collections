@@ -16,13 +16,17 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -82,7 +86,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     public void singleElementArrayToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(predicate);
-        Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
+        assertSame(predicate, allPredicate);
     }
 
     /**
@@ -93,52 +97,67 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(
                 Collections.<Predicate<T>>singleton(predicate));
-        Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
+        assertSame(predicate, allPredicate);
     }
 
     /**
      * Tests {@code getInstance} with a null predicate array.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullArrayToGetInstance() {
-        getPredicateInstance((Predicate<T>[]) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            getPredicateInstance((Predicate<T>[]) null);
+        });
+        assertTrue(exception.getMessage().contains("predicates"));
     }
 
     /**
      * Tests {@code getInstance} with a single null element in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null });
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            getPredicateInstance(new Predicate[] { null });
+        });
+        assertTrue(exception.getMessage().contains("predicates"));
     }
 
     /**
      * Tests {@code getInstance} with two null elements in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null, null });
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            getPredicateInstance(new Predicate[] { null, null });
+        });
+        assertTrue(exception.getMessage().contains("predicates"));
     }
 
 
     /**
      * Tests {@code getInstance} with a null predicate collection
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullCollectionToGetInstance() {
-        getPredicateInstance((Collection<Predicate<T>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            getPredicateInstance((Collection<Predicate<T>>) null);
+        });
+        assertTrue(exception.getMessage().contains("predicates"));
     }
 
     /**
      * Tests {@code getInstance} with a predicate collection that contains null elements
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInCollectionToGetInstance() {
         final Collection<Predicate<T>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        getPredicateInstance(coll);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            getPredicateInstance(coll);
+        });
+        assertTrue(exception.getMessage().contains("predicates"));
     }
 }
