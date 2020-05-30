@@ -27,7 +27,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.S
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link Shape} class.

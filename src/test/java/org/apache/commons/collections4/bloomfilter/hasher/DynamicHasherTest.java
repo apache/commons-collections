@@ -28,8 +28,8 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link DynamicHasher}.
@@ -69,7 +69,7 @@ public class DynamicHasherTest {
     /**
      * Sets up the DynamicHasher.
      */
-    @Before
+    @BeforeEach
     public void setup() {
         builder = new DynamicHasher.Builder(new MD5Cyclic());
         shape = new Shape(new MD5Cyclic(), 3, 72, 17);

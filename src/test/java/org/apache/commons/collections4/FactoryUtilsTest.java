@@ -31,7 +31,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.

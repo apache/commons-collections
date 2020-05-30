@@ -17,10 +17,11 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Enumeration;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesTest {
 
@@ -32,7 +33,7 @@ public class SortedPropertiesTest {
         }
         final Enumeration<Object> keys = sortedProperties.keys();
         for (char ch = 'A'; ch <= 'Z'; ch++) {
-            Assert.assertEquals(String.valueOf(ch), keys.nextElement());
+            assertEquals(String.valueOf(ch), keys.nextElement());
         }
     }
 }

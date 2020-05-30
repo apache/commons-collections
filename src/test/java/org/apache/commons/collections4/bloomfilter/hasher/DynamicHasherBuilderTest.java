@@ -27,8 +27,8 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * {@link DynamicHasher.Builder} tests.
@@ -124,7 +124,7 @@ public class DynamicHasherBuilderTest {
     /**
      * Sets up the builder for testing.
      */
-    @Before
+    @BeforeEach
     public void setup() {
         builder = new DynamicHasher.Builder(hf);
     }

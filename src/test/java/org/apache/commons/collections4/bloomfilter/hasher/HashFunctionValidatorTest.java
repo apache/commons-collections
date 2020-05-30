@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests of the {@link HashFunctionValidator}.

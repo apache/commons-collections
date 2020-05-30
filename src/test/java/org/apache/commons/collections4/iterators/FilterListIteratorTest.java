@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,12 +29,9 @@ import java.util.Random;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.PredicateUtils;
 import org.apache.commons.collections4.list.GrowthList;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the FilterListIterator class.
@@ -53,7 +54,7 @@ public class FilterListIteratorTest {
     private Predicate<Integer> fourPred = null;
     private final Random random = new Random();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         list = new ArrayList<>();
         odds = new ArrayList<>();
@@ -94,7 +95,7 @@ public class FilterListIteratorTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         list = null;
         odds = null;
@@ -289,9 +290,9 @@ public class FilterListIteratorTest {
         final Collection<Predicate<Object>> var7 = new GrowthList<>();
         final Predicate<Object> var9 = PredicateUtils.anyPredicate(var7);
         final FilterListIterator<Object> var13 = new FilterListIterator<>(var9);
-        Assert.assertFalse(var13.hasNext());
+        assertFalse(var13.hasNext());
         final FilterListIterator<Object> var14 = new FilterListIterator<>(var9);
-        Assert.assertFalse(var14.hasPrevious());
+        assertFalse(var14.hasPrevious());
     }
 
     // Utilities
@@ -403,25 +404,20 @@ public class FilterListIteratorTest {
         }
 
         // random walk
-        final StringBuilder walkdescr = new StringBuilder(500);
         for (int i = 0; i < 500; i++) {
             if (random.nextBoolean()) {
                 // step forward
-                walkdescr.append("+");
                 if (expected.hasNext()) {
-                    assertEquals(walkdescr.toString(), expected.next(), testing.next());
+                    assertEquals(expected.next(), testing.next());
                 }
             } else {
                 // step backward
-                walkdescr.append("-");
                 if (expected.hasPrevious()) {
-                    assertEquals(walkdescr.toString(), expected.previous(), testing.previous());
+                    assertEquals(expected.previous(), testing.previous());
                 }
             }
-            assertEquals(walkdescr.toString(), expected.nextIndex(), testing.nextIndex());
-            assertEquals(walkdescr.toString(), expected.previousIndex(), testing.previousIndex());
+            assertEquals(expected.nextIndex(), testing.nextIndex());
+            assertEquals(expected.previousIndex(), testing.previousIndex());
         }
-
     }
-
 }

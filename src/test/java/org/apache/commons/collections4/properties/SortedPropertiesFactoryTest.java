@@ -17,7 +17,8 @@
 
 package org.apache.commons.collections4.properties;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.Test;
 
 public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
@@ -29,6 +30,6 @@ public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<S
     @Override
     @Test
     public void testInstance() {
-        Assert.assertNotNull(SortedPropertiesFactory.INSTANCE);
+        assertNotNull(SortedPropertiesFactory.INSTANCE);
     }
 }

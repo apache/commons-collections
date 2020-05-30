@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,8 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 
 import org.apache.commons.collections4.multiset.HashMultiSet;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MultiSetUtils.
@@ -36,7 +36,7 @@ public class MultiSetUtilsTest {
     private String[] fullArray;
     private MultiSet<String> multiSet;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fullArray = new String[]{
             "a", "a", "b", "c", "d", "d", "d"

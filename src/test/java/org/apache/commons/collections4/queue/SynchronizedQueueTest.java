@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 
 import junit.framework.Test;
 
@@ -52,7 +52,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
         return SynchronizedQueue.synchronizedQueue(new LinkedList<T>());
     }
 
-    @Ignore("Run once")
+    @Disabled("Run once")
     public void testCreate() throws Exception {
         Queue<T> queue = makeObject();
         writeExternalFormToDisk((java.io.Serializable) queue, "src/test/resources/data/test/SynchronizedQueue.emptyCollection.version4.2.obj");

@@ -16,8 +16,10 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,8 +29,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Predicate;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PredicatedCollection.Builder class.
@@ -44,7 +45,7 @@ public class PredicatedCollectionBuilderTest {
     public void addPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test");
-        Assert.assertEquals(builder.createPredicatedList().size(), 1);
+        assertEquals(builder.createPredicatedList().size(), 1);
     }
 
     /**
@@ -54,9 +55,9 @@ public class PredicatedCollectionBuilderTest {
     public void addFail() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
-        Assert.assertTrue(builder.createPredicatedList().isEmpty());
+        assertTrue(builder.createPredicatedList().isEmpty());
 
-        Assert.assertEquals(1, builder.rejectedElements().size());
+        assertEquals(1, builder.rejectedElements().size());
     }
 
     /**
@@ -66,7 +67,7 @@ public class PredicatedCollectionBuilderTest {
     public void addAllPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.addAll(Arrays.asList("test1", null, "test2"));
-        Assert.assertEquals(builder.createPredicatedList().size(), 2);
+        assertEquals(builder.createPredicatedList().size(), 2);
     }
 
     @Test
@@ -89,10 +90,10 @@ public class PredicatedCollectionBuilderTest {
     }
 
     private void checkPredicatedCollection1(final Collection<String> collection) {
-        Assert.assertEquals(1, collection.size());
+        assertEquals(1, collection.size());
 
         collection.add("test2");
-        Assert.assertEquals(2, collection.size());
+        assertEquals(2, collection.size());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             collection.add(null);
@@ -123,16 +124,16 @@ public class PredicatedCollectionBuilderTest {
     }
 
     private void checkPredicatedCollection2(final Collection<Integer> collection) {
-        Assert.assertEquals(2, collection.size());
+        assertEquals(2, collection.size());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             collection.add(4);
         });
         assertNotNull(exception.getMessage());
-        Assert.assertEquals(2, collection.size());
+        assertEquals(2, collection.size());
 
         collection.add(5);
-        Assert.assertEquals(3, collection.size());
+        assertEquals(3, collection.size());
     }
 
     private static class OddPredicate implements Predicate<Integer> {

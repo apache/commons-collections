@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher.function;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the signature of a hash function.

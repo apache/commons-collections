@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link StaticHasher}.

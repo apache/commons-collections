@@ -21,7 +21,7 @@ import static org.apache.commons.collections4.functors.ComparatorPredicate.*;
 import java.util.Comparator;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 public class ComparatorPredicateTest extends AbstractPredicateTest {

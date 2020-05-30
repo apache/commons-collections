@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -111,7 +115,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> list2 = new LinkedList<>();
 
-        assertEquals("Comparator cannot sort empty lists", list2, list);
+        assertEquals(list2, list);
     }
 
     /**
@@ -127,7 +131,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList);
     }
 
     /**
@@ -150,7 +154,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         }
         */
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList);
     }
 
     /**
@@ -159,8 +163,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
-        assertTrue("This comparator should be Serializable.",
-                   comparator instanceof Serializable);
+        assertTrue(comparator instanceof Serializable);
     }
 
     public String getCanonicalComparatorName(final Object object) {
@@ -213,7 +216,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
             final List<T> orderedList = getComparableObjectsOrdered();
 
-            assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+            assertEquals(orderedList, randomList);
         }
     }
 }

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -51,9 +52,8 @@ import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for CollectionUtils.
@@ -116,7 +116,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     private final Collection<Integer> emptyCollection = new ArrayList<>(1);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         collectionA = new ArrayList<>();
         collectionA.add(1);
@@ -1463,7 +1463,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // rejected contains 1, 3, and 4
         final Integer[] expected = {1, 3, 4};
-        Assert.assertArrayEquals(expected, rejected.toArray());
+        assertArrayEquals(expected, rejected.toArray());
 
         output.clear();
         rejected.clear();

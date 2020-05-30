@@ -37,7 +37,7 @@ import java.util.Properties;
 
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class EmptyPropertiesTest {
 

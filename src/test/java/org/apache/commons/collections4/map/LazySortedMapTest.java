@@ -96,14 +96,11 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("First key should be A", "A", map.firstKey());
-        assertEquals("Last key should be C", "C", map.lastKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("C").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("A", "C").lastKey());
+        assertEquals("A", map.firstKey());
+        assertEquals("C", map.lastKey());
+        assertEquals("B", map.tailMap("B").firstKey());
+        assertEquals("B", map.headMap("C").lastKey());
+        assertEquals("B", map.subMap("A", "C").lastKey());
 
         final Comparator<?> c = map.comparator();
         assertNull(c);
@@ -114,14 +111,11 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("Last key should be A", "A", map.lastKey());
-        assertEquals("First key should be C", "C", map.firstKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("A").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("C", "A").lastKey());
+        assertEquals("A", map.lastKey());
+        assertEquals("C", map.firstKey());
+        assertEquals("B", map.tailMap("B").firstKey());
+        assertEquals("B", map.headMap("A").lastKey());
+        assertEquals("B", map.subMap("C", "A").lastKey());
 
         final Comparator<?> c = map.comparator();
         assertTrue(c == reverseStringComparator);

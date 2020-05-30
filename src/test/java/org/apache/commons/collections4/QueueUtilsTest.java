@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,7 +29,7 @@ import org.apache.commons.collections4.queue.PredicatedQueue;
 import org.apache.commons.collections4.queue.SynchronizedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;
 import org.apache.commons.collections4.queue.UnmodifiableQueue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for QueueUtils factory methods.
@@ -61,7 +61,7 @@ public class QueueUtilsTest {
         });
         assertTrue(exception.getMessage().contains("collection"));
 
-        assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
+        assertSame(queue, QueueUtils.unmodifiableQueue(queue));
     }
 
     @Test

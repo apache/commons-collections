@@ -40,7 +40,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.NullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PredicateUtils class.

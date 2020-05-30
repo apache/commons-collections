@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +38,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the TransformerUtils class.
@@ -441,12 +441,9 @@ public class TransformerUtilsTest {
 
     @Test
     public void testStringValueTransformer() {
-        assertNotNull( "StringValueTransformer should NEVER return a null value.",
-            TransformerUtils.stringValueTransformer().transform(null));
-        assertEquals( "StringValueTransformer should return \"null\" when given a null argument.", "null",
-            TransformerUtils.stringValueTransformer().transform(null));
-        assertEquals( "StringValueTransformer should return toString value", "6",
-            TransformerUtils.stringValueTransformer().transform(6));
+        assertNotNull(TransformerUtils.stringValueTransformer().transform(null));
+        assertEquals("null", TransformerUtils.stringValueTransformer().transform(null));
+        assertEquals("6", TransformerUtils.stringValueTransformer().transform(6));
     }
 
     // instantiateFactory

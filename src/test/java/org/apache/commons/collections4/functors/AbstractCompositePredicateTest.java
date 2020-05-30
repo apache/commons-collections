@@ -26,8 +26,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Test;
 
+import org.junit.jupiter.api.Test;
 /**
  * Base class for tests of composite predicates.
  *

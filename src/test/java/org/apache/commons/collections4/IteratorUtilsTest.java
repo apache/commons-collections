@@ -47,8 +47,8 @@ import java.util.LinkedHashSet;
 
 import org.apache.commons.collections4.iterators.*;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -133,7 +133,7 @@ public class IteratorUtilsTest {
         return IteratorUtils.unmodifiableListIterator(list.listIterator());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         collectionA = new ArrayList<>();
         collectionA.add(1);

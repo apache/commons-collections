@@ -36,8 +36,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IterableUtils.
@@ -61,7 +61,7 @@ public class IterableUtilsTest {
      */
     private Iterable<Integer> emptyIterable = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         final Collection<Integer> collectionA = new ArrayList<>();
         collectionA.add(1);

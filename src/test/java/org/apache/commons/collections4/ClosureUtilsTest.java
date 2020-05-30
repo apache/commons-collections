@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,7 +33,7 @@ import org.apache.commons.collections4.functors.ExceptionClosure;
 import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPClosure;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ClosureUtils class.
@@ -80,8 +80,7 @@ public class ClosureUtilsTest {
             Exception exception = assertThrows(FunctorException.class, () -> {
                 ClosureUtils.exceptionClosure().execute(cString);
             });
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains("ExceptionClosure invoked"));
+            assertTrue(exception.getMessage().contains("ExceptionClosure invoked"));
         }
     }
 
@@ -141,20 +140,17 @@ public class ClosureUtilsTest {
         Exception exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.whileClosure(null, ClosureUtils.nopClosure());
         });
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicate"));
+        assertTrue(exception.getMessage().contains("predicate"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closure"));
+        assertTrue(exception.getMessage().contains("closure"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.whileClosure(null, null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicate"));
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // doWhileClosure
@@ -173,8 +169,7 @@ public class ClosureUtilsTest {
         Exception exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.doWhileClosure(null, null);
         });
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicate"));
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // chainedClosure
@@ -211,26 +206,22 @@ public class ClosureUtilsTest {
         Exception exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.chainedClosure(null, null);
         });
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closures[0]"));
+        assertTrue(exception.getMessage().contains("closures[0]"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<Object>chainedClosure((Closure[]) null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closures"));
+        assertTrue(exception.getMessage().contains("closures"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closures"));
+        assertTrue(exception.getMessage().contains("closures"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<Object>chainedClosure(null, null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closures"));
+        assertTrue(exception.getMessage().contains("closures"));
 
         final Collection<Closure<Object>> collection = new ArrayList<>();
         collection.add(null);
@@ -238,8 +229,7 @@ public class ClosureUtilsTest {
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.chainedClosure(collection);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("closures"));
+        assertTrue(exception.getMessage().contains("closures"));
     }
 
     // ifClosure
@@ -340,33 +330,29 @@ public class ClosureUtilsTest {
         Exception exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.switchClosure(null, null);
         });
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicates"));
+        assertTrue(exception.getMessage().contains("predicates"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<String>switchClosure((Predicate<String>[]) null, (Closure<String>[]) null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicates"));
+        assertTrue(exception.getMessage().contains("predicates"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<String>switchClosure((Map<Predicate<String>, Closure<String>>) null);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicatesAndClosures"));
+        assertTrue(exception.getMessage().contains("predicatesAndClosures"));
 
         exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.<String>switchClosure(new Predicate[2], new Closure[2]);
         });
-        actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("predicates[0]"));
+        assertTrue(exception.getMessage().contains("predicates[0]"));
 
         exception = assertThrows(IllegalArgumentException.class, () -> {
             ClosureUtils.<String>switchClosure(
                     new Predicate[] { TruePredicate.<String>truePredicate() },
                     new Closure[] { a, b });
         });
-        assertTrue(actualMessage.contains("predicates"));
+        assertNotNull(exception.getMessage());
     }
 
     // switchMapClosure
@@ -409,8 +395,7 @@ public class ClosureUtilsTest {
         Exception exception = assertThrows(NullPointerException.class, () -> {
             ClosureUtils.switchMapClosure(null);
         });
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("objectsAndClosures"));
+        assertTrue(exception.getMessage().contains("objectsAndClosures"));
     }
 
     // asClosure

@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,8 +34,8 @@ import java.util.List;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ListUtils.
@@ -53,7 +53,7 @@ public class ListUtilsTest {
     private String[] fullArray;
     private List<String> fullList;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fullArray = new String[]{a, b, c, d, e};
         fullList = new ArrayList<>(Arrays.asList(fullArray));

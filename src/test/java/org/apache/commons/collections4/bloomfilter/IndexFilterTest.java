@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,8 +24,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentityIm
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,12 +89,12 @@ public class IndexFilterTest {
 
         IndexFilters.distinctIndexes(hasher, shape, actual::add);
 
-        Assert.assertEquals(expected.size(), actual.size());
+        assertEquals(expected.size(), actual.size());
         // Check the array has all the values.
         // We do not currently check the order of indexes from the
         // hasher.iterator() function.
         for (Integer index : actual) {
-            Assert.assertTrue(expected.contains(index));
+            assertTrue(expected.contains(index));
         }
     }
 }

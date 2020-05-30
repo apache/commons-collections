@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,7 +31,7 @@ import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.bag.UnmodifiableBag;
 import org.apache.commons.collections4.bag.UnmodifiableSortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for BagUtils factory methods.
@@ -65,7 +65,7 @@ public class BagUtilsTest {
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("collection"));
 
-        assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
+        assertSame(bag, BagUtils.unmodifiableBag(bag));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class BagUtilsTest {
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("collection"));
 
-        assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
+        assertSame(bag, BagUtils.unmodifiableSortedBag(bag));
     }
 
     @Test

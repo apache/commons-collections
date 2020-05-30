@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.Assert.assertSame;
 
 import java.util.Map;
 
