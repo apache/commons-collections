@@ -177,6 +177,9 @@
     <action dev="ggregory" type="update" due-to="dengliming">
       Remove deprecated sudo setting. #161.
     </action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">
+      Update tests from commons-io:commons-io 2.6 to 2.7.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">

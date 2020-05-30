@@ -687,7 +687,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     /**
      * Compare the current serialized form of the MultiSet
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testEmptyMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
@@ -701,7 +701,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     /**
      * Compare the current serialized form of the MultiSet
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testFullMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved

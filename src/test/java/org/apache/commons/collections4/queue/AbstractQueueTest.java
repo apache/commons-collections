@@ -341,7 +341,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Compare the current serialized form of the Queue
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
     public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
@@ -364,7 +364,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Compare the current serialized form of the Queue
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
     public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
