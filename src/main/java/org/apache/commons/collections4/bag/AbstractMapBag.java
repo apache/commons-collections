@@ -579,7 +579,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Gets a hash code for the Bag compatible with the definition of equals.
      * The hash code is defined as the sum total of a hash code for each
      * element. The per element hash code is defined as
-     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurances)}. This hash code
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}. This hash code
      * is compatible with the Set interface.
      *
      * @return the hash code of the Bag

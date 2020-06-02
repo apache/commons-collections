@@ -191,7 +191,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             }
             findNext(next);
         }
-        // if we havn't found the next value and iterators are not yet exhausted
+        // if we haven't found the next value and iterators are not yet exhausted
         if (!hasNext && !stack.isEmpty()) {
             // current iterator exhausted, go up a level
             currentIterator = stack.pop();

@@ -279,7 +279,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     }
 
     /**
-     * Deregisters a cursor from the list to be notified of changes.
+     * Deregister a cursor from the list to be notified of changes.
      *
      * @param cursor  the cursor to deregister
      */
