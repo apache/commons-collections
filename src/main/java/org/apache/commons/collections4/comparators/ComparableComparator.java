@@ -30,10 +30,10 @@ import java.util.Comparator;
  * <p>
  * Note: In the 2.0 and 2.1 releases of Commons Collections, this class would
  * throw a {@link ClassCastException} if either of the arguments to
- * {@link #compare(E, E) compare} were {@code null}, not
+ * {@link #compare(Object, Object) compare} were {@code null}, not
  * {@link Comparable Comparable}, or for which
  * {@link Comparable#compareTo(Object) compareTo} gave inconsistent results.
- * This is no longer the case. See {@link #compare(E, E) compare} for
+ * This is no longer the case. See {@link #compare(Object, Object) compare} for
  * details.
  * </p>
  *
