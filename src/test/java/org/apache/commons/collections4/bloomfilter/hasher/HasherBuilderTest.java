@@ -73,7 +73,7 @@ public class HasherBuilderTest {
      * Tests that adding unencoded CharSequence items works correctly.
      */
     @Test
-    public void withUnecodedCharSequenceTest() {
+    public void withUnencodedCharSequenceTest() {
         final String ascii = "plain";
         final String extended = getExtendedString();
         for (final String s : new String[] {ascii, extended}) {

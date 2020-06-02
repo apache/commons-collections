@@ -313,8 +313,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) queue);
-        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) queue);
+        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both queues are empty", 0, queue.size());
         assertEquals("Both queues are empty", 0, queue2.size());
@@ -328,8 +328,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) queue);
-        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) queue);
+        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both queues are same size", size, queue.size());
         assertEquals("Both queues are same size", size, queue2.size());
@@ -341,7 +341,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         Queue queue = makeEmptyQueue();
         if (!(queue instanceof Serializable)) return;
@@ -364,7 +364,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         Queue queue = makeFullQueue();
         if (!(queue instanceof Serializable)) return;

@@ -94,7 +94,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertTrue(keys.contains(Integer.toString(20)));
         assertEquals(4, keys.size());
         assertTrue(!caseInsensitiveMap.containsValue("One")
-            || !caseInsensitiveMap.containsValue("Three")); // ones collaped
+            || !caseInsensitiveMap.containsValue("Three")); // ones collapsed
         assertEquals("Four", caseInsensitiveMap.get(null));
     }
 

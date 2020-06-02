@@ -85,7 +85,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @throws ClassCastException if deserialised object has wrong type
+     * @throws ClassCastException if deserialized object has wrong type
      */
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
