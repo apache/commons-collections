@@ -71,8 +71,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Constructs a new {@link org.apache.commons.collections4.Trie org.apache.commons.collections4.Trie Trie}
-     * using the given {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie Trie}
+     * Constructs a new {@link org.apache.commons.collections4.Trie}
+     * using the given {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie}
      * with the values from the provided {@link Map}.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer,
@@ -103,7 +103,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * A helper method to increment the {@link Trie} size and the modification counter.
+     * A helper method to increment the {@link org.apache.commons.collections4.Trie} size and the modification counter.
      */
     void incrementSize() {
         size++;
@@ -111,7 +111,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * A helper method to decrement the {@link Trie} size and increment the modification counter.
+     * A helper method to decrement the {@link org.apache.commons.collections4.Trie} size and increment the modification counter.
      */
     void decrementSize() {
         size--;
@@ -187,7 +187,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Adds the given {@link TrieEntry} to the {@link Trie}.
+     * Adds the given {@link TrieEntry} to the {@link org.apache.commons.collections4.Trie}.
      */
     TrieEntry<K, V> addEntry(final TrieEntry<K, V> entry, final int lengthInBits) {
         TrieEntry<K, V> current = root.left;
@@ -341,10 +341,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         return entry.getValue();
     }
 
-    /**
-     * This is equivalent to the other {@link #selectR(TrieEntry, int, Object, int, Cursor, Reference)}
-     * method but without its overhead because we're selecting only one best matching Entry from the {@link Trie}.
-     */
     private boolean selectR(final TrieEntry<K, V> h, final int bitIndex,
                             final K key, final int lengthInBits,
                             final Reference<Map.Entry<K, V>> reference) {
@@ -468,7 +464,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Removes a single entry from the {@link Trie}.
+     * Removes a single entry from the {@link org.apache.commons.collections4.Trie}.
      *
      * If we found a Key (Entry h) then figure out if it's
      * an internal (hard to remove) or external Entry (easy
@@ -488,7 +484,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Removes an external entry from the {@link Trie}.
+     * Removes an external entry from the {@link org.apache.commons.collections4.Trie}.
      *
      * If it's an external Entry then just remove it.
      * This is very easy and straight forward.
@@ -519,7 +515,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Removes an internal entry from the {@link Trie}.
+     * Removes an internal entry from the {@link org.apache.commons.collections4.Trie}.
      *
      * If it's an internal Entry then "good luck" with understanding
      * this code. The Idea is essentially that Entry p takes Entry h's
@@ -734,7 +730,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Returns the first entry the {@link Trie} is storing.
+     * Returns the first entry the {@link org.apache.commons.collections4.Trie} is storing.
      * <p>
      * This is implemented by going always to the left until
      * we encounter a valid uplink. That uplink is the first key.
@@ -824,14 +820,14 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Returns a view of this {@link Trie} of all elements that are prefixed
+     * Returns a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
      * <p>
      * The view that this returns is optimized to have a very efficient
      * {@link Iterator}. The {@link SortedMap#firstKey()},
      * {@link SortedMap#lastKey()} &amp; {@link Map#size()} methods must
      * iterate over all possible values in order to determine the results.
-     * This information is cached until the PATRICIA {@link Trie} changes.
+     * This information is cached until the PATRICIA {@link org.apache.commons.collections4.Trie} changes.
      * All other methods (except {@link Iterator}) must compare the given
      * key to the prefix to ensure that it is within the range of the view.
      * The {@link Iterator}'s remove method must also relocate the subtree
@@ -841,7 +837,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * @param key  the key to use in the search
      * @param offsetInBits  the prefix offset
      * @param lengthInBits  the number of significant prefix bits
-     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     * @return a {@link SortedMap} view of this {@link org.apache.commons.collections4.Trie} with all elements whose
      *   key is prefixed by the search key
      */
     private SortedMap<K, V> getPrefixMapByBits(final K key, final int offsetInBits, final int lengthInBits) {
@@ -1141,7 +1137,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Returns the last entry the {@link Trie} is storing.
+     * Returns the last entry the {@link org.apache.commons.collections4.Trie} is storing.
      *
      * <p>This is implemented by going always to the right until
      * we encounter a valid uplink. That uplink is the last key.
@@ -1380,7 +1376,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
 
     /**
-     * This is a entry set view of the {@link Trie} as returned by {@link Map#entrySet()}.
+     * This is a entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
      */
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
@@ -1434,7 +1430,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * This is a key set view of the {@link Trie} as returned by {@link Map#keySet()}.
+     * This is a key set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#keySet()}.
      */
     private class KeySet extends AbstractSet<K> {
 
@@ -1477,7 +1473,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * This is a value view of the {@link Trie} as returned by {@link Map#values()}.
+     * This is a value view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#values()}.
      */
     private class Values extends AbstractCollection<V> {
 
@@ -1598,7 +1594,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * An {@link OrderedMapIterator} for a {@link Trie}.
+     * An {@link OrderedMapIterator} for a {@link org.apache.commons.collections4.Trie}.
      */
     private class TrieMapIterator extends TrieIterator<K> implements OrderedMapIterator<K, V> {
 
@@ -1669,7 +1665,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * A range view of the {@link Trie}.
+     * A range view of the {@link org.apache.commons.collections4.Trie}.
      */
     private abstract class RangeMap extends AbstractMap<K, V>
             implements SortedMap<K, V> {
@@ -2077,7 +2073,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * A submap used for prefix views over the {@link Trie}.
+     * A submap used for prefix views over the {@link org.apache.commons.collections4.Trie}.
      */
     private class PrefixRangeMap extends RangeMap {
 
@@ -2108,7 +2104,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          * This method does two things. It determines the FROM
          * and TO range of the {@link PrefixRangeMap} and the number
          * of elements in the range. This method must be called every
-         * time the {@link Trie} has changed.
+         * time the {@link org.apache.commons.collections4.Trie} has changed.
          */
         private int fixup() {
             // The trie has changed since we last found our toKey / fromKey
@@ -2262,7 +2258,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * A prefix {@link RangeEntrySet} view of the {@link Trie}.
+     * A prefix {@link RangeEntrySet} view of the {@link org.apache.commons.collections4.Trie}.
      */
     private final class PrefixRangeEntrySet extends RangeEntrySet {
 

@@ -29,7 +29,7 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * all data at the edges of the {@link org.apache.commons.collections4.Trie}
  * (and having empty internal nodes), PATRICIA stores data in every node.
  * This allows for very efficient traversal, insert, delete, predecessor,
- * successor, prefix, range, and {@link #select(Object)}
+ * successor, prefix, range, and {@link #select(String)}
  * operations. All operations are performed at worst in O(K) time, where K
  * is the number of bits in the largest item in the tree. In practice,
  * operations actually take O(A(K)) time, where A(K) is the average number of
@@ -51,7 +51,7 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * </p>
  * <p>
  * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
- * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
+ * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(String)}
  * are suited only to variable length keys.
  * </p>
  *

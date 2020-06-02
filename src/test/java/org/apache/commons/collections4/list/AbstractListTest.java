@@ -1072,7 +1072,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         List list = makeEmptyList();
         if (!(list instanceof Serializable)) return;
@@ -1096,7 +1096,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testFullListCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         List list = makeFullList();
         if (!(list instanceof Serializable)) return;
