@@ -129,7 +129,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * Compare the current serialized form of the Bag
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
@@ -143,7 +143,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * Compare the current serialized form of the Bag
-     * against the canonical version in SVN.
+     * against the canonical version in SCM.
      */
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
