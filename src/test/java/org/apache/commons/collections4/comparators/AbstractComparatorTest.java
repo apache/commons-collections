@@ -29,7 +29,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.junit.Test;
 
 /**
  * Abstract test class for testing the Comparator interface.
@@ -108,7 +107,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Test sorting an empty list
      */
-    @Test
     public void testEmptyListSort() {
         final List<T> list = new LinkedList<>();
         sortObjects(list, makeObject());
@@ -121,7 +119,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Test sorting a reversed list.
      */
-    @Test
     public void testReverseListSort() {
         final Comparator<T> comparator = makeObject();
 
@@ -137,7 +134,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Test sorting a random list.
      */
-    @Test
     public void testRandomListSort() {
         final Comparator<T> comparator = makeObject();
 
@@ -160,7 +156,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Nearly all Comparators should be Serializable.
      */
-    @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
         assertTrue(comparator instanceof Serializable);
@@ -183,7 +178,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
-    @Test
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;

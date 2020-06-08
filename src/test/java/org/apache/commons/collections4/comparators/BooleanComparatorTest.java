@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
 
 
 
@@ -72,14 +71,12 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // tests
     // ------------------------------------------------------------------------
 
-    @Test
     public void testConstructors() {
         allTests(false, new BooleanComparator());
         allTests(false, new BooleanComparator(false));
         allTests(true, new BooleanComparator(true));
     }
 
-    @Test
     public void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
         allTests(false, BooleanComparator.booleanComparator(false));
@@ -87,7 +84,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         allTests(true, BooleanComparator.booleanComparator(true));
     }
 
-    @Test
     public void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), new BooleanComparator(false));

@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Test;
 
 /**
  * Test class for FixedOrderComparator.
@@ -87,7 +86,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Tests that the constructor plus add method compares items properly.
      */
-    @Test
     public void testConstructorPlusAdd() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>();
         for (final String topCitie : topCities) {
@@ -100,7 +98,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Tests that the array constructor compares items properly.
      */
-    @Test
     public void testArrayConstructor() {
         final String[] keys = topCities.clone();
         final String[] topCitiesForTest = topCities.clone();
@@ -114,7 +111,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Tests the list constructor.
      */
-    @Test
     public void testListConstructor() {
         final String[] keys = topCities.clone();
         final List<String> topCitiesForTest = new LinkedList<>(Arrays.asList(topCities));
@@ -128,7 +124,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Tests addAsEqual method.
      */
-    @Test
     public void testAddAsEqual() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
         comparator.addAsEqual("New York", "Minneapolis");
@@ -140,7 +135,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Tests whether or not updates are disabled after a comparison is made.
      */
-    @Test
     public void testLock() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
         assertFalse(comparator.isLocked());
@@ -157,7 +151,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertTrue(exception.getMessage().contains("Cannot modify a FixedOrderComparator after a comparison"));
     }
 
-    @Test
     public void testUnknownObjectBehavior() {
         final FixedOrderComparator<String> fixedOrderComparator = new FixedOrderComparator<>(topCities);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

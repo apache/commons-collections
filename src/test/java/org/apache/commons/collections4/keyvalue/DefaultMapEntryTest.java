@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**

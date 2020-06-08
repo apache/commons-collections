@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
 
 /**
  * Tests for ReverseComparator.
@@ -78,7 +77,6 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
      * already "canonized" the comparator returned by makeComparator.
      */
     @Override
-    @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<String>());
 

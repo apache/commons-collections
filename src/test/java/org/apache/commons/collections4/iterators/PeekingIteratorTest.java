@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
 /**
  * Tests the PeekingIterator.
@@ -71,13 +70,11 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     //-----------------------------------------------------------------------
 
-    @Test
     public void testEmpty() {
         final Iterator<E> it = makeEmptyIterator();
         assertFalse(it.hasNext());
     }
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testSinglePeek() {
         final PeekingIterator<E> it = makeObject();
@@ -86,7 +83,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         validate(it, (E[]) testArray);
     }
 
-    @Test
     public void testMultiplePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
@@ -103,7 +99,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
     }
 
-    @Test
     public void testIteratorExhausted() {
         final PeekingIterator<E> it = makeObject();
         it.next();
@@ -118,7 +113,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertNull(exception.getMessage());
     }
 
-    @Test
     public void testIllegalRemove() {
         final PeekingIterator<E> it = makeObject();
         it.next();

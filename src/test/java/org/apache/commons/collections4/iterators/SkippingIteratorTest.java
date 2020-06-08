@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
 /**
  * A unit test to test the basic functions of {@link SkippingIterator}.
@@ -73,7 +72,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * at an index greater its first element, and the last element returned is
      * at an index less than its last element.
      */
-    @Test
     public void testSkipping() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 2);
 
@@ -100,7 +98,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * zero, in that the SkippingIterator should return all the same elements
      * as its decorated iterator.
      */
-    @Test
     public void testSameAsDecorated() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 0);
 
@@ -131,7 +128,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * greater than the decorated iterator's size. The SkippingIterator should
      * behave as if there are no more elements to return.
      */
-    @Test
     public void testOffsetGreaterThanSize() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 10);
         assertFalse(iter.hasNext());
@@ -145,7 +141,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test the case if a negative {@code offset} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
      */
-    @Test
     public void testNegativeOffset() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new SkippingIterator<>(testList.iterator(), -1);
@@ -157,7 +152,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test the {@code remove()} method being called without
      * {@code next()} being called first.
      */
-    @Test
     public void testRemoveWithoutCallingNext() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
@@ -172,7 +166,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test the {@code remove()} method being called twice without calling
      * {@code next()} in between.
      */
-    @Test
     public void testRemoveCalledTwice() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
@@ -191,7 +184,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test removing the first element. Verify that the element is removed from
      * the underlying collection.
      */
-    @Test
     public void testRemoveFirst() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 4);
@@ -218,7 +210,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test removing an element in the middle of the iterator. Verify that the
      * element is removed from the underlying collection.
      */
-    @Test
     public void testRemoveMiddle() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 3);
@@ -247,7 +238,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test removing the last element. Verify that the element is removed from
      * the underlying collection.
      */
-    @Test
     public void testRemoveLast() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 5);
@@ -277,7 +267,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test the case if the decorated iterator does not support the
      * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
-    @Test
     public void testRemoveUnsupported() {
         final Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
             @Override

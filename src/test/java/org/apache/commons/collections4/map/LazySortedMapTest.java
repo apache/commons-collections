@@ -32,7 +32,6 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
 
 /**
  * Extension of {@link LazyMapTest} for exercising the
@@ -75,7 +74,6 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         //TODO eliminate need for this via superclass - see svn history.
     }
 
-    @Test
     public void mapGet() {
         Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), oneFactory);
         assertEquals(0, map.size());

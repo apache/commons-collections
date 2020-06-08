@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
 
 /**
  * Tests the PushbackIterator.
@@ -65,7 +64,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     // -----------------------------------------------------------------------
 
-    @Test
     public void testNormalIteration() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
@@ -74,7 +72,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(iter.hasNext());
     }
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testImmediatePushback() {
         final PushbackIterator<E> iter = makeObject();
@@ -84,7 +81,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         validate(iter, "b", "c");
     }
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testDelayedPushback() {
         final PushbackIterator<E> iter = makeObject();
@@ -95,7 +91,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         validate(iter, "c");
     }
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testMultiplePushback() {
         final PushbackIterator<E> iter = makeObject();

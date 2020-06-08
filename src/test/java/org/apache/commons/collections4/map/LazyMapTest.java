@@ -24,7 +24,6 @@ import java.util.Map;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -52,7 +51,6 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         //TODO eliminate need for this via superclass - see svn history.
     }
 
-    @Test
     public void mapGetWithFactory() {
         Map<Integer, Number> map = lazyMap(new HashMap<Integer, Number>(), oneFactory);
         assertEquals(0, map.size());
@@ -70,7 +68,6 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.size());
     }
 
-    @Test
     public void mapGetWithTransformer() {
         final Transformer<Number, Integer> intConverter = Number::intValue;
         final Map<Long, Number> map = lazyMap(new HashMap<Long, Number>(), intConverter);
