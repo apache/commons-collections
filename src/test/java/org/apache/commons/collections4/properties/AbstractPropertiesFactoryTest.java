@@ -18,6 +18,7 @@
 package org.apache.commons.collections4.properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -29,7 +30,7 @@ import java.util.Properties;
 
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Assume;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -72,52 +73,68 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         return ".xml".equals(fileExtention);
     }
 
+    @Test
     public void testInstance() {
         assertNotNull(PropertiesFactory.INSTANCE);
     }
 
+    @Test
     public void testLoadClassLoaderMissingResource() throws Exception {
         assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtention));
     }
 
+    @Test
     public void testLoadClassLoaderResource() throws Exception {
         assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtention));
     }
 
+    @Test
     public void testLoadFile() throws Exception {
         assertContents(factory.load(Paths.get(pathString).toFile()));
     }
 
+    @Test
     public void testLoadFileName() throws Exception {
         assertContents(factory.load(pathString));
     }
 
+    @Test
     public void testLoadInputStream() throws Exception {
         // Can't tell what we are reading
-        Assume.assumeFalse(isXmlTest());
+        if (isXmlTest()) {
+            return;
+        }
+        assertFalse(isXmlTest());
         //
         try (FileInputStream inputStream = new FileInputStream(pathString)) {
             assertContents(factory.load(inputStream));
         }
     }
 
+    @Test
     public void testLoadPath() throws Exception {
         assertContents(factory.load(Paths.get(pathString)));
     }
 
+    @Test
     public void testLoadReader() throws Exception {
         // Can't tell what we are reading
-        Assume.assumeFalse(isXmlTest());
+        if (isXmlTest()) {
+            return;
+        }
+        assertFalse(isXmlTest());
         //
         try (BufferedReader inputStream = Files.newBufferedReader(Paths.get(pathString))) {
             assertContents(factory.load(inputStream));
         }
     }
 
+    @Test
     public void testLoadUri() throws Exception {
         assertContents(factory.load(Paths.get(pathString).toUri()));
     }
 
+    @Test
     public void testLoadUrl() throws Exception {
         assertContents(factory.load(Paths.get(pathString).toUri().toURL()));
     }
