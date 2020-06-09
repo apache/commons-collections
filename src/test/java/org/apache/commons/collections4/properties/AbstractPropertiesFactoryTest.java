@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -109,6 +110,13 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         try (FileInputStream inputStream = new FileInputStream(pathString)) {
             assertContents(factory.load(inputStream));
         }
+    }
+
+    @Test
+    public void testLoadNullInputStream() throws Exception {
+        //Test load null
+        final InputStream inputStream = null;
+        assertNull(factory.load(inputStream));
     }
 
     @Test

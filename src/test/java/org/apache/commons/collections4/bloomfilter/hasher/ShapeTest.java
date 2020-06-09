@@ -376,7 +376,7 @@ public class ShapeTest {
 
         assertEquals(shape, shape);
         assertEquals(shape, new Shape(testFunction, 5, 1.0 / 10));
-        assertNotNull(shape);
+        assertNotEquals(shape, null);
         assertNotEquals(shape, new Shape(testFunction, 5, 1.0 / 11));
         assertNotEquals(shape, new Shape(testFunction, 4, 1.0 / 10));
         // Number of bits does not change equality,

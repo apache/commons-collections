@@ -20,6 +20,7 @@ package org.apache.commons.collections4.properties;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -108,17 +109,25 @@ public class EmptyPropertiesTest {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(PropertiesFactory.EMPTY_PROPERTIES));
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(new Properties()));
         assertTrue(new Properties().equals(PropertiesFactory.EMPTY_PROPERTIES));
-        assertNotNull(PropertiesFactory.EMPTY_PROPERTIES);
+        assertNotEquals(PropertiesFactory.EMPTY_PROPERTIES, null);
         final Properties p = new Properties();
         p.put("Key", "Value");
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(p));
         assertFalse(p.equals(PropertiesFactory.EMPTY_PROPERTIES));
     }
 
+    @Test
     public void testForEach() {
         PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }
 
+    @Test
+    public void testForEachWithNull() {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PropertiesFactory.EMPTY_PROPERTIES.forEach(null);
+        });
+        assertNull(exception.getMessage());
+    }
     @Test
     public void testGet() {
         assertNull(PropertiesFactory.EMPTY_PROPERTIES.get("foo"));
@@ -256,7 +265,7 @@ public class EmptyPropertiesTest {
     @Test
     public void testRehash() {
         // Can't really test without extending and casting to a currently private class
-        // PropertiesFactory.EMPTY_PROPERTIES.rehash();
+        //PropertiesFactory.EMPTY_PROPERTIES.rehash();
     }
 
     @Test
