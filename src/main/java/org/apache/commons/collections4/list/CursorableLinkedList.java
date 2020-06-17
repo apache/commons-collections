@@ -535,9 +535,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * @param node  the node that was added
          */
         protected void nodeInserted(final Node<E> node) {
-            if (node.previous == current) {
-                next = node;
-            } else if (next.previous == node) {
+            if ((node.previous == current) || (next.previous == node)) {
                 next = node;
             } else {
                 nextIndexValid = false;
