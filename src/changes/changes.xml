@@ -145,7 +145,7 @@
       Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Update tests from Apache Commons Lang 3.9 to 3.10.
+      Update tests from Apache Commons Lang 3.9 to 3.11.
     </action>
     <action dev="ggregory" type="update" due-to="Chen">
       Fixed the typo and deal the NPE with Objects.requireNonNull #118.
