@@ -39,7 +39,7 @@ import org.apache.commons.collections4.BoundedCollection;
  * were added.  The iteration order is the same as the removal order.
  * </p>
  * <p>
- * The {@link #add(Object)}, {@link #remove()}, {@link #peek()}, {@link #poll},
+ * The {@link #add(Object)}, {@link #remove()}, {@link #peek()}, {@link #poll()},
  * {@link #offer(Object)} operations all perform in constant time.
  * All other operations perform in linear time or worse.
  * </p>
