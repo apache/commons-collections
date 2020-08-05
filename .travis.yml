@@ -31,10 +31,10 @@ jdk:
   - openjdk-ea
 
 script:
-  - mvn
+  - mvn -V --no-transfer-progress
   # japicmp requires a package
-  - mvn jar:jar japicmp:cmp -P japicmp
+  - mvn -V jar:jar japicmp:cmp -P japicmp --no-transfer-progress
 
 after_success:
   # jacoco will run in the main script. Include the profile to submit to coveralls.
-  - mvn jacoco:report coveralls:report -Ptravis-jacoco
+  - mvn -V jacoco:report coveralls:report -Ptravis-jacoco --no-transfer-progress
