@@ -613,6 +613,7 @@
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
             <exclude>site-content/**/*</exclude>
             <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
           </excludes>
