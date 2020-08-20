@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-708" dev="kinow" type="fix" due-to="dota17">
+      Add hashCode method to CollectionUtils that supports an equator parameter.
+    </action>
     <action issue="COLLECTIONS-759" dev="kinow" type="fix">
       Fix checkstyle issues regarding missing newline at end of file, and CRLF vs LF.
     </action>

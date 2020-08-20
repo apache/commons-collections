@@ -644,6 +644,33 @@ public class CollectionUtils {
     }
 
     /**
+     * Returns the hash code of the input collection using the hash method of an equator.
+     *
+     * <p>
+     * Returns 0 if the input collection is {@code null}.
+     * </p>
+     *
+     * @param <E>  the element type
+     * @param collection  the input collection
+     * @param equator  the equator used for generate hashCode
+     * @return the hash code of the input collection using the hash method of an equator
+     * @throws NullPointerException if the equator is {@code null}
+     * @since 4.5
+     */
+    public static <E> int hashCode(final Collection<? extends E> collection,
+            final Equator<? super E> equator) {
+        Objects.requireNonNull(equator, "equator");
+        if (null == collection) {
+            return 0;
+        }
+        int hashCode = 1;
+        for (final E e : collection) {
+            hashCode = 31 * hashCode + equator.hash(e);
+        }
+        return hashCode;
+    }
+
+    /**
      * Wraps another object and uses the provided Equator to implement
      * {@link #equals(Object)} and {@link #hashCode()}.
      * <p>
