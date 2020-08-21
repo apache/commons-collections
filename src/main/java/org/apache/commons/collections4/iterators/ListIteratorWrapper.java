@@ -203,7 +203,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Throws {@link UnsupportedOperationException} if {@link #previous()} has ever been called.
+     * Throws {@link UnsupportedOperationException} if {@link #previous()} has never been called.
      *
      * @throws UnsupportedOperationException always
      */
