@@ -203,12 +203,13 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Throws {@link UnsupportedOperationException} if {@link #previous()} has never been called.
+     * Removes the last element that was returned by {@link #next()} or {@link #previous()} from the underlying collection.
+     * This call can only be made once per call to {@code next} or {@code previous} and only if {@link #add()} was not called in between.
      *
-     * @throws UnsupportedOperationException always
+     * @throws IllegalStateException if {@code next} or {@code previous} have not been called before, or if {@code remove} or {@code add} have been called after the last call to {@code next} or {@code previous}
      */
     @Override
-    public void remove() throws UnsupportedOperationException {
+    public void remove() throws IllegalStateException {
         if (iterator instanceof ListIterator) {
             iterator.remove();
             return;
