@@ -194,7 +194,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Gets the {@link Comparator} by which collatation occurs.
+     * Gets the {@link Comparator} by which collation occurs.
      *
      * @return the {@link Comparator}
      */
@@ -383,8 +383,8 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Returns {@code true} iff any {@link Iterator} in the given list has
      * a next value.
      */
-    private boolean anyHasNext(final List<Iterator<? extends E>> iters) {
-        for (final Iterator<? extends E> iterator : iters) {
+    private boolean anyHasNext(final List<Iterator<? extends E>> iterators) {
+        for (final Iterator<? extends E> iterator : iterators) {
             if (iterator.hasNext()) {
                 return true;
             }

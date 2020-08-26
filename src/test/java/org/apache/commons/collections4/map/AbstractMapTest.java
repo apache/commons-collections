@@ -750,7 +750,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * against the canonical version in SCM.
      */
     public void testEmptyMapCompatibility() throws Exception {
-        /**
+        /*
          * Create canonical objects with this code
         Map map = makeEmptyMap();
         if (!(map instanceof Serializable)) return;
@@ -772,7 +772,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * against the canonical version in SCM.
      */
     public void testFullMapCompatibility() throws Exception {
-        /**
+        /*
          * Create canonical objects with this code
         Map map = makeFullMap();
         if (!(map instanceof Serializable)) return;

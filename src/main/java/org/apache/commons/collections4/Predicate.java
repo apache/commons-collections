@@ -27,7 +27,7 @@ package org.apache.commons.collections4;
  * <p>
  * Standard implementations of common predicates are provided by
  * {@link PredicateUtils}. These include true, false, instanceof, equals, and,
- * or, not, method invokation and null testing.
+ * or, not, method invocation and null testing.
  * </p>
  *
  * @param <T> the type that the predicate queries

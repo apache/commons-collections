@@ -115,13 +115,13 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
         final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         @SuppressWarnings("unchecked")
-        final DualTreeBidiMap<String, Integer> deserialised = (DualTreeBidiMap<String, Integer>) in.readObject();
+        final DualTreeBidiMap<String, Integer> deserialized = (DualTreeBidiMap<String, Integer>) in.readObject();
         in.close();
 
         assertNotNull(original.comparator());
-        assertNotNull(deserialised.comparator());
-        assertEquals(original.comparator().getClass(), deserialised.comparator().getClass());
-        assertEquals(original.valueComparator().getClass(), deserialised.valueComparator().getClass());
+        assertNotNull(deserialized.comparator());
+        assertEquals(original.comparator().getClass(), deserialized.comparator().getClass());
+        assertEquals(original.valueComparator().getClass(), deserialized.valueComparator().getClass());
     }
 
     public void testSortOrder() throws Exception {

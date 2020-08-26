@@ -204,7 +204,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Gets a hash code for the MultiSet compatible with the definition of equals.
      * The hash code is defined as the sum total of a hash code for each element.
      * The per element hash code is defined as
-     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurances)}.
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}.
      *
      * @return the hash code of the MultiSet
      */
@@ -260,7 +260,7 @@ public interface MultiSet<E> extends Collection<E> {
          * <p>
          * The hash code of a multiset entry {@code e} is defined to be:
          * <pre>
-         *      (e==null ? 0 : e.hashCode()) ^ noOccurances)
+         *      (e==null ? 0 : e.hashCode()) ^ noOccurrences)
          * </pre>
          *
          * @return the hash code value for this multiset entry
