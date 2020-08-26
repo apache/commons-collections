@@ -29,10 +29,21 @@ jdk:
   - openjdk-ea
 
 script:
+  - "if [ \"$TRAVIS_JDK_VERSION\" = \"openjdk8\" ]; then"
+  - mvn -V
+  - # japicmp requires a package
+  - mvn -V jar:jar japicmp:cmp -P japicmp
+  - else
   - mvn -V --no-transfer-progress
-  # japicmp requires a package
+  - # japicmp requires a package
   - mvn -V jar:jar japicmp:cmp -P japicmp --no-transfer-progress
+  - fi
 
 after_success:
-  # jacoco will run in the main script. Include the profile to submit to coveralls.
+  - "if [ \"$TRAVIS_JDK_VERSION\" = \"openjdk8\" ]; then"
+  - # jacoco will run in the main script. Include the profile to submit to coveralls.
+  - mvn -V jacoco:report coveralls:report -Ptravis-jacoco
+  - else
+  - # jacoco will run in the main script. Include the profile to submit to coveralls.
   - mvn -V jacoco:report coveralls:report -Ptravis-jacoco --no-transfer-progress
+  - fi
