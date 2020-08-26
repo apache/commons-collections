@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-764" dev="kinow" type="fix" due-to="XenoAmess">
+      Refine javadoc and fix typos.
+    </action>
     <action issue="COLLECTIONS-765" dev="kinow" type="fix" due-to="Tobias Kiecker">
       Update Javadoc of ListIteratorWrapper#remove.
     </action>
