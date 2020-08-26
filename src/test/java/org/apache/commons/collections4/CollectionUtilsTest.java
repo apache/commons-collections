@@ -838,12 +838,12 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(0, CollectionUtils.hashCode(collection, e));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testHashCodeNullEquator() {
         CollectionUtils.hashCode(collectionB, null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsEqualCollectionNullColl1() {
         final Collection<Integer> list = new ArrayList<>(1);
         list.add(1);

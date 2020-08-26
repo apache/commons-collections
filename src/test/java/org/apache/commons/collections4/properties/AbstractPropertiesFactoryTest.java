@@ -81,7 +81,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @Test
     public void testLoadClassLoaderMissingResource() throws Exception {
-        assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtention));
+        assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
     }
 
     @Test
