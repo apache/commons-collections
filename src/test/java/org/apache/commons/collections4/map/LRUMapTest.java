@@ -97,7 +97,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         exception = assertThrows(IllegalArgumentException.class, () -> {
             new LRUMap<K, V>(10, 12);
         });
-        assertTrue(exception.getMessage().contains("LRUMap initial size must not be greather than max size"));
+        assertTrue(exception.getMessage().contains("LRUMap initial size must not be greater than max size"));
 
         exception = assertThrows(IllegalArgumentException.class, () -> {
             new LRUMap<K, V>(10, -1, 0.75f, false);
@@ -107,7 +107,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         exception = assertThrows(IllegalArgumentException.class, () -> {
             new LRUMap<K, V>(10, 12, 0.75f, false);
         });
-        assertTrue(exception.getMessage().contains("LRUMap initial size must not be greather than max size"));
+        assertTrue(exception.getMessage().contains("LRUMap initial size must not be greater than max size"));
     }
 
     public void testLRU() {

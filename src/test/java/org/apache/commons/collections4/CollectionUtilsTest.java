@@ -840,7 +840,11 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testHashCodeNullEquator() {
-        CollectionUtils.hashCode(collectionB, null);
+
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            CollectionUtils.hashCode(collectionB, null);
+        });
+        assertNotNull(exception.getMessage());
     }
 
     @Test
