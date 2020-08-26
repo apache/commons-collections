@@ -29,23 +29,10 @@ jdk:
   - openjdk-ea
 
 script:
+  - mvn -V
   # japicmp requires a package
-  - |
-    if [ "$TRAVIS_ARCH_NAME" = "ppc64le" ];
-    then
-    mvn -V;
-    mvn -V jar:jar japicmp:cmp -P japicmp;
-    else
-    mvn -V --no-transfer-progress;
-    mvn -V jar:jar japicmp:cmp -P japicmp --no-transfer-progress;
-    fi;
+  - mvn -V jar:jar japicmp:cmp -P japicmp
 
 after_success:
   # jacoco will run in the main script. Include the profile to submit to coveralls.
-  - |
-    if [ "$TRAVIS_ARCH_NAME" = "ppc64le" ];
-    then
-    mvn -V jacoco:report coveralls:report -Ptravis-jacoco;
-    else
-    mvn -V jacoco:report coveralls:report -Ptravis-jacoco --no-transfer-progress;
-    fi;
+  - mvn -V jacoco:report coveralls:report -Ptravis-jacoco
