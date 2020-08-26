@@ -47,13 +47,13 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     private final AbstractPropertiesFactory<T> factory;
     private final String pathString;
-    private final String fileExtention;
+    private final String fileExtension;
 
     protected AbstractPropertiesFactoryTest(final AbstractPropertiesFactory<T> factory, final String fileExtension) {
         super();
         this.factory = factory;
-        this.fileExtention = fileExtension;
-        this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtention;
+        this.fileExtension = fileExtension;
+        this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;
     }
 
     private void assertContents(final T properties) {
@@ -71,7 +71,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
     }
 
     private boolean isXmlTest() {
-        return ".xml".equals(fileExtention);
+        return ".xml".equals(fileExtension);
     }
 
     @Test
@@ -86,7 +86,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @Test
     public void testLoadClassLoaderResource() throws Exception {
-        assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtention));
+        assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtension));
     }
 
     @Test

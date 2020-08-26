@@ -155,7 +155,7 @@ public abstract class AbstractBloomFilterTest {
      * Tests that the andCardinality calculations are correct with a generic BloomFilter.
      */
     @Test
-    public final void andCardinalityTest_GenenicBloomFilter() {
+    public final void andCardinalityTest_GenericBloomFilter() {
         andCardinalityTest(this::createGenericFilter);
     }
 
@@ -535,7 +535,7 @@ public abstract class AbstractBloomFilterTest {
      * Tests that the orCardinality calculations are correct with a generic BloomFilter.
      */
     @Test
-    public final void orCardinalityTest_GenenicBloomFilter() {
+    public final void orCardinalityTest_GenericBloomFilter() {
         orCardinalityTest(this::createGenericFilter);
     }
 

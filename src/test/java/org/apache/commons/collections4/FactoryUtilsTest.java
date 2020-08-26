@@ -260,18 +260,18 @@ public class FactoryUtilsTest {
     //------------------------------------------------------------------
 
     /**
-     * Test that all Factory singletones hold singleton pattern in
+     * Test that all Factory singletons hold singleton pattern in
      * serialization/deserialization process.
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletones = new Object[] {
+        final Object[] singletons = new Object[] {
             ExceptionFactory.INSTANCE,
         };
 
-        for (final Object original : singletones) {
+        for (final Object original : singletons) {
             TestUtils.assertSameAfterSerialization(
-                    "Singletone patern broken for " + original.getClass(),
+                    "Singleton pattern broken for " + original.getClass(),
                     original
             );
         }

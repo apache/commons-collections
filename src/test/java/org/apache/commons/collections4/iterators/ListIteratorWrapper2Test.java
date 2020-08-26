@@ -192,7 +192,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
         // after reset, the results should be the same as before
         assertEquals("First element should be the same", first, iter.next());
-        assertEquals("Second elment should be the same", second, iter.next());
+        assertEquals("Second element should be the same", second, iter.next());
 
         // after passing the point, where we resetted, continuation should work as expected
         for (int i = 2; i < testArray.length; i++) {

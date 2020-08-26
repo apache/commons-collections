@@ -766,7 +766,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
 
         /**
-         * This method can be overriden to provide custom logic to purge value
+         * This method can be overridden to provide custom logic to purge value
          */
         protected void nullValue() {
             value = null;

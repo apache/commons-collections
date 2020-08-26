@@ -36,7 +36,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     private Node[] nodes;
 
     // NodeListIterator supports two constructors. This flag allows to
-    // control, which constructor to use in makeObject() and makeEmtpyIterator
+    // control, which constructor to use in makeObject() and makeEmptyIterator
     private boolean createIteratorWithStandardConstr = true;
 
     /**

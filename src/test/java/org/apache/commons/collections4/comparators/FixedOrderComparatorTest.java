@@ -88,8 +88,8 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     public void testConstructorPlusAdd() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>();
-        for (final String topCitie : topCities) {
-            comparator.add(topCitie);
+        for (final String topCity : topCities) {
+            comparator.add(topCity);
         }
         final String[] keys = topCities.clone();
         assertComparatorYieldsOrder(keys, comparator);

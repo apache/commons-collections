@@ -1215,7 +1215,7 @@ public class MapUtilsTest {
         final Map<String, String> in = new HashMap<>();
         in.put("key", "str");
 
-        assertEquals("str", MapUtils.getString(in, "key", "defualt"));
+        assertEquals("str", MapUtils.getString(in, "key", "default"));
         assertEquals("str", MapUtils.getString(in, "key"));
         assertNull(MapUtils.getString(null, "key"));
         assertEquals("default", MapUtils.getString(in, "noKey", "default"));
@@ -1234,7 +1234,7 @@ public class MapUtilsTest {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", "str");
 
-        assertEquals("str", MapUtils.getObject(in, "key", "defualt"));
+        assertEquals("str", MapUtils.getObject(in, "key", "default"));
         assertEquals("str", MapUtils.getObject(in, "key"));
         assertNull(MapUtils.getObject(null, "key"));
         assertEquals("default", MapUtils.getObject(in, "noKey", "default"));

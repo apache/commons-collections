@@ -783,12 +783,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     //------------------------------------------------------------------
 
     /**
-     * Test that all Predicate singletones hold singleton pattern in
+     * Test that all Predicate singletons hold singleton pattern in
      * serialization/deserialization process.
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletones = new Object[] {
+        final Object[] singletons = new Object[] {
             ExceptionPredicate.INSTANCE,
             FalsePredicate.INSTANCE,
             NotNullPredicate.INSTANCE,
@@ -796,9 +796,9 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
             TruePredicate.INSTANCE
         };
 
-        for (final Object original : singletones) {
+        for (final Object original : singletons) {
             TestUtils.assertSameAfterSerialization(
-                    "Singletone patern broken for " + original.getClass(),
+                    "Singleton pattern broken for " + original.getClass(),
                     original
             );
         }

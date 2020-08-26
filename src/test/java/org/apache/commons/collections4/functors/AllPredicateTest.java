@@ -111,7 +111,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     }
 
     /**
-     * Tests whether combining some true and one false evalutes to false.  Also verifies that only the first
+     * Tests whether combining some true and one false evaluates to false.  Also verifies that only the first
      * false predicate is actually evaluated
      */
     @Test

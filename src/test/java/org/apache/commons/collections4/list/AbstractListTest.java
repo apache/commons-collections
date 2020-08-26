@@ -1008,8 +1008,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) list);
-        final List<E> list2 = (List<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) list);
+        final List<E> list2 = (List<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both lists are empty", 0, list.size());
         assertEquals("Both lists are empty", 0, list2.size());
@@ -1023,8 +1023,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) list);
-        final List<E> list2 = (List<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) list);
+        final List<E> list2 = (List<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both lists are same size", size, list.size());
         assertEquals("Both lists are same size", size, list2.size());
@@ -1036,7 +1036,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         List list = makeEmptyList();
         if (!(list instanceof Serializable)) return;
@@ -1060,7 +1060,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testFullListCompatibility() throws IOException, ClassNotFoundException {
-        /**
+        /*
          * Create canonical objects with this code
         List list = makeFullList();
         if (!(list instanceof Serializable)) return;

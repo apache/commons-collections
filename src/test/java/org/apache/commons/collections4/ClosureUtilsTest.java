@@ -422,14 +422,14 @@ public class ClosureUtilsTest {
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletones = new Object[] {
+        final Object[] singletons = new Object[] {
             ExceptionClosure.INSTANCE,
             NOPClosure.INSTANCE,
         };
 
-        for (final Object original : singletones) {
+        for (final Object original : singletons) {
             TestUtils.assertSameAfterSerialization(
-                    "Singletone patern broken for " + original.getClass(),
+                    "Singleton pattern broken for " + original.getClass(),
                     original
             );
         }

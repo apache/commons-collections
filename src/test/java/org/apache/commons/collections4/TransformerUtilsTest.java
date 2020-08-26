@@ -484,13 +484,13 @@ public class TransformerUtilsTest {
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletones = new Object[] {
+        final Object[] singletons = new Object[] {
             ExceptionTransformer.INSTANCE,
             NOPTransformer.INSTANCE,
             StringValueTransformer.stringValueTransformer(),
         };
 
-        for (final Object original : singletones) {
+        for (final Object original : singletons) {
             TestUtils.assertSameAfterSerialization("Singleton pattern broken for " + original.getClass(), original);
         }
     }

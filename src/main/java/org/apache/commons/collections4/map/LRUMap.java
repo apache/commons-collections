@@ -110,7 +110,7 @@ public class LRUMap<K, V>
      * Constructs a new, empty map with the specified maximum size.
      *
      * @param maxSize  the maximum size of the map
-     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @param scanUntilRemovable  scan until a removable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @since 3.1
      */
@@ -152,7 +152,7 @@ public class LRUMap<K, V>
      *
      * @param maxSize  the maximum size of the map
      * @param loadFactor  the load factor
-     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @param scanUntilRemovable  scan until a removable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
      * @since 3.1
@@ -167,7 +167,7 @@ public class LRUMap<K, V>
      * @param maxSize  the maximum size of the map
      * @param initialSize  the initial size of the map
      * @param loadFactor  the load factor
-     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @param scanUntilRemovable  scan until a removable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
      * @throws IllegalArgumentException if the load factor is less than zero
@@ -183,7 +183,7 @@ public class LRUMap<K, V>
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
         }
         if (initialSize > maxSize) {
-            throw new IllegalArgumentException("LRUMap initial size must not be greather than max size");
+            throw new IllegalArgumentException("LRUMap initial size must not be greater than max size");
         }
         this.maxSize = maxSize;
         this.scanUntilRemovable = scanUntilRemovable;
@@ -208,7 +208,7 @@ public class LRUMap<K, V>
      * <p>The maximum size is set from the map's size.</p>
      *
      * @param map  the map to copy
-     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @param scanUntilRemovable  scan until a removable entry is found, default false
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
      * @since 3.1
