@@ -31,7 +31,7 @@ jdk:
 script:
   # japicmp requires a package
   - |
-    if [ "$TRAVIS_OS_NAME" = "linux-ppc64le" ];
+    if [ "$TRAVIS_OS_NAME" = "ppc64le" ];
     then
     mvn -V;
     mvn -V jar:jar japicmp:cmp -P japicmp;
@@ -43,7 +43,7 @@ script:
 after_success:
   # jacoco will run in the main script. Include the profile to submit to coveralls.
   - |
-    if [ "$TRAVIS_OS_NAME" = "linux-ppc64le" ];
+    if [ "$TRAVIS_OS_NAME" = "ppc64le" ];
     then
     mvn -V jacoco:report coveralls:report -Ptravis-jacoco;
     else
