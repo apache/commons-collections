@@ -46,7 +46,7 @@ public class DynamicHasherBuilderTest {
     public void buildTest_byteArray() {
         final byte[] bytes = testString.getBytes();
         final DynamicHasher hasher = builder.with(bytes).build();
-        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
+        final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -80,7 +80,7 @@ public class DynamicHasherBuilderTest {
     public void buildTest_String() {
         final byte[] bytes = testString.getBytes(StandardCharsets.UTF_8);
         final DynamicHasher hasher = builder.with(testString, StandardCharsets.UTF_8).build();
-        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
+        final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -96,7 +96,7 @@ public class DynamicHasherBuilderTest {
     public void buildTest_UnencodedString() {
         final byte[] bytes = testString.getBytes(StandardCharsets.UTF_16LE);
         final DynamicHasher hasher = builder.withUnencoded(testString).build();
-        final int expected = (int) Math.floorMod(hf.apply(bytes, 0), shape.getNumberOfBits());
+        final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
 

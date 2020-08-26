@@ -204,7 +204,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
     /**
      * Removes the last element that was returned by {@link #next()} or {@link #previous()} from the underlying collection.
-     * This call can only be made once per call to {@code next} or {@code previous} and only if {@link #add()} was not called in between.
+     * This call can only be made once per call to {@code next} or {@code previous} and only if {@link #add(Object)} was not called in between.
      *
      * @throws IllegalStateException if {@code next} or {@code previous} have not been called before, or if {@code remove} or {@code add} have been called after the last call to {@code next} or {@code previous}
      */
