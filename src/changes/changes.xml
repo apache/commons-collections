@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-765" dev="kinow" type="fix" due-to="Tobias Kiecker">
+      Update Javadoc of ListIteratorWrapper#remove.
+    </action>
     <action issue="COLLECTIONS-708" dev="kinow" type="fix" due-to="dota17">
       Add hashCode method to CollectionUtils that supports an equator parameter.
     </action>
