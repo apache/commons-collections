@@ -195,6 +195,9 @@
     <action type="update" dev="ggregory" due-to="Dependabot">
       Update maven-pmd-plugin from 3.12.0 to 3.13.0 #167.
     </action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">
+      Update commons-codec from 1.14 to 1.15.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
