@@ -159,6 +159,11 @@ public class FixedSizeList<E>
     public boolean retainAll(final Collection<?> coll) {
         throw unsupportedOperationException();
     }
+    
+    @Override
+    protected void setCollection(Collection<E> coll) {
+        throw unsupportedOperationException();
+    }
 
     @Override
     public E set(final int index, final E object) {
