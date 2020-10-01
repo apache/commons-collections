@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump actions/setup-java from v1.4.0 to v1.4.3 #174 #177 #186.
+    </action>
     <action issue="COLLECTIONS-764" dev="kinow" type="fix" due-to="XenoAmess">
       Refine javadoc and fix typos.
     </action>
@@ -163,6 +166,8 @@
       Update build from checkstyle.version 3.1.0 to 3.1.1.
       Update build from checkstyle.dep.version 8.29 to 8.31.
       Update build from checkstyle.dep.version 8.31 to 8.32.
+      Bump checkstyle from 8.35 to 8.36 #179.
+      Bump checkstyle from 8.36 to 8.36.2 #184.
     </action>
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
@@ -187,10 +192,10 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Update tests from commons-io:commons-io 2.6 to 2.7.
+      Update tests from commons-io:commons-io 2.6 to 2.8.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update actions/checkout from v1 to v2.3.1 #166.
+      Update actions/checkout from v1 to v2.3.3 #166 #173 #183.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
       Update maven-pmd-plugin from 3.12.0 to 3.13.0 #167.
