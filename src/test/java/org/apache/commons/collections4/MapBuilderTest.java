@@ -7,8 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Test Cases for Map Builder
  */
@@ -17,12 +15,12 @@ class MapBuilderTest {
     @Test
     void setComparator() {
         // Null Comparator
-        Map myMap = new HashMap();
+        Map<String, Integer> myMap = new HashMap();
         myMap.put("A", 1);
         myMap.put("X", 24);
         myMap.put("B", 2);
         myMap.put("Y", 26);
-        Map builderMap = new MapBuilder().setData(myMap).setComparator(null).build();
+        Map<String, Integer> builderMap = new MapBuilder().setData(myMap).setComparator(null).build();
         Assert.assertEquals(myMap, builderMap);
 
         // Reverse comparator
@@ -35,13 +33,13 @@ class MapBuilderTest {
 
     @Test
     void setIterationOrder() {
-        //Key Order = RANDOM
-        Map myMap = new HashMap();
+        //Key Order = UNORDERED
+        Map<String, Integer> myMap = new HashMap();
         myMap.put("A", 1);
         myMap.put("X", 24);
         myMap.put("B", 2);
         myMap.put("Y", 26);
-        Map builderMap = new MapBuilder().setData(myMap).setIterationOrder(MapBuilder.KeyOrder.RANDOM).build();
+        Map<String, Integer> builderMap = new MapBuilder().setData(myMap).setIterationOrder(MapBuilder.KeyOrder.UNORDERED).build();
         Assert.assertEquals(myMap, builderMap);
 
         //Key Order = INSERTION ORDER
@@ -91,10 +89,10 @@ class MapBuilderTest {
 
     @Test
     void setImmutable() {
-        Map myMap = new HashMap();
+        Map<String, Integer> myMap = new HashMap();
         myMap.put("A", 1);
         myMap.put("B", 2);
-        Map builderMap = new MapBuilder().setData(myMap).setImmutable(true).build();
+        Map<String, Integer> builderMap = new MapBuilder().setData(myMap).setImmutable(true).build();
         boolean exceptionThrown = false;
         try {
             builderMap.put("C", 3);
@@ -107,16 +105,16 @@ class MapBuilderTest {
 
     @Test
     void setData() {
-        Map myMap = new HashMap();
+        Map<String, Integer> myMap = new HashMap();
         myMap.put("A", 1);
         myMap.put("B", 2);
-        Map builderMap = new MapBuilder().setData(myMap).build();
+        Map<String, Integer> builderMap = new MapBuilder().setData(myMap).build();
         Assert.assertEquals(myMap, builderMap);
     }
 
     @Test
     void build() {
-        Map builderMap = new MapBuilder().build();
+        Map<String, Integer> builderMap = new MapBuilder().build();
         Assert.assertTrue(builderMap.size() == 0);
     }
 }

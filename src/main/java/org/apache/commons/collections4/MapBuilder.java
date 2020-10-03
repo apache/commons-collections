@@ -17,19 +17,18 @@ import java.util.*;
  * builderMap.put("Y", 26);
  * }</pre>
  *
- * @author Amita Pradhan
  */
-public class MapBuilder {
+public class MapBuilder<K,V> {
 
-    private Comparator comparator;
+    private Comparator<? super K> comparator;
     private KeyOrder iterationOrder;
     private boolean synchronizedMap;
     private boolean immutable;
-    private Map data;
+    private Map<K,V> data;
 
     public MapBuilder() {
         comparator = null;
-        iterationOrder = KeyOrder.RANDOM;
+        iterationOrder = KeyOrder.UNORDERED;
         synchronizedMap = false;
         immutable = false;
         data = null;
@@ -44,7 +43,7 @@ public class MapBuilder {
     }
 
     /*
-    Sets the Iteration order to be used from [RANDOM, NATURAL_ORDER, INSERTION_ORDER, COMPARATOR_ORDER]
+    Sets the Iteration order to be used from [UNORDERED, NATURAL_ORDER, INSERTION_ORDER, COMPARATOR_ORDER]
      */
     public MapBuilder setIterationOrder(KeyOrder iterationOrder) {
         this.iterationOrder = iterationOrder;
@@ -79,7 +78,7 @@ public class MapBuilder {
     Builder Method which takes care of all the conditions and returns the required Map.
      */
     public Map build() {
-        Map map;
+        Map<K,V> map;
         switch (iterationOrder) {
             case NATURAL_ORDER :
             case COMPARATOR_ORDER:
@@ -110,6 +109,6 @@ public class MapBuilder {
 
     enum KeyOrder
     {
-        RANDOM, NATURAL_ORDER, INSERTION_ORDER, COMPARATOR_ORDER;
+        UNORDERED, NATURAL_ORDER, INSERTION_ORDER, COMPARATOR_ORDER;
     }
 }
