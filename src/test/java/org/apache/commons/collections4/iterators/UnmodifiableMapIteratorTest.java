@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,10 +90,10 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         it = getMap().mapIterator();
         assertTrue(it != UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableMapIterator.unmodifiableMapIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("iterator"));
     }
 
 }

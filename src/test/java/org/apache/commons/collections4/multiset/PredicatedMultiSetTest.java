@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Set;
 
 import junit.framework.Test;
@@ -75,25 +78,21 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
             assertEquals(true, multiset.contains(els[i]));
         }
         Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set contains the first element", set.contains(els[0]));
+        assertTrue(set.contains(els[0]));
         assertEquals(true, multiset.remove(els[0]));
         set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set does not contain anymore the first element",
-            set.contains(els[0]));
+        assertTrue(set.contains(els[0]));
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final MultiSet<T> multiset = makeTestMultiSet();
         final Integer i = Integer.valueOf(3);
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             multiset.add((T) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element",
-                   !multiset.contains(i));
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object '3'"));
+        assertTrue(!multiset.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -103,18 +102,14 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         elements.add("two");
         elements.add(Integer.valueOf(3));
         elements.add("four");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             decorateMultiSet((HashMultiSet<T>) elements, stringPredicate());
-            fail("MultiSet contains an element that should fail the predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object '3'"));
+        exception = assertThrows(NullPointerException.class, () -> {
             decorateMultiSet(new HashMultiSet<T>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Override

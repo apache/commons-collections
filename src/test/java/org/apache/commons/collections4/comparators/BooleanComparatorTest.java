@@ -16,14 +16,20 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertNotEquals;
+
 
 /**
  * Tests for {@link BooleanComparator}.
@@ -65,14 +71,11 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // tests
     // ------------------------------------------------------------------------
 
-    @Test
     public void testConstructors() {
         allTests(false, new BooleanComparator());
         allTests(false, new BooleanComparator(false));
         allTests(true, new BooleanComparator(true));
     }
-
-    @Test
 
     public void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
@@ -81,7 +84,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         allTests(true, BooleanComparator.booleanComparator(true));
     }
 
-    @Test
     public void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), new BooleanComparator(false));
@@ -130,35 +132,25 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(Boolean.TRUE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(Boolean.FALSE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, Boolean.TRUE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
+        });
+        assertNull(exception.getMessage());
+        exception = assertThrows(NullPointerException.class, () -> {
             comp.compare(null, Boolean.FALSE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 }

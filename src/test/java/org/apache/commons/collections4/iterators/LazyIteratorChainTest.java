@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -93,14 +98,12 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertTrue(!iter.hasNext());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.next();
-        } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testRemoveFromFilteredIterator() {
@@ -131,12 +134,10 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemove() {
         final Iterator<String> iter = makeObject();
 
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             iter.remove();
-            fail("Calling remove before the first call to next() should throw an exception");
-        } catch (final IllegalStateException e) {
-
-        }
+        });
+        assertNull(exception.getMessage());
 
         for (final String testValue : testArray) {
             final String iterValue = iter.next();
@@ -148,9 +149,9 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
             }
         }
 
-        assertTrue("List is empty", list1.size() == 0);
-        assertTrue("List is empty", list2.size() == 1);
-        assertTrue("List is empty", list3.size() == 0);
+        assertTrue(list1.size() == 0);
+        assertTrue(list2.size() == 1);
+        assertTrue(list3.size() == 0);
     }
 
     public void testFirstIteratorIsEmptyBug() {
@@ -171,25 +172,25 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
                 return null;
             }
         };
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext());
         assertEquals("A", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext());
         assertEquals("B", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext());
         assertEquals("C", chain.next());
-        assertTrue("should not have next", !chain.hasNext());
+        assertTrue(!chain.hasNext());
     }
 
     public void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
         assertEquals(false, chain.hasNext());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             chain.next();
-            fail();
-        } catch (final NoSuchElementException ex) {}
-        try {
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
+        exception = assertThrows(IllegalStateException.class, () -> {
             chain.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("Iterator contains no elements"));
     }
 }

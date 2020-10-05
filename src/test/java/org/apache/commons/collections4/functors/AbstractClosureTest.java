@@ -16,16 +16,17 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.apache.commons.collections4.Closure;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public abstract class AbstractClosureTest {
 
     @Test
     public void closureSanityTests() throws Exception {
         final Closure<?> closure = generateClosure();
-        Assert.assertNotNull(closure);
+        assertNotNull(closure);
     }
 
     /**

@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -66,7 +71,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(0, grower.size());
         grower.add(1, one);
         assertEquals(2, grower.size());
-        assertEquals(null, grower.get(0));
+        assertNull(grower.get(0));
         assertEquals(one, grower.get(1));
     }
 
@@ -80,7 +85,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(0, grower.size());
         grower.addAll(1, coll);
         assertEquals(3, grower.size());
-        assertEquals(null, grower.get(0));
+        assertNull(grower.get(0));
         assertEquals(one, grower.get(1));
         assertEquals(two, grower.get(2));
     }
@@ -91,7 +96,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(0, grower.size());
         grower.set(1, one);
         assertEquals(2, grower.size());
-        assertEquals(null, grower.get(0));
+        assertNull(grower.get(0));
         assertEquals(one, grower.get(1));
     }
 
@@ -110,15 +115,13 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListAddByIndexBoundsChecking() {
-        List<E> list;
+        final List<E> list;
         final E element = getOtherElements()[0];
-        try {
-            list = makeObject();
+        list = makeObject();
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Index: -1, Size: 0"));
     }
 
     /**
@@ -126,15 +129,13 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListAddByIndexBoundsChecking2() {
-        List<E> list;
+        final List<E> list;
         final E element = getOtherElements()[0];
-        try {
-            list = makeFullCollection();
+        list = makeFullCollection();
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Index: -1, Size: "));
     }
 
     /**
@@ -144,11 +145,11 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     public void testListSetByIndexBoundsChecking() {
         final List<E> list = makeObject();
         final E element = getOtherElements()[0];
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
+        });
+        if (null != exception.getMessage()) {
+            assertTrue(exception.getMessage().contains("-1"));
         }
     }
 
@@ -159,11 +160,11 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     public void testListSetByIndexBoundsChecking2() {
         final List<E> list = makeFullCollection();
         final E element = getOtherElements()[0];
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
+        });
+        if (null != exception.getMessage()) {
+            assertTrue(exception.getMessage().contains("-1"));
         }
     }
 

@@ -21,8 +21,8 @@ import java.util.List;
 
 import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.replay;
-import org.junit.Before;
-import org.junit.After;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.apache.commons.collections4.Predicate;
 import org.easymock.EasyMock;
 
@@ -55,7 +55,7 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Creates the list of predicates to verify.
      */
-    @Before
+    @BeforeEach
     public final void createVerifyList() {
         mockPredicatesToVerify = new ArrayList<>();
     }
@@ -63,7 +63,7 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Verifies all the mock predicates created for the test.
      */
-    @After
+    @AfterEach
     public final void verifyPredicates() {
         for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
             verify(predicate);

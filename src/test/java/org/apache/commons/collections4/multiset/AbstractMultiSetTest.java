@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -138,10 +142,10 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A");
-        assertTrue("Should contain 'A'", multiset.contains("A"));
+        assertTrue(multiset.contains("A"));
         assertEquals("Should have count of 1", 1, multiset.getCount("A"));
         multiset.add((T) "A");
-        assertTrue("Should contain 'A'", multiset.contains("A"));
+        assertTrue(multiset.contains("A"));
         assertEquals("Should have count of 2", 2, multiset.getCount("A"));
         multiset.add((T) "B");
         assertTrue(multiset.contains("A"));
@@ -360,7 +364,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
             }
         }
 
-        assertTrue("MultiSet should still contain 'A'", multiset.contains("A"));
+        assertTrue(multiset.contains("A"));
         assertEquals("MultiSet should have 2 items", 2, multiset.size());
         assertEquals("MultiSet should have 1 'A'", 1, multiset.getCount("A"));
     }
@@ -378,12 +382,10 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final Iterator<T> it = multiset.iterator();
         it.next();
         multiset.remove("A");
-        try {
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
             it.next();
-            fail("Should throw ConcurrentModificationException");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -400,12 +402,10 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         it.next();
         it.next();
         it.next();
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail("Should throw NoSuchElementException");
-        } catch (final NoSuchElementException ex) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -424,12 +424,10 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(3, multiset.size());
         it.remove();
         assertEquals(2, multiset.size());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail("Should throw IllegalStateException");
-        } catch (final IllegalStateException ex) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
         assertEquals(2, multiset.size());
         it.next();
         it.remove();
@@ -696,7 +694,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset));
-            assertTrue("MultiSet is empty", multiset2.size() == 0);
+            assertTrue(multiset2.size() == 0);
             assertEquals(multiset, multiset2);
         }
     }

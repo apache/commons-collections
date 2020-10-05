@@ -16,15 +16,17 @@
  */
 package org.apache.commons.collections4.sequence;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SequencesComparatorTest {
 
@@ -38,7 +40,7 @@ public class SequencesComparatorTest {
             final SequencesComparator<Character> comparator =
                     new SequencesComparator<>(sequence(before.get(i)),
                             sequence(after.get(i)));
-            Assert.assertEquals(length[i], comparator.getScript().getModifications());
+            assertEquals(length[i], comparator.getScript().getModifications());
         }
     }
 
@@ -49,7 +51,7 @@ public class SequencesComparatorTest {
             ev.setList(sequence(before.get(i)));
             new SequencesComparator<>(sequence(before.get(i)),
                     sequence(after.get(i))).getScript().visit(ev);
-            Assert.assertEquals(after.get(i), ev.getString());
+            assertEquals(after.get(i), ev.getString());
         }
     }
 
@@ -100,7 +102,7 @@ public class SequencesComparatorTest {
 
             final SequencesComparator<String> comparator =
                     new SequencesComparator<>(sentenceBefore, sentenceAfter);
-            Assert.assertTrue(comparator.getScript().getModifications() <= nbCom);
+            assertTrue(comparator.getScript().getModifications() <= nbCom);
         }
     }
 
@@ -139,7 +141,7 @@ public class SequencesComparatorTest {
                 for (final String s : shadokSentence) {
                     concat.append(s);
                 }
-                Assert.assertEquals(concat.toString(), ev.getString());
+                assertEquals(concat.toString(), ev.getString());
             }
         }
     }
@@ -187,7 +189,7 @@ public class SequencesComparatorTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         before = Arrays.asList(
@@ -226,7 +228,7 @@ public class SequencesComparatorTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         before = null;
         after  = null;

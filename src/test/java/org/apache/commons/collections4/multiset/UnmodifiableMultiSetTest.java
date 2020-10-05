@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
 import junit.framework.Test;
@@ -84,10 +88,10 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         final MultiSet<E> multiset = makeFullCollection();
         assertSame(multiset, UnmodifiableMultiSet.unmodifiableMultiSet(multiset));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableMultiSet.unmodifiableMultiSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     //-----------------------------------------------------------------------
@@ -95,28 +99,28 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     public void testAdd() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             unmodifiableMultiSet.add((E) "One", 1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testRemove() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             unmodifiableMultiSet.remove("One", 1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testSetCount() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             unmodifiableMultiSet.setCount((E) "One", 2);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testEntrySet() {

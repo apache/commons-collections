@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -150,48 +154,40 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             verify();
         }
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().remove();
-            fail("Empty queue should raise Underflow.");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("queue is empty"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException1() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new CircularFifoQueue<E>(0);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The size must be greater than 0"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException2() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new CircularFifoQueue<E>(-20);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The size must be greater than 0"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException3() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new CircularFifoQueue<E>(null);
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -424,13 +420,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     public void testAddNull() {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             b.add(null);
-            fail();
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("element"));
     }
 
     public void testDefaultSizeAndGetError1() {
@@ -442,12 +435,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             fifo.get(5);
-        } catch (final NoSuchElementException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The specified index 5 is outside the available range [0, 5)"));
     }
 
     public void testDefaultSizeAndGetError2() {
@@ -459,12 +450,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             fifo.get(-2);
-        } catch (final NoSuchElementException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The specified index -2 is outside the available range [0, 5)"));
     }
 
     @Override

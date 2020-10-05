@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NavigableSet;
@@ -70,20 +74,18 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     public void testGetSet() {
         final PredicatedNavigableSet<E> set = makeTestSet();
-        assertTrue("returned set should not be null", set.decorated() != null);
+        assertTrue(set.decorated() != null);
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final NavigableSet<E> set = makeTestSet();
         final String testString = "B";
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             set.add((E) testString);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element", !set.contains(testString));
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object 'B'"));
+        assertTrue(!set.contains(testString));
     }
 
     @SuppressWarnings("unchecked")
@@ -94,22 +96,20 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         elements.add((E) "Atwo");
         elements.add((E) "Bthree");
         elements.add((E) "Afour");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             set.addAll(elements);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Aone"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Atwo"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Bthree"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Afour"));
+        });
+        assertTrue(exception.getMessage().contains("Cannot add Object 'Bthree'"));
+        assertTrue(!set.contains("Aone"));
+        assertTrue(!set.contains("Atwo"));
+        assertTrue(!set.contains("Bthree"));
+        assertTrue(!set.contains("Afour"));
     }
 
     public void testComparator() {
         final NavigableSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull(c);
     }
 
     @Override

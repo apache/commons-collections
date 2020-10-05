@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -106,10 +109,10 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         final SortedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(map));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
 }

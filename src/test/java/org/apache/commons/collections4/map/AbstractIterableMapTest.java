@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
@@ -63,22 +66,22 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
             return;
         }
         resetFull();
-        Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
-        final Map.Entry<K, V> val = it.next();
+        final Iterator<Map.Entry<K, V>> it1 = getMap().entrySet().iterator();
+        final Map.Entry<K, V> val = it1.next();
         getMap().remove(val.getKey());
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
+            it1.next();
+        });
+        assertNull(exception.getMessage());
 
         resetFull();
-        it = getMap().entrySet().iterator();
+        Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
         it.next();
         getMap().clear();
-        try {
+        exception = assertThrows(ConcurrentModificationException.class, () -> {
             it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testFailFastKeySet() {
@@ -89,22 +92,22 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
             return;
         }
         resetFull();
-        Iterator<K> it = getMap().keySet().iterator();
-        final K val = it.next();
+        final Iterator<K> it1 = getMap().keySet().iterator();
+        final K val = it1.next();
         getMap().remove(val);
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
+            it1.next();
+        });
+        assertNull(exception.getMessage());
 
         resetFull();
-        it = getMap().keySet().iterator();
+        Iterator<K> it = getMap().keySet().iterator();
         it.next();
         getMap().clear();
-        try {
+        exception = assertThrows(ConcurrentModificationException.class, () -> {
             it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testFailFastValues() {
@@ -115,22 +118,22 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
             return;
         }
         resetFull();
-        Iterator<V> it = getMap().values().iterator();
-        it.next();
+        final Iterator<V> it1 = getMap().values().iterator();
+        it1.next();
         getMap().remove(getMap().keySet().iterator().next());
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        Exception exception = assertThrows(ConcurrentModificationException.class, () -> {
+            it1.next();
+        });
+        assertNull(exception.getMessage());
 
         resetFull();
-        it = getMap().values().iterator();
+        Iterator<V> it = getMap().values().iterator();
         it.next();
         getMap().clear();
-        try {
+        exception = assertThrows(ConcurrentModificationException.class, () -> {
             it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------

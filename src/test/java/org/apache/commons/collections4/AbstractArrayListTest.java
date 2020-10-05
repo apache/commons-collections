@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.list.AbstractListTest;
@@ -42,11 +46,11 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
         assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", 0, list.size());
 
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(1);
-            fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected result
+        });
+        if (null != exception.getMessage()) {
+            assertNotNull(exception.getMessage());
         }
     }
 

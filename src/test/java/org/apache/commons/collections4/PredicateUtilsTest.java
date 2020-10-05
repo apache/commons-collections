@@ -18,7 +18,11 @@ package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.NullPredicate.*;
 import static org.apache.commons.collections4.functors.TruePredicate.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +40,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.NullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PredicateUtils class.
@@ -56,13 +60,11 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         try {
             PredicateUtils.exceptionPredicate().evaluate(null);
         } catch (final FunctorException ex) {
-            try {
+            Exception exception = assertThrows(FunctorException.class, () -> {
                 PredicateUtils.exceptionPredicate().evaluate(cString);
-            } catch (final FunctorException ex2) {
-                return;
-            }
+            });
+            assertTrue(exception.getMessage().contains("ExceptionPredicate invoked"));
         }
-        fail();
     }
 
     // notNullPredicate
@@ -130,9 +132,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.notPredicate(truePredicate()).evaluate(cInteger));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNotPredicateEx() {
-        PredicateUtils.notPredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.notPredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // andPredicate
@@ -146,9 +151,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.andPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAndPredicateEx() {
-        PredicateUtils.andPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.andPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // allPredicate
@@ -192,25 +200,37 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertPredicateTrue(AllPredicate.allPredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAllPredicateEx1() {
-        AllPredicate.allPredicate((Predicate<Object>[]) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            AllPredicate.allPredicate((Predicate<Object>[]) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAllPredicateEx2() {
-        AllPredicate.<Object>allPredicate(new Predicate[] { null });
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            AllPredicate.<Object>allPredicate(new Predicate[] { null });
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAllPredicateEx3() {
-        AllPredicate.allPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            AllPredicate.allPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAllPredicateEx4() {
-        AllPredicate.allPredicate((Collection<Predicate<Object>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            AllPredicate.allPredicate((Collection<Predicate<Object>>) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -218,12 +238,15 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         AllPredicate.allPredicate(Collections.emptyList());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAllPredicateEx6() {
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        AllPredicate.allPredicate(coll);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            AllPredicate.allPredicate(coll);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // orPredicate
@@ -237,9 +260,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.orPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOrPredicateEx() {
-        PredicateUtils.orPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.orPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // anyPredicate
@@ -284,25 +310,37 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertPredicateFalse(PredicateUtils.anyPredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAnyPredicateEx1() {
-        PredicateUtils.anyPredicate((Predicate<Object>[]) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.anyPredicate((Predicate<Object>[]) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAnyPredicateEx2() {
-        PredicateUtils.anyPredicate(new Predicate[] {null});
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.anyPredicate(new Predicate[] {null});
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAnyPredicateEx3() {
-        PredicateUtils.anyPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.anyPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAnyPredicateEx4() {
-        PredicateUtils.anyPredicate((Collection<Predicate<Object>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.anyPredicate((Collection<Predicate<Object>>) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -310,12 +348,15 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         PredicateUtils.anyPredicate(Collections.emptyList());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAnyPredicateEx6() {
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        PredicateUtils.anyPredicate(coll);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.anyPredicate(coll);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // eitherPredicate
@@ -329,9 +370,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.eitherPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testEitherPredicateEx() {
-        PredicateUtils.eitherPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.eitherPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // onePredicate
@@ -377,25 +421,37 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertPredicateFalse(PredicateUtils.onePredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOnePredicateEx1() {
-        PredicateUtils.onePredicate((Predicate<Object>[]) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.onePredicate((Predicate<Object>[]) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOnePredicateEx2() {
-        PredicateUtils.onePredicate(new Predicate[] {null});
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.onePredicate(new Predicate[] {null});
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOnePredicateEx3() {
-        PredicateUtils.onePredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.onePredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOnePredicateEx4() {
-        PredicateUtils.onePredicate((Collection<Predicate<Object>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.onePredicate((Collection<Predicate<Object>>) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
@@ -404,9 +460,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         PredicateUtils.onePredicate(Collections.EMPTY_LIST);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testOnePredicateEx6() {
-        PredicateUtils.onePredicate(Arrays.asList(null, null));
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.onePredicate(Arrays.asList(null, null));
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // neitherPredicate
@@ -420,9 +479,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertTrue(PredicateUtils.neitherPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNeitherPredicateEx() {
-        PredicateUtils.neitherPredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.neitherPredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // nonePredicate
@@ -466,26 +528,38 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertPredicateTrue(PredicateUtils.nonePredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNonePredicateEx1() {
-        PredicateUtils.nonePredicate((Predicate<Object>[]) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nonePredicate((Predicate<Object>[]) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNonePredicateEx2() {
-        PredicateUtils.nonePredicate(new Predicate[] {null});
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nonePredicate(new Predicate[] {null});
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNonePredicateEx3() {
-        PredicateUtils.nonePredicate(null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nonePredicate(null, null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNonePredicateEx4() {
-        PredicateUtils.nonePredicate((Collection<Predicate<Object>>) null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nonePredicate((Collection<Predicate<Object>>) null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     @Test
@@ -493,12 +567,15 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         PredicateUtils.nonePredicate(Collections.emptyList());
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNonePredicateEx6() {
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        PredicateUtils.nonePredicate(coll);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nonePredicate(coll);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // instanceofPredicate
@@ -536,14 +613,20 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertTrue(PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(true));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testAsPredicateTransformerEx1() {
-        PredicateUtils.asPredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.asPredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("transformer"));
     }
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testAsPredicateTransformerEx2() {
-        PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(null);
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(null);
+        });
+        assertTrue(exception.getMessage().contains("Transformer"));
     }
 
     // invokerPredicate
@@ -557,19 +640,28 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testInvokerPredicateEx1() {
-        PredicateUtils.invokerPredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.invokerPredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("methodName"));
     }
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testInvokerPredicateEx2() {
-        PredicateUtils.invokerPredicate("isEmpty").evaluate(null);
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.invokerPredicate("isEmpty").evaluate(null);
+        });
+        assertTrue(exception.getMessage().contains("Transformer"));
     }
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testInvokerPredicateEx3() {
-        PredicateUtils.invokerPredicate("noSuchMethod").evaluate(new Object());
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.invokerPredicate("noSuchMethod").evaluate(new Object());
+        });
+        assertTrue(exception.getMessage().contains("InvokerTransformer"));
     }
 
     // invokerPredicate2
@@ -585,34 +677,49 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 "contains", new Class[]{Object.class}, new Object[]{cString}).evaluate(list));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testInvokerPredicate2Ex1() {
-        PredicateUtils.invokerPredicate(null, null, null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.invokerPredicate(null, null, null);
+        });
+        assertTrue(exception.getMessage().contains("methodName"));
     }
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testInvokerPredicate2Ex2() {
-        PredicateUtils.invokerPredicate("contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(null);
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.invokerPredicate("contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(null);
+        });
+        assertTrue(exception.getMessage().contains("Transformer"));
     }
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testInvokerPredicate2Ex3() {
-        PredicateUtils.invokerPredicate(
-                "noSuchMethod", new Class[] {Object.class}, new Object[] {cString}).evaluate(new Object());
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.invokerPredicate(
+                    "noSuchMethod", new Class[] {Object.class}, new Object[] {cString}).evaluate(new Object());
+        });
+        assertTrue(exception.getMessage().contains("InvokerTransformer"));
     }
 
     // nullIsException
     //------------------------------------------------------------------
 
-    @Test(expected=FunctorException.class)
+    @Test
     public void testNullIsExceptionPredicate() {
         assertTrue(PredicateUtils.nullIsExceptionPredicate(truePredicate()).evaluate(new Object()));
-        PredicateUtils.nullIsExceptionPredicate(TruePredicate.truePredicate()).evaluate(null);
+        Exception exception = assertThrows(FunctorException.class, () -> {
+            PredicateUtils.nullIsExceptionPredicate(TruePredicate.truePredicate()).evaluate(null);
+        });
+        assertTrue(exception.getMessage().contains("Input Object"));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNullIsExceptionPredicateEx1() {
-        PredicateUtils.nullIsExceptionPredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nullIsExceptionPredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // nullIsTrue
@@ -625,9 +732,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.nullIsTruePredicate(FalsePredicate.falsePredicate()).evaluate(new Object()));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNullIsTruePredicateEx1() {
-        PredicateUtils.nullIsTruePredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nullIsTruePredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // nullIsFalse
@@ -640,9 +750,12 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.nullIsFalsePredicate(FalsePredicate.falsePredicate()).evaluate(new Object()));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testNullIsFalsePredicateEx1() {
-        PredicateUtils.nullIsFalsePredicate(null);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            PredicateUtils.nullIsFalsePredicate(null);
+        });
+        assertTrue(exception.getMessage().contains("predicate"));
     }
 
     // transformed
@@ -660,10 +773,10 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         final Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");
         assertFalse(PredicateUtils.transformedPredicate(t, p).evaluate(null));
         assertTrue(PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             PredicateUtils.transformedPredicate(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("transformer"));
     }
 
     // misc tests

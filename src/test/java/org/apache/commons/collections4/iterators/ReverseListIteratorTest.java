@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,24 +60,22 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     public void testEmptyListIteratorIsIndeedEmpty() {
         final ListIterator<E> it = makeEmptyIterator();
 
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
         assertEquals(-1, it.nextIndex());  // reversed index
-        assertEquals(false, it.hasPrevious());
+        assertFalse(it.hasPrevious());
         assertEquals(0, it.previousIndex());  // reversed index
 
         // next() should throw a NoSuchElementException
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        });
+        assertNull(exception.getMessage());
 
         // previous() should throw a NoSuchElementException
-        try {
+        exception = assertThrows(NoSuchElementException.class, () -> {
             it.previous();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     @Override
@@ -83,8 +87,8 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         }
 
         // check state at end
-        assertEquals(false, it.hasNext());
-        assertEquals(true, it.hasPrevious());
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
 
         // this had to be commented out, as there is a bug in the JDK before JDK1.5
         // where calling previous at the start of an iterator would push the cursor
@@ -105,41 +109,40 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         }
 
         // check state at start
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
-        try {
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.previous();
-            fail("NoSuchElementException must be thrown from previous at start of ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
     public void testReverse() {
         final ListIterator<E> it = makeObject();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(3, it.nextIndex());
-        assertEquals(false, it.hasPrevious());
+        assertFalse(it.hasPrevious());
         assertEquals(4, it.previousIndex());
         assertEquals("Four", it.next());
         assertEquals(2, it.nextIndex());
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(3, it.previousIndex());
-        assertEquals(true, it.hasPrevious());
+        assertTrue(it.hasPrevious());
         assertEquals("Three", it.next());
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(1, it.nextIndex());
-        assertEquals(true, it.hasPrevious());
+        assertTrue(it.hasPrevious());
         assertEquals(2, it.previousIndex());
         assertEquals("Two", it.next());
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(0, it.nextIndex());
-        assertEquals(true, it.hasPrevious());
+        assertTrue(it.hasPrevious());
         assertEquals(1, it.previousIndex());
         assertEquals("One", it.next());
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
         assertEquals(-1, it.nextIndex());
-        assertEquals(true, it.hasPrevious());
+        assertTrue(it.hasPrevious());
         assertEquals(0, it.previousIndex());
         assertEquals("One", it.previous());
         assertEquals("Two", it.previous());

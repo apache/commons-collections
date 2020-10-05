@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -81,10 +84,10 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         final Collection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableCollection.unmodifiableCollection(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     //-----------------------------------------------------------------------

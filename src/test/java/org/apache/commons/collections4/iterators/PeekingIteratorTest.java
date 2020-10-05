@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
 /**
  * Tests the PeekingIterator.
@@ -65,13 +70,11 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     //-----------------------------------------------------------------------
 
-    @Test
     public void testEmpty() {
         final Iterator<E> it = makeEmptyIterator();
         assertFalse(it.hasNext());
     }
 
-    @Test
     @SuppressWarnings("unchecked")
     public void testSinglePeek() {
         final PeekingIterator<E> it = makeObject();
@@ -80,7 +83,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         validate(it, (E[]) testArray);
     }
 
-    @Test
     public void testMultiplePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
@@ -97,7 +99,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
     }
 
-    @Test
     public void testIteratorExhausted() {
         final PeekingIterator<E> it = makeObject();
         it.next();
@@ -106,15 +107,12 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
         assertNull(it.peek());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.element();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
-    @Test
     public void testIllegalRemove() {
         final PeekingIterator<E> it = makeObject();
         it.next();
@@ -123,12 +121,10 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertTrue(it.hasNext());
         assertEquals("b", it.peek());
 
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("peek() or element() called before remove()"));
     }
 
     private void validate(final Iterator<E> iter, final E... items) {

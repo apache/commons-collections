@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -238,10 +242,12 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                 getMap().put(toKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("out of range"));
+            }
             verify();
         }
         @Override
@@ -293,10 +299,12 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                 getMap().put(invalidKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("out of range"));
+            }
             verify();
         }
         @Override
@@ -355,10 +363,12 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                 getMap().put(toKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            });
+            if (null != exception.getMessage()) {
+                assertTrue(exception.getMessage().contains("out of range"));
+            }
             verify();
         }
         @Override

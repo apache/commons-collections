@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -72,7 +78,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationResultSize() {
         int factorial = 1;
-        for (int i = 0; i < 8; i++, factorial*=i) {
+        for (int i = 0; i < 8; i++, factorial *= i) {
             final List<Integer> list = new ArrayList<>();
             for (int j = 0; j < i; j++) {
                 list.add(j);
@@ -164,12 +170,10 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
             resultsList.add(permutation);
         }
         //asking for another permutation should throw an exception
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             it.next();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testPermutatorHasMore() {

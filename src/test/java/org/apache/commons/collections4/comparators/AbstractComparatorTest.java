@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,7 +29,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.junit.Test;
 
 /**
  * Abstract test class for testing the Comparator interface.
@@ -104,20 +107,18 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Test sorting an empty list
      */
-    @Test
     public void testEmptyListSort() {
         final List<T> list = new LinkedList<>();
         sortObjects(list, makeObject());
 
         final List<T> list2 = new LinkedList<>();
 
-        assertEquals("Comparator cannot sort empty lists", list2, list);
+        assertEquals(list2, list);
     }
 
     /**
      * Test sorting a reversed list.
      */
-    @Test
     public void testReverseListSort() {
         final Comparator<T> comparator = makeObject();
 
@@ -127,13 +128,12 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList);
     }
 
     /**
      * Test sorting a random list.
      */
-    @Test
     public void testRandomListSort() {
         final Comparator<T> comparator = makeObject();
 
@@ -150,17 +150,15 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         }
         */
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList);
     }
 
     /**
      * Nearly all Comparators should be Serializable.
      */
-    @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
-        assertTrue("This comparator should be Serializable.",
-                   comparator instanceof Serializable);
+        assertTrue(comparator instanceof Serializable);
     }
 
     public String getCanonicalComparatorName(final Object object) {
@@ -180,7 +178,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * against the canonical version in SCM.
      */
     @SuppressWarnings("unchecked")
-    @Test
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
@@ -213,7 +210,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
             final List<T> orderedList = getComparableObjectsOrdered();
 
-            assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+            assertEquals(orderedList, randomList);
         }
     }
 }

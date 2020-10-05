@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,9 +82,9 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final int sizeBefore = fixedSizeList.size();
         //
         final boolean changed = decoratedList.add("New Value");
-        Assert.assertTrue(changed);
+        assertTrue(changed);
         //
-        Assert.assertEquals("Modifying an the underlying list is allowed",
+        assertEquals("Modifying an the underlying list is allowed",
                 sizeBefore + 1, fixedSizeList.size());
     }
 
@@ -95,10 +99,10 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     public void testAdd() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             fixedSizeList.add(2, "New Value");
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("List is fixed size"));
     }
 
 
@@ -109,38 +113,38 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         addList.add("item 3");
         addList.add("item 4");
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             fixedSizeList.addAll(2, addList);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("List is fixed size"));
     }
 
     public void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
+        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             fixedSizeList.remove(1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("List is fixed size"));
     }
 
     public void testSubList() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
-        Assert.assertNotNull(subFixedSizeList);
-        Assert.assertEquals(0, subFixedSizeList.size());
+        assertNotNull(subFixedSizeList);
+        assertEquals(0, subFixedSizeList.size());
     }
 
     public void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertTrue(fixedSizeList.isFull());
+        assertTrue(fixedSizeList.isFull());
     }
 
     public void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertEquals(2, fixedSizeList.maxSize());
+        assertEquals(2, fixedSizeList.maxSize());
     }
 }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,10 +93,10 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         final BidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableBidiMap.unmodifiableBidiMap(map));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableBidiMap.unmodifiableBidiMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
 }

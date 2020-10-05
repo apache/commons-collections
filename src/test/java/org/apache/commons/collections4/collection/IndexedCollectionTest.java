@@ -17,6 +17,8 @@
 package org.apache.commons.collections4.collection;
 
 import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -129,12 +131,10 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         final Collection<String> coll = makeUniqueTestCollection();
 
         coll.add("1");
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             coll.add("1");
-            fail();
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Duplicate key in uniquely indexed collection"));
     }
 
     public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {

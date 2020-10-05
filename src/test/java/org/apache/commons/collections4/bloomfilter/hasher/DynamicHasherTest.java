@@ -16,18 +16,20 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link DynamicHasher}.
@@ -67,7 +69,7 @@ public class DynamicHasherTest {
     /**
      * Sets up the DynamicHasher.
      */
-    @Before
+    @BeforeEach
     public void setup() {
         builder = new DynamicHasher.Builder(new MD5Cyclic());
         shape = new Shape(new MD5Cyclic(), 3, 72, 17);
@@ -109,12 +111,10 @@ public class DynamicHasherTest {
             assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.next();
-            fail("Should have thrown NoSuchElementException");
-        } catch (final NoSuchElementException ignore) {
-            // do nothing
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     /**
@@ -125,11 +125,9 @@ public class DynamicHasherTest {
 
         final Hasher hasher = builder.with("Hello", StandardCharsets.UTF_8).build();
 
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             hasher.iterator(new Shape(testFunction, 3, 72, 17));
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        });
+        assertNotNull(exception.getMessage());
     }
 }

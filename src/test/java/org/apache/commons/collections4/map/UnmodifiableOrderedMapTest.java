@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 
 import org.apache.commons.collections4.OrderedMap;
@@ -73,10 +76,10 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         final OrderedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedMap.unmodifiableOrderedMap(map));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableOrderedMap.unmodifiableOrderedMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
     //-----------------------------------------------------------------------

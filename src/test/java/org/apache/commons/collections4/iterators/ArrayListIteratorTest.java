@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -68,18 +73,15 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
             final Object testValue = testArray[x];
             final Object iterValue = iter.previous();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasPrevious());
+        assertTrue(!iter.hasPrevious());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.previous();
-        } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        });
+        assertNull(exception.getMessage());
 
     }
 
@@ -101,20 +103,15 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
             x++;
         }
 
-        assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
+        assertTrue(Arrays.equals(testData, result));
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
-        iter = makeArrayListIterator(testArray);
+        final ListIterator<E> iter1 = makeArrayListIterator(testArray);
 
-        try {
-            iter.set((E) "should fail");
-            fail("ListIterator#set should fail if next() or previous() have not yet been called.");
-        } catch (final IllegalStateException e) {
-            // expected
-        } catch (final Throwable t) { // should never happen
-            fail(t.toString());
-        }
-
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            iter1.set((E) "should fail");
+        });
+        assertTrue(exception.getMessage().contains("must call next() or previous() before a call to set()"));
     }
 
 }

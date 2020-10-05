@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -70,14 +76,12 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertTrue(!iter.hasNext());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.next();
-        } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        });
+        assertNull(exception.getMessage());
 
         // now, read it backwards
         for (int i = testArray.length - 1; i > -1; --i) {
@@ -87,12 +91,10 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
 
-        try {
+        exception = assertThrows(NoSuchElementException.class, () -> {
             iter.previous();
-        } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        });
+        assertNull(exception.getMessage());
 
         // now, read it forwards again
         for (final String testValue : testArray) {
@@ -111,11 +113,10 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be initially positioned first");
-        } catch (final IllegalStateException e) {
-        }
+        });
+        assertNull(exception.getMessage());
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());
@@ -136,11 +137,10 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
+        exception = assertThrows(IllegalStateException.class, () -> {
             iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be repositioned first");
-        } catch (final IllegalStateException e) {
-        }
+        });
+        assertNull(exception.getMessage());
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());

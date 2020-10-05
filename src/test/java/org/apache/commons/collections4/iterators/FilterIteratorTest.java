@@ -17,6 +17,11 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,11 +126,11 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter1);
         filterIterator.setPredicate(truePredicate());
         // this iterator has elements
-        assertEquals(true, filterIterator.hasNext());
+        assertTrue(filterIterator.hasNext());
 
         // this iterator has no elements
         filterIterator.setIterator(iter2);
-        assertEquals(false, filterIterator.hasNext());
+        assertFalse(filterIterator.hasNext());
     }
 
     /**
@@ -147,12 +152,10 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private void verifyNoMoreElements() {
         assertTrue(!iterator.hasNext());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iterator.next();
-            fail("NoSuchElementException expected");
-        } catch (final NoSuchElementException e) {
-            // success
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
@@ -179,7 +182,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         if (iterator.hasNext()) {
             final Object last = iterator.next();
             iterator.remove();
-            assertTrue("Base of FilterIterator still contains removed element.", !list.contains(last));
+            assertTrue(!list.contains(last));
         }
     }
 

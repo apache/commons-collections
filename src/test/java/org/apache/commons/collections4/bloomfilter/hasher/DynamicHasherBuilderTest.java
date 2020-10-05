@@ -16,18 +16,19 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * {@link DynamicHasher.Builder} tests.
@@ -65,12 +66,10 @@ public class DynamicHasherBuilderTest {
         final OfInt iter = hasher.iterator(shape);
 
         assertFalse(iter.hasNext());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.nextInt();
-            fail("Should have thrown NoSuchElementException");
-        } catch (final NoSuchElementException ignore) {
-            // do nothing
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     /**
@@ -125,7 +124,7 @@ public class DynamicHasherBuilderTest {
     /**
      * Sets up the builder for testing.
      */
-    @Before
+    @BeforeEach
     public void setup() {
         builder = new DynamicHasher.Builder(hf);
     }

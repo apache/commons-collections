@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
@@ -246,12 +253,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "5");
 
         final CursorableLinkedList.Cursor<E> it = list.cursor();
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-            fail();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
         assertEquals("1", it.next());
         assertEquals("2", it.next());
         assertEquals("[1, 2, 3, 4, 5]", list.toString());
@@ -266,11 +271,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("3", it.next());
         it.remove();
         assertEquals("[4, 5]", list.toString());
-        try {
+        exception = assertThrows(IllegalStateException.class, () -> {
             it.remove();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        });
+        assertNull(exception.getMessage());
         assertEquals("4", it.next());
         assertEquals("5", it.next());
         it.remove();
@@ -352,17 +356,15 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("9", c2.next());
         assertEquals("10", c2.next());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             c2.next();
-            fail();
-        } catch (final NoSuchElementException nse) {
-        }
+        });
+        assertTrue(exception.getMessage().contains("No element at index 7."));
 
-        try {
+        exception = assertThrows(ConcurrentModificationException.class, () -> {
             li.next();
-            fail();
-        } catch (final ConcurrentModificationException cme) {
-        }
+        });
+        assertNull(exception.getMessage());
 
         c1.close(); // not necessary
         c2.close(); // not necessary
@@ -470,19 +472,19 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         assertEquals("B", list.remove(1));
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(true, c1.currentRemovedByAnother);
-        assertEquals(null, c1.current);
+        assertTrue(c1.currentRemovedByAnother);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -496,19 +498,19 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         assertEquals("B", list.remove(1));
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(false, c1.currentRemovedByAnother);
+        assertFalse(c1.currentRemovedByAnother);
         assertEquals("A", c1.current.value);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -523,19 +525,19 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         assertEquals("B", list.remove(1));
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(true, c1.currentRemovedByAnother);
-        assertEquals(null, c1.current);
+        assertTrue(c1.currentRemovedByAnother);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -552,18 +554,18 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         assertEquals("B", list.remove(1));
 
-        assertEquals(false, c1.nextIndexValid);
-        assertEquals(false, c1.currentRemovedByAnother);
+        assertFalse(c1.nextIndexValid);
+        assertFalse(c1.currentRemovedByAnother);
         assertEquals("C", c1.current.value);
         assertEquals("D", c1.next.value);
 
         assertEquals("[A, C, D]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, D]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -580,17 +582,17 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.remove();
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(false, c1.currentRemovedByAnother);
-        assertEquals(null, c1.current);
+        assertFalse(c1.currentRemovedByAnother);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -605,17 +607,17 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.remove();
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(false, c1.currentRemovedByAnother);
-        assertEquals(null, c1.current);
+        assertFalse(c1.currentRemovedByAnother);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -632,7 +634,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         list.add(1, (E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
         assertEquals("B", c1.current.value);
         assertEquals("Z", c1.next.value);
@@ -640,10 +642,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("[A, Z, B, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, Z, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -657,7 +659,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         list.add(1, (E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
         assertEquals("A", c1.current.value);
         assertEquals("Z", c1.next.value);
@@ -665,10 +667,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("[A, Z, B, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[Z, B, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -683,17 +685,17 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         list.add(1, (E) "Z");
 
-        assertEquals(false, c1.nextIndexValid);
+        assertFalse(c1.nextIndexValid);
         assertEquals("B", c1.current.value);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, Z, B, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, Z, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -710,16 +712,16 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.add((E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(2, c1.nextIndex);
-        assertEquals(null, c1.current);
+        assertNull(c1.current);
         assertEquals("B", c1.next.value);
 
         assertEquals("[A, Z, B, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -734,17 +736,17 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.add((E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(3, c1.nextIndex);
-        assertEquals(false, c1.currentRemovedByAnother);
-        assertEquals(null, c1.current);
+        assertFalse(c1.currentRemovedByAnother);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
 
         assertEquals("[A, B, Z, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -760,16 +762,16 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         list.remove(1);
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
-        assertEquals(null, c1.current);
+        assertNull(c1.current);
         assertEquals("C", c1.next.value);
         assertEquals("[A, C]", list.toString());
 
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.set((E) "Z");
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -786,7 +788,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.set((E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
         assertEquals("Z", c1.current.value);
         assertEquals("Z", c1.next.value);
@@ -794,10 +796,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("[A, Z, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -812,7 +814,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         c1.set((E) "Z");
 
-        assertEquals(true, c1.nextIndexValid);
+        assertTrue(c1.nextIndexValid);
         assertEquals(2, c1.nextIndex);
         assertEquals("Z", c1.current.value);
         assertEquals("C", c1.next.value);
@@ -820,10 +822,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("[A, Z, C]", list.toString());
         c1.remove();  // works ok
         assertEquals("[A, C]", list.toString());
-        try {
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
             c1.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        });
+        assertNull(exception.getMessage());
     }
 
     //-----------------------------------------------------------------------
@@ -893,12 +895,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testGet() {
-        try {
+        Exception exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(0);
-            fail("shouldn't get here");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index (0) is the size of the list"));
 
         assertTrue(list.add((E) "A"));
         assertEquals("A", list.get(0));
@@ -906,19 +906,15 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("A", list.get(0));
         assertEquals("B", list.get(1));
 
-        try {
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(-1);
-            fail("shouldn't get here");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index (-1) "));
 
-        try {
+        exception = assertThrows(IndexOutOfBoundsException.class, () -> {
             list.get(2);
-            fail("shouldn't get here");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Couldn't get the node: index (2) "));
     }
 
     @SuppressWarnings("unchecked")

@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -64,18 +69,15 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             final Integer testValue = Integer.valueOf(element);
             final Number iterValue = (Number) iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertTrue(!iter.hasNext());
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             iter.next();
-        } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        });
+        assertNull(exception.getMessage());
     }
 
     public void testIndexedArray() {
@@ -86,7 +88,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             iter.next();
         }
 
-        assertEquals("the count should be right using ArrayIterator(Object,2) ", count, testArray.length - 2);
+        assertEquals(count, testArray.length - 2);
 
         iter = makeArrayIterator(testArray, 1, testArray.length - 1);
         count = 0;
@@ -95,53 +97,34 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             iter.next();
         }
 
-        assertEquals(
-            "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ",
-            count,
-            testArray.length - 2);
+        assertEquals(count, testArray.length - 2);
 
-        try {
-            iter = makeArrayIterator(testArray, -1);
-            fail("new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
+        Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            makeArrayIterator(testArray, -1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts before the start of the array."));
 
-        try {
-            iter = makeArrayIterator(testArray, testArray.length + 1);
-            fail("new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
+        exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            makeArrayIterator(testArray, testArray.length + 1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that starts beyond the end of the array"));
 
-        try {
-            iter = makeArrayIterator(testArray, 0, -1);
-            fail("new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
 
-        try {
-            iter = makeArrayIterator(testArray, 0, testArray.length + 1);
-            fail("new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
+        exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            makeArrayIterator(testArray, 0, -1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that ends before the start of the array."));
 
-        try {
-            iter = makeArrayIterator(testArray, 1, 1);
-            // expected not to fail
-        } catch (final IllegalArgumentException iae) {
-            // MODIFIED: an iterator over a zero-length section of array
-            //  should be perfectly legal behavior
-            fail("new ArrayIterator(Object,1,1) should NOT throw an IllegalArgumentException");
-        }
+        exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            makeArrayIterator(testArray, 0, testArray.length + 1);
+        });
+        assertTrue(exception.getMessage().contains("Attempt to make an ArrayIterator that"));
 
-        try {
-            iter = makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2);
-            fail("new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        makeArrayIterator(testArray, 1, 1);
+
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2);
+        });
+        assertTrue(exception.getMessage().contains("End index must not be less than start index."));
     }
 }

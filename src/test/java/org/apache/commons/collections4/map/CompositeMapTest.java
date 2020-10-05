@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
@@ -78,12 +83,10 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             map.addComposited(three);
-            fail("Expecting IllegalArgumentException.");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("Key collision adding Map to CompositeMap"));
     }
 
     @SuppressWarnings("unchecked")

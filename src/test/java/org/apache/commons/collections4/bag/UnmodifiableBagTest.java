@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
 import junit.framework.Test;
@@ -85,10 +88,10 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         final Bag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableBag.unmodifiableBag(queue));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableBag.unmodifiableBag(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("collection"));
     }
 
     //-----------------------------------------------------------------------

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,10 +77,10 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMap.unmodifiableMap(map));
 
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             UnmodifiableMap.unmodifiableMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        });
+        assertTrue(exception.getMessage().contains("map"));
     }
 
     //-----------------------------------------------------------------------
