@@ -1,8 +1,28 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.commons.collections4;
 
 import org.apache.commons.collections4.map.HashedMap;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Collections;
 
 /**
  * Defines an Helper Builder that generates a {@code Map}
@@ -18,13 +38,13 @@ import java.util.*;
  * }</pre>
  *
  */
-public class MapBuilder<K,V> {
+public class MapBuilder<K, V> {
 
     private Comparator<? super K> comparator;
     private KeyOrder iterationOrder;
     private boolean synchronizedMap;
     private boolean immutable;
-    private Map<K,V> data;
+    private Map<K, V> data;
 
     public MapBuilder() {
         comparator = null;
@@ -78,37 +98,36 @@ public class MapBuilder<K,V> {
     Builder Method which takes care of all the conditions and returns the required Map.
      */
     public Map build() {
-        Map<K,V> map;
+        Map<K, V> map;
         switch (iterationOrder) {
-            case NATURAL_ORDER :
-            case COMPARATOR_ORDER:
-                map = new TreeMap(comparator);
-                break;
-            case INSERTION_ORDER :
-                map = new LinkedHashMap();
-                break;
-            default:
-                map = new HashedMap();
-                break;
+        case NATURAL_ORDER :
+        case COMPARATOR_ORDER:
+            map = new TreeMap(comparator);
+            break;
+        case INSERTION_ORDER :
+            map = new LinkedHashMap();
+            break;
+        default:
+            map = new HashedMap();
+            break;
         }
 
-        if(MapUtils.isNotEmpty(data)) {
+        if (MapUtils.isNotEmpty(data)) {
             map.putAll(data);
         }
 
-        if(synchronizedMap) {
+        if (synchronizedMap) {
             map = Collections.synchronizedMap(map);
         }
 
-        if(immutable) {
+        if (immutable) {
             map = Collections.unmodifiableMap(map);
         }
 
         return map;
     }
 
-    enum KeyOrder
-    {
+    enum KeyOrder {
         UNORDERED, NATURAL_ORDER, INSERTION_ORDER, COMPARATOR_ORDER;
     }
 }
