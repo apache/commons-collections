@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-769" dev="kinow" type="fix" due-to="Xin (Cynthia) Tong">
+      Fix flaky UnmodifiableMultiValuedMapTest.
+    </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump actions/setup-java from v1.4.0 to v1.4.3 #174 #177 #186.
     </action>
