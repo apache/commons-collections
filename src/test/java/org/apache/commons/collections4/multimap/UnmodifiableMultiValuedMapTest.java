@@ -48,6 +48,12 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     // -----------------------------------------------------------------------
+    private void assertMapContainsAllValues(MultiValuedMap<K, V> map) {
+        assertEquals("[uno, un]", map.get((K) "one").toString());
+        assertEquals("[dos, deux]", map.get((K) "two").toString());
+        assertEquals("[tres, trois]", map.get((K) "three").toString());
+    }
+
     @Override
     public boolean isAddSupported() {
         return false;
@@ -110,7 +116,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
             // expected, not support remove() method
             // UnmodifiableMultiValuedMap does not support change
         }
-        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+        this.assertMapContainsAllValues(map);
     }
 
     public void testRemoveMappingException() {
@@ -122,7 +128,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
             // expected, not support removeMapping() method
             // UnmodifiableMultiValuedMap does not support change
         }
-        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+        this.assertMapContainsAllValues(map);
     }
 
     public void testClearException() {
@@ -134,7 +140,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
             // expected, not support clear() method
             // UnmodifiableMultiValuedMap does not support change
         }
-        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+        this.assertMapContainsAllValues(map);
     }
 
     public void testPutAllException() {
