@@ -47,7 +47,11 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
+    /**
+     * Assert the given map contains all added values after it was initialized
+     * with makeFullMap().
+     * @param map the MultiValuedMap<K, V> to check
+     */
     private void assertMapContainsAllValues(MultiValuedMap<K, V> map) {
         assertEquals("[uno, un]", map.get((K) "one").toString());
         assertEquals("[dos, deux]", map.get((K) "two").toString());
