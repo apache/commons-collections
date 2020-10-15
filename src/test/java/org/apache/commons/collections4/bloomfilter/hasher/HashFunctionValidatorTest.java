@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests of the {@link HashFunctionValidator}.
@@ -108,12 +113,16 @@ public class HashFunctionValidatorTest {
     /**
      * Test the check method throws when the two hash functions are not equal.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testCheckThrows() {
         final HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.SIGNED,
-            ProcessType.CYCLIC, 300L);
+                ProcessType.CYCLIC, 300L);
         final HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl("Testing Suite", "impl1", Signedness.UNSIGNED,
-            ProcessType.CYCLIC, 300L);
-        HashFunctionValidator.checkAreEqual(impl1, impl2);
+                ProcessType.CYCLIC, 300L);
+
+        final Executable testMethod = () -> HashFunctionValidator.checkAreEqual(impl1, impl2);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Hash functions are not equal: (impl1-SIGNED-CYCLIC) != (impl1-UNSIGNED-CYCLIC)")));
     }
+
 }
