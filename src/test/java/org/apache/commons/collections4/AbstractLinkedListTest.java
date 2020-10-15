@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -23,6 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.
@@ -106,17 +112,14 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#getFirst()}.
+     * Tests {@link LinkedList#getFirst()}.
      */
     public void testLinkedListGetFirst() {
         resetEmpty();
-        try {
-            getCollection().getFirst();
-            fail("getFirst() should throw a NoSuchElementException for an " +
-                    "empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        final Executable testMethod = () -> getCollection()
+                .getFirst();
+        final NoSuchElementException thrown = assertThrows(NoSuchElementException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("FIXME")));
         verify();
 
         resetFull();
@@ -128,17 +131,14 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#getLast()}.
+     * Tests {@link LinkedList#getLast()}.
      */
     public void testLinkedListGetLast() {
         resetEmpty();
-        try {
-            getCollection().getLast();
-            fail("getLast() should throw a NoSuchElementException for an " +
-                    "empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        final Executable testMethod = () -> getCollection()
+                .getLast();
+        final NoSuchElementException thrown = assertThrows(NoSuchElementException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("FIXME")));
         verify();
 
         resetFull();
@@ -150,7 +150,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#removeFirst()}.
+     * Tests {@link LinkedList#removeFirst()}.
      */
     public void testLinkedListRemoveFirst() {
         if (!isRemoveSupported()) {
@@ -158,13 +158,10 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         }
 
         resetEmpty();
-        try {
-            getCollection().removeFirst();
-            fail("removeFirst() should throw a NoSuchElementException for " +
-                    "an empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        final Executable testMethod = () -> getCollection()
+                .removeFirst();
+        final NoSuchElementException thrown = assertThrows(NoSuchElementException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("FIXME")));
         verify();
 
         resetFull();
@@ -176,7 +173,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#removeLast()}.
+     * Tests {@link LinkedList#removeLast()}.
      */
     public void testLinkedListRemoveLast() {
         if (!isRemoveSupported()) {
@@ -184,13 +181,10 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         }
 
         resetEmpty();
-        try {
-            getCollection().removeLast();
-            fail("removeLast() should throw a NoSuchElementException for " +
-                    "an empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        final Executable testMethod = () -> getCollection()
+                .removeLast();
+        final NoSuchElementException thrown = assertThrows(NoSuchElementException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("FIXME")));
         verify();
 
         resetFull();
