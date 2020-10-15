@@ -17,12 +17,17 @@
 package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +59,7 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests for CollectionUtils.
@@ -192,9 +198,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(1, (int) freqB.get(5L));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testGetCardinalityMapNull() {
-        CollectionUtils.getCardinalityMap(null);
+        final Executable testMethod = () -> CollectionUtils.getCardinalityMap(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll")));
     }
 
     @Test
@@ -353,27 +361,36 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, empty));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.containsAny(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll1")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final Collection<String> list2 = null;
-        CollectionUtils.containsAny(list, list2);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(list, list2);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll2")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyNullColl3() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final String[] array = null;
-        CollectionUtils.containsAny(list, array);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(list, array);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll2")));
     }
 
     @Test
@@ -410,26 +427,35 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, emptyArr));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyInArrayNullColl1() {
         final String[] oneArr = {"1"};
-        CollectionUtils.containsAny(null, oneArr);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(null, oneArr);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll1")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyInArrayNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final Collection<String> list2 = null;
-        CollectionUtils.containsAny(list, list2);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(list, list2);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll2")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testContainsAnyInArrayNullArray() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final String[] array = null;
-        CollectionUtils.containsAny(list, array);
+
+        final Executable testMethod = () -> CollectionUtils.containsAny(list, array);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("coll2")));
     }
 
     @Test
@@ -451,18 +477,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.union(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.union(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.union(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.union(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -484,18 +516,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(5));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIntersectionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.intersection(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.intersection(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIntersectionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.intersection(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.intersection(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -517,18 +555,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testDisjunctionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.disjunction(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.disjunction(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testDisjunctionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.disjunction(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.disjunction(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -566,18 +610,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(1));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSubtractNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.subtract(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.subtract(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSubtractNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.subtract(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.subtract(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -646,18 +696,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isSubCollection(collectionA, c));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsSubCollectionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.isSubCollection(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.isSubCollection(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsSubCollectionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.isSubCollection(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.isSubCollection(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -737,9 +793,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testIsEqualCollectionNullEquator() {
-        CollectionUtils.isEqualCollection(collectionA, collectionA, null);
+        final Executable testMethod = () -> CollectionUtils.isEqualCollection(collectionA, collectionA, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("equator")));
     }
 
     @Test
@@ -783,12 +841,14 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(0, CollectionUtils.hashCode(collection, e));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testHashCodeNullEquator() {
-        CollectionUtils.hashCode(collectionB, null);
+        final Executable testMethod = () -> CollectionUtils.hashCode(collectionB, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("equator")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsEqualCollectionNullColl1() {
         final Collection<Integer> list = new ArrayList<>(1);
         list.add(1);
@@ -808,10 +868,12 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         };
 
-        CollectionUtils.isEqualCollection(null, list, e);
+        final Executable testMethod = () -> CollectionUtils.isEqualCollection(null, list, e);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsEqualCollectionNullColl2() {
         final Collection<Integer> list = new ArrayList<>(1);
         list.add(1);
@@ -831,7 +893,9 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         };
 
-        CollectionUtils.isEqualCollection(list, null, e);
+        final Executable testMethod = () -> CollectionUtils.isEqualCollection(list, null, e);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -856,18 +920,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.isProperSubCollection(a, CollectionUtils.subtract(a, b)));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsProperSubCollectionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.isProperSubCollection(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.isProperSubCollection(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("a")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsProperSubCollectionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        CollectionUtils.isProperSubCollection(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.isProperSubCollection(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("b")));
     }
 
     @Test
@@ -923,13 +993,16 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col.iterator(), testClosure);
     }
 
-    @Test(expected = FunctorException.class)
+    @Test
     @Deprecated
     public void forAllDoFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<>();
         col.add("x");
-        CollectionUtils.forAllDo(col, testClosure);
+
+        final Executable testMethod = () -> CollectionUtils.forAllDo(col, testClosure);
+        final FunctorException thrown = assertThrows(FunctorException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("InvokerTransformer: The method 'clear' on 'class java.lang.String' does not exist")));
     }
 
     @Test
@@ -996,18 +1069,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(expected, found);
 
         // Map index out of range
-        try {
-            CollectionUtils.get(expected, 2);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        try {
-            CollectionUtils.get(expected, -2);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        final Executable testMethod0 = () -> CollectionUtils.get(expected, 2);
+        final IndexOutOfBoundsException thrown0 = assertThrows(IndexOutOfBoundsException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("Entry does not exist: 0")));
+
+        final Executable testMethod1 = () -> CollectionUtils.get(expected, -2);
+        final IndexOutOfBoundsException thrown1 = assertThrows(IndexOutOfBoundsException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("Index cannot be negative: -2")));
 
         // Sorted map, entries exist, should respect order
         final SortedMap<String, String> map = new TreeMap<>();
@@ -1025,8 +1093,8 @@ public class CollectionUtilsTest extends MockTestCase {
      * Tests that {@link List}s are handled correctly - e.g. using
      * {@link List#get(int)}.
      */
-    @Test(expected=IndexOutOfBoundsException.class)
-    public void getFromList() throws Exception {
+    @Test
+    public void getFromList() {
         // List, entry exists
         final List<String> list = createMock(List.class);
         expect(list.get(0)).andReturn("zero");
@@ -1035,27 +1103,28 @@ public class CollectionUtilsTest extends MockTestCase {
         final String string = CollectionUtils.get(list, 0);
         assertEquals("zero", string);
         assertEquals("one", CollectionUtils.get(list, 1));
+
         // list, non-existent entry -- IndexOutOfBoundsException
-        CollectionUtils.get(new ArrayList<>(), 2);
+        final Executable testMethod = () -> CollectionUtils.get(new ArrayList<>(), 2);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Index: 2, Size: 0")));
     }
 
     @Test
     @Deprecated
     public void getFromIterator() throws Exception {
         // Iterator, entry exists
-        Iterator<Integer> iterator = iterableA.iterator();
-        assertEquals(1, (int) CollectionUtils.get(iterator, 0));
-        iterator = iterableA.iterator();
-        assertEquals(2, (int) CollectionUtils.get(iterator, 1));
+        final Iterator<Integer> iterator0 = iterableA.iterator();
+        assertEquals(1, (int) CollectionUtils.get(iterator0, 0));
+        final Iterator<Integer>  iterator1 = iterableA.iterator();
+        assertEquals(2, (int) CollectionUtils.get(iterator1, 1));
 
         // Iterator, non-existent entry
-        try {
-            CollectionUtils.get(iterator, 10);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertFalse(iterator.hasNext());
+        final Executable testMethod = () -> CollectionUtils.get(iterator1, 10);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 2")));
+
+        assertFalse(iterator1.hasNext());
     }
 
     @Test
@@ -1065,35 +1134,35 @@ public class CollectionUtilsTest extends MockTestCase {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
-        Enumeration<String> en = vector.elements();
-        assertEquals("zero", CollectionUtils.get(en, 0));
-        en = vector.elements();
-        assertEquals("one", CollectionUtils.get(en, 1));
+        final Enumeration<String> en0 = vector.elements();
+        assertEquals("zero", CollectionUtils.get(en0, 0));
+        final Enumeration<String> en1 = vector.elements();
+        assertEquals("one", CollectionUtils.get(en1, 1));
 
         // Enumerator, non-existent entry
-        try {
-            CollectionUtils.get(en, 3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertFalse(en.hasMoreElements());
+        final Executable testMethod = () -> CollectionUtils.get(en1, 3);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 3")));
+
+        assertFalse(en1.hasMoreElements());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     @Deprecated
-    public void getFromIterable() throws Exception {
+    public void getFromIterable() {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
         assertEquals("element", CollectionUtils.get(bag, 0));
 
         // Collection, non-existent entry
-        CollectionUtils.get(bag, 1);
+        final Executable testMethod = () -> CollectionUtils.get(bag, 1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 0")));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void getFromObjectArray() throws Exception {
+    @Test
+    public void getFromObjectArray() {
         // Object array, entry exists
         final Object[] objArray = new Object[2];
         objArray[0] = "zero";
@@ -1101,13 +1170,14 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("zero", CollectionUtils.get(objArray, 0));
         assertEquals("one", CollectionUtils.get(objArray, 1));
 
-        // Object array, non-existent entry --
-        // ArrayIndexOutOfBoundsException
-        CollectionUtils.get(objArray, 2);
+        // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
+        final Executable testMethod = () -> CollectionUtils.get(objArray, 2);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("2")));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void getFromPrimitiveArray() throws Exception {
+    @Test
+    public void getFromPrimitiveArray() {
         // Primitive array, entry exists
         final int[] array = new int[2];
         array[0] = 10;
@@ -1117,14 +1187,19 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // Object array, non-existent entry --
         // ArrayIndexOutOfBoundsException
-        CollectionUtils.get(array, 2);
+        final Executable testMethod = () -> CollectionUtils.get(array, 2);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(nullValue()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getFromObject() throws Exception {
+    @Test
+    public void getFromObject() {
         // Invalid object
         final Object obj = new Object();
-        CollectionUtils.get(obj, 0);
+
+        final Executable testMethod = () -> CollectionUtils.get(obj, 0);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Unsupported object type: java.lang.Object")));
     }
 
     // -----------------------------------------------------------------------
@@ -1196,9 +1271,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.size(list.iterator()));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testSize_Other() {
-        CollectionUtils.size("not a list");
+        final Executable testMethod = () -> CollectionUtils.size("not a list");
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Unsupported object type: java.lang.String")));
     }
 
     // -----------------------------------------------------------------------
@@ -1273,11 +1350,9 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_Other() {
-        try {
-            CollectionUtils.sizeIsEmpty("not a list");
-            fail("Expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException ex) {
-        }
+        final Executable testMethod = () -> CollectionUtils.sizeIsEmpty("not a list");
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Unsupported object type: java.lang.String")));
     }
 
     // -----------------------------------------------------------------------
@@ -1548,9 +1623,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(set.contains("4"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAddIgnoreNullNullColl() {
-        CollectionUtils.addIgnoreNull(null, "1");
+        final Executable testMethod = () -> CollectionUtils.addIgnoreNull(null, "1");
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     // -----------------------------------------------------------------------
@@ -1561,16 +1638,22 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("returned object should be a PredicatedCollection", collection instanceof PredicatedCollection);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPredicatedCollectionNullColl() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
-        CollectionUtils.predicatedCollection(null, predicate);
+
+        final Executable testMethod = () -> CollectionUtils.predicatedCollection(null, predicate);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPredicatedCollectionNullPredicate() {
         final Collection<Integer> list = new ArrayList<>();
-        CollectionUtils.predicatedCollection(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.predicatedCollection(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicate")));
     }
 
     @Test
@@ -1589,9 +1672,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.isFull(buf));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testIsFullNullColl() {
-        CollectionUtils.isFull(null);
+        final Executable testMethod = () -> CollectionUtils.isFull(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
@@ -1616,9 +1701,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, CollectionUtils.maxSize(buf));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testMaxSizeNullColl() {
-        CollectionUtils.maxSize(null);
+        final Executable testMethod = () -> CollectionUtils.maxSize(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
@@ -1686,18 +1773,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(sub.contains("X"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testRetainAllNullBaseColl() {
         final List<Object> sub = new ArrayList<>();
         sub.add("A");
-        CollectionUtils.retainAll(null, sub);
+
+        final Executable testMethod = () -> CollectionUtils.retainAll(null, sub);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testRetainAllNullSubColl() {
         final List<String> base = new ArrayList<>();
         base.add("A");
-        CollectionUtils.retainAll(base, null);
+
+        final Executable testMethod = () -> CollectionUtils.retainAll(base, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("retain")));
     }
 
     @Test
@@ -1718,39 +1811,54 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(result.contains(3));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testRemoveRangeNull() {
         final Collection<Integer> list = null;
-        CollectionUtils.removeRange(list, 0, 0);
+
+        final Executable testMethod = () -> CollectionUtils.removeRange(list, 0, 0);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("input")));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveRangeStartIndexNegative() {
         final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        CollectionUtils.removeRange(list, -1, 1);
+
+        final Executable testMethod = () -> CollectionUtils.removeRange(list, -1, 1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The start index can't be less than 0.")));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testRemoveRangeEndIndexNegative() {
         final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        CollectionUtils.removeRange(list, 0, -1);
+
+        final Executable testMethod = () -> CollectionUtils.removeRange(list, 0, -1);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The end index can't be less than the start index.")));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testRemoveRangeEndLowStart() {
         final Collection<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
-        CollectionUtils.removeRange(list, 1, 0);
+
+        final Executable testMethod = () -> CollectionUtils.removeRange(list, 1, 0);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The end index can't be less than the start index.")));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveRangeWrongEndIndex() {
         final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        CollectionUtils.removeRange(list, 0, 2);
+
+        final Executable testMethod = () -> CollectionUtils.removeRange(list, 0, 2);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The end index can't be greater than the size of collection.")));
     }
 
     @Test
@@ -1784,29 +1892,41 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(result.contains(5));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testRemoveCountWithNull() {
         final Collection<Integer> list = null;
-        CollectionUtils.removeCount(list, 0, 1);
+
+        final Executable testMethod = () -> CollectionUtils.removeCount(list, 0, 1);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("input")));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveCountStartNegative() {
         final Collection<Integer> list = new ArrayList<>();
-        CollectionUtils.removeCount(list, -1, 1);
+
+        final Executable testMethod = () -> CollectionUtils.removeCount(list, -1, 1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The start index can't be less than 0.")));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveCountNegative() {
         final Collection<Integer> list = new ArrayList<>();
-        CollectionUtils.removeCount(list, 0, -1);
+
+        final Executable testMethod = () -> CollectionUtils.removeCount(list, 0, -1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The count can't be less than 0.")));
     }
 
-    @Test(expected=IndexOutOfBoundsException.class)
+    @Test
     public void testRemoveCountWrongCount() {
         final Collection<Integer> list = new ArrayList<>();
         list.add(1);
-        CollectionUtils.removeCount(list, 0, 2);
+
+        final Executable testMethod = () -> CollectionUtils.removeCount(list, 0, 2);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("The sum of start index and count can't be greater than the size of collection.")));
     }
 
     @Test
@@ -1835,18 +1955,24 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(sub.contains("X"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testRemoveAllNullBaseColl() {
         final List<String> sub = new ArrayList<>();
         sub.add("A");
-        CollectionUtils.removeAll(null, sub);
+
+        final Executable testMethod = () -> CollectionUtils.removeAll(null, sub);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(nullValue()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testRemoveAllNullSubColl() {
         final List<String> base = new ArrayList<>();
         base.add("A");
-        CollectionUtils.removeAll(base, null);
+
+        final Executable testMethod = () -> CollectionUtils.removeAll(base, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(nullValue()));
     }
 
     // -----------------------------------------------------------------------
@@ -1857,16 +1983,22 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testTransformingCollectionNullColl() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
-        CollectionUtils.transformingCollection(null, transformer);
+
+        final Executable testMethod = () -> CollectionUtils.transformingCollection(null, transformer);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testTransformingCollectionNullTransformer() {
         final List<String> list = new ArrayList<>();
-        CollectionUtils.transformingCollection(list, null);
+
+        final Executable testMethod = () -> CollectionUtils.transformingCollection(list, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("transformer")));
     }
 
     @Test
@@ -1886,12 +2018,10 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
         assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
-        try {
-            CollectionUtils.synchronizedCollection(null);
-            fail("Expecting NullPointerException for null collection.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+
+        final Executable testMethod = () -> CollectionUtils.synchronizedCollection(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
@@ -1899,12 +2029,10 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
         assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
-        try {
-            CollectionUtils.unmodifiableCollection(null);
-            fail("Expecting NullPointerException for null collection.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+
+        final Executable testMethod = () -> CollectionUtils.unmodifiableCollection(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
@@ -1977,53 +2105,74 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collectionA.contains(5));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testaddAllNullColl1() {
         final List<Integer> list = new ArrayList<>();
-        CollectionUtils.addAll(null, list);
+
+        final Executable testMethod = () -> CollectionUtils.addAll(null, list);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAddAllNullColl2() {
         final List<Integer> list = new ArrayList<>();
         final Iterable<Integer> list2 = null;
-        CollectionUtils.addAll(list, list2);
+
+        final Executable testMethod = () -> CollectionUtils.addAll(list, list2);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterable")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAddAllNullColl3() {
         final List<Integer> list = new ArrayList<>();
         final Iterator<Integer> list2 = null;
-        CollectionUtils.addAll(list, list2);
+
+        final Executable testMethod = () -> CollectionUtils.addAll(list, list2);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAddAllNullColl4() {
         final List<Integer> list = new ArrayList<>();
         final Enumeration<Integer> enumArray = null;
-        CollectionUtils.addAll(list, enumArray);
+
+        final Executable testMethod = () -> CollectionUtils.addAll(list, enumArray);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("enumeration")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAddAllNullColl5() {
         final List<Integer> list = new ArrayList<>();
         final Integer[] array = null;
-        CollectionUtils.addAll(list, array);
+
+        final Executable testMethod = () -> CollectionUtils.addAll(list, array);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("elements")));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void getNegative() {
-        CollectionUtils.get((Object) collectionA, -3);
+        final Executable testMethod = () -> CollectionUtils.get((Object) collectionA, -3);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Index cannot be negative: -3")));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void getPositiveOutOfBounds() {
-        CollectionUtils.get((Object) collectionA.iterator(), 30);
+        final Executable testMethod = () -> CollectionUtils.get((Object) collectionA.iterator(), 30);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 20")));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void get1() {
-        CollectionUtils.get((Object) null, 0);
+        final Executable testMethod = () -> CollectionUtils.get((Object) null, 0);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Unsupported object type: null")));
     }
 
     @Test
@@ -2063,33 +2212,33 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(collectionA, Arrays.asList(a));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testReverseArrayNull() {
-        CollectionUtils.reverseArray(null);
+        final Executable testMethod = () -> CollectionUtils.reverseArray(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("array")));
     }
 
     @Test
     public void extractSingleton() {
-        ArrayList<String> coll = null;
-        try {
-            CollectionUtils.extractSingleton(coll);
-            fail("expected NullPointerException from extractSingleton(null)");
-        } catch (final NullPointerException e) {
-        }
-        coll = new ArrayList<>();
-        try {
-            CollectionUtils.extractSingleton(coll);
-            fail("expected IllegalArgumentException from extractSingleton(empty)");
-        } catch (final IllegalArgumentException e) {
-        }
-        coll.add("foo");
-        assertEquals("foo", CollectionUtils.extractSingleton(coll));
-        coll.add("bar");
-        try {
-            CollectionUtils.extractSingleton(coll);
-            fail("expected IllegalArgumentException from extractSingleton(size == 2)");
-        } catch (final IllegalArgumentException e) {
-        }
+        final ArrayList<String> coll0 = null;
+
+        final Executable testMethod0 = () -> CollectionUtils.extractSingleton(coll0);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
+
+        final ArrayList<String> coll1 = new ArrayList<>();
+        final Executable testMethod1 = () -> CollectionUtils.extractSingleton(coll1);
+        final IllegalArgumentException thrown1 = assertThrows(IllegalArgumentException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("Can extract singleton only when collection size == 1")));
+
+        coll1.add("foo");
+        assertEquals("foo", CollectionUtils.extractSingleton(coll1));
+        coll1.add("bar");
+
+        final Executable testMethod = () -> CollectionUtils.extractSingleton(coll1);
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Can extract singleton only when collection size == 1")));
     }
 
     /**
@@ -2100,19 +2249,25 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.next()).andReturn(t);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void collateException0() {
-        CollectionUtils.collate(null, collectionC);
+        final Executable testMethod = () -> CollectionUtils.collate(null, collectionC);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterableA")));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void collateException1() {
-        CollectionUtils.collate(collectionA, null);
+        final Executable testMethod = () -> CollectionUtils.collate(collectionA, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterableB")));
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void collateException2() {
-        CollectionUtils.collate(collectionA, collectionC, null);
+        final Executable testMethod = () -> CollectionUtils.collate(collectionA, collectionC, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("comparator")));
     }
 
     @Test
@@ -2165,9 +2320,11 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("Merge two lists 2 - ignore duplicates", combinedList, result2);
     }
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void testPermutationsWithNullCollection() {
-        CollectionUtils.permutations(null);
+        final Executable testMethod = () -> CollectionUtils.permutations(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
@@ -2239,17 +2396,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(remove.contains("CX"));
         assertTrue(remove.contains("XZ"));
 
-        try {
-            CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        final Executable testMethod0 = () -> CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
 
-        try {
-            CollectionUtils.removeAll(base, remove, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        final Executable testMethod1 = () -> CollectionUtils.removeAll(base, remove, null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("equator")));
     }
 
     @Test
@@ -2292,17 +2445,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(retain.contains("CX"));
         assertTrue(retain.contains("XZ"));
 
-        try {
-            CollectionUtils.retainAll(null, null, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        final Executable testMethod0 = () -> CollectionUtils.retainAll(null, null, null);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
 
-        try {
-            CollectionUtils.retainAll(base, retain, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
+        final Executable testMethod1 = () -> CollectionUtils.retainAll(base, retain, null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("equator")));
     }
 
 }
