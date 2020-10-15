@@ -16,9 +16,15 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Abstract test class for ArrayList.
@@ -42,12 +48,9 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
         assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", 0, list.size());
 
-        try {
-            list.get(1);
-            fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected result
-        }
+        final Executable testMethod = () -> list.get(1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Index: 1, Size: 0")));
     }
 
     @SuppressWarnings("unchecked")
