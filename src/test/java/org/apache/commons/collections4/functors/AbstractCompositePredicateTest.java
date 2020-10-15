@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,6 +29,7 @@ import java.util.List;
 import org.apache.commons.collections4.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Base class for tests of composite predicates.
@@ -99,46 +105,57 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Tests {@code getInstance} with a null predicate array.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullArrayToGetInstance() {
-        getPredicateInstance((Predicate<T>[]) null);
+        final Executable testMethod = () -> getPredicateInstance((Predicate<T>[]) null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicates")));
     }
 
     /**
      * Tests {@code getInstance} with a single null element in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null });
+        final Executable testMethod = () -> getPredicateInstance(new Predicate[] { null } );
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicates[0]")));
     }
 
     /**
      * Tests {@code getInstance} with two null elements in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null, null });
+        final Executable testMethod = () -> getPredicateInstance(new Predicate[] { null, null } );
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicates[0]")));
     }
-
 
     /**
      * Tests {@code getInstance} with a null predicate collection
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullCollectionToGetInstance() {
-        getPredicateInstance((Collection<Predicate<T>>) null);
+        final Executable testMethod = () -> getPredicateInstance((Collection<Predicate<T>>) null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicates")));
     }
 
     /**
      * Tests {@code getInstance} with a predicate collection that contains null elements
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInCollectionToGetInstance() {
         final Collection<Predicate<T>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        getPredicateInstance(coll);
+
+        final Executable testMethod = () -> getPredicateInstance(coll);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicates[0]")));
     }
+
 }
