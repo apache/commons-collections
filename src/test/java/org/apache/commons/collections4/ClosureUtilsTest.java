@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPClosure;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests the ClosureUtils class.
@@ -162,10 +167,9 @@ public class ClosureUtilsTest {
         ClosureUtils.doWhileClosure(cmd, PredicateUtils.uniquePredicate()).execute(null);
         assertEquals(2, cmd.count);
 
-        try {
-            ClosureUtils.doWhileClosure(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        final Executable testMethod = () -> ClosureUtils.doWhileClosure(null, null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("predicate")));
     }
 
     // chainedClosure
