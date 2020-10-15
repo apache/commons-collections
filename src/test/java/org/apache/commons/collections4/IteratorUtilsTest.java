@@ -21,12 +21,17 @@ import static org.apache.commons.collections4.functors.TruePredicate.INSTANCE;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +54,7 @@ import org.apache.commons.collections4.iterators.*;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -436,9 +442,11 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsEnumerationNull() {
-        IteratorUtils.asEnumeration(null);
+        final Executable testMethod = () -> IteratorUtils.asEnumeration(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
     @Test
@@ -472,14 +480,17 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsIterator() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
         assertTrue("create instance fail", IteratorUtils.asIterator(en) instanceof Iterator);
-        IteratorUtils.asIterator(null);
+
+        final Executable testMethod = () -> IteratorUtils.asIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("enumeration")));
     }
 
     @Test
@@ -599,7 +610,7 @@ public class IteratorUtilsTest {
         assertEquals(combinedList, result);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorCollectionNull() {
         final Collection<Iterator<?>> coll = new ArrayList<>();
         coll.add(collectionOdd.iterator());
@@ -607,10 +618,13 @@ public class IteratorUtilsTest {
         final Iterator<?> it = IteratorUtils.collatedIterator(null, coll);
         final List<?> result = IteratorUtils.toList(it);
         assertEquals(6, result.size());
-        IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null);
+
+        final Executable testMethod = () -> IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(nullValue()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorNull() {
         final ArrayList arrayList = new ArrayList();
         // natural ordering
@@ -632,7 +646,10 @@ public class IteratorUtilsTest {
         it = IteratorUtils.collatedIterator(reverseComparator, collectionOdd.iterator());
         result = IteratorUtils.toList(it);
         assertEquals(collectionOdd, result);
-        IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+
+        final Executable testMethod = () -> IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
     // -----------------------------------------------------------------------
@@ -1023,7 +1040,7 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
@@ -1031,16 +1048,22 @@ public class IteratorUtilsTest {
         coll.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
-        IteratorUtils.loopingIterator(null);
+
+        final Executable testMethod = () -> IteratorUtils.loopingIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingListIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
-        IteratorUtils.loopingListIterator(null);
+
+        final Executable testMethod = () -> IteratorUtils.loopingListIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("list")));
     }
 
     /**
@@ -1109,21 +1132,26 @@ public class IteratorUtilsTest {
         assertTrue("create instance fail", IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.peekingIterator(ie) instanceof Iterator);
-        IteratorUtils.peekingIterator(null);
 
+        final Executable testMethod = () -> IteratorUtils.peekingIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.pushbackIterator(ie) instanceof Iterator);
-        IteratorUtils.pushbackIterator(null);
+
+        final Executable testMethod = () -> IteratorUtils.pushbackIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
     @Test
@@ -1407,13 +1435,15 @@ public class IteratorUtilsTest {
         assertTrue(listIterator.hasNext());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
         assertTrue("create instance fail", IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
-        IteratorUtils.unmodifiableMapIterator(null);
 
+        final Executable testMethod = () -> IteratorUtils.unmodifiableMapIterator(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("iterator")));
     }
 
     @Test
