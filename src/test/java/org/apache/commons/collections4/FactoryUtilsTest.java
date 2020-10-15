@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -23,6 +26,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -32,6 +36,7 @@ import java.util.TimeZone;
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
@@ -214,9 +219,11 @@ public class FactoryUtilsTest {
     // instantiateFactory
     //------------------------------------------------------------------
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void instantiateFactoryNull() {
-        FactoryUtils.instantiateFactory(null);
+        final Executable testMethod = () -> FactoryUtils.instantiateFactory(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("classToInstantiate")));
     }
 
     @Test
@@ -229,14 +236,18 @@ public class FactoryUtilsTest {
         assertEquals(1, created.getValue());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryMismatch() {
-        FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
+        final Executable testMethod = () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[]{null});
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Parameter types must match the arguments")));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryNoConstructor() {
-        FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
+        final Executable testMethod = () -> FactoryUtils.instantiateFactory(Date.class, new Class[]{Long.class}, new Object[]{null});
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("InstantiateFactory: The constructor must exist and be public ")));
     }
 
     @Test
