@@ -17,12 +17,16 @@
 package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +41,7 @@ import org.apache.commons.collections4.bag.HashBag;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests for IterableUtils.
@@ -124,12 +129,15 @@ public class IterableUtilsTest {
         IterableUtils.forEach(col, testClosure);
     }
 
-    @Test(expected = FunctorException.class)
+    @Test
     public void forEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<>();
         col.add("x");
-        IterableUtils.forEach(col, testClosure);
+
+        final Executable testMethod = () -> IterableUtils.forEach(col, testClosure);
+        final FunctorException thrown = assertThrows(FunctorException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("InvokerTransformer: The method 'clear' on 'class java.lang.String' does not exist")));
     }
 
     @Test
@@ -380,13 +388,16 @@ public class IterableUtilsTest {
         assertEquals("element", IterableUtils.get(bag, 0));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void getFromIterableIndexOutOfBoundsException() throws Exception {
+    @Test
+    public void getFromIterableIndexOutOfBoundsException() {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
+
         // Collection, non-existent entry
-        IterableUtils.get(bag, 1);
+        final Executable testMethod = () -> IterableUtils.get(bag, 1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 0")));
     }
 
     public void firstFromIterable() throws Exception {
@@ -396,12 +407,15 @@ public class IterableUtilsTest {
         assertEquals("element", IterableUtils.first(bag));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void firstFromIterableIndexOutOfBoundsException() throws Exception {
+    @Test
+    public void firstFromIterableIndexOutOfBoundsException() {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
+
         // Collection, non-existent entry
-        IterableUtils.first(bag);
+        final Executable testMethod = () -> IterableUtils.first(bag);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Entry does not exist: 0")));
     }
 
     @SuppressWarnings("unchecked")
