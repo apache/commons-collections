@@ -16,9 +16,15 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.EmptyStackException;
 
 import junit.framework.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests ArrayStack.
@@ -46,20 +52,13 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", 0, stack.size());
 
-        try {
-            stack.peek();
-            fail("peek() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
+        final Executable testMethod0 = () -> stack.peek();
+        final EmptyStackException thrown0 = assertThrows(EmptyStackException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(nullValue()));
 
-        try {
-            stack.pop();
-            fail("pop() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
-
+        final Executable testMethod1 = () -> stack.pop();
+        final EmptyStackException thrown1 = assertThrows(EmptyStackException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(nullValue()));
     }
 
     @SuppressWarnings("unchecked")
