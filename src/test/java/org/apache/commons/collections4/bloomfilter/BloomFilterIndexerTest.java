@@ -16,8 +16,14 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,9 +34,11 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class BloomFilterIndexerTest {
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testCheckPositiveThrows() {
-        BloomFilterIndexer.checkPositive(-1);
+        final Executable testMethod = () -> BloomFilterIndexer.checkPositive(-1);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("Negative bitIndex: -1")));
     }
 
     @Test
