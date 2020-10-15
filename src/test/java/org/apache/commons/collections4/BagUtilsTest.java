@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.Assert.*;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -30,6 +34,7 @@ import org.apache.commons.collections4.bag.UnmodifiableBag;
 import org.apache.commons.collections4.bag.UnmodifiableSortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Tests for BagUtils factory methods.
@@ -46,26 +51,22 @@ public class BagUtilsTest {
     public void testSynchronizedBag() {
         final Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<>());
         assertTrue("Returned object should be a SynchronizedBag.",
-            bag instanceof SynchronizedBag);
-        try {
-            BagUtils.synchronizedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof SynchronizedBag);
+
+        final Executable testMethod = () -> BagUtils.synchronizedBag(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
     public void testUnmodifiableBag() {
         final Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<>());
         assertTrue("Returned object should be an UnmodifiableBag.",
-            bag instanceof UnmodifiableBag);
-        try {
-            BagUtils.unmodifiableBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof UnmodifiableBag);
+
+        final Executable testMethod = () -> BagUtils.unmodifiableBag(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
 
         assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
     }
@@ -74,64 +75,52 @@ public class BagUtilsTest {
     public void testPredicatedBag() {
         final Bag<Object> bag = BagUtils.predicatedBag(new HashBag<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedBag.",
-            bag instanceof PredicatedBag);
-        try {
-            BagUtils.predicatedBag(null, truePredicate);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            BagUtils.predicatedBag(new HashBag<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof PredicatedBag);
+
+        final Executable testMethod0 = () -> BagUtils.predicatedBag(null, truePredicate);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
+
+        final Executable testMethod1 = () -> BagUtils.predicatedBag(new HashBag<>(), null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("predicate")));
     }
 
     @Test
     public void testTransformedBag() {
         final Bag<Object> bag = BagUtils.transformingBag(new HashBag<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedBag.",
-            bag instanceof TransformedBag);
-        try {
-            BagUtils.transformingBag(null, nopTransformer);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            BagUtils.transformingBag(new HashBag<>(), null);
-            fail("Expecting NullPointerException for null transformer.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof TransformedBag);
+
+        final Executable testMethod0 = () -> BagUtils.transformingBag(null, nopTransformer);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
+
+        final Executable testMethod1 = () -> BagUtils.transformingBag(new HashBag<>(), null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("transformer")));
     }
 
     @Test
     public void testSynchronizedSortedBag() {
         final Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<>());
         assertTrue("Returned object should be a SynchronizedSortedBag.",
-            bag instanceof SynchronizedSortedBag);
-        try {
-            BagUtils.synchronizedSortedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof SynchronizedSortedBag);
+
+        final Executable testMethod = () -> BagUtils.synchronizedSortedBag(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
     }
 
     @Test
     public void testUnmodifiableSortedBag() {
         final SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<>());
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
-            bag instanceof UnmodifiableSortedBag);
-        try {
-            BagUtils.unmodifiableSortedBag(null);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof UnmodifiableSortedBag);
+
+        final Executable testMethod = () -> BagUtils.unmodifiableSortedBag(null);
+        final NullPointerException thrown = assertThrows(NullPointerException.class, testMethod);
+        assertThat(thrown.getMessage(), is(equalTo("collection")));
 
         assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
     }
@@ -140,39 +129,30 @@ public class BagUtilsTest {
     public void testPredicatedSortedBag() {
         final Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedSortedBag.",
-            bag instanceof PredicatedSortedBag);
-        try {
-            BagUtils.predicatedSortedBag(null, truePredicate);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            BagUtils.predicatedSortedBag(new TreeBag<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof PredicatedSortedBag);
+
+        final Executable testMethod0 = () -> BagUtils.predicatedSortedBag(null, truePredicate);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
+
+        final Executable testMethod1 = () -> BagUtils.predicatedSortedBag(new TreeBag<>(), null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("predicate")));
     }
 
     @Test
     public void testTransformedSortedBag() {
         final Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedSortedBag",
-            bag instanceof TransformedSortedBag);
-        try {
-            BagUtils.transformingSortedBag(null, nopTransformer);
-            fail("Expecting NullPointerException for null bag.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            BagUtils.transformingSortedBag(new TreeBag<>(), null);
-            fail("Expecting NullPointerException for null transformer.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+                bag instanceof TransformedSortedBag);
+
+        final Executable testMethod0 = () -> BagUtils.transformingSortedBag(null, nopTransformer);
+        final NullPointerException thrown0 = assertThrows(NullPointerException.class, testMethod0);
+        assertThat(thrown0.getMessage(), is(equalTo("collection")));
+
+        final Executable testMethod1 = () -> BagUtils.transformingSortedBag(new TreeBag<>(), null);
+        final NullPointerException thrown1 = assertThrows(NullPointerException.class, testMethod1);
+        assertThat(thrown1.getMessage(), is(equalTo("transformer")));
     }
+
 }
-
-
