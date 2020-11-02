@@ -171,6 +171,7 @@
       Update build from checkstyle.dep.version 8.31 to 8.32.
       Bump checkstyle from 8.35 to 8.36 #179.
       Bump checkstyle from 8.36 to 8.36.2 #184.
+      Bump checkstyle from 8.36.2 to 8.37 #192.
     </action>
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
