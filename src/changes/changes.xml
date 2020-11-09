@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-771" dev="kinow" type="fix" due-to="Xin Tong">
+      Fix flaky AbstractMultiValuedMapTest#testToString.
+    </action>
     <action issue="COLLECTIONS-769" dev="kinow" type="fix" due-to="Xin (Cynthia) Tong">
       Fix flaky UnmodifiableMultiValuedMapTest.
     </action>
