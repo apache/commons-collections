@@ -210,6 +210,9 @@
     <action type="update" dev="ggregory" due-to="Gary Gregory">
       Update optional commons-codec from 1.14 to 1.15.
     </action>
+    <action type="update" dev="ggregory" due-to="Dependabot">
+      Bump commons.junit.version from 5.6.2 to 5.7.0 #181.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
