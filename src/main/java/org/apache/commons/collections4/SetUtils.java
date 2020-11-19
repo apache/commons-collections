@@ -656,7 +656,7 @@ public class SetUtils {
     }
 
     /**
-     * {@code SetUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private SetUtils() {}
 }

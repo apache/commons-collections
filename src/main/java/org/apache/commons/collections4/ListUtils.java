@@ -44,7 +44,7 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
 public class ListUtils {
 
     /**
-     * {@code ListUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private ListUtils() {}
 

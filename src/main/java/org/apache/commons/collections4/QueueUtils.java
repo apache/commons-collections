@@ -38,7 +38,7 @@ public class QueueUtils {
     public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
 
     /**
-     * {@code QueueUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private QueueUtils() {}
 

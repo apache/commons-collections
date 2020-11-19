@@ -39,7 +39,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
 public class SplitMapUtils {
 
     /**
-     * {@code SplitMapUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private SplitMapUtils() {}
 

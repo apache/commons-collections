@@ -36,7 +36,7 @@ public class MultiSetUtils {
         UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
 
     /**
-     * Instantiation of MultiSetUtils is not intended or required.
+     * Don't allow instances.
      */
     private MultiSetUtils() {}
 

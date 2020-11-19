@@ -44,7 +44,7 @@ import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
 public class MultiMapUtils {
 
     /**
-     * {@code MultiMapUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private MultiMapUtils() {}
 

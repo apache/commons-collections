@@ -2044,7 +2044,7 @@ public class MapUtils {
     }
 
     /**
-     * {@code MapUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private MapUtils() {
     }

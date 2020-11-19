@@ -49,7 +49,7 @@ public class BagUtils {
             UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<>());
 
     /**
-     * Instantiation of BagUtils is not intended or required.
+     * Don't allow instances.
      */
     private BagUtils() {}
 
