@@ -43,8 +43,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.unmodifiableCollection(list);
     }
 
@@ -55,9 +54,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final ArrayList<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     @Override

@@ -43,9 +43,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeConfirmedFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     @Override
@@ -57,8 +55,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public List<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 

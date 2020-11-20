@@ -56,9 +56,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final ArrayList<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     @Override

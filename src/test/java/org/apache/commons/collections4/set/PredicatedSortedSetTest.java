@@ -53,8 +53,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public SortedSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return PredicatedSortedSet.predicatedSortedSet(set, truePredicate);
     }
 

@@ -55,8 +55,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     @Override
     public NavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return PredicatedNavigableSet.predicatedNavigableSet(set, truePredicate);
     }
 

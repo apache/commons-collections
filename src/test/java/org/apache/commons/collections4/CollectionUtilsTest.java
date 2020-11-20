@@ -2127,8 +2127,7 @@ public class CollectionUtilsTest extends MockTestCase {
         List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD);
         assertEquals("Merge two lists 1", result1, result2);
 
-        final List<Integer> combinedList = new ArrayList<>();
-        combinedList.addAll(collectionD);
+        final List<Integer> combinedList = new ArrayList<>(collectionD);
         combinedList.addAll(collectionE);
         Collections.sort(combinedList);
 
@@ -2156,8 +2155,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD, false);
         assertEquals("Merge two lists 1 - ignore duplicates", result1, result2);
 
-        final Set<Integer> combinedSet = new HashSet<>();
-        combinedSet.addAll(collectionD);
+        final Set<Integer> combinedSet = new HashSet<>(collectionD);
         combinedSet.addAll(collectionE);
         final List<Integer> combinedList = new ArrayList<>(combinedSet);
         Collections.sort(combinedList);

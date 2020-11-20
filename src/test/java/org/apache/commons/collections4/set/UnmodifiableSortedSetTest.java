@@ -53,8 +53,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public UnmodifiableSortedSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
 

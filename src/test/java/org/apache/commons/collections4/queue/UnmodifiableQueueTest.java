@@ -44,8 +44,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Queue<E> makeFullCollection() {
-        final Queue<E> queue = new LinkedList<>();
-        queue.addAll(Arrays.asList(getFullElements()));
+        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
         return UnmodifiableQueue.unmodifiableQueue(queue);
     }
 
@@ -56,9 +55,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final LinkedList<E> list = new LinkedList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
     @Override

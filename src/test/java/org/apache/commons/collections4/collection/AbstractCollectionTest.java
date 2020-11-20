@@ -392,8 +392,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         if (isNullSupported()) {
-            final ArrayList<E> list = new ArrayList<>();
-            list.addAll(Arrays.asList(getFullNonNullElements()));
+            final ArrayList<E> list = new ArrayList<>(Arrays.asList(getFullNonNullElements()));
             list.add(4, null);
             return (E[]) list.toArray();
         }
@@ -710,8 +709,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // make sure calls to "containsAll" don't change anything
         verify();
 
-        col = new ArrayList<>();
-        col.addAll(Arrays.asList(getFullElements()));
+        col = new ArrayList<>(Arrays.asList(getFullElements()));
         col.addAll(Arrays.asList(getFullElements()));
         assertTrue("Full collection should containAll duplicate full elements",
                 getCollection().containsAll(col));

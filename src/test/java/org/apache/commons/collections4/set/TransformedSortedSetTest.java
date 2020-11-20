@@ -54,8 +54,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeFullCollection() {
-        final SortedSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final SortedSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
