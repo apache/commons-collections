@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -362,9 +363,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     public void clear() {
         modCount++;
         final HashEntry<K, V>[] data = this.data;
-        for (int i = data.length - 1; i >= 0; i--) {
-            data[i] = null;
-        }
+        Arrays.fill(data, null);
         size = 0;
     }
 
