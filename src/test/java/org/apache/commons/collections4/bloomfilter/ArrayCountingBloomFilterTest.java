@@ -40,14 +40,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
     /**
      * Function to convert int arrays to BloomFilters for testing.
      */
-    private Function<int[], BloomFilter> converter = new Function<int[], BloomFilter>() {
-
-        @Override
-        public BloomFilter apply(int[] counts) {
-            BloomFilter testingFilter = new BitSetBloomFilter(shape);
-            testingFilter.merge(new FixedIndexesTestHasher(shape, counts));
-            return testingFilter;
-        }
+    private Function<int[], BloomFilter> converter = counts -> {
+        BloomFilter testingFilter = new BitSetBloomFilter(shape);
+        testingFilter.merge(new FixedIndexesTestHasher(shape, counts));
+        return testingFilter;
     };
 
     @Override
