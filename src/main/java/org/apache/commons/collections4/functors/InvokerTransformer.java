@@ -89,7 +89,6 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
      * @param methodName  the method to call
      */
     private InvokerTransformer(final String methodName) {
-        super();
         iMethodName = methodName;
         iParamTypes = null;
         iArgs = null;
@@ -106,7 +105,6 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
      * @param args  the constructor arguments
      */
     public InvokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args) {
-        super();
         iMethodName = methodName;
         iParamTypes = paramTypes != null ? paramTypes.clone() : null;
         iArgs = args != null ? args.clone() : null;

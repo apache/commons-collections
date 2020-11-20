@@ -54,7 +54,6 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @param predicate  the predicate to call after the null check
      */
     public NullIsExceptionPredicate(final Predicate<? super T> predicate) {
-        super();
         iPredicate = predicate;
     }
 

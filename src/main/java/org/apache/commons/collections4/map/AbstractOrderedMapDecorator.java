@@ -45,7 +45,6 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
      * @since 3.1
      */
     protected AbstractOrderedMapDecorator() {
-        super();
     }
 
     /**

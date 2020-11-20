@@ -315,7 +315,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
          * @param parent  the parent map
          */
         protected BidiOrderedMapIterator(final AbstractDualBidiMap<K, V> parent) {
-            super();
             this.parent = parent;
             iterator = new ArrayList<>(parent.entrySet()).listIterator();
         }

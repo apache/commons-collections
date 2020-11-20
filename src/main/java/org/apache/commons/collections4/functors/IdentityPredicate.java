@@ -55,7 +55,6 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the object to compare to
      */
     public IdentityPredicate(final T object) {
-        super();
         iValue = object;
     }
 

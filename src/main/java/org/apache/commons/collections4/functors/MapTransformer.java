@@ -59,7 +59,6 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @param map  the map to use for lookup, not cloned
      */
     private MapTransformer(final Map<? super I, ? extends O> map) {
-        super();
         iMap = map;
     }
 

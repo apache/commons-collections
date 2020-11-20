@@ -51,7 +51,6 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractInputCheckedMapDecorator() {
-        super();
     }
 
     /**

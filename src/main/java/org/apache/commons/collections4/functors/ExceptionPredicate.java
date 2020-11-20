@@ -50,7 +50,6 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
      * Restricted constructor.
      */
     private ExceptionPredicate() {
-        super();
     }
 
     /**

@@ -58,7 +58,6 @@ public class SingletonIterator<E>
      * @since 3.1
      */
     public SingletonIterator(final E object, final boolean removeAllowed) {
-        super();
         this.object = object;
         this.removeAllowed = removeAllowed;
     }

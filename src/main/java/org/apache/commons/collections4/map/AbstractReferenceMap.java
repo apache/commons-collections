@@ -151,7 +151,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Constructor used during deserialization.
      */
     protected AbstractReferenceMap() {
-        super();
     }
 
     /**
@@ -795,7 +794,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         int expectedModCount;
 
         ReferenceBaseIterator(final AbstractReferenceMap<K, V> parent) {
-            super();
             this.parent = parent;
             index = parent.size() != 0 ? parent.data.length : 0;
             // have to do this here!  size() invocation above

@@ -66,7 +66,6 @@ public class ForClosure<E> implements Closure<E> {
      * @param closure  the closure to execute, not null
      */
     public ForClosure(final int count, final Closure<? super E> closure) {
-        super();
         iCount = count;
         iClosure = closure;
     }

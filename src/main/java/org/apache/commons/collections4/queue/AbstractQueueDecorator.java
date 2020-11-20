@@ -46,7 +46,6 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractQueueDecorator() {
-        super();
     }
 
     /**

@@ -63,7 +63,6 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * @param iterator  the iterator to decorate
      */
     private UnmodifiableIterator(final Iterator<? extends E> iterator) {
-        super();
         this.iterator = iterator;
     }
 

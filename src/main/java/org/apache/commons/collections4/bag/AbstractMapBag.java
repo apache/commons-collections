@@ -57,7 +57,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Constructor needed for subclass serialisation.
      */
     protected AbstractMapBag() {
-        super();
     }
 
     /**
@@ -67,7 +66,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param map the map to assign
      */
     protected AbstractMapBag(final Map<E, MutableInteger> map) {
-        super();
         this.map = map;
     }
 

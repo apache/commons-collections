@@ -75,7 +75,6 @@ public class SingletonMap<K, V>
      * Constructor that creates a map of {@code null} to {@code null}.
      */
     public SingletonMap() {
-        super();
         this.key = null;
     }
 
@@ -86,7 +85,6 @@ public class SingletonMap<K, V>
      * @param value  the value to use
      */
     public SingletonMap(final K key, final V value) {
-        super();
         this.key = key;
         this.value = value;
     }
@@ -97,7 +95,6 @@ public class SingletonMap<K, V>
      * @param keyValue  the key value pair to use
      */
     public SingletonMap(final KeyValue<K, V> keyValue) {
-        super();
         this.key = keyValue.getKey();
         this.value = keyValue.getValue();
     }
@@ -108,7 +105,6 @@ public class SingletonMap<K, V>
      * @param mapEntry  the mapEntry to use
      */
     public SingletonMap(final Map.Entry<? extends K, ? extends V> mapEntry) {
-        super();
         this.key = mapEntry.getKey();
         this.value = mapEntry.getValue();
     }
@@ -121,7 +117,6 @@ public class SingletonMap<K, V>
      * @throws IllegalArgumentException if the size is not 1
      */
     public SingletonMap(final Map<? extends K, ? extends V> map) {
-        super();
         if (map.size() != 1) {
             throw new IllegalArgumentException("The map size must be 1");
         }
@@ -431,7 +426,6 @@ public class SingletonMap<K, V>
         private boolean canGetSet = false;
 
         SingletonMapIterator(final SingletonMap<K, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -516,7 +510,6 @@ public class SingletonMap<K, V>
         private final SingletonMap<?, V> parent;
 
         SingletonValues(final SingletonMap<?, V> parent) {
-            super();
             this.parent = parent;
         }
 

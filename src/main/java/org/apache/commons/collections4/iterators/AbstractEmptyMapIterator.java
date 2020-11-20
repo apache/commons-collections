@@ -29,7 +29,6 @@ public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterat
      * Create a new AbstractEmptyMapIterator.
      */
     public AbstractEmptyMapIterator() {
-        super();
     }
 
     public K getKey() {

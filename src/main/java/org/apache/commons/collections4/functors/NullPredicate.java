@@ -49,7 +49,6 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
      * Restricted constructor.
      */
     private NullPredicate() {
-        super();
     }
 
     /**

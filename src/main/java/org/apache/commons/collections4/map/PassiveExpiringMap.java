@@ -102,7 +102,6 @@ public class PassiveExpiringMap<K, V>
          *        entries that ALWAYS expire.
          */
         public ConstantTimeToLiveExpirationPolicy(final long timeToLiveMillis) {
-            super();
             this.timeToLiveMillis = timeToLiveMillis;
         }
 

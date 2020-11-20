@@ -29,7 +29,6 @@ abstract class AbstractEmptyIterator<E> {
      * Constructor.
      */
     protected AbstractEmptyIterator() {
-        super();
     }
 
     public boolean hasNext() {

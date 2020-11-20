@@ -50,7 +50,6 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
      * Restricted constructor.
      */
     private ExceptionFactory() {
-        super();
     }
 
     /**

@@ -89,7 +89,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @throws NullPointerException if map is null
      */
     private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
-        super();
         this.map = Objects.requireNonNull(map, "map");
         this.dummyValue = dummyValue;
     }

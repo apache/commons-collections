@@ -42,7 +42,6 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
      * @throws NullPointerException if the iterator is null
      */
     public AbstractMapIteratorDecorator(final MapIterator<K, V> iterator) {
-        super();
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 

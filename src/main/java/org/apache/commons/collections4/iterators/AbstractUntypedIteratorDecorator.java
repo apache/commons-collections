@@ -39,7 +39,6 @@ public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator
      * @throws NullPointerException if the iterator is null
      */
     protected AbstractUntypedIteratorDecorator(final Iterator<I> iterator) {
-        super();
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 

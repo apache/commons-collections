@@ -122,7 +122,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      */
     @SuppressWarnings("unchecked")
     public TreeBidiMap() {
-        super();
         rootNode = new Node[2];
     }
 
@@ -1501,7 +1500,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          * @param orderType  the KEY or VALUE int for the order
          */
         View(final DataElement orderType) {
-            super();
             this.orderType = orderType;
         }
 
@@ -1674,7 +1672,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          * @param orderType  the KEY or VALUE int for the order
          */
         ViewIterator(final DataElement orderType) {
-            super();
             this.orderType = orderType;
             expectedModifications = modifications;
             nextNode = leastNode(rootNode[orderType.ordinal()], orderType);
@@ -1905,7 +1902,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          */
         @SuppressWarnings("unchecked")
         Node(final K key, final V value) {
-            super();
             this.key = key;
             this.value = value;
             leftNode = new Node[2];

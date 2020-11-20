@@ -76,7 +76,6 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterators after using this constructor.
      */
     public IteratorChain() {
-        super();
     }
 
     /**
@@ -93,7 +92,6 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws NullPointerException if the iterator is null
      */
     public IteratorChain(final Iterator<? extends E> iterator) {
-        super();
         addIterator(iterator);
     }
 
@@ -108,7 +106,6 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws NullPointerException if either iterator is null
      */
     public IteratorChain(final Iterator<? extends E> first, final Iterator<? extends E> second) {
-        super();
         addIterator(first);
         addIterator(second);
     }
@@ -123,7 +120,6 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws NullPointerException if iterators array is or contains null
      */
     public IteratorChain(final Iterator<? extends E>... iteratorChain) {
-        super();
         for (final Iterator<? extends E> element : iteratorChain) {
             addIterator(element);
         }
@@ -142,7 +138,6 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterator
      */
     public IteratorChain(final Collection<Iterator<? extends E>> iteratorChain) {
-        super();
         for (final Iterator<? extends E> iterator : iteratorChain) {
             addIterator(iterator);
         }

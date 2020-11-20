@@ -91,7 +91,6 @@ public class PrototypeFactory {
      * Restricted constructor.
      */
     private PrototypeFactory() {
-        super();
     }
 
     // PrototypeCloneFactory
@@ -110,7 +109,6 @@ public class PrototypeFactory {
          * Constructor to store prototype.
          */
         private PrototypeCloneFactory(final T prototype, final Method method) {
-            super();
             iPrototype = prototype;
             iCloneMethod = method;
         }
@@ -163,7 +161,6 @@ public class PrototypeFactory {
          * Constructor to store prototype
          */
         private PrototypeSerializationFactory(final T prototype) {
-            super();
             iPrototype = prototype;
         }
 

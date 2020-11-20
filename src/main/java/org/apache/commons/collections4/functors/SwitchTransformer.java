@@ -128,7 +128,6 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     private SwitchTransformer(final boolean clone, final Predicate<? super I>[] predicates,
                              final Transformer<? super I, ? extends O>[] transformers,
                              final Transformer<? super I, ? extends O> defaultTransformer) {
-        super();
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
         iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ?

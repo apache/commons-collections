@@ -41,7 +41,6 @@ public abstract class AbstractBagDecorator<E>
      * @since 3.1
      */
     protected AbstractBagDecorator() {
-        super();
     }
 
     /**

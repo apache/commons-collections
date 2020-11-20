@@ -50,7 +50,6 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * Restricted constructor.
      */
     private StringValueTransformer() {
-        super();
     }
 
     /**

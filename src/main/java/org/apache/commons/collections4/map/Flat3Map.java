@@ -110,7 +110,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Constructor.
      */
     public Flat3Map() {
-        super();
     }
 
     /**
@@ -120,7 +119,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @throws NullPointerException if the map is null
      */
     public Flat3Map(final Map<? extends K, ? extends V> map) {
-        super();
         putAll(map);
     }
 
@@ -643,7 +641,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         private boolean canRemove = false;
 
         FlatMapIterator(final Flat3Map<K, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -766,7 +763,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         private final Flat3Map<K, V> parent;
 
         EntrySet(final Flat3Map<K, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -990,7 +986,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         private final Flat3Map<K, ?> parent;
 
         KeySet(final Flat3Map<K, ?> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -1066,7 +1061,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         private final Flat3Map<?, V> parent;
 
         Values(final Flat3Map<?, V> parent) {
-            super();
             this.parent = parent;
         }
 

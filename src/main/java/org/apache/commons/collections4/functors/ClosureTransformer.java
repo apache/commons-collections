@@ -55,7 +55,6 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * @param closure  the closure to call, not null
      */
     public ClosureTransformer(final Closure<? super T> closure) {
-        super();
         iClosure = closure;
     }
 

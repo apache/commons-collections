@@ -77,7 +77,6 @@ public class TreeList<E> extends AbstractList<E> {
      * Constructs a new empty list.
      */
     public TreeList() {
-        super();
     }
 
     /**
@@ -87,7 +86,6 @@ public class TreeList<E> extends AbstractList<E> {
      * @throws NullPointerException if the collection is null
      */
     public TreeList(final Collection<? extends E> coll) {
-        super();
         if (!coll.isEmpty()) {
             root = new AVLNode<>(coll);
             size = coll.size();
@@ -1018,7 +1016,6 @@ public class TreeList<E> extends AbstractList<E> {
          * @param fromIndex  the index to start at
          */
         protected TreeListIterator(final TreeList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
-            super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
             this.next = parent.root == null ? null : parent.root.get(fromIndex);

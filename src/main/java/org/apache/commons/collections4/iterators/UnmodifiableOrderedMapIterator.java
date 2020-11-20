@@ -65,7 +65,6 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      * @param iterator  the iterator to decorate
      */
     private UnmodifiableOrderedMapIterator(final OrderedMapIterator<K, ? extends V> iterator) {
-        super();
         this.iterator = iterator;
     }
 

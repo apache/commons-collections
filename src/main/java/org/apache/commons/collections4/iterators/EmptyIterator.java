@@ -68,7 +68,6 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
      * Constructor.
      */
     protected EmptyIterator() {
-        super();
     }
 
 }

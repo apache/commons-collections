@@ -40,7 +40,6 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
      * @param object  the single object to return from the iterator
      */
     public SingletonListIterator(final E object) {
-        super();
         this.object = object;
     }
 

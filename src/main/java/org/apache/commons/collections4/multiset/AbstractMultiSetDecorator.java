@@ -40,7 +40,6 @@ public abstract class AbstractMultiSetDecorator<E>
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractMultiSetDecorator() {
-        super();
     }
 
     /**

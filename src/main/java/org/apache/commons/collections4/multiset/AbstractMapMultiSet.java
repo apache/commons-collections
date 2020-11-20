@@ -52,7 +52,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * Constructor needed for subclass serialisation.
      */
     protected AbstractMapMultiSet() {
-        super();
     }
 
     /**
@@ -62,7 +61,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * @param map the map to assign
      */
     protected AbstractMapMultiSet(final Map<E, MutableInteger> map) {
-        super();
         this.map = map;
     }
 

@@ -84,7 +84,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * {@link #AbstractDualBidiMap(Map, Map)}.
      */
     protected AbstractDualBidiMap() {
-        super();
     }
 
     /**
@@ -102,7 +101,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @since 3.1
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap) {
-        super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
     }
@@ -117,7 +115,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap,
                                   final BidiMap<V, K> inverseBidiMap) {
-        super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
         this.inverseBidiMap = inverseBidiMap;
@@ -747,7 +744,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param parent  the parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
-            super();
             this.parent = parent;
             this.iterator = parent.normalMap.entrySet().iterator();
         }

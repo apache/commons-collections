@@ -76,7 +76,6 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * @throws NullPointerException if the iterator is null
      */
     public ListIteratorWrapper(final Iterator<? extends E> iterator) {
-        super();
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 

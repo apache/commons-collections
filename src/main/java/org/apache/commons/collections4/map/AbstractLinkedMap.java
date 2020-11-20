@@ -75,7 +75,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractLinkedMap() {
-        super();
     }
 
     /**
@@ -555,7 +554,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         protected int expectedModCount;
 
         protected LinkIterator(final AbstractLinkedMap<K, V> parent) {
-            super();
             this.parent = parent;
             this.next = parent.header.after;
             this.expectedModCount = parent.modCount;

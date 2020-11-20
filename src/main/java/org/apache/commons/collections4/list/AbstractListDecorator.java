@@ -42,7 +42,6 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
      * @since 3.1
      */
     protected AbstractListDecorator() {
-        super();
     }
 
     /**

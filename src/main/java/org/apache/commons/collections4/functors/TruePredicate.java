@@ -49,7 +49,6 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
      * Restricted constructor.
      */
     private TruePredicate() {
-        super();
     }
 
     /**

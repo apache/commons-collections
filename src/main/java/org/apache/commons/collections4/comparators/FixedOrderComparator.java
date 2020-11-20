@@ -81,7 +81,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * Constructs an empty FixedOrderComparator.
      */
     public FixedOrderComparator() {
-        super();
     }
 
     /**
@@ -94,7 +93,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @throws NullPointerException if the array is null
      */
     public FixedOrderComparator(final T... items) {
-        super();
         for (final T item : Objects.requireNonNull(items, "items")) {
             add(item);
         }
@@ -110,7 +108,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @throws NullPointerException if the list is null
      */
     public FixedOrderComparator(final List<T> items) {
-        super();
         for (final T t : Objects.requireNonNull(items, "items")) {
             add(t);
         }

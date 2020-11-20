@@ -98,7 +98,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractHashedMap() {
-        super();
     }
 
     /**
@@ -110,7 +109,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(final int initialCapacity, final float loadFactor, final int threshold) {
-        super();
         this.loadFactor = loadFactor;
         this.data = new HashEntry[initialCapacity];
         this.threshold = threshold;
@@ -139,7 +137,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(int initialCapacity, final float loadFactor) {
-        super();
         if (initialCapacity < 0) {
             throw new IllegalArgumentException("Initial capacity must be a non negative number");
         }
@@ -846,7 +843,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<K, V> parent;
 
         protected EntrySet(final AbstractHashedMap<K, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -946,7 +942,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<K, ?> parent;
 
         protected KeySet(final AbstractHashedMap<K, ?> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -1035,7 +1030,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<?, V> parent;
 
         protected Values(final AbstractHashedMap<?, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -1101,7 +1095,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         protected Object value;
 
         protected HashEntry(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
-            super();
             this.next = next;
             this.hashCode = hashCode;
             this.key = key;
@@ -1177,7 +1170,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private int expectedModCount;
 
         protected HashIterator(final AbstractHashedMap<K, V> parent) {
-            super();
             this.parent = parent;
             final HashEntry<K, V>[] data = parent.data;
             int i = data.length;

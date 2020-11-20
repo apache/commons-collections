@@ -40,7 +40,6 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
      * @param value  the value for the entry, may be null
      */
     protected AbstractKeyValue(final K key, final V value) {
-        super();
         this.key = key;
         this.value = value;
     }

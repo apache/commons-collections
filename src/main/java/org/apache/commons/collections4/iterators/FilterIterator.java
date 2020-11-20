@@ -47,7 +47,6 @@ public class FilterIterator<E> implements Iterator<E> {
      * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public FilterIterator() {
-        super();
     }
 
     /**
@@ -57,7 +56,6 @@ public class FilterIterator<E> implements Iterator<E> {
      * @param iterator  the iterator to use
      */
     public FilterIterator(final Iterator<? extends E> iterator) {
-        super();
         this.iterator = iterator;
     }
 
@@ -69,7 +67,6 @@ public class FilterIterator<E> implements Iterator<E> {
      * @param predicate  the predicate to use
      */
     public FilterIterator(final Iterator<? extends E> iterator, final Predicate<? super E> predicate) {
-        super();
         this.iterator = iterator;
         this.predicate = predicate;
     }

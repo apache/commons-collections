@@ -50,7 +50,6 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
      * Restricted constructor.
      */
     private ExceptionClosure() {
-        super();
     }
 
     /**

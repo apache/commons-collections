@@ -41,7 +41,6 @@ public abstract class AbstractSortedSetDecorator<E>
      * @since 3.1
      */
     protected AbstractSortedSetDecorator() {
-        super();
     }
 
     /**

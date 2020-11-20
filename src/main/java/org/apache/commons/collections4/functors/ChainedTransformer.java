@@ -86,7 +86,6 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @param transformers  the transformers to chain, no nulls
      */
     private ChainedTransformer(final boolean clone, final Transformer<? super T, ? extends T>[] transformers) {
-        super();
         iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
     }
 

@@ -39,7 +39,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * {@link #setTransformer(Transformer)} methods are invoked.
      */
     public TransformIterator() {
-        super();
     }
 
     /**
@@ -49,7 +48,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param iterator  the iterator to use
      */
     public TransformIterator(final Iterator<? extends I> iterator) {
-        super();
         this.iterator = iterator;
     }
 
@@ -63,7 +61,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      */
     public TransformIterator(final Iterator<? extends I> iterator,
                              final Transformer<? super I, ? extends O> transformer) {
-        super();
         this.iterator = iterator;
         this.transformer = transformer;
     }

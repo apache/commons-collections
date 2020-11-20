@@ -45,7 +45,6 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
     private final String fileExtension;
 
     protected AbstractPropertiesFactoryTest(final AbstractPropertiesFactory<T> factory, final String fileExtension) {
-        super();
         this.factory = factory;
         this.fileExtension = fileExtension;
         this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;

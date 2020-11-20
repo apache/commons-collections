@@ -50,7 +50,6 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * Constructor.
      */
     protected EmptyMapIterator() {
-        super();
     }
 
 }

@@ -86,8 +86,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @throws IndexOutOfBoundsException if either index is invalid
      */
     public ArrayIterator(final Object array, final int startIndex, final int endIndex) {
-        super();
-
         this.array = array;
         this.startIndex = startIndex;
         this.endIndex = endIndex;

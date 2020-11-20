@@ -93,7 +93,6 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
         final Transformer<? super I, ? extends O> trueTransformer,
         final Transformer<? super I, ? extends O> falseTransformer) {
 
-        super();
         iPredicate = predicate;
         iTrueTransformer = trueTransformer;
         iFalseTransformer = falseTransformer;

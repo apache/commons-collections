@@ -49,7 +49,6 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
      * Constructor.
      */
     private NOPTransformer() {
-        super();
     }
 
     /**

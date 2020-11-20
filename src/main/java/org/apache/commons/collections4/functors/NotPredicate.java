@@ -53,7 +53,6 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @param predicate  the predicate to call after the null check
      */
     public NotPredicate(final Predicate<? super T> predicate) {
-        super();
         iPredicate = predicate;
     }
 

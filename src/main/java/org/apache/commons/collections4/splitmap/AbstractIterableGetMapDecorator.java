@@ -51,7 +51,6 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractIterableGetMapDecorator() {
-        super();
     }
 
     /**
