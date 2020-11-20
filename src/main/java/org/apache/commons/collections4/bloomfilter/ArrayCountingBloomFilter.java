@@ -140,28 +140,6 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         counts = new int[shape.getNumberOfBits()];
     }
 
-    /**
-     * Constructs a counting Bloom filter from a hasher and a shape.
-     *
-     * <p>The filter will be equal to the result of merging the hasher with an empty
-     * filter; specifically duplicate indexes in the hasher are ignored.
-     *
-     * @param hasher the hasher to build the filter from
-     * @param shape the shape of the filter
-     * @throws IllegalArgumentException if the hasher cannot generate indices for
-     * the shape
-     * @see #merge(Hasher)
-     */
-    public ArrayCountingBloomFilter(final Hasher hasher, final Shape shape) {
-        super(shape);
-        // Given the filter is empty we can optimise the operation of merge(hasher)
-        verifyHasher(hasher);
-        // Delay array allocation until after hasher is verified
-        counts = new int[shape.getNumberOfBits()];
-        // All counts are zero. Ignore duplicates by initialising to 1
-        hasher.iterator(shape).forEachRemaining((IntConsumer) idx -> counts[idx] = 1);
-    }
-
     @Override
     public int cardinality() {
         int size = 0;
