@@ -181,7 +181,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Initialise this subclass during construction, cloning or deserialization.
+     * Initialize this subclass during construction, cloning or deserialization.
      */
     @Override
     protected void init() {

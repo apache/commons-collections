@@ -123,7 +123,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     }
 
     /**
-     * Initialise this subclass during construction.
+     * Initialize this subclass during construction.
      * <p>
      * NOTE: As from v3.2 this method calls
      * {@link #createEntry(HashEntry, int, Object, Object)} to create
