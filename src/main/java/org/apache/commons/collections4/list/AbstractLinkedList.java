@@ -93,7 +93,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * The equivalent of a default constructor, broken out so it can be called
      * by any constructor and by {@code readObject}.
      * Subclasses which override this method should make sure they call super,
-     * so the list is initialised properly.
+     * so the list is initialized properly.
      */
     protected void init() {
         header = createHeaderNode();

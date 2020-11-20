@@ -1831,7 +1831,7 @@ public class MapUtils {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets a new Properties object initialised with the values from a Map. A null input will return an empty properties
+     * Gets a new Properties object initialized with the values from a Map. A null input will return an empty properties
      * object.
      * <p>
      * A Properties object may only store non-null keys and values, thus if the provided map contains either a key or

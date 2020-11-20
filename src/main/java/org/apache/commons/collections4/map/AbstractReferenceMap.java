@@ -1007,7 +1007,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Replaces the superclass method to store the state of this class.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
@@ -1041,7 +1041,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Replaces the superclass method to read the state of this class.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>

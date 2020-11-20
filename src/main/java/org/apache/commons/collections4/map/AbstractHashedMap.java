@@ -1246,7 +1246,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
@@ -1276,7 +1276,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
