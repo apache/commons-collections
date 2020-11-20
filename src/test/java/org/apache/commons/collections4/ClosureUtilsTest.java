@@ -230,7 +230,7 @@ public class ClosureUtilsTest {
     @Test
     public void testIfClosure() {
         MockClosure<Object> a = new MockClosure<>();
-        MockClosure<Object> b = null;
+        MockClosure<Object> b;
         ClosureUtils.ifClosure(TruePredicate.truePredicate(), a).execute(null);
         assertEquals(1, a.count);
 

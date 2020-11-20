@@ -202,8 +202,8 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
-        Iterator<K> kit = null;
-        Iterator<V> vit = null;
+        Iterator<K> kit;
+        Iterator<V> vit;
 
         resetEmpty();
         map.put(keys[0], values[0]);
@@ -276,8 +276,8 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
-        Iterator<K> kit = null;
-        Iterator<V> vit = null;
+        Iterator<K> kit;
+        Iterator<V> vit;
 
         resetEmpty();
         final LRUMap<K, V> lruMap = (LRUMap<K, V>) map;
