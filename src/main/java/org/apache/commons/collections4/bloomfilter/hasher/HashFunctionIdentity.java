@@ -62,6 +62,7 @@ public interface HashFunctionIdentity {
      * When the hash function executes it generally returns an array of bytes.
      * That array is converted into one or more numerical values.
      * The Signedness identifies if those values are signed or unsigned.
+     * </p>
      */
     enum Signedness {
         SIGNED, UNSIGNED
