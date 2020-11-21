@@ -261,11 +261,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws IOException
      */
     protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
-        final FileOutputStream fileStream = new FileOutputStream(path);
-        try {
+        try (FileOutputStream fileStream = new FileOutputStream(path)) {
             writeExternalFormToStream(o, fileStream);
-        } finally {
-            fileStream.close();
         }
     }
 
@@ -294,11 +291,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws ClassNotFoundException
      */
     protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
-        final FileInputStream stream = new FileInputStream(path);
-        try {
+        try (FileInputStream stream = new FileInputStream(path)) {
             return readExternalFormFromStream(stream);
-        } finally {
-            stream.close();
         }
     }
 
