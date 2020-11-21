@@ -53,21 +53,21 @@ public class IndexFilterTest {
         try {
             IndexFilters.distinctIndexes(null, shape, consumer);
             Assert.fail("null hasher");
-        } catch (NullPointerException expected) {
+        } catch (final NullPointerException expected) {
             // Ignore
         }
 
         try {
             IndexFilters.distinctIndexes(hasher, null, consumer);
             Assert.fail("null shape");
-        } catch (NullPointerException expected) {
+        } catch (final NullPointerException expected) {
             // Ignore
         }
 
         try {
             IndexFilters.distinctIndexes(hasher, shape, null);
             Assert.fail("null consumer");
-        } catch (NullPointerException expected) {
+        } catch (final NullPointerException expected) {
             // Ignore
         }
 

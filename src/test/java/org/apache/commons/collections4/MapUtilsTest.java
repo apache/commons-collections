@@ -813,7 +813,7 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
-        for (String element : list) {
+        for (final String element : list) {
             assertTrue(map.containsKey(Integer.valueOf(element)));
             assertFalse(map.containsKey(element));
             assertTrue(map.containsValue(element));
@@ -825,7 +825,7 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
-        for (String element : list) {
+        for (final String element : list) {
             assertTrue(map.containsKey(Integer.valueOf(element)));
             assertFalse(map.containsKey(element));
             assertTrue(map.containsValue(Integer.valueOf(element)));
@@ -866,7 +866,7 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
         assertEquals(list.size(), map.totalSize());
 
-        for (X element : list) {
+        for (final X element : list) {
             assertTrue(map.containsKey(element.key));
             assertTrue(map.containsValue(element));
         }

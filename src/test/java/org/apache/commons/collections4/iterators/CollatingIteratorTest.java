@@ -97,7 +97,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     public void testIterateEven() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
-        for (Integer even : evens) {
+        for (final Integer even : evens) {
             assertTrue(iter.hasNext());
             assertEquals(even, iter.next());
             assertEquals(0, iter.getIteratorIndex());
@@ -129,7 +129,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
         iter.addIterator(evens.iterator());
-        for (Integer even : evens) {
+        for (final Integer even : evens) {
             assertTrue(iter.hasNext());
             assertEquals(even, iter.next());
             assertEquals(0, iter.getIteratorIndex());
