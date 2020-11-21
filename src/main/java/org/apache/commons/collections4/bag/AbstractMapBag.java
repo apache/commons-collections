@@ -268,7 +268,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
                 return true;
             }
             mut.value += nCopies;
-            return false;
         }
         return false;
     }
