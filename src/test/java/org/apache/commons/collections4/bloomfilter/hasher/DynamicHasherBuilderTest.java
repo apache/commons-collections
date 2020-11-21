@@ -35,9 +35,9 @@ import org.junit.Test;
 public class DynamicHasherBuilderTest {
 
     private DynamicHasher.Builder builder;
-    private HashFunction hf = new MD5Cyclic();
+    private final HashFunction hf = new MD5Cyclic();
     private final Shape shape = new Shape(hf, 1, 345, 1);
-    private String testString = HasherBuilderTest.getExtendedString();
+    private final String testString = HasherBuilderTest.getExtendedString();
 
     /**
      * Tests that hashing a byte array works as expected.

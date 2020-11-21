@@ -63,19 +63,19 @@ public class SetOperationsTest {
 
     @Test
     public void testDifferentShapesThrows() {
-        List<Integer> lst = Arrays.asList(1, 2);
-        Hasher hasher = new StaticHasher(lst.iterator(), shape);
-        BloomFilter filter1 = new HasherBloomFilter(hasher, shape);
+        final List<Integer> lst = Arrays.asList(1, 2);
+        final Hasher hasher = new StaticHasher(lst.iterator(), shape);
+        final BloomFilter filter1 = new HasherBloomFilter(hasher, shape);
 
         final Shape shape2 = new Shape(testFunction, 3, 72, 18);
-        List<Integer> lst2 = Arrays.asList(2, 3);
-        Hasher hasher2 = new StaticHasher(lst2.iterator(), shape2);
-        BloomFilter filter2 = new HasherBloomFilter(hasher2, shape2);
+        final List<Integer> lst2 = Arrays.asList(2, 3);
+        final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape2);
+        final BloomFilter filter2 = new HasherBloomFilter(hasher2, shape2);
 
         try {
             SetOperations.cosineDistance(filter1, filter2);
             Assert.fail("Expected an IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
+        } catch (final IllegalArgumentException expected) {
             // Ignore
         }
     }

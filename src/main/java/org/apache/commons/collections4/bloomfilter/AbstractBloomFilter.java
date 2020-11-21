@@ -175,7 +175,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
      * @param operation the operation (e.g. OR, XOR)
      * @return the cardinality
      */
-    private int opCardinality(final BloomFilter other, LongBinaryOperator operation) {
+    private int opCardinality(final BloomFilter other, final LongBinaryOperator operation) {
         verifyShape(other);
         final long[] mine = getBits();
         final long[] theirs = other.getBits();

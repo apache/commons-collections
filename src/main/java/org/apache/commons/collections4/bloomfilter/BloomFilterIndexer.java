@@ -32,7 +32,7 @@ public final class BloomFilterIndexer {
      * @param bitIndex the bit index
      * @throws IndexOutOfBoundsException if the index is not positive
      */
-    public static void checkPositive(int bitIndex) {
+    public static void checkPositive(final int bitIndex) {
         if (bitIndex < 0) {
             throw new IndexOutOfBoundsException("Negative bitIndex: " + bitIndex);
         }
@@ -52,7 +52,7 @@ public final class BloomFilterIndexer {
      * @return the filter index
      * @see #checkPositive(int)
      */
-    public static int getLongIndex(int bitIndex) {
+    public static int getLongIndex(final int bitIndex) {
         // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is positive.
         // We do not explicitly check for a negative here. Instead we use a
         // a signed shift. Any negative index will produce a negative value
@@ -74,7 +74,7 @@ public final class BloomFilterIndexer {
      * @return the filter bit
      * @see #checkPositive(int)
      */
-    public static long getLongBit(int bitIndex) {
+    public static long getLongBit(final int bitIndex) {
         // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
         // using 0x3f (63) or compute bitIndex % 64.
         // Note: If the index is negative the shift will be (64 - (bitIndex & 0x3f)) and

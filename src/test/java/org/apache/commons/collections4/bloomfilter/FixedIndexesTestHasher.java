@@ -31,9 +31,9 @@ import java.util.PrimitiveIterator.OfInt;
  */
 class FixedIndexesTestHasher implements Hasher {
     /** The shape. */
-    private Shape shape;
+    private final Shape shape;
     /** The indexes. */
-    private int[] indexes;
+    private final int[] indexes;
 
     /**
      * Create an instance.
@@ -41,13 +41,13 @@ class FixedIndexesTestHasher implements Hasher {
      * @param shape the shape
      * @param indexes the indexes
      */
-    FixedIndexesTestHasher(Shape shape, int... indexes) {
+    FixedIndexesTestHasher(final Shape shape, final int... indexes) {
         this.shape = shape;
         this.indexes = indexes;
     }
 
     @Override
-    public OfInt iterator(Shape shape) {
+    public OfInt iterator(final Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));

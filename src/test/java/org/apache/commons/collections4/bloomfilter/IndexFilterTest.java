@@ -39,7 +39,7 @@ public class IndexFilterTest {
      * This is used as an argument to a Hasher that just returns fixed indexes
      * so the parameters do not matter.
      */
-    private Shape shape = new Shape(new HashFunctionIdentityImpl(
+    private final Shape shape = new Shape(new HashFunctionIdentityImpl(
         "Apache Commons Collections", "Dummy", Signedness.SIGNED, ProcessType.CYCLIC, 0L),
         50, 3000, 4);
 
@@ -85,7 +85,7 @@ public class IndexFilterTest {
         assertFilter(1, 4, 4, 6, 7, 7, 7, 7, 7, 9);
     }
 
-    private void assertFilter(int... indexes) {
+    private void assertFilter(final int... indexes) {
         final FixedIndexesTestHasher hasher = new FixedIndexesTestHasher(shape, indexes);
         final Set<Integer> expected = Arrays.stream(indexes).boxed().collect(Collectors.toSet());
         final ArrayList<Integer> actual = new ArrayList<>();
@@ -96,7 +96,7 @@ public class IndexFilterTest {
         // Check the array has all the values.
         // We do not currently check the order of indexes from the
         // hasher.iterator() function.
-        for (Integer index : actual) {
+        for (final Integer index : actual) {
             Assert.assertTrue(expected.contains(index));
         }
     }

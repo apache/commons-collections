@@ -152,7 +152,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public boolean contains(BloomFilter other) {
+    public boolean contains(final BloomFilter other) {
         // The AbstractBloomFilter implementation converts both filters to long[] bits.
         // This would involve checking all indexes in this filter against zero.
         // Ideally we use an iterator of bit indexes to allow fail-fast on the
@@ -230,25 +230,25 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public boolean remove(BloomFilter other) {
+    public boolean remove(final BloomFilter other) {
         applyAsBloomFilter(other, this::decrement);
         return isValid();
     }
 
     @Override
-    public boolean remove(Hasher hasher) {
+    public boolean remove(final Hasher hasher) {
         applyAsHasher(hasher, this::decrement);
         return isValid();
     }
 
     @Override
-    public boolean add(CountingBloomFilter other) {
+    public boolean add(final CountingBloomFilter other) {
         applyAsCountingBloomFilter(other, this::add);
         return isValid();
     }
 
     @Override
-    public boolean subtract(CountingBloomFilter other) {
+    public boolean subtract(final CountingBloomFilter other) {
         applyAsCountingBloomFilter(other, this::subtract);
         return isValid();
     }
@@ -273,7 +273,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public void forEachCount(BitCountConsumer action) {
+    public void forEachCount(final BitCountConsumer action) {
         for (int i = 0; i < counts.length; i++) {
             if (counts[i] != 0) {
                 action.accept(i, counts[i]);
@@ -321,7 +321,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      *
      * @param idx the index
      */
-    private void increment(int idx) {
+    private void increment(final int idx) {
         final int updated = counts[idx] + 1;
         state |= updated;
         counts[idx] = updated;
@@ -332,7 +332,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      *
      * @param idx the index
      */
-    private void decrement(int idx) {
+    private void decrement(final int idx) {
         final int updated = counts[idx] - 1;
         state |= updated;
         counts[idx] = updated;
@@ -344,7 +344,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * @param idx the index
      * @param addend the amount to add
      */
-    private void add(int idx, int addend) {
+    private void add(final int idx, final int addend) {
         final int updated = counts[idx] + addend;
         state |= updated;
         counts[idx] = updated;
@@ -356,7 +356,7 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * @param idx the index
      * @param subtrahend the amount to subtract
      */
-    private void subtract(int idx, int subtrahend) {
+    private void subtract(final int idx, final int subtrahend) {
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;

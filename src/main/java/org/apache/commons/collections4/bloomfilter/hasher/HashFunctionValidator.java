@@ -47,7 +47,7 @@ public final class HashFunctionValidator {
      * @see String#toLowerCase(Locale)
      * @see Locale#ROOT
      */
-    static int hash(HashFunctionIdentity a) {
+    static int hash(final HashFunctionIdentity a) {
         return Objects.hash(a.getSignedness(),
                             a.getProcessType(),
                             a.getName().toLowerCase(Locale.ROOT));
@@ -66,7 +66,7 @@ public final class HashFunctionValidator {
      * @return true, if successful
      * @see String#equalsIgnoreCase(String)
      */
-    public static boolean areEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
+    public static boolean areEqual(final HashFunctionIdentity a, final HashFunctionIdentity b) {
         return (a.getSignedness() == b.getSignedness() &&
                 a.getProcessType() == b.getProcessType() &&
                 a.getName().equalsIgnoreCase(b.getName()));
@@ -81,7 +81,7 @@ public final class HashFunctionValidator {
      * @see #areEqual(HashFunctionIdentity, HashFunctionIdentity)
      * @throws IllegalArgumentException if the hash functions are not equal
      */
-    public static void checkAreEqual(HashFunctionIdentity a, HashFunctionIdentity b) {
+    public static void checkAreEqual(final HashFunctionIdentity a, final HashFunctionIdentity b) {
         if (!areEqual(a, b)) {
             throw new IllegalArgumentException(String.format("Hash functions are not equal: (%s) != (%s)",
                 HashFunctionIdentity.asCommonString(a), HashFunctionIdentity.asCommonString(b)));

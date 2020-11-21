@@ -159,18 +159,18 @@ public class MapUtilsTest {
 
     @Test
     public void testInvertEmptyMap() {
-        Map<String, String> emptyMap = new HashMap<>();
-        Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
+        final Map<String, String> emptyMap = new HashMap<>();
+        final Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
         assertEquals(emptyMap, resultMap);
     }
 
     @Test
     public void testInvertMapNull() {
-        Map<String, String> nullMap = null;
-        Exception exception = assertThrows(NullPointerException.class, () -> {
+        final Map<String, String> nullMap = null;
+        final Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.invertMap(nullMap);
         });
-        String actualMessage = exception.getMessage();
+        final String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("map"));
     }
 
@@ -1016,28 +1016,28 @@ public class MapUtilsTest {
 
     @Test
     public void testUnmodifiableMap() {
-        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             MapUtils.unmodifiableMap(new HashMap<>()).clear();
         });
     }
 
     @Test
     public void testUnmodifiableSortedMap() {
-        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
         });
     }
 
     @Test
     public void testFixedSizeMap() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
         });
     }
 
     @Test
     public void testFixedSizeSortedMap() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
         });
     }

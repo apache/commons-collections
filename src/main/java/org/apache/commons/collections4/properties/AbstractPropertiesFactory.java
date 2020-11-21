@@ -53,7 +53,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
         /** XML file format. */
         XML;
 
-        static PropertyFormat toPropertyFormat(String fileName) {
+        static PropertyFormat toPropertyFormat(final String fileName) {
             return Objects.requireNonNull(fileName, "fileName").endsWith(".xml") ? XML : PROPERTIES;
         }
     }

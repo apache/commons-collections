@@ -64,7 +64,7 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void getBitsTest_Empty() {
-        BloomFilter filter = createEmptyFilter(shape);
+        final BloomFilter filter = createEmptyFilter(shape);
         Assert.assertArrayEquals(new long[0], filter.getBits());
     }
 
@@ -74,11 +74,11 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
      */
     @Test
     public void getBitsTest_LowestBitOnly() {
-        BloomFilter filter = createEmptyFilter(shape);
+        final BloomFilter filter = createEmptyFilter(shape);
         // Set the lowest bit index only.
         filter.merge(new Hasher() {
             @Override
-            public OfInt iterator(Shape shape) {
+            public OfInt iterator(final Shape shape) {
                 return Arrays.stream(new int[] {0}).iterator();
             }
 

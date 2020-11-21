@@ -30,7 +30,7 @@ public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
 
     @Override
     protected BitSetBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        BitSetBloomFilter testFilter = new BitSetBloomFilter(shape);
+        final BitSetBloomFilter testFilter = new BitSetBloomFilter(shape);
         testFilter.merge( hasher );
         return testFilter;
     }
