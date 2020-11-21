@@ -813,11 +813,11 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
-            assertFalse(map.containsKey(list.get(i)));
-            assertTrue(map.containsValue(list.get(i)));
-            assertEquals(list.get(i), map.get(Integer.valueOf(list.get(i))));
+        for (String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(element));
+            assertEquals(element, map.get(Integer.valueOf(element)));
         }
 
         // Now test both Key-Value transform population
@@ -825,11 +825,11 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
-            assertFalse(map.containsKey(list.get(i)));
-            assertTrue(map.containsValue(Integer.valueOf(list.get(i))));
-            assertEquals(Integer.valueOf(list.get(i)), map.get(Integer.valueOf(list.get(i))));
+        for (String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(Integer.valueOf(element)));
+            assertEquals(Integer.valueOf(element), map.get(Integer.valueOf(element)));
         }
     }
 
@@ -866,9 +866,9 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
         assertEquals(list.size(), map.totalSize());
 
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(list.get(i).key));
-            assertTrue(map.containsValue(list.get(i)));
+        for (X element : list) {
+            assertTrue(map.containsKey(element.key));
+            assertTrue(map.containsValue(element));
         }
     }
 

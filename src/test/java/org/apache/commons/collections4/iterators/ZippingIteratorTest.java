@@ -80,9 +80,9 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     public void testIterateEven() {
         @SuppressWarnings("unchecked")
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator());
-        for (int i = 0; i < evens.size(); i++) {
+        for (Integer even : evens) {
             assertTrue(iter.hasNext());
-            assertEquals(evens.get(i), iter.next());
+            assertEquals(even, iter.next());
         }
         assertTrue(!iter.hasNext());
     }
@@ -113,11 +113,11 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
 
     public void testIterateEvenEven() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator(), evens.iterator());
-        for (int i = 0; i < evens.size(); i++) {
+        for (Integer even : evens) {
             assertTrue(iter.hasNext());
-            assertEquals(evens.get(i), iter.next());
+            assertEquals(even, iter.next());
             assertTrue(iter.hasNext());
-            assertEquals(evens.get(i), iter.next());
+            assertEquals(even, iter.next());
         }
         assertTrue(!iter.hasNext());
     }

@@ -129,10 +129,10 @@ public class SequencesComparatorTest {
 
         final ExecutionVisitor<String> ev = new ExecutionVisitor<>();
 
-        for (int i = 0; i < shadokSentences.size(); ++i) {
+        for (List<String> element : shadokSentences) {
             for (final List<String> shadokSentence : shadokSentences) {
-                ev.setList(shadokSentences.get(i));
-                new SequencesComparator<>(shadokSentences.get(i),
+                ev.setList(element);
+                new SequencesComparator<>(element,
                         shadokSentence).getScript().visit(ev);
 
                 final StringBuilder concat = new StringBuilder();

@@ -752,7 +752,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         it1 = getCollection().iterator();
-        for (int i = 0; i < getCollection().size(); i++) {
+        for (E element : getCollection()) {
             assertTrue("Iterator for full collection should haveNext", it1.hasNext());
             it1.next();
         }
