@@ -60,8 +60,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public E[] getFullNonNullElements() {
         // override to avoid duplicate "One"
         return (E[]) new Object[] {
-            new String(""),
-            new String("One"),
+            "",
+            "One",
             Integer.valueOf(2),
             "Three",
             Integer.valueOf(4),
@@ -69,7 +69,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             new Float(6),
             "Seven",
             "Eight",
-            new String("Nine"),
+            "Nine",
             Integer.valueOf(10),
             new Short((short) 11),
             new Long(12),
@@ -535,9 +535,9 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         final HashSet<E> s = new HashSet<>();
         final SetUniqueList<E> ul = new SetUniqueList<>(l, s);
 
-        final E a = (E) new String("A");
-        final E b = (E) new String("B");
-        final E c = (E) new String("C");
+        final E a = (E) "A";
+        final E b = (E) "B";
+        final E c = (E) "C";
 
         ul.add(a);
         ul.add(b);

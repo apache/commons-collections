@@ -424,8 +424,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
         return (E[]) new Object[] {
-            new String(""),
-            new String("One"),
+            "",
+            "One",
             Integer.valueOf(2),
             "Three",
             Integer.valueOf(4),
@@ -434,7 +434,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             new Float(6),
             "Seven",
             "Eight",
-            new String("Nine"),
+            "Nine",
             Integer.valueOf(10),
             new Short((short) 11),
             new Long(12),
