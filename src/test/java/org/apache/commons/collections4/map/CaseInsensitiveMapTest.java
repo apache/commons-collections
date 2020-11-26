@@ -49,8 +49,6 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         return "4";
     }
 
-    //-------------------------------------------------------------------------
-
     @SuppressWarnings("unchecked")
     public void testCaseInsensitive() {
         final Map<K, V> map = makeObject();
