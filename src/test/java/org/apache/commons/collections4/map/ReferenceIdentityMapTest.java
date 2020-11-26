@@ -111,7 +111,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return new IdentityMap<>();
     }
 
-    //-----------------------------------------------------------------------
 /*
     // Tests often fail because gc is uncontrollable
 
@@ -226,7 +225,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     public ReferenceIdentityMap<K, V> makeObject() {
         return new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
-    //-----------------------------------------------------------------------
+
     @SuppressWarnings("unchecked")
     public void testBasics() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -260,7 +259,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertEquals(true, map.containsValue(I2B));
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testHashEntry() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -278,7 +276,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertEquals(false, entry1.equals(entry3));
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
