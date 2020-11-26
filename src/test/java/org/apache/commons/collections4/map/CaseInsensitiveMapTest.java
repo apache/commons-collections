@@ -31,22 +31,22 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public CaseInsensitiveMapTest(final String testName) {
-        super(testName);
-    }
-
     public static Test suite() {
         return BulkTest.makeSuite(CaseInsensitiveMapTest.class);
     }
 
-    @Override
-    public CaseInsensitiveMap<K, V> makeObject() {
-        return new CaseInsensitiveMap<>();
+    public CaseInsensitiveMapTest(final String testName) {
+        super(testName);
     }
 
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    public CaseInsensitiveMap<K, V> makeObject() {
+        return new CaseInsensitiveMap<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -59,6 +59,58 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         map.put((K) "two", (V) "Three");
         assertEquals("Three", map.get("Two"));
     }
+
+    @SuppressWarnings("unchecked")
+    public void testClone() {
+        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
+        map.put((K) "1", (V) "1");
+        final CaseInsensitiveMap<K, V> cloned = map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
+        assertEquals(1, map.data.length);
+    }
+
+    // COLLECTIONS-294
+    public void testLocaleIndependence() {
+        final Locale orig = Locale.getDefault();
+
+        final Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
+
+        final String[][] data = {
+            { "i", "I" },
+            { "\u03C2", "\u03C3" },
+            { "\u03A3", "\u03C2" },
+            { "\u03A3", "\u03C3" },
+        };
+
+        try {
+            for (final Locale locale : locales) {
+                Locale.setDefault(locale);
+                for (int j = 0; j < data.length; j++) {
+                    assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
+                    final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
+                    map.put(data[j][0], "value");
+                    assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
+                }
+            }
+        } finally {
+            Locale.setDefault(orig);
+        }
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.fullCollection.version4.obj");
+//    }
 
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
@@ -94,57 +146,5 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertTrue(!caseInsensitiveMap.containsValue("One")
             || !caseInsensitiveMap.containsValue("Three")); // ones collapsed
         assertEquals("Four", caseInsensitiveMap.get(null));
-    }
-
-    @SuppressWarnings("unchecked")
-    public void testClone() {
-        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
-        map.put((K) "1", (V) "1");
-        final CaseInsensitiveMap<K, V> cloned = map.clone();
-        assertEquals(map.size(), cloned.size());
-        assertSame(map.get("1"), cloned.get("1"));
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.fullCollection.version4.obj");
-//    }
-
-    // COLLECTIONS-294
-    public void testLocaleIndependence() {
-        final Locale orig = Locale.getDefault();
-
-        final Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
-
-        final String[][] data = {
-            { "i", "I" },
-            { "\u03C2", "\u03C3" },
-            { "\u03A3", "\u03C2" },
-            { "\u03A3", "\u03C3" },
-        };
-
-        try {
-            for (final Locale locale : locales) {
-                Locale.setDefault(locale);
-                for (int j = 0; j < data.length; j++) {
-                    assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
-                    final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
-                    map.put(data[j][0], "value");
-                    assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
-                }
-            }
-        } finally {
-            Locale.setDefault(orig);
-        }
-    }
-
-    /**
-     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
-     */
-    public void testInitialCapacityZero() {
-        final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
-        assertEquals(1, map.data.length);
     }
 }
