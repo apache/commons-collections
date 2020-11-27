@@ -219,6 +219,9 @@
     <action issue="COLLECTIONS-773" type="update" dev="ggregory" due-to="Martin Monperrus">
       Add an assertion to validate ensureCapacity #198.
     </action>
+    <action issue="COLLECTIONS-772" type="update" dev="ggregory" due-to="Arturo Bernal, Alex Herbert, Gary Gregory, Bruno P. Kinoshita">
+      Add private constructor to ArrayUtils; better Javadocs, #195.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
