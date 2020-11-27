@@ -216,6 +216,9 @@
     <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
       Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
     </action>
+    <action issue="COLLECTIONS-773" type="update" dev="ggregory" due-to="Martin Monperrus">
+      Add an assertion to validate ensureCapacity #198.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
