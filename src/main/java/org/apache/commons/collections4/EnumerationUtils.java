@@ -32,7 +32,7 @@ import org.apache.commons.collections4.iterators.IteratorIterable;
 public class EnumerationUtils {
 
     /**
-     * EnumerationUtils is not normally instantiated.
+     * Don't allow instances.
      */
     private EnumerationUtils() {
         // no instances.

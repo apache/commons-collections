@@ -44,7 +44,7 @@ import org.apache.commons.collections4.functors.PrototypeFactory;
 public class FactoryUtils {
 
     /**
-     * This class is not normally instantiated.
+     * Don't allow instances.
      */
     private FactoryUtils() {}
 

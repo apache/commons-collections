@@ -71,7 +71,7 @@ import org.apache.commons.collections4.functors.UniquePredicate;
 public class PredicateUtils {
 
     /**
-     * This class is not normally instantiated.
+     * Don't allow instances.
      */
     private PredicateUtils() {}
 

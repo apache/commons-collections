@@ -134,7 +134,7 @@ public class FluentIterable<E> implements Iterable<E> {
     // ----------------------------------------------------------------------
 
     /**
-     * Package-private constructor, used by IterableUtils.
+     * Don't allow instances.
      */
     FluentIterable() {
         this.iterable = this;

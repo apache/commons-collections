@@ -61,7 +61,7 @@ import org.apache.commons.collections4.functors.WhileClosure;
 public class ClosureUtils {
 
     /**
-     * This class is not normally instantiated.
+     * Don't allow instances.
      */
     private ClosureUtils() {}
 

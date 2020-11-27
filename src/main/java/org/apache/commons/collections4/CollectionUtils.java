@@ -185,7 +185,7 @@ public class CollectionUtils {
     public static final Collection EMPTY_COLLECTION = Collections.emptyList();
 
     /**
-     * {@code CollectionUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private CollectionUtils() {}
 

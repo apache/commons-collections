@@ -123,7 +123,7 @@ public class IteratorUtils {
     private static final String DEFAULT_TOSTRING_DELIMITER = ", ";
 
     /**
-     * IteratorUtils is not normally instantiated.
+     * Don't allow instances.
      */
     private IteratorUtils() {}
 
