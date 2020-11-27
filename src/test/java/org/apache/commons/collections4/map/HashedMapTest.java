@@ -54,12 +54,23 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testInternalState() {
-        final HashedMap<K, V> map = new HashedMap<>(42, 0.75f);
+        final HashedMap<Integer, Integer> map = new HashedMap<>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
         assertEquals(0, map.size);
         assertEquals(64, map.data.length);
         assertEquals(48, map.threshold);
         assertEquals(0, map.modCount);
+
+        // contract: the capacity is ensured when too many elements are added
+        final HashedMap<Integer, Integer> tmpMap = new HashedMap<>();
+        // we need to put at least the "threshold" number of elements
+        // in order to double the capacity
+        for (int i = 1; i <= map.threshold; i++) {
+            tmpMap.put(i, i);
+        }
+        map.putAll(tmpMap);
+        // the threshold has changed due to calling ensureCapacity
+        assertEquals(96, map.threshold);
     }
 
 //    public void testCreate() throws Exception {
