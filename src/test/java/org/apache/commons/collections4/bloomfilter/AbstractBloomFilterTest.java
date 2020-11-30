@@ -49,7 +49,7 @@ public abstract class AbstractBloomFilterTest {
         /** The bits. */
         final BitSet bits;
 
-        protected TestBloomFilter(Shape shape, BitSet bits) {
+        protected TestBloomFilter(final Shape shape, final BitSet bits) {
             super(shape);
             this.bits = bits;
         }
@@ -65,12 +65,12 @@ public abstract class AbstractBloomFilterTest {
         }
 
         @Override
-        public boolean merge(BloomFilter other) {
+        public boolean merge(final BloomFilter other) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public boolean merge(Hasher hasher) {
+        public boolean merge(final Hasher hasher) {
             throw new UnsupportedOperationException();
         }
     }
@@ -163,7 +163,7 @@ public abstract class AbstractBloomFilterTest {
      *
      * @param filterFactory the factory function to create the filter
      */
-    private void andCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
+    private void andCardinalityTest(final BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -372,8 +372,8 @@ public abstract class AbstractBloomFilterTest {
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
-    private AbstractBloomFilter createGenericFilter(Hasher hasher, Shape shape) {
-        BitSet bits = new BitSet();
+    private AbstractBloomFilter createGenericFilter(final Hasher hasher, final Shape shape) {
+        final BitSet bits = new BitSet();
         hasher.iterator(shape).forEachRemaining((IntConsumer) bits::set);
         return new TestBloomFilter(shape, bits);
     }
@@ -455,7 +455,7 @@ public abstract class AbstractBloomFilterTest {
      *
      * @param filterFactory the factory function to create the filter
      */
-    private void mergeTest_BloomFilter(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
+    private void mergeTest_BloomFilter(final BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -553,7 +553,7 @@ public abstract class AbstractBloomFilterTest {
      *
      * @param filterFactory the factory function to create the filter
      */
-    private void orCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
+    private void orCardinalityTest(final BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 
@@ -607,7 +607,7 @@ public abstract class AbstractBloomFilterTest {
      *
      * @param filterFactory the factory function to create the filter
      */
-    private void xorCardinalityTest(BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
+    private void xorCardinalityTest(final BiFunction<Hasher, Shape, BloomFilter> filterFactory) {
         final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final Hasher hasher = new StaticHasher(lst.iterator(), shape);
 

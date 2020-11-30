@@ -55,7 +55,6 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param factory  the factory to call, not null
      */
     public FactoryTransformer(final Factory<? extends O> factory) {
-        super();
         iFactory = factory;
     }
 

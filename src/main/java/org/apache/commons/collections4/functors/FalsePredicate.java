@@ -49,7 +49,6 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * Restricted constructor.
      */
     private FalsePredicate() {
-        super();
     }
 
     /**

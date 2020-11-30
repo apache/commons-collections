@@ -42,7 +42,6 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * Constructor needed for subclass serialisation.
      */
     protected AbstractSetValuedMap() {
-        super();
     }
 
     /**

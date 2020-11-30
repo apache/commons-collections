@@ -55,8 +55,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     @Override
     @SuppressWarnings("unchecked")
     public NavigableSet<E> makeFullCollection() {
-        final NavigableSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final NavigableSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return TransformedNavigableSet.transformingNavigableSet(set,
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }

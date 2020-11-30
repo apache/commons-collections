@@ -54,7 +54,6 @@ public class ArrayStack<E> extends ArrayList<E> {
      * is controlled by {@code ArrayList} and is currently 10.
      */
     public ArrayStack() {
-        super();
     }
 
     /**

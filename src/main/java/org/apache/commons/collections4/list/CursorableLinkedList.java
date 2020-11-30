@@ -71,7 +71,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Constructor that creates.
      */
     public CursorableLinkedList() {
-        super();
         init(); // must call init() as use super();
     }
 

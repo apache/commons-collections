@@ -64,7 +64,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
      * @param collection  the collection to remove elements from
      */
     public EnumerationIterator(final Enumeration<? extends E> enumeration, final Collection<? super E> collection) {
-        super();
         this.enumeration = enumeration;
         this.collection = collection;
         this.last = null;

@@ -115,7 +115,6 @@ public class IteratorIterable<E> implements Iterable<E> {
      * @param multipleUse {@code true} if the new iterable can be used in multiple iterations
      */
     public IteratorIterable(final Iterator<? extends E> iterator, final boolean multipleUse) {
-        super();
         if (multipleUse && !(iterator instanceof ResettableIterator)) {
             this.iterator = new ListIteratorWrapper<>(iterator);
         } else {

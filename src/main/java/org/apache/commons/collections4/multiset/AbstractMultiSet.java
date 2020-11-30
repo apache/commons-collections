@@ -47,7 +47,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * Constructor needed for subclass serialisation.
      */
     protected AbstractMultiSet() {
-        super();
     }
 
     //-----------------------------------------------------------------------

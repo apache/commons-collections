@@ -45,9 +45,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Queue<E> makeConfirmedFullCollection() {
-        final Queue<E> list = new LinkedList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
     @Override
@@ -60,8 +58,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Queue<E> makeFullCollection() {
-        final Queue<E> list = new LinkedList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final Queue<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
         return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 

@@ -77,14 +77,13 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     transient Set<Map.Entry<K, V>> entrySet = null;
 
     /**
-     * Creates an empty map, initialised by {@code createMap}.
+     * Creates an empty map, initialized by {@code createMap}.
      * <p>
      * This constructor remains in place for deserialization.
      * All other usage is deprecated in favour of
      * {@link #AbstractDualBidiMap(Map, Map)}.
      */
     protected AbstractDualBidiMap() {
-        super();
     }
 
     /**
@@ -102,7 +101,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @since 3.1
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap) {
-        super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
     }
@@ -117,7 +115,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap,
                                   final BidiMap<V, K> inverseBidiMap) {
-        super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
         this.inverseBidiMap = inverseBidiMap;
@@ -747,7 +744,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param parent  the parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
-            super();
             this.parent = parent;
             this.iterator = parent.normalMap.entrySet().iterator();
         }

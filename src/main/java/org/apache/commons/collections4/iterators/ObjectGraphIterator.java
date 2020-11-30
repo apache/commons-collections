@@ -104,7 +104,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      */
     @SuppressWarnings("unchecked")
     public ObjectGraphIterator(final E root, final Transformer<? super E, ? extends E> transformer) {
-        super();
         if (root instanceof Iterator) {
             this.currentIterator = (Iterator<? extends E>) root;
         } else {
@@ -124,7 +123,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
     public ObjectGraphIterator(final Iterator<? extends E> rootIterator) {
-        super();
         this.currentIterator = rootIterator;
         this.transformer = null;
     }

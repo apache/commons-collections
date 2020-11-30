@@ -39,7 +39,6 @@ public abstract class AbstractNavigableSetDecorator<E>
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractNavigableSetDecorator() {
-        super();
     }
 
     /**

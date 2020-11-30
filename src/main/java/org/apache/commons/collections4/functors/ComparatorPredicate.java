@@ -133,7 +133,6 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @param criterion  the criterion to use to evaluate comparison
      */
     public ComparatorPredicate(final T object, final Comparator<T> comparator, final Criterion criterion) {
-        super();
         this.object = object;
         this.comparator = comparator;
         this.criterion = criterion;

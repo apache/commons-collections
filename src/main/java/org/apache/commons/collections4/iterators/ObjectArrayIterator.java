@@ -80,7 +80,6 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @throws NullPointerException if {@code array} is {@code null}
      */
     public ObjectArrayIterator(final E array[], final int start, final int end) {
-        super();
         if (start < 0) {
             throw new ArrayIndexOutOfBoundsException("Start index must not be less than zero");
         }

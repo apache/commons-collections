@@ -92,7 +92,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * @param maximumCacheSize  the maximum cache size
      */
     public NodeCachingLinkedList(final int maximumCacheSize) {
-        super();
         this.maximumCacheSize = maximumCacheSize;
         init();  // must call init() as use super();
     }

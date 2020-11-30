@@ -217,7 +217,6 @@ public class MultiKey<K> implements Serializable {
      * @since 3.1
      */
     public MultiKey(final K[] keys, final boolean makeClone) {
-        super();
         Objects.requireNonNull(keys, "keys");
         this.keys = makeClone ? keys.clone() : keys;
         calculateHashCode(keys);

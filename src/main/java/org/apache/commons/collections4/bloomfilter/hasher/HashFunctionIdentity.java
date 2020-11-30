@@ -35,15 +35,15 @@ public interface HashFunctionIdentity {
      *  {@link HashFunction#apply(byte[], int)}.</dd>
      *  <dt>Cyclic processes</dt>
      *  <dd>Call the underlying hash algorithm using a (buffer, seed) pair passed to
-     *  {@link HashFunction#apply(byte[], int)} to initialise the state. Subsequent
+     *  {@link HashFunction#apply(byte[], int)} to initialize the state. Subsequent
      *  calls can generate hash values without calling the underlying algorithm.</dd>
      * </dl>
      */
     enum ProcessType {
         /**
          * Call the underlying hash algorithm for a (buffer, seed) pair passed to
-         * {@link HashFunction#apply(byte[], int)} when the state is uninitialised or
-         * the seed is zero. This initialises the state. Subsequent calls with a non-zero
+         * {@link HashFunction#apply(byte[], int)} when the state is uninitialized or
+         * the seed is zero. This initializes the state. Subsequent calls with a non-zero
          * seed use the state to generate a new value.
          */
         CYCLIC,
@@ -71,8 +71,10 @@ public interface HashFunctionIdentity {
          * The result of {@link HashFunction#apply(byte[], int)} is signed,
          * thus the sign bit may be set.
          *
-         * <p>The result can be used with {@code Math.floorMod(x, y)} to generate a positive
+         * <p>
+         * The result can be used with {@code Math.floorMod(x, y)} to generate a positive
          * value if y is positive.
+         * </p>
          *
          * @see Math#floorMod(int, int)
          */
@@ -81,8 +83,10 @@ public interface HashFunctionIdentity {
          * The result of {@link HashFunction#apply(byte[], int)} is unsigned,
          * thus the sign bit is never set.
          *
-         * <p>The result can be used with {@code x % y} to generate a positive
+         * <p>
+         * The result can be used with {@code x % y} to generate a positive
          * value if y is positive.
+         * </p>
          */
         UNSIGNED
     }
@@ -119,9 +123,11 @@ public interface HashFunctionIdentity {
 
     /**
      * Gets the name of this hash function.
-     * <p> Hash function should be the common name
+     * <p>
+     * Hash function should be the common name
      * for the hash. This may include indications as to hash length
-     * </p><p>
+     * </p>
+     * <p>
      * Names are not case specific.  Thus, "MD5" and "md5" should be considered as the same.
      * </p>
      * @return the Hash name
@@ -149,7 +155,9 @@ public interface HashFunctionIdentity {
      * Gets the signature of this function. The signature is the output of the hash function
      * when applied to a set of bytes composed using properties of the hash function.
      *
-     * <p>Implementations should define the method used to generate the signature.
+     * <p>
+     * Implementations should define the method used to generate the signature.
+     * </p>
      *
      * @return the signature of this function.
      * @see #prepareSignatureBuffer(HashFunctionIdentity)

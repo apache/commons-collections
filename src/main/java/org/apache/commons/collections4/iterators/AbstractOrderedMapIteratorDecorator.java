@@ -42,7 +42,6 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
      * @throws NullPointerException if the iterator is null
      */
     public AbstractOrderedMapIteratorDecorator(final OrderedMapIterator<K, V> iterator) {
-        super();
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 

@@ -89,7 +89,6 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @since 4.0
      */
     public EqualPredicate(final T object, final Equator<T> equator) {
-        super();
         iValue = object;
         this.equator = equator;
     }

@@ -27,7 +27,7 @@ public abstract class AbstractPredicateTest {
     protected Integer cInteger;
 
     @Before
-    public void initialiseTestObjects() throws Exception {
+    public void initializeTestObjects() throws Exception {
         cObject = new Object();
         cString = "Hello";
         cInteger = Integer.valueOf(6);

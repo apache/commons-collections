@@ -70,7 +70,6 @@ public abstract class AbstractCollectionDecorator<E>
      * @since 3.1
      */
     protected AbstractCollectionDecorator() {
-        super();
     }
 
     /**

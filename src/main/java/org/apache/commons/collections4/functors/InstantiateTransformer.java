@@ -81,7 +81,6 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * Constructor for no arg instance.
      */
     private InstantiateTransformer() {
-        super();
         iParamTypes = null;
         iArgs = null;
     }
@@ -96,7 +95,6 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param args  the constructor arguments
      */
     public InstantiateTransformer(final Class<?>[] paramTypes, final Object[] args) {
-        super();
         iParamTypes = paramTypes != null ? paramTypes.clone() : null;
         iArgs = args != null ? args.clone() : null;
     }

@@ -74,7 +74,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * and {@link #setPredicate(Predicate) setPredicate} are invoked.
      */
     public FilterListIterator() {
-        super();
     }
 
     /**
@@ -84,7 +83,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * @param iterator  the iterator to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator ) {
-        super();
         this.iterator = iterator;
     }
 
@@ -95,7 +93,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * @param predicate  the predicate to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator, final Predicate<? super E> predicate) {
-        super();
         this.iterator = iterator;
         this.predicate = predicate;
     }
@@ -107,7 +104,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * @param predicate  the predicate to use.
      */
     public FilterListIterator(final Predicate<? super E> predicate) {
-        super();
         this.predicate = predicate;
     }
 

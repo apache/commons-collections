@@ -53,7 +53,6 @@ public class CloneTransformer<T> implements Transformer<T, T> {
      * Constructor.
      */
     private CloneTransformer() {
-        super();
     }
 
     /**

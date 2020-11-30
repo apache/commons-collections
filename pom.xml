@@ -560,7 +560,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.1.1</checkstyle.version>
-    <checkstyle.dep.version>8.36.2</checkstyle.dep.version>
+    <checkstyle.dep.version>8.38</checkstyle.dep.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
@@ -569,7 +569,7 @@
     <!-- Override clirr version to enable clirr on Java 8 -->
     <commons.clirr.version>2.8</commons.clirr.version>
     <commons.jacoco.version>0.8.6</commons.jacoco.version>
-    <commons.junit.version>5.6.2</commons.junit.version>
+    <commons.junit.version>5.7.0</commons.junit.version>
 
     <!--Commons Release Plugin -->
     <commons.bc.version>4.4</commons.bc.version>
@@ -742,7 +742,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.14.0</version>
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
         </configuration>
@@ -771,7 +771,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
+            <version>3.0.0</version>
             <executions>
               <execution>
                 <id>prepare-checkout</id>

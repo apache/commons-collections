@@ -37,18 +37,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     private final BitSet bitSet;
 
     /**
-     * Constructs a BitSetBloomFilter from a hasher and a shape.
-     *
-     * @param hasher the Hasher to use.
-     * @param shape the desired shape of the filter.
-     */
-    public BitSetBloomFilter(final Hasher hasher, final Shape shape) {
-        this(shape);
-        verifyHasher(hasher);
-        hasher.iterator(shape).forEachRemaining((IntConsumer) bitSet::set);
-    }
-
-    /**
      * Constructs an empty BitSetBloomFilter.
      *
      * @param shape the desired shape of the filter.

@@ -39,7 +39,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
      * @throws NullPointerException if the iterator is null
      */
     public AbstractListIteratorDecorator(final ListIterator<E> iterator) {
-        super();
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 

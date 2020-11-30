@@ -100,7 +100,6 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      */
     public IfClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure,
                      final Closure<? super E> falseClosure) {
-        super();
         iPredicate = predicate;
         iTrueClosure = trueClosure;
         iFalseClosure = falseClosure;

@@ -392,8 +392,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         if (isNullSupported()) {
-            final ArrayList<E> list = new ArrayList<>();
-            list.addAll(Arrays.asList(getFullNonNullElements()));
+            final ArrayList<E> list = new ArrayList<>(Arrays.asList(getFullNonNullElements()));
             list.add(4, null);
             return (E[]) list.toArray();
         }
@@ -425,8 +424,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
         return (E[]) new Object[] {
-            new String(""),
-            new String("One"),
+            "",
+            "One",
             Integer.valueOf(2),
             "Three",
             Integer.valueOf(4),
@@ -435,7 +434,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             new Float(6),
             "Seven",
             "Eight",
-            new String("Nine"),
+            "Nine",
             Integer.valueOf(10),
             new Short((short) 11),
             new Long(12),
@@ -710,8 +709,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // make sure calls to "containsAll" don't change anything
         verify();
 
-        col = new ArrayList<>();
-        col.addAll(Arrays.asList(getFullElements()));
+        col = new ArrayList<>(Arrays.asList(getFullElements()));
         col.addAll(Arrays.asList(getFullElements()));
         assertTrue("Full collection should containAll duplicate full elements",
                 getCollection().containsAll(col));
@@ -754,7 +752,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         it1 = getCollection().iterator();
-        for (int i = 0; i < getCollection().size(); i++) {
+        for (final E element : getCollection()) {
             assertTrue("Iterator for full collection should haveNext", it1.hasNext());
             it1.next();
         }

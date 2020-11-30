@@ -43,9 +43,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeConfirmedFullCollection() {
-        final Set<E> set = new HashSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
-        return set;
+        return new HashSet<>(Arrays.asList(getFullElements()));
     }
 
     @Override
@@ -58,8 +56,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeFullCollection() {
-        final Set<E> list = new HashSet<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final Set<E> list = new HashSet<>(Arrays.asList(getFullElements()));
         return TransformedSet.transformingSet(list,
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }

@@ -41,8 +41,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
     @Override
     public UnmodifiableList<E> makeFullCollection() {
-        final ArrayList<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final ArrayList<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return new UnmodifiableList<>(list);
     }
 

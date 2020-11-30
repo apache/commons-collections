@@ -70,7 +70,6 @@ public class PushbackIterator<E> implements Iterator<E> {
      * @param iterator  the iterator to decorate
      */
     public PushbackIterator(final Iterator<? extends E> iterator) {
-        super();
         this.iterator = iterator;
     }
 

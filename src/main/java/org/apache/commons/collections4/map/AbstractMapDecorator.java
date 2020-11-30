@@ -50,7 +50,6 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
      * @since 3.1
      */
     protected AbstractMapDecorator() {
-        super();
     }
 
     /**

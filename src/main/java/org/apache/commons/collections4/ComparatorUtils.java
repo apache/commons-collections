@@ -42,7 +42,7 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
 public class ComparatorUtils {
 
     /**
-     * ComparatorUtils should not normally be instantiated.
+     * Don't allow instances.
      */
     private ComparatorUtils() {}
 

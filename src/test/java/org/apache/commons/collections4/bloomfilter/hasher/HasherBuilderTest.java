@@ -45,7 +45,7 @@ public class HasherBuilderTest {
         }
 
         @Override
-        public Builder with(byte[] item) {
+        public Builder with(final byte[] item) {
             items.add(item);
             return this;
         }
@@ -62,7 +62,7 @@ public class HasherBuilderTest {
             for (final Charset cs : new Charset[] {
                 StandardCharsets.ISO_8859_1, StandardCharsets.UTF_8, StandardCharsets.UTF_16
             }) {
-                TestBuilder builder = new TestBuilder();
+                final TestBuilder builder = new TestBuilder();
                 builder.with(s, cs);
                 Assert.assertArrayEquals(s.getBytes(cs), builder.items.get(0));
             }

@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -80,16 +79,12 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     @Override
     public Collection<String> makeFullCollection() {
-        final List<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return decorateCollection(list);
+        return decorateCollection(new ArrayList<>(Arrays.asList(getFullElements())));
     }
 
     @Override
     public Collection<String> makeConfirmedFullCollection() {
-        final List<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
     public Collection<String> makeTestCollection() {

@@ -75,7 +75,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * method must be called.
      */
     protected AbstractLinkedList() {
-        super();
     }
 
     /**
@@ -84,7 +83,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param coll  the collection to copy
      */
     protected AbstractLinkedList(final Collection<? extends E> coll) {
-        super();
         init();
         addAll(coll);
     }
@@ -93,7 +91,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * The equivalent of a default constructor, broken out so it can be called
      * by any constructor and by {@code readObject}.
      * Subclasses which override this method should make sure they call super,
-     * so the list is initialised properly.
+     * so the list is initialized properly.
      */
     protected void init() {
         header = createHeaderNode();
@@ -670,7 +668,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Constructs a new header node.
          */
         protected Node() {
-            super();
             previous = this;
             next = this;
         }
@@ -681,7 +678,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param value  the value to store
          */
         protected Node(final E value) {
-            super();
             this.value = value;
         }
 
@@ -693,7 +689,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param value  the value to store
          */
         protected Node(final Node<E> previous, final Node<E> next, final E value) {
-            super();
             this.previous = previous;
             this.next = next;
             this.value = value;
@@ -807,7 +802,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          */
         protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex)
                 throws IndexOutOfBoundsException {
-            super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
             this.next = parent.getNode(fromIndex, true);

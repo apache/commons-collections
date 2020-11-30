@@ -341,7 +341,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     public class TestBidiMapEntrySet extends TestMapEntrySet {
         public TestBidiMapEntrySet() {
-            super();
         }
         public void testMapEntrySetIteratorEntrySetValueCrossCheck() {
             final K key1 = getSampleKeys()[0];
@@ -409,7 +408,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         final AbstractBidiMapTest<K, V> main;
 
         public TestInverseBidiMap(final AbstractBidiMapTest<K, V> main) {
-            super();
             this.main = main;
         }
 

@@ -49,7 +49,6 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
      * Restricted constructor.
      */
     private NotNullPredicate() {
-        super();
     }
 
     /**

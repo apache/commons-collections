@@ -53,7 +53,6 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
      * @param predicate  the predicate to call after the null check
      */
     public NullIsFalsePredicate(final Predicate<? super T> predicate) {
-        super();
         iPredicate = predicate;
     }
 

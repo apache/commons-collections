@@ -34,7 +34,6 @@ class FunctorUtils {
      * Restricted constructor.
      */
     private FunctorUtils() {
-        super();
     }
 
     /**

@@ -32,7 +32,6 @@ public class FunctorException extends RuntimeException {
      * detail message.
      */
     public FunctorException() {
-        super();
     }
 
     /**

@@ -479,7 +479,6 @@ public class IterableUtils {
         private final Iterable<E> unmodifiable;
 
         UnmodifiableIterable(final Iterable<E> iterable) {
-            super();
             this.unmodifiable = iterable;
         }
 

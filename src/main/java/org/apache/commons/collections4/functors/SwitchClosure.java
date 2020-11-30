@@ -117,7 +117,6 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     @SuppressWarnings("unchecked")
     private SwitchClosure(final boolean clone, final Predicate<? super E>[] predicates,
                           final Closure<? super E>[] closures, final Closure<? super E> defaultClosure) {
-        super();
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
         iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);

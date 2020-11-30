@@ -75,7 +75,6 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param constantToReturn  the constant to return each time
      */
     public ConstantTransformer(final O constantToReturn) {
-        super();
         iConstant = constantToReturn;
     }
 

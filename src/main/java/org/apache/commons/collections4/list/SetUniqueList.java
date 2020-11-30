@@ -89,7 +89,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
-     * The set and list must both be correctly initialised to the same elements.
+     * The set and list must both be correctly initialized to the same elements.
      *
      * @param set  the set to decorate, must not be null
      * @param list  the list to decorate, must not be null

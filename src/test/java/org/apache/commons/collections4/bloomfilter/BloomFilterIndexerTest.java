@@ -72,7 +72,7 @@ public class BloomFilterIndexerTest {
      */
     private static int[] getIndexes() {
         final Random rng = ThreadLocalRandom.current();
-        ArrayList<Integer> indexes = new ArrayList<>(40);
+        final ArrayList<Integer> indexes = new ArrayList<>(40);
         for (int i = 0; i < 10; i++) {
             // random positive numbers
             indexes.add(rng.nextInt() >>> 1);

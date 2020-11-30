@@ -422,8 +422,7 @@ public class FluentIterableTest {
 
     @Test
     public void eval() {
-        final List<Integer> listNumbers = new ArrayList<>();
-        listNumbers.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
         final FluentIterable<Integer> materialized = iterable.eval();
 
@@ -458,8 +457,7 @@ public class FluentIterableTest {
         result.add(8);
         FluentIterable.of(iterableA).copyInto(result);
 
-        expected = new ArrayList<>();
-        expected.addAll(Arrays.asList(10, 9, 8));
+        expected = new ArrayList<>(Arrays.asList(10, 9, 8));
         expected.addAll(IterableUtils.toList(iterableA));
         assertEquals(expected.size(), result.size());
         assertEquals(expected, result);

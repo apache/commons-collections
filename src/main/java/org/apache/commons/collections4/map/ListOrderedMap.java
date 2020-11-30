@@ -513,7 +513,6 @@ public class ListOrderedMap<K, V>
 
         @SuppressWarnings("unchecked")
         ValuesView(final ListOrderedMap<?, V> parent) {
-            super();
             this.parent = (ListOrderedMap<Object, V>) parent;
         }
 
@@ -564,7 +563,6 @@ public class ListOrderedMap<K, V>
 
         @SuppressWarnings("unchecked")
         KeySetView(final ListOrderedMap<K, ?> parent) {
-            super();
             this.parent = (ListOrderedMap<K, Object>) parent;
         }
 
@@ -601,7 +599,6 @@ public class ListOrderedMap<K, V>
         private Set<Map.Entry<K, V>> entrySet;
 
         EntrySetView(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
-            super();
             this.parent = parent;
             this.insertOrder = insertOrder;
         }
@@ -726,7 +723,6 @@ public class ListOrderedMap<K, V>
         private boolean readable = false;
 
         ListOrderedMapIterator(final ListOrderedMap<K, V> parent) {
-            super();
             this.parent = parent;
             this.iterator = parent.insertOrder.listIterator();
         }

@@ -485,7 +485,7 @@ public class IterableUtilsTest {
         result = IterableUtils.toString(null);
         assertEquals("[]", result);
 
-        result = IterableUtils.toString(iterableA, input -> new Integer(input * 2).toString());
+        result = IterableUtils.toString(iterableA, input -> Integer.toString(input * 2));
         assertEquals("[2, 4, 4, 6, 6, 6, 8, 8, 8, 8]", result);
 
         result = IterableUtils.toString(new ArrayList<Integer>(), input -> {
@@ -504,7 +504,7 @@ public class IterableUtilsTest {
     @Test
     public void testToStringDelimiter() {
 
-        final Transformer<Integer, String> transformer = input -> new Integer(input * 2).toString();
+        final Transformer<Integer, String> transformer = input -> Integer.toString(input * 2);
 
         String result = IterableUtils.toString(iterableA, transformer, "", "", "");
         assertEquals("2446668888", result);

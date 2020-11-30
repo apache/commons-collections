@@ -38,6 +38,12 @@ package org.apache.commons.collections4;
  */
 class ArrayUtils {
 
+
+    /**
+     * Don't allow instances.
+     */
+    private ArrayUtils() {}
+
     /**
      * The index value when an element is not found in a list or array: {@code -1}. This value is returned by methods in
      * this class and can also be used in comparisons with values returned by various method from

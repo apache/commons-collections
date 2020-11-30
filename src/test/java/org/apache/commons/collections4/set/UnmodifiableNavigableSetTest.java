@@ -53,8 +53,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
 
     @Override
     public UnmodifiableNavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<>();
-        set.addAll(Arrays.asList(getFullElements()));
+        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return (UnmodifiableNavigableSet<E>) UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
     }
 

@@ -53,7 +53,6 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      * @param type  the type to check for
      */
     public InstanceofPredicate(final Class<?> type) {
-        super();
         iType = type;
     }
 

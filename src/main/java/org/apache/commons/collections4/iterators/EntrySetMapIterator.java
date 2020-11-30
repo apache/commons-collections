@@ -51,7 +51,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @param map  the map to iterate over
      */
     public EntrySetMapIterator(final Map<K, V> map) {
-        super();
         this.map = map;
         this.iterator = map.entrySet().iterator();
     }

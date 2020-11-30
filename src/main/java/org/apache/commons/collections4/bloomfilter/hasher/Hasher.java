@@ -82,7 +82,7 @@ public interface Hasher {
          * @param charset the character set
          * @return a reference to this object
          */
-        default Builder with(CharSequence item, Charset charset) {
+        default Builder with(final CharSequence item, final Charset charset) {
             return with(item.toString().getBytes(charset));
         }
 
@@ -93,8 +93,8 @@ public interface Hasher {
          * @param item the item to add
          * @return a reference to this object
          */
-        default Builder withUnencoded(CharSequence item) {
-            int length = item.length();
+        default Builder withUnencoded(final CharSequence item) {
+            final int length = item.length();
             final byte[] bytes = new byte[length * 2];
             for (int i = 0; i < length; i++) {
                 final char ch = item.charAt(i);

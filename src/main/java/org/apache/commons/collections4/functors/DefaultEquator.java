@@ -54,7 +54,6 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
      * Restricted constructor.
      */
     private DefaultEquator() {
-        super();
     }
 
     /**

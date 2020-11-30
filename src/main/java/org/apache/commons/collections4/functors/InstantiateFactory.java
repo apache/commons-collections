@@ -79,7 +79,6 @@ public class InstantiateFactory<T> implements Factory<T> {
      * @param classToInstantiate  the class to instantiate
      */
     public InstantiateFactory(final Class<T> classToInstantiate) {
-        super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = null;
         iArgs = null;
@@ -95,7 +94,6 @@ public class InstantiateFactory<T> implements Factory<T> {
      * @param args  the constructor arguments, cloned
      */
     public InstantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
-        super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = paramTypes.clone();
         iArgs = args.clone();

@@ -56,10 +56,10 @@ public class SequencesComparatorTest {
     @Test
     public void testMinimal() {
         final String[] shadokAlph = new String[] {
-            new String("GA"),
-            new String("BU"),
-            new String("ZO"),
-            new String("MEU")
+            "GA",
+            "BU",
+            "ZO",
+            "MEU"
         };
         final List<String> sentenceBefore = new ArrayList<>();
         final List<String> sentenceAfter  = new ArrayList<>();
@@ -108,10 +108,10 @@ public class SequencesComparatorTest {
     public void testShadok() {
         final int lgMax = 5;
         final String[] shadokAlph = new String[] {
-            new String("GA"),
-            new String("BU"),
-            new String("ZO"),
-            new String("MEU")
+            "GA",
+            "BU",
+            "ZO",
+            "MEU"
         };
         List<List<String>> shadokSentences = new ArrayList<>();
         for (int lg=0; lg<lgMax; ++lg) {
@@ -129,10 +129,10 @@ public class SequencesComparatorTest {
 
         final ExecutionVisitor<String> ev = new ExecutionVisitor<>();
 
-        for (int i = 0; i < shadokSentences.size(); ++i) {
+        for (final List<String> element : shadokSentences) {
             for (final List<String> shadokSentence : shadokSentences) {
-                ev.setList(shadokSentences.get(i));
-                new SequencesComparator<>(shadokSentences.get(i),
+                ev.setList(element);
+                new SequencesComparator<>(element,
                         shadokSentence).getScript().visit(ev);
 
                 final StringBuilder concat = new StringBuilder();

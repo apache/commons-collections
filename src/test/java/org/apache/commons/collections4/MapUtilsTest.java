@@ -159,18 +159,18 @@ public class MapUtilsTest {
 
     @Test
     public void testInvertEmptyMap() {
-        Map<String, String> emptyMap = new HashMap<>();
-        Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
+        final Map<String, String> emptyMap = new HashMap<>();
+        final Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
         assertEquals(emptyMap, resultMap);
     }
 
     @Test
     public void testInvertMapNull() {
-        Map<String, String> nullMap = null;
-        Exception exception = assertThrows(NullPointerException.class, () -> {
+        final Map<String, String> nullMap = null;
+        final Exception exception = assertThrows(NullPointerException.class, () -> {
             MapUtils.invertMap(nullMap);
         });
-        String actualMessage = exception.getMessage();
+        final String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("map"));
     }
 
@@ -813,11 +813,11 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
-            assertFalse(map.containsKey(list.get(i)));
-            assertTrue(map.containsValue(list.get(i)));
-            assertEquals(list.get(i), map.get(Integer.valueOf(list.get(i))));
+        for (final String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(element));
+            assertEquals(element, map.get(Integer.valueOf(element)));
         }
 
         // Now test both Key-Value transform population
@@ -825,11 +825,11 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(Integer.valueOf(list.get(i))));
-            assertFalse(map.containsKey(list.get(i)));
-            assertTrue(map.containsValue(Integer.valueOf(list.get(i))));
-            assertEquals(Integer.valueOf(list.get(i)), map.get(Integer.valueOf(list.get(i))));
+        for (final String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(Integer.valueOf(element)));
+            assertEquals(Integer.valueOf(element), map.get(Integer.valueOf(element)));
         }
     }
 
@@ -866,9 +866,9 @@ public class MapUtilsTest {
         MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
         assertEquals(list.size(), map.totalSize());
 
-        for (int i = 0; i < list.size(); i++) {
-            assertTrue(map.containsKey(list.get(i).key));
-            assertTrue(map.containsValue(list.get(i)));
+        for (final X element : list) {
+            assertTrue(map.containsKey(element.key));
+            assertTrue(map.containsValue(element));
         }
     }
 
@@ -1016,28 +1016,28 @@ public class MapUtilsTest {
 
     @Test
     public void testUnmodifiableMap() {
-        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             MapUtils.unmodifiableMap(new HashMap<>()).clear();
         });
     }
 
     @Test
     public void testUnmodifiableSortedMap() {
-        Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
             MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
         });
     }
 
     @Test
     public void testFixedSizeMap() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
         });
     }
 
     @Test
     public void testFixedSizeSortedMap() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
         });
     }
@@ -1058,17 +1058,12 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getDoubleValue(in, "key", 0.0), 0);
         assertEquals(2.0, MapUtils.getDoubleValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getDoubleValue(in, "noKey", 1.0), 0);
-        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> {
-            //sometimes the default value need to be calculated,such as System.currentTimeMillis()
-            return 5.0D;
-        }), 0);
+        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> 5.0D), 0);
 
         assertEquals(0, MapUtils.getDoubleValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getDouble(in, "key", 0.0), 0);
         assertEquals(1.0, MapUtils.getDouble(in, "noKey", 1.0), 0);
-        assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> {
-            return 1.0;
-        }), 0);
+        assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> 1.0), 0);
 
 
         final Map<String, String> inStr = new HashMap<>();
@@ -1086,15 +1081,11 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getFloatValue(in, "key", 0.0f), 0);
         assertEquals(2.0, MapUtils.getFloatValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> {
-            return 1.0F;
-        }), 0);
+        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> 1.0F), 0);
         assertEquals(0, MapUtils.getFloatValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getFloat(in, "key", 0.0f), 0);
         assertEquals(1.0, MapUtils.getFloat(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloat(in, "noKey", key -> {
-            return 1.0F;
-        }), 0);
+        assertEquals(1.0, MapUtils.getFloat(in, "noKey", key -> 1.0F), 0);
 
         final Map<String, String> inStr = new HashMap<>();
         final char decimalSeparator = getDecimalSeparator();
@@ -1138,15 +1129,11 @@ public class MapUtilsTest {
         assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> {
-            return 0;
-        }), 0);
+        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
         assertEquals(2, MapUtils.getInteger(in, "key", 0), 0);
         assertEquals(0, MapUtils.getInteger(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getInteger(in, "noKey", key -> {
-            return 0;
-        }), 0);
+        assertEquals(0, MapUtils.getInteger(in, "noKey", key -> 0), 0);
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "2");
@@ -1163,15 +1150,11 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> {
-            return val;
-        }), 0);
+        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
         assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getShort(in, "key", val), 0);
         assertEquals(val, MapUtils.getShort(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShort(in, "noKey", key -> {
-            return val;
-        }), 0);
+        assertEquals(val, MapUtils.getShort(in, "noKey", key -> val), 0);
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "10");
@@ -1188,15 +1171,11 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getByteValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
         assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> {
-            return (byte) 100;
-        }), 0);
+        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> ((byte) 100)), 0);
         assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getByte(in, "key", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByte(in, "noKey", key -> {
-            return val;
-        }), 0);
+        assertEquals(val, MapUtils.getByte(in, "noKey", key -> val), 0);
 
 
         final Map<String, String> inStr = new HashMap<>();
@@ -1268,9 +1247,7 @@ public class MapUtilsTest {
         assertTrue(MapUtils.getBooleanValue(in, "key", true));
         assertTrue(MapUtils.getBooleanValue(in, "key"));
         assertTrue(MapUtils.getBooleanValue(in, "noKey", true));
-        assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> {
-            return true;
-        }));
+        assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> true));
         assertFalse(MapUtils.getBooleanValue(in, "noKey"));
         assertTrue(MapUtils.getBoolean(in, "key", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", true));
@@ -1280,12 +1257,8 @@ public class MapUtilsTest {
             }
             return false;
         }));
-        assertNull(MapUtils.getBoolean(in, "noKey", key -> {
-            return null;
-        }));
-        assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> {
-            return null;
-        }));
+        assertNull(MapUtils.getBoolean(in, "noKey", key -> null));
+        assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> null));
         assertNull(MapUtils.getBoolean(null, "noKey"));
         // Values are Numbers
         assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));

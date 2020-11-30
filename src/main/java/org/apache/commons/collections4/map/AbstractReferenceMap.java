@@ -151,7 +151,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Constructor used during deserialization.
      */
     protected AbstractReferenceMap() {
-        super();
     }
 
     /**
@@ -181,7 +180,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Initialise this subclass during construction, cloning or deserialization.
+     * Initialize this subclass during construction, cloning or deserialization.
      */
     @Override
     protected void init() {
@@ -795,7 +794,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         int expectedModCount;
 
         ReferenceBaseIterator(final AbstractReferenceMap<K, V> parent) {
-            super();
             this.parent = parent;
             index = parent.size() != 0 ? parent.data.length : 0;
             // have to do this here!  size() invocation above
@@ -1007,7 +1005,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Replaces the superclass method to store the state of this class.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
@@ -1041,7 +1039,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Replaces the superclass method to read the state of this class.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>

@@ -21,6 +21,12 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+    <action issue="COLLECTIONS-771" dev="kinow" type="fix" due-to="Xin Tong">
+      Fix flaky AbstractMultiValuedMapTest#testToString.
+    </action>
+    <action issue="COLLECTIONS-769" dev="kinow" type="fix" due-to="Xin (Cynthia) Tong">
+      Fix flaky UnmodifiableMultiValuedMapTest.
+    </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump actions/setup-java from v1.4.0 to v1.4.3 #174 #177 #186.
     </action>
@@ -168,6 +174,8 @@
       Update build from checkstyle.dep.version 8.31 to 8.32.
       Bump checkstyle from 8.35 to 8.36 #179.
       Bump checkstyle from 8.36 to 8.36.2 #184.
+      Bump checkstyle from 8.36.2 to 8.37 #192.
+      Bump checkstyle from 8.37 to 8.38 #199.
     </action>
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
@@ -195,13 +203,25 @@
       Update tests from commons-io:commons-io 2.6 to 2.8.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update actions/checkout from v1 to v2.3.3 #166 #173 #183.
+      Update actions/checkout from v1 to v2.3.4 #166 #173 #183 #193.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update maven-pmd-plugin from 3.12.0 to 3.13.0 #167.
+      Update maven-pmd-plugin from 3.12.0 to 3.14.0 #167 #196.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
       Update optional commons-codec from 1.14 to 1.15.
+    </action>
+    <action type="update" dev="ggregory" due-to="Dependabot">
+      Bump commons.junit.version from 5.6.2 to 5.7.0 #181.
+    </action>
+    <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
+      Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
+    </action>
+    <action issue="COLLECTIONS-773" type="update" dev="ggregory" due-to="Martin Monperrus">
+      Add an assertion to validate ensureCapacity #198.
+    </action>
+    <action issue="COLLECTIONS-772" type="update" dev="ggregory" due-to="Arturo Bernal, Alex Herbert, Gary Gregory, Bruno P. Kinoshita">
+      Add private constructor to ArrayUtils; better Javadocs, #195.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

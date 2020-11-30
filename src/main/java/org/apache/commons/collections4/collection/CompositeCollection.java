@@ -55,7 +55,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * Create an empty CompositeCollection.
      */
     public CompositeCollection() {
-        super();
     }
 
     /**
@@ -64,7 +63,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollection  the Collection to be appended to the composite
      */
     public CompositeCollection(final Collection<E> compositeCollection) {
-        super();
         addComposited(compositeCollection);
     }
 
@@ -76,7 +74,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     public CompositeCollection(final Collection<E> compositeCollection1,
                                final Collection<E> compositeCollection2) {
-        super();
         addComposited(compositeCollection1, compositeCollection2);
     }
 
@@ -86,7 +83,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollections  the collections to composite
      */
     public CompositeCollection(final Collection<E>... compositeCollections) {
-        super();
         addComposited(compositeCollections);
     }
 

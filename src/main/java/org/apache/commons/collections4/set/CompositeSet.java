@@ -65,7 +65,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * Creates an empty CompositeSet.
      */
     public CompositeSet() {
-        super();
     }
 
     /**
@@ -74,7 +73,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param set  the initial set in the composite
      */
     public CompositeSet(final Set<E> set) {
-        super();
         addComposited(set);
     }
 
@@ -84,7 +82,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param sets  the initial sets in the composite
      */
     public CompositeSet(final Set<E>... sets) {
-        super();
         addComposited(sets);
     }
 

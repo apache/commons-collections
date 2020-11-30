@@ -57,7 +57,6 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @param predicate  the predicate to call, not null
      */
     public PredicateTransformer(final Predicate<? super T> predicate) {
-        super();
         iPredicate = predicate;
     }
 

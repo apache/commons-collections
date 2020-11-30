@@ -78,7 +78,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * Constructor needed for subclass serialisation.
      */
     protected AbstractMultiValuedMap() {
-        super();
     }
 
     /**

@@ -50,7 +50,6 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
      * Constructor.
      */
     protected EmptyOrderedMapIterator() {
-        super();
     }
 
 }

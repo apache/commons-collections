@@ -875,7 +875,7 @@ public class MapUtils {
     public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             final Object answer = map.get(key);
-            if (answer != null && answer instanceof Map) {
+            if (answer instanceof Map) {
                 return (Map<?, ?>) answer;
             }
         }
@@ -1831,7 +1831,7 @@ public class MapUtils {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets a new Properties object initialised with the values from a Map. A null input will return an empty properties
+     * Gets a new Properties object initialized with the values from a Map. A null input will return an empty properties
      * object.
      * <p>
      * A Properties object may only store non-null keys and values, thus if the provided map contains either a key or
@@ -2044,7 +2044,7 @@ public class MapUtils {
     }
 
     /**
-     * {@code MapUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private MapUtils() {
     }

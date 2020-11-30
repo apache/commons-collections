@@ -67,7 +67,6 @@ public class WhileClosure<E> implements Closure<E> {
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
     public WhileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure, final boolean doLoop) {
-        super();
         iPredicate = predicate;
         iClosure = closure;
         iDoLoop = doLoop;

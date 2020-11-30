@@ -64,7 +64,6 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * @param iterator  the iterator to decorate
      */
     private UnmodifiableMapIterator(final MapIterator<? extends K, ? extends V> iterator) {
-        super();
         this.iterator = iterator;
     }
 

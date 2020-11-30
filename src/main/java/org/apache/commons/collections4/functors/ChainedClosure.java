@@ -86,7 +86,6 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @param closures  the closures to chain, no nulls
      */
     private ChainedClosure(final boolean clone, final Closure<? super E>... closures) {
-        super();
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
     }
 

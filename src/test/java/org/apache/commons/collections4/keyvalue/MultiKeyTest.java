@@ -291,9 +291,9 @@ public class MultiKeyTest {
 
     @Test
     public void testTwoArgCtor() {
-        MultiKeyTest key1 = new MultiKeyTest();
-        MultiKeyTest key2 = new MultiKeyTest();
-        MultiKeyTest[] keys = new MultiKey<>(key1, key2).getKeys();
+        final MultiKeyTest key1 = new MultiKeyTest();
+        final MultiKeyTest key2 = new MultiKeyTest();
+        final MultiKeyTest[] keys = new MultiKey<>(key1, key2).getKeys();
         assertNotNull(keys);
     }
 

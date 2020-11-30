@@ -44,7 +44,6 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * Constructor needed for subclass serialisation.
      */
     protected AbstractListValuedMap() {
-        super();
     }
 
     /**

@@ -59,7 +59,6 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      * @param predicate2  the second predicate to check, not null
      */
     public OrPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
-        super();
         iPredicate1 = predicate1;
         iPredicate2 = predicate2;
     }

@@ -50,7 +50,6 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @param key  the key
      */
     public TiedMapEntry(final Map<K, V> map, final K key) {
-        super();
         this.map = map;
         this.key = key;
     }

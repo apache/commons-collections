@@ -152,7 +152,7 @@ public class ListOrderedSet<E>
      * Constructor that wraps (not copies) the Set and specifies the list to
      * use.
      * <p>
-     * The set and list must both be correctly initialised to the same elements.
+     * The set and list must both be correctly initialized to the same elements.
      *
      * @param set the set to decorate, must not be null
      * @param list the list to decorate, must not be null

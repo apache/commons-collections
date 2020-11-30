@@ -56,7 +56,7 @@ final class IndexFilters {
      * @throws NullPointerException if the hasher, shape or action are null
      * @see Hasher#iterator(Shape)
      */
-    static void distinctIndexes(Hasher hasher, Shape shape, IntConsumer consumer) {
+    static void distinctIndexes(final Hasher hasher, final Shape shape, final IntConsumer consumer) {
         Objects.requireNonNull(hasher, "hasher");
         Objects.requireNonNull(shape, "shape");
         Objects.requireNonNull(consumer, "consumer");

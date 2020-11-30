@@ -39,7 +39,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     public AbstractOrderedBidiMapTest() {
-        super();
     }
 
     //-----------------------------------------------------------------------

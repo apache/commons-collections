@@ -40,7 +40,6 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
      * @since 3.1
      */
     protected AbstractSetDecorator() {
-        super();
     }
 
     /**

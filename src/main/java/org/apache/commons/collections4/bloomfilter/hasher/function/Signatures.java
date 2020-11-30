@@ -40,7 +40,7 @@ final class Signatures {
      * @see HashFunctionIdentity#prepareSignatureBuffer(HashFunctionIdentity)
      * @see HashFunction#apply(byte[], int)
      */
-    static long getSignature(HashFunction hashFunction) {
+    static long getSignature(final HashFunction hashFunction) {
         return hashFunction.apply(HashFunctionIdentity.prepareSignatureBuffer(hashFunction), 0);
     }
 }

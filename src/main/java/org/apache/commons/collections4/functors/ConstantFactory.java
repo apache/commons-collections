@@ -63,7 +63,6 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * @param constantToReturn  the constant to return each time
      */
     public ConstantFactory(final T constantToReturn) {
-        super();
         iConstant = constantToReturn;
     }
 

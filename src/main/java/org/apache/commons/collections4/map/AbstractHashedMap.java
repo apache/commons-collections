@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -97,7 +98,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractHashedMap() {
-        super();
     }
 
     /**
@@ -109,7 +109,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(final int initialCapacity, final float loadFactor, final int threshold) {
-        super();
         this.loadFactor = loadFactor;
         this.data = new HashEntry[initialCapacity];
         this.threshold = threshold;
@@ -138,7 +137,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(int initialCapacity, final float loadFactor) {
-        super();
         if (initialCapacity < 0) {
             throw new IllegalArgumentException("Initial capacity must be a non negative number");
         }
@@ -362,9 +360,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     public void clear() {
         modCount++;
         final HashEntry<K, V>[] data = this.data;
-        for (int i = data.length - 1; i >= 0; i--) {
-            data[i] = null;
-        }
+        Arrays.fill(data, null);
         size = 0;
     }
 
@@ -847,7 +843,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<K, V> parent;
 
         protected EntrySet(final AbstractHashedMap<K, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -947,7 +942,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<K, ?> parent;
 
         protected KeySet(final AbstractHashedMap<K, ?> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -1036,7 +1030,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private final AbstractHashedMap<?, V> parent;
 
         protected Values(final AbstractHashedMap<?, V> parent) {
-            super();
             this.parent = parent;
         }
 
@@ -1102,7 +1095,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         protected Object value;
 
         protected HashEntry(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
-            super();
             this.next = next;
             this.hashCode = hashCode;
             this.key = key;
@@ -1178,7 +1170,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         private int expectedModCount;
 
         protected HashIterator(final AbstractHashedMap<K, V> parent) {
-            super();
             this.parent = parent;
             final HashEntry<K, V>[] data = parent.data;
             int i = data.length;
@@ -1246,7 +1237,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>
@@ -1276,7 +1267,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * subclass must be setup before {@code put()} is used.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
-     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
      * <p>

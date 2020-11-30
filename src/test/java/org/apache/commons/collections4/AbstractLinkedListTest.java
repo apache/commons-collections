@@ -214,8 +214,6 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     @Override
     public Collection<T> makeConfirmedFullCollection() {
-        final List<T> list = new LinkedList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
+        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 }

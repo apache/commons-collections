@@ -26,7 +26,7 @@ import org.apache.commons.collections4.trie.UnmodifiableTrie;
 public class TrieUtils {
 
     /**
-     * {@link TrieUtils} should not normally be instantiated.
+     * Don't allow instances.
      */
     private TrieUtils() {}
 

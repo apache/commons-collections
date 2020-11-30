@@ -61,7 +61,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @param iterator  the iterator to decorate
      */
     private UnmodifiableListIterator(final ListIterator<? extends E> iterator) {
-        super();
         this.iterator = iterator;
     }
 

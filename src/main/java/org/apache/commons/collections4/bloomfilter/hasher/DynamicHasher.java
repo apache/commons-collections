@@ -70,13 +70,13 @@ public class DynamicHasher implements Hasher {
         }
 
         @Override
-        public DynamicHasher.Builder with(CharSequence item, Charset charset) {
+        public DynamicHasher.Builder with(final CharSequence item, final Charset charset) {
             Hasher.Builder.super.with(item, charset);
             return this;
         }
 
         @Override
-        public DynamicHasher.Builder withUnencoded(CharSequence item) {
+        public DynamicHasher.Builder withUnencoded(final CharSequence item) {
             Hasher.Builder.super.withUnencoded(item);
             return this;
         }

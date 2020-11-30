@@ -39,8 +39,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>();
-        list.addAll(Arrays.asList(getFullElements()));
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
         return GrowthList.growthList(list);
     }
 

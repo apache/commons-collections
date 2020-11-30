@@ -55,7 +55,6 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @param transformer  the transformer to decorate
      */
     public TransformerPredicate(final Transformer<? super T, Boolean> transformer) {
-        super();
         iTransformer = transformer;
     }
 
