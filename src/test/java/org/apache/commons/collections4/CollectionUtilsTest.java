@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -982,7 +983,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
-    public void getFromMap() {
+    public void getFromHashMap() {
         // Unordered map, entries exist
         final Map<String, String> expected = new HashMap<>();
         expected.put("zeroKey", "zero");
@@ -1006,6 +1007,51 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
+    }
+
+    @Test
+    public void getFromLinkedHashMap() {
+        // Ordered map, entries exist
+        final Map<String, String> expected = new LinkedHashMap<>();
+        expected.put("zeroKey", "zero");
+        expected.put("oneKey", "one");
+
+        final Map<String, String> found = new LinkedHashMap<>();
+        Map.Entry<String, String> entry = CollectionUtils.get(expected, 0);
+        found.put(entry.getKey(), entry.getValue());
+        entry = CollectionUtils.get(expected, 1);
+        found.put(entry.getKey(), entry.getValue());
+        assertEquals(expected, found);
+    }
+
+    @Test
+    public void getFromMapIndexOutOfRange() {
+        // Ordered map, entries exist
+        final Map<String, String> expected = new LinkedHashMap<>();
+        expected.put("zeroKey", "zero");
+        expected.put("oneKey", "one");
+
+        // Map index out of range
+        try {
+            CollectionUtils.get(expected, 2);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+        try {
+            CollectionUtils.get(expected, -2);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+     }
+
+    @Test
+    public void getFromTreeMap() {
+        // Ordered map, entries exist
+        final Map<String, String> expected = new LinkedHashMap<>();
+        expected.put("zeroKey", "zero");
+        expected.put("oneKey", "one");
 
         // Sorted map, entries exist, should respect order
         final SortedMap<String, String> map = new TreeMap<>();
