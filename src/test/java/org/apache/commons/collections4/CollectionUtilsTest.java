@@ -857,7 +857,7 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
-     }
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void getFromObject() throws Exception {
@@ -1408,7 +1408,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEmpty(new ArrayList<>()));
     }
 
-@Test
+    @Test
     public void testIsEmptyWithNonEmptyCollection() {
         assertFalse(CollectionUtils.isEmpty(Collections.singletonList("item")));
     }

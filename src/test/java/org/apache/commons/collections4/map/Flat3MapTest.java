@@ -22,6 +22,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.BulkTest;
@@ -338,7 +339,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public void testEntrySet() {
         // Sanity check
-        putAndRemove(new HashMap<>());
+        putAndRemove(new LinkedHashMap<>());
         // Actual test
         putAndRemove(new Flat3Map<>());
     }
