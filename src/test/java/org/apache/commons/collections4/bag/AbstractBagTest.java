@@ -125,7 +125,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
     //-----------------------------------------------------------------------
     /**
-     * Returns the {@link #collection} field cast to a {@link Bag}.
+     * Returns the {@link Collection} field cast to a {@link Bag}.
      *
      * @return the collection field as a Bag
      */
