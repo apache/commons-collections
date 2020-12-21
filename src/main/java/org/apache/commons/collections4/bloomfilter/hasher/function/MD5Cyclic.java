@@ -69,7 +69,7 @@ public final class MD5Cyclic implements HashFunction {
     public long apply(final byte[] buffer, final int seed) {
 
         if (seed == 0) {
-            byte[] hash;
+            final byte[] hash;
             synchronized (messageDigest) {
                 messageDigest.update(buffer);
                 hash = messageDigest.digest();

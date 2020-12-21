@@ -150,8 +150,8 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     public void testArrayListValuedHashMap() {
-        ListValuedMap<K, V> listMap;
-        ListValuedMap<K, V> listMap1;
+        final ListValuedMap<K, V> listMap;
+        final ListValuedMap<K, V> listMap1;
         final Map<K, V> map = new HashMap<>();
         final Map<K, V> map1 = new HashMap<>();
         map.put((K) "A", (V) "W");

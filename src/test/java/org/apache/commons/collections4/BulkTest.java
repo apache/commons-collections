@@ -359,7 +359,7 @@ class BulkTestSuiteMaker {
             return;
         }
 
-        BulkTest bulk2;
+        final BulkTest bulk2;
         try {
             bulk2 = (BulkTest) m.invoke(bulk, (Object[]) null);
             if (bulk2 == null) {

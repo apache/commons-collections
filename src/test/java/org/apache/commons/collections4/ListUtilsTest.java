@@ -447,7 +447,7 @@ public class ListUtilsTest {
         assertEquals(strings, partitionMax.get(0));
     }
 
-    private static Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
+    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
     @Test
     @SuppressWarnings("boxing") // OK in test code

@@ -179,12 +179,12 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
     public class TestNavigableSetSubSet extends AbstractNavigableSetTest<E> {
 
-        private int m_Type;
+        private final int m_Type;
         private int m_LowBound;
         private int m_HighBound;
-        private E[] m_FullElements;
-        private E[] m_OtherElements;
-        private boolean m_Inclusive;
+        private final E[] m_FullElements;
+        private final E[] m_OtherElements;
+        private final boolean m_Inclusive;
 
         @SuppressWarnings("unchecked")
         public TestNavigableSetSubSet(final int bound, final boolean head, final boolean inclusive) {

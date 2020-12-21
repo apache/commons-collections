@@ -109,7 +109,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListAddByIndexBoundsChecking() {
-        List<E> list;
+        final List<E> list;
         final E element = getOtherElements()[0];
         try {
             list = makeObject();
@@ -125,7 +125,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListAddByIndexBoundsChecking2() {
-        List<E> list;
+        final List<E> list;
         final E element = getOtherElements()[0];
         try {
             list = makeFullCollection();

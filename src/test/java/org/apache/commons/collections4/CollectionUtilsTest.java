@@ -64,7 +64,7 @@ import org.junit.Test;
 public class CollectionUtilsTest extends MockTestCase {
 
     // -----------------------------------------------------------------------
-    private static Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
+    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
     /**
      * Collection of {@link Integer}s

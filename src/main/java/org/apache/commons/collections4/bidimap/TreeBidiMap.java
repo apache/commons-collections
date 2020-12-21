@@ -623,7 +623,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @return the specified node
      */
     private Node<K, V> nextGreater(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> rval;
+        final Node<K, V> rval;
         if (node == null) {
             rval = null;
         } else if (node.getRight(dataElement) != null) {
@@ -658,7 +658,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @return the specified node
      */
     private Node<K, V> nextSmaller(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> rval;
+        final Node<K, V> rval;
         if (node == null) {
             rval = null;
         } else if (node.getLeft(dataElement) != null) {

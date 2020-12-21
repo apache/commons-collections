@@ -127,7 +127,7 @@ public class SplitMapUtils {
 
         @Override
         public MapIterator<K, V> mapIterator() {
-            MapIterator<K, V> it;
+            final MapIterator<K, V> it;
             if (get instanceof IterableGet) {
                 it = ((IterableGet<K, V>) get).mapIterator();
             } else {

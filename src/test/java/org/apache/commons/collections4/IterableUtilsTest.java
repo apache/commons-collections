@@ -91,9 +91,9 @@ public class IterableUtilsTest {
         emptyIterable = Collections.emptyList();
     }
 
-    private static Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
+    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
-    private static Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
+    private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
     // -----------------------------------------------------------------------
     @Test
