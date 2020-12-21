@@ -31,7 +31,7 @@
  *   <li>Transformed - transforms each element added</li>
  *   <li>FixedSize - ensures that the size of the list cannot change</li>
  *   <li>Lazy - creates objects in the list on demand</li>
- *   <li>Growth - grows the list instead of erring when set/add used with index beyond the list size</li>
+ *   <li>Growth - grows the list instead of erroring when set/add used with index beyond the list size</li>
  *   <li>SetUnique - a list that avoids duplicate entries like a Set</li>
  * </ul>
  *
