@@ -226,6 +226,9 @@
     <action issue="COLLECTIONS-775" type="update" dev="ggregory" due-to="Xin Tong, Bruno P. Kinoshita, Gary Gregory">
       Fix flaky CollectionUtilsTest.getFromMap() #200.
     </action>
+    <action type="update" dev="ggregory" due-to="Arturo Bernal">
+      Minor Improvements #203.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
