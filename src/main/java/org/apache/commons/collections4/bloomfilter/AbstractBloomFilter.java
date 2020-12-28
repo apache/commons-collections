@@ -179,8 +179,8 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         verifyShape(other);
         final long[] mine = getBits();
         final long[] theirs = other.getBits();
-        long[] small;
-        long[] big;
+        final long[] small;
+        final long[] big;
         if (mine.length > theirs.length) {
             big = mine;
             small = theirs;

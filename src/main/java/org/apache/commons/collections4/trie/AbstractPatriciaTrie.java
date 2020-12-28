@@ -1897,7 +1897,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         @Override
         public K lastKey() {
-            Map.Entry<K, V> e;
+            final Map.Entry<K, V> e;
             if (toKey == null) {
                 e = lastEntry();
             } else {

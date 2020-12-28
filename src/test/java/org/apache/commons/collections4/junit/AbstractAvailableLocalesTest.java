@@ -69,7 +69,7 @@ public abstract class AbstractAvailableLocalesTest {
             if (field.getType() == Locale.class && Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers)) {
                 try {
                     availableLocales.add((Locale) field.get(Locale.class));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
+                } catch (final IllegalArgumentException | IllegalAccessException e) {
                     throw new IllegalStateException("Field " + field, e);
                 }
             }

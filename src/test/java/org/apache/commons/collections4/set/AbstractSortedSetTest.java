@@ -190,11 +190,11 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
     public class TestSortedSetSubSet extends AbstractSortedSetTest<E> {
 
-        private int m_Type;
+        private final int m_Type;
         private int m_LowBound;
         private int m_HighBound;
-        private E[] m_FullElements;
-        private E[] m_OtherElements;
+        private final E[] m_FullElements;
+        private final E[] m_OtherElements;
 
         @SuppressWarnings("unchecked")
         public TestSortedSetSubSet(final int bound, final boolean head) {

@@ -60,7 +60,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @since 4.0
      */
     public enum UnknownObjectBehavior {
-        BEFORE, AFTER, EXCEPTION;
+        BEFORE, AFTER, EXCEPTION
     }
 
     /** Internal map of object to position */

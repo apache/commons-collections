@@ -74,7 +74,7 @@ public class LRUMap<K, V>
     /** Maximum size */
     private transient int maxSize;
     /** Scan behavior */
-    private boolean scanUntilRemovable;
+    private final boolean scanUntilRemovable;
 
     /**
      * Constructs a new empty map with a maximum size of 100.
