@@ -430,18 +430,18 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             "Three",
             Integer.valueOf(4),
             "One",
-            new Double(5),
-            new Float(6),
+            Double.valueOf(5),
+            Float.valueOf(6),
             "Seven",
             "Eight",
             "Nine",
             Integer.valueOf(10),
-            new Short((short) 11),
-            new Long(12),
+            Short.valueOf((short) 11),
+            Long.valueOf(12),
             "Thirteen",
             "14",
             "15",
-            new Byte((byte) 16)
+            Byte.valueOf((byte) 16)
         };
     }
 
@@ -454,13 +454,13 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public E[] getOtherNonNullElements() {
         return (E[]) new Object[] {
             Integer.valueOf(0),
-            new Float(0),
-            new Double(0),
+            Float.valueOf(0),
+            Double.valueOf(0),
             "Zero",
-            new Short((short) 0),
-            new Byte((byte) 0),
-            new Long(0),
-            new Character('\u0000'),
+            Short.valueOf((short) 0),
+            Byte.valueOf((byte) 0),
+            Long.valueOf(0),
+            Character.valueOf('\u0000'),
             "0"
         };
     }
