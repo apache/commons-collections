@@ -147,7 +147,7 @@ public class SequencesComparatorTest {
     private List<Character> sequence(final String string) {
         final List<Character> list = new ArrayList<>();
         for (int i = 0; i < string.length(); ++i) {
-            list.add(new Character(string.charAt(i)));
+            list.add(Character.valueOf(string.charAt(i)));
         }
         return list;
     }
