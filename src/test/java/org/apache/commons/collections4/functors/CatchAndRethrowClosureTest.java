@@ -64,8 +64,6 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         Closure<Integer> closure = generateNoExceptionClosure();
         try {
             closure.execute(Integer.valueOf(0));
-        } catch (final FunctorException ex) {
-            Assert.fail();
         } catch (final RuntimeException ex) {
             Assert.fail();
         }

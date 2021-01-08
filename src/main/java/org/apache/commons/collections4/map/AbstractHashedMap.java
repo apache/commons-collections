@@ -1359,9 +1359,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
                     }
                 }
             }
-        } catch (final ClassCastException ignored)   {
-            return false;
-        } catch (final NullPointerException ignored) {
+        } catch (final ClassCastException | NullPointerException ignored) {
             return false;
         }
         return true;

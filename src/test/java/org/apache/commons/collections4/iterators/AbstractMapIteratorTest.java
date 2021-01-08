@@ -141,8 +141,9 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             try {
                 it.setValue(addSetValues()[0]);
                 fail();
-            } catch (final UnsupportedOperationException ex) {
-            } catch (final IllegalStateException ex) {}
+            } catch (final UnsupportedOperationException | IllegalStateException ex) {
+                // ignore
+            }
         } else {
             // setValue() should throw an IllegalStateException
             try {

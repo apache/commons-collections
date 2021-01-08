@@ -1274,10 +1274,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             getCollection().clear();
             iter.next();
             fail("next after clear should raise ConcurrentModification");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        } catch (final NoSuchElementException e) {
-            // (also legal given spec)
+        } catch (final ConcurrentModificationException | NoSuchElementException e) {
+            // ConcurrentModificationException: expected
+            // NoSuchElementException: (also legal given spec)
         }
 
         resetFull();
@@ -1387,9 +1386,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     protected static void assertNotCollectionContains(final Collection<?> coll, final Object element) {
         try {
             assertFalse(coll.contains(element));
-        } catch (final ClassCastException e) {
-            //apparently not
-        } catch (final NullPointerException e) {
+        } catch (final ClassCastException | NullPointerException e) {
             //apparently not
         }
     }
@@ -1402,9 +1399,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     protected static void assertNotCollectionContainsAll(final Collection<?> coll, final Collection<?> sub) {
         try {
             assertFalse(coll.containsAll(sub));
-        } catch (final ClassCastException cce) {
-            //apparently not
-        } catch (final NullPointerException e) {
+        } catch (final ClassCastException | NullPointerException e) {
             //apparently not
         }
     }
@@ -1417,9 +1412,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     protected static void assertNotRemoveFromCollection(final Collection<?> coll, final Object element) {
         try {
             assertFalse(coll.remove(element));
-        } catch (final ClassCastException cce) {
-            //apparently not
-        } catch (final NullPointerException e) {
+        } catch (final ClassCastException | NullPointerException e) {
             //apparently not
         }
     }
@@ -1432,9 +1425,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     protected static void assertNotRemoveAllFromCollection(final Collection<?> coll, final Collection<?> sub) {
         try {
             assertFalse(coll.removeAll(sub));
-        } catch (final ClassCastException cce) {
-            //apparently not
-        } catch (final NullPointerException e) {
+        } catch (final ClassCastException | NullPointerException e) {
             //apparently not
         }
     }

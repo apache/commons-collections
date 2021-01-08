@@ -58,10 +58,7 @@ public final class TestUtils {
 
             // assert that original object and deserialized objects are the same
             assertSame(msg, o, object);
-        } catch (final IOException e) {
-            // should never happen
-            throw new RuntimeException(e);
-        } catch (final ClassNotFoundException e) {
+        } catch (final IOException | ClassNotFoundException e) {
             // should never happen
             throw new RuntimeException(e);
         }

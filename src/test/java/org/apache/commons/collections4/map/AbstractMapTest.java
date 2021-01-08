@@ -832,8 +832,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     // two possible exception here, either valid
                     getMap().put(keys[0], newValues[0]);
                     fail("Expected IllegalArgumentException or UnsupportedOperationException on put (change)");
-                } catch (final IllegalArgumentException ex) {
-                } catch (final UnsupportedOperationException ex) {}
+                } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                    // ignore
+                }
             }
 
         } else if (isPutChangeSupported()) {
@@ -841,8 +842,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             try {
                 getMap().put(keys[0], values[0]);
                 fail("Expected UnsupportedOperationException or IllegalArgumentException on put (add) when fixed size");
-            } catch (final IllegalArgumentException ex) {
-            } catch (final UnsupportedOperationException ex) {
+            } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                // ignore
             }
 
             resetFull();
@@ -887,8 +888,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 try {
                     getMap().put(null, values[0]);
                     fail("put(null, value) should throw NPE/IAE");
-                } catch (final NullPointerException ex) {
-                } catch (final IllegalArgumentException ex) {}
+                } catch (final NullPointerException | IllegalArgumentException ex) {}
             }
         }
     }
@@ -907,8 +907,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 try {
                     getMap().put(keys[0], null);
                     fail("put(key, null) should throw NPE/IAE");
-                } catch (final NullPointerException ex) {
-                } catch (final IllegalArgumentException ex) {}
+                } catch (final NullPointerException | IllegalArgumentException ex) {}
             }
         }
     }
