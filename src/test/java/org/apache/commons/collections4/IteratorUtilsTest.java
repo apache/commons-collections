@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -46,7 +47,9 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 
 import org.apache.commons.collections4.iterators.*;
+import org.apache.commons.collections4.list.GrowthList;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Node;
@@ -632,6 +635,19 @@ public class IteratorUtilsTest {
         result = IteratorUtils.toList(it);
         assertEquals(collectionOdd, result);
         IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+    }
+
+    /**
+     * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-761"}
+     */
+    @Test
+    public void testCollections762() {
+        Set<String> strings = new HashSet<>();
+        strings.add( "this is testString" );
+        Iterator<String> iterator = strings.iterator();
+        List<String> out = IteratorUtils.toList( iterator );
+        Iterator<String> stringIterator = out.iterator();
+        assertTrue( stringIterator.hasNext() );
     }
 
     // -----------------------------------------------------------------------
