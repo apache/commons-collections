@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +36,8 @@ import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IterableUtils.
@@ -60,7 +61,7 @@ public class IterableUtilsTest {
      */
     private Iterable<Integer> emptyIterable = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         final Collection<Integer> collectionA = new ArrayList<>();
         collectionA.add(1);
@@ -124,12 +125,12 @@ public class IterableUtilsTest {
         IterableUtils.forEach(col, testClosure);
     }
 
-    @Test(expected = FunctorException.class)
+    @Test
     public void forEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<>();
         col.add("x");
-        IterableUtils.forEach(col, testClosure);
+        assertThrows(FunctorException.class, () -> IterableUtils.forEach(col, testClosure));
     }
 
     @Test
@@ -380,13 +381,13 @@ public class IterableUtilsTest {
         assertEquals("element", IterableUtils.get(bag, 0));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void getFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
         // Collection, non-existent entry
-        IterableUtils.get(bag, 1);
+        assertThrows(IndexOutOfBoundsException.class, () -> IterableUtils.get(bag, 1));
     }
 
     public void firstFromIterable() throws Exception {
@@ -396,12 +397,12 @@ public class IterableUtilsTest {
         assertEquals("element", IterableUtils.first(bag));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void firstFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         // Collection, non-existent entry
-        IterableUtils.first(bag);
+        assertThrows(IndexOutOfBoundsException.class, () -> IterableUtils.first(bag));
     }
 
     @SuppressWarnings("unchecked")
