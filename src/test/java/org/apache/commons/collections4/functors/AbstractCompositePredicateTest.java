@@ -23,7 +23,9 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Base class for tests of composite predicates.
@@ -99,46 +101,46 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Tests {@code getInstance} with a null predicate array.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullArrayToGetInstance() {
-        getPredicateInstance((Predicate<T>[]) null);
+        assertThrows(NullPointerException.class, () -> getPredicateInstance((Predicate<T>[]) null));
     }
 
     /**
      * Tests {@code getInstance} with a single null element in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null });
+        assertThrows(NullPointerException.class, () -> getPredicateInstance(new Predicate[] { null }));
     }
 
     /**
      * Tests {@code getInstance} with two null elements in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInArrayToGetInstance() {
-        getPredicateInstance(new Predicate[] { null, null });
+        assertThrows(NullPointerException.class, () -> getPredicateInstance(new Predicate[] { null, null }));
     }
 
 
     /**
      * Tests {@code getInstance} with a null predicate collection
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullCollectionToGetInstance() {
-        getPredicateInstance((Collection<Predicate<T>>) null);
+        assertThrows(NullPointerException.class, () -> getPredicateInstance((Collection<Predicate<T>>) null));
     }
 
     /**
      * Tests {@code getInstance} with a predicate collection that contains null elements
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void nullElementsInCollectionToGetInstance() {
         final Collection<Predicate<T>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
-        getPredicateInstance(coll);
+        assertThrows(NullPointerException.class, () -> getPredicateInstance(coll));
     }
 }

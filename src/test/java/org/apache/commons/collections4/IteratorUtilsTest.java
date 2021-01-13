@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,8 +48,8 @@ import java.util.LinkedHashSet;
 
 import org.apache.commons.collections4.iterators.*;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -133,7 +134,7 @@ public class IteratorUtilsTest {
         return IteratorUtils.unmodifiableListIterator(list.listIterator());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         collectionA = new ArrayList<>();
         collectionA.add(1);
@@ -436,9 +437,9 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsEnumerationNull() {
-        IteratorUtils.asEnumeration(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.asEnumeration(null));
     }
 
     @Test
@@ -472,14 +473,14 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testAsIterator() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
         assertTrue("create instance fail", IteratorUtils.asIterator(en) instanceof Iterator);
-        IteratorUtils.asIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.asIterator(null));
     }
 
     @Test
@@ -598,7 +599,7 @@ public class IteratorUtilsTest {
         assertEquals(combinedList, result);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorCollectionNull() {
         final Collection<Iterator<?>> coll = new ArrayList<>();
         coll.add(collectionOdd.iterator());
@@ -606,10 +607,10 @@ public class IteratorUtilsTest {
         final Iterator<?> it = IteratorUtils.collatedIterator(null, coll);
         final List<?> result = IteratorUtils.toList(it);
         assertEquals(6, result.size());
-        IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.collatedIterator(null, (Collection<Iterator<?>>) null));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCollatedIteratorNull() {
         final ArrayList arrayList = new ArrayList();
         // natural ordering
@@ -631,7 +632,7 @@ public class IteratorUtilsTest {
         it = IteratorUtils.collatedIterator(reverseComparator, collectionOdd.iterator());
         result = IteratorUtils.toList(it);
         assertEquals(collectionOdd, result);
-        IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null));
     }
 
     // -----------------------------------------------------------------------
@@ -1022,7 +1023,7 @@ public class IteratorUtilsTest {
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
@@ -1030,16 +1031,16 @@ public class IteratorUtilsTest {
         coll.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
-        IteratorUtils.loopingIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.loopingIterator(null));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testLoopingListIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
-        IteratorUtils.loopingListIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.loopingListIterator(null));
     }
 
     /**
@@ -1108,21 +1109,21 @@ public class IteratorUtilsTest {
         assertTrue("create instance fail", IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.peekingIterator(ie) instanceof Iterator);
-        IteratorUtils.peekingIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.peekingIterator(null));
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
         assertTrue("create instance fail", IteratorUtils.pushbackIterator(ie) instanceof Iterator);
-        IteratorUtils.pushbackIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.pushbackIterator(null));
     }
 
     @Test
@@ -1406,12 +1407,12 @@ public class IteratorUtilsTest {
         assertTrue(listIterator.hasNext());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
         assertTrue("create instance fail", IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
-        IteratorUtils.unmodifiableMapIterator(null);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.unmodifiableMapIterator(null));
 
     }
 

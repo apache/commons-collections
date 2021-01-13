@@ -17,20 +17,22 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for the {@link BloomFilterIndexer}.
  */
 public class BloomFilterIndexerTest {
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testCheckPositiveThrows() {
-        BloomFilterIndexer.checkPositive(-1);
+        assertThrows(IndexOutOfBoundsException.class, () -> BloomFilterIndexer.checkPositive(-1));
     }
 
     @Test
