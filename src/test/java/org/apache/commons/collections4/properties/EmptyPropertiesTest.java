@@ -29,7 +29,9 @@ import java.util.Properties;
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EmptyPropertiesTest {
 
@@ -46,19 +48,19 @@ public class EmptyPropertiesTest {
         Assert.assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testCompute() {
-        PropertiesFactory.EMPTY_PROPERTIES.compute("key", (k, v) -> "foo");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.compute("key", (k, v) -> "foo"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testComputeIfAbsent() {
-        PropertiesFactory.EMPTY_PROPERTIES.computeIfAbsent("key", k -> "foo");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.computeIfAbsent("key", k -> "foo"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testComputeIfPresent() {
-        PropertiesFactory.EMPTY_PROPERTIES.computeIfPresent("key", (k, v) -> "foo");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.computeIfPresent("key", (k, v) -> "foo"));
     }
 
     @Test
@@ -173,26 +175,26 @@ public class EmptyPropertiesTest {
         Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testLoadFromXML() throws IOException {
-        PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY));
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testLoadInputStream() throws IOException {
-        PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY));
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testLoadReader() throws IOException {
         try (NullReader reader = new NullReader(0)) {
-            PropertiesFactory.EMPTY_PROPERTIES.load(reader);
+            assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(reader));
         }
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testMerge() {
-        PropertiesFactory.EMPTY_PROPERTIES.merge("key", "value", (k, v) -> "foo");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.merge("key", "value", (k, v) -> "foo"));
     }
 
     @Test
@@ -200,19 +202,19 @@ public class EmptyPropertiesTest {
         Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.propertyNames().hasMoreElements());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testPut() {
-        PropertiesFactory.EMPTY_PROPERTIES.put("Key", "Value");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.put("Key", "Value"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testPutAll() {
-        PropertiesFactory.EMPTY_PROPERTIES.putAll(new HashMap<>());
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.putAll(new HashMap<>()));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testPutIfAbsent() {
-        PropertiesFactory.EMPTY_PROPERTIES.putIfAbsent("Key", "Value");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.putIfAbsent("Key", "Value"));
     }
 
     @Test
@@ -221,29 +223,29 @@ public class EmptyPropertiesTest {
         // PropertiesFactory.EMPTY_PROPERTIES.rehash();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
-        PropertiesFactory.EMPTY_PROPERTIES.remove("key", "value");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.remove("key", "value"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemoveKey() {
-        PropertiesFactory.EMPTY_PROPERTIES.remove("key");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.remove("key"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testReplace() {
-        PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testReplaceAll() {
-        PropertiesFactory.EMPTY_PROPERTIES.replaceAll((k, v) -> "value1");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replaceAll((k, v) -> "value1"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testReplaceOldValue() {
-        PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1", "value2");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1", "value2"));
     }
 
     @Test
@@ -269,9 +271,9 @@ public class EmptyPropertiesTest {
         }
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testSetProperty() {
-        PropertiesFactory.EMPTY_PROPERTIES.setProperty("Key", "Value");
+        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.setProperty("Key", "Value"));
     }
 
     @Test
