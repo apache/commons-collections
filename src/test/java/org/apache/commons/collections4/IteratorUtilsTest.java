@@ -47,9 +47,7 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 
 import org.apache.commons.collections4.iterators.*;
-import org.apache.commons.collections4.list.GrowthList;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Node;
