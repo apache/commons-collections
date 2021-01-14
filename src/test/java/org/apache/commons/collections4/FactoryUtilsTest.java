@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
@@ -214,9 +215,9 @@ public class FactoryUtilsTest {
     // instantiateFactory
     //------------------------------------------------------------------
 
-    @Test(expected=NullPointerException.class)
+    @Test
     public void instantiateFactoryNull() {
-        FactoryUtils.instantiateFactory(null);
+        assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
     }
 
     @Test
@@ -229,14 +230,14 @@ public class FactoryUtilsTest {
         assertEquals(1, created.getValue());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryMismatch() {
-        FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null}));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void instantiateFactoryNoConstructor() {
-        FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null}));
     }
 
     @Test

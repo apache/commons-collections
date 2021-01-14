@@ -20,7 +20,7 @@ import static org.apache.commons.collections4.functors.NullPredicate.nullPredica
 import static org.junit.Assert.assertSame;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NullPredicateTest extends AbstractPredicateTest {
     @Test

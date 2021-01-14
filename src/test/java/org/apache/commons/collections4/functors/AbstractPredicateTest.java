@@ -18,15 +18,15 @@ package org.apache.commons.collections4.functors;
 
 import org.apache.commons.collections4.Predicate;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public abstract class AbstractPredicateTest {
     protected Object cObject;
     protected String cString;
     protected Integer cInteger;
 
-    @Before
+    @BeforeEach
     public void initializeTestObjects() throws Exception {
         cObject = new Object();
         cString = "Hello";
