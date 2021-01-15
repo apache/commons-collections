@@ -48,7 +48,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Whether or not the {@link #nextObject} has been set
      * (possibly to {@code null}).
      */
-    private boolean nextObjectSet = false;
+    private boolean nextObjectSet;
 
     /**
      * The value of the previous (matching) object, when
@@ -60,12 +60,12 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Whether or not the {@link #previousObject} has been set
      * (possibly to {@code null}).
      */
-    private boolean previousObjectSet = false;
+    private boolean previousObjectSet;
 
     /**
      * The index of the element that would be returned by {@link #next}.
      */
-    private int nextIndex = 0;
+    private int nextIndex;
 
     //-----------------------------------------------------------------------
     /**

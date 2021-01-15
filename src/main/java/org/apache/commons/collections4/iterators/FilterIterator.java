@@ -39,7 +39,7 @@ public class FilterIterator<E> implements Iterator<E> {
     /** The next object in the iteration */
     private E nextObject;
     /** Whether the next object has been calculated yet */
-    private boolean nextObjectSet = false;
+    private boolean nextObjectSet;
 
     //-----------------------------------------------------------------------
     /**

@@ -58,13 +58,13 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private transient volatile Set<Map.Entry<K, V>> entrySet;
 
     /** The current size of the {@link org.apache.commons.collections4.Trie}. */
-    private transient int size = 0;
+    private transient int size;
 
     /**
      * The number of times this {@link org.apache.commons.collections4.Trie} has been modified.
      * It's used to detect concurrent modifications and fail-fast the {@link Iterator}s.
      */
-    protected transient int modCount = 0;
+    protected transient int modCount;
 
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         super(keyAnalyzer);
@@ -2083,11 +2083,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         private final int lengthInBits;
 
-        private K fromKey = null;
+        private K fromKey;
 
-        private K toKey = null;
+        private K toKey;
 
-        private transient int expectedModCount = 0;
+        private transient int expectedModCount;
 
         private int size = -1;
 
@@ -2266,7 +2266,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         private TrieEntry<K, V> prefixStart;
 
-        private int expectedModCount = 0;
+        private int expectedModCount;
 
         /**
          * Creates a {@link PrefixRangeEntrySet}.
@@ -2305,7 +2305,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
             private final TrieEntry<K, V> entry;
 
-            private int hit = 0;
+            private int hit;
 
             SingletonIterator(final TrieEntry<K, V> entry) {
                 this.entry = entry;

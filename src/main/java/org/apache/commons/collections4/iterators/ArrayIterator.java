@@ -44,7 +44,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /** The end index to loop to */
     final int endIndex;
     /** The current iterator index */
-    int index = 0;
+    int index;
 
     // Constructors
     // ----------------------------------------------------------------------

@@ -407,7 +407,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /** Is the next index valid */
         boolean nextIndexValid = true;
         /** Flag to indicate if the current element was removed by another object. */
-        boolean currentRemovedByAnother = false;
+        boolean currentRemovedByAnother;
 
         /**
          * Constructs a new cursor.

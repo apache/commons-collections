@@ -41,7 +41,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     private static final BooleanComparator FALSE_FIRST = new BooleanComparator(false);
 
     /** {@code true} iff {@code true} values sort before {@code false} values. */
-    private boolean trueFirst = false;
+    private final boolean trueFirst;
 
     //-----------------------------------------------------------------------
     /**

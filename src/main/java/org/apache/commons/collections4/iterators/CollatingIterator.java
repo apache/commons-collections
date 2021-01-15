@@ -42,16 +42,16 @@ import org.apache.commons.collections4.list.UnmodifiableList;
 public class CollatingIterator<E> implements Iterator<E> {
 
     /** The {@link Comparator} used to evaluate order. */
-    private Comparator<? super E> comparator = null;
+    private Comparator<? super E> comparator;
 
     /** The list of {@link Iterator}s to evaluate. */
-    private List<Iterator<? extends E>> iterators = null;
+    private final List<Iterator<? extends E>> iterators;
 
     /** {@link Iterator#next Next} objects peeked from each iterator. */
-    private List<E> values = null;
+    private List<E> values;
 
     /** Whether or not each {@link #values} element has been set. */
-    private BitSet valueSet = null;
+    private BitSet valueSet;
 
     /**
      * Index of the {@link #iterators iterator} from whom the last returned

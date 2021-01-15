@@ -35,7 +35,7 @@ public class SingletonIterator<E>
     /** Is the cursor before the first element */
     private boolean beforeFirst = true;
     /** Has the element been removed */
-    private boolean removed = false;
+    private boolean removed;
     /** The object */
     private E object;
 

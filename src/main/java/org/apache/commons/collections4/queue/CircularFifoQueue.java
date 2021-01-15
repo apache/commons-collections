@@ -60,7 +60,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     private transient E[] elements;
 
     /** Array index of first (oldest) queue element. */
-    private transient int start = 0;
+    private transient int start;
 
     /**
      * Index mod maxElements of the array position following the last queue
@@ -69,10 +69,10 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * For example, elements = {c,a,b}, start=1, end=1 corresponds to
      * the queue [a,b,c].
      */
-    private transient int end = 0;
+    private transient int end;
 
     /** Flag to indicate if the queue is currently full. */
-    private transient boolean full = false;
+    private transient boolean full;
 
     /** Capacity of the queue. */
     private final int maxElements;

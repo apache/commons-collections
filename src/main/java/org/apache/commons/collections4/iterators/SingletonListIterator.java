@@ -30,8 +30,8 @@ import org.apache.commons.collections4.ResettableListIterator;
 public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     private boolean beforeFirst = true;
-    private boolean nextCalled = false;
-    private boolean removed = false;
+    private boolean nextCalled;
+    private boolean removed;
     private E object;
 
     /**

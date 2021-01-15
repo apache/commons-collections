@@ -43,7 +43,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     private final Map<K, V> map;
     private Iterator<Map.Entry<K, V>> iterator;
     private Map.Entry<K, V> last;
-    private boolean canRemove = false;
+    private boolean canRemove;
 
     /**
      * Constructor.
