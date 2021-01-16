@@ -47,6 +47,8 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  */
 public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {
 
+    private static final Map[] EMPTY_MAP_ARRAY = new Map[0];
+
     /** Serialization version */
     private static final long serialVersionUID = -6096931280583808322L;
 
@@ -109,7 +111,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     @SuppressWarnings("unchecked")
     public CompositeMap(final Map<K, V>[] composite, final MapMutator<K, V> mutator) {
         this.mutator = mutator;
-        this.composite = new Map[0];
+        this.composite = EMPTY_MAP_ARRAY;
         for (int i = composite.length - 1; i >= 0; --i) {
             this.addComposited(composite[i]);
         }

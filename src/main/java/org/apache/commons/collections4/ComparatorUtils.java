@@ -41,6 +41,8 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  */
 public class ComparatorUtils {
 
+    private static final Comparator[] EMPTY_COMPARATOR_ARRAY = new Comparator[0];
+
     /**
      * Don't allow instances.
      */
@@ -98,7 +100,7 @@ public class ComparatorUtils {
     @SuppressWarnings("unchecked")
     public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
         return chainedComparator(
-            (Comparator<E>[]) comparators.toArray(new Comparator[0])
+            (Comparator<E>[]) comparators.toArray(EMPTY_COMPARATOR_ARRAY)
         );
     }
 

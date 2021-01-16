@@ -33,6 +33,8 @@ import org.apache.commons.collections4.Transformer;
  */
 public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
+    private static final Transformer[] EMPTY_TRANSFORMER_ARRAY = new Transformer[0];
+
     /** Serial version UID */
     private static final long serialVersionUID = 3514945074733160196L;
 
@@ -74,7 +76,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
             return NOPTransformer.<T>nopTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
-        final Transformer<T, T>[] cmds = transformers.toArray(new Transformer[0]);
+        final Transformer<T, T>[] cmds = transformers.toArray(EMPTY_TRANSFORMER_ARRAY);
         FunctorUtils.validate(cmds);
         return new ChainedTransformer<>(false, cmds);
     }
