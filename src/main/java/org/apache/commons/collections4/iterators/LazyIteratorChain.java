@@ -48,19 +48,19 @@ import java.util.Iterator;
 public abstract class LazyIteratorChain<E> implements Iterator<E> {
 
     /** The number of times {@link #next()} was already called. */
-    private int callCounter = 0;
+    private int callCounter;
 
     /** Indicates that the Iterator chain has been exhausted. */
-    private boolean chainExhausted = false;
+    private boolean chainExhausted;
 
     /** The current iterator. */
-    private Iterator<? extends E> currentIterator = null;
+    private Iterator<? extends E> currentIterator;
 
     /**
      * The "last used" Iterator is the Iterator upon which next() or hasNext()
      * was most recently called used for the remove() operation only.
      */
-    private Iterator<? extends E> lastUsedIterator = null;
+    private Iterator<? extends E> lastUsedIterator;
 
     //-----------------------------------------------------------------------
 

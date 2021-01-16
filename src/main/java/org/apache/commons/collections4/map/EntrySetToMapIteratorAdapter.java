@@ -34,7 +34,7 @@ import org.apache.commons.collections4.ResettableIterator;
 public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
 
     /** The adapted Map entry Set. */
-    Set<Map.Entry<K, V>> entrySet;
+    final Set<Map.Entry<K, V>> entrySet;
 
     /** The resettable iterator in use. */
     transient Iterator<Map.Entry<K, V>> iterator;

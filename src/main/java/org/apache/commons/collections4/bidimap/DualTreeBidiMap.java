@@ -308,7 +308,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         private ListIterator<Map.Entry<K, V>> iterator;
 
         /** The last returned entry */
-        private Map.Entry<K, V> last = null;
+        private Map.Entry<K, V> last;
 
         /**
          * Constructor.

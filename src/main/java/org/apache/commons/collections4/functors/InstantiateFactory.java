@@ -43,7 +43,7 @@ public class InstantiateFactory<T> implements Factory<T> {
     /** The constructor arguments */
     private final Object[] iArgs;
     /** The constructor */
-    private transient Constructor<T> iConstructor = null;
+    private transient Constructor<T> iConstructor;
 
     /**
      * Factory method that performs validation.

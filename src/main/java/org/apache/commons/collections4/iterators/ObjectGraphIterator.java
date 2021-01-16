@@ -84,7 +84,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     private final Transformer<? super E, ? extends E> transformer;
 
     /** Whether there is another element in the iteration */
-    private boolean hasNext = false;
+    private boolean hasNext;
     /** The current iterator */
     private Iterator<? extends E> currentIterator;
     /** The current value */

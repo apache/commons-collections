@@ -41,7 +41,7 @@ public final class Murmur128x64Cyclic implements HashFunction {
     /**
      * The result of the hash 0 call.
      */
-    private long[] parts = null;
+    private long[] parts;
 
     /**
      * The signature for this hash function.

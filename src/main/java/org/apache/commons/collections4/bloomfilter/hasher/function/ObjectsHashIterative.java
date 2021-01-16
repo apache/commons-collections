@@ -46,7 +46,7 @@ public final class ObjectsHashIterative implements HashFunction {
     /**
      * The value of the last hash.
      */
-    private long last = 0;
+    private long last;
 
     /**
      * Constructs a hash that uses the Objects.hash method to has values.

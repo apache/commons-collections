@@ -362,7 +362,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     static class SetListIterator<E> extends AbstractIteratorDecorator<E> {
 
         private final Set<E> set;
-        private E last = null;
+        private E last;
 
         protected SetListIterator(final Iterator<E> it, final Set<E> set) {
             super(it);
@@ -390,7 +390,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             AbstractListIteratorDecorator<E> {
 
         private final Set<E> set;
-        private E last = null;
+        private E last;
 
         protected SetListListIterator(final ListIterator<E> it, final Set<E> set) {
             super(it);

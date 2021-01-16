@@ -42,10 +42,10 @@ public class ZippingIterator<E> implements Iterator<E> {
     private final Iterator<Iterator<? extends E>> iterators;
 
     /** The next iterator to use for next(). */
-    private Iterator<? extends E> nextIterator = null;
+    private Iterator<? extends E> nextIterator;
 
     /** The last iterator which was used for next(). */
-    private Iterator<? extends E> lastReturned = null;
+    private Iterator<? extends E> lastReturned;
 
     // Constructors
     // ----------------------------------------------------------------------

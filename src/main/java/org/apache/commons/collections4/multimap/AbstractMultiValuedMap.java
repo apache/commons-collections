@@ -653,7 +653,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         private final Iterator<Entry<K, V>> it;
 
-        private Entry<K, V> current = null;
+        private Entry<K, V> current;
 
         MultiValuedMapIterator() {
             this.it = AbstractMultiValuedMap.this.entries().iterator();

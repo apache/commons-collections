@@ -326,10 +326,10 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         protected final AbstractMapMultiSet<E> parent;
 
         /** The last returned element */
-        protected E lastElement = null;
+        protected E lastElement;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.
@@ -372,10 +372,10 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         protected final Iterator<Map.Entry<E, MutableInteger>> decorated;
 
         /** The last returned entry */
-        protected Entry<E> last = null;
+        protected Entry<E> last;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.

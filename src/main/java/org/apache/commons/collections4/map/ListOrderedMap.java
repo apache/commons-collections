@@ -675,7 +675,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     static class ListOrderedIterator<K, V> extends AbstractUntypedIteratorDecorator<K, Map.Entry<K, V>> {
         private final ListOrderedMap<K, V> parent;
-        private K last = null;
+        private K last;
 
         ListOrderedIterator(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
             super(insertOrder.iterator());
@@ -719,8 +719,8 @@ public class ListOrderedMap<K, V>
     static class ListOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
         private final ListOrderedMap<K, V> parent;
         private ListIterator<K> iterator;
-        private K last = null;
-        private boolean readable = false;
+        private K last;
+        private boolean readable;
 
         ListOrderedMapIterator(final ListOrderedMap<K, V> parent) {
             this.parent = parent;

@@ -59,22 +59,22 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * Inverse view of this map.
      */
-    transient BidiMap<V, K> inverseBidiMap = null;
+    transient BidiMap<V, K> inverseBidiMap;
 
     /**
      * View of the keys.
      */
-    transient Set<K> keySet = null;
+    transient Set<K> keySet;
 
     /**
      * View of the values.
      */
-    transient Set<V> values = null;
+    transient Set<V> values;
 
     /**
      * View of the entries.
      */
-    transient Set<Map.Entry<K, V>> entrySet = null;
+    transient Set<Map.Entry<K, V>> entrySet;
 
     /**
      * Creates an empty map, initialized by {@code createMap}.
@@ -485,10 +485,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<K, ?> parent;
 
         /** The last returned key */
-        protected K lastKey = null;
+        protected K lastKey;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.
@@ -569,10 +569,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<Object, V> parent;
 
         /** The last returned value */
-        protected V lastValue = null;
+        protected V lastValue;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.
@@ -655,10 +655,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<K, V> parent;
 
         /** The last returned entry */
-        protected Map.Entry<K, V> last = null;
+        protected Map.Entry<K, V> last;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.
@@ -734,10 +734,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected Iterator<Map.Entry<K, V>> iterator;
 
         /** The last returned entry */
-        protected Map.Entry<K, V> last = null;
+        protected Map.Entry<K, V> last;
 
         /** Whether remove is allowed at present */
-        protected boolean canRemove = false;
+        protected boolean canRemove;
 
         /**
          * Constructor.

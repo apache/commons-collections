@@ -637,8 +637,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      */
     static class FlatMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
         private final Flat3Map<K, V> parent;
-        private int nextIndex = 0;
-        private boolean canRemove = false;
+        private int nextIndex;
+        private boolean canRemove;
 
         FlatMapIterator(final Flat3Map<K, V> parent) {
             this.parent = parent;
@@ -916,8 +916,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
     abstract static class EntryIterator<K, V> {
         private final Flat3Map<K, V> parent;
-        private int nextIndex = 0;
-        private FlatMapEntry<K, V> currentEntry = null;
+        private int nextIndex;
+        private FlatMapEntry<K, V> currentEntry;
 
         /**
          * Create a new Flat3Map.EntryIterator.

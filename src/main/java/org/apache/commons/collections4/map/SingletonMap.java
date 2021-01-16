@@ -423,7 +423,7 @@ public class SingletonMap<K, V>
     static class SingletonMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
         private final SingletonMap<K, V> parent;
         private boolean hasNext = true;
-        private boolean canGetSet = false;
+        private boolean canGetSet;
 
         SingletonMapIterator(final SingletonMap<K, V> parent) {
             this.parent = parent;

@@ -74,7 +74,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
             return NOPTransformer.<T>nopTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
-        final Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
+        final Transformer<T, T>[] cmds = transformers.toArray(new Transformer[0]);
         FunctorUtils.validate(cmds);
         return new ChainedTransformer<>(false, cmds);
     }

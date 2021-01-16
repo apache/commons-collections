@@ -67,10 +67,10 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     private final Map<T, Integer> map = new HashMap<>();
 
     /** Counter used in determining the position in the map */
-    private int counter = 0;
+    private int counter;
 
     /** Is the comparator locked against further change */
-    private boolean isLocked = false;
+    private boolean isLocked;
 
     /** The behavior in the case of an unknown object */
     private UnknownObjectBehavior unknownObjectBehavior = UnknownObjectBehavior.EXCEPTION;

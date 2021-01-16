@@ -36,10 +36,10 @@ public class PeekingIterator<E> implements Iterator<E> {
     private final Iterator<? extends E> iterator;
 
     /** Indicates that the decorated iterator is exhausted. */
-    private boolean exhausted = false;
+    private boolean exhausted;
 
     /** Indicates if the lookahead slot is filled. */
-    private boolean slotFilled = false;
+    private boolean slotFilled;
 
     /** The current slot for lookahead. */
     private E slot;

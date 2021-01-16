@@ -109,12 +109,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     private static final long serialVersionUID = 721969328361807L;
 
     private transient Node<K, V>[] rootNode;
-    private transient int nodeCount = 0;
-    private transient int modifications = 0;
+    private transient int nodeCount;
+    private transient int modifications;
     private transient Set<K> keySet;
     private transient Set<V> valuesSet;
     private transient Set<Map.Entry<K, V>> entrySet;
-    private transient Inverse inverse = null;
+    private transient Inverse inverse;
 
     //-----------------------------------------------------------------------
     /**

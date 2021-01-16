@@ -54,19 +54,19 @@ public class IteratorChain<E> implements Iterator<E> {
     private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<>();
 
     /** The current iterator */
-    private Iterator<? extends E> currentIterator = null;
+    private Iterator<? extends E> currentIterator;
 
     /**
      * The "last used" Iterator is the Iterator upon which next() or hasNext()
      * was most recently called used for the remove() operation only
      */
-    private Iterator<? extends E> lastUsedIterator = null;
+    private Iterator<? extends E> lastUsedIterator;
 
     /**
      * ComparatorChain is "locked" after the first time compare(Object,Object)
      * is called
      */
-    private boolean isLocked = false;
+    private boolean isLocked;
 
     //-----------------------------------------------------------------------
     /**

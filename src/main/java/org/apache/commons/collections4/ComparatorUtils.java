@@ -98,7 +98,7 @@ public class ComparatorUtils {
     @SuppressWarnings("unchecked")
     public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
         return chainedComparator(
-            (Comparator<E>[]) comparators.toArray(new Comparator[comparators.size()])
+            (Comparator<E>[]) comparators.toArray(new Comparator[0])
         );
     }
 

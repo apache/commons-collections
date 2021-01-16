@@ -60,9 +60,9 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     private final List<E> list = new ArrayList<>();
 
     /** The current index of this iterator. */
-    private int currentIndex = 0;
+    private int currentIndex;
     /** The current index of the wrapped iterator. */
-    private int wrappedIteratorIndex = 0;
+    private int wrappedIteratorIndex;
     /** recall whether the wrapped iterator's "cursor" is in such a state as to allow remove() to be called */
     private boolean removeState;
 
