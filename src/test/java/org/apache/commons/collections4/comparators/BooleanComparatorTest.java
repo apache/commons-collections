@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Tests for {@link BooleanComparator}.

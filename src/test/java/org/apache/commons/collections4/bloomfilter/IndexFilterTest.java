@@ -20,14 +20,17 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentityIm
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the {@link IndexFilters}.
@@ -52,21 +55,21 @@ public class IndexFilterTest {
 
         try {
             IndexFilters.distinctIndexes(null, shape, consumer);
-            Assert.fail("null hasher");
+            fail("null hasher");
         } catch (final NullPointerException expected) {
             // Ignore
         }
 
         try {
             IndexFilters.distinctIndexes(hasher, null, consumer);
-            Assert.fail("null shape");
+            fail("null shape");
         } catch (final NullPointerException expected) {
             // Ignore
         }
 
         try {
             IndexFilters.distinctIndexes(hasher, shape, null);
-            Assert.fail("null consumer");
+            fail("null consumer");
         } catch (final NullPointerException expected) {
             // Ignore
         }
@@ -92,12 +95,12 @@ public class IndexFilterTest {
 
         IndexFilters.distinctIndexes(hasher, shape, actual::add);
 
-        Assert.assertEquals(expected.size(), actual.size());
+        assertEquals(expected.size(), actual.size());
         // Check the array has all the values.
         // We do not currently check the order of indexes from the
         // hasher.iterator() function.
         for (final Integer index : actual) {
-            Assert.assertTrue(expected.contains(index));
+            assertTrue(expected.contains(index));
         }
     }
 }

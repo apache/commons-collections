@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import java.util.function.ToIntBiFunction;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
@@ -86,10 +86,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
         int zeros = 0;
         for (int i = 0; i < expected.length; i++) {
             if (m.get(i) == null) {
-                assertEquals("Wrong value for " + i, expected[i], 0);
+                assertEquals(expected[i], 0, "Wrong value for " + i);
                 zeros++;
             } else {
-                assertEquals("Wrong value for " + i, expected[i], m.get(i).intValue());
+                assertEquals(expected[i], m.get(i).intValue(), "Wrong value for " + i);
             }
         }
         assertEquals(expected.length - zeros, bf.cardinality());
@@ -299,7 +299,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
         // Big + 1 = Overflow
         assertTrue(bf2.isValid());
         assertFalse(bf2.merge(bf));
-        assertFalse("Merge should overflow and the filter is invalid", bf2.isValid());
+        assertFalse(bf2.isValid(), "Merge should overflow and the filter is invalid");
 
         // The counts are not clipped to max. They have simply overflowed.
         // Note that this is a merge and the count is only incremented by 1
@@ -326,7 +326,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
         // Less - More = Negative
         assertTrue(bf2.isValid());
         bf2.remove(bf);
-        assertFalse("Remove should create negative counts and the filter is invalid", bf2.isValid());
+        assertFalse(bf2.isValid(), "Remove should create negative counts and the filter is invalid");
 
         // The counts are not clipped to zero. They have been left as negative.
         assertCounts(bf2, new int[] {0, -1, 1, -1});

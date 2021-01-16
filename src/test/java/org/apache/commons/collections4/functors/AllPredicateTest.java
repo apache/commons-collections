@@ -19,9 +19,9 @@ package org.apache.commons.collections4.functors;
 import org.apache.commons.collections4.Predicate;
 
 import static org.apache.commons.collections4.functors.AllPredicate.allPredicate;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -63,7 +63,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     @SuppressWarnings({"unchecked"})
     @Test
     public void emptyArrayToGetInstance() {
-        assertTrue("empty array not true", getPredicateInstance(new Predicate[] {}).evaluate(null));
+        assertTrue(getPredicateInstance(new Predicate[] {}).evaluate(null), "empty array not true");
     }
 
     /**
@@ -73,7 +73,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     public void emptyCollectionToGetInstance() {
         final Predicate<Integer> allPredicate = getPredicateInstance(
                 Collections.<Predicate<Integer>>emptyList());
-        assertTrue("empty collection not true", allPredicate.evaluate(getTestValue()));
+        assertTrue(allPredicate.evaluate(getTestValue()), "empty collection not true");
     }
 
     /**
@@ -86,8 +86,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(true);
 
-        assertTrue("single true predicate evaluated to false",
-                allPredicate(predicate).evaluate(getTestValue()));
+        assertTrue(allPredicate(predicate).evaluate(getTestValue()), "single true predicate evaluated to false");
     }
 
     /**
@@ -99,8 +98,8 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(false);
-        assertFalse("single false predicate evaluated to true",
-                allPredicate(predicate).evaluate(getTestValue()));
+        assertFalse(allPredicate(predicate).evaluate(getTestValue()),
+                "single false predicate evaluated to true");
     }
 
     /**
@@ -108,10 +107,10 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @Test
     public void allTrue() {
-        assertTrue("multiple true predicates evaluated to false",
-                getPredicateInstance(true, true).evaluate(getTestValue()));
-        assertTrue("multiple true predicates evaluated to false",
-                getPredicateInstance(true, true, true).evaluate(getTestValue()));
+        assertTrue(getPredicateInstance(true, true).evaluate(getTestValue()),
+                "multiple true predicates evaluated to false");
+        assertTrue(getPredicateInstance(true, true, true).evaluate(getTestValue()),
+                "multiple true predicates evaluated to false");
     }
 
     /**
@@ -120,15 +119,15 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @Test
     public void trueAndFalseCombined() {
-        assertFalse("false predicate evaluated to true",
-                getPredicateInstance(false, null).evaluate(getTestValue()));
-        assertFalse("false predicate evaluated to true",
-                getPredicateInstance(false, null, null).evaluate(getTestValue()));
-        assertFalse("false predicate evaluated to true",
-                getPredicateInstance(true, false, null).evaluate(getTestValue()));
-        assertFalse("false predicate evaluated to true",
-                getPredicateInstance(true, true, false).evaluate(getTestValue()));
-        assertFalse("false predicate evaluated to true",
-                getPredicateInstance(true, true, false, null).evaluate(getTestValue()));
+        assertFalse(getPredicateInstance(false, null).evaluate(getTestValue()),
+                "false predicate evaluated to true");
+        assertFalse(getPredicateInstance(false, null, null).evaluate(getTestValue()),
+                "false predicate evaluated to true");
+        assertFalse(getPredicateInstance(true, false, null).evaluate(getTestValue()),
+                "false predicate evaluated to true");
+        assertFalse(getPredicateInstance(true, true, false).evaluate(getTestValue()),
+                "false predicate evaluated to true");
+        assertFalse(getPredicateInstance(true, true, false, null).evaluate(getTestValue()),
+                "false predicate evaluated to true");
     }
 }

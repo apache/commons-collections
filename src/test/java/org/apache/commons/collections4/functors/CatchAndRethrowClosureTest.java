@@ -20,8 +20,10 @@ import java.io.IOException;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.FunctorException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CatchAndRethrowClosureTest extends AbstractClosureTest {
 
@@ -65,27 +67,27 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         try {
             closure.execute(Integer.valueOf(0));
         } catch (final RuntimeException ex) {
-            Assert.fail();
+            fail();
         }
 
         closure = generateIOExceptionClosure();
         try {
             closure.execute(Integer.valueOf(0));
-            Assert.fail();
+            fail();
         } catch (final FunctorException ex) {
-            Assert.assertTrue(ex.getCause() instanceof IOException);
+            assertTrue(ex.getCause() instanceof IOException);
         } catch (final RuntimeException ex) {
-            Assert.fail();
+            fail();
         }
 
         closure = generateNullPointerExceptionClosure();
         try {
             closure.execute(Integer.valueOf(0));
-            Assert.fail();
+            fail();
         } catch (final FunctorException ex) {
-            Assert.fail();
+            fail();
         } catch (final RuntimeException ex) {
-            Assert.assertTrue(ex instanceof NullPointerException);
+            assertTrue(ex instanceof NullPointerException);
         }
     }
 }

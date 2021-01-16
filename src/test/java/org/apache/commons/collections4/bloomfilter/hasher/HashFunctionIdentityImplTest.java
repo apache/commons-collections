@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the HashFunctionIdentity implementation ({@link HashFunctionIdentityImpl})..

@@ -28,24 +28,29 @@ import java.util.Properties;
 
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class EmptyPropertiesTest {
 
     @Test
     public void testClear() {
         PropertiesFactory.EMPTY_PROPERTIES.clear();
-        Assert.assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
+        assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
     public void testClone() {
         // TODO Better test?
         PropertiesFactory.EMPTY_PROPERTIES.clone();
-        Assert.assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
+        assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
@@ -65,86 +70,86 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testContains() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.contains("foo"));
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.contains("foo"));
     }
 
     @Test
     public void testContainsKey() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsKey("foo"));
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsKey("foo"));
     }
 
     @Test
     public void testContainsValue() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsValue("foo"));
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsValue("foo"));
     }
 
     @Test
     public void testElements() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.elements().hasMoreElements());
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.elements().hasMoreElements());
     }
 
     @Test
     public void testEntrySet() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.entrySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.entrySet().isEmpty());
     }
 
     @Test
     public void testEquals() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(PropertiesFactory.EMPTY_PROPERTIES));
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(new Properties()));
-        Assert.assertTrue(new Properties().equals(PropertiesFactory.EMPTY_PROPERTIES));
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(null));
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(PropertiesFactory.EMPTY_PROPERTIES));
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(new Properties()));
+        assertTrue(new Properties().equals(PropertiesFactory.EMPTY_PROPERTIES));
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(null));
         final Properties p = new Properties();
         p.put("Key", "Value");
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(p));
-        Assert.assertFalse(p.equals(PropertiesFactory.EMPTY_PROPERTIES));
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(p));
+        assertFalse(p.equals(PropertiesFactory.EMPTY_PROPERTIES));
     }
 
     public void testForEach() {
-        PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> Assert.fail());
+        PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }
 
     @Test
     public void testGet() {
-        Assert.assertNull(PropertiesFactory.EMPTY_PROPERTIES.get("foo"));
+        assertNull(PropertiesFactory.EMPTY_PROPERTIES.get("foo"));
     }
 
     @Test
     public void testGetOrDefault() {
-        Assert.assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getOrDefault("foo", "bar"));
+        assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getOrDefault("foo", "bar"));
     }
 
     @Test
     public void testGetProperty() {
-        Assert.assertNull(PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo"));
+        assertNull(PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo"));
     }
 
     @Test
     public void testGetPropertyDefault() {
-        Assert.assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo", "bar"));
+        assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo", "bar"));
     }
 
     @Test
     public void testHashCode() {
-        Assert.assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(),
+        assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(),
             PropertiesFactory.EMPTY_PROPERTIES.hashCode());
         // Should be equals?
-        // Assert.assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), new Properties().hashCode());
+        // assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), new Properties().hashCode());
     }
 
     @Test
     public void testIsEmpty() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
     public void testKeys() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.keys().hasMoreElements());
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.keys().hasMoreElements());
     }
 
     @Test
     public void testKeySet() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
     }
 
     @Test
@@ -155,10 +160,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().list(new PrintStream(expected));
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().list(new PrintStream(expected));
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
@@ -169,10 +174,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().list(new PrintWriter(expected));
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().list(new PrintWriter(expected));
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
@@ -199,7 +204,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testPropertyName() {
-        Assert.assertFalse(PropertiesFactory.EMPTY_PROPERTIES.propertyNames().hasMoreElements());
+        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.propertyNames().hasMoreElements());
     }
 
     @Test
@@ -261,12 +266,12 @@ public class EmptyPropertiesTest {
                 try (PrintStream out = new PrintStream(expected)) {
                     PropertiesFactory.INSTANCE.createProperties().save(out, comments);
                 }
-                Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray());
                 expected.reset();
                 try (PrintStream out = new PrintStream(expected)) {
                     new Properties().save(out, comments);
                 }
-                Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray());
             }
         }
     }
@@ -278,7 +283,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testSize() {
-        Assert.assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
+        assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
@@ -290,10 +295,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().store(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().store(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
@@ -305,10 +310,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().store(new PrintWriter(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().store(new PrintWriter(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
@@ -320,10 +325,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().storeToXML(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().storeToXML(new PrintStream(expected), comments);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
@@ -336,24 +341,24 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().storeToXML(new PrintStream(expected), comments, encoding);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
         expected.reset();
         new Properties().storeToXML(new PrintStream(expected), comments, encoding);
-        Assert.assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
     }
 
     @Test
     public void testStringPropertyName() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.stringPropertyNames().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.stringPropertyNames().isEmpty());
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals(new Properties().toString(), PropertiesFactory.EMPTY_PROPERTIES.toString());
+        assertEquals(new Properties().toString(), PropertiesFactory.EMPTY_PROPERTIES.toString());
     }
 
     @Test
     public void testValues() {
-        Assert.assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
     }
 }

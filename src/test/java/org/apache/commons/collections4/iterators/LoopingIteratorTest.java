@@ -21,9 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the LoopingIterator class.
@@ -51,7 +51,7 @@ public class LoopingIteratorTest {
     public void testLooping0() throws Exception {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
-        assertTrue("hasNext should return false", !loop.hasNext());
+        assertTrue(!loop.hasNext(), "hasNext should return false");
 
         try {
             loop.next();
@@ -69,13 +69,13 @@ public class LoopingIteratorTest {
         final List<String> list = Arrays.asList("a");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
-        assertTrue("1st hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "1st hasNext should return true");
         assertEquals("a", loop.next());
 
-        assertTrue("2nd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "2nd hasNext should return true");
         assertEquals("a", loop.next());
 
-        assertTrue("3rd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("a", loop.next());
 
     }
@@ -89,13 +89,13 @@ public class LoopingIteratorTest {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
-        assertTrue("1st hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "1st hasNext should return true");
         assertEquals("a", loop.next());
 
-        assertTrue("2nd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "2nd hasNext should return true");
         assertEquals("b", loop.next());
 
-        assertTrue("3rd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("a", loop.next());
 
     }
@@ -109,16 +109,16 @@ public class LoopingIteratorTest {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
-        assertTrue("1st hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "1st hasNext should return true");
         assertEquals("a", loop.next());
 
-        assertTrue("2nd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "2nd hasNext should return true");
         assertEquals("b", loop.next());
 
-        assertTrue("3rd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("c", loop.next());
 
-        assertTrue("4th hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "4th hasNext should return true");
         assertEquals("a", loop.next());
 
     }
@@ -131,24 +131,24 @@ public class LoopingIteratorTest {
     public void testRemoving1() throws Exception {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
-        assertEquals("list should have 3 elements.", 3, list.size());
+        assertEquals(3, list.size(), "list should have 3 elements.");
 
-        assertTrue("1st hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "1st hasNext should return true");
         assertEquals("a", loop.next());
         loop.remove();  // removes a
-        assertEquals("list should have 2 elements.", 2, list.size());
+        assertEquals(2, list.size(), "list should have 2 elements.");
 
-        assertTrue("2nd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "2nd hasNext should return true");
         assertEquals("b", loop.next());
         loop.remove();  // removes b
-        assertEquals("list should have 1 elements.", 1, list.size());
+        assertEquals(1, list.size(), "list should have 1 elements.");
 
-        assertTrue("3rd hasNext should return true", loop.hasNext());
+        assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("c", loop.next());
         loop.remove();  // removes c
-        assertEquals("list should have 0 elements.", 0, list.size());
+        assertEquals(0, list.size(), "list should have 0 elements.");
 
-        assertFalse("4th hasNext should return false", loop.hasNext());
+        assertFalse(loop.hasNext(), "4th hasNext should return false");
         try {
             loop.next();
             fail("Expected NoSuchElementException to be thrown.");

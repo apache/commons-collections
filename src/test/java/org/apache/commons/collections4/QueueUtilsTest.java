@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -28,7 +28,7 @@ import org.apache.commons.collections4.queue.PredicatedQueue;
 import org.apache.commons.collections4.queue.SynchronizedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;
 import org.apache.commons.collections4.queue.UnmodifiableQueue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for QueueUtils factory methods.
@@ -44,7 +44,7 @@ public class QueueUtilsTest {
     @Test
     public void testSynchronizedQueue() {
         final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
-        assertTrue("Returned object should be a SynchronizedQueue.", queue instanceof SynchronizedQueue);
+        assertTrue(queue instanceof SynchronizedQueue, "Returned object should be a SynchronizedQueue.");
         try {
             QueueUtils.synchronizedQueue(null);
             fail("Expecting NullPointerException for null queue.");
@@ -56,7 +56,7 @@ public class QueueUtilsTest {
     @Test
     public void testUnmodifiableQueue() {
         final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
-        assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
+        assertTrue(queue instanceof UnmodifiableQueue, "Returned object should be an UnmodifiableQueue.");
         try {
             QueueUtils.unmodifiableQueue(null);
             fail("Expecting NullPointerException for null queue.");
@@ -64,13 +64,13 @@ public class QueueUtilsTest {
             // expected
         }
 
-        assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
+        assertSame(queue, QueueUtils.unmodifiableQueue(queue), "UnmodifiableQueue shall not be decorated");
     }
 
     @Test
     public void testPredicatedQueue() {
         final Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
-        assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
+        assertTrue(queue instanceof PredicatedQueue, "Returned object should be a PredicatedQueue.");
         try {
             QueueUtils.predicatedQueue(null, truePredicate);
             fail("Expecting NullPointerException for null queue.");
@@ -88,7 +88,7 @@ public class QueueUtilsTest {
     @Test
     public void testTransformedQueue() {
         final Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
-        assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
+        assertTrue(queue instanceof TransformedQueue, "Returned object should be an TransformedQueue.");
         try {
             QueueUtils.transformingQueue(null, nopTransformer);
             fail("Expecting NullPointerException for null queue.");
@@ -106,8 +106,8 @@ public class QueueUtilsTest {
     @Test
     public void testEmptyQueue() {
         final Queue<Object> queue = QueueUtils.emptyQueue();
-        assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
-        assertTrue("Returned queue is not empty.", queue.isEmpty());
+        assertTrue(queue instanceof UnmodifiableQueue, "Returned object should be an UnmodifiableQueue.");
+        assertTrue(queue.isEmpty(), "Returned queue is not empty.");
 
         try {
             queue.add(new Object());

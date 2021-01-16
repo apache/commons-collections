@@ -21,12 +21,12 @@ import static org.apache.commons.collections4.functors.TruePredicate.INSTANCE;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -460,7 +460,7 @@ public class IteratorUtilsTest {
         assertTrue(expected > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext(), "should not be able to iterate twice");
     }
 
     @Test
@@ -479,7 +479,7 @@ public class IteratorUtilsTest {
         vector.addElement("zero");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
-        assertTrue("create instance fail", IteratorUtils.asIterator(en) instanceof Iterator);
+        assertTrue(IteratorUtils.asIterator(en) instanceof Iterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.asIterator(null));
     }
 
@@ -491,7 +491,7 @@ public class IteratorUtilsTest {
         vector.addElement("test");
         vector.addElement("one");
         final Enumeration<String> en = vector.elements();
-        assertTrue("create instance fail", IteratorUtils.asIterator(en, coll) instanceof Iterator);
+        assertTrue(IteratorUtils.asIterator(en, coll) instanceof Iterator, "create instance fail");
         try {
             IteratorUtils.asIterator(null, coll);
         } catch (final NullPointerException npe) {
@@ -545,9 +545,9 @@ public class IteratorUtilsTest {
     public void testChainedIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.chainedIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.chainedIterator(ie) instanceof Iterator, "create instance fail");
         final Collection<Iterator<?>> coll = new ArrayList();
-        assertTrue("create instance fail", IteratorUtils.chainedIterator(coll) instanceof Iterator);
+        assertTrue(IteratorUtils.chainedIterator(coll) instanceof Iterator, "create instance fail");
 
     }
 
@@ -861,8 +861,8 @@ public class IteratorUtilsTest {
         final List arrayList = new ArrayList();
         arrayList.add("test");
         final Predicate predicate = INSTANCE;
-        assertTrue("create instance fail",
-                IteratorUtils.filteredListIterator(arrayList.listIterator(), predicate) instanceof ListIterator);
+        assertTrue(IteratorUtils.filteredListIterator(arrayList.listIterator(), predicate) instanceof ListIterator,
+                "create instance fail");
         try {
             IteratorUtils.filteredListIterator(null, predicate);
         } catch (final NullPointerException npe) {
@@ -985,25 +985,23 @@ public class IteratorUtilsTest {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
 
-        assertTrue("returns empty iterator when null passed", IteratorUtils.getIterator(null) instanceof EmptyIterator);
-        assertTrue("returns Iterator when Iterator directly ",
-                IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator);
-        assertTrue("returns Iterator when iterable passed", IteratorUtils.getIterator(iterableA) instanceof Iterator);
-        assertTrue("returns ObjectArrayIterator when Object array passed",
-                IteratorUtils.getIterator(objArray) instanceof ObjectArrayIterator);
-        assertTrue("returns Iterator when Map passed", IteratorUtils.getIterator(inMap) instanceof Iterator);
-        assertTrue("returns NodeListIterator when nodeList passed",
-                IteratorUtils.getIterator(nodeList) instanceof NodeListIterator);
-        assertTrue("returns EnumerationIterator when Enumeration passed",
-                IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator);
+        assertTrue(IteratorUtils.getIterator(null) instanceof EmptyIterator, "returns empty iterator when null passed");
+        assertTrue(IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator, "returns Iterator when Iterator directly ");
+        assertTrue(IteratorUtils.getIterator(iterableA) instanceof Iterator, "returns Iterator when iterable passed");
+        assertTrue(IteratorUtils.getIterator(objArray) instanceof ObjectArrayIterator,
+                "returns ObjectArrayIterator when Object array passed");
+        assertTrue(IteratorUtils.getIterator(inMap) instanceof Iterator, "returns Iterator when Map passed");
+        assertTrue(IteratorUtils.getIterator(nodeList) instanceof NodeListIterator, "returns NodeListIterator when nodeList passed");
+        assertTrue(IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator,
+                "returns EnumerationIterator when Enumeration passed");
         final Node node1 = createMock(Node.class);
-        assertTrue("returns NodeListIterator when nodeList passed",
-                IteratorUtils.getIterator(node1) instanceof NodeListIterator);
+        assertTrue(IteratorUtils.getIterator(node1) instanceof NodeListIterator,
+                "returns NodeListIterator when nodeList passed");
         final Dictionary dic = createMock(Dictionary.class);
-        assertTrue("returns EnumerationIterator when Dictionary passed",
-                IteratorUtils.getIterator(dic) instanceof EnumerationIterator);
+        assertTrue(IteratorUtils.getIterator(dic) instanceof EnumerationIterator,
+                "returns EnumerationIterator when Dictionary passed");
         final int[] arr = new int[8];
-        assertTrue("returns ArrayIterator when array passed", IteratorUtils.getIterator(arr) instanceof ArrayIterator);
+        assertTrue(IteratorUtils.getIterator(arr) instanceof ArrayIterator, "returns ArrayIterator when array passed");
     }
 
     @Test
@@ -1030,7 +1028,7 @@ public class IteratorUtilsTest {
         final Collection coll = new ArrayList();
         coll.add("test");
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.loopingIterator(coll) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.loopingIterator(coll) instanceof ResettableIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.loopingIterator(null));
     }
 
@@ -1039,7 +1037,7 @@ public class IteratorUtilsTest {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.loopingListIterator(null));
     }
 
@@ -1065,7 +1063,7 @@ public class IteratorUtilsTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext(), "should not be able to iterate twice");
 
         try {
             IteratorUtils.nodeListIterator((Node) null);
@@ -1094,7 +1092,7 @@ public class IteratorUtilsTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
+        assertFalse(IteratorUtils.asIterable(iterator).iterator().hasNext(), "should not be able to iterate twice");
 
         try {
             IteratorUtils.nodeListIterator((NodeList) null);
@@ -1106,14 +1104,14 @@ public class IteratorUtilsTest {
 
     @Test
     public void testObjectGraphIterator() {
-        assertTrue("create instance fail", IteratorUtils.objectGraphIterator(null, null) instanceof Iterator);
+        assertTrue(IteratorUtils.objectGraphIterator(null, null) instanceof Iterator, "create instance fail");
     }
 
     @Test
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.peekingIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.peekingIterator(ie) instanceof Iterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.peekingIterator(null));
 
     }
@@ -1122,18 +1120,18 @@ public class IteratorUtilsTest {
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.pushbackIterator(ie) instanceof Iterator);
+        assertTrue(IteratorUtils.pushbackIterator(ie) instanceof Iterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.pushbackIterator(null));
     }
 
     @Test
     public void testSingletonIterator() {
-        assertTrue("create instance fail", IteratorUtils.singletonIterator(new Object()) instanceof ResettableIterator);
+        assertTrue(IteratorUtils.singletonIterator(new Object()) instanceof ResettableIterator, "create instance fail");
     }
 
     @Test
     public void testSingletonListIterator() {
-        assertTrue("create instance fail", IteratorUtils.singletonListIterator(new Object()) instanceof Iterator);
+        assertTrue(IteratorUtils.singletonListIterator(new Object()) instanceof Iterator, "create instance fail");
     }
 
     @Test
@@ -1411,7 +1409,7 @@ public class IteratorUtilsTest {
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
-        assertTrue("create instance fail", IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator);
+        assertTrue(IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.unmodifiableMapIterator(null));
 
     }
@@ -1420,7 +1418,7 @@ public class IteratorUtilsTest {
     public void testZippingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator ie = arrayList.iterator();
-        assertTrue("create instance fail", IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator);
-        assertTrue("create instance fail", IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator);
+        assertTrue(IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator, "create instance fail");
+        assertTrue(IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator, "create instance fail");
     }
 }

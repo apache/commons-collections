@@ -17,12 +17,13 @@
 package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -53,7 +54,6 @@ import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -359,23 +359,23 @@ public class CollectionUtilsTest extends MockTestCase {
         multiples.add("3");
         multiples.add("1");
 
-        assertFalse("containsAll({1},{1,3}) should return false.", CollectionUtils.containsAll(one, odds));
-        assertTrue("containsAll({1,3},{1}) should return true.", CollectionUtils.containsAll(odds, one));
-        assertFalse("containsAll({3},{1,3}) should return false.", CollectionUtils.containsAll(three, odds));
-        assertTrue("containsAll({1,3},{3}) should return true.", CollectionUtils.containsAll(odds, three));
-        assertTrue("containsAll({2},{2}) should return true.", CollectionUtils.containsAll(two, two));
-        assertTrue("containsAll({1,3},{1,3}) should return true.", CollectionUtils.containsAll(odds, odds));
+        assertFalse(CollectionUtils.containsAll(one, odds), "containsAll({1},{1,3}) should return false.");
+        assertTrue(CollectionUtils.containsAll(odds, one), "containsAll({1,3},{1}) should return true.");
+        assertFalse(CollectionUtils.containsAll(three, odds), "containsAll({3},{1,3}) should return false.");
+        assertTrue(CollectionUtils.containsAll(odds, three), "containsAll({1,3},{3}) should return true.");
+        assertTrue(CollectionUtils.containsAll(two, two), "containsAll({2},{2}) should return true.");
+        assertTrue(CollectionUtils.containsAll(odds, odds), "containsAll({1,3},{1,3}) should return true.");
 
-        assertFalse("containsAll({2},{1,3}) should return false.", CollectionUtils.containsAll(two, odds));
-        assertFalse("containsAll({1,3},{2}) should return false.", CollectionUtils.containsAll(odds, two));
-        assertFalse("containsAll({1},{3}) should return false.", CollectionUtils.containsAll(one, three));
-        assertFalse("containsAll({3},{1}) should return false.", CollectionUtils.containsAll(three, one));
-        assertTrue("containsAll({1,3},{}) should return true.", CollectionUtils.containsAll(odds, empty));
-        assertFalse("containsAll({},{1,3}) should return false.", CollectionUtils.containsAll(empty, odds));
-        assertTrue("containsAll({},{}) should return true.", CollectionUtils.containsAll(empty, empty));
+        assertFalse(CollectionUtils.containsAll(two, odds), "containsAll({2},{1,3}) should return false.");
+        assertFalse(CollectionUtils.containsAll(odds, two), "containsAll({1,3},{2}) should return false.");
+        assertFalse(CollectionUtils.containsAll(one, three), "containsAll({1},{3}) should return false.");
+        assertFalse(CollectionUtils.containsAll(three, one), "containsAll({3},{1}) should return false.");
+        assertTrue(CollectionUtils.containsAll(odds, empty), "containsAll({1,3},{}) should return true.");
+        assertFalse(CollectionUtils.containsAll(empty, odds), "containsAll({},{1,3}) should return false.");
+        assertTrue(CollectionUtils.containsAll(empty, empty), "containsAll({},{}) should return true.");
 
-        assertTrue("containsAll({1,3},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, multiples));
-        assertTrue("containsAll({1,3,1},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, odds));
+        assertTrue(CollectionUtils.containsAll(odds, multiples), "containsAll({1,3},{1,3,1}) should return true.");
+        assertTrue(CollectionUtils.containsAll(odds, odds), "containsAll({1,3,1},{1,3,1}) should return true.");
     }
 
     @Test
@@ -396,20 +396,20 @@ public class CollectionUtilsTest extends MockTestCase {
         odds.add("3");
         final String[] oddsArr = {"1", "3"};
 
-        assertTrue("containsAny({1},{1,3}) should return true.", CollectionUtils.containsAny(one, oddsArr));
-        assertTrue("containsAny({1,3},{1}) should return true.", CollectionUtils.containsAny(odds, oneArr));
-        assertTrue("containsAny({3},{1,3}) should return true.", CollectionUtils.containsAny(three, oddsArr));
-        assertTrue("containsAny({1,3},{3}) should return true.", CollectionUtils.containsAny(odds, threeArr));
-        assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, twoArr));
-        assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, oddsArr));
+        assertTrue(CollectionUtils.containsAny(one, oddsArr), "containsAny({1},{1,3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, oneArr), "containsAny({1,3},{1}) should return true.");
+        assertTrue(CollectionUtils.containsAny(three, oddsArr), "containsAny({3},{1,3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, threeArr), "containsAny({1,3},{3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(two, twoArr), "containsAny({2},{2}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, oddsArr), "containsAny({1,3},{1,3}) should return true.");
 
-        assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, oddsArr));
-        assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, twoArr));
-        assertFalse("containsAny({1},{3}) should return false.", CollectionUtils.containsAny(one, threeArr));
-        assertFalse("containsAny({3},{1}) should return false.", CollectionUtils.containsAny(three, oneArr));
-        assertFalse("containsAny({1,3},{}) should return false.", CollectionUtils.containsAny(odds, emptyArr));
-        assertFalse("containsAny({},{1,3}) should return false.", CollectionUtils.containsAny(empty, oddsArr));
-        assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, emptyArr));
+        assertFalse(CollectionUtils.containsAny(two, oddsArr), "containsAny({2},{1,3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(odds, twoArr), "containsAny({1,3},{2}) should return false.");
+        assertFalse(CollectionUtils.containsAny(one, threeArr), "containsAny({1},{3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(three, oneArr), "containsAny({3},{1}) should return false.");
+        assertFalse(CollectionUtils.containsAny(odds, emptyArr), "containsAny({1,3},{}) should return false.");
+        assertFalse(CollectionUtils.containsAny(empty, oddsArr), "containsAny({},{1,3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(empty, emptyArr), "containsAny({},{}) should return false.");
     }
 
     @Test
@@ -425,20 +425,20 @@ public class CollectionUtilsTest extends MockTestCase {
         odds.add("1");
         odds.add("3");
 
-        assertTrue("containsAny({1},{1,3}) should return true.", CollectionUtils.containsAny(one, odds));
-        assertTrue("containsAny({1,3},{1}) should return true.", CollectionUtils.containsAny(odds, one));
-        assertTrue("containsAny({3},{1,3}) should return true.", CollectionUtils.containsAny(three, odds));
-        assertTrue("containsAny({1,3},{3}) should return true.", CollectionUtils.containsAny(odds, three));
-        assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, two));
-        assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, odds));
+        assertTrue(CollectionUtils.containsAny(one, odds), "containsAny({1},{1,3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, one), "containsAny({1,3},{1}) should return true.");
+        assertTrue(CollectionUtils.containsAny(three, odds), "containsAny({3},{1,3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, three), "containsAny({1,3},{3}) should return true.");
+        assertTrue(CollectionUtils.containsAny(two, two), "containsAny({2},{2}) should return true.");
+        assertTrue(CollectionUtils.containsAny(odds, odds), "containsAny({1,3},{1,3}) should return true.");
 
-        assertFalse("containsAny({2},{1,3}) should return false.", CollectionUtils.containsAny(two, odds));
-        assertFalse("containsAny({1,3},{2}) should return false.", CollectionUtils.containsAny(odds, two));
-        assertFalse("containsAny({1},{3}) should return false.", CollectionUtils.containsAny(one, three));
-        assertFalse("containsAny({3},{1}) should return false.", CollectionUtils.containsAny(three, one));
-        assertFalse("containsAny({1,3},{}) should return false.", CollectionUtils.containsAny(odds, empty));
-        assertFalse("containsAny({},{1,3}) should return false.", CollectionUtils.containsAny(empty, odds));
-        assertFalse("containsAny({},{}) should return false.", CollectionUtils.containsAny(empty, empty));
+        assertFalse(CollectionUtils.containsAny(two, odds), "containsAny({2},{1,3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(odds, two), "containsAny({1,3},{2}) should return false.");
+        assertFalse(CollectionUtils.containsAny(one, three), "containsAny({1},{3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(three, one), "containsAny({3},{1}) should return false.");
+        assertFalse(CollectionUtils.containsAny(odds, empty), "containsAny({1,3},{}) should return false.");
+        assertFalse(CollectionUtils.containsAny(empty, odds), "containsAny({},{1,3}) should return false.");
+        assertFalse(CollectionUtils.containsAny(empty, empty), "containsAny({},{}) should return false.");
     }
 
     @Test
@@ -1040,7 +1040,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void predicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
         final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<Number>(), predicate);
-        assertTrue("returned object should be a PredicatedCollection", collection instanceof PredicatedCollection);
+        assertTrue(collection instanceof PredicatedCollection, "returned object should be a PredicatedCollection");
     }
 
     @Test
@@ -1108,7 +1108,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // rejected contains 1, 3, and 4
         final Integer[] expected = {1, 3, 4};
-        Assert.assertArrayEquals(expected, rejected.toArray());
+        assertArrayEquals(expected, rejected.toArray());
 
         output.clear();
         rejected.clear();
@@ -1218,26 +1218,26 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void testCollate() {
         List<Integer> result = CollectionUtils.collate(emptyCollection, emptyCollection);
-        assertEquals("Merge empty with empty", 0, result.size());
+        assertEquals(0, result.size(), "Merge empty with empty");
 
         result = CollectionUtils.collate(collectionA, emptyCollection);
-        assertEquals("Merge empty with non-empty", collectionA, result);
+        assertEquals(collectionA, result, "Merge empty with non-empty");
 
         List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE);
         List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD);
-        assertEquals("Merge two lists 1", result1, result2);
+        assertEquals(result1, result2, "Merge two lists 1");
 
         final List<Integer> combinedList = new ArrayList<>(collectionD);
         combinedList.addAll(collectionE);
         Collections.sort(combinedList);
 
-        assertEquals("Merge two lists 2", combinedList, result2);
+        assertEquals(combinedList, result2, "Merge two lists 2");
 
         final Comparator<Integer> reverseComparator =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
         result = CollectionUtils.collate(emptyCollection, emptyCollection, reverseComparator);
-        assertEquals("Comparator Merge empty with empty", 0, result.size());
+        assertEquals(0, result.size(), "Comparator Merge empty with empty");
 
         Collections.reverse((List<Integer>) collectionD);
         Collections.reverse((List<Integer>) collectionE);
@@ -1245,22 +1245,22 @@ public class CollectionUtilsTest extends MockTestCase {
 
         result1 = CollectionUtils.collate(collectionD, collectionE, reverseComparator);
         result2 = CollectionUtils.collate(collectionE, collectionD, reverseComparator);
-        assertEquals("Comparator Merge two lists 1", result1, result2);
-        assertEquals("Comparator Merge two lists 2", combinedList, result2);
+        assertEquals(result1, result2, "Comparator Merge two lists 1");
+        assertEquals(combinedList, result2, "Comparator Merge two lists 2");
     }
 
     @Test
     public void testCollateIgnoreDuplicates() {
         final List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE, false);
         final List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD, false);
-        assertEquals("Merge two lists 1 - ignore duplicates", result1, result2);
+        assertEquals(result1, result2, "Merge two lists 1 - ignore duplicates");
 
         final Set<Integer> combinedSet = new HashSet<>(collectionD);
         combinedSet.addAll(collectionE);
         final List<Integer> combinedList = new ArrayList<>(combinedSet);
         Collections.sort(combinedList);
 
-        assertEquals("Merge two lists 2 - ignore duplicates", combinedList, result2);
+        assertEquals(combinedList, result2, "Merge two lists 2 - ignore duplicates");
     }
 
     @Test
@@ -2224,7 +2224,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
-        assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
+        assertTrue(col instanceof SynchronizedCollection, "Returned object should be a SynchronizedCollection.");
         try {
             CollectionUtils.synchronizedCollection(null);
             fail("Expecting NullPointerException for null collection.");
@@ -2238,7 +2238,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testTransformedCollection() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
         final Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<>(), transformer);
-        assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
+        assertTrue(collection instanceof TransformedCollection, "returned object should be a TransformedCollection");
     }
 
     @Test
@@ -2283,7 +2283,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
-        assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
+        assertTrue(col instanceof UnmodifiableCollection, "Returned object should be a UnmodifiableCollection.");
         try {
             CollectionUtils.unmodifiableCollection(null);
             fail("Expecting NullPointerException for null collection.");

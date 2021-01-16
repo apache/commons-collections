@@ -16,15 +16,15 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
@@ -65,7 +65,7 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
     @Test
     public void getBitsTest_Empty() {
         final BloomFilter filter = createEmptyFilter(shape);
-        Assert.assertArrayEquals(new long[0], filter.getBits());
+        assertArrayEquals(new long[0], filter.getBits());
     }
 
     /**
@@ -87,6 +87,6 @@ public class HasherBloomFilterTest extends AbstractBloomFilterTest {
                 return shape.getHashFunctionIdentity();
             }
         });
-        Assert.assertArrayEquals(new long[] {1L}, filter.getBits());
+        assertArrayEquals(new long[] {1L}, filter.getBits());
     }
 }

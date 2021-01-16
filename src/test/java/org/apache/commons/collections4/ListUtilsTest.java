@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,8 +27,8 @@ import java.util.List;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ListUtils.
@@ -46,7 +46,7 @@ public class ListUtilsTest {
     private String[] fullArray;
     private List<String> fullList;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fullArray = new String[]{a, b, c, d, e};
         fullList = new ArrayList<>(Arrays.asList(fullArray));
@@ -58,7 +58,7 @@ public class ListUtilsTest {
     @Test
     public void testIntersectNonEmptyWithEmptyList() {
         final List<String> empty = Collections.<String>emptyList();
-        assertTrue("result not empty", ListUtils.intersection(empty, fullList).isEmpty());
+        assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
     }
 
     /**
@@ -67,7 +67,7 @@ public class ListUtilsTest {
     @Test
     public void testIntersectEmptyWithEmptyList() {
         final List<?> empty = Collections.EMPTY_LIST;
-        assertTrue("result not empty", ListUtils.intersection(empty, empty).isEmpty());
+        assertTrue(ListUtils.intersection(empty, empty).isEmpty(), "result not empty");
     }
 
     /**
@@ -124,7 +124,7 @@ public class ListUtilsTest {
     public void testPredicatedList() {
         final Predicate<Object> predicate = o -> o instanceof String;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
-        assertTrue("returned object should be a PredicatedList", list instanceof PredicatedList);
+        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
         try {
             ListUtils.predicatedList(new ArrayList<>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
