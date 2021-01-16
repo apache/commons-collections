@@ -234,7 +234,7 @@
       Fix flaky CollectionUtilsTest.getFromMap() #200.
     </action>
     <action type="update" dev="ggregory" due-to="Arturo Bernal">
-      Minor Improvements #203.
+      Minor Improvements #203, #208.
     </action>
     <action type="update" dev="ggregory" due-to="EruDev">
       Fix typo erroring -> erring #202.
