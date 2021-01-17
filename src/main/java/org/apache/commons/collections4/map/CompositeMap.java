@@ -139,7 +139,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         if (map != null) {
             for (int i = composite.length - 1; i >= 0; --i) {
                 final Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
-                if (intersect.size() != 0) {
+                if (!intersect.isEmpty()) {
                     if (this.mutator == null) {
                         throw new IllegalArgumentException("Key collision adding Map to CompositeMap");
                     }

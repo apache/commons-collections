@@ -795,7 +795,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         ReferenceBaseIterator(final AbstractReferenceMap<K, V> parent) {
             this.parent = parent;
-            index = parent.size() != 0 ? parent.data.length : 0;
+            index = !parent.isEmpty() ? parent.data.length : 0;
             // have to do this here!  size() invocation above
             // may have altered the modCount.
             expectedModCount = parent.modCount;
