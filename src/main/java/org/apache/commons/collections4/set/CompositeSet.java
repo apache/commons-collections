@@ -376,13 +376,13 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         if (set != null) {
             for (final Set<E> existingSet : getSets()) {
                 final Collection<E> intersects = CollectionUtils.intersection(existingSet, set);
-                if (intersects.size() > 0) {
+                if (!intersects.isEmpty()) {
                     if (this.mutator == null) {
                         throw new UnsupportedOperationException(
                                 "Collision adding composited set with no SetMutator set");
                     }
                     getMutator().resolveCollision(this, existingSet, set, intersects);
-                    if (CollectionUtils.intersection(existingSet, set).size() > 0) {
+                    if (!CollectionUtils.intersection(existingSet, set).isEmpty()) {
                         throw new IllegalArgumentException(
                                 "Attempt to add illegal entry unresolved by SetMutator.resolveCollision()");
                     }

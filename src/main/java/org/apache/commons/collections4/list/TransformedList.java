@@ -80,7 +80,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     public static <E> TransformedList<E> transformedList(final List<E> list,
                                                          final Transformer<? super E, ? extends E> transformer) {
         final TransformedList<E> decorated = new TransformedList<>(list, transformer);
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             @SuppressWarnings("unchecked") // list is of type E
             final E[] values = (E[]) list.toArray(); // NOPMD - false positive for generics
             list.clear();

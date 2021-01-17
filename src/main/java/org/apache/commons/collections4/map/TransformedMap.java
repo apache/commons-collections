@@ -104,7 +104,7 @@ public class TransformedMap<K, V>
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
         final TransformedMap<K, V> decorated = new TransformedMap<>(map, keyTransformer, valueTransformer);
-        if (map.size() > 0) {
+        if (!map.isEmpty()) {
             final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
             decorated.decorated().putAll(transformed);  // avoids double transformation

@@ -67,7 +67,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public boolean hasNext() {
-        return collection.size() > 0;
+        return !collection.isEmpty();
     }
 
     /**

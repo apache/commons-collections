@@ -96,7 +96,7 @@ public class TransformedSortedMap<K, V>
 
         final TransformedSortedMap<K, V> decorated =
                 new TransformedSortedMap<>(map, keyTransformer, valueTransformer);
-        if (map.size() > 0) {
+        if (!map.isEmpty()) {
             final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
             decorated.decorated().putAll(transformed);  // avoids double transformation

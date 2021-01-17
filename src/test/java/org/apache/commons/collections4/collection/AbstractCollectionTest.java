@@ -1050,7 +1050,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         assertEquals("Size of new Collection is 0.", 0, getCollection().size());
 
         resetFull();
-        assertTrue("Size of full collection should be greater than zero", getCollection().size() > 0);
+        assertFalse("Size of full collection should be greater than zero", getCollection().isEmpty());
     }
 
     /**

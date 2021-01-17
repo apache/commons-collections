@@ -82,7 +82,7 @@ public class ListOrderedSet<E>
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
         Objects.requireNonNull(set, "set");
         Objects.requireNonNull(list, "list");
-        if (set.size() > 0 || list.size() > 0) {
+        if (!set.isEmpty() || !list.isEmpty()) {
             throw new IllegalArgumentException("Set and List must be empty");
         }
         return new ListOrderedSet<>(set, list);

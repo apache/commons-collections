@@ -43,7 +43,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         super(name);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.
@@ -67,7 +66,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
             }
             assertEquals("Element appears to be out of order.", last, confiter.next());
         }
-        if (getCollection().size() > 0) {
+        if (!getCollection().isEmpty()) {
             assertEquals("Incorrect element returned by first().", first,
                 getCollection().first());
             assertEquals("Incorrect element returned by last().", last,
@@ -75,7 +74,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Overridden because SortedSets don't allow null elements (normally).
      * @return false
@@ -99,7 +97,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         return (SortedSet<E>) super.makeFullCollection();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link TreeSet} for use in modification testing.
      *
@@ -110,9 +107,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         return new TreeSet<>();
     }
 
-    //-----------------------------------------------------------------------
-
-    //-----------------------------------------------------------------------
     /**
      * Override to return comparable objects.
      */

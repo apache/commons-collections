@@ -511,7 +511,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         private Map.Entry<K, V> last;
 
         public boolean hasNext() {
-            if (current.size() > 0) {
+            if (!current.isEmpty()) {
                 return true;
             }
             while (bucket < buckets.length) {
@@ -522,7 +522,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
                         n = n.next;
                     }
                     bucket++;
-                    if (current.size() > 0) {
+                    if (!current.isEmpty()) {
                         return true;
                     }
                 }

@@ -85,7 +85,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
 
         final TransformedCollection<E> decorated = new TransformedCollection<>(collection, transformer);
         // null collection & transformer are disallowed by the constructor call above
-        if (collection.size() > 0) {
+        if (!collection.isEmpty()) {
             @SuppressWarnings("unchecked") // collection is of type E
             final E[] values = (E[]) collection.toArray(); // NOPMD - false positive for generics
             collection.clear();

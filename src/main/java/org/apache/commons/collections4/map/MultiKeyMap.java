@@ -105,10 +105,10 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      */
     public static <K, V> MultiKeyMap<K, V> multiKeyMap(final AbstractHashedMap<MultiKey<? extends K>, V> map) {
         Objects.requireNonNull(map, "map");
-        if (map.size() > 0) {
-            throw new IllegalArgumentException("Map must be empty");
+        if (map.isEmpty()) {
+            return new MultiKeyMap<>(map);
         }
-        return new MultiKeyMap<>(map);
+        throw new IllegalArgumentException("Map must be empty");
     }
 
     //-----------------------------------------------------------------------

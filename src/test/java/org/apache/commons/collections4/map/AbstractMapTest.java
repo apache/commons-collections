@@ -1033,8 +1033,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear values, reflected in map
         resetFull();
         Collection<V> values = getMap().values();
-        assertTrue(getMap().size() > 0);
-        assertTrue(values.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(values.isEmpty());
         values.clear();
         assertTrue(getMap().isEmpty());
         assertTrue(values.isEmpty());
@@ -1042,8 +1042,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear map, reflected in values
         resetFull();
         values = getMap().values();
-        assertTrue(getMap().size() > 0);
-        assertTrue(values.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(values.isEmpty());
         getMap().clear();
         assertTrue(getMap().isEmpty());
         assertTrue(values.isEmpty());
@@ -1061,8 +1061,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear values, reflected in map
         resetFull();
         Set<K> keySet = getMap().keySet();
-        assertTrue(getMap().size() > 0);
-        assertTrue(keySet.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(keySet.isEmpty());
         keySet.clear();
         assertTrue(getMap().isEmpty());
         assertTrue(keySet.isEmpty());
@@ -1070,8 +1070,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear map, reflected in values
         resetFull();
         keySet = getMap().keySet();
-        assertTrue(getMap().size() > 0);
-        assertTrue(keySet.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(keySet.isEmpty());
         getMap().clear();
         assertTrue(getMap().isEmpty());
         assertTrue(keySet.isEmpty());
@@ -1089,8 +1089,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear values, reflected in map
         resetFull();
         Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
-        assertTrue(getMap().size() > 0);
-        assertTrue(entrySet.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(entrySet.isEmpty());
         entrySet.clear();
         assertTrue(getMap().isEmpty());
         assertTrue(entrySet.isEmpty());
@@ -1098,8 +1098,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // clear map, reflected in values
         resetFull();
         entrySet = getMap().entrySet();
-        assertTrue(getMap().size() > 0);
-        assertTrue(entrySet.size() > 0);
+        assertFalse(getMap().isEmpty());
+        assertFalse(entrySet.isEmpty());
         getMap().clear();
         assertTrue(getMap().isEmpty());
         assertTrue(entrySet.isEmpty());

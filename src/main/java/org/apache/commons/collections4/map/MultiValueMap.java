@@ -269,7 +269,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         if (coll == null) {
             coll = createCollection(1);  // might produce a non-empty collection
             coll.add((V) value);
-            if (coll.size() > 0) {
+            if (!coll.isEmpty()) {
                 // only add if non-zero size to maintain class state
                 decorated().put(key, coll);
                 result = true;  // map definitely changed
@@ -391,7 +391,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         if (coll == null) {
             coll = createCollection(values.size());  // might produce a non-empty collection
             coll.addAll(values);
-            if (coll.size() > 0) {
+            if (!coll.isEmpty()) {
                 // only add if non-zero size to maintain class state
                 decorated().put(key, coll);
                 result = true;  // map definitely changed

@@ -77,7 +77,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      */
     public static <E> Set<E> transformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         final TransformedSet<E> decorated = new TransformedSet<>(set, transformer);
-        if (set.size() > 0) {
+        if (!set.isEmpty()) {
             @SuppressWarnings("unchecked") // set is type E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();

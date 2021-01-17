@@ -254,7 +254,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      */
     @Override
     protected void removeAllNodes() {
-        if (size() > 0) {
+        if (!isEmpty()) {
             // superclass implementation would break all the iterators
             final Iterator<E> it = iterator();
             while (it.hasNext()) {

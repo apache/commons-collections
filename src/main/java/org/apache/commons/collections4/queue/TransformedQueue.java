@@ -75,7 +75,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
                                                            final Transformer<? super E, ? extends E> transformer) {
         // throws IAE if queue or transformer is null
         final TransformedQueue<E> decorated = new TransformedQueue<>(queue, transformer);
-        if (queue.size() > 0) {
+        if (!queue.isEmpty()) {
             @SuppressWarnings("unchecked") // queue is type <E>
             final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics
             queue.clear();
