@@ -826,7 +826,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the entrySet iterator
      */
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return EmptyIterator.<Map.Entry<K, V>>emptyIterator();
         }
         return new EntrySetIterator<>(this);
@@ -926,7 +926,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the keySet iterator
      */
     protected Iterator<K> createKeySetIterator() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return EmptyIterator.<K>emptyIterator();
         }
         return new KeySetIterator<>(this);
@@ -1014,7 +1014,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the values iterator
      */
     protected Iterator<V> createValuesIterator() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return EmptyIterator.<V>emptyIterator();
         }
         return new ValuesIterator<>(this);
@@ -1387,7 +1387,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @Override
     public String toString() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return "{}";
         }
         final StringBuilder buf = new StringBuilder(32 * size());

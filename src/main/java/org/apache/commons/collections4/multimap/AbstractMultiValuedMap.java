@@ -354,7 +354,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     @Override
     public MapIterator<K, V> mapIterator() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return EmptyMapIterator.emptyMapIterator();
         }
         return new MultiValuedMapIterator();

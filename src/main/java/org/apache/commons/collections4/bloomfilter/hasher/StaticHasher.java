@@ -106,6 +106,15 @@ public final class StaticHasher implements Hasher {
     }
 
     /**
+     * Tests emptiness (size == 0).
+     * 
+     * @return Whether or not this is empty.
+     */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
      * Gets an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.  The iterator will not return the same value multiple
      * times.  Values will be returned in ascending order.

@@ -599,7 +599,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      */
     @Override
     public String toString() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return "[]";
         }
         final StringBuilder buf = new StringBuilder();

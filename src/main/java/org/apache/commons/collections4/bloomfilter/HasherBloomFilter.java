@@ -96,7 +96,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
 
     @Override
     public long[] getBits() {
-        if (hasher.size() == 0) {
+        if (hasher.isEmpty()) {
             return EMPTY;
         }
 

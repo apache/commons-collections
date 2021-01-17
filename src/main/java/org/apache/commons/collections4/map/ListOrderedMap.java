@@ -171,7 +171,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public K firstKey() {
-        if (size() == 0) {
+        if (isEmpty()) {
             throw new NoSuchElementException("Map is empty");
         }
         return insertOrder.get(0);
@@ -185,7 +185,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public K lastKey() {
-        if (size() == 0) {
+        if (isEmpty()) {
             throw new NoSuchElementException("Map is empty");
         }
         return insertOrder.get(size() - 1);

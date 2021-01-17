@@ -251,7 +251,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @throws UnsupportedOperationException if the {@link ComparatorChain} is empty
      */
     private void checkChainIntegrity() {
-        if (comparatorChain.size() == 0) {
+        if (comparatorChain.isEmpty()) {
             throw new UnsupportedOperationException("ComparatorChains must contain at least one Comparator");
         }
     }

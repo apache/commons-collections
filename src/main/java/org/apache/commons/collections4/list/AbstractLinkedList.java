@@ -402,7 +402,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     @Override
     public String toString() {
-        if (size() == 0) {
+        if (isEmpty()) {
             return "[]";
         }
         final StringBuilder buf = new StringBuilder(16 * size());

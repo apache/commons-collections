@@ -332,7 +332,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collection.size() == collectionA.size());
         assertTrue(collection.contains(2L) && !collection.contains(1));
         collection = CollectionUtils.collect((Iterator<Integer>) null, (Transformer<Integer, Number>) null);
-        assertTrue(collection.size() == 0);
+        assertTrue(collection.isEmpty());
 
         final int size = collectionA.size();
         collectionB = CollectionUtils.collect((Collection<Integer>) null, transformer, collectionB);

@@ -383,7 +383,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return true if this map changed
      */
     public boolean putAll(final K key, final Collection<V> values) {
-        if (values == null || values.size() == 0) {
+        if (values == null || values.isEmpty()) {
             return false;
         }
         boolean result = false;

@@ -94,7 +94,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> map) {
 
         Objects.requireNonNull(map, "map");
-        if (map.size() == 0) {
+        if (map.isEmpty()) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
         // convert to array like this to guarantee iterator() ordering

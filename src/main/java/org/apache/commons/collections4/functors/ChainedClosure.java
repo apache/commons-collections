@@ -66,7 +66,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
         Objects.requireNonNull(closures, "closures");
-        if (closures.size() == 0) {
+        if (closures.isEmpty()) {
             return NOPClosure.<E>nopClosure();
         }
         // convert to array like this to guarantee iterator() ordering

@@ -72,7 +72,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     public static <T> Transformer<T, T> chainedTransformer(
             final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
         Objects.requireNonNull(transformers, "transformers");
-        if (transformers.size() == 0) {
+        if (transformers.isEmpty()) {
             return NOPTransformer.<T>nopTransformer();
         }
         // convert to array like this to guarantee iterator() ordering

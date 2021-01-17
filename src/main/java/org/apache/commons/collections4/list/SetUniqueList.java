@@ -276,7 +276,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         if (result == false) {
             return false;
         }
-        if (set.size() == 0) {
+        if (set.isEmpty()) {
             super.clear();
         } else {
             // use the set as parameter for the call to retainAll to improve performance

@@ -134,9 +134,9 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
             }
         }
 
-        assertTrue("List is empty", list1.size() == 0);
+        assertTrue("List is empty", list1.isEmpty());
         assertTrue("List is empty", list2.size() == 1);
-        assertTrue("List is empty", list3.size() == 0);
+        assertTrue("List is empty", list3.isEmpty());
     }
 
     public void testFirstIteratorIsEmptyBug() {

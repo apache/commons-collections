@@ -696,7 +696,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset));
-            assertTrue("MultiSet is empty", multiset2.size() == 0);
+            assertTrue("MultiSet is empty", multiset2.isEmpty());
             assertEquals(multiset, multiset2);
         }
     }

@@ -118,7 +118,7 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertTrue( "Map should be empty", readMap.size() == 0 );
+        assertTrue( "Map should be empty", readMap.isEmpty() );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
@@ -138,7 +138,7 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertFalse( "Map should not be empty", readMap.size() == 0 );
+        assertFalse( "Map should not be empty", readMap.isEmpty() );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 

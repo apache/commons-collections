@@ -772,7 +772,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     @Override
     public K firstKey() {
-        if (size() == 0) {
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
         return firstEntry().getKey();
