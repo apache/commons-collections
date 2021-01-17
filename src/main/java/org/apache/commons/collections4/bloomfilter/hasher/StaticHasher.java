@@ -91,6 +91,20 @@ public final class StaticHasher implements Hasher {
         this.values = hasher.values;
     }
 
+    @Override
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return shape.getHashFunctionIdentity();
+    }
+
+    /**
+     * Gets the shape this static hasher was created with.
+     *
+     * @return the Shape of this hasher.
+     */
+    public Shape getShape() {
+        return shape;
+    }
+
     /**
      * Gets an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.  The iterator will not return the same value multiple
@@ -107,20 +121,6 @@ public final class StaticHasher implements Hasher {
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));
         }
         return Arrays.stream(values).iterator();
-    }
-
-    @Override
-    public HashFunctionIdentity getHashFunctionIdentity() {
-        return shape.getHashFunctionIdentity();
-    }
-
-    /**
-     * Gets the shape this static hasher was created with.
-     *
-     * @return the Shape of this hasher.
-     */
-    public Shape getShape() {
-        return shape;
     }
 
     /**
