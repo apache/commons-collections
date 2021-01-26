@@ -29,6 +29,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.OrderedIterator;
 
 /**
@@ -143,7 +144,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             }
             i++;
         }
-        return -1;
+        return CollectionUtils.INDEX_NOT_FOUND;
     }
 
     @Override
@@ -155,7 +156,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             }
             i--;
         }
-        return -1;
+        return CollectionUtils.INDEX_NOT_FOUND;
     }
 
     @Override

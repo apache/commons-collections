@@ -42,7 +42,6 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
  * @since 1.0
  */
 public class ListUtils {
-
     /**
      * Don't allow instances.
      */
@@ -539,7 +538,7 @@ public class ListUtils {
                 }
             }
         }
-        return -1;
+        return CollectionUtils.INDEX_NOT_FOUND;
     }
 
     //-----------------------------------------------------------------------

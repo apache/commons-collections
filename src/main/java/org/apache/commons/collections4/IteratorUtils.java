@@ -1249,7 +1249,7 @@ public class IteratorUtils {
                 }
             }
         }
-        return -1;
+        return CollectionUtils.INDEX_NOT_FOUND;
     }
 
     /**
