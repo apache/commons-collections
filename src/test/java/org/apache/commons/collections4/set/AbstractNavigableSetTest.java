@@ -179,38 +179,38 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
     public class TestNavigableSetSubSet extends AbstractNavigableSetTest<E> {
 
-        private final int m_Type;
-        private int m_LowBound;
-        private int m_HighBound;
-        private final E[] m_FullElements;
-        private final E[] m_OtherElements;
+        private final int type;
+        private int lowBound;
+        private int highBound;
+        private final E[] fullElements;
+        private final E[] otherElements;
         private final boolean m_Inclusive;
 
         @SuppressWarnings("unchecked")
         public TestNavigableSetSubSet(final int bound, final boolean head, final boolean inclusive) {
             super("TestNavigableSetSubSet");
             if (head) {
-                m_Type = TYPE_HEADSET;
+                type = TYPE_HEADSET;
                 m_Inclusive = inclusive;
-                m_HighBound = bound;
+                highBound = bound;
 
                 final int realBound = inclusive ? bound + 1 : bound;
-                m_FullElements = (E[]) new Object[realBound];
-                System.arraycopy(AbstractNavigableSetTest.this.getFullElements(), 0, m_FullElements, 0, realBound);
-                m_OtherElements = (E[]) new Object[bound - 1];
+                fullElements = (E[]) new Object[realBound];
+                System.arraycopy(AbstractNavigableSetTest.this.getFullElements(), 0, fullElements, 0, realBound);
+                otherElements = (E[]) new Object[bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                    AbstractNavigableSetTest.this.getOtherElements(), 0, m_OtherElements, 0, bound - 1);
+                    AbstractNavigableSetTest.this.getOtherElements(), 0, otherElements, 0, bound - 1);
             } else {
-                m_Type = TYPE_TAILSET;
+                type = TYPE_TAILSET;
                 m_Inclusive = inclusive;
-                m_LowBound = bound;
+                lowBound = bound;
                 final Object[] allelements = AbstractNavigableSetTest.this.getFullElements();
                 final int realBound = inclusive ? bound : bound + 1;
-                m_FullElements = (E[]) new Object[allelements.length - realBound];
-                System.arraycopy(allelements, realBound, m_FullElements, 0, allelements.length - realBound);
-                m_OtherElements = (E[]) new Object[allelements.length - bound - 1];
+                fullElements = (E[]) new Object[allelements.length - realBound];
+                System.arraycopy(allelements, realBound, fullElements, 0, allelements.length - realBound);
+                otherElements = (E[]) new Object[allelements.length - bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                    AbstractNavigableSetTest.this.getOtherElements(), bound, m_OtherElements, 0, allelements.length - bound - 1);
+                    AbstractNavigableSetTest.this.getOtherElements(), bound, otherElements, 0, allelements.length - bound - 1);
             }
 
         } //type
@@ -218,19 +218,19 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         @SuppressWarnings("unchecked")
         public TestNavigableSetSubSet(final int lobound, final int hibound, final boolean inclusive) {
             super("TestNavigableSetSubSet");
-            m_Type = TYPE_SUBSET;
-            m_LowBound = lobound;
-            m_HighBound = hibound;
+            type = TYPE_SUBSET;
+            lowBound = lobound;
+            highBound = hibound;
             m_Inclusive = inclusive;
 
             final int fullLoBound = inclusive ? lobound : lobound + 1;
             final int length = hibound - lobound + 1 - (inclusive ? 0 : 2);
-            m_FullElements = (E[]) new Object[length];
-            System.arraycopy(AbstractNavigableSetTest.this.getFullElements(), fullLoBound, m_FullElements, 0, length);
+            fullElements = (E[]) new Object[length];
+            System.arraycopy(AbstractNavigableSetTest.this.getFullElements(), fullLoBound, fullElements, 0, length);
             final int otherLength = hibound - lobound;
-            m_OtherElements = (E[]) new Object[otherLength - 1];
+            otherElements = (E[]) new Object[otherLength - 1];
             System.arraycopy(//src src_pos dst dst_pos length
-                AbstractNavigableSetTest.this.getOtherElements(), lobound, m_OtherElements, 0, otherLength - 1);
+                AbstractNavigableSetTest.this.getOtherElements(), lobound, otherElements, 0, otherLength - 1);
         }
 
         @Override
@@ -252,22 +252,22 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         @Override
         public E[] getFullElements() {
-            return m_FullElements;
+            return fullElements;
         }
         @Override
         public E[] getOtherElements() {
-            return m_OtherElements;
+            return otherElements;
         }
 
         private NavigableSet<E> getSubSet(final NavigableSet<E> set) {
             final E[] elements = AbstractNavigableSetTest.this.getFullElements();
-            switch (m_Type) {
+            switch (type) {
             case TYPE_SUBSET :
-                return set.subSet(elements[m_LowBound], m_Inclusive, elements[m_HighBound], m_Inclusive);
+                return set.subSet(elements[lowBound], m_Inclusive, elements[highBound], m_Inclusive);
             case TYPE_HEADSET :
-                return set.headSet(elements[m_HighBound], m_Inclusive);
+                return set.headSet(elements[highBound], m_Inclusive);
             case TYPE_TAILSET :
-                return set.tailSet(elements[m_LowBound], m_Inclusive);
+                return set.tailSet(elements[lowBound], m_Inclusive);
             default :
                 return null;
             }
