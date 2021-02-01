@@ -240,6 +240,9 @@
     <action type="update" dev="ggregory" due-to="EruDev">
       Fix typo erroring -> erring #202.
     </action>
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump maven-checkstyle-plugin from 3.1.1 to 3.1.2 #211.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
