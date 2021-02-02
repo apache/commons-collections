@@ -53,54 +53,54 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     }
 
     public static void benchmark(final List<? super Integer> l) {
-        long start = System.currentTimeMillis();
+        long startMillis = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             l.add(Integer.valueOf(i));
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 200; i++) {
             l.toArray();
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 100; i++) {
             final java.util.Iterator<? super Integer> it = l.iterator();
             while (it.hasNext()) {
                 it.next();
             }
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             final int j = (int) (Math.random() * 100000);
             l.add(j, Integer.valueOf(-j));
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 50000; i++) {
             final int j = (int) (Math.random() * 110000);
             l.get(j);
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 200; i++) {
             final int j = (int) (Math.random() * 100000);
             l.indexOf(Integer.valueOf(j));
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
 
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             final int j = (int) (Math.random() * 100000);
             l.remove(j);
         }
-        System.out.print(System.currentTimeMillis() - start + ";");
+        System.out.print(System.currentTimeMillis() - startMillis + ";");
     }
 
     //-----------------------------------------------------------------------

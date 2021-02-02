@@ -136,15 +136,15 @@ public class PassiveExpiringMap<K, V>
         public long expirationTime(final K key, final V value) {
             if (timeToLiveMillis >= 0L) {
                 // avoid numerical overflow
-                final long now = System.currentTimeMillis();
-                if (now > Long.MAX_VALUE - timeToLiveMillis) {
+                final long nowMillis = System.currentTimeMillis();
+                if (nowMillis > Long.MAX_VALUE - timeToLiveMillis) {
                     // expiration would be greater than Long.MAX_VALUE
                     // never expire
                     return -1;
                 }
 
                 // timeToLiveMillis in the future
-                return now + timeToLiveMillis;
+                return nowMillis + timeToLiveMillis;
             }
 
             // never expire
@@ -461,11 +461,11 @@ public class PassiveExpiringMap<K, V>
      *
      * @see #isExpired(long, Long)
      */
-    private void removeAllExpired(final long now) {
+    private void removeAllExpired(final long nowMillis) {
         final Iterator<Map.Entry<Object, Long>> iter = expirationMap.entrySet().iterator();
         while (iter.hasNext()) {
             final Map.Entry<Object, Long> expirationEntry = iter.next();
-            if (isExpired(now, expirationEntry.getValue())) {
+            if (isExpired(nowMillis, expirationEntry.getValue())) {
                 // remove entry from collection
                 super.remove(expirationEntry.getKey());
                 // remove entry from expiration map
@@ -479,9 +479,9 @@ public class PassiveExpiringMap<K, V>
      * less than {@code now}. If the entry has a negative expiration time,
      * the entry is never removed.
      */
-    private void removeIfExpired(final Object key, final long now) {
+    private void removeIfExpired(final Object key, final long nowMillis) {
         final Long expirationTimeObject = expirationMap.get(key);
-        if (isExpired(now, expirationTimeObject)) {
+        if (isExpired(nowMillis, expirationTimeObject)) {
             remove(key);
         }
     }

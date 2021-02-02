@@ -107,9 +107,9 @@ public class MapPerformance {
     }
 
     private static void test(final Map<String, String> map, final String name) {
-        long start = 0, end = 0;
+        long startMillis = 0, endMillis = 0;
 //        int total = 0;
-        start = System.currentTimeMillis();
+        startMillis = System.currentTimeMillis();
         for (int i = RUNS; i > 0; i--) {
 //            if (map.get("Alpha") != null) total++;
 //            if (map.get("Beta") != null) total++;
@@ -124,8 +124,8 @@ public class MapPerformance {
             map.put("Delta", "E");
             map.clear();
         }
-        end = System.currentTimeMillis();
-        System.out.println(name + (end - start));
+        endMillis = System.currentTimeMillis();
+        System.out.println(name + (endMillis - startMillis));
     }
 
     // ----------------------------------------------------------------------
