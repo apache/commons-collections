@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
@@ -33,7 +33,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test standard methods in the {@link BloomFilter} interface.
@@ -207,10 +207,10 @@ public abstract class AbstractBloomFilterTest {
         final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
-            assertTrue("Not enough data in second hasher", iter2.hasNext());
+            assertTrue(iter2.hasNext(), "Not enough data in second hasher");
             assertEquals(iter1.nextInt(), iter2.nextInt());
         }
-        assertFalse("Too much data in second hasher", iter2.hasNext());
+        assertFalse(iter2.hasNext(), "Too much data in second hasher");
     }
 
     /**
@@ -466,7 +466,7 @@ public abstract class AbstractBloomFilterTest {
 
         final BloomFilter bf2 = filterFactory.apply(hasher2, shape);
 
-        assertTrue("Merge should not fail", bf.merge(bf2));
+        assertTrue(bf.merge(bf2), "Merge should not fail");
         assertEquals(27, bf.cardinality());
     }
 
@@ -506,7 +506,7 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), shape);
 
-        assertTrue("Merge should not fail", bf.merge(hasher2));
+        assertTrue(bf.merge(hasher2), "Merge should not fail");
         assertEquals(27, bf.cardinality());
     }
 

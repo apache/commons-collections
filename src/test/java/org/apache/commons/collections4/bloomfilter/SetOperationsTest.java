@@ -16,15 +16,16 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.List;
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test {@link SetOperations}.
@@ -74,7 +75,7 @@ public class SetOperationsTest {
 
         try {
             SetOperations.cosineDistance(filter1, filter2);
-            Assert.fail("Expected an IllegalArgumentException");
+            fail("Expected an IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // Ignore
         }

@@ -17,12 +17,13 @@
 package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -424,7 +424,7 @@ public class IterableUtilsTest {
         // second partition contains 1, 3, and 4
         final Integer[] expected = {1, 3, 4};
         partition = partitions.get(1);
-        Assert.assertArrayEquals(expected, partition.toArray());
+        assertArrayEquals(expected, partition.toArray());
 
         partitions = IterableUtils.partition((List<Integer>) null, EQUALS_TWO);
         assertEquals(2, partitions.size());
@@ -466,7 +466,7 @@ public class IterableUtilsTest {
         // third partition contains 1 and 3
         final Integer[] expected = {1, 3};
         partition = partitions.get(2);
-        Assert.assertArrayEquals(expected, partition.toArray());
+        assertArrayEquals(expected, partition.toArray());
 
         try {
             IterableUtils.partition(input, EQUALS_TWO, null);

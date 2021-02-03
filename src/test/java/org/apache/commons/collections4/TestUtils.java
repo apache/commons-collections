@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -57,7 +57,7 @@ public final class TestUtils {
             ois.close();
 
             // assert that original object and deserialized objects are the same
-            assertSame(msg, o, object);
+            assertSame(o, object, msg);
         } catch (final IOException | ClassNotFoundException e) {
             // should never happen
             throw new RuntimeException(e);

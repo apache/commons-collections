@@ -18,7 +18,7 @@ package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.NullPredicate.*;
 import static org.apache.commons.collections4.functors.TruePredicate.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

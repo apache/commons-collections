@@ -18,14 +18,16 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher.Builder;
 import org.apache.commons.lang3.NotImplementedException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the
@@ -64,7 +66,7 @@ public class HasherBuilderTest {
             }) {
                 final TestBuilder builder = new TestBuilder();
                 builder.with(s, cs);
-                Assert.assertArrayEquals(s.getBytes(cs), builder.items.get(0));
+                assertArrayEquals(s.getBytes(cs), builder.items.get(0));
             }
         }
     }
@@ -82,12 +84,12 @@ public class HasherBuilderTest {
             final byte[] encoded = builder.items.get(0);
             final char[] original = s.toCharArray();
             // Should be twice the length
-            Assert.assertEquals(original.length * 2, encoded.length);
+            assertEquals(original.length * 2, encoded.length);
             // Should be little endian (lower bits first)
             final CharBuffer buffer = ByteBuffer.wrap(encoded)
                                                 .order(ByteOrder.LITTLE_ENDIAN).asCharBuffer();
             for (int i = 0; i < original.length; i++) {
-                Assert.assertEquals(original[i], buffer.get(i));
+                assertEquals(original[i], buffer.get(i));
             }
         }
     }

@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +28,8 @@ import java.util.Map;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.splitmap.TransformedSplitMap;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -43,7 +43,7 @@ public class SplitMapUtilsTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         backingMap = new HashMap<>();
         transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String>nopTransformer(),

@@ -16,17 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link StaticHasher}.
@@ -102,10 +102,10 @@ public class StaticHasherTest {
         final OfInt iter2 = hasher2.iterator(shape);
 
         while (iter1.hasNext()) {
-            assertTrue("Not enough data in second hasher", iter2.hasNext());
+            assertTrue(iter2.hasNext(), "Not enough data in second hasher");
             assertEquals(iter1.nextInt(), iter2.nextInt());
         }
-        assertFalse("Too much data in second hasher", iter2.hasNext());
+        assertFalse(iter2.hasNext(), "Too much data in second hasher");
     }
 
     /**
@@ -188,7 +188,7 @@ public class StaticHasherTest {
         iter = hasher.iterator(shape);
         int idx = 0;
         while (iter.hasNext()) {
-            assertEquals("Error at idx " + idx, Integer.valueOf(values[idx]), iter.next());
+            assertEquals(Integer.valueOf(values[idx]), iter.next(), "Error at idx " + idx);
             idx++;
         }
         assertEquals(5, idx);

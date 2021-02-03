@@ -18,10 +18,10 @@ package org.apache.commons.collections4.functors;
 
 import org.apache.commons.collections4.Predicate;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
@@ -50,7 +50,7 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
     public final void singleElementArrayToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(predicate);
-        assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
+        assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
     }
 
     /**
@@ -63,8 +63,7 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(
                 Collections.<Predicate<T>>singleton(predicate));
-        assertSame("expected singleton collection member to be returned by getInstance()",
-                predicate, allPredicate);
+        assertSame(predicate, allPredicate, "expected singleton collection member to be returned by getInstance()");
     }
 
     /**

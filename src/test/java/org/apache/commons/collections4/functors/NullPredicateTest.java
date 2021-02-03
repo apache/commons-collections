@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import static org.apache.commons.collections4.functors.NullPredicate.nullPredicate;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
