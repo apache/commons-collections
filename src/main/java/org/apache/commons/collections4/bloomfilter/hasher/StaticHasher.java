@@ -107,7 +107,7 @@ public final class StaticHasher implements Hasher {
 
     /**
      * Tests emptiness (size == 0).
-     * 
+     *
      * @return Whether or not this is empty.
      */
     public boolean isEmpty() {
