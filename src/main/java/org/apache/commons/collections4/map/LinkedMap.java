@@ -28,6 +28,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections4.list.UnmodifiableList;
@@ -183,7 +184,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
                 return i;
             }
         }
-        return -1;
+        return CollectionUtils.INDEX_NOT_FOUND;
     }
 
     /**

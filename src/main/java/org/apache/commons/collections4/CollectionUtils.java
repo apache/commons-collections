@@ -57,6 +57,13 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
 public class CollectionUtils {
 
     /**
+     * The index value when an element is not found in a collection or array: {@code -1}.
+     *
+     * @since 4.5
+     */
+    public static final int INDEX_NOT_FOUND = -1;
+
+    /**
      * Helper class to easily access cardinality properties of two collections.
      * @param <O>  the element type
      */
