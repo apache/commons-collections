@@ -249,6 +249,9 @@
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump actions/cache from v2 to v2.1.4 #214.
     </action>
+    <action issue="COLLECTIONS-781" type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
+      Add and use CollectionUtils.INDEX_NOT_FOUND constant.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
