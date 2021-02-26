@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -603,19 +604,19 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             return "[]";
         }
         final StringBuilder buf = new StringBuilder();
-        buf.append('[');
+        buf.append(CollectionUtils.DEFAULT_TOSTRING_PREFIX);
         final Iterator<E> it = uniqueSet().iterator();
         while (it.hasNext()) {
             final Object current = it.next();
             final int count = getCount(current);
             buf.append(count);
-            buf.append(':');
+            buf.append(CollectionUtils.COLON);
             buf.append(current);
             if (it.hasNext()) {
-                buf.append(',');
+                buf.append(CollectionUtils.COMMA);
             }
         }
-        buf.append(']');
+        buf.append(CollectionUtils.DEFAULT_TOSTRING_SUFFIX);
         return buf.toString();
     }
 

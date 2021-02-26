@@ -407,7 +407,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             return "[]";
         }
         final StringBuilder buf = new StringBuilder(16 * size());
-        buf.append('[');
+        buf.append(CollectionUtils.DEFAULT_TOSTRING_PREFIX);
 
         final Iterator<E> it = iterator();
         boolean hasNext = it.hasNext();
@@ -419,7 +419,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
                 buf.append(", ");
             }
         }
-        buf.append(']');
+        buf.append(CollectionUtils.DEFAULT_TOSTRING_SUFFIX);
         return buf.toString();
     }
 

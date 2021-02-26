@@ -26,6 +26,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.OrderedIterator;
 
 /**
@@ -965,11 +966,11 @@ public class TreeList<E> extends AbstractList<E> {
             return new StringBuilder()
                 .append("AVLNode(")
                 .append(relativePosition)
-                .append(',')
+                .append(CollectionUtils.COMMA)
                 .append(left != null)
-                .append(',')
+                .append(CollectionUtils.COMMA)
                 .append(value)
-                .append(',')
+                .append(CollectionUtils.COMMA)
                 .append(getRightSubTree() != null)
                 .append(", faedelung ")
                 .append(rightIsNext)
