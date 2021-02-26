@@ -1559,6 +1559,40 @@ public class CollectionUtils {
         return coll == null || coll.isEmpty();
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if any value in the given Collections is {@code null} or empty.
+     *
+     * <p>
+     * Null returns true.
+     * </p>
+     *
+     * <pre>
+     * CollectionUtils.isAnyEmpty(*)                    = false
+     * CollectionUtils.isAnyEmpty(*, *)                 = false
+     * CollectionUtils.isAnyEmpty(*,EMPTY_COLLECTION)   = true
+     * CollectionUtils.isAnyEmpty(null)                 = true
+     * CollectionUtils.isAnyEmpty(null, null)           = true
+     * CollectionUtils.isAnyEmpty(null, *)              = true
+     * CollectionUtils.isAnyEmpty(*, null)              = true
+     * CollectionUtils.isAnyEmpty(*, *, null, *)        = true
+     * </pre>
+     *
+     * @param coll the collection to check, may be null
+     * @return {@code true} if there is at least one {@code null} value in the Collection,
+     * {@code false} if all the values are non-null and not empty.
+     * If the Collections is {@code null} or empty, {@code true} is also returned.
+     * @since 4.5
+     */
+    public static boolean isAnyEmpty(final Collection<?>... coll) {
+        for (final Collection<?> aColl2 : coll) {
+            if (isEmpty(aColl2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Null-safe check if the specified collection is not empty.
      * <p>

@@ -1420,6 +1420,25 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void testisAnyEmpty() {
+        collectionE = new ArrayList<>();
+        collectionE.add(2);
+        collectionE.add(null);
+        collectionE.add(4);
+        collectionE.add(5);
+        collectionE.add(6);
+        collectionE.add(6);
+        collectionE.add(9);
+        assertFalse(CollectionUtils.isAnyEmpty(collectionE));
+        assertFalse(CollectionUtils.isAnyEmpty(collectionE, collectionE));
+        assertTrue(CollectionUtils.isAnyEmpty(collectionE, CollectionUtils.EMPTY_COLLECTION));
+        assertTrue(CollectionUtils.isAnyEmpty(collectionE, collectionE, collectionE, null, collectionE));
+        assertTrue(CollectionUtils.isAnyEmpty((Collection<?>) null));
+        assertTrue(CollectionUtils.isAnyEmpty(null, null, null));
+
+    }
+
+    @Test
     public void testIsEqualCollection() {
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collectionC));
         assertFalse(CollectionUtils.isEqualCollection(collectionC, collectionA));
