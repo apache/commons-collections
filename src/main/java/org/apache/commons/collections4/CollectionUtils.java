@@ -64,6 +64,33 @@ public class CollectionUtils {
     public static final int INDEX_NOT_FOUND = -1;
 
     /**
+     * Default prefix used while converting an Iterator to its String representation.
+     *
+     * @since 4.5
+     */
+    public static final String DEFAULT_TOSTRING_PREFIX = "[";
+
+    /**
+     * Default suffix used while converting an Iterator to its String representation.
+     *
+     * @since 4.5
+     */
+    public static final String DEFAULT_TOSTRING_SUFFIX = "]";
+
+    /**
+     * A String for Colon  (":").
+     *
+     * @since 4.5
+     */
+    public static final String COLON = ":";
+    /**
+     * A String for Comma (",").
+     *
+     * @since 4.5
+     */
+    public static final String COMMA = ",";
+
+    /**
      * Helper class to easily access cardinality properties of two collections.
      * @param <O>  the element type
      */

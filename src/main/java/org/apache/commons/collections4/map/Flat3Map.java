@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.ResettableIterator;
@@ -1262,12 +1263,12 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             buf.append(key3 == this ? "(this Map)" : key3);
             buf.append('=');
             buf.append(value3 == this ? "(this Map)" : value3);
-            buf.append(',');
+            buf.append(CollectionUtils.COMMA);
         case 2:
             buf.append(key2 == this ? "(this Map)" : key2);
             buf.append('=');
             buf.append(value2 == this ? "(this Map)" : value2);
-            buf.append(',');
+            buf.append(CollectionUtils.COMMA);
         case 1:
             buf.append(key1 == this ? "(this Map)" : key1);
             buf.append('=');

@@ -105,17 +105,6 @@ public class IteratorUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
-
-    /**
-     * Default prefix used while converting an Iterator to its String representation.
-     */
-    private static final String DEFAULT_TOSTRING_PREFIX = "[";
-
-    /**
-     * Default suffix used while converting an Iterator to its String representation.
-     */
-    private static final String DEFAULT_TOSTRING_SUFFIX = "]";
-
     /**
      * Default delimiter used to delimit elements while converting an Iterator
      * to its String representation.
@@ -1405,8 +1394,8 @@ public class IteratorUtils {
      */
     public static <E> String toString(final Iterator<E> iterator) {
         return toString(iterator, TransformerUtils.stringValueTransformer(),
-                        DEFAULT_TOSTRING_DELIMITER, DEFAULT_TOSTRING_PREFIX,
-                        DEFAULT_TOSTRING_SUFFIX);
+                        DEFAULT_TOSTRING_DELIMITER, CollectionUtils.DEFAULT_TOSTRING_PREFIX,
+                CollectionUtils.DEFAULT_TOSTRING_SUFFIX);
     }
 
     /**
@@ -1427,7 +1416,7 @@ public class IteratorUtils {
     public static <E> String toString(final Iterator<E> iterator,
                                       final Transformer<? super E, String> transformer) {
         return toString(iterator, transformer, DEFAULT_TOSTRING_DELIMITER,
-                        DEFAULT_TOSTRING_PREFIX, DEFAULT_TOSTRING_SUFFIX);
+                CollectionUtils.DEFAULT_TOSTRING_PREFIX, CollectionUtils.DEFAULT_TOSTRING_SUFFIX);
     }
 
     /**
