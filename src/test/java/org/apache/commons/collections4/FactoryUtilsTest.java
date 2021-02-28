@@ -164,10 +164,8 @@ public class FactoryUtilsTest {
         }
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof Mock1) {
-                if (iVal == ((Mock1) obj).iVal) {
-                    return true;
-                }
+            if (obj instanceof Mock1 && (iVal == ((Mock1) obj).iVal)) {
+                return true;
             }
             return false;
         }
@@ -188,10 +186,8 @@ public class FactoryUtilsTest {
         }
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof Mock2) {
-                if (iVal == ((Mock2) obj).iVal) {
-                    return true;
-                }
+            if (obj instanceof Mock2 && (iVal == ((Mock2) obj).iVal)) {
+                return true;
             }
             return false;
         }

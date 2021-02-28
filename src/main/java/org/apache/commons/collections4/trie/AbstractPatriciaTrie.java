@@ -172,14 +172,10 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 }
                 return root.setKeyValue(key, value);
 
-            } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
-                // This is a very special and rare case.
-
-                /* REPLACE OLD KEY+VALUE */
-                if (found != root) { // NOPMD
-                    incrementModCount();
-                    return found.setKeyValue(key, value);
-                }
+            } else /* REPLACE OLD KEY+VALUE */
+            if (KeyAnalyzer.isEqualBitKey(bitIndex) && found != root) { // NOPMD
+                incrementModCount();
+                return found.setKeyValue(key, value);
             }
         }
 
