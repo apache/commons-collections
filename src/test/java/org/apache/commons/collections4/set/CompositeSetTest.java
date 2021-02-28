@@ -60,19 +60,19 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testContains() {
-        final CompositeSet<E> set = new CompositeSet<>(new Set[]{ buildOne(), buildTwo() });
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertTrue(set.contains("1"));
     }
 
     @SuppressWarnings("unchecked")
     public void testContainsAll() {
-        final CompositeSet<E> set = new CompositeSet<>(new Set[]{ buildOne(), buildTwo() });
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.containsAll(null));
     }
 
     @SuppressWarnings("unchecked")
     public void testRemoveAll() {
-        final CompositeSet<E> set = new CompositeSet<>(new Set[]{ buildOne(), buildTwo() });
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.removeAll(null));
     }
 
@@ -80,7 +80,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
     public void testRemoveUnderlying() {
         final Set<E> one = buildOne();
         final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(new Set[] { one, two });
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
         one.remove("1");
         assertFalse(set.contains("1"));
 
@@ -92,7 +92,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
     public void testRemoveComposited() {
         final Set<E> one = buildOne();
         final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(new Set[] { one, two });
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
         set.remove("1");
         assertFalse(one.contains("1"));
 
@@ -104,7 +104,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
     public void testFailedCollisionResolution() {
         final Set<E> one = buildOne();
         final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(new Set[] { one, two });
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
         set.setMutator(new SetMutator<E>() {
             private static final long serialVersionUID = 1L;
 
