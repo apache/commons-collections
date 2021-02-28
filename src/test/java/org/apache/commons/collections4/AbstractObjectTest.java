@@ -228,7 +228,7 @@ public abstract class AbstractObjectTest extends BulkTest {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
+        colName = colName.substring(colName.lastIndexOf(".") + 1);
         retval.append(colName);
         retval.append(".emptyCollection.version");
         retval.append(getCompatibilityVersion());
@@ -240,7 +240,7 @@ public abstract class AbstractObjectTest extends BulkTest {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
+        colName = colName.substring(colName.lastIndexOf(".") + 1);
         retval.append(colName);
         retval.append(".fullCollection.version");
         retval.append(getCompatibilityVersion());
