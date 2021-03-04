@@ -256,6 +256,9 @@
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump commons-lang3 from 3.11 to 3.12.0 #219.
     </action>
+    <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
+      Add new variables to oac.collections4.CollectionUtils and use them in the code base.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">

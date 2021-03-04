@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MapIterator;
@@ -1404,7 +1405,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
             hasNext = it.hasNext();
             if (hasNext) {
-                buf.append(',').append(' ');
+                buf.append(CollectionUtils.COMMA).append(' ');
             }
         }
 
