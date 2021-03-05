@@ -140,7 +140,8 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     public int compare(final K o1, final K o2) {
         if (o1 == null) {
             return o2 == null ? 0 : -1;
-        } else if (o2 == null) {
+        }
+        if (o2 == null) {
             return 1;
         }
 

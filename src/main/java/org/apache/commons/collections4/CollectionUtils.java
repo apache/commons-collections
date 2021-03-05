@@ -1437,25 +1437,29 @@ public class CollectionUtils {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
             return IteratorUtils.get(iterator, i);
-        } else if (object instanceof Object[]) {
+        }
+        if (object instanceof Object[]) {
             return ((Object[]) object)[i];
-        } else if (object instanceof Iterator<?>) {
+        }
+        if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
             return IteratorUtils.get(it, i);
-        } else if (object instanceof Iterable<?>) {
+        }
+        if (object instanceof Iterable<?>) {
             final Iterable<?> iterable = (Iterable<?>) object;
             return IterableUtils.get(iterable, i);
-        } else if (object instanceof Enumeration<?>) {
+        }
+        if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
             return EnumerationUtils.get(it, i);
-        } else if (object == null) {
+        }
+        if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
-        } else {
-            try {
-                return Array.get(object, i);
-            } catch (final IllegalArgumentException ex) {
-                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
-            }
+        }
+        try {
+            return Array.get(object, i);
+        } catch (final IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
         }
     }
 
@@ -1550,24 +1554,29 @@ public class CollectionUtils {
     public static boolean sizeIsEmpty(final Object object) {
         if (object == null) {
             return true;
-        } else if (object instanceof Collection<?>) {
+        }
+        if (object instanceof Collection<?>) {
             return ((Collection<?>) object).isEmpty();
-        } else if (object instanceof Iterable<?>) {
+        }
+        if (object instanceof Iterable<?>) {
             return IterableUtils.isEmpty((Iterable<?>) object);
-        } else if (object instanceof Map<?, ?>) {
+        }
+        if (object instanceof Map<?, ?>) {
             return ((Map<?, ?>) object).isEmpty();
-        } else if (object instanceof Object[]) {
+        }
+        if (object instanceof Object[]) {
             return ((Object[]) object).length == 0;
-        } else if (object instanceof Iterator<?>) {
+        }
+        if (object instanceof Iterator<?>) {
             return ((Iterator<?>) object).hasNext() == false;
-        } else if (object instanceof Enumeration<?>) {
+        }
+        if (object instanceof Enumeration<?>) {
             return ((Enumeration<?>) object).hasMoreElements() == false;
-        } else {
-            try {
-                return Array.getLength(object) == 0;
-            } catch (final IllegalArgumentException ex) {
-                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
-            }
+        }
+        try {
+            return Array.getLength(object) == 0;
+        } catch (final IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
         }
     }
 

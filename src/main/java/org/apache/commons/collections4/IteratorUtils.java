@@ -1119,7 +1119,8 @@ public class IteratorUtils {
         }
         if (obj instanceof Dictionary) {
             return new EnumerationIterator<>(((Dictionary<?, ?>) obj).elements());
-        } else if (obj.getClass().isArray()) {
+        }
+        if (obj.getClass().isArray()) {
             return new ArrayIterator<>(obj);
         }
         try {
@@ -1178,11 +1179,10 @@ public class IteratorUtils {
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
-                if (iterator.hasNext()) {
-                    closure.execute(element);
-                } else {
+                if (!iterator.hasNext()) {
                     return element;
                 }
+                closure.execute(element);
             }
         }
         return null;

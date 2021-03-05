@@ -172,21 +172,21 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
         if (factory != null) {
             return new LazyList<>(sub, factory);
-        } else if (transformer != null) {
-            return new LazyList<>(sub, transformer);
-        } else {
-            throw new IllegalStateException("Factory and Transformer are both null!");
         }
+        if (transformer != null) {
+            return new LazyList<>(sub, transformer);
+        }
+        throw new IllegalStateException("Factory and Transformer are both null!");
     }
 
     private E element(final int index) {
         if (factory != null) {
             return factory.create();
-        } else if (transformer != null) {
-            return transformer.transform(index);
-        } else {
-            throw new IllegalStateException("Factory and Transformer are both null!");
         }
+        if (transformer != null) {
+            return transformer.transform(index);
+        }
+        throw new IllegalStateException("Factory and Transformer are both null!");
     }
 
 }

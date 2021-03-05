@@ -104,15 +104,14 @@ public class SingletonIterator<E>
      */
     @Override
     public void remove() {
-        if (removeAllowed) {
-            if (removed || beforeFirst) {
-                throw new IllegalStateException();
-            }
-            object = null;
-            removed = true;
-        } else {
+        if (!removeAllowed) {
             throw new UnsupportedOperationException();
         }
+        if (removed || beforeFirst) {
+            throw new IllegalStateException();
+        }
+        object = null;
+        removed = true;
     }
 
     /**

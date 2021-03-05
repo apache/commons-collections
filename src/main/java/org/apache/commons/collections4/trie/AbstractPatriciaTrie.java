@@ -160,7 +160,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 addEntry(t, lengthInBits);
                 incrementSize();
                 return null;
-            } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
+            }
+            if (KeyAnalyzer.isNullBitKey(bitIndex)) {
                 // A bits of the Key are zero. The only place to
                 // store such a Key is the root Node!
 
@@ -172,7 +173,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 }
                 return root.setKeyValue(key, value);
 
-            } else /* REPLACE OLD KEY+VALUE */
+            }
             if (KeyAnalyzer.isEqualBitKey(bitIndex) && found != root) { // NOPMD
                 incrementModCount();
                 return found.setKeyValue(key, value);
@@ -488,7 +489,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private void removeExternalEntry(final TrieEntry<K, V> h) {
         if (h == root) {
             throw new IllegalArgumentException("Cannot delete root Entry!");
-        } else if (!h.isExternalNode()) {
+        }
+        if (!h.isExternalNode()) {
             throw new IllegalArgumentException(h + " is not an external Entry!");
         }
 
@@ -520,7 +522,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private void removeInternalEntry(final TrieEntry<K, V> h) {
         if (h == root) {
             throw new IllegalArgumentException("Cannot delete root Entry!");
-        } else if (!h.isInternalNode()) {
+        }
+        if (!h.isInternalNode()) {
             throw new IllegalArgumentException(h + " is not an internal Entry!");
         }
 
@@ -903,15 +906,17 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             removeEntry(added);
             modCount -= 2; // we didn't really modify it.
             return ceil;
-        } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
                 return firstEntry();
-            } else if (size() > 1) {
-                return nextEntry(firstEntry());
-            } else {
-                return null;
             }
-        } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
+            if (size() > 1) {
+                return nextEntry(firstEntry());
+            }
+            return null;
+        }
+        if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return nextEntry(found);
         }
 
@@ -965,12 +970,14 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             removeEntry(added);
             modCount -= 2; // we didn't really modify it.
             return ceil;
-        } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
                 return root;
             }
             return firstEntry();
-        } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return found;
         }
 
@@ -1020,9 +1027,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             removeEntry(added);
             modCount -= 2; // we didn't really modify it.
             return prior;
-        } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             return null;
-        } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return previousEntry(found);
         }
 
@@ -1061,12 +1070,14 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             removeEntry(added);
             modCount -= 2; // we didn't really modify it.
             return floor;
-        } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
                 return root;
             }
             return null;
-        } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
+        }
+        if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return found;
         }
 
@@ -2287,11 +2298,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             if (prefixStart == null) {
                 final Set<Map.Entry<K, V>> empty = Collections.emptySet();
                 return empty.iterator();
-            } else if (delegate.lengthInBits > prefixStart.bitIndex) {
-                return new SingletonIterator(prefixStart);
-            } else {
-                return new EntryIterator(prefixStart, delegate.prefix, delegate.offsetInBits, delegate.lengthInBits);
             }
+            if (delegate.lengthInBits > prefixStart.bitIndex) {
+                return new SingletonIterator(prefixStart);
+            }
+            return new EntryIterator(prefixStart, delegate.prefix, delegate.offsetInBits, delegate.lengthInBits);
         }
 
         /**

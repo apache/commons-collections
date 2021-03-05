@@ -529,10 +529,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 if (cmp == 0) {
                     // shouldn't happen
                     throw new IllegalArgumentException("Cannot store a duplicate key (\"" + key + "\") in this Map");
-                } else if (cmp < 0) {
-                    if (node.getLeft(KEY) != null) {
-                        node = node.getLeft(KEY);
-                    } else {
+                }
+                if (cmp < 0) {
+                    if (node.getLeft(KEY) == null) {
                         final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
@@ -543,10 +542,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
                         break;
                     }
+                    node = node.getLeft(KEY);
                 } else { // cmp > 0
-                    if (node.getRight(KEY) != null) {
-                        node = node.getRight(KEY);
-                    } else {
+                    if (node.getRight(KEY) == null) {
                         final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
@@ -557,6 +555,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
                         break;
                     }
+                    node = node.getRight(KEY);
                 }
             }
         }
@@ -1327,26 +1326,25 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (cmp == 0) {
                 throw new IllegalArgumentException(
                     "Cannot store a duplicate value (\"" + newNode.getData(VALUE) + "\") in this Map");
-            } else if (cmp < 0) {
-                if (node.getLeft(VALUE) != null) {
-                    node = node.getLeft(VALUE);
-                } else {
+            }
+            if (cmp < 0) {
+                if (node.getLeft(VALUE) == null) {
                     node.setLeft(newNode, VALUE);
                     newNode.setParent(node, VALUE);
                     doRedBlackInsert(newNode, VALUE);
 
                     break;
                 }
+                node = node.getLeft(VALUE);
             } else { // cmp > 0
-                if (node.getRight(VALUE) != null) {
-                    node = node.getRight(VALUE);
-                } else {
+                if (node.getRight(VALUE) == null) {
                     node.setRight(newNode, VALUE);
                     newNode.setParent(node, VALUE);
                     doRedBlackInsert(newNode, VALUE);
 
                     break;
                 }
+                node = node.getRight(VALUE);
             }
         }
     }

@@ -1195,9 +1195,8 @@ public class MapUtilsTest {
         assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", key -> {
             if (true) {
                 return val;
-            } else {
-                return null;
             }
+            return null;
         }).intValue(), 0);
 
     }
@@ -1214,9 +1213,8 @@ public class MapUtilsTest {
         assertEquals("default", MapUtils.getString(in, "noKey", key -> {
             if ("noKey".equals(key)) {
                 return "default";
-            } else {
-                return "";
             }
+            return "";
         }));
         assertEquals("default", MapUtils.getString(null, "noKey", "default"));
     }

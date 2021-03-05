@@ -106,15 +106,13 @@ public class EnumerationIterator<E> implements Iterator<E> {
      */
     @Override
     public void remove() {
-        if (collection != null) {
-            if (last != null) {
-                collection.remove(last);
-            } else {
-                throw new IllegalStateException("next() must have been called for remove() to function");
-            }
-        } else {
+        if (collection == null) {
             throw new UnsupportedOperationException("No Collection associated with this Iterator");
         }
+        if (last == null) {
+            throw new IllegalStateException("next() must have been called for remove() to function");
+        }
+        collection.remove(last);
     }
 
     // Properties

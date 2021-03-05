@@ -125,7 +125,8 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     final boolean compareKeys(final K key, final K other) {
         if (key == null) {
             return other == null;
-        } else if (other == null) {
+        }
+        if (other == null) {
             return false;
         }
 
@@ -194,7 +195,8 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
         public boolean equals(final Object o) {
             if (o == this) {
                 return true;
-            } else if (!(o instanceof Map.Entry)) {
+            }
+            if (!(o instanceof Map.Entry)) {
                 return false;
             }
 
