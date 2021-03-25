@@ -92,7 +92,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      */
     @Override
     public void remove() {
-        if (canRemove == false) {
+        if (!canRemove) {
             throw new IllegalStateException("Iterator remove() can only be called once after next()");
         }
         iterator.remove();

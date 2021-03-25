@@ -198,7 +198,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
             }
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException();
             }
             final MutableInteger mut = current.getValue();
@@ -288,7 +288,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof MutableInteger == false) {
+            if (!(obj instanceof MutableInteger)) {
                 return false;
             }
             return ((MutableInteger) obj).value == value;
@@ -350,7 +350,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             final int count = parent.getCount(lastElement);
@@ -402,7 +402,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             decorated.remove();
@@ -536,7 +536,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         if (object == this) {
             return true;
         }
-        if (object instanceof MultiSet == false) {
+        if (!(object instanceof MultiSet)) {
             return false;
         }
         final MultiSet<?> other = (MultiSet<?>) object;

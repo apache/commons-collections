@@ -238,7 +238,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     @Override
     public E next() throws NoSuchElementException {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         final int leastIndex = least();
@@ -346,7 +346,7 @@ public class CollatingIterator<E> implements Iterator<E> {
         int leastIndex = -1;
         E leastObject = null;
         for (int i = 0; i < values.size(); i++) {
-            if (valueSet.get(i) == false) {
+            if (!valueSet.get(i)) {
                 set(i);
             }
             if (valueSet.get(i)) {

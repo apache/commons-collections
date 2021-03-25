@@ -674,7 +674,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
 

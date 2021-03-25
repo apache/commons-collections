@@ -436,7 +436,7 @@ public class SingletonMap<K, V>
 
         @Override
         public K next() {
-            if (hasNext == false) {
+            if (!hasNext) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
             hasNext = false;
@@ -446,12 +446,12 @@ public class SingletonMap<K, V>
 
         @Override
         public boolean hasPrevious() {
-            return hasNext == false;
+            return !hasNext;
         }
 
         @Override
         public K previous() {
-            if (hasNext == true) {
+            if (hasNext) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }
             hasNext = true;
@@ -465,7 +465,7 @@ public class SingletonMap<K, V>
 
         @Override
         public K getKey() {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return parent.getKey();
@@ -473,7 +473,7 @@ public class SingletonMap<K, V>
 
         @Override
         public V getValue() {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return parent.getValue();
@@ -481,7 +481,7 @@ public class SingletonMap<K, V>
 
         @Override
         public V setValue(final V value) {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return parent.setValue(value);
@@ -562,7 +562,7 @@ public class SingletonMap<K, V>
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map == false) {
+        if (!(obj instanceof Map)) {
             return false;
         }
         final Map<?, ?> other = (Map<?, ?>) obj;

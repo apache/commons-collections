@@ -119,7 +119,7 @@ public class FixedSizeMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
-        if (map.containsKey(key) == false) {
+        if (!map.containsKey(key)) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         return map.put(key, value);

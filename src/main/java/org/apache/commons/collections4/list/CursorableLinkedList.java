@@ -474,7 +474,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          */
         @Override
         public int nextIndex() {
-            if (nextIndexValid == false) {
+            if (!nextIndexValid) {
                 if (next == parent.header) {
                     nextIndex = parent.size();
                 } else {

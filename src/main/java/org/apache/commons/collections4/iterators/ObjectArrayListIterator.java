@@ -108,7 +108,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public E previous() {
-        if (hasPrevious() == false) {
+        if (!hasPrevious()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = --this.index;
@@ -123,7 +123,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public E next() {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = this.index;

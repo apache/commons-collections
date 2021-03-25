@@ -94,7 +94,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         comparatorChain = new ArrayList<>(1);
         comparatorChain.add(comparator);
         orderingBits = new BitSet(1);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(0);
         }
     }
@@ -153,7 +153,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         checkLocked();
 
         comparatorChain.add(comparator);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(comparatorChain.size() - 1);
         }
     }
@@ -183,7 +183,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         checkLocked();
 
         comparatorChain.set(index, comparator);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(index);
         } else {
             orderingBits.clear(index);
@@ -239,7 +239,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
      */
     private void checkLocked() {
-        if (isLocked == true) {
+        if (isLocked) {
             throw new UnsupportedOperationException(
                     "Comparator ordering cannot be changed after the first comparison is performed");
         }
@@ -268,7 +268,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      */
     @Override
     public int compare(final E o1, final E o2) throws UnsupportedOperationException {
-        if (isLocked == false) {
+        if (!isLocked) {
             checkChainIntegrity();
             isLocked = true;
         }
@@ -281,7 +281,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
             int retval = comparator.compare(o1, o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort
-                if (orderingBits.get(comparatorIndex) == true) {
+                if (orderingBits.get(comparatorIndex)) {
                     if (retval > 0) {
                         retval = -1;
                     } else {

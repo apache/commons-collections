@@ -161,7 +161,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     @Override
     public V get(final Object key) {
         // create value for key if key is not currently in the map
-        if (map.containsKey(key) == false) {
+        if (!map.containsKey(key)) {
             @SuppressWarnings("unchecked")
             final K castKey = (K) key;
             final V value = factory.transform(castKey);
