@@ -1848,9 +1848,8 @@ public class MapUtils {
         final Properties answer = new Properties();
         if (map != null) {
             for (final Entry<K, V> entry2 : map.entrySet()) {
-                final Map.Entry<?, ?> entry = entry2;
-                final Object key = entry.getKey();
-                final Object value = entry.getValue();
+                final Object key = ((Entry<?, ?>) entry2).getKey();
+                final Object value = ((Entry<?, ?>) entry2).getValue();
                 answer.put(key, value);
             }
         }

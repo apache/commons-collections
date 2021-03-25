@@ -104,10 +104,7 @@ public class BoundedIterator<E> implements Iterator<E> {
      * @return {@code true} if the iterator is within its bounds, {@code false} otherwise
      */
     private boolean checkBounds() {
-        if (pos - offset + 1 > max) {
-            return false;
-        }
-        return true;
+        return pos - offset + 1 <= max;
     }
 
     @Override

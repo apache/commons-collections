@@ -147,7 +147,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public void add(final int index, final E object) {
         // adds element if it is not contained already
-        if (set.contains(object) == false) {
+        if (!set.contains(object)) {
             set.add(object);
             super.add(index, object);
         }
@@ -273,7 +273,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public boolean retainAll(final Collection<?> coll) {
         final boolean result = set.retainAll(coll);
-        if (result == false) {
+        if (!result) {
             return false;
         }
         if (set.isEmpty()) {
@@ -418,7 +418,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
         @Override
         public void add(final E object) {
-            if (set.contains(object) == false) {
+            if (!set.contains(object)) {
                 super.add(object);
                 set.add(object);
             }

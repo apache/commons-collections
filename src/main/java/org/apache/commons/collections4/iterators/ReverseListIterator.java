@@ -132,7 +132,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      */
     @Override
     public void remove() {
-        if (validForUpdate == false) {
+        if (!validForUpdate) {
             throw new IllegalStateException("Cannot remove from list until next() or previous() called");
         }
         iterator.remove();
@@ -147,7 +147,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      */
     @Override
     public void set(final E obj) {
-        if (validForUpdate == false) {
+        if (!validForUpdate) {
             throw new IllegalStateException("Cannot set to list until next() or previous() called");
         }
         iterator.set(obj);
@@ -164,7 +164,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     public void add(final E obj) {
         // the validForUpdate flag is needed as the necessary previous()
         // method call re-enables remove and add
-        if (validForUpdate == false) {
+        if (!validForUpdate) {
             throw new IllegalStateException("Cannot add to list until next() or previous() called");
         }
         validForUpdate = false;

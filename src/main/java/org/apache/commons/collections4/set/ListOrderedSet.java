@@ -248,7 +248,7 @@ public class ListOrderedSet<E>
     @Override
     public boolean retainAll(final Collection<?> coll) {
         final boolean result = decorated().retainAll(coll);
-        if (result == false) {
+        if (!result) {
             return false;
         }
         if (decorated().isEmpty()) {

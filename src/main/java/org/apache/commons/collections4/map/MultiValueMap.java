@@ -220,7 +220,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             return false;
         }
         final boolean removed = valuesForKey.remove(value);
-        if (removed == false) {
+        if (!removed) {
             return false;
         }
         if (valuesForKey.isEmpty()) {

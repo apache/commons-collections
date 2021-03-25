@@ -278,7 +278,7 @@ public class SetUtils {
         Objects.requireNonNull(setA, "setA");
         Objects.requireNonNull(setB, "setB");
 
-        final Predicate<E> containedInB = object -> setB.contains(object);
+        final Predicate<E> containedInB = setB::contains;
 
         return new SetView<E>() {
             @Override

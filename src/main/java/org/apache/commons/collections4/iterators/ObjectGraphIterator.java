@@ -182,7 +182,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             currentIterator = iterator;
         }
 
-        while (currentIterator.hasNext() && hasNext == false) {
+        while (currentIterator.hasNext() && !hasNext) {
             E next = currentIterator.next();
             if (transformer != null) {
                 next = transformer.transform(next);
@@ -218,7 +218,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         updateCurrentIterator();
-        if (hasNext == false) {
+        if (!hasNext) {
             throw new NoSuchElementException("No more elements in the iteration");
         }
         lastUsedIterator = currentIterator;

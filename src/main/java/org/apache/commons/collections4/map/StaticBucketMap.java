@@ -420,7 +420,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map<?, ?> == false) {
+        if (!(obj instanceof Map<?, ?>)) {
             return false;
         }
         final Map<?, ?> other = (Map<?, ?>) obj;
@@ -479,7 +479,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof Map.Entry<?, ?> == false) {
+            if (!(obj instanceof Map.Entry<?, ?>)) {
                 return false;
             }
 
@@ -607,7 +607,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Map.Entry<?, ?> == false) {
+            if (!(obj instanceof Map.Entry<?, ?>)) {
                 return false;
             }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;

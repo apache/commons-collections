@@ -139,7 +139,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if the add is invalid
      */
     protected void validate(final E object) {
-        if (predicate.evaluate(object) == false) {
+        if (!predicate.evaluate(object)) {
             throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
                                                predicate + "' rejected it");
         }

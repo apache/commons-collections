@@ -1429,35 +1429,34 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if the object type is invalid
      */
     public static Object get(final Object object, final int index) {
-        final int i = index;
-        if (i < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
         }
         if (object instanceof Map<?, ?>) {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
-            return IteratorUtils.get(iterator, i);
+            return IteratorUtils.get(iterator, index);
         }
         if (object instanceof Object[]) {
-            return ((Object[]) object)[i];
+            return ((Object[]) object)[index];
         }
         if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
-            return IteratorUtils.get(it, i);
+            return IteratorUtils.get(it, index);
         }
         if (object instanceof Iterable<?>) {
             final Iterable<?> iterable = (Iterable<?>) object;
-            return IterableUtils.get(iterable, i);
+            return IterableUtils.get(iterable, index);
         }
         if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
-            return EnumerationUtils.get(it, i);
+            return EnumerationUtils.get(it, index);
         }
         if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         }
         try {
-            return Array.get(object, i);
+            return Array.get(object, index);
         } catch (final IllegalArgumentException ex) {
             throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
         }
@@ -1568,10 +1567,10 @@ public class CollectionUtils {
             return ((Object[]) object).length == 0;
         }
         if (object instanceof Iterator<?>) {
-            return ((Iterator<?>) object).hasNext() == false;
+            return !((Iterator<?>) object).hasNext();
         }
         if (object instanceof Enumeration<?>) {
-            return ((Enumeration<?>) object).hasMoreElements() == false;
+            return !((Enumeration<?>) object).hasMoreElements();
         }
         try {
             return Array.getLength(object) == 0;
