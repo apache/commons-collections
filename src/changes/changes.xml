@@ -260,6 +260,9 @@
     <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
       Add new variables to oac.collections4.CollectionUtils and use them in the code base.
     </action>
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump easymock from 4.2 to 4.3 #226.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
