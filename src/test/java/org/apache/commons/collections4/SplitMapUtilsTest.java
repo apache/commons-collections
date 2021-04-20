@@ -79,7 +79,7 @@ public class SplitMapUtilsTest {
         // check individual operations
         int sz = map.size();
 
-        attemptPutOperation(() -> map.clear());
+        attemptPutOperation(map::clear);
 
         assertEquals(sz, map.size());
 
@@ -116,11 +116,11 @@ public class SplitMapUtilsTest {
     public void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
         attemptGetOperation(() -> map.get(null));
-        attemptGetOperation(() -> map.entrySet());
-        attemptGetOperation(() -> map.keySet());
-        attemptGetOperation(() -> map.values());
-        attemptGetOperation(() -> map.size());
-        attemptGetOperation(() -> map.isEmpty());
+        attemptGetOperation(map::entrySet);
+        attemptGetOperation(map::keySet);
+        attemptGetOperation(map::values);
+        attemptGetOperation(map::size);
+        attemptGetOperation(map::isEmpty);
         attemptGetOperation(() -> map.containsKey(null));
         attemptGetOperation(() -> map.containsValue(null));
         attemptGetOperation(() -> map.remove(null));

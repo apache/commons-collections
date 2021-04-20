@@ -263,7 +263,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testCustomPurge() {
         final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
-        final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) v -> expiredValues.add(v);
+        final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) expiredValues::add;
         final Map<Integer, Integer> map = new ReferenceMap<Integer, Integer>(ReferenceStrength.WEAK, ReferenceStrength.HARD, false) {
             private static final long serialVersionUID = 1L;
 

@@ -79,7 +79,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final List<K> list = new ArrayList<>(Arrays.asList(super.getSampleKeys()));
-        Collections.sort(list, new NullComparator<K>());
+        list.sort(new NullComparator<K>());
         return (K[]) list.toArray();
     }
 
