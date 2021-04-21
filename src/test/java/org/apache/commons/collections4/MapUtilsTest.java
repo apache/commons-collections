@@ -1249,10 +1249,7 @@ public class MapUtilsTest {
         assertTrue(MapUtils.getBoolean(in, "key", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", true));
         assertTrue(MapUtils.getBoolean(in, "noKey", key -> {
-            if (System.currentTimeMillis() > 0) {
-                return true;
-            }
-            return false;
+            return System.currentTimeMillis() > 0;
         }));
         assertNull(MapUtils.getBoolean(in, "noKey", key -> null));
         assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> null));

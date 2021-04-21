@@ -1348,10 +1348,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Equator<Integer> e = new Equator<Integer>() {
             @Override
             public boolean equate(final Integer o1, final Integer o2) {
-                if (o1 % 2 == 0 ^ o2 % 2 == 0) {
-                    return false;
-                }
-                return true;
+                return !(o1 % 2 == 0 ^ o2 % 2 == 0);
             }
 
             @Override
@@ -1368,10 +1365,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Equator<Integer> e = new Equator<Integer>() {
             @Override
             public boolean equate(final Integer o1, final Integer o2) {
-                if (o1 % 2 == 0 ^ o2 % 2 == 0) {
-                    return false;
-                }
-                return true;
+                return !(o1 % 2 == 0 ^ o2 % 2 == 0);
             }
 
             @Override
@@ -1459,10 +1453,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Equator<Integer> e = new Equator<Integer>() {
             @Override
             public boolean equate(final Integer o1, final Integer o2) {
-                if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
-                    return false;
-                }
-                return true;
+                return !(o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0);
             }
 
             @Override
@@ -1488,10 +1479,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Equator<Integer> e = new Equator<Integer>() {
             @Override
             public boolean equate(final Integer o1, final Integer o2) {
-                if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
-                    return false;
-                }
-                return true;
+                return !(o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0);
             }
 
             @Override
@@ -1510,10 +1498,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Equator<Integer> e = new Equator<Integer>() {
             @Override
             public boolean equate(final Integer o1, final Integer o2) {
-                if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
-                    return false;
-                }
-                return true;
+                return !(o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0);
             }
 
             @Override

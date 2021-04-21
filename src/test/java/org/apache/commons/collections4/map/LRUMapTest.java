@@ -442,10 +442,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         @Override
         protected boolean removeLRU(final LinkEntry<K, V> entry) {
-            if ("a".equals(entry.getValue())) {
-                return false;
-            }
-            return true;
+            return !"a".equals(entry.getValue());
         }
     }
 
