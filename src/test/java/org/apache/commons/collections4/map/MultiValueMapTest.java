@@ -24,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -366,7 +367,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(true, map.containsValue("A", "Y"));
         assertEquals(true, map.containsValue("A", "Z"));
 
-        coll = (Collection<V>) Arrays.asList("M");
+        coll = (Collection<V>) Collections.singletonList("M");
         assertEquals(true, map.putAll((K) "A", coll));
         assertEquals(4, map.size("A"));
         assertEquals(true, map.containsValue("A", "X"));

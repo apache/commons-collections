@@ -613,7 +613,7 @@ public class CollectionUtilsTest extends MockTestCase {
         result.append(CollectionUtils.forAllButLastDo(strings, (Closure<String>) input -> result.append(input+";")));
         assertEquals("a;b;c", result.toString());
 
-        final Collection<String> oneString = Arrays.asList("a");
+        final Collection<String> oneString = Collections.singletonList("a");
         final StringBuilder resultOne = new StringBuilder();
         resultOne.append(CollectionUtils.forAllButLastDo(oneString, (Closure<String>) input -> resultOne.append(input+";")));
         assertEquals("a", resultOne.toString());

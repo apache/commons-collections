@@ -75,7 +75,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+                e.getClass().equals(NoSuchElementException.class));
         }
 
     }

@@ -115,7 +115,7 @@ public class FluentIterableTest {
         iterable = FluentIterable.of(1);
         assertEquals(1, iterable.size());
         assertFalse(iterable.isEmpty());
-        assertEquals(Arrays.asList(1), iterable.toList());
+        assertEquals(Collections.singletonList(1), iterable.toList());
 
         result = FluentIterable.of(new Integer[0]).toList();
         assertTrue(result.isEmpty());

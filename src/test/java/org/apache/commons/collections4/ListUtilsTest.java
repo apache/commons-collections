@@ -252,12 +252,12 @@ public class ListUtilsTest {
         } catch (final NullPointerException e) {}
 
         try {
-            ListUtils.longestCommonSubsequence(Arrays.asList('A'), null);
+            ListUtils.longestCommonSubsequence(Collections.singletonList('A'), null);
             fail("failed to check for null argument");
         } catch (final NullPointerException e) {}
 
         try {
-            ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
+            ListUtils.longestCommonSubsequence(null, Collections.singletonList('A'));
             fail("failed to check for null argument");
         } catch (final NullPointerException e) {}
 

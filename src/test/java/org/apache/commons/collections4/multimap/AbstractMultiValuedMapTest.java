@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -638,7 +639,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(true, map.containsMapping("A", "Y"));
         assertEquals(true, map.containsMapping("A", "Z"));
 
-        coll = (Collection<V>) Arrays.asList("M");
+        coll = (Collection<V>) Collections.singletonList("M");
         assertEquals(true, map.putAll((K) "A", coll));
         assertEquals(4, map.get((K) "A").size());
         assertEquals(true, map.containsMapping("A", "X"));
@@ -710,10 +711,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testKeysBagIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<K> col = new ArrayList<>();
-        final Iterator<K> it = map.keys().iterator();
-        while (it.hasNext()) {
-            col.add(it.next());
-        }
+        col.addAll(map.keys());
         final Bag<K> bag = new HashBag<>(col);
         assertEquals(2, bag.getCount("one"));
         assertEquals(2, bag.getCount("two"));

@@ -74,7 +74,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+                e.getClass().equals(NoSuchElementException.class));
         }
     }
 

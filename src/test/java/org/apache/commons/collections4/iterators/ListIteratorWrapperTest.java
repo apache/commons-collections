@@ -77,7 +77,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
             iter.next();
         } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
+                       e.getClass().equals(NoSuchElementException.class));
         }
 
         // now, read it backwards
@@ -92,7 +92,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
             iter.previous();
         } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
+                       e.getClass().equals(NoSuchElementException.class));
         }
 
         // now, read it forwards again
