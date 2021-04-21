@@ -143,7 +143,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
 

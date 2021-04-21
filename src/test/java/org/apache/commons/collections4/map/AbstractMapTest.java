@@ -413,7 +413,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                            "isAllowNullValue is not overridden to return false.",
                            values[i] == null || !isAllowNullValue());
 
-                assertTrue("Unknown reason for NullPointer.", false);
+                fail("Unknown reason for NullPointer.");
             }
         }
         assertEquals("size must reflect number of mappings added.",
@@ -532,26 +532,22 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMakeMap() {
         final Map<K, V> em = makeObject();
-        assertTrue("failure in test: makeEmptyMap must return a non-null map.",
-                   em != null);
+        assertNotNull("failure in test: makeEmptyMap must return a non-null map.", em);
 
         final Map<K, V> em2 = makeObject();
-        assertTrue("failure in test: makeEmptyMap must return a non-null map.",
-                   em != null);
+        assertNotNull("failure in test: makeEmptyMap must return a non-null map.", em);
 
-        assertTrue("failure in test: makeEmptyMap must return a new map " +
-                   "with each invocation.", em != em2);
+        assertNotSame("failure in test: makeEmptyMap must return a new map " +
+                "with each invocation.", em, em2);
 
         final Map<K, V> fm = makeFullMap();
-        assertTrue("failure in test: makeFullMap must return a non-null map.",
-                   fm != null);
+        assertNotNull("failure in test: makeFullMap must return a non-null map.", fm);
 
         final Map<K, V> fm2 = makeFullMap();
-        assertTrue("failure in test: makeFullMap must return a non-null map.",
-                   fm != null);
+        assertNotNull("failure in test: makeFullMap must return a non-null map.", fm);
 
-        assertTrue("failure in test: makeFullMap must return a new map " +
-                   "with each invocation.", fm != fm2);
+        assertNotSame("failure in test: makeFullMap must return a new map " +
+                "with each invocation.", fm, fm2);
     }
 
     /**
@@ -559,13 +555,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapIsEmpty() {
         resetEmpty();
-        assertEquals("Map.isEmpty() should return true with an empty map",
-                     true, getMap().isEmpty());
+        assertTrue("Map.isEmpty() should return true with an empty map", getMap().isEmpty());
         verify();
 
         resetFull();
-        assertEquals("Map.isEmpty() should return false with a non-empty map",
-                     false, getMap().isEmpty());
+        assertFalse("Map.isEmpty() should return false with a non-empty map", getMap().isEmpty());
         verify();
     }
 
@@ -623,8 +617,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         resetEmpty();
         for (final Object key : keys) {
-            assertTrue("Map must not contain key when map is empty",
-                    !getMap().containsKey(key));
+            assertFalse("Map must not contain key when map is empty", getMap().containsKey(key));
         }
         verify();
 
@@ -646,8 +639,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         resetEmpty();
         for (final Object value : values) {
-            assertTrue("Empty map must not contain value",
-                       !getMap().containsValue(value));
+            assertFalse("Empty map must not contain value", getMap().containsValue(value));
         }
         verify();
 
@@ -665,11 +657,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapEquals() {
         resetEmpty();
-        assertTrue("Empty maps unequal.", getMap().equals(confirmed));
+        assertEquals("Empty maps unequal.", getMap(), confirmed);
         verify();
 
         resetFull();
-        assertTrue("Full maps unequal.", getMap().equals(confirmed));
+        assertEquals("Full maps unequal.", getMap(), confirmed);
         verify();
 
         resetFull();
@@ -678,12 +670,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Iterator<K> iter = confirmed.keySet().iterator();
         iter.next();
         iter.remove();
-        assertTrue("Different maps equal.", !getMap().equals(confirmed));
+        assertFalse("Different maps equal.", getMap().equals(confirmed));
 
         resetFull();
-        assertTrue("equals(null) returned true.", !getMap().equals(null));
-        assertTrue("equals(new Object()) returned true.",
-                   !getMap().equals(new Object()));
+        assertFalse("equals(null) returned true.", getMap().equals(null));
+        assertFalse("equals(new Object()) returned true.", getMap().equals(new Object()));
         verify();
     }
 
@@ -697,8 +688,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] values = getSampleValues();
 
         for (final Object key : keys) {
-            assertTrue("Empty map.get() should return null.",
-                    getMap().get(key) == null);
+            assertNull("Empty map.get() should return null.", getMap().get(key));
         }
         verify();
 
@@ -714,12 +704,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapHashCode() {
         resetEmpty();
-        assertTrue("Empty maps have different hashCodes.",
-                getMap().hashCode() == confirmed.hashCode());
+        assertEquals("Empty maps have different hashCodes.", getMap().hashCode(), confirmed.hashCode());
 
         resetFull();
-        assertTrue("Equal maps have different hashCodes.",
-                getMap().hashCode() == confirmed.hashCode());
+        assertEquals("Equal maps have different hashCodes.", getMap().hashCode(), confirmed.hashCode());
     }
 
     /**
@@ -733,13 +721,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapToString() {
         resetEmpty();
-        assertTrue("Empty map toString() should not return null",
-                getMap().toString() != null);
+        assertNotNull("Empty map toString() should not return null", getMap().toString());
         verify();
 
         resetFull();
-        assertTrue("Empty map toString() should not return null",
-                getMap().toString() != null);
+        assertNotNull("Empty map toString() should not return null", getMap().toString());
         verify();
     }
 
@@ -801,7 +787,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 final Object o = getMap().put(keys[i], values[i]);
                 getConfirmed().put(keys[i], values[i]);
                 verify();
-                assertTrue("First map.put should return null", o == null);
+                assertNull("First map.put should return null", o);
                 assertTrue("Map should contain key after put",
                         getMap().containsKey(keys[i]));
                 assertTrue("Map should contain value after put",
@@ -821,8 +807,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     // if duplicates are allowed, we're not guaranteed that the value
                     // no longer exists, so don't try checking that.
                     if (!isAllowDuplicateValues()) {
-                        assertTrue("Map should not contain old value after put when changed",
-                                !getMap().containsValue(values[i]));
+                        assertFalse("Map should not contain old value after put when changed", getMap().containsValue(values[i]));
                     }
                 }
             } else {
@@ -860,8 +845,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 // if duplicates are allowed, we're not guaranteed that the value
                 // no longer exists, so don't try checking that.
                 if (!isAllowDuplicateValues()) {
-                    assertTrue("Map should not contain old value after put when changed",
-                        !getMap().containsValue(values[i]));
+                    assertFalse("Map should not contain old value after put when changed", getMap().containsValue(values[i]));
                 }
             }
         } else {
@@ -990,7 +974,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] values = getSampleValues();
         for (final Object key : keys) {
             final Object o = getMap().remove(key);
-            assertTrue("First map.remove should return null", o == null);
+            assertNull("First map.remove should return null", o);
         }
         verify();
 
@@ -1106,7 +1090,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final Map.Entry<K, V> entry = entrySet.iterator().next();
-        assertEquals(true, entrySet.contains(entry));
+        assertTrue(entrySet.contains(entry));
     }
 
     public void testEntrySetContains2() {
@@ -1114,7 +1098,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final Map.Entry<K, V> entry = entrySet.iterator().next();
         final Map.Entry<K, V> test = cloneMapEntry(entry);
-        assertEquals(true, entrySet.contains(test));
+        assertTrue(entrySet.contains(test));
     }
 
     @SuppressWarnings("unchecked")
@@ -1125,7 +1109,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final HashMap<K, V> temp = new HashMap<>();
         temp.put(entry.getKey(), (V) "A VERY DIFFERENT VALUE");
         final Map.Entry<K, V> test = temp.entrySet().iterator().next();
-        assertEquals(false, entrySet.contains(test));
+        assertFalse(entrySet.contains(test));
     }
 
     public void testEntrySetRemove1() {
@@ -1138,8 +1122,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Map.Entry<K, V> entry = entrySet.iterator().next();
         final K key = entry.getKey();
 
-        assertEquals(true, entrySet.remove(entry));
-        assertEquals(false, getMap().containsKey(key));
+        assertTrue(entrySet.remove(entry));
+        assertFalse(getMap().containsKey(key));
         assertEquals(size - 1, getMap().size());
     }
 
@@ -1154,8 +1138,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final K key = entry.getKey();
         final Map.Entry<K, V> test = cloneMapEntry(entry);
 
-        assertEquals(true, entrySet.remove(test));
-        assertEquals(false, getMap().containsKey(key));
+        assertTrue(entrySet.remove(test));
+        assertFalse(getMap().containsKey(key));
         assertEquals(size - 1, getMap().size());
     }
 
@@ -1173,8 +1157,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         temp.put(entry.getKey(), (V) "A VERY DIFFERENT VALUE");
         final Map.Entry<K, V> test = temp.entrySet().iterator().next();
 
-        assertEquals(false, entrySet.remove(test));
-        assertEquals(true, getMap().containsKey(key));
+        assertFalse(entrySet.remove(test));
+        assertTrue(getMap().containsKey(key));
         assertEquals(size, getMap().size());
     }
 
@@ -1210,9 +1194,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     j++;
                 }
                 assertTrue("values().remove(obj) is broken", j < 10000);
-                assertTrue(
-                    "Value should have been removed from the underlying map.",
-                    !getMap().containsValue(sampleValue));
+                assertFalse("Value should have been removed from the underlying map.", getMap().containsValue(sampleValue));
             }
         }
     }
@@ -1316,9 +1298,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 // if key.remove is unsupported, just skip this test
                 return;
             }
-            assertTrue(
-                "Key should have been removed from the underlying map.",
-                !getMap().containsKey(sampleKey));
+            assertFalse("Key should have been removed from the underlying map.", getMap().containsKey(sampleKey));
         }
     }
 
@@ -1403,9 +1383,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 // if entrySet removal is unsupported, just skip this test
                 return;
             }
-            assertTrue(
-                    "Entry should have been removed from the underlying map.",
-                    !getMap().containsKey(sampleKeys[i]));
+            assertFalse("Entry should have been removed from the underlying map.", getMap().containsKey(sampleKeys[i]));
         }
     }
 
@@ -1614,8 +1592,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             int count = 0;
             while (it.hasNext()) {
                 final Map.Entry<K, V> entry = it.next();
-                assertEquals(true, AbstractMapTest.this.getMap().containsKey(entry.getKey()));
-                assertEquals(true, AbstractMapTest.this.getMap().containsValue(entry.getValue()));
+                assertTrue(AbstractMapTest.this.getMap().containsKey(entry.getKey()));
+                assertTrue(AbstractMapTest.this.getMap().containsValue(entry.getValue()));
                 if (!isGetStructuralModify()) {
                     assertEquals(AbstractMapTest.this.getMap().get(entry.getKey()), entry.getValue());
                 }
@@ -1654,24 +1632,24 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             entry1.setValue(newValue1);
             entryConfirmed1.setValue(newValue1);
             assertEquals(newValue1, entry1.getValue());
-            assertEquals(true, AbstractMapTest.this.getMap().containsKey(entry1.getKey()));
-            assertEquals(true, AbstractMapTest.this.getMap().containsValue(newValue1));
+            assertTrue(AbstractMapTest.this.getMap().containsKey(entry1.getKey()));
+            assertTrue(AbstractMapTest.this.getMap().containsValue(newValue1));
             assertEquals(newValue1, AbstractMapTest.this.getMap().get(entry1.getKey()));
             verify();
 
             entry1.setValue(newValue1);
             entryConfirmed1.setValue(newValue1);
             assertEquals(newValue1, entry1.getValue());
-            assertEquals(true, AbstractMapTest.this.getMap().containsKey(entry1.getKey()));
-            assertEquals(true, AbstractMapTest.this.getMap().containsValue(newValue1));
+            assertTrue(AbstractMapTest.this.getMap().containsKey(entry1.getKey()));
+            assertTrue(AbstractMapTest.this.getMap().containsValue(newValue1));
             assertEquals(newValue1, AbstractMapTest.this.getMap().get(entry1.getKey()));
             verify();
 
             entry2.setValue(newValue2);
             entryConfirmed2.setValue(newValue2);
             assertEquals(newValue2, entry2.getValue());
-            assertEquals(true, AbstractMapTest.this.getMap().containsKey(entry2.getKey()));
-            assertEquals(true, AbstractMapTest.this.getMap().containsValue(newValue2));
+            assertTrue(AbstractMapTest.this.getMap().containsKey(entry2.getKey()));
+            assertTrue(AbstractMapTest.this.getMap().containsValue(newValue2));
             assertEquals(newValue2, AbstractMapTest.this.getMap().get(entry2.getKey()));
             verify();
         }
@@ -1699,8 +1677,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 return;
             }
             resetFull();
-            assertEquals(false, getCollection().remove(null));
-            assertEquals(false, getCollection().remove(new Object()));
+            assertFalse(getCollection().remove(null));
+            assertFalse(getCollection().remove(new Object()));
         }
 
         @Override
@@ -1956,7 +1934,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // concurrent modification exceptions.
         // Because of this we have assertEquals(map, confirmed), and not the other way around.
         assertEquals("Map should still equal HashMap", map, confirmed);
-        assertTrue("Map should still equal HashMap", getMap().equals(getConfirmed()));
+        assertEquals("Map should still equal HashMap", getMap(), getConfirmed());
     }
 
     public void verifyEntrySet() {

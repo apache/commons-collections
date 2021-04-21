@@ -71,7 +71,7 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         it = testList.iterator();
-        assertTrue(it != UnmodifiableIterator.unmodifiableIterator(it));
+        assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         try {
             UnmodifiableIterator.unmodifiableIterator(null);

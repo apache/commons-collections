@@ -219,7 +219,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             final Object value = lm.get(key);
             assertEquals(value, lm.remove(i));
             list.remove(i);
-            assertEquals(false, lm.containsKey(key));
+            assertFalse(lm.containsKey(key));
         }
     }
 

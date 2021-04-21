@@ -85,7 +85,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         assertSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         it = getMap().mapIterator();
-        assertTrue(it != UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
+        assertNotSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         try {
             UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null);

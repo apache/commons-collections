@@ -114,7 +114,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
 
         final MapIterator<K, V> it = makeEmptyIterator();
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
 
         // next() should throw a NoSuchElementException
         try {
@@ -161,9 +161,9 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
 
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
@@ -193,7 +193,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
         final Map<K, V> confirmed = getConfirmedMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
         final V value = it.getValue();
 
@@ -209,11 +209,11 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         assertSame("Key must not change after setValue", key, it.getKey());
         assertSame("Value must be changed after setValue", newValue, it.getValue());
         assertSame("setValue must return old value", value, old);
-        assertEquals("Map must contain key", true, map.containsKey(key));
+        assertTrue("Map must contain key", map.containsKey(key));
         // test against confirmed, as map may contain value twice
         assertEquals("Map must not contain old value",
             confirmed.containsValue(old), map.containsValue(old));
-        assertEquals("Map must contain new value", true, map.containsValue(newValue));
+        assertTrue("Map must contain new value", map.containsValue(newValue));
         verify();
 
         it.setValue(newValue);  // same value - should be OK
@@ -234,7 +234,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
         final Map<K, V> confirmed = getConfirmedMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         if (!supportsRemove()) {
@@ -248,7 +248,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
 
         it.remove();
         confirmed.remove(key);
-        assertEquals(false, map.containsKey(key));
+        assertFalse(map.containsKey(key));
         verify();
 
         try {
@@ -266,7 +266,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.setValue(newValue);
@@ -288,7 +288,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.remove();
@@ -309,7 +309,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.remove();

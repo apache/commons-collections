@@ -16,9 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * Tests the ObjectArrayListIterator class.
@@ -68,14 +69,12 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasPrevious());
+        assertFalse("Iterator should now be empty", iter.hasPrevious());
 
         try {
             iter.previous();
         } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
         }
 
     }
@@ -98,7 +97,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
             x++;
         }
 
-        assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
+        assertArrayEquals("The two arrays should have the same value, i.e. {0,1,2}", testData, result);
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
         iter = makeArrayListIterator((E[]) testArray);

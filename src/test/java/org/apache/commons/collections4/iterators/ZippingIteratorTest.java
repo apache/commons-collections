@@ -84,7 +84,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
             assertTrue(iter.hasNext());
             assertEquals(even, iter.next());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateEvenOdd() {
@@ -93,7 +93,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
             assertTrue(iter.hasNext());
             assertEquals(Integer.valueOf(i), iter.next());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateOddEven() {
@@ -108,7 +108,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
                 j++;
             }
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateEvenEven() {
@@ -119,7 +119,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
             assertTrue(iter.hasNext());
             assertEquals(even, iter.next());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateFibEvenOdd() {
@@ -154,7 +154,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
         assertEquals(Integer.valueOf(18), iter.next()); // even  18
         assertEquals(Integer.valueOf(19), iter.next()); // odd   19
 
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testRemoveFromSingle() {

@@ -104,7 +104,7 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     public void testEqualsNull() {
         final Object obj = makeObject();
-        assertEquals(false, obj.equals(null)); // make sure this doesn't throw NPE either
+        assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
     public void testObjectHashCodeEqualsSelfHashCode() {
@@ -124,9 +124,7 @@ public abstract class AbstractObjectTest extends BulkTest {
             assertEquals(
                 "[2] When two objects are equal, their hashCodes should be also.",
                 obj1.hashCode(), obj2.hashCode());
-            assertTrue(
-                "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true",
-                obj2.equals(obj1));
+            assertEquals("When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true", obj2, obj1);
         }
     }
 

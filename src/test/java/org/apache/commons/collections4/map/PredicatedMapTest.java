@@ -57,12 +57,10 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();
-        assertTrue("returned entryset should not be null",
-            map.entrySet() != null);
+        assertNotNull("returned entryset should not be null", map.entrySet());
         map = decorateMap(new HashMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertTrue("returned entryset should contain one entry",
-            map.entrySet().size() == 1);
+        assertEquals("returned entryset should contain one entry", 1, map.entrySet().size());
         map = decorateMap(map, null, null);
     }
 
@@ -83,8 +81,8 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             // expected
         }
 
-        assertTrue(!map.containsKey(Integer.valueOf(3)));
-        assertTrue(!map.containsValue(Integer.valueOf(3)));
+        assertFalse(map.containsKey(Integer.valueOf(3)));
+        assertFalse(map.containsValue(Integer.valueOf(3)));
 
         final Map<K, V> map2 = new HashMap<>();
         map2.put((K) "A", (V) "a");
