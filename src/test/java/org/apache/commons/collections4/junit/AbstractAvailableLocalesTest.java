@@ -74,7 +74,7 @@ public abstract class AbstractAvailableLocalesTest {
                 }
             }
         }
-        Collections.sort(availableLocales, new ObjectToStringComparator());
+        availableLocales.sort(new ObjectToStringComparator());
         return availableLocales;
     }
 
