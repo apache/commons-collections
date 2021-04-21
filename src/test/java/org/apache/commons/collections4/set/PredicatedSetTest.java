@@ -64,7 +64,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
-        assertTrue("returned set should not be null", set.decorated() != null);
+        assertNotNull("returned set should not be null", set.decorated());
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +77,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", !set.contains(i));
+        assertFalse("Collection shouldn't contain illegal element", set.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -94,10 +94,10 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Set shouldn't contain illegal element", !set.contains("one"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("two"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains(Integer.valueOf(3)));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("four"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("one"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("two"));
+        assertFalse("Set shouldn't contain illegal element", set.contains(Integer.valueOf(3)));
+        assertFalse("Set shouldn't contain illegal element", set.contains("four"));
     }
 
     @Override

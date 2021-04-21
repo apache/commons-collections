@@ -66,7 +66,7 @@ public class TransformedSplitMapTest extends BulkTest {
         }
 
         int sz = map.size();
-        assertEquals(null, map.remove(k[0]));
+        assertNull(map.remove(k[0]));
         assertEquals(sz, map.size());
         assertEquals(objectToClass.transform(v[0]), map.remove(intToString.transform(k[0])));
         assertEquals(--sz, map.size());

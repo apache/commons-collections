@@ -51,7 +51,7 @@ public class LoopingIteratorTest {
     public void testLooping0() throws Exception {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
-        assertTrue(!loop.hasNext(), "hasNext should return false");
+        assertFalse(loop.hasNext(), "hasNext should return false");
 
         try {
             loop.next();

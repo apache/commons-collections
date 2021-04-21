@@ -311,12 +311,12 @@ public class CollectionUtilsTest extends MockTestCase {
     public void collect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);
         Collection<Number> collection = CollectionUtils.<Integer, Number>collect(iterableA, transformer);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertCollectResult(collection);
 
         ArrayList<Number> list;
         list = CollectionUtils.collect(collectionA, transformer, new ArrayList<Number>());
-        assertTrue(list.size() == collectionA.size());
+        assertEquals(list.size(), collectionA.size());
         assertCollectResult(list);
 
         Iterator<Integer> iterator = null;
@@ -324,12 +324,12 @@ public class CollectionUtilsTest extends MockTestCase {
 
         iterator = iterableA.iterator();
         list = CollectionUtils.collect(iterator, transformer, list);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertCollectResult(collection);
 
         iterator = collectionA.iterator();
         collection = CollectionUtils.<Integer, Number>collect(iterator, transformer);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertTrue(collection.contains(2L) && !collection.contains(1));
         collection = CollectionUtils.collect((Iterator<Integer>) null, (Transformer<Integer, Number>) null);
         assertTrue(collection.isEmpty());
@@ -2140,9 +2140,9 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void testSizeIsEmpty_Map() {
         final Map<String, String> map = new HashMap<>();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(map));
+        assertTrue(CollectionUtils.sizeIsEmpty(map));
         map.put("1", "a");
-        assertEquals(false, CollectionUtils.sizeIsEmpty(map));
+        assertFalse(CollectionUtils.sizeIsEmpty(map));
     }
 
     // -----------------------------------------------------------------------

@@ -19,6 +19,8 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
@@ -56,15 +58,9 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse("Iterator should now be empty", iter.hasNext());
 
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        assertThrows(NoSuchElementException.class, iter::next, "NoSuchElementException must be thrown");
     }
 
     public void testNullArray() {

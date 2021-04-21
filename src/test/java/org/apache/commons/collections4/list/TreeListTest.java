@@ -117,7 +117,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         l.add((E) "andres");
         l.add((E) "harald");
         l.add(0, null);
-        assertEquals(null, l.get(0));
+        assertNull(l.get(0));
         assertEquals("hugo", l.get(1));
         assertEquals("erna", l.get(2));
         assertEquals("daniel", l.get(3));
@@ -135,7 +135,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         l.add((E) "harald");
         l.add(0, null);
         int i = 0;
-        assertEquals(null, l.get(i++));
+        assertNull(l.get(i++));
         assertEquals("hugo", l.get(i++));
         assertEquals("erna", l.get(i++));
         assertEquals("daniel", l.get(i++));
@@ -241,7 +241,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals(Integer.valueOf(4), li.next());
         assertEquals(Integer.valueOf(4), li.previous());
         assertEquals(Integer.valueOf(4), li.next());
-        assertEquals(false, li.hasNext());
+        assertFalse(li.hasNext());
     }
 
     public void testBugCollections447() {

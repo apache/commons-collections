@@ -67,12 +67,12 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         for (int i = 0; i < els.length; i++) {
             list.add(els[i]);
             assertEquals(i + 1, list.size());
-            assertEquals(true, list.contains(Integer.valueOf((String) els[i])));
-            assertEquals(false, list.contains(els[i]));
+            assertTrue(list.contains(Integer.valueOf((String) els[i])));
+            assertFalse(list.contains(els[i]));
         }
 
-        assertEquals(false, list.remove(els[0]));
-        assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
+        assertFalse(list.remove(els[0]));
+        assertTrue(list.remove(Integer.valueOf((String) els[0])));
 
         list.clear();
         for (int i = 0; i < els.length; i++) {
@@ -116,12 +116,12 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         final List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
         for (final Object el : els) {
-            assertEquals(true, list.contains(Integer.valueOf((String) el)));
-            assertEquals(false, list.contains(el));
+            assertTrue(list.contains(Integer.valueOf((String) el)));
+            assertFalse(list.contains(el));
         }
 
-        assertEquals(false, list.remove(els[0]));
-        assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
+        assertFalse(list.remove(els[0]));
+        assertTrue(list.remove(Integer.valueOf((String) els[0])));
     }
 
     public void testSubList() {

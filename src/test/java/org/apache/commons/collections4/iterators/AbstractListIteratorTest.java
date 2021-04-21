@@ -95,9 +95,9 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
 
         final ListIterator<E> it = makeEmptyIterator();
 
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
         assertEquals(0, it.nextIndex());
-        assertEquals(false, it.hasPrevious());
+        assertFalse(it.hasPrevious());
         assertEquals(-1, it.previousIndex());
 
         // next() should throw a NoSuchElementException
@@ -126,8 +126,8 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         }
 
         // check state at end
-        assertEquals(false, it.hasNext());
-        assertEquals(true, it.hasPrevious());
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
         try {
             it.next();
             fail("NoSuchElementException must be thrown from next at end of ListIterator");
@@ -144,8 +144,8 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         }
 
         // check state at start
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
         try {
             it.previous();
             fail("NoSuchElementException must be thrown from previous at start of ListIterator");
@@ -177,7 +177,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         // add at start should be OK, added should not be next
         it = makeObject();
         it.add(addValue);
-        assertTrue(addValue != it.next());
+        assertNotSame(addValue, it.next());
 
         // add in middle and at end should be OK
         it = makeObject();
