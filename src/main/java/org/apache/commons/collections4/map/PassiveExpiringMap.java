@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
  * </p>
  * <p>
  * When invoking methods that involve accessing the entire map contents (i.e
- * {@link #containsKey(Object)}, {@link #entrySet()}, etc.) this decorator
+ * {@link #containsValue(Object)}, {@link #entrySet()}, etc.) this decorator
  * removes all expired entries prior to actually completing the invocation.
  * </p>
  * <p>
