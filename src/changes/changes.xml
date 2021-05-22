@@ -267,6 +267,9 @@
     <action type="fix" dev="kinow" due-to="Jin Xu">
       Fix checkstyle syntax (was scope, is now accessModifiers) via PR #235.
     </action>
+    <action issue="COLLECTIONS-786" type="fix" dev="kinow" due-to="vandrewskis">
+      Fix PassiveExpiringMap documentation for methods that involve accessing the entire map.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
