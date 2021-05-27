@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import org.apache.commons.collections4.iterators.ZippedTupleIterator.ZippedTuple;
+import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 
 /**
  * Provides a iteration over the elements contained in a pair of Iterators.
@@ -35,11 +35,11 @@ import org.apache.commons.collections4.iterators.ZippedTupleIterator.ZippedTuple
  *   List<Integer> studentIds = ...
  *   List<String> studentNames = ...
  *
- *   ZippedTupleIterator<ZippedTuple<Integer, String>> zippedIterator =
- *     ZippedTupleIterator.ofIterables(studentIds, studentNames);
+ *   PairedIterator<PairedItem<Integer, String>> pairedIterator =
+ *     PairedIterator.ofIterables(studentIds, studentNames);
  *
- *   while (zippedIterator.hasNext()) {
- *     ZippedTuple<Integer, String> item = zippedIterator.next();
+ *   while (pairedIterator.hasNext()) {
+ *     PairedItem<Integer, String> item = zippedIterator.next();
  *     ...
  *   }
  * }</pre>
@@ -47,7 +47,7 @@ import org.apache.commons.collections4.iterators.ZippedTupleIterator.ZippedTuple
  * @param <L> the left elements' type
  * @param <R> the right elements' type
  */
-public class ZippedTupleIterator<L, R> implements Iterator<ZippedTuple<L, R>> {
+public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
 
     /**
      * The left {@link Iterator}s to evaluate.
@@ -70,7 +70,7 @@ public class ZippedTupleIterator<L, R> implements Iterator<ZippedTuple<L, R>> {
      * @param rightIterator the iterator for the right side element.
      * @throws NullPointerException if either iterator is null
      */
-    public ZippedTupleIterator(Iterator<L> leftIterator, Iterator<R> rightIterator) {
+    public PairedIterator(Iterator<L> leftIterator, Iterator<R> rightIterator) {
       this.leftIterator = requireNonNull(leftIterator);
       this.rightIterator = requireNonNull(rightIterator);
     }
@@ -83,9 +83,9 @@ public class ZippedTupleIterator<L, R> implements Iterator<ZippedTuple<L, R>> {
      * @return the iterator to iterate over the provided iterators.
      * @throws NullPointerException if either iterator is null
      */
-    public static <L, R> ZippedTupleIterator<L, R> of(Iterator<L> leftIterator,
+    public static <L, R> PairedIterator<L, R> of(Iterator<L> leftIterator,
         Iterator<R> rightIterator) {
-      return new ZippedTupleIterator<>(leftIterator, rightIterator);
+      return new PairedIterator<>(leftIterator, rightIterator);
     }
 
     /**
@@ -96,54 +96,9 @@ public class ZippedTupleIterator<L, R> implements Iterator<ZippedTuple<L, R>> {
      * @return the iterator to iterate over the iterators derived from the provided iterables.
      * @throws NullPointerException if either iterables is null
      */
-    public static <L, R> ZippedTupleIterator<L, R> ofIterables(Iterable<L> leftIterable,
+    public static <L, R> PairedIterator<L, R> ofIterables(Iterable<L> leftIterable,
         Iterable<R> rightIterable) {
       return of(requireNonNull(leftIterable).iterator(), requireNonNull(rightIterable).iterator());
-    }
-
-    // Iterator Methods
-    // -------------------------------------------------------------------
-
-    /**
-     * An immutable tuple class to represent elements from both the iterators.
-     *
-     * @param <L> the left elements' type
-     * @param <R> the right elements' type
-     */
-    public static final class ZippedTuple<L, R> {
-
-      private final L leftItem;
-
-      private final R rightItem;
-
-      private ZippedTuple(L leftItem, R rightItem) {
-        this.leftItem = leftItem;
-        this.rightItem = rightItem;
-      }
-
-      /**
-       * Convenience static factory method to construct the tuple pair.
-       *
-       * @param left  the left element
-       * @param right the right element
-       * @return the Immutable tuple pair of two elements.
-       */
-      private static <L, R> ZippedTuple<L, R> of(L left, R right) {
-        return new ZippedTuple<>(left, right);
-      }
-
-      public L getLeftItem() {
-        return leftItem;
-      }
-
-      public R getRightItem() {
-        return rightItem;
-      }
-
-      @Override
-      public String toString() {
-        return String.format("{%s, %s}", leftItem, rightItem);
-      }
     }
 
     // Iterator Methods
@@ -166,11 +121,53 @@ public class ZippedTupleIterator<L, R> implements Iterator<ZippedTuple<L, R>> {
      * @throws NoSuchElementException if any one child iterator is exhausted.
      */
     @Override
-    public ZippedTuple<L, R> next() {
+    public PairedItem<L, R> next() {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
 
-      return ZippedTuple.of(leftIterator.next(), rightIterator.next());
+      return PairedItem.of(leftIterator.next(), rightIterator.next());
     }
+
+    /**
+     * An immutable tuple class to represent elements from both the iterators.
+     *
+     * @param <L> the left elements' type
+     * @param <R> the right elements' type
+     */
+    public static final class PairedItem<L, R> {
+
+    private final L leftItem;
+
+    private final R rightItem;
+
+    private PairedItem(L leftItem, R rightItem) {
+      this.leftItem = leftItem;
+      this.rightItem = rightItem;
+    }
+
+    /**
+     * Convenience static factory method to construct the tuple pair.
+     *
+     * @param left  the left element
+     * @param right the right element
+     * @return the Immutable tuple pair of two elements.
+     */
+    private static <L, R> PairedItem<L, R> of(L left, R right) {
+      return new PairedItem<>(left, right);
+    }
+
+    public L getLeftItem() {
+      return leftItem;
+    }
+
+    public R getRightItem() {
+      return rightItem;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("{%s, %s}", leftItem, rightItem);
+    }
+  }
 }

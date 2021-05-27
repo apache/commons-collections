@@ -1421,4 +1421,12 @@ public class IteratorUtilsTest {
         assertTrue(IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator, "create instance fail");
         assertTrue(IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator, "create instance fail");
     }
+
+    @Test
+    public void testPairedIterator() {
+        final ArrayList<String> stringList = new ArrayList<>();
+        final ArrayList<Integer> integerList = new ArrayList<>();
+
+        assertTrue(IteratorUtils.pairedIterator(stringList.iterator(), integerList.iterator()) instanceof PairedIterator, "create instance failed");
+    }
 }

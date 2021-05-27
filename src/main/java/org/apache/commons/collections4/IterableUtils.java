@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
+import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 
@@ -550,6 +551,34 @@ public class IterableUtils {
                     iterators[i + 1] = others[i].iterator();
                 }
                 return IteratorUtils.zippingIterator(iterators);
+            }
+        };
+    }
+
+    /**
+     * Provides iteration over the elements contained in a pair of Iterables in-tandem.
+     * <p>
+     * The returned iterable has an iterator that traverses the elements in {@code a}
+     * and {@code b} together until one of the iterables is traversed completely.
+     * <p>
+     * The returned iterable's iterator does NOT support {@code remove()}.
+     *
+     * @param <L> the left elements' type
+     * @param <R> the right elements' type
+     * @param left the iterable for the left side elements
+     * @param right the iterable for the right side elements
+     * @return an iterable, over the decorated iterables to traverse them together until one is
+     * exhausted
+     * @throws NullPointerException if any iterator is null
+     */
+    public static <L,R> Iterable<PairedItem<L,R>> pairedIterable(final Iterable<L> left, final Iterable<R> right) {
+        checkNotNull(left);
+        checkNotNull(right);
+
+        return new FluentIterable<PairedItem<L,R>>(){
+            @Override
+            public Iterator<PairedItem<L,R>> iterator() {
+                return IteratorUtils.pairedIterator(left.iterator(), right.iterator());
             }
         };
     }

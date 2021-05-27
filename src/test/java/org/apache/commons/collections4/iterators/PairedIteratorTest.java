@@ -21,16 +21,16 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.collections4.iterators.ZippedTupleIterator.ZippedTuple;
+import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 
 
 /** Unit test suite for {@link ZippingIterator}. */
-public final class ZippedTupleIteratorTest
-    extends AbstractIteratorTest<ZippedTuple<String, Integer>> {
+public final class PairedIteratorTest
+    extends AbstractIteratorTest<PairedItem<String, Integer>> {
 
   //------------------------------------------------------------ Conventional
 
-  public ZippedTupleIteratorTest(String testName) {
+  public PairedIteratorTest(String testName) {
     super(testName);
   }
 
@@ -75,23 +75,23 @@ public final class ZippedTupleIteratorTest
   //---------------------------------------------------- TestIterator Methods
 
   @Override
-  public Iterator<ZippedTuple<String, Integer>> makeEmptyIterator() {
-    return ZippedTupleIterator.of(IteratorUtils.emptyIterator(), IteratorUtils.emptyIterator());
+  public Iterator<PairedItem<String, Integer>> makeEmptyIterator() {
+    return PairedIterator.of(IteratorUtils.emptyIterator(), IteratorUtils.emptyIterator());
   }
 
   @Override
-  public Iterator<ZippedTuple<String, Integer>> makeObject() {
-    return ZippedTupleIterator.of(smallStringsList.iterator(), smallIntsList.iterator());
+  public Iterator<PairedItem<String, Integer>> makeObject() {
+    return PairedIterator.of(smallStringsList.iterator(), smallIntsList.iterator());
   }
 
   public void testLeftIteratorLargerThanRight() {
-    Iterator<ZippedTuple<String, Integer>> zipPairIterator =
-        ZippedTupleIterator.ofIterables(largeStringsList, smallIntsList);
+    Iterator<PairedItem<String, Integer>> zipPairIterator =
+        PairedIterator.ofIterables(largeStringsList, smallIntsList);
 
 
     for (int i = 0; i < SMALL_LIST_SIZE; i++) {
       assertTrue(zipPairIterator.hasNext());
-      ZippedTuple<String, Integer> zippedItem = zipPairIterator.next();
+      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
 
       assertEquals(largeStringsList.get(i) , zippedItem.getLeftItem());
       assertEquals(smallIntsList.get(i) , zippedItem.getRightItem());
@@ -101,13 +101,13 @@ public final class ZippedTupleIteratorTest
   }
 
   public void testRightIteratorLargerThanLeft() {
-    Iterator<ZippedTuple<String, Integer>> zipPairIterator =
-        ZippedTupleIterator.ofIterables(smallStringsList, largeIntsList);
+    Iterator<PairedItem<String, Integer>> zipPairIterator =
+        PairedIterator.ofIterables(smallStringsList, largeIntsList);
 
 
     for (int i = 0; i < SMALL_LIST_SIZE; i++) {
       assertTrue(zipPairIterator.hasNext());
-      ZippedTuple<String, Integer> zippedItem = zipPairIterator.next();
+      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
 
       assertEquals(smallStringsList.get(i) , zippedItem.getLeftItem());
       assertEquals(largeIntsList.get(i) , zippedItem.getRightItem());
@@ -117,28 +117,28 @@ public final class ZippedTupleIteratorTest
   }
 
   public void testEmptyLeftIterator() {
-    Iterator<ZippedTuple<String, Integer>> zipPairIterator =
-        ZippedTupleIterator.of(IteratorUtils.emptyIterator(), largeIntsList.iterator());
+    Iterator<PairedItem<String, Integer>> zipPairIterator =
+        PairedIterator.of(IteratorUtils.emptyIterator(), largeIntsList.iterator());
 
     assertFalse(zipPairIterator.hasNext());
   }
 
   public void testEmptyRightIterator() {
-    Iterator<ZippedTuple<String, Integer>> zipPairIterator =
-        ZippedTupleIterator.of(largeStringsList.iterator(), IteratorUtils.emptyIterator());
+    Iterator<PairedItem<String, Integer>> zipPairIterator =
+        PairedIterator.of(largeStringsList.iterator(), IteratorUtils.emptyIterator());
 
     assertFalse(zipPairIterator.hasNext());
   }
 
 
   public void testValidTupleString() {
-    Iterator<ZippedTuple<String, Integer>> zipPairIterator =
-        ZippedTupleIterator.ofIterables(smallStringsList, largeIntsList);
+    Iterator<PairedItem<String, Integer>> zipPairIterator =
+        PairedIterator.ofIterables(smallStringsList, largeIntsList);
 
 
     for (int i = 0; i < SMALL_LIST_SIZE; i++) {
       assertTrue(zipPairIterator.hasNext());
-      ZippedTuple<String, Integer> zippedItem = zipPairIterator.next();
+      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
 
       assertEquals(
           String.format("{%s, %s}", zippedItem.getLeftItem(), zippedItem.getRightItem()),
