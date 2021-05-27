@@ -53,6 +53,7 @@ import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections4.iterators.ObjectGraphIterator;
+import org.apache.commons.collections4.iterators.PairedIterator;
 import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.apache.commons.collections4.iterators.PushbackIterator;
 import org.apache.commons.collections4.iterators.SingletonIterator;
@@ -905,6 +906,20 @@ public class IteratorUtils {
      */
     public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E>... iterators) {
         return new ZippingIterator<>(iterators);
+    }
+
+    /**
+     * Returns an iterator that provides the elements contained in a pair of Iterators.
+     *
+     * @param <L> the left elements' type
+     * @param <R> the right elements' type
+     * @param left the iterator for the left side elements
+     * @param right the iterator for the right side elements
+     * @return an iterator, to iterate over the decorated iterators together until one is exhausted
+     * @throws NullPointerException if any iterator is null
+     */
+    public static <L,R> PairedIterator<L,R> pairedIterator(final Iterator<L> left, Iterator<R> right) {
+        return PairedIterator.of(left, right);
     }
 
     // Views
