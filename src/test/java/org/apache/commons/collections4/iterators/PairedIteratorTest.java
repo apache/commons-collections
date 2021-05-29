@@ -28,123 +28,123 @@ import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 public final class PairedIteratorTest
     extends AbstractIteratorTest<PairedItem<String, Integer>> {
 
-  //------------------------------------------------------------ Conventional
+    //------------------------------------------------------------ Conventional
 
-  public PairedIteratorTest(String testName) {
-    super(testName);
-  }
-
-  //------------------------------------------------------------ Lifecycle
-
-  private ArrayList<String> smallStringsList = null;
-  private ArrayList<String> largeStringsList = null;
-  private ArrayList<Integer> smallIntsList = null;
-  private ArrayList<Integer> largeIntsList = null;
-
-  // Unequal sized lists
-  private static final int SMALL_LIST_SIZE = 20;
-  private static final int LARGE_LIST_SIZE = 40;
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-
-    smallStringsList = new ArrayList<>();
-    largeStringsList = new ArrayList<>();
-    smallIntsList = new ArrayList<>();
-    largeIntsList = new ArrayList<>();
-
-    Random random = new Random();
-
-    for (int i = 0; i < SMALL_LIST_SIZE; i++) {
-      smallIntsList.add(random.nextInt());
-      smallStringsList.add(UUID.randomUUID().toString());
+    public PairedIteratorTest(String testName) {
+        super(testName);
     }
 
-    for (int i = 0; i < LARGE_LIST_SIZE; i++) {
-      largeIntsList.add(random.nextInt());
-      largeStringsList.add(UUID.randomUUID().toString());
-    }
-  }
+    //------------------------------------------------------------ Lifecycle
 
-  @Override
-  public boolean supportsRemove() {
-    return false;
-  }
+    private ArrayList<String> smallStringsList = null;
+    private ArrayList<String> largeStringsList = null;
+    private ArrayList<Integer> smallIntsList = null;
+    private ArrayList<Integer> largeIntsList = null;
 
-  //---------------------------------------------------- TestIterator Methods
+    // Unequal sized lists
+    private static final int SMALL_LIST_SIZE = 20;
+    private static final int LARGE_LIST_SIZE = 40;
 
-  @Override
-  public Iterator<PairedItem<String, Integer>> makeEmptyIterator() {
-    return PairedIterator.of(IteratorUtils.emptyIterator(), IteratorUtils.emptyIterator());
-  }
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
 
-  @Override
-  public Iterator<PairedItem<String, Integer>> makeObject() {
-    return PairedIterator.of(smallStringsList.iterator(), smallIntsList.iterator());
-  }
+        smallStringsList = new ArrayList<>();
+        largeStringsList = new ArrayList<>();
+        smallIntsList = new ArrayList<>();
+        largeIntsList = new ArrayList<>();
 
-  public void testLeftIteratorLargerThanRight() {
-    Iterator<PairedItem<String, Integer>> zipPairIterator =
-        PairedIterator.ofIterables(largeStringsList, smallIntsList);
+        Random random = new Random();
 
+        for (int i = 0; i < SMALL_LIST_SIZE; i++) {
+            smallIntsList.add(random.nextInt());
+            smallStringsList.add(UUID.randomUUID().toString());
+        }
 
-    for (int i = 0; i < SMALL_LIST_SIZE; i++) {
-      assertTrue(zipPairIterator.hasNext());
-      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
-
-      assertEquals(largeStringsList.get(i) , zippedItem.getLeftItem());
-      assertEquals(smallIntsList.get(i) , zippedItem.getRightItem());
+        for (int i = 0; i < LARGE_LIST_SIZE; i++) {
+            largeIntsList.add(random.nextInt());
+            largeStringsList.add(UUID.randomUUID().toString());
+        }
     }
 
-    assertFalse(zipPairIterator.hasNext());
-  }
-
-  public void testRightIteratorLargerThanLeft() {
-    Iterator<PairedItem<String, Integer>> zipPairIterator =
-        PairedIterator.ofIterables(smallStringsList, largeIntsList);
-
-
-    for (int i = 0; i < SMALL_LIST_SIZE; i++) {
-      assertTrue(zipPairIterator.hasNext());
-      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
-
-      assertEquals(smallStringsList.get(i) , zippedItem.getLeftItem());
-      assertEquals(largeIntsList.get(i) , zippedItem.getRightItem());
+    @Override
+    public boolean supportsRemove() {
+        return false;
     }
 
-    assertFalse(zipPairIterator.hasNext());
-  }
+    //---------------------------------------------------- TestIterator Methods
 
-  public void testEmptyLeftIterator() {
-    Iterator<PairedItem<String, Integer>> zipPairIterator =
-        PairedIterator.of(IteratorUtils.emptyIterator(), largeIntsList.iterator());
-
-    assertFalse(zipPairIterator.hasNext());
-  }
-
-  public void testEmptyRightIterator() {
-    Iterator<PairedItem<String, Integer>> zipPairIterator =
-        PairedIterator.of(largeStringsList.iterator(), IteratorUtils.emptyIterator());
-
-    assertFalse(zipPairIterator.hasNext());
-  }
-
-
-  public void testValidTupleString() {
-    Iterator<PairedItem<String, Integer>> zipPairIterator =
-        PairedIterator.ofIterables(smallStringsList, largeIntsList);
-
-
-    for (int i = 0; i < SMALL_LIST_SIZE; i++) {
-      assertTrue(zipPairIterator.hasNext());
-      PairedItem<String, Integer> zippedItem = zipPairIterator.next();
-
-      assertEquals(
-          String.format("{%s, %s}", zippedItem.getLeftItem(), zippedItem.getRightItem()),
-          zippedItem.toString());
+    @Override
+    public Iterator<PairedItem<String, Integer>> makeEmptyIterator() {
+        return PairedIterator.of(IteratorUtils.emptyIterator(), IteratorUtils.emptyIterator());
     }
 
-    assertFalse(zipPairIterator.hasNext());
-  }
+    @Override
+    public Iterator<PairedItem<String, Integer>> makeObject() {
+        return PairedIterator.of(smallStringsList.iterator(), smallIntsList.iterator());
+    }
+
+    public void testLeftIteratorLargerThanRight() {
+        Iterator<PairedItem<String, Integer>> zipPairIterator =
+            PairedIterator.ofIterables(largeStringsList, smallIntsList);
+
+
+        for (int i = 0; i < SMALL_LIST_SIZE; i++) {
+            assertTrue(zipPairIterator.hasNext());
+            PairedItem<String, Integer> zippedItem = zipPairIterator.next();
+
+            assertEquals(largeStringsList.get(i), zippedItem.getLeftItem());
+            assertEquals(smallIntsList.get(i), zippedItem.getRightItem());
+        }
+
+        assertFalse(zipPairIterator.hasNext());
+    }
+
+    public void testRightIteratorLargerThanLeft() {
+        Iterator<PairedItem<String, Integer>> zipPairIterator =
+            PairedIterator.ofIterables(smallStringsList, largeIntsList);
+
+
+        for (int i = 0; i < SMALL_LIST_SIZE; i++) {
+            assertTrue(zipPairIterator.hasNext());
+            PairedItem<String, Integer> zippedItem = zipPairIterator.next();
+
+            assertEquals(smallStringsList.get(i), zippedItem.getLeftItem());
+            assertEquals(largeIntsList.get(i), zippedItem.getRightItem());
+        }
+
+        assertFalse(zipPairIterator.hasNext());
+    }
+
+    public void testEmptyLeftIterator() {
+        Iterator<PairedItem<String, Integer>> zipPairIterator =
+            PairedIterator.of(IteratorUtils.emptyIterator(), largeIntsList.iterator());
+
+        assertFalse(zipPairIterator.hasNext());
+    }
+
+    public void testEmptyRightIterator() {
+        Iterator<PairedItem<String, Integer>> zipPairIterator =
+            PairedIterator.of(largeStringsList.iterator(), IteratorUtils.emptyIterator());
+
+        assertFalse(zipPairIterator.hasNext());
+    }
+
+
+    public void testValidTupleString() {
+        Iterator<PairedItem<String, Integer>> zipPairIterator =
+            PairedIterator.ofIterables(smallStringsList, largeIntsList);
+
+
+        for (int i = 0; i < SMALL_LIST_SIZE; i++) {
+            assertTrue(zipPairIterator.hasNext());
+            PairedItem<String, Integer> zippedItem = zipPairIterator.next();
+
+            assertEquals(
+                String.format("{%s, %s}", zippedItem.getLeftItem(), zippedItem.getRightItem()),
+                zippedItem.toString());
+        }
+
+        assertFalse(zipPairIterator.hasNext());
+    }
 }

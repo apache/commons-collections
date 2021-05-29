@@ -71,8 +71,8 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      * @throws NullPointerException if either iterator is null
      */
     public PairedIterator(Iterator<L> leftIterator, Iterator<R> rightIterator) {
-      this.leftIterator = requireNonNull(leftIterator);
-      this.rightIterator = requireNonNull(rightIterator);
+        this.leftIterator = requireNonNull(leftIterator);
+        this.rightIterator = requireNonNull(rightIterator);
     }
 
     /**
@@ -83,9 +83,8 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      * @return the iterator to iterate over the provided iterators.
      * @throws NullPointerException if either iterator is null
      */
-    public static <L, R> PairedIterator<L, R> of(Iterator<L> leftIterator,
-        Iterator<R> rightIterator) {
-      return new PairedIterator<>(leftIterator, rightIterator);
+    public static <L, R> PairedIterator<L, R> of(Iterator<L> leftIterator, Iterator<R> rightIterator) {
+        return new PairedIterator<>(leftIterator, rightIterator);
     }
 
     /**
@@ -96,9 +95,8 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      * @return the iterator to iterate over the iterators derived from the provided iterables.
      * @throws NullPointerException if either iterables is null
      */
-    public static <L, R> PairedIterator<L, R> ofIterables(Iterable<L> leftIterable,
-        Iterable<R> rightIterable) {
-      return of(requireNonNull(leftIterable).iterator(), requireNonNull(rightIterable).iterator());
+    public static <L, R> PairedIterator<L, R> ofIterables(Iterable<L> leftIterable, Iterable<R> rightIterable) {
+        return of(requireNonNull(leftIterable).iterator(), requireNonNull(rightIterable).iterator());
     }
 
     // Iterator Methods
@@ -111,7 +109,7 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      */
     @Override
     public boolean hasNext() {
-      return leftIterator.hasNext() && rightIterator.hasNext();
+        return leftIterator.hasNext() && rightIterator.hasNext();
     }
 
     /**
@@ -122,11 +120,11 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      */
     @Override
     public PairedItem<L, R> next() {
-      if (!hasNext()) {
-        throw new NoSuchElementException();
-      }
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
 
-      return PairedItem.of(leftIterator.next(), rightIterator.next());
+        return PairedItem.of(leftIterator.next(), rightIterator.next());
     }
 
     /**
@@ -137,37 +135,37 @@ public class PairedIterator<L, R> implements Iterator<PairedItem<L, R>> {
      */
     public static final class PairedItem<L, R> {
 
-    private final L leftItem;
+        private final L leftItem;
 
-    private final R rightItem;
+        private final R rightItem;
 
-    private PairedItem(L leftItem, R rightItem) {
-      this.leftItem = leftItem;
-      this.rightItem = rightItem;
+        private PairedItem(L leftItem, R rightItem) {
+            this.leftItem = leftItem;
+            this.rightItem = rightItem;
+        }
+
+        /**
+         * Convenience static factory method to construct the tuple pair.
+         *
+         * @param left  the left element
+         * @param right the right element
+         * @return the Immutable tuple pair of two elements.
+         */
+        private static <L, R> PairedItem<L, R> of(L left, R right) {
+            return new PairedItem<>(left, right);
+        }
+
+        public L getLeftItem() {
+            return leftItem;
+        }
+
+        public R getRightItem() {
+            return rightItem;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("{%s, %s}", leftItem, rightItem);
+        }
     }
-
-    /**
-     * Convenience static factory method to construct the tuple pair.
-     *
-     * @param left  the left element
-     * @param right the right element
-     * @return the Immutable tuple pair of two elements.
-     */
-    private static <L, R> PairedItem<L, R> of(L left, R right) {
-      return new PairedItem<>(left, right);
-    }
-
-    public L getLeftItem() {
-      return leftItem;
-    }
-
-    public R getRightItem() {
-      return rightItem;
-    }
-
-    @Override
-    public String toString() {
-      return String.format("{%s, %s}", leftItem, rightItem);
-    }
-  }
 }
