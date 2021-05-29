@@ -61,7 +61,7 @@ public final class PairedIterableTest {
         Iterator<String> stringIterator = smallStringsList.iterator();
         Iterator<Integer> integerIterator = smallIntsList.iterator();
 
-        for(PairedItem<String, Integer> item : PairedIterable.of(smallStringsList, smallIntsList)) {
+        for (PairedItem<String, Integer> item : PairedIterable.of(smallStringsList, smallIntsList)) {
             assertEquals(stringIterator.next(), item.getLeftItem());
             assertEquals(integerIterator.next(), item.getRightItem());
         }

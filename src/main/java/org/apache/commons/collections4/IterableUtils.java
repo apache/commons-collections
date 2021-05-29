@@ -571,13 +571,13 @@ public class IterableUtils {
      * exhausted
      * @throws NullPointerException if any iterator is null
      */
-    public static <L,R> Iterable<PairedItem<L,R>> pairedIterable(final Iterable<L> left, final Iterable<R> right) {
+    public static <L, R> Iterable<PairedItem<L, R>> pairedIterable(final Iterable<L> left, final Iterable<R> right) {
         checkNotNull(left);
         checkNotNull(right);
 
-        return new FluentIterable<PairedItem<L,R>>(){
+        return new FluentIterable<PairedItem<L, R>>(){
             @Override
-            public Iterator<PairedItem<L,R>> iterator() {
+            public Iterator<PairedItem<L, R>> iterator() {
                 return IteratorUtils.pairedIterator(left.iterator(), right.iterator());
             }
         };

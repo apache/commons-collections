@@ -918,7 +918,7 @@ public class IteratorUtils {
      * @return an iterator, to iterate over the decorated iterators together until one is exhausted
      * @throws NullPointerException if any iterator is null
      */
-    public static <L,R> PairedIterator<L,R> pairedIterator(final Iterator<L> left, Iterator<R> right) {
+    public static <L, R> PairedIterator<L, R> pairedIterator(final Iterator<L> left, Iterator<R> right) {
         return PairedIterator.of(left, right);
     }
 

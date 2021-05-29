@@ -82,7 +82,7 @@ public class PairedIterable<L, R> implements Iterable<PairedItem<L, R>> {
      * @return the Iterable to iterate over the elements derived from the provided iterables.
      * @throws NullPointerException if either iterables is null
      */
-    public static <L,R> PairedIterable<L,R> of(Iterable<L> leftIterable, Iterable<R> rightIterable) {
+    public static <L, R> PairedIterable<L, R> of(Iterable<L> leftIterable, Iterable<R> rightIterable) {
         return new PairedIterable<>(leftIterable, rightIterable);
     }
 
@@ -94,7 +94,7 @@ public class PairedIterable<L, R> implements Iterable<PairedItem<L, R>> {
         return PairedIterator.ofIterables(leftIterable, rightIterable);
     }
 
-    public Stream<PairedItem<L,R>> stream() {
+    public Stream<PairedItem<L, R>> stream() {
         return StreamSupport.stream(spliterator(), /*parallel=*/ false);
     }
 }
