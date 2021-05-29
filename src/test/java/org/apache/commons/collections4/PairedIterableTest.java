@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,5 +66,19 @@ public final class PairedIterableTest {
             assertEquals(stringIterator.next(), item.getLeftItem());
             assertEquals(integerIterator.next(), item.getRightItem());
         }
+    }
+
+    @Test
+    public void testStream() {
+        PairedIterable<Integer, String> testIterable =
+            PairedIterable.of(smallIntsList, smallStringsList);
+
+        assertEquals(
+            smallIntsList,
+            testIterable.stream().map(PairedItem::getLeftItem).collect(Collectors.toList()));
+
+        assertEquals(
+            smallStringsList,
+            testIterable.stream().map(PairedItem::getRightItem).collect(Collectors.toList()));
     }
 }
