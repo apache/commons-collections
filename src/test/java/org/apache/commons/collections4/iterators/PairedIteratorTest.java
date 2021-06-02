@@ -16,32 +16,28 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
-import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
 
 
-/** Unit test suite for {@link ZippingIterator}. */
+/** Unit test suite for {@link PairedIterator}. */
 public final class PairedIteratorTest
     extends AbstractIteratorTest<PairedItem<String, Integer>> {
-
-    //------------------------------------------------------------ Conventional
 
     public PairedIteratorTest(String testName) {
         super(testName);
     }
 
-    //------------------------------------------------------------ Lifecycle
+    private ArrayList<String> smallStringsList;
+    private ArrayList<String> largeStringsList;
+    private ArrayList<Integer> smallIntsList;
+    private ArrayList<Integer> largeIntsList;
 
-    private ArrayList<String> smallStringsList = null;
-    private ArrayList<String> largeStringsList = null;
-    private ArrayList<Integer> smallIntsList = null;
-    private ArrayList<Integer> largeIntsList = null;
-
-    // Unequal sized lists
     private static final int SMALL_LIST_SIZE = 20;
     private static final int LARGE_LIST_SIZE = 40;
 
@@ -71,8 +67,6 @@ public final class PairedIteratorTest
     public boolean supportsRemove() {
         return false;
     }
-
-    //---------------------------------------------------- TestIterator Methods
 
     @Override
     public Iterator<PairedItem<String, Integer>> makeEmptyIterator() {
