@@ -16,11 +16,14 @@
  */
 package org.apache.commons.collections4;
 
+import org.apache.commons.collections4.iterators.PairedIterator;
+import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
+
 import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import org.apache.commons.collections4.iterators.PairedIterator;
-import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Provides iteration over the elements contained in a pair of Iterables in-tandem.
@@ -69,8 +72,8 @@ public class PairedIterable<L, R> implements Iterable<PairedItem<L, R>> {
      * @throws NullPointerException if either iterator is null
      */
     public PairedIterable(Iterable<L> leftIterable, Iterable<R> rightIterable) {
-        this.leftIterable = leftIterable;
-        this.rightIterable = rightIterable;
+        this.leftIterable = requireNonNull(leftIterable);
+        this.rightIterable = requireNonNull(rightIterable);
     }
 
     /**

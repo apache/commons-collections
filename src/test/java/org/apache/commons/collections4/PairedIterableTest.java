@@ -16,69 +16,141 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import java.util.*;
+import java.util.stream.IntStream;
+
+import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
+@RunWith(Enclosed.class)
 public final class PairedIterableTest {
-    private ArrayList<String> smallStringsList = null;
-    private ArrayList<String> largeStringsList = null;
-    private ArrayList<Integer> smallIntsList = null;
-    private ArrayList<Integer> largeIntsList = null;
 
-    // Unequal sized lists
-    private static final int SMALL_LIST_SIZE = 20;
-    private static final int LARGE_LIST_SIZE = 40;
+  private static final int SMALL_LIST_SIZE = 20;
+  private static final int LARGE_LIST_SIZE = 40;
 
-    @Before
-    public void setUp() {
-        smallStringsList = new ArrayList<>();
-        largeStringsList = new ArrayList<>();
-        smallIntsList = new ArrayList<>();
-        largeIntsList = new ArrayList<>();
+  private static final List<String> SMALL_STRINGS_LIST =
+      unmodifiableList(stringsList(SMALL_LIST_SIZE));
+  private static final List<String> LARGE_STRINGS_LIST =
+      unmodifiableList(stringsList(LARGE_LIST_SIZE));
+  private static final List<Integer> SMALL_INTS_LIST = unmodifiableList(intsList(SMALL_LIST_SIZE));
+  private static final List<Integer> LARGE_INTS_LIST = unmodifiableList(intsList(LARGE_LIST_SIZE));
 
-        Random random = new Random();
+  @RunWith(Parameterized.class)
+  public static final class ParameterizedTests<L, R> {
+    private final String testCondition;
+    private final List<L> leftList;
+    private final List<R> rightList;
+    private final int expectedIterableSize;
 
-        for (int i = 0; i < SMALL_LIST_SIZE; i++) {
-            smallIntsList.add(random.nextInt());
-            smallStringsList.add(UUID.randomUUID().toString());
-        }
-
-        for (int i = 0; i < LARGE_LIST_SIZE; i++) {
-            largeIntsList.add(random.nextInt());
-            largeStringsList.add(UUID.randomUUID().toString());
-        }
+    public ParameterizedTests(
+        String testCondition, List<L> leftList, List<R> rightList, int expectedIterableSize) {
+      this.testCondition = testCondition;
+      this.leftList = leftList;
+      this.rightList = rightList;
+      this.expectedIterableSize = expectedIterableSize;
     }
 
     @Test
     public void testAllowsForEach() {
-        Iterator<String> stringIterator = smallStringsList.iterator();
-        Iterator<Integer> integerIterator = smallIntsList.iterator();
+      ArrayList<PairedItem<L, R>> outputPairedIterable = new ArrayList<>();
+      for (PairedItem<L, R> item : PairedIterable.of(leftList, rightList)) {
+        outputPairedIterable.add(item);
+      }
 
-        for (PairedItem<String, Integer> item : PairedIterable.of(smallStringsList, smallIntsList)) {
-            assertEquals(stringIterator.next(), item.getLeftItem());
-            assertEquals(integerIterator.next(), item.getRightItem());
-        }
+      assertEquals(expectedIterableSize, outputPairedIterable.size());
+
+      for (int i = 0; i < outputPairedIterable.size(); i++) {
+        PairedItem<L, R> item = outputPairedIterable.get(i);
+        assertEquals(leftList.get(i), item.getLeftItem());
+        assertEquals(rightList.get(i), item.getRightItem());
+      }
     }
 
     @Test
     public void testStream() {
-        PairedIterable<Integer, String> testIterable =
-            PairedIterable.of(smallIntsList, smallStringsList);
+      PairedIterable<L, R> testIterable = PairedIterable.of(leftList, rightList);
 
-        assertEquals(
-            smallIntsList,
-            testIterable.stream().map(PairedItem::getLeftItem).collect(Collectors.toList()));
-
-        assertEquals(
-            smallStringsList,
-            testIterable.stream().map(PairedItem::getRightItem).collect(Collectors.toList()));
+      assertEquals(
+          leftList.subList(0, expectedIterableSize),
+          testIterable.stream().map(PairedItem::getLeftItem).collect(toList()));
+      assertEquals(
+          rightList.subList(0, expectedIterableSize),
+          testIterable.stream().map(PairedItem::getRightItem).collect(toList()));
     }
+
+    @Parameters(name = "{0}")
+    public static Object[][] testingParameters() {
+      return new Object[][] {
+        new Object[] {
+          "left iterable (int) larger than right iterable (string)",
+          LARGE_INTS_LIST,
+          SMALL_STRINGS_LIST,
+          SMALL_LIST_SIZE
+        },
+        new Object[] {
+          "left iterable (string) larger than right iterable (int)",
+          LARGE_STRINGS_LIST,
+          SMALL_INTS_LIST,
+          SMALL_LIST_SIZE
+        },
+        new Object[] {
+          "equal sized left and right (int, string)",
+          LARGE_INTS_LIST,
+          LARGE_STRINGS_LIST,
+          LARGE_LIST_SIZE
+        },
+        new Object[] {
+          "equal sized left and right (string, int)",
+          SMALL_STRINGS_LIST,
+          SMALL_INTS_LIST,
+          SMALL_LIST_SIZE
+        },
+        new Object[] {
+          "Left empty, right small list", Collections.<Integer>emptyList(), LARGE_STRINGS_LIST, 0
+        },
+        new Object[] {
+          "Right empty, left small list", LARGE_STRINGS_LIST, Collections.<Integer>emptyList(), 0
+        },
+        new Object[] {
+          "Right and left both empty lists", Collections.emptyList(), Collections.emptyList(), 0
+        },
+      };
+    }
+  }
+
+  @RunWith(JUnit4.class)
+  public static final class ErrorTest {
+
+    @Test
+    public void leftIterableNullThrowsException() {
+      assertThrows(NullPointerException.class, () -> PairedIterable.of(null, SMALL_INTS_LIST));
+    }
+
+    @Test
+    public void rightIterableNullThrowsException() {
+      assertThrows(NullPointerException.class, () -> PairedIterable.of(SMALL_INTS_LIST, null));
+    }
+  }
+
+  private static List<String> stringsList(int size) {
+    return IntStream.range(0, size)
+        .boxed()
+        .map(x -> UUID.randomUUID().toString())
+        .collect(toList());
+  }
+
+  private static List<Integer> intsList(int size) {
+    Random rnd = new Random();
+    return IntStream.range(0, size).boxed().map(x -> rnd.nextInt()).collect(toList());
+  }
 }
