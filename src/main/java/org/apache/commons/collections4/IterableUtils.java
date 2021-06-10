@@ -560,8 +560,11 @@ public class IterableUtils {
      * <p>
      * The returned iterable has an iterator that traverses the elements in {@code a}
      * and {@code b} together until one of the iterables is traversed completely.
+     * </p>
+     *
      * <p>
      * The returned iterable's iterator does NOT support {@code remove()}.
+     * </p>
      *
      * @param <L> the left elements' type
      * @param <R> the right elements' type
@@ -570,6 +573,7 @@ public class IterableUtils {
      * @return an iterable, over the decorated iterables to traverse them together until one is
      * exhausted
      * @throws NullPointerException if any iterator is null
+     * @since 4.5
      */
     public static <L, R> Iterable<PairedItem<L, R>> pairedIterable(final Iterable<L> left, final Iterable<R> right) {
         checkNotNull(left);
