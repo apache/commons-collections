@@ -86,7 +86,7 @@ public class IteratorUtils {
      * @return an iterator over nothing
      */
     public static <E> ResettableIterator<E> emptyIterator() {
-        return EmptyIterator.resettableEmptyIterator();
+        return EmptyIterator.<E>resettableEmptyIterator();
     }
 
     /**
