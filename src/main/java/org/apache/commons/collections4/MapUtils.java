@@ -26,6 +26,7 @@ import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Map.Entry;
@@ -862,6 +863,57 @@ public class MapUtils {
     }
 
     /**
+     * Gets a List from a Map in a null-safe manner.
+     * <p>
+     * If the value returned from the specified list is not a List then {@code null} is returned.
+     * </p>
+     *
+     * @param <K> the key type
+     * @param map the map to use
+     * @param key the key to look up
+     * @return the value in the Map as a List, {@code null} if null map input
+     */
+    public static <K> List<?> getList(final Map<? super K, ?> map, final K key) {
+        if (map != null) {
+            final Object answer = map.get(key);
+            if (answer instanceof List) {
+                return (List<?>) answer;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Looks up the given key in the given map, converting the result into a list, using the defaultFunction to produce
+     * the default value if the conversion fails.
+     *
+     * @param <K> the key type
+     * @param map the map whose value to look up
+     * @param key the key of the value to look up in that map
+     * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
+     * @return the value in the map as a List, or defaultValue produced by the defaultFunction if the original value
+     *         is null, the map is null or the List conversion fails
+     */
+    public static <K> List<?> getList(final Map<? super K, ?> map, final K key, final Function<K, List<?>> defaultFunction) {
+        return applyDefaultFunction(map, key, MapUtils::getList, defaultFunction);
+    }
+
+    /**
+     * Looks up the given key in the given map, converting the result into a List, using the default value if the
+     * conversion fails.
+     *
+     * @param <K> the key type
+     * @param map the map whose value to look up
+     * @param key the key of the value to look up in that map
+     * @param defaultValue what to return if the value is null or if the conversion fails
+     * @return the value in the map as a List, or defaultValue if the original value is null, the map is null or the
+     *         List conversion fails
+     */
+    public static <K> List<?> getList(final Map<? super K, ?> map, final K key, final List<?> defaultValue) {
+        return applyDefaultValue(map, key, MapUtils::getList, defaultValue);
+    }
+
+    /**
      * Gets a Map from a Map in a null-safe manner.
      * <p>
      * If the value returned from the specified map is not a Map then {@code null} is returned.
@@ -890,7 +942,7 @@ public class MapUtils {
      * @param map the map whose value to look up
      * @param key the key of the value to look up in that map
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
-     * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
+     * @return the value in the map as a Map, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the map conversion fails
      * @since 4.5
      */
@@ -907,7 +959,7 @@ public class MapUtils {
      * @param map the map whose value to look up
      * @param key the key of the value to look up in that map
      * @param defaultValue what to return if the value is null or if the conversion fails
-     * @return the value in the map as a number, or defaultValue if the original value is null, the map is null or the
+     * @return the value in the map as a Map, or defaultValue if the original value is null, the map is null or the
      *         map conversion fails
      */
     public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key, final Map<?, ?> defaultValue) {

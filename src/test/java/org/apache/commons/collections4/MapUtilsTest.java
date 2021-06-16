@@ -1274,6 +1274,19 @@ public class MapUtilsTest {
     }
 
     @Test
+    public void testGetList() {
+        final Map<String, List<String>> in = new HashMap<>();
+        final List<String> valList = new ArrayList<>();
+        valList.add("value1");
+        in.put("key1", valList);
+        final List<?> outValue = MapUtils.getList(in, "key1", (List<?>) null);
+
+        assertEquals("value1", outValue.get(0));
+        assertNull(MapUtils.getList(in, "key2", (List<?>) null));
+        assertNull(MapUtils.getList(null, "key2", (List<?>) null));
+    }
+
+    @Test
     public void testGetMap() {
         final Map<String, Map<String, String>> in = new HashMap<>();
         final Map<String, String> valMap = new HashMap<>();
