@@ -19,6 +19,7 @@ package org.apache.commons.collections4.trie;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -425,6 +426,24 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(prefixMap.values().isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    public void testNullTerminatedKey() {
+        // COLLECTIONS-714
+        PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        try {
+            trie.put("x\u0000", 1);
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("x\u0000", 1);
+        try {
+            trie = new PatriciaTrie<>(map);
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
     }
 
     //-----------------------------------------------------------------------
