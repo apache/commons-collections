@@ -50,6 +50,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1313,5 +1314,20 @@ public class MapUtilsTest {
             return ((DecimalFormat) numberFormat).getDecimalFormatSymbols().getDecimalSeparator();
         }
         return '.';
+    }
+
+    @Test
+    public void testBlankCharSequenceMap(){
+        final Map<String, String> blankMap = new HashMap<>();
+        blankMap.put("key1",null);
+        blankMap.put("key2","");
+        blankMap.put("key3","LGD");
+        String value1 = MapUtils.getString(blankMap, "key1");
+        String value2 = MapUtils.getString(blankMap, "key2");
+        String value3 = MapUtils.getString(blankMap, "key3");
+        assertTrue(StringUtils.isBlank(value1));
+        assertTrue(StringUtils.isBlank(value2));
+        assertTrue(StringUtils.isNotBlank(value3));
+
     }
 }
