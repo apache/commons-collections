@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -425,6 +426,29 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(prefixMap.values().isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    public void testNullTerminatedKey1() {
+        // COLLECTIONS-714
+        Map<String, Integer> map = new HashMap<>();
+        map.put("x", 0);         // key of length 1
+        map.put("x\u0000", 1);   // key of length 2
+        map.put("x\u0000y", 2);  // key of length 3
+        Assert.assertEquals(3, map.size());  // 3 keys in map
+
+        PatriciaTrie<Integer> trie = new PatriciaTrie<>(map);
+        Assert.assertEquals(3, trie.size()); // 3 keys in corresponding trie
+    }
+
+    public void testNullTerminatedKey2() {
+        // COLLECTIONS-714
+        PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("x", 0);
+        Assert.assertTrue(trie.containsKey("x")); // just inserted
+
+        trie.put("x\u0000", 1);
+        Assert.assertTrue(trie.containsKey("x\u0000")); // just inserted
+        Assert.assertTrue(trie.containsKey("x")); // previously inserted; not removed
     }
 
     //-----------------------------------------------------------------------
