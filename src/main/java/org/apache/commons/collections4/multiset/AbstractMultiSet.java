@@ -165,7 +165,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         /** {@inheritDoc} */
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException();
             }
             final int count = current.getCount();
@@ -374,7 +374,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
 
         @Override
         public boolean contains(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
+            if (!(obj instanceof Entry<?>)) {
                 return false;
             }
             final Entry<?> entry = (Entry<?>) obj;
@@ -384,7 +384,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
+            if (!(obj instanceof Entry<?>)) {
                 return false;
             }
             final Entry<?> entry = (Entry<?>) obj;
@@ -469,7 +469,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         if (object == this) {
             return true;
         }
-        if (object instanceof MultiSet == false) {
+        if (!(object instanceof MultiSet)) {
             return false;
         }
         final MultiSet<?> other = (MultiSet<?>) object;

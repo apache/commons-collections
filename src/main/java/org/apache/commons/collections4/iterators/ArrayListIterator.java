@@ -115,7 +115,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     @SuppressWarnings("unchecked")
     public E previous() {
-        if (hasPrevious() == false) {
+        if (!hasPrevious()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = --this.index;
@@ -131,7 +131,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     @SuppressWarnings("unchecked")
     public E next() {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = this.index;

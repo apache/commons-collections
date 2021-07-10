@@ -144,7 +144,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     @Override
     @SuppressWarnings("unchecked")
     public E next() {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         return (E) Array.get(array, index++);

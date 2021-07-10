@@ -1568,10 +1568,10 @@ public class CollectionUtils {
             return ((Object[]) object).length == 0;
         }
         if (object instanceof Iterator<?>) {
-            return ((Iterator<?>) object).hasNext() == false;
+            return !((Iterator<?>) object).hasNext();
         }
         if (object instanceof Enumeration<?>) {
-            return ((Enumeration<?>) object).hasMoreElements() == false;
+            return !((Enumeration<?>) object).hasMoreElements();
         }
         try {
             return Array.getLength(object) == 0;

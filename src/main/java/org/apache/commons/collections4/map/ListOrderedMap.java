@@ -632,7 +632,7 @@ public class ListOrderedMap<K, V>
         @Override
         @SuppressWarnings("unchecked")
         public boolean remove(final Object obj) {
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
             if (getEntrySet().contains(obj)) {
@@ -753,7 +753,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public void remove() {
-            if (readable == false) {
+            if (!readable) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
             iterator.remove();
@@ -763,7 +763,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public K getKey() {
-            if (readable == false) {
+            if (!readable) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return last;
@@ -771,7 +771,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public V getValue() {
-            if (readable == false) {
+            if (!readable) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return parent.get(last);
@@ -779,7 +779,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public V setValue(final V value) {
-            if (readable == false) {
+            if (!readable) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return parent.map.put(last, value);
@@ -794,7 +794,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public String toString() {
-            if (readable == true) {
+            if (readable) {
                 return "Iterator[" + getKey() + "=" + getValue() + "]";
             }
             return "Iterator[]";

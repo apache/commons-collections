@@ -113,7 +113,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     @Override
     public boolean isEmpty() {
         for (final Collection<E> item : all) {
-            if (item.isEmpty() == false) {
+            if (!item.isEmpty()) {
                 return false;
             }
         }
@@ -262,7 +262,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return false;
         }
         for (final Object item : coll) {
-            if (contains(item) == false) {
+            if (!contains(item)) {
                 return false;
             }
         }

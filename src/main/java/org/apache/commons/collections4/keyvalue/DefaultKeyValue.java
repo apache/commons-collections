@@ -129,7 +129,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof DefaultKeyValue == false) {
+        if (!(obj instanceof DefaultKeyValue)) {
             return false;
         }
 

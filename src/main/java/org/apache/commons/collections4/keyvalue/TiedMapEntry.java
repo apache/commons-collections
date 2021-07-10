@@ -104,7 +104,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map.Entry == false) {
+        if (!(obj instanceof Map.Entry)) {
             return false;
         }
         final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;

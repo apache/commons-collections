@@ -90,7 +90,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
             lastUsedIterator = currentIterator;
         }
 
-        while (currentIterator.hasNext() == false && !chainExhausted) {
+        while (!currentIterator.hasNext() && !chainExhausted) {
             final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
             if (nextIterator != null) {
                 currentIterator = nextIterator;

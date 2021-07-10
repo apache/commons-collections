@@ -112,7 +112,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     @Override
     public boolean isEmpty() {
         for (final Set<E> item : all) {
-            if (item.isEmpty() == false) {
+            if (!item.isEmpty()) {
                 return false;
             }
         }
@@ -257,7 +257,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             return false;
         }
         for (final Object item : coll) {
-            if (contains(item) == false) {
+            if (!contains(item)) {
                 return false;
             }
         }

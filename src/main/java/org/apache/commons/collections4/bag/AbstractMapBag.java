@@ -225,7 +225,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
             }
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException();
             }
             final MutableInteger mut = current.getValue();
@@ -427,7 +427,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof MutableInteger == false) {
+            if (!(obj instanceof MutableInteger)) {
                 return false;
             }
             return ((MutableInteger) obj).value == value;
@@ -558,7 +558,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         if (object == this) {
             return true;
         }
-        if (object instanceof Bag == false) {
+        if (!(object instanceof Bag)) {
             return false;
         }
         final Bag<?> other = (Bag<?>) object;

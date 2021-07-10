@@ -87,7 +87,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
         }
-        if (iterator.hasNext() == false) {
+        if (!iterator.hasNext()) {
             reset();
         }
         return iterator.next();
@@ -110,7 +110,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
         }
-        if (iterator.hasNext() == false) {
+        if (!iterator.hasNext()) {
             return 0;
         }
         return iterator.nextIndex();
@@ -144,7 +144,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
         }
-        if (iterator.hasPrevious() == false) {
+        if (!iterator.hasPrevious()) {
             E result = null;
             while (iterator.hasNext()) {
                 result = iterator.next();
@@ -172,7 +172,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
         }
-        if (iterator.hasPrevious() == false) {
+        if (!iterator.hasPrevious()) {
             return list.size() - 1;
         }
         return iterator.previousIndex();

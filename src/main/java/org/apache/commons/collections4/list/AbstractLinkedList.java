@@ -300,7 +300,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         boolean modified = false;
         final Iterator<E> it = iterator();
         while (it.hasNext()) {
-            if (coll.contains(it.next()) == false) {
+            if (!coll.contains(it.next())) {
                 it.remove();
                 modified = true;
             }
@@ -375,7 +375,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof List == false) {
+        if (!(obj instanceof List)) {
             return false;
         }
         final List<?> other = (List<?>) obj;
