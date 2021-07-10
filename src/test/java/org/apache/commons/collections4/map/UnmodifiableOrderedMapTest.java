@@ -62,7 +62,6 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -79,7 +78,6 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

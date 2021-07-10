@@ -63,7 +63,6 @@ public final class UnmodifiableMultiSet<E>
         return new UnmodifiableMultiSet<>(multiset);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -75,7 +74,6 @@ public final class UnmodifiableMultiSet<E>
         super((MultiSet<E>) multiset);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *
@@ -101,7 +99,6 @@ public final class UnmodifiableMultiSet<E>
         setCollection((Collection<E>) in.readObject());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
@@ -145,7 +142,6 @@ public final class UnmodifiableMultiSet<E>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public int setCount(final E object, final int count) {
         throw new UnsupportedOperationException();

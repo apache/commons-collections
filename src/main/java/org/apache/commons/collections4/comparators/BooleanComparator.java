@@ -43,7 +43,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     /** {@code true} iff {@code true} values sort before {@code false} values. */
     private final boolean trueFirst;
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a BooleanComparator instance that sorts
      * {@code true} values before {@code false} values.
@@ -99,7 +98,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
         return trueFirst ? TRUE_FIRST : FALSE_FIRST;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a {@code BooleanComparator} that sorts
      * {@code false} values before {@code true} values.
@@ -126,7 +124,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
         this.trueFirst = trueFirst;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares two non-{@code null} {@code Boolean} objects
      * according to the value of {@link #sortsTrueFirst()}.
@@ -144,7 +141,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
         return (v1 ^ v2) ? ( (v1 ^ trueFirst) ? 1 : -1 ) : 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
@@ -176,7 +172,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
                 (this.trueFirst == ((BooleanComparator) object).trueFirst));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns {@code true} iff
      * I sort {@code true} values before

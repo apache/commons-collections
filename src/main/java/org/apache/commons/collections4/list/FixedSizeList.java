@@ -65,7 +65,6 @@ public class FixedSizeList<E>
         return new FixedSizeList<>(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -76,7 +75,6 @@ public class FixedSizeList<E>
         super(list);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object) {
         throw unsupportedOperationException();

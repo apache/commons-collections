@@ -39,7 +39,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedBidiMap<K, V> makeObject() {
         return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<K, V>());
@@ -69,7 +68,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         return new String[] {"UnmodifiableSortedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean isAllowNullKey() {
         return false;
@@ -95,7 +93,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);

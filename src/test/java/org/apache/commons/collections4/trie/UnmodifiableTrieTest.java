@@ -68,7 +68,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -85,7 +84,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Override to prevent infinite recursion of tests.

@@ -41,13 +41,11 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public IterableMap<K, V> makeObject() {
         return DefaultedMap.defaultedMap(new HashMap<K, V>(), nullFactory);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public void testMapGet() {

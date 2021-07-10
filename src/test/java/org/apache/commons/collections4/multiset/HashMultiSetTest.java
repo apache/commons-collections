@@ -37,7 +37,6 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return BulkTest.makeSuite(HashMultiSetTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public MultiSet<T> makeObject() {

@@ -1250,7 +1250,6 @@ public class CollectionUtils {
         return outputCollection;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds an element to the collection unless the element is null.
      *
@@ -1580,7 +1579,6 @@ public class CollectionUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Null-safe check if the specified collection is empty.
      * <p>
@@ -1609,7 +1607,6 @@ public class CollectionUtils {
         return !isEmpty(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Reverses the order of the given array.
      *
@@ -1692,7 +1689,6 @@ public class CollectionUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Merges two sorted Collections, a and b, into a single, sorted List
      * such that the natural ordering of the elements is retained.
@@ -1801,7 +1797,6 @@ public class CollectionUtils {
         return mergedList;
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Returns a {@link Collection} of all the permutations of the input collection.
@@ -1833,7 +1828,6 @@ public class CollectionUtils {
         return result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a collection containing all the elements in {@code collection}
      * that are also in {@code retain}. The cardinality of an element {@code e}
@@ -2048,7 +2042,6 @@ public class CollectionUtils {
         return list;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized collection backed by the given collection.
      * <p>

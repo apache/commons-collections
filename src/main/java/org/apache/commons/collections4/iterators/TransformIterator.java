@@ -32,7 +32,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
     /** The transformer being used */
     private Transformer<? super I, ? extends O> transformer;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new {@code TransformIterator} that will not function
      * until the {@link #setIterator(Iterator) setIterator} and
@@ -65,7 +64,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
         this.transformer = transformer;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         return iterator.hasNext();
@@ -89,7 +87,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
         iterator.remove();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the iterator this iterator is using.
      *
@@ -109,7 +106,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the transformer this iterator is using.
      *
@@ -129,7 +125,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
         this.transformer = transformer;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Transforms the given object using the transformer.
      * If the transformer is null, the original object is returned as-is.

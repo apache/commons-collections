@@ -91,7 +91,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -125,7 +124,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E get(final int index) {
@@ -147,7 +145,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return getList().remove(index);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public void add(final int index, E object) {

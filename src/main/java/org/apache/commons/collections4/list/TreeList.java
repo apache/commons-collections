@@ -73,7 +73,6 @@ public class TreeList<E> extends AbstractList<E> {
     /** The current size of the list */
     private int size;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new empty list.
      */
@@ -93,7 +92,6 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the element at the specified index.
      *
@@ -193,7 +191,6 @@ public class TreeList<E> extends AbstractList<E> {
         return array;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds a new element to the list.
      *
@@ -278,7 +275,6 @@ public class TreeList<E> extends AbstractList<E> {
         size = 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the index is valid.
      *
@@ -293,7 +289,6 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implements an AVLNode which keeps the offset updated.
      * <p>
@@ -532,7 +527,6 @@ public class TreeList<E> extends AbstractList<E> {
             return ret;
         }
 
-        //-----------------------------------------------------------------------
         /**
          * Gets the left node, returning null if its a faedelung.
          */
@@ -672,7 +666,6 @@ public class TreeList<E> extends AbstractList<E> {
             return this;
         }
 
-        //-----------------------------------------------------------------------
         /**
          * Balances according to the AVL algorithm.
          */

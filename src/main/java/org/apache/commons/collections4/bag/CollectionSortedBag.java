@@ -47,7 +47,6 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         return new CollectionSortedBag<>(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -58,7 +57,6 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         super(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *
@@ -84,9 +82,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         setCollection((Collection<E>) in.readObject());
     }
 
-    //-----------------------------------------------------------------------
     // Collection interface
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean containsAll(final Collection<?> coll) {
@@ -153,9 +149,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         return decorated().retainAll(null);
     }
 
-    //-----------------------------------------------------------------------
     // Bag interface
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object, final int count) {

@@ -63,7 +63,6 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -80,7 +79,6 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

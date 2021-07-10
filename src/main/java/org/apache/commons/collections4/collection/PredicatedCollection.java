@@ -109,7 +109,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         return new PredicatedCollection<>(coll, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -145,7 +144,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.

@@ -69,7 +69,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (LRUMap<K, V>) super.getMap();
     }
 
-    //-----------------------------------------------------------------------
     public void testCtors() {
         try {
             new LRUMap<K, V>(0);
@@ -178,7 +177,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[3], vit.next());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testReset() {
         resetEmpty();
@@ -195,7 +193,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(list.get(0), it.next());
     }
 
-    //-----------------------------------------------------------------------
     public void testAccessOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -452,7 +449,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     static class SingleHashCode {
         private final String code;
         SingleHashCode(final String code) {

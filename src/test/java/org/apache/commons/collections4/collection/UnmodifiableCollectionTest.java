@@ -35,7 +35,6 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
         return UnmodifiableCollection.unmodifiableCollection(new ArrayList<E>());
@@ -67,7 +66,6 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -84,7 +82,6 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

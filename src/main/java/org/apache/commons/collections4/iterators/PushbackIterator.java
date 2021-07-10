@@ -41,7 +41,6 @@ public class PushbackIterator<E> implements Iterator<E> {
     /** The LIFO queue containing the pushed back items. */
     private final Deque<E> items = new ArrayDeque<>();
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
@@ -62,7 +61,6 @@ public class PushbackIterator<E> implements Iterator<E> {
         return new PushbackIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Constructor.

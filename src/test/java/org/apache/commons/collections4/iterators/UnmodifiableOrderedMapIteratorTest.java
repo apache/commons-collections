@@ -76,7 +76,6 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         return false;
     }
 
-    //-----------------------------------------------------------------------
     public void testOrderedMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }

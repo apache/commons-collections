@@ -73,7 +73,6 @@ public abstract class AbstractBagDecorator<E>
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int getCount(final Object object) {

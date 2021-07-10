@@ -151,7 +151,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

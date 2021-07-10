@@ -123,7 +123,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         putAll(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      *
@@ -197,7 +196,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         return size() == 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
      *
@@ -291,7 +289,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map.
      *
@@ -610,7 +607,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the map.
      * Changes made to the iterator affect this map.
@@ -1108,7 +1104,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -1143,7 +1138,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *

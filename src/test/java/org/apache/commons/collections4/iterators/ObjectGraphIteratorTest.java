@@ -58,7 +58,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         iteratorList.add(list3.iterator());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public ObjectGraphIterator<Object> makeEmptyIterator() {
         final ArrayList<Object> list = new ArrayList<>();
@@ -70,7 +69,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         return new ObjectGraphIterator<>(iteratorList.iterator());
     }
 
-    //-----------------------------------------------------------------------
     public void testIteratorConstructor_null1() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
 
@@ -105,7 +103,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         }
     }
 
-    //-----------------------------------------------------------------------
     public void testIteratorConstructorIteration_Empty() {
         final List<Iterator<Object>> iteratorList = new ArrayList<>();
         final Iterator<Object> it = new ObjectGraphIterator<>(iteratorList.iterator());
@@ -199,7 +196,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertEquals(0, list3.size());
     }
 
-    //-----------------------------------------------------------------------
     public void testIteration_IteratorOfIterators() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(list1.iterator());
@@ -232,7 +228,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertEquals(false, it.hasNext());
     }
 
-    //-----------------------------------------------------------------------
     public void testIteration_RootNull() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null, null);
 
@@ -350,7 +345,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         }
     }
 
-    //-----------------------------------------------------------------------
     static class LeafFinder implements Transformer<Object, Object> {
         @Override
         public Object transform(final Object input) {
@@ -370,7 +364,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         }
     }
 
-    //-----------------------------------------------------------------------
     static class Forest {
         List<Tree> trees = new ArrayList<>();
 

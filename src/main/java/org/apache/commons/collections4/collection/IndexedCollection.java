@@ -257,7 +257,6 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
         return changed;
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Provides checking for adding the index.

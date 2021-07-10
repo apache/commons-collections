@@ -66,7 +66,6 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
         return new PredicatedMultiSet<>(multiset, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -102,7 +101,6 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int add(final E object, final int count) {

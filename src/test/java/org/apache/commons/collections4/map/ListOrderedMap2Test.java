@@ -54,7 +54,6 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
-    //-----------------------------------------------------------------------
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();

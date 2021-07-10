@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.
      * Subclasses should override this method to return a Map.Entry
@@ -52,7 +51,6 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         return new UnmodifiableMapEntry<>(key, value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Subclasses should override this method.
      *

@@ -37,7 +37,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
     private E last;
 
     // Constructors
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new {@code EnumerationIterator} that will not
      * function until {@link #setEnumeration(Enumeration)} is called.
@@ -70,7 +69,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
     }
 
     // Iterator interface
-    //-----------------------------------------------------------------------
     /**
      * Returns true if the underlying enumeration has more elements.
      *
@@ -116,7 +114,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
     }
 
     // Properties
-    //-----------------------------------------------------------------------
     /**
      * Returns the underlying enumeration.
      *

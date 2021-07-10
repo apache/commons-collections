@@ -37,7 +37,6 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return BulkTest.makeSuite(SynchronizedMultiSetTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public MultiSet<T> makeObject() {

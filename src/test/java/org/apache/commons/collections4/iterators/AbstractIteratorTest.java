@@ -42,7 +42,6 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement this method to return an iterator over an empty collection.
      *
@@ -95,7 +94,6 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         // do nothing
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test the empty iterator.
      */

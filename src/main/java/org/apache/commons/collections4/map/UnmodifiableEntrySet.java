@@ -62,7 +62,6 @@ public final class UnmodifiableEntrySet<K, V>
         return new UnmodifiableEntrySet<>(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -73,7 +72,6 @@ public final class UnmodifiableEntrySet<K, V>
         super(set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final Map.Entry<K, V> object) {
         throw new UnsupportedOperationException();
@@ -112,7 +110,6 @@ public final class UnmodifiableEntrySet<K, V>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<Map.Entry<K, V>> iterator() {
         return new UnmodifiableEntrySetIterator(decorated().iterator());
@@ -155,7 +152,6 @@ public final class UnmodifiableEntrySet<K, V>
         return array;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implementation of an entry set iterator.
      */
@@ -176,7 +172,6 @@ public final class UnmodifiableEntrySet<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implementation of a map entry that is unmodifiable.
      */

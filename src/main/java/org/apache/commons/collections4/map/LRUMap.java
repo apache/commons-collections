@@ -218,7 +218,6 @@ public class LRUMap<K, V>
         putAll(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      * <p>
@@ -257,7 +256,6 @@ public class LRUMap<K, V>
         return entry.getValue();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Moves an entry to the MRU position at the end of the list.
      * <p>
@@ -438,7 +436,6 @@ public class LRUMap<K, V>
         return true;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns true if this map is full and no new mappings can be added.
      *
@@ -470,7 +467,6 @@ public class LRUMap<K, V>
         return scanUntilRemovable;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *

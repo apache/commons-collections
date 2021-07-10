@@ -198,7 +198,6 @@ public class SetUtils {
         return set == null ? Collections.<T>emptySet() : set;
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Get a typed empty unmodifiable Set.
@@ -429,7 +428,6 @@ public class SetUtils {
     }
 
     // Set
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized set backed by the given set.
      * <p>
@@ -458,7 +456,6 @@ public class SetUtils {
     }
 
     // SortedSet
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>
@@ -551,7 +548,6 @@ public class SetUtils {
     }
 
     // Set operations
-    //-----------------------------------------------------------------------
 
     /**
      * Returns a unmodifiable <b>view</b> of the union of the given {@link Set}s.
@@ -596,7 +592,6 @@ public class SetUtils {
     }
 
     // NavigableSet
-    //-----------------------------------------------------------------------
     /**
      * Returns an unmodifiable navigable set backed by the given navigable set.
      * <p>

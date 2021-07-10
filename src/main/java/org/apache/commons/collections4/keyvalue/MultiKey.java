@@ -236,7 +236,6 @@ public class MultiKey<K> implements Serializable {
         hashCode = total;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares this object to another.
      * <p>
@@ -273,7 +272,6 @@ public class MultiKey<K> implements Serializable {
         return keys[index];
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets a clone of the array of keys.
      * <p>

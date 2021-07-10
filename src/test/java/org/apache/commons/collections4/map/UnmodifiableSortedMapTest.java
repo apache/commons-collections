@@ -62,7 +62,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         return UnmodifiableSortedMap.unmodifiableSortedMap(m);
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -79,7 +78,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     public void testHeadMap() {
         final SortedMap<K, V> map = makeFullMap();
@@ -93,7 +91,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(16, map.headMap((K) "we'll").size());
     }
 
-    //-----------------------------------------------------------------------
 
     public void testTailMap() {
         final SortedMap<K, V> map = makeFullMap();
@@ -107,7 +104,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(18, map.tailMap((K) "again").size());
     }
 
-    //-----------------------------------------------------------------------
 
     public void testSubMap() {
         final SortedMap<K, V> map = makeFullMap();
@@ -123,7 +119,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(map.headMap((K) "you").size(), map.subMap((K) "again", (K) "you").size());
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

@@ -117,7 +117,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify the MapMutator to be used by mutation operations.
      *
@@ -174,7 +173,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Calls {@code clear()} on all composited Maps.
      *

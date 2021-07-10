@@ -110,7 +110,6 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     public void testNullConstructor(){
         try{
             new NodeListIterator((Node) null);

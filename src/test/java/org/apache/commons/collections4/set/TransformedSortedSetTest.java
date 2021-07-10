@@ -44,7 +44,6 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return BulkTest.makeSuite(TransformedSortedSetTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeObject() {
@@ -58,7 +57,6 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),

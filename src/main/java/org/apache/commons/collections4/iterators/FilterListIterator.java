@@ -67,7 +67,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      */
     private int nextIndex;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new {@code FilterListIterator} that will not function
      * until {@link #setListIterator(ListIterator) setListIterator}
@@ -107,7 +106,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
         this.predicate = predicate;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Not supported.
      * @param o the element to insert
@@ -175,7 +173,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the iterator this iterator is using.
      *
@@ -195,7 +192,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the predicate this iterator is using.
      *
@@ -214,7 +210,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
         this.predicate = predicate;
     }
 
-    //-----------------------------------------------------------------------
     private void clearNextObject() {
         nextObject = null;
         nextObjectSet = false;

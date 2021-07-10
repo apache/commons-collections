@@ -48,7 +48,6 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     /** The transformer being used. */
     private final Transformer<? super I, ? extends O> transformer;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs an instance with the given Transformer and a
      * {@link ComparableComparator ComparableComparator}.
@@ -71,7 +70,6 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
         this.transformer = transformer;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the result of comparing the values from the transform operation.
      *
@@ -86,7 +84,6 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
         return this.decorated.compare(value1, value2);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.

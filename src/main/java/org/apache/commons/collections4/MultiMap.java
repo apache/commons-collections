@@ -72,7 +72,6 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      */
     boolean removeMapping(K key, V item);
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the number of keys in this map.
      * <p>

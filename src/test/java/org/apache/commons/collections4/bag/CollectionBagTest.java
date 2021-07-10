@@ -44,7 +44,6 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {
@@ -85,7 +84,6 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
 //    }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Compares the current serialized form of the Bag

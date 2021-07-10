@@ -80,7 +80,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return new MapBackedSet<>(map, dummyValue);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -93,7 +92,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         this.dummyValue = dummyValue;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public int size() {
         return map.size();

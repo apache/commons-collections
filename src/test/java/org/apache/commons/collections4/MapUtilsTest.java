@@ -748,7 +748,6 @@ public class MapUtilsTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
-    //-----------------------------------------------------------------------
 
     @Test
     public void testEmptyIfNull() {

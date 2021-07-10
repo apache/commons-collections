@@ -66,7 +66,6 @@ public interface MapIterator<K, V> extends Iterator<K> {
     @Override
     K next();
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the current key, which is the key returned by the last call
      * to {@code next()}.
@@ -85,7 +84,6 @@ public interface MapIterator<K, V> extends Iterator<K> {
      */
     V getValue();
 
-    //-----------------------------------------------------------------------
     /**
      * Removes the last returned key from the underlying {@code Map} (optional operation).
      * <p>

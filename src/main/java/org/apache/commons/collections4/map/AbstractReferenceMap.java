@@ -146,7 +146,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     private transient ReferenceQueue<Object> queue;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor used during deserialization.
      */
@@ -187,7 +186,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         queue = new ReferenceQueue<>();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the size of the map.
      *
@@ -302,7 +300,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets a MapIterator over the reference map.
      * The iterator only returns valid key/value pairs.
@@ -355,7 +352,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         return values;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Purges stale mappings from this map before read operations.
      * <p>
@@ -421,7 +417,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the entry mapped to the key specified.
      *
@@ -511,7 +506,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         return new ReferenceValuesIterator<>(this);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * EntrySet implementation.
      */
@@ -537,7 +531,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * KeySet implementation.
      */
@@ -563,7 +556,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Values implementation.
      */
@@ -589,7 +581,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A MapEntry implementation for the map.
      * <p>
@@ -772,7 +763,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Base iterator class.
      */
@@ -959,7 +949,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     // These two classes store the hashCode of the key of
     // of the mapping, so that after they're dequeued a quick
     // lookup of the bucket in the table can occur.
@@ -1000,7 +989,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Replaces the superclass method to store the state of this class.
      * <p>

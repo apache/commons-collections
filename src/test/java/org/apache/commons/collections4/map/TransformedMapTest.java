@@ -37,14 +37,12 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public IterableMap<K, V> makeObject() {
         return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K>nopTransformer(),
                 TransformerUtils.<V>nopTransformer());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -94,7 +92,6 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
@@ -135,7 +132,6 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(4), trans.get("d"));
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

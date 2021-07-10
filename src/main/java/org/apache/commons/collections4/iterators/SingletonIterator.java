@@ -62,7 +62,6 @@ public class SingletonIterator<E>
         this.removeAllowed = removeAllowed;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Is another object available from the iterator?
      * <p>

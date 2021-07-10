@@ -86,7 +86,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         addComposited(compositeCollections);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the size of this composite collection.
      * <p>
@@ -368,7 +367,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify a CollectionMutator strategy instance to handle changes.
      *
@@ -427,7 +425,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         all.remove(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a new collection containing all of the elements
      *
@@ -455,7 +452,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         return mutator;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Pluggable strategy to handle changes to the composite.
      *

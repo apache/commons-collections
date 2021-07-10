@@ -71,7 +71,6 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
-    //-----------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         o -> o instanceof String;
 

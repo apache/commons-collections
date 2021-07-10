@@ -103,13 +103,11 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         System.out.print(System.currentTimeMillis() - startMillis + ";");
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public TreeList<E> makeObject() {
         return new TreeList<>();
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testAddMultiple() {
         final List<E> l = makeObject();

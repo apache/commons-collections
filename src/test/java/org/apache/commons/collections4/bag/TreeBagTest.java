@@ -37,7 +37,6 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         return BulkTest.makeSuite(TreeBagTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public SortedBag<T> makeObject() {

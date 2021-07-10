@@ -456,7 +456,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("0", c1.next());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextPreviousRemoveIndex1ByList() {
         list.add((E) "A");
@@ -566,7 +565,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextPreviousRemoveByIterator() {
         list.add((E) "A");
@@ -618,7 +616,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextPreviousAddIndex1ByList() {
         list.add((E) "A");
@@ -696,7 +693,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextPreviousAddByIterator() {
         list.add((E) "A");
@@ -747,7 +743,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextRemoveByListSetByIterator() {
         list.add((E) "A");
@@ -772,7 +767,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testInternalState_CursorNextNextPreviousSetByIterator() {
         list.add((E) "A");
@@ -826,7 +820,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         } catch (final IllegalStateException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         assertTrue(list.equals(list));

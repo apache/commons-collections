@@ -123,7 +123,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     // Iterator interface
-    //-----------------------------------------------------------------------
     /**
      * Returns true if there are more elements to return from the array.
      *
@@ -161,7 +160,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     // Properties
-    //-----------------------------------------------------------------------
     /**
      * Gets the array that this iterator is iterating over.
      *

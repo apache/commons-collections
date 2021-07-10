@@ -65,7 +65,6 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from LazyMapTest
-    //-----------------------------------------------------------------------
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
@@ -86,7 +85,6 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     }
 
-    //-----------------------------------------------------------------------
     public void testSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String, Number>(), oneFactory);
         map.put("A",  5);

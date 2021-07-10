@@ -95,7 +95,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     // ListIterator interface
-    //-----------------------------------------------------------------------
     /**
      * Returns true if there are previous elements to return from the array.
      *

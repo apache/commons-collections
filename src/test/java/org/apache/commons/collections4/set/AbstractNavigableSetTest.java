@@ -43,7 +43,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         super(name);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * {@inheritDoc}
      */
@@ -58,7 +57,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return (NavigableSet<E>) super.makeFullCollection();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link TreeSet} for use in modification testing.
      *
@@ -69,7 +67,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return new TreeSet<>();
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Verification extension, will check the order of elements,
@@ -102,7 +99,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to return comparable objects.
      */
@@ -130,7 +126,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return (E[]) elements;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Bulk test {@link NavigableSet#subSet(Object, boolean, Object, boolean)}.
      * This method runs through all of the tests in {@link AbstractNavigableSetTest}.

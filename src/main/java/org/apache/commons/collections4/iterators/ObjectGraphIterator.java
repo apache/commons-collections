@@ -92,7 +92,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /** The last used iterator, needed for remove() */
     private Iterator<? extends E> lastUsedIterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs an ObjectGraphIterator using a root object and transformer.
      * <p>
@@ -127,7 +126,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
         this.transformer = null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Loops around the iterators to find the next value to return.
      */
@@ -197,7 +195,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether there are any more elements in the iteration to obtain.
      *

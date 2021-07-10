@@ -36,7 +36,6 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
         return BulkTest.makeSuite(HashBagTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {

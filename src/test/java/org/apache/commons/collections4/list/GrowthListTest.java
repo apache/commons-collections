@@ -43,7 +43,6 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         return GrowthList.growthList(list);
     }
 
-    //-----------------------------------------------------------------------
     public void testGrowthList() {
         final Integer zero = Integer.valueOf(0);
         final Integer one = Integer.valueOf(1);
@@ -58,7 +57,6 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(3, grower.size());
     }
 
-    //-----------------------------------------------------------------------
     public void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -103,7 +101,6 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(one, grower.get(0));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override.
      */
@@ -166,7 +163,6 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

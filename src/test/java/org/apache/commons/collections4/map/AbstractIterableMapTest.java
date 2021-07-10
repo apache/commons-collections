@@ -54,7 +54,6 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         return (IterableMap<K, V>) super.makeFullMap();
     }
 
-    //-----------------------------------------------------------------------
     public void testFailFastEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -133,7 +132,6 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         } catch (final ConcurrentModificationException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestMapIterator() {
         return new InnerTestMapIterator();
     }

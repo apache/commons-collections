@@ -173,7 +173,6 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *

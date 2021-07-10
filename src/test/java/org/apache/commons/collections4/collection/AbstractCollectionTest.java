@@ -159,7 +159,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Specifies whether equal elements in the collection are, in fact,
      *  distinguishable with information not readily available.  That is, if a
@@ -236,7 +235,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Verifies that {@link #collection} and {@link #confirmed} have
      *  identical state.
@@ -308,7 +306,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Resets the {@link #collection} and {@link #confirmed} fields to empty
      *  collections.  Invoke this method before performing a modification
@@ -329,7 +326,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         this.setConfirmed(makeConfirmedFullCollection());
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns a confirmed empty collection.
      *  For instance, an {@link java.util.ArrayList} for lists or a
@@ -378,7 +374,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         return map.entrySet().iterator().next();
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns an array of objects that are contained in a collection
      *  produced by {@link #makeFullCollection()}.  Every element in the
@@ -412,7 +407,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         return getOtherNonNullElements();
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns a list of elements suitable for return by
      *  {@link #getFullElements()}.  The array returned by this method
@@ -492,7 +486,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     // Tests
-    //-----------------------------------------------------------------------
     /**
      *  Tests {@link Collection#add(Object)}.
      */

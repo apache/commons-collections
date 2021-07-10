@@ -49,7 +49,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         return new SynchronizedMultiSet<>(multiset);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -98,7 +97,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int add(final E object, final int count) {
@@ -144,7 +142,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Synchronized Set for the MultiSet class.
      */

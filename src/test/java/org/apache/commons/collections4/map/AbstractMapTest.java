@@ -420,7 +420,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                      keys.length, m.size());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Return a new, empty {@link Map} to be used for testing.
      *
@@ -470,7 +469,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         return super.getCompatibilityVersion();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test to ensure the test setup is working properly.  This method checks
      * to ensure that the getSampleKeys and getSampleValues methods are
@@ -1020,7 +1018,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         verify();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests that the {@link Map#values} collection is backed by
      * the underlying map for clear().
@@ -1105,7 +1102,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertTrue(entrySet.isEmpty());
     }
 
-    //-----------------------------------------------------------------------
     public void testEntrySetContains1() {
         resetFull();
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
@@ -1182,7 +1178,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertEquals(size, getMap().size());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests that the {@link Map#values} collection is backed by
      * the underlying map by removing from the values collection

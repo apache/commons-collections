@@ -35,7 +35,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     /** The iterator being decorated */
     private final ListIterator<? extends E> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -54,7 +53,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         return new UnmodifiableListIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
@@ -64,7 +62,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         return iterator.hasNext();

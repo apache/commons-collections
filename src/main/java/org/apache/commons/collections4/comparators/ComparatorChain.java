@@ -62,7 +62,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
    /** Whether the chain has been "locked". */
     private boolean isLocked;
 
-    //-----------------------------------------------------------------------
     /**
      * Construct a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
@@ -131,7 +130,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         orderingBits = bits;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Add a Comparator to the end of the chain using the
      * forward sort order
@@ -256,7 +254,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Perform comparisons on the Objects as per
      * Comparator.compare(o1,o2).
@@ -296,7 +293,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         return 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.

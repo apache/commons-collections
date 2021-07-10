@@ -65,7 +65,6 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
         return new PredicatedSortedBag<>(bag, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>If there are any elements already in the bag being decorated, they
@@ -90,7 +89,6 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
         return (SortedBag<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E first() {

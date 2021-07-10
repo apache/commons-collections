@@ -104,7 +104,6 @@ public class TransformedSortedMap<K, V>
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -122,7 +121,6 @@ public class TransformedSortedMap<K, V>
         super(map, keyTransformer, valueTransformer);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
      *
@@ -132,7 +130,6 @@ public class TransformedSortedMap<K, V>
         return (SortedMap<K, V>) map;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K firstKey() {
         return getSortedMap().firstKey();

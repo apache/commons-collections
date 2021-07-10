@@ -45,7 +45,6 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         testList.addAll(Arrays.asList(testArray));
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean supportsRemove() {
@@ -67,7 +66,6 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         return new PermutationIterator<>(testList);
     }
 
-    //-----------------------------------------------------------------------
 
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationResultSize() {

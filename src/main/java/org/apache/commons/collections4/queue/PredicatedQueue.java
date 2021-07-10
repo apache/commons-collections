@@ -60,7 +60,6 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
         return new PredicatedQueue<>(Queue, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -86,7 +85,6 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
         return (Queue<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Override to validate the object being added to ensure it matches

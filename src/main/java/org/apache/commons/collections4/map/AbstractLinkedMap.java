@@ -134,7 +134,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         header.before = header.after = header;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified value.
      *
@@ -171,7 +170,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         header.before = header.after = header;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the first key in the map, which is the first inserted.
      *
@@ -227,7 +225,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         return entry == null || entry.before == header ? null : entry.before.getKey();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
      *
@@ -314,7 +311,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         super.removeEntry(entry, hashIndex, previous);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the {@code before} field from a {@code LinkEntry}.
      * Used in subclasses that have no visibility of the field.
@@ -341,7 +337,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         return entry.after;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * {@inheritDoc}
      */
@@ -401,7 +396,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates an entry set iterator.
      * Subclasses can override this to return iterators with different properties.
@@ -437,7 +431,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a key set iterator.
      * Subclasses can override this to return iterators with different properties.
@@ -474,7 +467,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a values iterator.
      * Subclasses can override this to return iterators with different properties.
@@ -511,7 +503,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * LinkEntry that stores the data.
      * <p>

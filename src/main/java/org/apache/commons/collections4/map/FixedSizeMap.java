@@ -78,7 +78,6 @@ public class FixedSizeMap<K, V>
         return new FixedSizeMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -89,7 +88,6 @@ public class FixedSizeMap<K, V>
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -116,7 +114,6 @@ public class FixedSizeMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
         if (!map.containsKey(key)) {

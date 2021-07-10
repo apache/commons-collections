@@ -28,7 +28,6 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testRemoveFirst() {
         resetEmpty();

@@ -75,7 +75,6 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
         return new GrowthList<>(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that uses an ArrayList internally.
      */
@@ -103,7 +102,6 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
         super(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Decorate the add method to perform the growth behavior.
      * <p>
@@ -131,7 +129,6 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
         decorated().add(index, element);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Decorate the addAll method to perform the growth behavior.
      * <p>
@@ -162,7 +159,6 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
         return decorated().addAll(index, coll) || result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Decorate the set method to perform the growth behavior.
      * <p>

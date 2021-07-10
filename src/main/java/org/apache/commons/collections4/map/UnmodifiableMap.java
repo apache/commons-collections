@@ -71,7 +71,6 @@ public final class UnmodifiableMap<K, V>
         return new UnmodifiableMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -83,7 +82,6 @@ public final class UnmodifiableMap<K, V>
         super((Map<K, V>) map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -110,7 +108,6 @@ public final class UnmodifiableMap<K, V>
         map = (Map<K, V>) in.readObject();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         throw new UnsupportedOperationException();

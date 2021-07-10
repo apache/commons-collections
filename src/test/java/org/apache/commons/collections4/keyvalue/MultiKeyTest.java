@@ -86,7 +86,6 @@ public class MultiKeyTest {
     Integer THREE = Integer.valueOf(3);
     Integer FOUR = Integer.valueOf(4);
     Integer FIVE = Integer.valueOf(5);
-    //-----------------------------------------------------------------------
     @Test
     public void testConstructors() throws Exception {
         MultiKey<Integer> mk;

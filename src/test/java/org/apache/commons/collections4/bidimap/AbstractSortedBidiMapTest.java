@@ -72,7 +72,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 //        sortedNewValues.addAll(Arrays.asList(getNewSampleValues()));
 //    }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean isAllowNullKey() {
         return false;
@@ -102,8 +101,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         return new TreeMap<>();
     }
 
-    //-----------------------------------------------------------------------
-    //-----------------------------------------------------------------------
     public void testBidiHeadMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
@@ -126,7 +123,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(head.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiClearByHeadMap() {
         if (!isRemoveSupported()) {
             return;
@@ -173,7 +169,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(toKeyValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMap() {
         if (!isRemoveSupported()) {
             return;
@@ -217,7 +212,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -271,8 +265,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(set.contains(secondEntry));
     }
 
-    //-----------------------------------------------------------------------
-    //-----------------------------------------------------------------------
     public void testBidiTailMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
@@ -300,7 +292,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertTrue(sub.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiClearByTailMap() {
         if (!isRemoveSupported()) {
             return;
@@ -349,7 +340,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMap() {
         if (!isRemoveSupported()) {
             return;
@@ -394,7 +384,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -448,8 +437,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(set.contains(secondEntry));
     }
 
-    //-----------------------------------------------------------------------
-    //-----------------------------------------------------------------------
     public void testBidiSubMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
@@ -484,7 +471,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(thirdValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiClearBySubMap() {
         if (!isRemoveSupported()) {
             return;
@@ -541,7 +527,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(toKeyValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMap() {
         if (!isRemoveSupported()) {
             return;
@@ -587,7 +572,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsValue(secondValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -643,7 +627,6 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(set.contains(secondEntry));
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestHeadMap() {
         return new AbstractSortedMapTest.TestHeadMap<>(this);
     }

@@ -57,7 +57,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
-    //-----------------------------------------------------------------------
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -353,7 +352,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     public void testValueList_getByIndex() {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
@@ -413,7 +411,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         listMap.putAll(2, hmap);
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestKeyListView() {
         return new TestKeyListView();
     }
@@ -422,7 +419,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return new TestValueListView();
     }
 
-    //-----------------------------------------------------------------------
     public class TestKeyListView extends AbstractListTest<K> {
         TestKeyListView() {
             super("TestKeyListView");
@@ -463,7 +459,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     public class TestValueListView extends AbstractListTest<V> {
         TestValueListView() {
             super("TestValueListView");
@@ -504,7 +499,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

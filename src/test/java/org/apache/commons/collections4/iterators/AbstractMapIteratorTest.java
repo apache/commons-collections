@@ -44,7 +44,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement this method to return a map iterator over an empty map.
      *
@@ -106,7 +105,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         return (V[]) new Object[] { "A", "B" };
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
@@ -153,7 +151,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the full list iterator contract is correct.
      */
@@ -186,7 +183,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
     }
 
-    //-----------------------------------------------------------------------
     public void testMapIteratorSet() {
         if (!supportsFullIterator()) {
             return;
@@ -233,7 +229,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void testRemove() { // override
         final MapIterator<K, V> it = makeObject();
@@ -263,7 +258,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
-    //-----------------------------------------------------------------------
     public void testMapIteratorSetRemoveSet() {
         if (!supportsSetValue() || !supportsRemove()) {
             return;
@@ -287,7 +281,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
-    //-----------------------------------------------------------------------
     public void testMapIteratorRemoveGetKey() {
         if (!supportsRemove()) {
             return;
@@ -309,7 +302,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
-    //-----------------------------------------------------------------------
     public void testMapIteratorRemoveGetValue() {
         if (!supportsRemove()) {
             return;

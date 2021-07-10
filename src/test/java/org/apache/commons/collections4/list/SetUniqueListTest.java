@@ -49,7 +49,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";
@@ -80,7 +79,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         };
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public List<E> makeObject() {
         return new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
@@ -238,7 +236,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertEquals(4, decoratedList.size());
     }
 
-    //-----------------------------------------------------------------------
     public void testFactory() {
         final Integer[] array = new Integer[] { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(array));
@@ -327,7 +324,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void testListIteratorSet() {
         // override to block

@@ -33,7 +33,6 @@ public class DefaultKeyValueTest<K, V> {
     private final String key = "name";
     private final String value = "duke";
 
-    //-----------------------------------------------------------------------
     /**
      * Make an instance of DefaultKeyValue with the default (null) key and value.
      * Subclasses should override this method to return a DefaultKeyValue
@@ -52,7 +51,6 @@ public class DefaultKeyValueTest<K, V> {
         return new DefaultKeyValue<>(key, value);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     @Test
     public void testAccessorsAndMutators() {

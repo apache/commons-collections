@@ -35,7 +35,6 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
         final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<E>());
@@ -79,7 +78,6 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         return "4";
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);

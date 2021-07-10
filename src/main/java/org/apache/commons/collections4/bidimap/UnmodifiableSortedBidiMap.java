@@ -65,7 +65,6 @@ public final class UnmodifiableSortedBidiMap<K, V>
         return new UnmodifiableSortedBidiMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -77,7 +76,6 @@ public final class UnmodifiableSortedBidiMap<K, V>
         super((SortedBidiMap<K, V>) map);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -116,20 +114,17 @@ public final class UnmodifiableSortedBidiMap<K, V>
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K removeValue(final Object value) {
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         final OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {

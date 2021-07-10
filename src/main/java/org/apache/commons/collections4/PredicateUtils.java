@@ -518,7 +518,6 @@ public class PredicateUtils {
     }
 
     // Transformed
-    //-----------------------------------------------------------------------
     /**
      * Creates a predicate that transforms the input object before passing it
      * to the predicate.

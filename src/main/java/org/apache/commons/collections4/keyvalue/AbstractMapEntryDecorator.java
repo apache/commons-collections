@@ -53,7 +53,6 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
         return entry;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public K getKey() {

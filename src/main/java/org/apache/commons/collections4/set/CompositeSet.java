@@ -85,7 +85,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         addComposited(sets);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the size of this composite set.
      * <p>
@@ -353,7 +352,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify a SetMutator strategy instance to handle changes.
      *
@@ -425,7 +423,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         all.remove(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a new Set containing all of the elements.
      *

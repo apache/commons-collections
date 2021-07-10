@@ -38,7 +38,6 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
     /** The comparator being decorated. */
     private final Comparator<? super E> comparator;
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
@@ -63,7 +62,6 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
         this.comparator = comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : comparator;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares two objects in reverse order.
      *
@@ -76,7 +74,6 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
         return comparator.compare(obj2, obj1);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.

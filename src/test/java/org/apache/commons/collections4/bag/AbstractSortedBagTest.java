@@ -33,7 +33,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.
@@ -65,7 +64,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Overridden because SortedBags don't allow null elements (normally).
      * @return false
@@ -99,7 +97,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return new TreeBag<>();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public void resetEmpty() {
@@ -113,7 +110,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         this.setConfirmed(makeConfirmedFullCollection());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to return comparable objects.
      */
@@ -141,7 +137,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return (T[]) elements;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link SortedBag}.
      *
@@ -152,7 +147,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return (SortedBag<T>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
 
     // TODO: Add the SortedBag tests!
 }

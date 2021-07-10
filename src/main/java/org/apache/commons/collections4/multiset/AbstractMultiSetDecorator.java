@@ -72,7 +72,6 @@ public abstract class AbstractMultiSetDecorator<E>
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int getCount(final Object object) {

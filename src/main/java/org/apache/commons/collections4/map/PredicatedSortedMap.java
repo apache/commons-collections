@@ -78,7 +78,6 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
         return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -92,7 +91,6 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
         super(map, keyPredicate, valuePredicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
      *
@@ -102,7 +100,6 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
         return (SortedMap<K, V>) map;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K firstKey() {
         return getSortedMap().firstKey();

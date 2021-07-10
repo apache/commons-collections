@@ -62,7 +62,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return new UnmodifiableTrie<>(trie);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -75,7 +74,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = tmpTrie;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Set<Entry<K, V>> entrySet() {
@@ -172,7 +170,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.comparator();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         final OrderedMapIterator<K, V> it = delegate.mapIterator();
@@ -189,7 +186,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.previousKey(key);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public int hashCode() {
         return delegate.hashCode();

@@ -41,7 +41,6 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         return BulkTest.makeSuite(UnmodifiableBagTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Bag<E> makeObject() {
         return UnmodifiableBag.unmodifiableBag(new HashBag<E>());
@@ -74,7 +73,6 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -91,7 +89,6 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

@@ -68,7 +68,6 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
         return new PredicatedSortedSet<>(set, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -94,7 +93,6 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
         return (SortedSet<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Comparator<? super E> comparator() {
         return decorated().comparator();

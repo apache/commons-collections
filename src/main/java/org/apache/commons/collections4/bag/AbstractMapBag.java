@@ -80,7 +80,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return map;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements in this bag.
      *
@@ -117,7 +116,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Determines if the bag contains the given element by checking if the
      * underlying map contains the element as a key.
@@ -162,7 +160,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the bag elements. Elements present in the Bag more
      * than once will be returned repeatedly.
@@ -239,7 +236,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds a new element to the bag, incrementing its count in the underlying map.
      *
@@ -290,7 +286,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return changed;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clears the bag by clearing the underlying map.
      */
@@ -409,7 +404,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Mutable integer class for storing the data.
      */
@@ -439,7 +433,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an array of all of this bag's elements.
      *
@@ -510,7 +503,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         return uniqueSet;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      * @param out the output stream
@@ -545,7 +537,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares this Bag to another. This Bag equals another Bag if it contains
      * the same number of occurrences of the same elements.

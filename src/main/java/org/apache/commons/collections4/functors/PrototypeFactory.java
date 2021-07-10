@@ -94,7 +94,6 @@ public class PrototypeFactory {
     }
 
     // PrototypeCloneFactory
-    //-----------------------------------------------------------------------
     /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
      */
@@ -148,7 +147,6 @@ public class PrototypeFactory {
     }
 
     // PrototypeSerializationFactory
-    //-----------------------------------------------------------------------
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
      */

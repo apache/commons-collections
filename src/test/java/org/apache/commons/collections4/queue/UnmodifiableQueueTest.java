@@ -36,7 +36,6 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Queue<E> makeObject() {
         return UnmodifiableQueue.unmodifiableQueue(new LinkedList<E>());
@@ -78,7 +77,6 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void testQueueRemove() {
         resetEmpty();
@@ -120,7 +118,6 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         } catch (final UnsupportedOperationException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

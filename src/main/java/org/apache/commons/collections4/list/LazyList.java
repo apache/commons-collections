@@ -103,7 +103,6 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         return new LazyList<>(list, transformer);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -130,7 +129,6 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         this.transformer = Objects.requireNonNull(transformer);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Decorate the get method to perform the lazy behavior.
      * <p>

@@ -113,7 +113,6 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *
@@ -147,7 +146,6 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         doReadObject(in);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
      *

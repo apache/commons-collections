@@ -138,7 +138,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Determine the exact hash entry for the key.  The hash algorithm
      * is rather simplistic, but it does the job:
@@ -267,7 +266,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a new key value mapping into the map.
      *
@@ -350,7 +348,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the key set.
      *
@@ -381,7 +378,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         return new EntrySet();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts all the entries from the specified map into this map.
      * This operation is <b>not atomic</b> and may have undesired effects.
@@ -449,7 +445,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         return hashCode;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * The Map.Entry for the StaticBucketMap.
      */
@@ -504,7 +499,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         public int size;
     }
 
-    //-----------------------------------------------------------------------
     private class BaseIterator {
         private final ArrayList<Map.Entry<K, V>> current = new ArrayList<>();
         private int bucket;

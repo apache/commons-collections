@@ -58,7 +58,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
@@ -70,7 +69,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Verifies that the test list implementation matches the confirmed list
      *  implementation.
@@ -105,7 +103,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * List equals method is defined.
      */
@@ -150,7 +147,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         return list;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link List}.
      *
@@ -171,7 +167,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         return (List<E>) super.getConfirmed();
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Tests bounds checking for {@link List#add(int, Object)} on an
      *  empty list.
@@ -783,7 +778,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests remove on list iterator is correct.
      */
@@ -905,7 +899,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         assertEquals(true, it.hasPrevious());
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Traverses to the end of the given iterator.
      *
@@ -1115,7 +1108,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns a {@link BulkTest} for testing {@link List#subList(int,int)}.
      *  The returned bulk test will run through every {@code TestList}

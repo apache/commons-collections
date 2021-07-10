@@ -74,7 +74,6 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         return false;
     }
 
-    //-----------------------------------------------------------------------
     public void testMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }

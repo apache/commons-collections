@@ -44,7 +44,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Implement this method to return a list of sorted objects.
@@ -53,7 +52,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      */
     public abstract List<T> getComparableObjectsOrdered();
 
-    //-----------------------------------------------------------------------
     /**
      * Implements the abstract superclass method to return the comparator.
      *
@@ -78,7 +76,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Reverse the list.
      */
@@ -100,7 +97,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         list.sort(comparator);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test sorting an empty list
      */

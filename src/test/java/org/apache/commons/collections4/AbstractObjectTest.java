@@ -52,7 +52,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement this method to return the object to test.
      *
@@ -98,7 +97,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         return true;
     }
 
-    //-----------------------------------------------------------------------
     public void testObjectEqualsSelf() {
         final Object obj = makeObject();
         assertEquals("A Object should equal itself", obj, obj);
@@ -204,7 +202,6 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     // protected implementation
-    //-----------------------------------------------------------------------
     /**
      * Get the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to
@@ -315,7 +312,6 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     // private implementation
-    //-----------------------------------------------------------------------
     private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
         final ObjectInputStream oStream = new ObjectInputStream(stream);
         return oStream.readObject();

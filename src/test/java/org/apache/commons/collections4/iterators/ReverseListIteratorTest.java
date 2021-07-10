@@ -49,7 +49,6 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     // overrides
-    //-----------------------------------------------------------------------
     @Override
     public void testEmptyListIteratorIsIndeedEmpty() {
         final ListIterator<E> it = makeEmptyIterator();
@@ -114,7 +113,6 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     public void testReverse() {
         final ListIterator<E> it = makeObject();
         assertEquals(true, it.hasNext());

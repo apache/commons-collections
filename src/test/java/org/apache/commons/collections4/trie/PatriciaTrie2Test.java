@@ -47,7 +47,6 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

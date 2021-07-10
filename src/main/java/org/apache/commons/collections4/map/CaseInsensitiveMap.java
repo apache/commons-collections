@@ -120,7 +120,6 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to
      * lower case.
@@ -142,7 +141,6 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
         return AbstractHashedMap.NULL;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *

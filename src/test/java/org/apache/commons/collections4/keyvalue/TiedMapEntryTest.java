@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the instance to test
      */
@@ -40,7 +39,6 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         return new TiedMapEntry<>(map, key);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests the constructors.
      */

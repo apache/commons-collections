@@ -66,7 +66,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link ArrayList}.
      */
@@ -104,7 +103,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         return multiset;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public void resetEmpty() {
@@ -118,7 +116,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         this.setConfirmed(makeConfirmedFullCollection());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link MultiSet}.
      *
@@ -129,7 +126,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         return (MultiSet<T>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testMultiSetAdd() {
         if (!isAddSupported()) {
@@ -526,7 +522,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(1, c);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testMultiSetEquals() {
         if (!isAddSupported()) {
@@ -606,7 +601,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(total, multiset2.hashCode());
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Bulk test {@link MultiSet#uniqueSet()}.  This method runs through all of
@@ -685,7 +679,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Compare the current serialized form of the MultiSet

@@ -43,7 +43,6 @@ public abstract class AbstractSerializableListDecorator<E>
         super(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the list out using a custom routine.
      *

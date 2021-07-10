@@ -883,7 +883,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      * @param out the output stream

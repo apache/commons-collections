@@ -39,7 +39,6 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         return BulkTest.makeSuite(FixedSizeSortedMapTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedMap<K, V> makeObject() {
         return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<K, V>());
@@ -68,7 +67,6 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

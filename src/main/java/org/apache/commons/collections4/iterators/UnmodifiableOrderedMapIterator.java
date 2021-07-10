@@ -37,7 +37,6 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
     /** The iterator being decorated */
     private final OrderedMapIterator<? extends K, ? extends V> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -58,7 +57,6 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         return new UnmodifiableOrderedMapIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
@@ -68,7 +66,6 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         return iterator.hasNext();

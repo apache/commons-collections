@@ -34,7 +34,6 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeEmptyIterator() {
@@ -61,7 +60,6 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());

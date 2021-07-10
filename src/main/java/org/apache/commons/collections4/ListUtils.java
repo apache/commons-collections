@@ -47,7 +47,6 @@ public class ListUtils {
      */
     private ListUtils() {}
 
-    //-----------------------------------------------------------------------
 
     /**
      * Returns an immutable empty list if the argument is {@code null},
@@ -285,7 +284,6 @@ public class ListUtils {
         return hashCode;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a List containing all the elements in {@code collection}
      * that are also in {@code retain}. The cardinality of an element {@code e}
@@ -352,7 +350,6 @@ public class ListUtils {
         return list;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized list backed by the given list.
      * <p>
@@ -517,7 +514,6 @@ public class ListUtils {
         return FixedSizeList.fixedSizeList(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Finds the first index in the given List which matches the given predicate.
      * <p>
@@ -541,7 +537,6 @@ public class ListUtils {
         return CollectionUtils.INDEX_NOT_FOUND;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
      *
@@ -655,7 +650,6 @@ public class ListUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns consecutive {@link List#subList(int, int) sublists} of a
      * list, each of the same size (the final list may be smaller). For example,

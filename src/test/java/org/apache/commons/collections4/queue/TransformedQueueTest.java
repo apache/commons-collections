@@ -37,7 +37,6 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Queue<E> makeConfirmedCollection() {
         return new LinkedList<>();
@@ -62,7 +61,6 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
-    //-----------------------------------------------------------------------
     public void testTransformedQueue() {
         final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<>(),
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);

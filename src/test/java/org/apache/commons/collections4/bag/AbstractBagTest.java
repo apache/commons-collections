@@ -72,7 +72,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link ArrayList}.
      */
@@ -109,7 +108,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         return bag;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public void resetEmpty() {
@@ -123,7 +121,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         this.setConfirmed(makeConfirmedFullCollection());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link Bag}.
      *
@@ -134,7 +131,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         return (Bag<T>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBagAdd() {
         if (!isAddSupported()) {
@@ -515,7 +511,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(1, c);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBagEquals() {
         if (!isAddSupported()) {
@@ -595,7 +590,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(total, bag2.hashCode());
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Bulk test {@link Bag#uniqueSet()}.  This method runs through all of
@@ -674,7 +668,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Compare the current serialized form of the Bag

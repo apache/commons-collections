@@ -40,7 +40,6 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         return BulkTest.makeSuite(UnmodifiableMultiSetTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public MultiSet<E> makeObject() {
         return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<E>());
@@ -73,7 +72,6 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
@@ -90,7 +88,6 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 
     public void testAdd() {
         final MultiSet<E> multiset = makeFullCollection();
@@ -124,7 +121,6 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         assertSame( unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
     }
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

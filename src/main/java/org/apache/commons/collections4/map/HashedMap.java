@@ -88,7 +88,6 @@ public class HashedMap<K, V>
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *

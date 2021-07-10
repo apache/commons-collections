@@ -37,7 +37,6 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
         return BulkTest.makeSuite(SynchronizedBagTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {

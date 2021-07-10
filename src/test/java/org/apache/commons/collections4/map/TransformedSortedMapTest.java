@@ -49,7 +49,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         return null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public SortedMap<K, V> makeObject() {
@@ -64,7 +63,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         return false;
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -122,7 +120,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final SortedMap<K, V> base = new TreeMap<>();
@@ -163,7 +160,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

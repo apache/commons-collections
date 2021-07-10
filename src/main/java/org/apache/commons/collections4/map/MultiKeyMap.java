@@ -90,7 +90,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /** Serialisation version */
     private static final long serialVersionUID = -1788199231038721040L;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified map to add the MultiKeyMap API and fast query.
      * The map must not be null and must be empty.
@@ -111,7 +110,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         throw new IllegalArgumentException("Map must be empty");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new MultiKeyMap that decorates a {@code HashedMap}.
      */
@@ -132,7 +130,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         this.map = map;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
      *
@@ -261,7 +258,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1)));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
      *
@@ -400,7 +396,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2)));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
      *
@@ -549,7 +544,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3)));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
      *
@@ -710,7 +704,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             (key5 == multi.getKey(4) || key5 != null && key5.equals(multi.getKey(4)));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Removes all mappings where the first key is that specified.
      * <p>
@@ -815,7 +808,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         return modified;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Check to ensure that input keys are valid MultiKey objects.
      *
@@ -872,7 +864,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         super.putAll(mapToCopy);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public MapIterator<MultiKey<? extends K>, V> mapIterator() {
         return decorated().mapIterator();
@@ -886,7 +877,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         return (AbstractHashedMap<MultiKey<? extends K>, V>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *

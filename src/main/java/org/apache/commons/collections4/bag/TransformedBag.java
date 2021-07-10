@@ -88,7 +88,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -122,7 +121,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int getCount(final Object object) {
@@ -134,7 +132,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         return getBag().remove(object, nCopies);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object, final int nCopies) {

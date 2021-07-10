@@ -105,7 +105,6 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         return new LazyMap<>(map, factory);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -130,7 +129,6 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         this.factory = Objects.requireNonNull(factory, "factory");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -157,7 +155,6 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         map = (Map<K, V>) in.readObject();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V get(final Object key) {
         // create value for key if key is not currently in the map

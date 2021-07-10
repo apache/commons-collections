@@ -107,7 +107,6 @@ public class ListOrderedMap<K, V>
         return new ListOrderedMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new empty {@code ListOrderedMap} that decorates
      * a {@code HashMap}.
@@ -129,7 +128,6 @@ public class ListOrderedMap<K, V>
         insertOrder.addAll(decorated().keySet());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -157,7 +155,6 @@ public class ListOrderedMap<K, V>
     }
 
     // Implement OrderedMap
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new ListOrderedMapIterator<>(this);
@@ -223,7 +220,6 @@ public class ListOrderedMap<K, V>
         return null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
         if (decorated().containsKey(key)) {
@@ -287,7 +283,6 @@ public class ListOrderedMap<K, V>
         insertOrder.clear();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets a view over the keys in the map.
      * <p>
@@ -357,7 +352,6 @@ public class ListOrderedMap<K, V>
         return new EntrySetView<>(this, this.insertOrder);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the Map as a string.
      *
@@ -387,7 +381,6 @@ public class ListOrderedMap<K, V>
         return buf.toString();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
      *
@@ -507,7 +500,6 @@ public class ListOrderedMap<K, V>
         return keyList();
     }
 
-    //-----------------------------------------------------------------------
     static class ValuesView<V> extends AbstractList<V> {
         private final ListOrderedMap<Object, V> parent;
 
@@ -557,7 +549,6 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     static class KeySetView<K> extends AbstractSet<K> {
         private final ListOrderedMap<K, Object> parent;
 
@@ -592,7 +583,6 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     static class EntrySetView<K, V> extends AbstractSet<Map.Entry<K, V>> {
         private final ListOrderedMap<K, V> parent;
         private final List<K> insertOrder;
@@ -672,7 +662,6 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     static class ListOrderedIterator<K, V> extends AbstractUntypedIteratorDecorator<K, Map.Entry<K, V>> {
         private final ListOrderedMap<K, V> parent;
         private K last;
@@ -695,7 +684,6 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     static class ListOrderedMapEntry<K, V> extends AbstractMapEntry<K, V> {
         private final ListOrderedMap<K, V> parent;
 
@@ -715,7 +703,6 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     static class ListOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
         private final ListOrderedMap<K, V> parent;
         private ListIterator<K> iterator;

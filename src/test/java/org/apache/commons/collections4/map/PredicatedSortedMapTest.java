@@ -52,7 +52,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     protected SortedMap<K, V> decorateMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,
         final Predicate<? super V> valuePredicate) {
         return PredicatedSortedMap.predicatedSortedMap(map, keyPredicate, valuePredicate);
@@ -83,7 +82,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from TestPredicatedMap
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
@@ -146,7 +144,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedMap<K, V> map = makeTestMap();

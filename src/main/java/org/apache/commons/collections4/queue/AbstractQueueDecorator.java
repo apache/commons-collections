@@ -68,7 +68,6 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
         return (Queue<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean offer(final E obj) {

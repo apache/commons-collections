@@ -177,7 +177,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(6, createTestMap().totalSize());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testMapEquals() {
         final MultiValueMap<K, V> one = new MultiValueMap<>();
@@ -189,7 +188,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(two, one);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testGetCollection() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
@@ -424,10 +422,8 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         return iis.readObject();
     }
 
-    //-----------------------------------------------------------------------
     // Manual serialization testing as this class cannot easily
     // extend the AbstractTestMap
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

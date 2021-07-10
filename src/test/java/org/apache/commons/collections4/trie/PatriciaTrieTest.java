@@ -58,7 +58,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     public void testPrefixMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
@@ -427,7 +426,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

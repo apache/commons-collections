@@ -80,7 +80,6 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            "src/test/resources/data/test/ReferenceMap.fullCollection.version4.obj");
 //    }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
@@ -105,7 +104,6 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
 /*
     // Tests often fail because gc is uncontrollable
 

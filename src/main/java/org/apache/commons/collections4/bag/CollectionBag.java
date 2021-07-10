@@ -56,7 +56,6 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         return new CollectionBag<>(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -67,7 +66,6 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         super(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *
@@ -93,9 +91,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         setCollection((Collection<E>) in.readObject());
     }
 
-    //-----------------------------------------------------------------------
     // Collection interface
-    //-----------------------------------------------------------------------
 
     /**
      * <i>(Change)</i>
@@ -218,9 +214,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         return decorated().retainAll(null);
     }
 
-    //-----------------------------------------------------------------------
     // Bag interface
-    //-----------------------------------------------------------------------
 
     /**
      * <i>(Change)</i>

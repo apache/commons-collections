@@ -98,7 +98,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         header = createHeaderNode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int size() {
@@ -116,7 +115,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return node.getValue();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Iterator<E> iterator() {
@@ -133,7 +131,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return new LinkedListIterator<>(this, fromIndex);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int indexOf(final Object value) {
@@ -174,7 +171,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Object[] toArray() {
@@ -213,7 +209,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return new LinkedSubList<>(this, fromIndexInclusive, toIndexExclusive);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E value) {
@@ -241,7 +236,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E remove(final int index) {
@@ -284,7 +278,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return modified;
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -321,7 +314,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         removeAllNodes();
     }
 
-    //-----------------------------------------------------------------------
 
     public E getFirst() {
         final Node<E> node = header.next;
@@ -369,7 +361,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return oldValue;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean equals(final Object obj) {
         if (obj == this) {
@@ -423,7 +414,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return buf.toString();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares two values for equals.
      * This implementation uses the equals method.
@@ -590,7 +580,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return node;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates an iterator for the sublist.
      *
@@ -612,7 +601,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return new LinkedSubListIterator<>(subList, fromIndex);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Serializes the data held in this object to the stream specified.
      * <p>
@@ -649,7 +637,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A node within the linked list.
      * <p>
@@ -756,7 +743,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A list iterator over the linked list.
      */
@@ -916,7 +902,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A list iterator over the linked sub list.
      */
@@ -960,7 +945,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * The sublist implementation for AbstractLinkedList.
      */

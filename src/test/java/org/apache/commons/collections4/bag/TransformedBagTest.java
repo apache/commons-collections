@@ -39,7 +39,6 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         return BulkTest.makeSuite(TransformedBagTest.class);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     @SuppressWarnings("unchecked")

@@ -81,7 +81,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         putAll(map);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         root.key = null;
@@ -762,7 +761,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Comparator<? super K> comparator() {
@@ -2412,7 +2410,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Reads the content of the stream.

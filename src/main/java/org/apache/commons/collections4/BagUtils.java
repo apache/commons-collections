@@ -53,7 +53,6 @@ public class BagUtils {
      */
     private BagUtils() {}
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) bag backed by the given bag. In
      * order to guarantee serial access, it is critical that all access to the
@@ -153,7 +152,6 @@ public class BagUtils {
         return CollectionBag.collectionBag(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) sorted bag backed by the given
      * sorted bag. In order to guarantee serial access, it is critical that all

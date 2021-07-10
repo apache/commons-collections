@@ -61,7 +61,6 @@ public abstract class AbstractNavigableSetDecorator<E>
         return (NavigableSet<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E lower(final E e) {

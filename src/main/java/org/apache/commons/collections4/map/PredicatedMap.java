@@ -86,7 +86,6 @@ public class PredicatedMap<K, V>
         return new PredicatedMap<>(map, keyPredicate, valuePredicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -108,7 +107,6 @@ public class PredicatedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -135,7 +133,6 @@ public class PredicatedMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Validates a key value pair.
      *
@@ -179,7 +176,6 @@ public class PredicatedMap<K, V>
         return valuePredicate != null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
         validate(key, value);

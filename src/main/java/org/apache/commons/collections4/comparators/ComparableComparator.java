@@ -51,7 +51,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     @SuppressWarnings("rawtypes")
     public static final ComparableComparator INSTANCE = new ComparableComparator();
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the singleton instance of a ComparableComparator.
      * <p>
@@ -67,7 +66,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
         return INSTANCE;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor whose use should be avoided.
      * <p>
@@ -76,7 +74,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     public ComparableComparator() {
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compare the two {@link Comparable Comparable} arguments.
      * This method is equivalent to:
@@ -95,7 +92,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
         return obj1.compareTo(obj2);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.

@@ -130,7 +130,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return new DualTreeBidiMap<>(normalMap, reverseMap, inverseMap);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Comparator<? super K> comparator() {
@@ -185,7 +184,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return hm.lastKey();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Obtains an ordered map iterator.
      * <p>
@@ -207,7 +205,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return inverseBidiMap();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {
@@ -232,7 +229,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return (SortedBidiMap<V, K>) super.inverseBidiMap();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Internal sorted map view.
      */
@@ -295,7 +291,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class MapIterator.
      */
@@ -400,7 +395,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     // Serialization
-    //-----------------------------------------------------------------------
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);

@@ -37,7 +37,6 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         return BulkTest.makeSuite(NodeCachingLinkedListTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public NodeCachingLinkedList<E> makeObject() {
         return new NodeCachingLinkedList<>();
@@ -48,7 +47,6 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         return "4";
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testShrinkCache() {
         if (!isRemoveSupported() || !isAddSupported()) {
@@ -70,7 +68,6 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         checkNodes();
     }
 
-    //-----------------------------------------------------------------------
     public static void compareSpeed() {
         final NodeCachingLinkedList<Object> ncll = new NodeCachingLinkedList<>();
         final LinkedList<Object> ll = new LinkedList<>();

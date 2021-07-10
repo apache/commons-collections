@@ -42,7 +42,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return BulkTest.makeSuite(SingletonMapTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMap<K, V> makeObject() {
         // need an empty singleton map, but thats not possible
@@ -94,7 +93,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (V[]) new Object[] { TEN };
     }
 
-    //-----------------------------------------------------------------------
     public void testClone() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
@@ -120,7 +118,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertTrue(map instanceof BoundedMap);
     }
 
-    //-----------------------------------------------------------------------
 //    public BulkTest bulkTestMapIterator() {
 //        return new TestFlatMapIterator();
 //    }

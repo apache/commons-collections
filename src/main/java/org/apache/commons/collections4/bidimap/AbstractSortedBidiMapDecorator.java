@@ -62,7 +62,6 @@ public abstract class AbstractSortedBidiMapDecorator<K, V>
         return (SortedBidiMap<K, V>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedBidiMap<V, K> inverseBidiMap() {
         return decorated().inverseBidiMap();

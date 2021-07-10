@@ -131,7 +131,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     protected abstract BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseMap);
 
     // Map delegation
-    //-----------------------------------------------------------------------
 
     @Override
     public V get(final Object key) {
@@ -169,7 +168,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // BidiMap changes
-    //-----------------------------------------------------------------------
 
     @Override
     public V put(final K key, final V value) {
@@ -213,7 +211,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // BidiMap
-    //-----------------------------------------------------------------------
     /**
      * Obtains a {@code MapIterator} over the map.
      * The iterator implements {@link BidiMapIterator}.
@@ -251,7 +248,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // Map views
-    //-----------------------------------------------------------------------
     /**
      * Gets a keySet view of the map.
      * Changes made on the view are reflected in the map.
@@ -334,7 +330,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return new EntrySetIterator<>(iterator, this);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class View.
      */
@@ -436,7 +431,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class KeySet.
      */
@@ -520,7 +514,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class Values.
      */
@@ -604,7 +597,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class EntrySet.
      */

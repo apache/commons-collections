@@ -57,7 +57,6 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
         iterator = list.listIterator(list.size());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether there is another element.
      *

@@ -38,7 +38,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Runs through the regular verifications, but also verifies that
      *  the buffer contains the same elements in the same sequence as the
@@ -56,7 +55,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Overridden because CircularFifoQueue doesn't allow null elements.
      * @return false
@@ -75,7 +73,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty ArrayList.
      *
@@ -108,7 +105,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         return new CircularFifoQueue<>(100);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests that the removal operation actually removes the first element.
      */
@@ -367,7 +363,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[4, 5, 6, 7]", fifo.toString());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testRepeatedSerialization() throws Exception {
         // bug 31433

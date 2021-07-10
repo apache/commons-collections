@@ -42,7 +42,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         super("Inverse");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to create a full {@code BidiMap} other than the default.
      *
@@ -76,7 +75,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // BidiPut
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBidiPut() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
@@ -139,7 +137,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // testGetKey
-    //-----------------------------------------------------------------------
     public void testBidiGetKey() {
         doTestGetKey(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
     }
@@ -157,7 +154,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // testInverse
-    //-----------------------------------------------------------------------
     public void testBidiInverse() {
         final BidiMap<K, V> map = makeFullMap();
         final BidiMap<V, K> inverseMap = map.inverseBidiMap();
@@ -178,7 +174,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             inverseMap.getKey(getSampleKeys()[0]));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiModifyEntrySet() {
         if (!isSetValueSupported()) {
             return;
@@ -211,7 +206,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             map.getKey(oldValue));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiClear() {
         if (!isRemoveSupported()) {
             try {
@@ -234,7 +228,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemove() {
         if (!isRemoveSupported()) {
             try {
@@ -269,7 +262,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertNull("Value was not removed.", map.getKey(value));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiKeySetValuesOrder() {
         resetFull();
         final Iterator<K> keys = map.keySet().iterator();
@@ -283,7 +275,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertFalse(values.hasNext());
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByKeySet() {
         if (!isRemoveSupported()) {
             return;
@@ -303,7 +294,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertFalse("Value was not removed from inverse map.", map.inverseBidiMap().containsKey(value));
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiRemoveByEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -333,7 +323,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         return (BidiMap<K, V>) super.getMap();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public BulkTest bulkTestMapEntrySet() {
         return new TestBidiMapEntrySet();
@@ -467,7 +456,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestBidiMapIterator() {
         return new TestBidiMapIterator();
     }
@@ -523,7 +511,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         }
     }
 
-    //-----------------------------------------------------------------------
     public void testBidiMapIteratorSet() {
         final V newValue1 = getOtherValues()[0];
         final V newValue2 = getOtherValues()[1];

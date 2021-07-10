@@ -146,7 +146,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

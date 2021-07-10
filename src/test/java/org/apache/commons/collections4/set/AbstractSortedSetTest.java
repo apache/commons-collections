@@ -134,7 +134,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         return (E[]) elements;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Bulk test {@link SortedSet#subSet(Object, Object)}.  This method runs through all of
      * the tests in {@link AbstractSortedSetTest}.

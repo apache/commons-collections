@@ -126,7 +126,6 @@ public class SingletonMap<K, V>
     }
 
     // KeyValue
-    //-----------------------------------------------------------------------
     /**
      * Gets the key.
      *
@@ -160,7 +159,6 @@ public class SingletonMap<K, V>
     }
 
     // BoundedMap
-    //-----------------------------------------------------------------------
     /**
      * Is the map currently full, always true.
      *
@@ -182,7 +180,6 @@ public class SingletonMap<K, V>
     }
 
     // Map
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      *
@@ -217,7 +214,6 @@ public class SingletonMap<K, V>
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
      *
@@ -240,7 +236,6 @@ public class SingletonMap<K, V>
         return isEqualValue(value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map where the key must match the existing key.
      * <p>
@@ -307,7 +302,6 @@ public class SingletonMap<K, V>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the entrySet view of the map.
      * Changes made via {@code setValue} affect this map.
@@ -395,7 +389,6 @@ public class SingletonMap<K, V>
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares the specified key to the stored key.
      *
@@ -416,7 +409,6 @@ public class SingletonMap<K, V>
         return value == null ? getValue() == null : value.equals(getValue());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * SingletonMapIterator.
      */
@@ -535,7 +527,6 @@ public class SingletonMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the key or value.
      *

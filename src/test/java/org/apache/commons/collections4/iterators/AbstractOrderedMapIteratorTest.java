@@ -47,14 +47,12 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public abstract OrderedMapIterator<K, V> makeEmptyIterator();
 
     @Override
     public abstract OrderedMapIterator<K, V> makeObject();
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
@@ -74,7 +72,6 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         } catch (final NoSuchElementException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the full list iterator contract is correct.
      */
@@ -130,7 +127,6 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the iterator order matches the keySet order.
      */

@@ -64,7 +64,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         return new SynchronizedCollection<>(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -97,7 +96,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         return collection;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object) {

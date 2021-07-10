@@ -34,7 +34,6 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     /** The iterator being decorated */
     private final MapIterator<K, V> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that decorates the specified iterator.
      *
@@ -54,7 +53,6 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
         return iterator;
     }
 
-    //-----------------------------------------------------------------------
 
     /** {@inheritDoc} */
     @Override

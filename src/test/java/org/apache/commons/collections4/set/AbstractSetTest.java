@@ -50,7 +50,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         super(name);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Provides additional verifications for sets.
      */
@@ -67,7 +66,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Set equals method is defined.
      */
@@ -121,7 +119,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         return set;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Return the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
      */
@@ -138,7 +135,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         return (Set<E>) super.getConfirmed();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests {@link Set#equals(Object)}.
      */

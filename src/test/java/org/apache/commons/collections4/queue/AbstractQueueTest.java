@@ -51,7 +51,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
@@ -63,7 +62,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Verifies that the test queue implementation matches the confirmed queue
      *  implementation.
@@ -80,7 +78,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link ArrayList}.
      */
@@ -116,7 +113,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return queue;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link Queue}.
      *
@@ -127,7 +123,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return (Queue<E>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Tests {@link Queue#offer(Object)}.
      */
@@ -302,7 +297,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         assertNull(element);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();

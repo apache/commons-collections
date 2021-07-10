@@ -49,7 +49,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     protected AbstractMultiSet() {
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements in this multiset.
      *
@@ -98,7 +97,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return oldCount;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Determines if the multiset contains the given element.
      *
@@ -110,7 +108,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return getCount(object) > 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the multiset elements. Elements present in the
      * MultiSet more than once will be returned repeatedly.
@@ -178,7 +175,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object) {
         add(object, 1);
@@ -190,7 +186,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clears the multiset removing all elements from the entrySet.
      */
@@ -225,7 +220,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a view of the unique elements of this multiset.
      *
@@ -296,7 +290,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     protected abstract Iterator<Entry<E>> createEntrySetIterator();
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class UniqueSet.
      */
@@ -345,7 +338,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class EntrySet.
      */
@@ -431,7 +423,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the multiset out using a custom routine.
      * @param out the output stream
@@ -463,7 +454,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean equals(final Object object) {
         if (object == this) {

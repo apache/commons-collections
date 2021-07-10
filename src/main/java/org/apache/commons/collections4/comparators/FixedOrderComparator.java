@@ -76,7 +76,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     private UnknownObjectBehavior unknownObjectBehavior = UnknownObjectBehavior.EXCEPTION;
 
     // Constructors
-    //-----------------------------------------------------------------------
     /**
      * Constructs an empty FixedOrderComparator.
      */
@@ -114,7 +113,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     // Bean methods / state querying methods
-    //-----------------------------------------------------------------------
     /**
      * Returns true if modifications cannot be made to the FixedOrderComparator.
      * FixedOrderComparators cannot be modified once they have performed a comparison.
@@ -160,7 +158,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     // Methods for adding items
-    //-----------------------------------------------------------------------
     /**
      * Adds an item, which compares as after all items known to the Comparator.
      * If the item is already known to the Comparator, its old position is
@@ -201,7 +198,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     // Comparator methods
-    //-----------------------------------------------------------------------
     /**
      * Compares two objects according to the order of this Comparator.
      * <p>
@@ -239,7 +235,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         return position1.compareTo(position2);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.

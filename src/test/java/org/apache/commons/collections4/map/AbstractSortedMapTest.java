@@ -41,7 +41,6 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Can't sort null keys.
      *
@@ -62,7 +61,6 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         return new TreeMap<>();
     }
 
-    //-----------------------------------------------------------------------
     public void testComparator() {
 //        SortedMap<K, V> sm = makeFullMap();
         // no tests I can think of
@@ -96,7 +94,6 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         assertSame(obj, sm.lastKey());
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestHeadMap() {
         return new TestHeadMap<>(this);
     }

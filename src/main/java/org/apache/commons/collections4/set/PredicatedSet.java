@@ -63,7 +63,6 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
         return new PredicatedSet<>(set, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>

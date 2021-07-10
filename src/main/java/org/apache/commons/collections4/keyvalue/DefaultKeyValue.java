@@ -71,7 +71,6 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         super(entry.getKey(), entry.getValue());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Sets the key.
      *
@@ -104,7 +103,6 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         return super.setValue(value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a new {@code Map.Entry} object with key and value from this pair.
      *
@@ -114,7 +112,6 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         return new DefaultMapEntry<>(this);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>

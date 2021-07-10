@@ -31,7 +31,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     /** The iterator being decorated */
     private final ListIterator<E> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that decorates the specified iterator.
      *
@@ -51,7 +50,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
         return iterator;
     }
 
-    //-----------------------------------------------------------------------
 
     /** {@inheritDoc} */
     @Override

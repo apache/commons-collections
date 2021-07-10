@@ -59,7 +59,6 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
         addAll(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the bag out using a custom routine.
      *

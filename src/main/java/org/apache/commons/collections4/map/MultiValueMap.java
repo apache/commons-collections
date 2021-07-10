@@ -128,7 +128,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         return new MultiValueMap<>(map, collectionFactory);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a MultiValueMap based on a {@code HashMap} and
      * storing the multiple values in an {@code ArrayList}.
@@ -156,7 +155,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         this.collectionFactory = collectionFactory;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -183,7 +181,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         map = (Map<K, Object>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clear the map.
      */
@@ -484,7 +481,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         return collectionFactory.create();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class that provides the values view.
      */

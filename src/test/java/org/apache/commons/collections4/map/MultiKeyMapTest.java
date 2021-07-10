@@ -113,7 +113,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         return false;
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
@@ -135,7 +134,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         } catch (final NullPointerException ex) {}
     }
 
-    //-----------------------------------------------------------------------
     public void testMultiKeyGet() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
@@ -418,7 +416,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         }
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testClone() {
         final MultiKeyMap<K, V> map = new MultiKeyMap<>();
@@ -428,7 +425,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         assertSame(map.get(new MultiKey<>((K) I1, (K) I2)), cloned.get(new MultiKey<>((K) I1, (K) I2)));
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testLRUMultiKeyMap() {
         final MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<MultiKey<? extends K>, V>(2));
@@ -452,7 +448,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         assertEquals(true, cloned.containsKey(I1, I5));
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

@@ -63,7 +63,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
 
     @Test
     public void testEmpty() {

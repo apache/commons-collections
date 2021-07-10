@@ -40,7 +40,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         return new ArrayStack<>();
     }
 
-    //-----------------------------------------------------------------------
     public void testNewStack() {
         final ArrayStack<E> stack = makeObject();
         assertTrue("New stack is empty", stack.empty());

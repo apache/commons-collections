@@ -57,7 +57,6 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
         addAll(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the multiset out using a custom routine.
      *

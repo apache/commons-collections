@@ -41,7 +41,6 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implements the abstract superclass method to return the list iterator.
      *
@@ -86,7 +85,6 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */

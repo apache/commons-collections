@@ -60,7 +60,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         return (OrderedMap<K, V>) super.makeFullMap();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * OrderedMap uses TreeMap as its known comparison.
      *
@@ -83,7 +82,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         return (K[]) list.toArray();
     }
 
-    //-----------------------------------------------------------------------
     public void testFirstKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
@@ -115,7 +113,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         assertEquals(confirmedLast, ordered.lastKey());
     }
 
-    //-----------------------------------------------------------------------
     public void testNextKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
@@ -186,7 +183,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestOrderedMapIterator() {
         return new InnerTestOrderedMapIterator();
     }

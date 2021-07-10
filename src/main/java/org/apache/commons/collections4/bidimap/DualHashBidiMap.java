@@ -93,7 +93,6 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
     }
 
     // Serialization
-    //-----------------------------------------------------------------------
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);

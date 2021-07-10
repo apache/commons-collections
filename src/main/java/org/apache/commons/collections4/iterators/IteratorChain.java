@@ -68,7 +68,6 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     private boolean isLocked;
 
-    //-----------------------------------------------------------------------
     /**
      * Construct an IteratorChain with no Iterators.
      * <p>
@@ -143,7 +142,6 @@ public class IteratorChain<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Add an Iterator to the end of the chain
      *
@@ -217,7 +215,6 @@ public class IteratorChain<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Return true if any Iterator in the IteratorChain has a remaining element.
      *

@@ -63,7 +63,6 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Hook method called when a value is being set using {@code setValue}.
      * <p>
@@ -97,7 +96,6 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         return true;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (isSetValueChecking()) {
@@ -106,7 +104,6 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         return map.entrySet();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implementation of an entry set that checks additions via setValue.
      */

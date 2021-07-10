@@ -36,7 +36,6 @@ public abstract class AbstractMapEntryTest<K, V> {
     protected final String key = "name";
     protected final String value = "duke";
 
-    //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.
      * This implementation simply calls {@link #makeMapEntry(Object, Object)}
@@ -70,7 +69,6 @@ public abstract class AbstractMapEntryTest<K, V> {
         return entry;
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     @Test
     public void testAccessorsAndMutators() {

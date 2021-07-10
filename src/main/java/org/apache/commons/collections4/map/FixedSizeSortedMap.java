@@ -80,7 +80,6 @@ public class FixedSizeSortedMap<K, V>
         return new FixedSizeSortedMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -100,7 +99,6 @@ public class FixedSizeSortedMap<K, V>
         return (SortedMap<K, V>) map;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -125,7 +123,6 @@ public class FixedSizeSortedMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
         if (!map.containsKey(key)) {
@@ -167,7 +164,6 @@ public class FixedSizeSortedMap<K, V>
         return UnmodifiableCollection.unmodifiableCollection(map.values());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return new FixedSizeSortedMap<>(getSortedMap().subMap(fromKey, toKey));

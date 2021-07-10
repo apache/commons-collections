@@ -33,7 +33,6 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public UnmodifiableList<E> makeObject() {
         return new UnmodifiableList<>(new ArrayList<E>());
@@ -60,7 +59,6 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     protected UnmodifiableList<E> list;
     protected ArrayList<E> array;
 
@@ -169,7 +167,6 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

@@ -49,7 +49,6 @@ public class BoundedIterator<E> implements Iterator<E> {
     /** The position of the current element */
     private long pos;
 
-    //-----------------------------------------------------------------------
 
     /**
      * Decorates the specified iterator to return at most the given number of elements,
@@ -89,7 +88,6 @@ public class BoundedIterator<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean hasNext() {

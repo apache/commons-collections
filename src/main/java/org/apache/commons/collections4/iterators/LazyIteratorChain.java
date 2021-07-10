@@ -62,7 +62,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      */
     private Iterator<? extends E> lastUsedIterator;
 
-    //-----------------------------------------------------------------------
 
     /**
      * Gets the next iterator after the previous one has been exhausted.
@@ -100,7 +99,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Return true if any Iterator in the chain has a remaining element.

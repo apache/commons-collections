@@ -77,7 +77,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         addAll(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * {@inheritDoc}
      *
@@ -96,7 +95,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         return super.add(object);
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E first() {
@@ -118,7 +116,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         return (SortedMap<E, AbstractMapBag.MutableInteger>) super.getMap();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the bag out using a custom routine.
      *

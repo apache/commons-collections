@@ -44,7 +44,6 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
         return BulkTest.makeSuite(TransformedNavigableSetTest.class);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public NavigableSet<E> makeObject() {
@@ -60,7 +59,6 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final NavigableSet<E> set = TransformedNavigableSet.transformingNavigableSet(new TreeSet<E>(),

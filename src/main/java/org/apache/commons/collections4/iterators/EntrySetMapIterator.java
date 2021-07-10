@@ -55,7 +55,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         this.iterator = map.entrySet().iterator();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks to see if there are more entries still to be iterated.
      *
@@ -79,7 +78,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         return last.getKey();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Removes the last returned key from the underlying {@code Map}.
      * <p>
@@ -100,7 +98,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         canRemove = false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the current key, which is the key returned by the last call
      * to {@code next()}.
@@ -149,7 +146,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         return last.setValue(value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Resets the state of the iterator.
      */

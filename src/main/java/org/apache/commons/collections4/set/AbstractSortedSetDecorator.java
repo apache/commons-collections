@@ -63,7 +63,6 @@ public abstract class AbstractSortedSetDecorator<E>
         return (SortedSet<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         return decorated().subSet(fromElement, toElement);

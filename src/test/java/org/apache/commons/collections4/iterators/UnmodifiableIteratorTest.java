@@ -62,7 +62,6 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     public void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }

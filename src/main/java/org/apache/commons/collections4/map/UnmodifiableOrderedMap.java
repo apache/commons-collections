@@ -69,7 +69,6 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
         return new UnmodifiableOrderedMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -81,7 +80,6 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
         super((OrderedMap<K, V>) map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -108,7 +106,6 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         final OrderedMapIterator<K, V> it = decorated().mapIterator();

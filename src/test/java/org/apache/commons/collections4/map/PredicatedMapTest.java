@@ -40,7 +40,6 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
         final Predicate<? super V> valuePredicate) {
         return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);
@@ -55,7 +54,6 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return decorateMap(new HashMap<K, V>(), testPredicate, testPredicate);
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();

@@ -55,7 +55,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<Object> makeConfirmedCollection() {
         return new ArrayList<>();
@@ -77,7 +76,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
@@ -88,7 +86,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
     }
 
-    //-----------------------------------------------------------------------
     public void testTransformedCollection() {
         final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());

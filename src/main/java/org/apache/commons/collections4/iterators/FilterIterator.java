@@ -41,7 +41,6 @@ public class FilterIterator<E> implements Iterator<E> {
     /** Whether the next object has been calculated yet */
     private boolean nextObjectSet;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new {@code FilterIterator} that will not function
      * until {@link #setIterator(Iterator) setIterator} is invoked.
@@ -71,7 +70,6 @@ public class FilterIterator<E> implements Iterator<E> {
         this.predicate = predicate;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns true if the underlying iterator contains an object that
      * matches the predicate.
@@ -120,7 +118,6 @@ public class FilterIterator<E> implements Iterator<E> {
         iterator.remove();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the iterator this iterator is using.
      *
@@ -142,7 +139,6 @@ public class FilterIterator<E> implements Iterator<E> {
         nextObjectSet = false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the predicate this iterator is using.
      *
@@ -163,7 +159,6 @@ public class FilterIterator<E> implements Iterator<E> {
         nextObjectSet = false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Set nextObject to the next object. If there are no more
      * objects then return false. Otherwise, return true.

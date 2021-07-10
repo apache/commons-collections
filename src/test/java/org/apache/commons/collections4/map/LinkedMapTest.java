@@ -61,7 +61,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return "4";
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testReset() {
         resetEmpty();
@@ -78,7 +77,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(list.get(0), it.next());
     }
 
-    //-----------------------------------------------------------------------
     public void testInsertionOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -126,7 +124,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[2], valueIter.next());
     }
 
-    //-----------------------------------------------------------------------
     public void testGetByIndex() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();

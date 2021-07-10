@@ -77,7 +77,6 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     /** The transformer to use if the map does not contain a key */
     private final Transformer<? super K, ? extends V> value;
 
-    //-----------------------------------------------------------------------
     /**
      * Factory method to create a defaulting map.
      * <p>
@@ -134,7 +133,6 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         return new DefaultedMap<>(map, Objects.requireNonNull(transformer, "Transformer must not be null"));
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new empty {@code DefaultedMap} that decorates
      * a {@code HashMap}.
@@ -169,7 +167,6 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         this.value = Objects.requireNonNull(defaultValueTransformer, "defaultValueTransformer");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -194,7 +191,6 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         map = (Map<K, V>) in.readObject();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public V get(final Object key) {
