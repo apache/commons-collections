@@ -1313,4 +1313,25 @@ public class MapUtilsTest {
         }
         return '.';
     }
+
+    @Test
+    public void testFromKeySetAndCollectionsOfSameLength() {
+       final Map<String, String> expected = new HashMap<>();
+       expected.put("key1", "value1");
+       final Map<String, String> actual = MapUtils.fromKeySetAndValues(expected.keySet(), expected.values());
+       Assert.assertTrue(actual.equals(expected));
+    }
+
+    @Test
+    public void testFromKeySetAndValuesOfDifferentLengthThrowsException() {
+      Set<String> keys = new HashSet<>();
+      List<String> values = new ArrayList<>();
+      keys.add("foo");
+      keys.add("key1");
+      try {
+        MapUtils.fromKeySetAndValues(keys, values);
+      } catch (Exception e) {
+        Assert.assertTrue(e.getMessage().equals("Size of keys and values must match"));
+      }
+    }
 }
