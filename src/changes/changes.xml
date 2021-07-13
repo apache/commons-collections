@@ -213,7 +213,7 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Update tests from commons-io:commons-io 2.6 to 2.10.0 #180.
+      Update tests from commons-io:commons-io 2.6 to 2.11.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
       Update actions/checkout from v1 to v2.3.4 #166 #173 #183 #193.
