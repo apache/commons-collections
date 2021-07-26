@@ -1330,7 +1330,7 @@ public class MapUtilsTest {
       keys.add("key1");
       try {
         MapUtils.fromKeySetAndValues(keys, values);
-      } catch (Exception e) {
+      } catch (RuntimeException e) {
         Assert.assertTrue(e.getMessage().equals("Size of keys and values must match"));
       }
     }
