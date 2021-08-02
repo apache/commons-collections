@@ -43,7 +43,9 @@ public class ListUtilsTest {
     private static final String e = "e";
     private static final String x = "x";
 
+    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
     private String[] fullArray;
+
     private List<String> fullList;
 
     @BeforeEach
@@ -52,13 +54,69 @@ public class ListUtilsTest {
         fullList = new ArrayList<>(Arrays.asList(fullArray));
     }
 
+    @Test
+    public void testDefaultIfNull() {
+        assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
+
+        final List<Long> list = new ArrayList<>();
+        assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
+    }
+
+    @Test
+    public void testEmptyIfNull() {
+        assertTrue(ListUtils.emptyIfNull(null).isEmpty());
+
+        final List<Long> list = new ArrayList<>();
+        assertSame(list, ListUtils.emptyIfNull(list));
+    }
+
+    @Test
+    public void testEquals() {
+        final Collection<String> data = Arrays.asList("a", "b", "c");
+
+        final List<String> a = new ArrayList<>( data );
+        final List<String> b = new ArrayList<>( data );
+
+        assertEquals(a, b);
+        assertTrue(ListUtils.isEqualList(a, b));
+        a.clear();
+        assertFalse(ListUtils.isEqualList(a, b));
+        assertFalse(ListUtils.isEqualList(a, null));
+        assertFalse(ListUtils.isEqualList(null, b));
+        assertTrue(ListUtils.isEqualList(null, null));
+    }
+
+    @Test
+    public void testHashCode() {
+        final Collection<String> data = Arrays.asList("a", "b", "c");
+
+        final List<String> a = new ArrayList<>(data);
+        final List<String> b = new ArrayList<>(data);
+
+        assertEquals(a.hashCode(), b.hashCode());
+        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
+        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
+        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        a.clear();
+        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        assertEquals(0, ListUtils.hashCodeForList(null));
+    }
+
     /**
-     * Tests intersecting a non-empty list with an empty list.
+     * Tests the {@code indexOf} method in {@code ListUtils} class..
      */
     @Test
-    public void testIntersectNonEmptyWithEmptyList() {
-        final List<String> empty = Collections.<String>emptyList();
-        assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
+    public void testIndexOf() {
+        Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
+        int index = ListUtils.indexOf(fullList, testPredicate);
+        assertEquals(d, fullList.get(index));
+
+        testPredicate = EqualPredicate.equalPredicate("de");
+        index = ListUtils.indexOf(fullList, testPredicate);
+        assertEquals(index, -1);
+
+        assertEquals(ListUtils.indexOf(null, testPredicate), -1);
+        assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 
     /**
@@ -71,19 +129,19 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests intersecting a non-empty list with an subset of itself.
+     * Tests intersecting two lists in different orders.
      */
     @Test
-    public void testIntersectNonEmptySubset() {
-        // create a copy
-        final List<String> other = new ArrayList<>(fullList);
-
-        // remove a few items
-        assertNotNull(other.remove(0));
-        assertNotNull(other.remove(1));
-
-        // make sure the intersection is equal to the copy
-        assertEquals(other, ListUtils.intersection(fullList, other));
+    public void testIntersectionOrderInsensitivity() {
+        final List<String> one = new ArrayList<>();
+        final List<String> two = new ArrayList<>();
+        one.add("a");
+        one.add("b");
+        two.add("a");
+        two.add("a");
+        two.add("b");
+        two.add("b");
+        assertEquals(ListUtils.intersection(one, two), ListUtils.intersection(two, one));
     }
 
     /**
@@ -105,38 +163,28 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests intersecting two lists in different orders.
+     * Tests intersecting a non-empty list with an subset of itself.
      */
     @Test
-    public void testIntersectionOrderInsensitivity() {
-        final List<String> one = new ArrayList<>();
-        final List<String> two = new ArrayList<>();
-        one.add("a");
-        one.add("b");
-        two.add("a");
-        two.add("a");
-        two.add("b");
-        two.add("b");
-        assertEquals(ListUtils.intersection(one, two), ListUtils.intersection(two, one));
+    public void testIntersectNonEmptySubset() {
+        // create a copy
+        final List<String> other = new ArrayList<>(fullList);
+
+        // remove a few items
+        assertNotNull(other.remove(0));
+        assertNotNull(other.remove(1));
+
+        // make sure the intersection is equal to the copy
+        assertEquals(other, ListUtils.intersection(fullList, other));
     }
 
+    /**
+     * Tests intersecting a non-empty list with an empty list.
+     */
     @Test
-    public void testPredicatedList() {
-        final Predicate<Object> predicate = o -> o instanceof String;
-        final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
-        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
-        try {
-            ListUtils.predicatedList(new ArrayList<>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            ListUtils.predicatedList(null, predicate);
-            fail("Expecting IllegalArgumentException for null list.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+    public void testIntersectNonEmptyWithEmptyList() {
+        final List<String> empty = Collections.<String>emptyList();
+        assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
     }
 
     @Test
@@ -178,158 +226,6 @@ public class ListUtilsTest {
 
         assertNotNull(list.get(5));
         assertEquals(6, list.size());
-    }
-
-    @Test
-    public void testEmptyIfNull() {
-        assertTrue(ListUtils.emptyIfNull(null).isEmpty());
-
-        final List<Long> list = new ArrayList<>();
-        assertSame(list, ListUtils.emptyIfNull(list));
-    }
-
-    @Test
-    public void testDefaultIfNull() {
-        assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
-
-        final List<Long> list = new ArrayList<>();
-        assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
-    }
-
-    @Test
-    public void testEquals() {
-        final Collection<String> data = Arrays.asList("a", "b", "c");
-
-        final List<String> a = new ArrayList<>( data );
-        final List<String> b = new ArrayList<>( data );
-
-        assertEquals(a, b);
-        assertTrue(ListUtils.isEqualList(a, b));
-        a.clear();
-        assertFalse(ListUtils.isEqualList(a, b));
-        assertFalse(ListUtils.isEqualList(a, null));
-        assertFalse(ListUtils.isEqualList(null, b));
-        assertTrue(ListUtils.isEqualList(null, null));
-    }
-
-    @Test
-    public void testHashCode() {
-        final Collection<String> data = Arrays.asList("a", "b", "c");
-
-        final List<String> a = new ArrayList<>(data);
-        final List<String> b = new ArrayList<>(data);
-
-        assertEquals(a.hashCode(), b.hashCode());
-        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
-        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
-        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        a.clear();
-        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        assertEquals(0, ListUtils.hashCodeForList(null));
-    }
-
-    @Test
-    public void testRetainAll() {
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-        sub.add(b);
-        sub.add(x);
-
-        final List<String> retained = ListUtils.retainAll(fullList, sub);
-        assertEquals(2, retained.size());
-        sub.remove(x);
-        assertEquals(retained, sub);
-        fullList.retainAll(sub);
-        assertEquals(retained, fullList);
-
-        try {
-            ListUtils.retainAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe){} // this is what we want
-    }
-
-    @Test
-    public void testRemoveAll() {
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-        sub.add(b);
-        sub.add(x);
-
-        final List<String> remainder = ListUtils.removeAll(fullList, sub);
-        assertEquals(3, remainder.size());
-        fullList.removeAll(sub);
-        assertEquals(remainder, fullList);
-
-        try {
-            ListUtils.removeAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
-    }
-
-    @Test
-    public void testSubtract() {
-        final List<String> list = new ArrayList<>();
-        list.add(a);
-        list.add(b);
-        list.add(a);
-        list.add(x);
-
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-
-        final List<String> result = ListUtils.subtract(list, sub);
-        assertEquals(3, result.size());
-
-        final List<String> expected = new ArrayList<>();
-        expected.add(b);
-        expected.add(a);
-        expected.add(x);
-
-        assertEquals(expected, result);
-
-        try {
-            ListUtils.subtract(list, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
-    }
-
-    @Test
-    public void testSubtractNullElement() {
-        final List<String> list = new ArrayList<>();
-        list.add(a);
-        list.add(null);
-        list.add(null);
-        list.add(x);
-
-        final List<String> sub = new ArrayList<>();
-        sub.add(null);
-
-        final List<String> result = ListUtils.subtract(list, sub);
-        assertEquals(3, result.size());
-
-        final List<String> expected = new ArrayList<>();
-        expected.add(a);
-        expected.add(null);
-        expected.add(x);
-
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Tests the {@code indexOf} method in {@code ListUtils} class..
-     */
-    @Test
-    public void testIndexOf() {
-        Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
-        int index = ListUtils.indexOf(fullList, testPredicate);
-        assertEquals(d, fullList.get(index));
-
-        testPredicate = EqualPredicate.equalPredicate("de");
-        index = ListUtils.indexOf(fullList, testPredicate);
-        assertEquals(index, -1);
-
-        assertEquals(ListUtils.indexOf(null, testPredicate), -1);
-        assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 
     @Test
@@ -447,7 +343,62 @@ public class ListUtilsTest {
         assertEquals(strings, partitionMax.get(0));
     }
 
-    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
+    @Test
+    public void testPredicatedList() {
+        final Predicate<Object> predicate = o -> o instanceof String;
+        final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
+        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
+        try {
+            ListUtils.predicatedList(new ArrayList<>(), null);
+            fail("Expecting IllegalArgumentException for null predicate.");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
+        try {
+            ListUtils.predicatedList(null, predicate);
+            fail("Expecting IllegalArgumentException for null list.");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
+    }
+
+    @Test
+    public void testRemoveAll() {
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+        sub.add(b);
+        sub.add(x);
+
+        final List<String> remainder = ListUtils.removeAll(fullList, sub);
+        assertEquals(3, remainder.size());
+        fullList.removeAll(sub);
+        assertEquals(remainder, fullList);
+
+        try {
+            ListUtils.removeAll(null, null);
+            fail("expecting NullPointerException");
+        } catch(final NullPointerException npe) {} // this is what we want
+    }
+
+    @Test
+    public void testRetainAll() {
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+        sub.add(b);
+        sub.add(x);
+
+        final List<String> retained = ListUtils.retainAll(fullList, sub);
+        assertEquals(2, retained.size());
+        sub.remove(x);
+        assertEquals(retained, sub);
+        fullList.retainAll(sub);
+        assertEquals(retained, fullList);
+
+        try {
+            ListUtils.retainAll(null, null);
+            fail("expecting NullPointerException");
+        } catch(final NullPointerException npe){} // this is what we want
+    }
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
@@ -485,5 +436,54 @@ public class ListUtilsTest {
         assertTrue(output1.contains(1L));
         assertTrue(output1.contains(3L));
         assertTrue(output1.contains(4L));
+    }
+
+    @Test
+    public void testSubtract() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        list.add(a);
+        list.add(x);
+
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+
+        final List<String> result = ListUtils.subtract(list, sub);
+        assertEquals(3, result.size());
+
+        final List<String> expected = new ArrayList<>();
+        expected.add(b);
+        expected.add(a);
+        expected.add(x);
+
+        assertEquals(expected, result);
+
+        try {
+            ListUtils.subtract(list, null);
+            fail("expecting NullPointerException");
+        } catch(final NullPointerException npe) {} // this is what we want
+    }
+
+    @Test
+    public void testSubtractNullElement() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(null);
+        list.add(null);
+        list.add(x);
+
+        final List<String> sub = new ArrayList<>();
+        sub.add(null);
+
+        final List<String> result = ListUtils.subtract(list, sub);
+        assertEquals(3, result.size());
+
+        final List<String> expected = new ArrayList<>();
+        expected.add(a);
+        expected.add(null);
+        expected.add(x);
+
+        assertEquals(expected, result);
     }
 }
