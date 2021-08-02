@@ -541,7 +541,7 @@
     <commons.module.name>org.apache.commons.collections4</commons.module.name>
 
     <!-- Current 4.x release series -->
-    <commons.release.version>4.4</commons.release.version>
+    <commons.release.version>4.5</commons.release.version>
     <commons.release.desc>(Requires Java 8 or later)</commons.release.desc>
 
     <!-- Previous 4.2 release on Java 7 -->
