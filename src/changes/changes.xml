@@ -21,10 +21,11 @@
   </properties>
   <body>
   <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
-  	<action issue="COLLECTIONS-780" dev="kinow" type="fix" due-to="Arturo Bernal">
+    <!-- FIX -->
+    <action issue="COLLECTIONS-780" dev="kinow" type="fix" due-to="Arturo Bernal">
       Use assertThrows V2.
     </action>
-  	<action issue="COLLECTIONS-778" dev="kinow" type="fix" due-to="Arturo Bernal">
+    <action issue="COLLECTIONS-778" dev="kinow" type="fix" due-to="Arturo Bernal">
       Use assertThrows.
     </action>
     <action issue="COLLECTIONS-771" dev="kinow" type="fix" due-to="Xin Tong">
@@ -32,9 +33,6 @@
     </action>
     <action issue="COLLECTIONS-769" dev="kinow" type="fix" due-to="Xin (Cynthia) Tong">
       Fix flaky UnmodifiableMultiValuedMapTest.
-    </action>
-    <action type="update" dev="kinow" due-to="Dependabot">
-      Bump actions/setup-java from v1.4.0 to v2 #174 #177 #186 #224.
     </action>
     <action issue="COLLECTIONS-764" dev="kinow" type="fix" due-to="XenoAmess">
       Refine javadoc and fix typos.
@@ -48,8 +46,70 @@
     <action issue="COLLECTIONS-759" dev="kinow" type="fix">
       Fix checkstyle issues regarding missing newline at end of file, and CRLF vs LF.
     </action>
+    <action issue="COLLECTIONS-727" dev="ggregory" type="fix" due-to="XiangzheXu, XZ-X">
+      A potential misleading comment #82.
+    </action>
+    <action issue="COLLECTIONS-679" dev="ggregory" type="fix" due-to="David Mollitor, Mikko Maunu">
+      Using existing class in example given in Javadocs. #85.
+    </action>
+    <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
+      Add test cases to IteratorUtilsTest #86.
+    </action>
+    <action dev="ggregory" type="fix" due-to="dota17">
+      Fix typos in release notes and Javadoc for AbstractHashedMap and AbstractHashedMapTest #88.
+    </action>
+    <action issue="COLLECTIONS-740" dev="ggregory" type="fix" due-to="Pengyu Nie">
+      Add missing @throws comment for SwitchTransformer.switchTransformer. #124.
+    </action>
+    <action issue="COLLECTIONS-739" dev="ggregory" type="fix" due-to="Pengyu Nie">
+      Fix inconsistent @throws comments in DefaultedMap #123.
+    </action>
+    <action dev="ggregory" type="fix" due-to="Dominik Stadler">
+      Fix links to release notes and update contents for 4.4 #127.
+    </action>
+    <action type="fix" dev="kinow" due-to="Jin Xu">
+      Fix checkstyle syntax (was scope, is now accessModifiers) via PR #235.
+    </action>
+    <action issue="COLLECTIONS-786" type="fix" dev="kinow" due-to="vandrewskis">
+      Fix PassiveExpiringMap documentation for methods that involve accessing the entire map.
+    </action>
+    <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
-      Add tests for MapUtils
+      Add tests for MapUtils.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Test subMap and tailMap #94.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add junit for add, remove, setCount and entrySet in the UnmodifiableMultiSetTest #95.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add two test cases in UnmodifiableQueueTest #96.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Update two test cases in AbstractMultiValuedMapTest testPutAll_map1 testPutAll_map2 #97.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case for AbstractMultiValuedMapTest testToString() #100.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case AbstractMultiValuedMapTest#testMultiValuedMapIterator() #108.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add junit for getWithNull and subList in LazyListTest; #103.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add test cases to ArrayListValuedHashMapTest; #106.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add test cases in UnmodifiableMultiValuedMapTest; #102.
+    </action>    
+    <action issue="COLLECTIONS-674" dev="ggregory" type="add" due-to="dota17">
+      Add CollectionUtils removeRange, removeCount #91.
+    </action>
+    <!-- UPDATE -->
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump actions/setup-java from v1.4.0 to v2 #174 #177 #186 #224.
     </action>
     <action issue="COLLECTIONS-737" dev="kinow" type="update" due-to="Prodigysov">
       Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests.
@@ -66,38 +126,11 @@
     <action issue="COLLECTIONS-726" dev="ggregory" type="update" due-to="liuhaozzu, Gary Gregory">
       Add lambdas function to provide default values in MapUtils #81.
     </action>
-    <action issue="COLLECTIONS-727" dev="ggregory" type="fix" due-to="XiangzheXu, XZ-X">
-      A potential misleading comment #82.
-    </action>
-    <action issue="COLLECTIONS-679" dev="ggregory" type="fix" due-to="David Mollitor, Mikko Maunu">
-      Using existing class in example given in Javadocs. #85.
-    </action>
-    <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
-      Add test cases to IteratorUtilsTest #86.
-    </action>
-    <action dev="ggregory" type="fix" due-to="dota17">
-      Fix typos in release notes and Javadoc for AbstractHashedMap and AbstractHashedMapTest #88.
-    </action>
     <action issue="COLLECTIONS-704" dev="ggregory" type="update" due-to="dota17">
       Update size to capacity for GrowthList #90.
     </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Test subMap and tailMap #94.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add junit for add, remove, setCount and entrySet in the UnmodifiableMultiSetTest #95.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add two test cases in UnmodifiableQueueTest #96.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Update two test cases in AbstractMultiValuedMapTest testPutAll_map1 testPutAll_map2 #97.
-    </action>
     <action dev="ggregory" type="update" due-to="dota17">
       TransformedSortedBagTest should work with TransformedSortedBag, not TransformedBag #98.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add a test case for AbstractMultiValuedMapTest testToString() #100.
     </action>
     <action dev="ggregory" type="update" due-to="dota17">
       Update some map test cases #104.
@@ -105,23 +138,8 @@
     <action dev="ggregory" type="update" due-to="dota17">
       Add three test cases in UnmodifiableQueueTest #105.
     </action>
-    <action issue="COLLECTIONS-674" dev="ggregory" type="add" due-to="dota17">
-      Add CollectionUtils removeRange, removeCount #91.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add a test case AbstractMultiValuedMapTest#testMultiValuedMapIterator() #108.
-    </action>
     <action dev="ggregory" type="update" due-to="dota17">
       Remove the parentheses in the error message in CircularFifoQueue #107.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add junit for getWithNull and subList in LazyListTest; #103.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add test cases to ArrayListValuedHashMapTest; #106.
-    </action>
-    <action dev="ggregory" type="add" due-to="dota17">
-      Add test cases in UnmodifiableMultiValuedMapTest; #102.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       [test] org.easymock:easymock 4.0.2 -> 4.1.
@@ -131,15 +149,6 @@
     </action>
     <action dev="ggregory" type="update" due-to="Chen">
       Fix inconsistent @throws comments in ListOrderedSet #125.
-    </action>
-    <action issue="COLLECTIONS-740" dev="ggregory" type="fix" due-to="Pengyu Nie">
-      Add missing @throws comment for SwitchTransformer.switchTransformer. #124.
-    </action>
-    <action issue="COLLECTIONS-739" dev="ggregory" type="fix" due-to="Pengyu Nie">
-      Fix inconsistent @throws comments in DefaultedMap #123.
-    </action>
-    <action dev="ggregory" type="fix" due-to="Dominik Stadler">
-      Fix links to release notes and update contents for 4.4 #127.
     </action>
     <action issue="COLLECTIONS-744" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.EnumerationUtils.asIterable(Enumeration).
@@ -265,12 +274,6 @@
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump easymock from 4.2 to 4.3 #226.
-    </action>
-    <action type="fix" dev="kinow" due-to="Jin Xu">
-      Fix checkstyle syntax (was scope, is now accessModifiers) via PR #235.
-    </action>
-    <action issue="COLLECTIONS-786" type="fix" dev="kinow" due-to="vandrewskis">
-      Fix PassiveExpiringMap documentation for methods that involve accessing the entire map.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
