@@ -180,7 +180,7 @@ public class ListUtils {
      * Shorthand for {@code list.get(0)}
      * </p>
      * @param <T> The list type.
-     * @param list The list
+     * @param list The list.
      * @return the first element of a list.
      * @see List#get(int)
      * @since 4.5
@@ -195,7 +195,7 @@ public class ListUtils {
      * Shorthand for {@code list.get(list.size() - 1)}
      * </p>
      * @param <T> The list type.
-     * @param list The list
+     * @param list The list.
      * @return the last element of a list.
      * @see List#get(int)
      * @since 4.5
