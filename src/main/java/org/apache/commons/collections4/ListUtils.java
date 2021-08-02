@@ -175,6 +175,36 @@ public class ListUtils {
     }
 
     /**
+     * Gets the first element of a list.
+     * <p>
+     * Shorthand for {@code list.get(0)}
+     * </p>
+     * @param <T> The list type.
+     * @param list The list
+     * @return the first element of a list.
+     * @see List#get(int)
+     * @since 4.5
+     */
+    public static <T> T getFirst(List<T> list) {
+        return Objects.requireNonNull(list, "list").get(0);
+    }
+
+    /**
+     * Gets the last element of a list.
+     * <p>
+     * Shorthand for {@code list.get(list.size() - 1)}
+     * </p>
+     * @param <T> The list type.
+     * @param list The list
+     * @return the last element of a list.
+     * @see List#get(int)
+     * @since 4.5
+     */
+    public static <T> T getLast(List<T> list) {
+        return Objects.requireNonNull(list, "list").get(list.size() - 1);
+    }
+
+    /**
      * Generates a hash code using the algorithm specified in
      * {@link java.util.List#hashCode()}.
      * <p>

@@ -55,6 +55,20 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void testGetFirst() {
+        assertEquals(a, ListUtils.getFirst(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
+    }
+
+    @Test
+    public void testGetLast() {
+        assertEquals(e, ListUtils.getLast(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
+    }
+
+    @Test
     public void testDefaultIfNull() {
         assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
 

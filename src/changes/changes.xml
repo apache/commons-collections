@@ -107,6 +107,9 @@
     <action issue="COLLECTIONS-674" dev="ggregory" type="add" due-to="dota17">
       Add CollectionUtils removeRange, removeCount #91.
     </action>
+    <action dev="ggregory" type="add" due-to="Gary Gregory">
+      Add ListUtils.getFirst() and getLast().
+    </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump actions/setup-java from v1.4.0 to v2 #174 #177 #186 #224.
