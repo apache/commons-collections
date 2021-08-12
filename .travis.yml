@@ -18,6 +18,7 @@ cache:
   directories:
     - $HOME/.m2
 matrix:
+  fast_finish: true
   include:
     - os: linux-ppc64le
       jdk: openjdk8
@@ -38,6 +39,4 @@ script:
 after_success:
   # jacoco will run in the main script. Include the profile to submit to coveralls.
   - mvn -V jacoco:report coveralls:report -Ptravis-jacoco
-
-git:
-  depth: 1
+  
