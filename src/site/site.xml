@@ -22,38 +22,20 @@
         <href>/index.html</href>
     </bannerRight>
 
-    <body>
-        <menu name="Collections">
-            <item name="Overview"             href="/index.html"/>
-            <item name="Download"             href="/download_collections.cgi"/>
-            <item name="Security Reports"     href="/security-reports.html"/>
-            <item name="Users guide"          href="/userguide.html"/>
-            <item name="History"              href="/history.html"/>
-            <item name="Release Notes 4.4"    href="/release_4_4.html"/>
-            <item name="Release Notes 4.3"    href="/release_4_3.html"/>
-            <item name="Release Notes 4.2"    href="/release_4_2.html"/>
-            <item name="Release Notes 4.1"    href="/release_4_1.html"/>
-            <item name="Release Notes 4.0"    href="/release_4_0.html"/>
-            <item name="Release Notes 3.2.2"  href="/release_3_2_2.html"/>
-            <item name="Release Notes 3.2.1"  href="/release_3_2_1.html"/>
-            <item name="Release Notes 3.2"    href="/release_3_2.html"/>
-            <item name="Javadoc 4.4"          href="/javadocs/api-4.4/index.html"/>
-            <item name="Javadoc 4.3"          href="/javadocs/api-4.3/index.html"/>
-            <item name="Javadoc 4.2"          href="/javadocs/api-4.2/index.html"/>
-            <item name="Javadoc 4.1"          href="/javadocs/api-4.1/index.html"/>
-            <item name="Javadoc 4.0"          href="/javadocs/api-4.0/index.html"/>
-            <item name="Javadoc 3.2.2"        href="/javadocs/api-3.2.2/index.html"/>
-        </menu>
+    <menu name="Commons Collections">
+      <item name="Overview"        href="/index.html"/>
+      <item name="Download"        href="/download_collections.cgi"/>
+      <item name="User Guide"      href="/userguide.html"/>
+      <item name="Javadoc"         href="/apidocs/index.html"/>
+      <item name="Javadoc Archive" href="https://javadoc.io/doc/org.apache.commons/commons-collections4/latest/index.html"/>
+    </menu>
 
-        <menu name="Development">
-            <item name="Building"             href="/building.html"/>
-            <item name="Mailing Lists"        href="/mail-lists.html"/>
-            <item name="Issue Tracking"       href="/issue-tracking.html"/>
-            <item name="Proposal"             href="/proposal.html"/>
-            <item name="Source Repository"    href="/scm.html"/>
-            <item name="Javadoc (latest)"     href="/apidocs/index.html"/>
-        </menu>
-
-    </body>
+    <menu name="Development">
+      <item name="History"         href="/changes-report.html"/>
+      <item name="Mailing Lists"   href="/mail-lists.html"/>
+      <item name="Issue Tracking"  href="/issue-tracking.html"/>
+      <item name="Team"            href="/team.html"/>
+      <item name="Source"          href="/scm.html"/>
+    </menu>
 
 </project>
