@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -116,16 +120,16 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         list.add((E) "C");
         final Queue<E> queue = new CircularFifoQueue<>(list);
 
-        assertEquals(true, queue.contains("A"));
-        assertEquals(true, queue.contains("B"));
-        assertEquals(true, queue.contains("C"));
+        assertTrue(queue.contains("A"));
+        assertTrue(queue.contains("B"));
+        assertTrue(queue.contains("C"));
 
         queue.add((E) "D");
 
         assertEquals(false, queue.contains("A"));
-        assertEquals(true, queue.contains("B"));
-        assertEquals(true, queue.contains("C"));
-        assertEquals(true, queue.contains("D"));
+        assertTrue(queue.contains("B"));
+        assertTrue(queue.contains("C"));
+        assertTrue(queue.contains("D"));
 
         assertEquals("B", queue.peek());
         assertEquals("B", queue.remove());
@@ -146,48 +150,40 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             verify();
         }
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().remove();
-            fail("Empty queue should raise Underflow.");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        });
+        assertTrue(exception.getMessage().contains("queue is empty"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException1() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new CircularFifoQueue<E>(0);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The size must be greater than 0"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException2() {
-        try {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new CircularFifoQueue<E>(-20);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The size must be greater than 0"));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException3() {
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             new CircularFifoQueue<E>(null);
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        });
+        assertNull(exception.getMessage());
     }
 
     @SuppressWarnings("unchecked")
@@ -369,7 +365,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
         b.add((E) "a");
         assertEquals(1, b.size());
-        assertEquals(true, b.contains("a"));
+        assertTrue(b.contains("a"));
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b);
@@ -378,11 +374,11 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(1, b2.size());
-        assertEquals(true, b2.contains("a"));
+        assertTrue(b2.contains("a"));
         b2.add((E) "b");
         assertEquals(2, b2.size());
-        assertEquals(true, b2.contains("a"));
-        assertEquals(true, b2.contains("b"));
+        assertTrue(b2.contains("a"));
+        assertTrue(b2.contains("b"));
 
         bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b2);
@@ -391,12 +387,12 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(2, b3.size());
-        assertEquals(true, b3.contains("a"));
-        assertEquals(true, b3.contains("b"));
+        assertTrue(b3.contains("a"));
+        assertTrue(b3.contains("b"));
         b3.add((E) "c");
         assertEquals(2, b3.size());
-        assertEquals(true, b3.contains("b"));
-        assertEquals(true, b3.contains("c"));
+        assertTrue(b3.contains("b"));
+        assertTrue(b3.contains("c"));
     }
 
     public void testGetIndex() {
@@ -419,13 +415,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     public void testAddNull() {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
-        try {
+        Exception exception = assertThrows(NullPointerException.class, () -> {
             b.add(null);
-            fail();
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("element"));
     }
 
     public void testDefaultSizeAndGetError1() {
@@ -437,12 +430,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             fifo.get(5);
-        } catch (final NoSuchElementException ex) {
-            return;
-        }
-        fail();
+        });
+        assertTrue(exception.getMessage().contains("The specified index 5 is outside the available range [0, 5)"));
     }
 
     public void testDefaultSizeAndGetError2() {
@@ -454,12 +445,15 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
+        Exception exception2 = assertThrows(NoSuchElementException.class, () -> {
             fifo.get(-2);
-        } catch (final NoSuchElementException ex) {
-            return;
+        });
+        String message = exception2.getMessage();
+        if (null == message) {
+            assertNull(message);
+        } else {
+            assertTrue(message.contains("The specified index -2 is outside the available range"));
         }
-        fail();
     }
 
     @Override

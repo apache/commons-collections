@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -69,12 +71,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         for (int i = 0; i < elements.length; i++) {
             queue.add(elements[i]);
             assertEquals(i + 1, queue.size());
-            assertEquals(true, queue.contains(Integer.valueOf((String) elements[i])));
+            assertTrue(queue.contains(Integer.valueOf((String) elements[i])));
             assertEquals(false, queue.contains(elements[i]));
         }
 
         assertEquals(false, queue.remove(elements[0]));
-        assertEquals(true, queue.remove(Integer.valueOf((String) elements[0])));
+        assertTrue(queue.remove(Integer.valueOf((String) elements[0])));
 
     }
 
@@ -87,12 +89,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(elements.length, queue.size());
         for (final Object el : elements) {
-            assertEquals(true, queue.contains(Integer.valueOf((String) el)));
+            assertTrue(queue.contains(Integer.valueOf((String) el)));
             assertEquals(false, queue.contains(el));
         }
 
         assertEquals(false, queue.remove(elements[0]));
-        assertEquals(true, queue.remove(Integer.valueOf((String) elements[0])));
+        assertTrue(queue.remove(Integer.valueOf((String) elements[0])));
     }
 
     @Override

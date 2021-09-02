@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,11 +165,14 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     public void testQueueElement() {
         resetEmpty();
 
-        try {
+        Exception noSuchElementException = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
+        });
+        String message = noSuchElementException.getMessage();
+        if (null == message) {
+            assertNull(message);
+        } else {
+            assertTrue(message.contains("queue is empty"));
         }
 
         resetFull();
@@ -192,11 +199,14 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             verify();
         }
 
-        try {
+        noSuchElementException = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
+        });
+        message = noSuchElementException.getMessage();
+        if (null == message) {
+            assertNull(message);
+        } else {
+            assertTrue(message.contains("queue is empty"));
         }
     }
 
@@ -245,11 +255,14 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
         resetEmpty();
 
-        try {
+        Exception exception = assertThrows(NoSuchElementException.class, () -> {
             getCollection().remove();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
+        });
+        String message = exception.getMessage();
+        if (null == message) {
+            assertNull(message);
+        } else {
+            assertTrue(message.contains("queue is empty"));
         }
 
         resetFull();
@@ -262,11 +275,14 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             verify();
         }
 
-        try {
+        Exception noSuchElementException = assertThrows(NoSuchElementException.class, () -> {
             getCollection().element();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
+        });
+        message = exception.getMessage();
+        if (null == message) {
+            assertNull(message);
+        } else {
+            assertTrue(message.contains("queue is empty"));
         }
     }
 
