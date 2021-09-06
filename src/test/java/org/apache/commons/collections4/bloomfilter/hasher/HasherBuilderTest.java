@@ -28,6 +28,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.ArgumentMatchers.any;
 
 /**
  * Tests the
@@ -36,37 +40,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HasherBuilderTest {
 
     /**
-     * Simple class to collect byte[] items added to the builder.
-     */
-    private static class TestBuilder implements Hasher.Builder {
-        ArrayList<byte[]> items = new ArrayList<>();
-
-        @Override
-        public Hasher build() {
-            throw new NotImplementedException("Not required");
-        }
-
-        @Override
-        public Builder with(final byte[] item) {
-            items.add(item);
-            return this;
-        }
-    }
-
-    /**
      * Tests that adding CharSequence items works correctly.
      */
     @Test
     public void withCharSequenceTest() {
         final String ascii = "plain";
         final String extended = getExtendedString();
-        for (final String s : new String[] {ascii, extended}) {
-            for (final Charset cs : new Charset[] {
-                StandardCharsets.ISO_8859_1, StandardCharsets.UTF_8, StandardCharsets.UTF_16
-            }) {
-                final TestBuilder builder = new TestBuilder();
+        for (final String s : new String[] { ascii, extended }) {
+            for (final Charset cs : new Charset[] { StandardCharsets.ISO_8859_1, StandardCharsets.UTF_8,
+                StandardCharsets.UTF_16 }) {
+                // Create variables for tracking behaviors of mock object
+                ArrayList<byte[]> builderItems = new ArrayList<>();
+                // Construct mock object
+                final Builder builder = spy(Hasher.Builder.class);
+                // Method Stubs
+                doThrow(new NotImplementedException("Not required")).when(builder).build();
+                doAnswer((stubInvo) -> {
+                    byte[] item = stubInvo.getArgument(0);
+                    builderItems.add(item);
+                    return builder;
+                }).when(builder).with(any(byte[].class));
                 builder.with(s, cs);
-                assertArrayEquals(s.getBytes(cs), builder.items.get(0));
+                assertArrayEquals(s.getBytes(cs), builderItems.get(0));
             }
         }
     }
@@ -78,16 +73,25 @@ public class HasherBuilderTest {
     public void withUnencodedCharSequenceTest() {
         final String ascii = "plain";
         final String extended = getExtendedString();
-        for (final String s : new String[] {ascii, extended}) {
-            final TestBuilder builder = new TestBuilder();
+        for (final String s : new String[] { ascii, extended }) {
+            // Create variables for tracking behaviors of mock object
+            ArrayList<byte[]> builderItems = new ArrayList<>();
+            // Construct mock object
+            final Builder builder = spy(Hasher.Builder.class);
+            // Method Stubs
+            doThrow(new NotImplementedException("Not required")).when(builder).build();
+            doAnswer((stubInvo) -> {
+                byte[] item = stubInvo.getArgument(0);
+                builderItems.add(item);
+                return builder;
+            }).when(builder).with(any(byte[].class));
             builder.withUnencoded(s);
-            final byte[] encoded = builder.items.get(0);
+            final byte[] encoded = builderItems.get(0);
             final char[] original = s.toCharArray();
             // Should be twice the length
             assertEquals(original.length * 2, encoded.length);
             // Should be little endian (lower bits first)
-            final CharBuffer buffer = ByteBuffer.wrap(encoded)
-                                                .order(ByteOrder.LITTLE_ENDIAN).asCharBuffer();
+            final CharBuffer buffer = ByteBuffer.wrap(encoded).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer();
             for (int i = 0; i < original.length; i++) {
                 assertEquals(original[i], buffer.get(i));
             }
