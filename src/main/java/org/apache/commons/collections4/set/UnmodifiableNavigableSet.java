@@ -107,6 +107,22 @@ public final class UnmodifiableNavigableSet<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.5
+     */
+    @Override
+    public E pollFirst() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.5
+     */
+    @Override
+    public E pollLast() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
