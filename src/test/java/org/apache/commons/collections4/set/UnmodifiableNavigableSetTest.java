@@ -143,6 +143,23 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         } catch (final UnsupportedOperationException e) {
             // expected
         }
+
+        if (set instanceof NavigableSet) {
+            final NavigableSet<E> navigableSet = (NavigableSet<E>) set;
+
+            try {
+                navigableSet.pollFirst();
+                fail("Expecting UnsupportedOperationException.");
+            } catch (final UnsupportedOperationException e) {
+                // expected
+            }
+            try {
+                navigableSet.pollLast();
+                fail("Expecting UnsupportedOperationException.");
+            } catch (final UnsupportedOperationException e) {
+                // expected
+            }
+        }
     }
 
     public void testComparator() {
