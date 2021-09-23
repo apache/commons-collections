@@ -54,7 +54,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     }
 
     /**
-     * use "org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator" instead.
+     * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
      */
     @Deprecated
     public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
