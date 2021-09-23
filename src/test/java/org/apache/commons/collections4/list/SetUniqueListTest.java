@@ -17,9 +17,12 @@
 package org.apache.commons.collections4.list;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * JUnit tests.
@@ -190,7 +193,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // repeat the test with a different class than HashSet;
         // which means subclassing SetUniqueList below
         list = new ArrayList<>();
-        uniqueList = new SetUniqueList307(list, new java.util.TreeSet<E>());
+        uniqueList = new SetUniqueList307(list, new TreeSet<E>());
 
         uniqueList.add((E) hello);
         uniqueList.add((E) world);
@@ -554,13 +557,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testSubListIsUnmodifiable() {
         resetFull();
         final List<E> subList = getCollection().subList(1, 3);
-        Assertions.assertEquals(2, subList.size());
-        try {
-            subList.remove(0);
-            fail("subList should be unmodifiable");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertEquals(2, subList.size());
+        assertThrows(UnsupportedOperationException.class, () -> subList.remove(0));
     }
 
     @SuppressWarnings("unchecked")
@@ -622,22 +620,22 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
         // Standard case with HashSet
         final Set<String> setBasedOnList = setUniqueList.createSetBasedOnList(new HashSet<>(), list);
-        Assertions.assertEquals(list.size(), setBasedOnList.size());
-        list.forEach(item -> Assertions.assertTrue(setBasedOnList.contains(item)));
+        assertEquals(list.size(), setBasedOnList.size());
+        list.forEach(item -> assertTrue(setBasedOnList.contains(item)));
 
         // Use different Set than HashSet
-        final Set<String> setBasedOnList1 = setUniqueList.createSetBasedOnList(new TreeSet(), list);
-        Assertions.assertEquals(list.size(), setBasedOnList1.size());
-        list.forEach(item -> Assertions.assertTrue(setBasedOnList1.contains(item)));
+        final Set<String> setBasedOnList1 = setUniqueList.createSetBasedOnList(new TreeSet<>(), list);
+        assertEquals(list.size(), setBasedOnList1.size());
+        list.forEach(item -> assertTrue(setBasedOnList1.contains(item)));
 
         // throws internally NoSuchMethodException --> results in HashSet
         final Set<String> setBasedOnList2 = setUniqueList.createSetBasedOnList(UnmodifiableSet.unmodifiableSet(new HashSet<>()), list);
-        Assertions.assertEquals(list.size(), setBasedOnList2.size());
-        list.forEach(item -> Assertions.assertTrue(setBasedOnList2.contains(item)));
+        assertEquals(list.size(), setBasedOnList2.size());
+        list.forEach(item -> assertTrue(setBasedOnList2.contains(item)));
 
         // provide null values as Parameter
-        Assertions.assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
-        Assertions.assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet(), null));
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
 
     }
 }
