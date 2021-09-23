@@ -24,13 +24,14 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections4.Unmodifiable;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Tests the UnmodifiableListIterator.
- *
  */
 public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
-    protected String[] testArray = { "One", "Two", "Three" };
+    protected String[] testArray = {"One", "Two", "Three"};
     protected List<E> testList;
 
     public UnmodifiableListIteratorTest(final String testName) {
@@ -49,12 +50,12 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
 
     @Override
     public ListIterator<E> makeEmptyIterator() {
-        return UnmodifiableListIterator.umodifiableListIterator(Collections.<E>emptyList().listIterator());
+        return UnmodifiableListIterator.unmodifiableListIterator(Collections.<E>emptyList().listIterator());
     }
 
     @Override
     public ListIterator<E> makeObject() {
-        return UnmodifiableListIterator.umodifiableListIterator(testList.listIterator());
+        return UnmodifiableListIterator.unmodifiableListIterator(testList.listIterator());
     }
 
     @Override
@@ -78,15 +79,12 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
 
     public void testDecorateFactory() {
         ListIterator<E> it = makeObject();
-        assertSame(it, UnmodifiableListIterator.umodifiableListIterator(it));
+        assertSame(it, UnmodifiableListIterator.unmodifiableListIterator(it));
 
         it = testList.listIterator();
-        assertTrue(it != UnmodifiableListIterator.umodifiableListIterator(it));
+        assertNotSame(it, UnmodifiableListIterator.unmodifiableListIterator(it));
 
-        try {
-            UnmodifiableListIterator.umodifiableListIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableListIterator.unmodifiableListIterator(null));
     }
 
 }
