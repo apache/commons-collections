@@ -352,6 +352,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
                 subSet = new HashSet<>();
             }
         }
+        subSet.addAll(list);
         return subSet;
     }
 
