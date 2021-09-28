@@ -17,10 +17,13 @@
 
 package org.apache.commons.collections4.properties;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -47,5 +50,16 @@ public class SortedProperties extends Properties {
         }
         Collections.sort(keys);
         return new IteratorEnumeration<>(keys.iterator());
+    }
+
+    @Override
+    public Set<Map.Entry<Object, Object>> entrySet() {
+        Enumeration<Object> keys = keys();
+        Set<Map.Entry<Object, Object>> entrySet = new LinkedHashSet<>();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            entrySet.add(new AbstractMap.SimpleEntry<>(key, getProperty((String) key)));
+        }
+        return entrySet;
     }
 }
