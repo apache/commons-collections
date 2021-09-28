@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 
@@ -43,21 +44,15 @@ public class SortedProperties extends Properties {
 
     @Override
     public synchronized Enumeration<Object> keys() {
-        final Set<Object> keySet = keySet();
-        final List<String> keys = new ArrayList<>(keySet.size());
-        for (final Object key : keySet) {
-            keys.add(key.toString());
-        }
-        Collections.sort(keys);
-        return new IteratorEnumeration<>(keys.iterator());
+        return new IteratorEnumeration<>(keySet().stream().map(Object::toString).sorted().collect(Collectors.toList()).iterator());
     }
 
     @Override
     public Set<Map.Entry<Object, Object>> entrySet() {
-        Enumeration<Object> keys = keys();
-        Set<Map.Entry<Object, Object>> entrySet = new LinkedHashSet<>();
+        final Enumeration<Object> keys = keys();
+        final Set<Map.Entry<Object, Object>> entrySet = new LinkedHashSet<>();
         while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
+            final Object key = keys.nextElement();
             entrySet.add(new AbstractMap.SimpleEntry<>(key, getProperty((String) key)));
         }
         return entrySet;
