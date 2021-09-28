@@ -46,7 +46,7 @@ public class SortedPropertiesTest {
         }
         final Iterator<Map.Entry<Object, Object>> entries = sortedProperties.entrySet().iterator();
         for (char ch = 'A'; ch <= 'Z'; ch++) {
-            Map.Entry<Object, Object> entry = entries.next();
+            final Map.Entry<Object, Object> entry = entries.next();
             Assert.assertEquals(String.valueOf(ch), entry.getKey());
             Assert.assertEquals("Value" + ch, entry.getValue());
         }
