@@ -18,15 +18,14 @@
 package org.apache.commons.collections4.properties;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 
@@ -43,18 +42,17 @@ public class SortedProperties extends Properties {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public synchronized Enumeration<Object> keys() {
-        return new IteratorEnumeration<>(keySet().stream().map(Object::toString).sorted().collect(Collectors.toList()).iterator());
+    public Set<Map.Entry<Object, Object>> entrySet() {
+        final Stream<SimpleEntry<Object, Object>> stream = sortedKeys().map(k -> new AbstractMap.SimpleEntry<>(k, getProperty(k)));
+        return stream.collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     @Override
-    public Set<Map.Entry<Object, Object>> entrySet() {
-        final Enumeration<Object> keys = keys();
-        final Set<Map.Entry<Object, Object>> entrySet = new LinkedHashSet<>();
-        while (keys.hasMoreElements()) {
-            final Object key = keys.nextElement();
-            entrySet.add(new AbstractMap.SimpleEntry<>(key, getProperty((String) key)));
-        }
-        return entrySet;
+    public synchronized Enumeration<Object> keys() {
+        return new IteratorEnumeration<>(sortedKeys().collect(Collectors.toList()).iterator());
+    }
+
+    private Stream<String> sortedKeys() {
+        return keySet().stream().map(Object::toString).sorted();
     }
 }
