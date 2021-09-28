@@ -27,18 +27,6 @@ import org.junit.Test;
 public class SortedPropertiesTest {
 
     @Test
-    public void testKeys() {
-        final SortedProperties sortedProperties = new SortedProperties();
-        for (char ch = 'Z'; ch >= 'A'; ch--) {
-            sortedProperties.put(String.valueOf(ch), "Value" + ch);
-        }
-        final Enumeration<Object> keys = sortedProperties.keys();
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            Assert.assertEquals(String.valueOf(ch), keys.nextElement());
-        }
-    }
-
-    @Test
     public void testEntrySet() {
         final SortedProperties sortedProperties = new SortedProperties();
         for (char ch = 'Z'; ch >= 'A'; ch--) {
@@ -49,6 +37,18 @@ public class SortedPropertiesTest {
             final Map.Entry<Object, Object> entry = entries.next();
             Assert.assertEquals(String.valueOf(ch), entry.getKey());
             Assert.assertEquals("Value" + ch, entry.getValue());
+        }
+    }
+
+    @Test
+    public void testKeys() {
+        final SortedProperties sortedProperties = new SortedProperties();
+        for (char ch = 'Z'; ch >= 'A'; ch--) {
+            sortedProperties.put(String.valueOf(ch), "Value" + ch);
+        }
+        final Enumeration<Object> keys = sortedProperties.keys();
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            Assert.assertEquals(String.valueOf(ch), keys.nextElement());
         }
     }
 }
