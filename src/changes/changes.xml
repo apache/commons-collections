@@ -73,6 +73,9 @@
     <action issue="COLLECTIONS-786" type="fix" dev="kinow" due-to="vandrewskis">
       Fix PassiveExpiringMap documentation for methods that involve accessing the entire map.
     </action>
+    <action type="fix" dev="ggregory" due-to="Michael Berry">
+      SortedProperties should sort entrySet() as well as keys() #256.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
