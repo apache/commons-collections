@@ -243,7 +243,7 @@
       Update optional commons-codec from 1.14 to 1.15.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump commons.junit.version from 5.6.2 to 5.8.0 #181 #213 #236 #252.
+      Bump commons.junit.version from 5.6.2 to 5.8.1 #181 #213 #236 #252 #254.
     </action>
     <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
       Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
