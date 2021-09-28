@@ -20,9 +20,7 @@ package org.apache.commons.collections4.properties;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.collections4.MultiSet;
 import org.junit.Assert;
 import org.junit.Test;
 
