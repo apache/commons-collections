@@ -41,7 +41,7 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
      * Function to convert int arrays to BloomFilters for testing.
      */
     private final Function<int[], BloomFilter> converter = counts -> {
-        final BloomFilter testingFilter = new BitSetBloomFilter(shape);
+        final BloomFilter testingFilter = new SimpleBloomFilter(shape);
         testingFilter.merge(new FixedIndexesTestHasher(shape, counts));
         return testingFilter;
     };
@@ -122,10 +122,10 @@ public class ArrayCountingBloomFilterTest extends AbstractBloomFilterTest {
         // Some indexes with duplicates
         final Hasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 5);
         final ArrayCountingBloomFilter bf = createFilter(hasher, shape);
-        BitSetBloomFilter testingFilter = new BitSetBloomFilter(shape);
+        SimpleBloomFilter testingFilter = new SimpleBloomFilter(shape);
         testingFilter.merge( new FixedIndexesTestHasher(shape, 3, 4));
         assertFalse(bf.contains(testingFilter));
-        testingFilter = new BitSetBloomFilter(shape);
+        testingFilter = new SimpleBloomFilter(shape);
         testingFilter.merge( new FixedIndexesTestHasher(shape, 2, 5));
         assertTrue(bf.contains(testingFilter));
     }

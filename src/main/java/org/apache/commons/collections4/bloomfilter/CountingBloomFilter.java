@@ -104,37 +104,6 @@ public interface CountingBloomFilter extends BloomFilter {
 
     // Modification Operations
 
-    /**
-     * Merges the specified Bloom filter into this Bloom filter. Specifically all counts for
-     * indexes that are enabled in the {@code other} filter will be incremented by 1.
-     *
-     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored; only
-     * the enabled indexes are used.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param other {@inheritDoc}
-     * @return true if the merge was successful and the state is valid
-     * @throws IllegalArgumentException {@inheritDoc}
-     * @see #isValid()
-     */
-    @Override
-    boolean merge(BloomFilter other);
-
-    /**
-     * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
-     * counts for the <em>distinct</em> indexes that are identified by the {@code hasher} will
-     * be incremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.
-     *
-     * <p>This method will return true if the filter is valid after the operation.
-     *
-     * @param hasher {@inheritDoc}
-     * @return true if the merge was successful and the state is valid
-     * @throws IllegalArgumentException {@inheritDoc}
-     * @see #isValid()
-     */
-    @Override
-    boolean merge(Hasher hasher);
 
     /**
      * Removes the specified Bloom filter from this Bloom filter. Specifically
@@ -168,6 +137,7 @@ public interface CountingBloomFilter extends BloomFilter {
      * @see #isValid()
      */
     boolean remove(Hasher hasher);
+
 
     /**
      * Adds the specified counting Bloom filter to this Bloom filter. Specifically

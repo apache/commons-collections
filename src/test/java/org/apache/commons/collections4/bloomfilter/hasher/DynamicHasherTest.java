@@ -31,10 +31,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link DynamicHasher}.
+ * Tests the {@link HasherCollection}.
  */
 public class DynamicHasherTest {
-    private DynamicHasher.Builder builder;
+    private HasherCollection.Builder builder;
     private Shape shape;
 
     private final HashFunctionIdentity testFunction = new HashFunctionIdentity() {
@@ -70,7 +70,7 @@ public class DynamicHasherTest {
      */
     @BeforeEach
     public void setup() {
-        builder = new DynamicHasher.Builder(new MD5Cyclic());
+        builder = new HasherCollection.Builder(new MD5Cyclic());
         shape = new Shape(new MD5Cyclic(), 3, 72, 17);
     }
 

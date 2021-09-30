@@ -30,11 +30,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * {@link DynamicHasher.Builder} tests.
+ * {@link HasherCollection.Builder} tests.
  */
 public class DynamicHasherBuilderTest {
 
-    private DynamicHasher.Builder builder;
+    private HasherCollection.Builder builder;
     private final HashFunction hf = new MD5Cyclic();
     private final Shape shape = new Shape(hf, 1, 345, 1);
     private final String testString = HasherBuilderTest.getExtendedString();
@@ -45,7 +45,7 @@ public class DynamicHasherBuilderTest {
     @Test
     public void buildTest_byteArray() {
         final byte[] bytes = testString.getBytes();
-        final DynamicHasher hasher = builder.with(bytes).build();
+        final HasherCollection hasher = builder.with(bytes).build();
         final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
@@ -60,7 +60,7 @@ public class DynamicHasherBuilderTest {
      */
     @Test
     public void buildTest_Empty() {
-        final DynamicHasher hasher = builder.build();
+        final HasherCollection hasher = builder.build();
 
         final OfInt iter = hasher.iterator(shape);
 
@@ -79,7 +79,7 @@ public class DynamicHasherBuilderTest {
     @Test
     public void buildTest_String() {
         final byte[] bytes = testString.getBytes(StandardCharsets.UTF_8);
-        final DynamicHasher hasher = builder.with(testString, StandardCharsets.UTF_8).build();
+        final HasherCollection hasher = builder.with(testString, StandardCharsets.UTF_8).build();
         final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
@@ -95,7 +95,7 @@ public class DynamicHasherBuilderTest {
     @Test
     public void buildTest_UnencodedString() {
         final byte[] bytes = testString.getBytes(StandardCharsets.UTF_16LE);
-        final DynamicHasher hasher = builder.withUnencoded(testString).build();
+        final HasherCollection hasher = builder.withUnencoded(testString).build();
         final int expected = (int) Math.floorMod((long) hf.apply(bytes, 0), (long) shape.getNumberOfBits());
 
         final OfInt iter = hasher.iterator(shape);
@@ -127,6 +127,6 @@ public class DynamicHasherBuilderTest {
      */
     @BeforeEach
     public void setup() {
-        builder = new DynamicHasher.Builder(hf);
+        builder = new HasherCollection.Builder(hf);
     }
 }
