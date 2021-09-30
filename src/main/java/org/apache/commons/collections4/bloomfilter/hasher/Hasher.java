@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.nio.charset.Charset;
 import java.util.PrimitiveIterator;
 
 /**
@@ -46,66 +45,6 @@ import java.util.PrimitiveIterator;
 public interface Hasher {
 
     /**
-     * A builder to build a hasher.
-     *
-     * <p>A hasher represents one or more items of arbitrary byte size. The builder
-     * contains methods to collect byte representations of items. Each method to add
-     * to the builder will add an entire item to the final hasher created by the
-     * {@link #build()} method.
-     *
-     * @since 4.5
-     */
-    interface Builder {
-
-        /**
-         * Builds the hasher from all the items.
-         *
-         * <p>This method will clear the builder for future use.
-         *
-         * @return the fully constructed hasher
-         */
-        Hasher build();
-
-        /**
-         * Adds a byte array item to the hasher.
-         *
-         * @param item the item to add
-         * @return a reference to this object
-         */
-        Builder with(byte[] item);
-
-        /**
-         * Adds a character sequence item to the hasher using the specified {@code charset}
-         * encoding.
-         *
-         * @param item the item to add
-         * @param charset the character set
-         * @return a reference to this object
-         */
-        default Builder with(final CharSequence item, final Charset charset) {
-            return with(item.toString().getBytes(charset));
-        }
-
-        /**
-         * Adds a character sequence item to the hasher. Each 16-bit character is
-         * converted to 2 bytes using little-endian order.
-         *
-         * @param item the item to add
-         * @return a reference to this object
-         */
-        default Builder withUnencoded(final CharSequence item) {
-            final int length = item.length();
-            final byte[] bytes = new byte[length * 2];
-            for (int i = 0; i < length; i++) {
-                final char ch = item.charAt(i);
-                bytes[i * 2] = (byte) ch;
-                bytes[i * 2 + 1] = (byte) (ch >>> 8);
-            }
-            return with(bytes);
-        }
-    }
-
-    /**
      * Gets an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.
      *
@@ -124,9 +63,10 @@ public interface Hasher {
     PrimitiveIterator.OfInt iterator(Shape shape);
 
     /**
-     * Gets the identify of the hash function used by the the hasher.
-     *
-     * @return the identity of the hash function
+     * Gets the number of items that will be hashed by the iterator.
+     * @return The number of items that will be hashed by the iterator.
      */
-    HashFunctionIdentity getHashFunctionIdentity();
+    int size();
+
+
 }

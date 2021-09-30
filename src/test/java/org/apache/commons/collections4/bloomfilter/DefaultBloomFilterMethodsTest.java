@@ -21,7 +21,7 @@ import java.util.function.IntConsumer;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
+import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 
 /**
  * Test all the default implementations of the BloomFilter in {@link AbstractBloomFilter}.
@@ -67,8 +67,8 @@ public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
         }
 
         @Override
-        public StaticHasher getHasher() {
-            return new StaticHasher(bitSet.stream().iterator(), getShape());
+        public SimpleHasher getHasher() {
+            return new SimpleHasher(bitSet.stream().iterator(), getShape());
         }
 
         @Override

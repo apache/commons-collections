@@ -20,18 +20,16 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
- * Tests for the {@link BitSetBloomFilter}.
+ * Tests for the {@link SimpleBloomFilter}.
  */
-public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
+public class SimpleBloomFilterTest extends AbstractBloomFilterTest {
     @Override
-    protected BitSetBloomFilter createEmptyFilter(final Shape shape) {
-        return new BitSetBloomFilter(shape);
+    protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
+        return new SimpleBloomFilter(shape);
     }
 
     @Override
-    protected BitSetBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-        final BitSetBloomFilter testFilter = new BitSetBloomFilter(shape);
-        testFilter.merge( hasher );
-        return testFilter;
+    protected SimpleBloomFilter createFilter(final Shape shape, final Hasher hasher) {
+        return  new SimpleBloomFilter(shape, hasher);
     }
 }

@@ -14,11 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.commons.collections4.bloomfilter;
+
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
- * Provides implementations of the Bloom filter
- * {@link org.apache.commons.collections4.bloomfilter.hasher.HashFunction HashFunction} interface.
- *
- * @since 4.5
+ * Tests for the {@link SimpleBloomFilter}.
  */
-package org.apache.commons.collections4.bloomfilter.hasher.function;
+public class SparseBloomFilterTest extends AbstractBloomFilterTest {
+    @Override
+    protected SparseBloomFilter createEmptyFilter(final Shape shape) {
+        return new SparseBloomFilter(shape);
+    }
+
+    @Override
+    protected SparseBloomFilter createFilter(final Shape shape, final Hasher hasher) {
+        return  new SparseBloomFilter(shape, hasher);
+    }
+}

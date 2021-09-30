@@ -21,10 +21,10 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.function.IntConsumer;
+import java.util.stream.IntStream;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
  * A counting Bloom filter using an array to track counts for each enabled bit
@@ -53,7 +53,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * @see Shape
  * @since 4.5
  */
-public class ArrayCountingBloomFilter extends AbstractBloomFilter implements CountingBloomFilter {
+public class ArrayCountingBloomFilter implements CountingBloomFilter {
+
+    private final Shape shape;
 
     /**
      * The count of each bit index in the filter.
@@ -136,19 +138,18 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * @param shape the shape of the filter
      */
     public ArrayCountingBloomFilter(final Shape shape) {
-        super(shape);
+        this.shape = shape;
         counts = new int[shape.getNumberOfBits()];
     }
 
     @Override
+    public boolean isSparse() {
+        return BitMap.isSparse( cardinality(), shape);
+    }
+
+    @Override
     public int cardinality() {
-        int size = 0;
-        for (final int c : counts) {
-            if (c != 0) {
-                size++;
-            }
-        }
-        return size;
+        return (int) IntStream.range( 0,  counts.length ).filter( i -> counts[i] > 0 ).count();
     }
 
     @Override
@@ -158,20 +159,13 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         // Ideally we use an iterator of bit indexes to allow fail-fast on the
         // first bit index that is zero.
         if (other instanceof ArrayCountingBloomFilter) {
-            verifyShape(other);
             return contains(((ArrayCountingBloomFilter) other).iterator());
         }
-
-        // Note:
-        // This currently creates a StaticHasher which stores all the indexes.
-        // It would greatly benefit from direct generation of the index iterator
-        // avoiding the intermediate storage.
-        return contains(other.getHasher());
+        return CountingBloomFilter.super.contains(other);
     }
 
     @Override
     public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
         return contains(hasher.iterator(getShape()));
     }
 
@@ -201,11 +195,6 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         return bs.toLongArray();
     }
 
-    @Override
-    public StaticHasher getHasher() {
-        return new StaticHasher(iterator(), getShape());
-    }
-
     /**
      * Returns an iterator over the enabled indexes in this filter.
      * Any index with a non-zero count is considered enabled.
@@ -218,13 +207,13 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public boolean merge(final BloomFilter other) {
+    public boolean mergeInPlace(final BloomFilter other) {
         applyAsBloomFilter(other, this::increment);
         return isValid();
     }
 
     @Override
-    public boolean merge(final Hasher hasher) {
+    public boolean mergeInPlace(final Hasher hasher) {
         applyAsHasher(hasher, this::increment);
         return isValid();
     }
@@ -285,7 +274,6 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * Apply the action for each index in the Bloom filter.
      */
     private void applyAsBloomFilter(final BloomFilter other, final IntConsumer action) {
-        verifyShape(other);
         if (other instanceof ArrayCountingBloomFilter) {
             // Only use the presence of non-zero and not the counts
             final int[] counts2 = ((ArrayCountingBloomFilter) other).counts;
@@ -303,7 +291,6 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * Apply the action for each index in the hasher.
      */
     private void applyAsHasher(final Hasher hasher, final IntConsumer action) {
-        verifyHasher(hasher);
         // We do not naturally handle duplicates so filter them.
         IndexFilters.distinctIndexes(hasher, getShape(), action);
     }
@@ -312,7 +299,6 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * Apply the action for each index in the Bloom filter.
      */
     private void applyAsCountingBloomFilter(final CountingBloomFilter other, final BitCountConsumer action) {
-        verifyShape(other);
         other.forEachCount(action);
     }
 
@@ -360,5 +346,15 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;
+    }
+
+    @Override
+    public int[] getIndices() {
+        return IntStream.range( 0,  counts.length ).filter( i -> counts[i] > 0 ).toArray();
+    }
+
+    @Override
+    public Shape getShape() {
+        return shape;
     }
 }
