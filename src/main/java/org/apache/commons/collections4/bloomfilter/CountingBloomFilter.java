@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -52,25 +53,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  *
  * @since 4.5
  */
-public interface CountingBloomFilter extends BloomFilter {
+public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
 
-    /**
-     * Represents an operation that accepts an {@code <index, count>} pair representing
-     * the count for a bit index in a counting Bloom filter and returns no result.
-     *
-     * <p>Note: This is a functional interface as a primitive type specialization of
-     * {@link java.util.function.BiConsumer} for {@code int}.
-     */
-    @FunctionalInterface
-    interface BitCountConsumer {
-        /**
-         * Performs this operation on the given {@code <index, count>} pair.
-         *
-         * @param index the bit index
-         * @param count the count at the specified bit index
-         */
-        void accept(int index, int count);
-    }
+    
 
     // Query Operations
 
@@ -92,15 +77,6 @@ public interface CountingBloomFilter extends BloomFilter {
      * @return true if the state is valid
      */
     boolean isValid();
-
-    /**
-     * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
-     * Any exceptions thrown by the action are relayed to the caller.
-     *
-     * @param action the action to be performed for each non-zero bit count
-     * @throws NullPointerException if the specified action is null
-     */
-    void forEachCount(BitCountConsumer action);
 
     // Modification Operations
 
@@ -152,7 +128,7 @@ public interface CountingBloomFilter extends BloomFilter {
      * the shape of this filter
      * @see #isValid()
      */
-    boolean add(CountingBloomFilter other);
+    boolean add(BitCountProducer other);
 
     /**
      * Adds the specified counting Bloom filter to this Bloom filter. Specifically
@@ -167,5 +143,37 @@ public interface CountingBloomFilter extends BloomFilter {
      * the shape of this filter
      * @see #isValid()
      */
-    boolean subtract(CountingBloomFilter other);
+    boolean subtract(BitCountProducer other);
+
+    /**
+     * Merges the specified Bloom filter into this Bloom filter. Specifically all bit indexes
+     * that are enabled in the {@code other} filter will be enabled in this filter.
+     *
+     * <p>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter is not ensured to contain
+     * the {@code other} Bloom filter.
+     *
+     * @param other the other Bloom filter
+     * @return true if the merge was successful
+     * @throws IllegalArgumentException if the shape of the other filter does not match
+     * the shape of this filter
+     */
+    @Override
+    CountingBloomFilter merge(BloomFilter other);
+
+    /**
+     * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
+     * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
+     *
+     * <p>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter is not ensured to contain
+     * the specified decomposed Bloom filter.
+     *
+     * @param hasher the hasher to provide the indexes
+     * @return true if the merge was successful
+     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
+     * this filter
+     */
+    @Override
+    CountingBloomFilter merge(Hasher hasher);
 }

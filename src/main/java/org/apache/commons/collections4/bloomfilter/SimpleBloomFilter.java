@@ -18,10 +18,11 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Objects;
 import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
  * A bloom filter using a Java BitSet to track enabled bits. This is a standard
@@ -41,19 +42,22 @@ public class SimpleBloomFilter implements BloomFilter {
      *
      */
     public SimpleBloomFilter(Shape shape) {
+        Objects.requireNonNull( shape, "shape");
         this.shape = shape;
         this.bitSet = new BitSet();
     }
 
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
         this( shape );
+        Objects.requireNonNull( hasher, "hasher");
         hasher.iterator(shape).forEachRemaining( (IntConsumer) i -> bitSet.set(i));
     }
 
     @Override
     public boolean mergeInPlace(BloomFilter other) {
+        Objects.requireNonNull( other, "other");
         if (other.isSparse()) {
-            Arrays.stream(other.getIndices()).forEach( s -> bitSet.set( s ));
+            other.forEachIndex( bitSet::set );
         } else {
             bitSet.or( BitSet.valueOf(other.getBits() ));
         }
@@ -81,17 +85,22 @@ public class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public int[] getIndices() {
-        int[] result = new int[ bitSet.cardinality() ];
-        int idx = 0;
-        for (int i=0;i<result.length;i++)
-        {
-            idx = bitSet.nextSetBit(idx);
-            result[i] = idx;
-            idx++;
+    public void forEachIndex(IntConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+        for (int i = bitSet.nextSetBit(0); i >= 0; i = bitSet.nextSetBit(i+1)) {
+            consumer.accept(i);
+            if (i == Integer.MAX_VALUE) {
+                break; // or (i+1) would overflow
+            }
         }
-        return result;
     }
 
+    @Override
+    public void forEachBitMap(LongConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+        for ( long l : getBits() ) {
+            consumer.accept(l);
+        }
+    }
 
  }

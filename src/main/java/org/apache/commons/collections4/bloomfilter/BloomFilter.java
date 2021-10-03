@@ -16,18 +16,23 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.PrimitiveIterator;
+import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 
+import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
  * The interface that describes a Bloom filter.
  * @since 4.5
  */
-public interface BloomFilter {
+public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     // Query Operations
 
@@ -49,14 +54,34 @@ public interface BloomFilter {
      *
      * @return the {@code long[]} representation of this filter
      */
-    long[] getBits();
+    default long[] getBits() {
+
+        if (cardinality() == 0) {
+            return new long[0];
+        }
+
+        BitBuilder consumer = new BitBuilder(getShape());
+        forEachBitMap( consumer );
+        return consumer.trim();
+    }
 
     /**
      * Gets an array of indices of bits that are enabled.
      * Array must be in sorted order.
      * @return an array of indices for bits that are enabled in the filter.
      */
-    int[]  getIndices();
+    default int[]  getIndices() {
+            int[] result = new int[ cardinality() ];
+            IntConsumer consumer = new IntConsumer() {
+                int idx = 0;
+                @Override
+                public void accept(int i) {
+                    result[idx++] = i;
+                }
+            };
+            forEachIndex( consumer );
+            return result;
+    }
 
     /**
      * Gets the shape that was used when the filter was built.
@@ -74,6 +99,7 @@ public interface BloomFilter {
      * @return true if all enabled bits in the other filter are enabled in this filter.
      */
     default boolean contains(BloomFilter other) {
+        Objects.requireNonNull( other, "other");
         if (isSparse()) {
             int[] myIndicies = getIndices();
             if (other.isSparse()) {
@@ -126,6 +152,7 @@ public interface BloomFilter {
      * this filter
      */
     default boolean contains(Hasher hasher) {
+        Objects.requireNonNull( hasher, "Hasher");
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions()), shape ) ?
                 new SparseBloomFilter(getShape(), hasher) :
@@ -149,6 +176,7 @@ public interface BloomFilter {
      * the shape of this filter
      */
     default BloomFilter merge(BloomFilter other) {
+        Objects.requireNonNull( other, "other");
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse( (cardinality() + other.cardinality()), getShape() ) ?
                 new SparseBloomFilter(shape) :
@@ -173,6 +201,7 @@ public interface BloomFilter {
      * this filter
      */
     default BloomFilter merge(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions())+ cardinality(), shape ) ?
                 new SparseBloomFilter(shape, hasher) :
@@ -185,6 +214,7 @@ public interface BloomFilter {
     boolean mergeInPlace(BloomFilter other);
 
     default boolean mergeInPlace(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions())+cardinality(),shape ) ?
                 new SparseBloomFilter(getShape(), hasher) :
@@ -199,6 +229,7 @@ public interface BloomFilter {
      * @return true if the filter is full.
      */
     default boolean isFull(Shape shape) {
+        Objects.requireNonNull( shape, "shape");
         return cardinality() == shape.getNumberOfBits();
     }
 
@@ -217,8 +248,8 @@ public interface BloomFilter {
      * Estimates the number of items in the Bloom filter.
      * @return an estimate of the number of items in the bloom filter.
      */
-    default double estimateN() {
-        return getShape().estimate_n( cardinality() );
+    default int estimateN() {
+        return (int) Math.round( getShape().estimateN( cardinality() ));
     }
 
     /**
@@ -226,7 +257,8 @@ public interface BloomFilter {
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the union.
      */
-    default double estimateUnion( BloomFilter other) {
+    default int estimateUnion( BloomFilter other) {
+        Objects.requireNonNull( other, "other");
         return this.merge( other ).estimateN();
     }
 
@@ -235,7 +267,8 @@ public interface BloomFilter {
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the intersection.
      */
-    default double estimateIntersection( BloomFilter other) {
+    default int estimateIntersection( BloomFilter other) {
+        Objects.requireNonNull( other, "other");
         return estimateN() + other.estimateN() - estimateUnion(  other );
     }
 
@@ -250,7 +283,7 @@ public interface BloomFilter {
         private int next;
 
         /**
-         * Constructs a bit iterator from an array fo bit maps
+         * Constructs a bit iterator from an array of bit maps
          * @param bits the array of bit maps.
          */
         BitIterator( long[] bits ) {
@@ -391,6 +424,22 @@ public interface BloomFilter {
             return numberOfBuckets(shape.getNumberOfBits()-1)*2 >= cardinality;
         }
 
+    }
+
+    public class BitBuilder implements LongConsumer {
+        private long[] result;
+        private int idx=0;
+        public BitBuilder( Shape shape ) {
+            result = new long[ BitMap.numberOfBuckets( shape.getNumberOfBits() )];
+        }
+        @Override
+        public void accept(long bitmap) {
+            result[idx++] = bitmap;
+        }
+
+        public long[] trim() {
+            return Arrays.copyOf( result, idx );
+        }
     }
 
 }

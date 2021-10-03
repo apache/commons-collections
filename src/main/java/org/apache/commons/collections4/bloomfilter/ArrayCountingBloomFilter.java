@@ -18,13 +18,15 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.BitSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 import java.util.stream.IntStream;
 
+import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 
 /**
  * A counting Bloom filter using an array to track counts for each enabled bit
@@ -136,8 +138,10 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
      * Constructs an empty counting Bloom filter with the specified shape.
      *
      * @param shape the shape of the filter
+     *
      */
     public ArrayCountingBloomFilter(final Shape shape) {
+        Objects.requireNonNull( shape, "shape");
         this.shape = shape;
         counts = new int[shape.getNumberOfBits()];
     }
@@ -154,18 +158,18 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(final BloomFilter other) {
-        // The AbstractBloomFilter implementation converts both filters to long[] bits.
-        // This would involve checking all indexes in this filter against zero.
-        // Ideally we use an iterator of bit indexes to allow fail-fast on the
-        // first bit index that is zero.
-        if (other instanceof ArrayCountingBloomFilter) {
-            return contains(((ArrayCountingBloomFilter) other).iterator());
+        Objects.requireNonNull( other, "other");
+        try {
+            other.forEachIndex( idx -> {if ( this.counts[idx] == 0  ) { throw new ArrayCountingBloomFilter.NoMatchException(); }} );
+        } catch (NoMatchException e) {
+            return false;
         }
-        return CountingBloomFilter.super.contains(other);
+        return true;
     }
 
     @Override
     public boolean contains(final Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
         return contains(hasher.iterator(getShape()));
     }
 
@@ -206,39 +210,64 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
         return new IndexIterator();
     }
 
+    protected ArrayCountingBloomFilter makeClone() {
+        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
+        filter.add( this );
+        filter.state = this.state;
+        return filter;
+    }
+
+    @Override
+    public CountingBloomFilter merge(BloomFilter other) {
+        Objects.requireNonNull( other, "other");
+        CountingBloomFilter filter = makeClone();
+        filter.add( BitCountProducer.Factory.simple( other ));
+        return filter;
+    }
+
+    @Override
+    public CountingBloomFilter merge(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
+        ArrayCountingBloomFilter filter = makeClone();
+        filter.mergeInPlace( hasher );
+        return filter;
+    }
+
     @Override
     public boolean mergeInPlace(final BloomFilter other) {
-        applyAsBloomFilter(other, this::increment);
-        return isValid();
+        Objects.requireNonNull( other, "other");
+        return add( BitCountProducer.Factory.simple(other) );
     }
 
     @Override
     public boolean mergeInPlace(final Hasher hasher) {
-        applyAsHasher(hasher, this::increment);
-        return isValid();
+        Objects.requireNonNull( hasher, "hasher");
+        return add( BitCountProducer.Factory.from( shape, hasher ));
     }
 
     @Override
     public boolean remove(final BloomFilter other) {
-        applyAsBloomFilter(other, this::decrement);
-        return isValid();
+        Objects.requireNonNull( other, "other");
+        return subtract( BitCountProducer.Factory.simple(other));
     }
 
     @Override
     public boolean remove(final Hasher hasher) {
-        applyAsHasher(hasher, this::decrement);
+        Objects.requireNonNull( hasher, "hasher");
+        return subtract( BitCountProducer.Factory.from( shape, hasher ));
+    }
+
+    @Override
+    public boolean add(final BitCountProducer other) {
+        Objects.requireNonNull( other, "other");
+        other.forEachCount(this::add);
         return isValid();
     }
 
     @Override
-    public boolean add(final CountingBloomFilter other) {
-        applyAsCountingBloomFilter(other, this::add);
-        return isValid();
-    }
-
-    @Override
-    public boolean subtract(final CountingBloomFilter other) {
-        applyAsCountingBloomFilter(other, this::subtract);
+    public boolean subtract(final BitCountProducer other) {
+        Objects.requireNonNull( other, "other");
+        other.forEachCount(this::subtract);
         return isValid();
     }
 
@@ -262,66 +291,34 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public void forEachCount(final BitCountConsumer action) {
+    public void forEachCount(final BitCountProducer.BitCountConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
         for (int i = 0; i < counts.length; i++) {
             if (counts[i] != 0) {
-                action.accept(i, counts[i]);
+                consumer.accept(i, counts[i]);
             }
         }
     }
 
-    /**
-     * Apply the action for each index in the Bloom filter.
-     */
-    private void applyAsBloomFilter(final BloomFilter other, final IntConsumer action) {
-        if (other instanceof ArrayCountingBloomFilter) {
-            // Only use the presence of non-zero and not the counts
-            final int[] counts2 = ((ArrayCountingBloomFilter) other).counts;
-            for (int i = 0; i < counts2.length; i++) {
-                if (counts2[i] != 0) {
-                    action.accept(i);
-                }
+    @Override
+    public void forEachIndex(IntConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+        for (int i = 0; i < counts.length; i++) {
+            if (counts[i] != 0) {
+                consumer.accept(i);
             }
-        } else {
-            BitSet.valueOf(other.getBits()).stream().forEach(action);
         }
     }
 
-    /**
-     * Apply the action for each index in the hasher.
-     */
-    private void applyAsHasher(final Hasher hasher, final IntConsumer action) {
-        // We do not naturally handle duplicates so filter them.
-        IndexFilters.distinctIndexes(hasher, getShape(), action);
-    }
-
-    /**
-     * Apply the action for each index in the Bloom filter.
-     */
-    private void applyAsCountingBloomFilter(final CountingBloomFilter other, final BitCountConsumer action) {
-        other.forEachCount(action);
-    }
-
-    /**
-     * Increment to the count for the bit index.
-     *
-     * @param idx the index
-     */
-    private void increment(final int idx) {
-        final int updated = counts[idx] + 1;
-        state |= updated;
-        counts[idx] = updated;
-    }
-
-    /**
-     * Decrement from the count for the bit index.
-     *
-     * @param idx the index
-     */
-    private void decrement(final int idx) {
-        final int updated = counts[idx] - 1;
-        state |= updated;
-        counts[idx] = updated;
+    @Override
+    public void forEachBitMap(LongConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+            if (cardinality() == 0) {
+                return;
+            }
+            BitMapBuilder builder = new BitMapBuilder( consumer );
+            forEachIndex(  builder );
+            builder.finish();
     }
 
     /**
@@ -330,7 +327,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @param idx the index
      * @param addend the amount to add
      */
-    private void add(final int idx, final int addend) {
+    protected void add(final int idx, final int addend) {
         final int updated = counts[idx] + addend;
         state |= updated;
         counts[idx] = updated;
@@ -342,7 +339,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @param idx the index
      * @param subtrahend the amount to subtract
      */
-    private void subtract(final int idx, final int subtrahend) {
+    protected void subtract(final int idx, final int subtrahend) {
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;
@@ -357,4 +354,46 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public Shape getShape() {
         return shape;
     }
+
+    private  static class BitMapBuilder implements IntConsumer {
+
+        LongConsumer consumer;
+        long bucket = 0;
+        long bucektIdx=0;
+
+        BitMapBuilder( LongConsumer consumer ) {
+            this.consumer = consumer;
+        }
+
+        @Override
+        public void accept( int i ) {
+            int nextIndex = BitMap.getLongIndex( i );
+            while (nextIndex > bucektIdx)
+            {
+                consumer.accept(bucket);
+                bucket =0;
+                bucektIdx++;
+            }
+            bucket |= BitMap.getLongBit( i );
+        }
+
+        public void finish() {
+            if (bucket != 0) {
+                consumer.accept( bucket );
+            }
+        }
+    }
+
+    /**
+     * An exception throwns when no match was found in the byte buffer.
+     *
+     */
+    private class NoMatchException extends RuntimeException {
+
+        public NoMatchException() {
+            super();
+        }
+
+    }
+
 }
