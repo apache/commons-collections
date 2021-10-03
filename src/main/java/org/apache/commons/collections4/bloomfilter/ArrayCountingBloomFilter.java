@@ -25,7 +25,6 @@ import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 import java.util.stream.IntStream;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -242,7 +241,8 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean mergeInPlace(final Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
-        return add( BitCountProducer.Factory.from( shape, hasher ));
+        hasher.forEach( h -> add( BitCountProducer.Factory.from( shape, h )));
+        return isValid();
     }
 
     @Override
@@ -254,7 +254,8 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean remove(final Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
-        return subtract( BitCountProducer.Factory.from( shape, hasher ));
+        hasher.forEach( h -> subtract( BitCountProducer.Factory.from( shape, h )));
+        return isValid();
     }
 
     @Override

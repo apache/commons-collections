@@ -23,9 +23,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.PrimitiveIterator;
 import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -60,7 +58,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             return new long[0];
         }
 
-        BitBuilder consumer = new BitBuilder(getShape());
+        BitMapProducer.ArrayBuilder consumer = new BitMapProducer.ArrayBuilder(getShape());
         forEachBitMap( consumer );
         return consumer.trim();
     }
@@ -163,17 +161,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // Modification Operations
 
     /**
-     * Merges the specified Bloom filter into this Bloom filter. Specifically all bit indexes
-     * that are enabled in the {@code other} filter will be enabled in this filter.
-     *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the {@code other} Bloom filter.
+     * Merges the specified Bloom filter withthis Bloom filter creating a new Bloom filter.
+     * Specifically all bit indexes that are enabled in the {@code other} filter will be
+     * enabled in the resulting filter.
      *
      * @param other the other Bloom filter
-     * @return true if the merge was successful
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
+     * @return The new Bloom filter.
      */
     default BloomFilter merge(BloomFilter other) {
         Objects.requireNonNull( other, "other");
@@ -188,17 +181,13 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     }
 
     /**
-     * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
-     * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
+     * Merges the specified Hasher with this Bloom filter and returns a new Bloom filter.
+     * Specifically all bit indexes that are identified by the {@code hasher} will be enabled
+     * in the resulting filter.
      *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the specified decomposed Bloom filter.
      *
      * @param hasher the hasher to provide the indexes
-     * @return true if the merge was successful
-     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
-     * this filter
+     * @return the new Bloom filter.
      */
     default BloomFilter merge(Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
@@ -211,8 +200,30 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         return result;
     }
 
+    /**
+     * Merges the specified Bloom filter into this Bloom filter. Specifically all
+     * bit indexes that are identified by the {@code other} will be enabled in this filter.
+     *
+     * <p>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter is not ensured to contain
+     * the specified Bloom filter.
+     *
+     * @param other The bloom filter to merge into this one.
+     * @return true if the merge was successful
+     */
     boolean mergeInPlace(BloomFilter other);
 
+    /**
+     * Merges the specified hasher into this Bloom filter. Specifically all
+     * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
+     *
+     * <p>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter is not ensured to contain
+     * the specified Bloom filter.
+     *
+     * @param hasher The hasher to merge.
+     * @return true if the merge was successful
+     */
     default boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
         Shape shape = getShape();
@@ -273,10 +284,11 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     }
 
     /**
-     * Iterates over the enabled bits in an array of bit maps.
+     * Iterates over the enabled bits in an array of bit maps.  Useful for when a
+     * array of bitmaps is available but an iterator of indices is needed.
      *
      */
-    class BitIterator implements PrimitiveIterator.OfInt {
+    public class BitIterator implements PrimitiveIterator.OfInt {
         private long[] bits;
         private int bucket;
         private int offset;
@@ -321,124 +333,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
                 }
             }
             throw new NoSuchElementException();
-        }
-    }
-
-    /**
-     * Contains functions to convert {@code int} indices into Bloom filter bit positions.
-     */
-    class BitMap {
-        /** A bit shift to apply to an integer to divided by 64 (2^6). */
-        private static final int DIVIDE_BY_64 = 6;
-
-        /** Do not instantiate. */
-        private BitMap() {}
-
-        /**
-         * Calculates the number of buckets required for the numberOfBits parameter.
-         * @param numberOfBits the number of bits to store in the array of buckets.
-         * @return the number of buckets necessary.
-         */
-        public static int numberOfBuckets( int numberOfBits ) {
-            int bucket = numberOfBits >> DIVIDE_BY_64;
-            return bucket+1;
-        }
-
-        /**
-         * Checks if the specified index bit is enabled in the array of bit buckets.
-         * @param buckets  The array of bit buckets
-         * @param idx the index of the bit to locate.
-         * @return {@code true} if the bit is enabled, {@code false} otherwise.
-         */
-        public static boolean contains( long[] buckets, int idx ) {
-            return (buckets[ getLongIndex( idx )] & getLongBit( idx )) != 0;
-        }
-
-        /**
-         * Check the index is positive.
-         *
-         * @param bitIndex the bit index
-         * @throws IndexOutOfBoundsException if the index is not positive
-         */
-        public static void checkPositive(final int bitIndex) {
-            if (bitIndex < 0) {
-                throw new IndexOutOfBoundsException("Negative bitIndex: " + bitIndex);
-            }
-        }
-
-
-        /**
-         * Gets the filter index for the specified bit index assuming the filter is using 64-bit longs
-         * to store bits starting at index 0.
-         *
-         * <p>The index is assumed to be positive. For a positive index the result will match
-         * {@code bitIndex / 64}.
-         *
-         * <p>The divide is performed using bit shifts. If the input is negative the behavior
-         * is not defined.
-         *
-         * @param bitIndex the bit index (assumed to be positive)
-         * @return the filter index
-         * @see #checkPositive(int)
-         */
-        public static int getLongIndex(final int bitIndex) {
-            // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is positive.
-            // We do not explicitly check for a negative here. Instead we use a
-            // a signed shift. Any negative index will produce a negative value
-            // by sign-extension and if used as an index into an array it will throw an exception.
-            return bitIndex >> DIVIDE_BY_64;
-        }
-
-        /**
-         * Gets the filter bit mask for the specified bit index assuming the filter is using 64-bit
-         * longs to store bits starting at index 0. The returned value is a {@code long} with only
-         * 1 bit set.
-         *
-         * <p>The index is assumed to be positive. For a positive index the result will match
-         * {@code 1L << (bitIndex % 64)}.
-         *
-         * <p>If the input is negative the behavior is not defined.
-         *
-         * @param bitIndex the bit index (assumed to be positive)
-         * @return the filter bit
-         * @see #checkPositive(int)
-         */
-        public static long getLongBit(final int bitIndex) {
-            // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
-            // using 0x3f (63) or compute bitIndex % 64.
-            // Note: If the index is negative the shift will be (64 - (bitIndex & 0x3f)) and
-            // this will identify an incorrect bit.
-            return 1L << bitIndex;
-        }
-
-        /**
-         * Determines id a cardinality is sparse for the shape.
-         * Since the size of a bucket is a long and the size of an index is an int, there can be
-         * 2 indexes for each bucket.  Since indexes are evenly distributed sparse is defined as
-         * {@code numberOfBuckets*2 >= cardinality}
-         * @param cardinality the cardinality to check.
-         * @param shape the Shape to check against
-         * @return true if the cardinality is sparse within the bucket.
-         */
-        public static boolean isSparse( int cardinality, Shape shape ) {
-            return numberOfBuckets(shape.getNumberOfBits()-1)*2 >= cardinality;
-        }
-
-    }
-
-    public class BitBuilder implements LongConsumer {
-        private long[] result;
-        private int idx=0;
-        public BitBuilder( Shape shape ) {
-            result = new long[ BitMap.numberOfBuckets( shape.getNumberOfBits() )];
-        }
-        @Override
-        public void accept(long bitmap) {
-            result[idx++] = bitmap;
-        }
-
-        public long[] trim() {
-            return Arrays.copyOf( result, idx );
         }
     }
 

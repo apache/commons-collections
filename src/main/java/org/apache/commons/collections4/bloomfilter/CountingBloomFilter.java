@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -55,7 +54,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  */
 public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
 
-    
+
 
     // Query Operations
 
@@ -100,9 +99,12 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     boolean remove(BloomFilter other);
 
     /**
-     * Removes the specified decomposed Bloom filter from this Bloom filter. Specifically
+     * Removes the specified hasher from the Bloom filter from this Bloom filter. Specifically
      * all counts for the <em>distinct</em> indexes identified by the {@code hasher} will be
      * decremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.
+     *
+     * For HasherCollections each SimpleHasher will be considered a single item and decremented
+     * from the counts separately.
      *
      * <p>This method will return true if the filter is valid after the operation.
      *
@@ -164,6 +166,9 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
      * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
+     *
+     * For HasherCollections each SimpleHasher will be considered a single item and increment
+     * the counts separately.
      *
      * <p>Note: This method should return {@code true} even if no additional bit indexes were
      * enabled. A {@code false} result indicates that this filter is not ensured to contain
