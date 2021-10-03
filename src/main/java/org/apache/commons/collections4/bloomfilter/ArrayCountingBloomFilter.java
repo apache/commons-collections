@@ -314,12 +314,12 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public void forEachBitMap(LongConsumer consumer) {
         Objects.requireNonNull( consumer, "consumer");
-            if (cardinality() == 0) {
-                return;
-            }
-            BitMapBuilder builder = new BitMapBuilder( consumer );
-            forEachIndex(  builder );
-            builder.finish();
+        if (cardinality() == 0) {
+            return;
+        }
+        BitMapBuilder builder = new BitMapBuilder( consumer );
+        forEachIndex(  builder );
+        builder.finish();
     }
 
     /**

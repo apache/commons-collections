@@ -1,12 +1,6 @@
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
-
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 public interface IndexProducer {
 
