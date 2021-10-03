@@ -99,8 +99,8 @@ public class SetOperationsTest {
 
         filter2 = new SimpleBloomFilter(shape, from11);
 
-        assertEquals(0.41176470, SetOperations.cosineSimilarity(filter1, filter2), 0.000000001);
-        assertEquals(0.41176470, SetOperations.cosineSimilarity(filter2, filter1), 0.000000001);
+        assertEquals(0.41176470, SetOperations.cosineSimilarity(filter1, filter2), 0.00000001);
+        assertEquals(0.41176470, SetOperations.cosineSimilarity(filter2, filter1), 0.00000001);
     }
 
     /**

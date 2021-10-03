@@ -19,13 +19,13 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.function.Consumer;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
 
 
 /**
- * A Hasher implementation that contains the index for all enabled bits for a specific
- * Shape.
+ * A Hasher ithat implemente combinatorial hashing.
  * @since 4.5
  */
 public final class SimpleHasher implements Hasher {
@@ -64,6 +64,10 @@ public final class SimpleHasher implements Hasher {
         return 1;
     }
 
+    @Override
+    public void forEach(Consumer<Hasher> consumer) {
+        consumer.accept( this );
+    }
 
     /**
      * The iterator of integers.

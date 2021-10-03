@@ -47,6 +47,11 @@ public class SimpleBloomFilter implements BloomFilter {
         this.bitSet = new BitSet();
     }
 
+    /**
+     * Constructor.
+     * @param shape The shape for the filter.
+     * @param hasher the Hasher to initialize the filter with.
+     */
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
         this( shape );
         Objects.requireNonNull( hasher, "hasher");

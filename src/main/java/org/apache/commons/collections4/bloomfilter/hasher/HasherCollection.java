@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
@@ -87,6 +88,14 @@ public class HasherCollection implements Hasher {
         }
         return i;
     }
+
+    @Override
+    public void forEach(Consumer<Hasher> consumer) {
+        for (Hasher h : this.hashers) {
+            h.forEach(consumer);
+        }
+    }
+
 
     /**
      * The iterator of integers.

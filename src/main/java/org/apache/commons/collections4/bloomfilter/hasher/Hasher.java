@@ -17,8 +17,10 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
+import java.util.function.Consumer;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
 
 /**
  * A Hasher represents items of arbitrary byte size as a byte representation of
@@ -69,6 +71,16 @@ public interface Hasher {
      * @return The number of items that will be hashed by the iterator.
      */
     int size();
+
+    /**
+     * Performs the given action for each hasher.
+     *
+     * For collections of hashers, this method must be called on each hasher in the collection.
+     *
+     * @param consumer the action to be performed for each hasher
+     * @throws NullPointerException if the specified action is null
+     */
+    void forEach(Consumer<Hasher> consumer);
 
 
 }

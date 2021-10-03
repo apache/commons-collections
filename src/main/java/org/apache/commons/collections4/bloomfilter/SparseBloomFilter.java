@@ -57,16 +57,33 @@ public class SparseBloomFilter implements BloomFilter {
         this.indices = new TreeSet<Integer>();
     }
 
+    /**
+     * Constructs a populated Bloom filter.
+     * @param shape the shape for the bloom filter.
+     * @param hasher the hasher to provide the initial data.
+     */
     public SparseBloomFilter(final Shape shape, Hasher hasher) {
         this( shape );
         Objects.requireNonNull( hasher, "hasher");
-        hasher.iterator(shape).forEachRemaining( (IntConsumer) i -> indices.add( i ));
+        hasher.forEach( h -> h.iterator(shape).forEachRemaining( (IntConsumer) indices::add ));
     }
 
+    /**
+     * Constructs a populated Bloom filter.
+     * @param shape the shape of the filter.
+     * @param indices a list of indices to to enable.
+     * @throws IllegalArgumentException if indices contains a value greater than the number
+     * of bits in the shape.
+     */
     public SparseBloomFilter(Shape shape, List<Integer> indices) {
         this(shape);
         Objects.requireNonNull( indices, "indices");
         this.indices.addAll( indices );
+        if (this.indices.last() >= shape.getNumberOfBits()) {
+            throw new IllegalArgumentException(
+                    String.format( "Value in list {} is greater than maximum value ({})",
+                            this.indices.last(), shape.getNumberOfBits()));
+        }
     }
 
     @Override
