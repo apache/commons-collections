@@ -20,6 +20,8 @@ import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 
+import org.apache.commons.collections4.bloomfilter.Shape;
+
 
 /**
  * A Hasher implementation that contains the index for all enabled bits for a specific

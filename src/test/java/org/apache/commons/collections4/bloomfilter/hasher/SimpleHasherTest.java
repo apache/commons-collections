@@ -14,38 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
+package org.apache.commons.collections4.bloomfilter.hasher;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
-import java.util.function.ToIntBiFunction;
+import java.util.NoSuchElementException;
+import java.util.PrimitiveIterator;
+import java.util.PrimitiveIterator.OfInt;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the {@link ArrayCountingBloomFilter}.
+ * Tests the {@link SimpleHasher}.
  */
-public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest {
+public class SimpleHasherTest {
 
-    @Override
-    protected ArrayCountingBloomFilter createEmptyFilter(Shape shape) {
-        return new ArrayCountingBloomFilter( shape );
+    private SimpleHasher hasher = new SimpleHasher( 1,1 );
+
+    @Test
+    public void sizeTest() {
+        assertEquals( 1, hasher.size() );
     }
 
-    @Override
-    protected ArrayCountingBloomFilter createFilter(Shape shape, Hasher hasher) {
-        ArrayCountingBloomFilter filter = createEmptyFilter( shape );
-        filter.add( BitCountProducer.Factory.from(shape, hasher));
-        return filter;
+    @Test
+    public void testIterator() {
+        Shape shape = new Shape( 5, 10 );
+        OfInt iter = hasher.iterator(shape);
+        for (int i=1;i<6;i++) {
+            assertEquals( i, iter.next() );
+        }
+        assertFalse( iter.hasNext());
     }
 
 }

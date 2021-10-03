@@ -21,16 +21,17 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 
 import javax.swing.event.ListSelectionEvent;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 
 /**
@@ -51,22 +52,26 @@ public class SparseBloomFilter implements BloomFilter {
      *
      */
     public SparseBloomFilter(Shape shape) {
+        Objects.requireNonNull( shape, "shape");
         this.shape = shape;
         this.indices = new TreeSet<Integer>();
     }
 
     public SparseBloomFilter(final Shape shape, Hasher hasher) {
         this( shape );
+        Objects.requireNonNull( hasher, "hasher");
         hasher.iterator(shape).forEachRemaining( (IntConsumer) i -> indices.add( i ));
     }
 
     public SparseBloomFilter(Shape shape, List<Integer> indices) {
         this(shape);
+        Objects.requireNonNull( indices, "indices");
         this.indices.addAll( indices );
     }
 
     @Override
     public boolean mergeInPlace(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
         PrimitiveIterator.OfInt iter =  hasher.iterator(shape);
         while (iter.hasNext()) {
             indices.add( iter.next() );
@@ -76,9 +81,8 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean mergeInPlace(BloomFilter other) {
-        for (int i : other.getIndices()) {
-            indices.add(i);
-        }
+        Objects.requireNonNull( other, "other");
+        other.forEachIndex( indices::add );
         return true;
     }
 
@@ -98,26 +102,34 @@ public class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public long[] getBits() {
-        if (cardinality() == 0) {
-            return new long[0];
+    public void forEachIndex(IntConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+        for (int value : indices ) {
+            consumer.accept( value );
         }
-        long[] result = new long[ BitMap.numberOfBuckets( indices.last() )];
-        for (Integer idx : indices)
-        {
-            result[ BitMap.getLongIndex( idx.intValue()) ] |= BitMap.getLongBit(idx.intValue());
-        }
-        return result;
     }
 
     @Override
-    public int[] getIndices() {
-        int[] result = new int[ indices.size() ];
-        int i=0;
-        for (int value : indices ) {
-            result[i++]=value;
+    public void forEachBitMap(LongConsumer consumer) {
+        Objects.requireNonNull( consumer, "consumer");
+        if (cardinality() == 0) {
+            return;
         }
-        return result;
+        long bucket = 0;
+        long bucektIdx=0;
+        for (int i : indices ) {
+            int nextIndex = BitMap.getLongIndex( i );
+            while (nextIndex > bucektIdx)
+            {
+                consumer.accept(bucket);
+                bucket =0;
+                bucektIdx++;
+            }
+            bucket |= BitMap.getLongBit( i );
+        }
+        if (bucket != 0) {
+            consumer.accept( bucket );
+        }
     }
 
 

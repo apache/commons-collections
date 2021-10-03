@@ -33,25 +33,28 @@ import java.util.BitSet;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.HasherCollection;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test standard methods in the {@link BloomFilter} interface.
  */
-public abstract class AbstractBloomFilterTest {
+public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
-    private final SimpleHasher from1 = new SimpleHasher( 1, 1 );
-    private final SimpleHasher from11 = new SimpleHasher( 11, 1 );
-    private final HasherCollection bigHasher = new HasherCollection( from1, from11 );
-    private final HasherCollection fullHasher = new HasherCollection(
+    protected final SimpleHasher from1 = new SimpleHasher( 1, 1 );
+    protected final long from1Value = 0x3FFFEL;
+    protected final SimpleHasher from11 = new SimpleHasher( 11, 1 );
+    protected final long from11Value = 0xFFFF800L;
+    protected final HasherCollection bigHasher = new HasherCollection( from1, from11 );
+    protected final long bigHashValue = 0xFFFFFFEL;
+    protected final HasherCollection fullHasher = new HasherCollection(
             new SimpleHasher(0,1)/*0-16*/,
             new SimpleHasher(17,1)/*17-33*/,
             new SimpleHasher(33,1)/*33-49*/,
             new SimpleHasher(50,1)/*50-66*/,
             new SimpleHasher(67,1)/*67-83*/
             );
+    protected final long[] fullHashValue = { 0xFFFFFFFFFFFFFFFFL, 0xFFFFFL };
 
     /**
      * The shape of the Bloom filters for testing
@@ -64,7 +67,7 @@ public abstract class AbstractBloomFilterTest {
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract BloomFilter createEmptyFilter(Shape shape);
+    protected abstract T createEmptyFilter(Shape shape);
 
     /**
      * Create the BloomFilter implementation we are testing.
@@ -73,7 +76,7 @@ public abstract class AbstractBloomFilterTest {
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract BloomFilter createFilter(Shape shape, Hasher hasher);
+    protected abstract T createFilter(Shape shape, Hasher hasher);
 
 
     /**
@@ -111,8 +114,8 @@ public abstract class AbstractBloomFilterTest {
         final BloomFilter bf = createFilter( shape, from1 );
         final BloomFilter bf2 = createFilter( shape, bigHasher );
 
-        assertEquals(1.0, bf.estimateIntersection(bf2), 0.5);
-        assertEquals(1.0, bf2.estimateIntersection(bf), 0.5);
+        assertEquals(1.0, bf.estimateIntersection(bf2));
+        assertEquals(1.0, bf2.estimateIntersection(bf));
     }
 
     @Test
@@ -120,8 +123,8 @@ public abstract class AbstractBloomFilterTest {
         final BloomFilter bf = createFilter( shape, from1 );
         final BloomFilter bf2 = createEmptyFilter( shape);
 
-        assertEquals(0.0, bf.estimateIntersection(bf2), 0.00);
-        assertEquals(0.0, bf2.estimateIntersection(bf), 0.00);
+        assertEquals(0.0, bf.estimateIntersection(bf2));
+        assertEquals(0.0, bf2.estimateIntersection(bf));
     }
 
     /**
@@ -135,18 +138,39 @@ public abstract class AbstractBloomFilterTest {
 
         final BloomFilter bf2 = createFilter( shape, from11 );
 
-        assertEquals(2.0, bf.estimateUnion(bf2), 0.5);
-        assertEquals(2.0, bf2.estimateUnion(bf), 0.5);
+        assertEquals(2.0, bf.estimateUnion(bf2));
+        assertEquals(2.0, bf2.estimateUnion(bf));
     }
 
     @Test
     public void estimateUnionTest_empty() {
-        final List<Integer> lst = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
         final BloomFilter bf = createFilter( shape, from1 );
         final BloomFilter bf2 = createEmptyFilter( shape);
 
-        assertEquals(1.0, bf.estimateUnion(bf2), 0.15);
-        assertEquals(1.0, bf2.estimateUnion(bf), 0.15);
+        assertEquals(1.0, bf.estimateUnion(bf2));
+        assertEquals(1.0, bf2.estimateUnion(bf));
+    }
+
+
+
+    /**
+     * Tests that the size estimate is correctly calculated.
+     */
+    @Test
+    public void estimateNTest() {
+        // build a filter
+        BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
+        assertEquals(1, filter1.estimateN());
+
+        // the data provided above do not generate an estimate that is equivalent to the
+        // actual.
+        filter1.mergeInPlace( new SimpleHasher( 4, 1 ));
+
+        assertEquals(1, filter1.estimateN() );
+
+        filter1.mergeInPlace( new SimpleHasher( 17, 1 ));
+
+        assertEquals(3, filter1.estimateN() );
     }
 
 

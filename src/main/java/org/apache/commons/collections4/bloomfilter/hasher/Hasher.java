@@ -18,6 +18,8 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
 
+import org.apache.commons.collections4.bloomfilter.Shape;
+
 /**
  * A Hasher represents items of arbitrary byte size as a byte representation of
  * fixed size (a hash). The hash representations can be used to create indexes
