@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.IntConsumer;
@@ -108,4 +107,4 @@ public class SimpleBloomFilter implements BloomFilter {
         }
     }
 
- }
+}

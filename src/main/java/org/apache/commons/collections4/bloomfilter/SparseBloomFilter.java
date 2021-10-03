@@ -16,23 +16,14 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.PrimitiveIterator;
-import java.util.PrimitiveIterator.OfInt;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
-import javax.swing.event.ListSelectionEvent;
-
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 
 /**
  * A bloom filter using a Java BitSet to track enabled bits. This is a standard
@@ -150,4 +141,4 @@ public class SparseBloomFilter implements BloomFilter {
     }
 
 
- }
+}
