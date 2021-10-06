@@ -18,16 +18,16 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.PrimitiveIterator;
 import java.util.TreeSet;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
+import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
- * A bloom filter using a Java BitSet to track enabled bits. This is a standard
- * implementation and should work well for most Bloom filters.
+ * A bloom filter using a TreeSet of integers to track enabled bits. This is a standard
+ * implementation and should work well for most low cardinality Bloom filters.
  * @since 4.5
  */
 public class SparseBloomFilter implements BloomFilter {
@@ -56,7 +56,7 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(final Shape shape, Hasher hasher) {
         this( shape );
         Objects.requireNonNull( hasher, "hasher");
-        hasher.forEach( h -> h.iterator(shape).forEachRemaining( (IntConsumer) indices::add ));
+        hasher.indices(shape).forEachIndex( this.indices::add );
     }
 
     /**
@@ -80,10 +80,7 @@ public class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
-        PrimitiveIterator.OfInt iter =  hasher.iterator(shape);
-        while (iter.hasNext()) {
-            indices.add( iter.next() );
-        }
+        hasher.indices(shape).forEachIndex( this.indices::add );
         return true;
     }
 
@@ -123,21 +120,22 @@ public class SparseBloomFilter implements BloomFilter {
         if (cardinality() == 0) {
             return;
         }
-        long bucket = 0;
-        long bucektIdx=0;
-        for (int i : indices ) {
-            int nextIndex = BitMap.getLongIndex( i );
-            while (nextIndex > bucektIdx)
-            {
-                consumer.accept(bucket);
-                bucket =0;
-                bucektIdx++;
-            }
-            bucket |= BitMap.getLongBit( i );
+        BitMapProducer.fromIndexProducer( this, shape).forEachBitMap(consumer);
+    }
+
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        try {
+            indexProducer.forEachIndex( idx -> { if (!indices.contains(idx)) { throw new NoMatchException(); }});
+            return true;
+        } catch (NoMatchException e) {
+            return false;
         }
-        if (bucket != 0) {
-            consumer.accept( bucket );
-        }
+    }
+
+    @Override
+    public boolean contains(BitMapProducer bitMapProducer) {
+        return contains( IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
 

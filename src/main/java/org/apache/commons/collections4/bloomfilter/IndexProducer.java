@@ -16,8 +16,14 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Objects;
 import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
 
+/**
+ * An object that produces indices for or of a Bloom filter.
+ *
+ */
 public interface IndexProducer {
 
     /**
@@ -29,4 +35,32 @@ public interface IndexProducer {
      */
     void forEachIndex(IntConsumer consumer);
 
+    /**
+     * Creates an IndexProducer from a @{code BitMapProducer}.
+     * @param producer the @{code BitMapProducer}
+     * @return a new @{code IndexProducer}.
+     */
+    public static IndexProducer fromBitMapProducer( BitMapProducer producer ) {
+        Objects.requireNonNull( producer, "producer");
+        return new IndexProducer() {
+            @Override
+            public void forEachIndex(IntConsumer consumer) {
+                LongConsumer longConsumer = new LongConsumer(){
+                    int wordIdx = 0;
+                    @Override
+                    public void accept(long word) {
+                        for (int i = 0;i<64;i++)
+                        {
+                            long mask = 1L<<i;
+                            if ((word & mask) == mask) {
+                                consumer.accept( (wordIdx*64)+i) ;
+                            }
+                        }
+                    }};
+                    producer.forEachBitMap( longConsumer::accept );
+
+            }
+
+        };
+    }
 }

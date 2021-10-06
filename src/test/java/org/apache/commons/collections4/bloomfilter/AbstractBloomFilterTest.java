@@ -19,18 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.List;
-import java.util.PrimitiveIterator.OfInt;
-import java.util.function.BiFunction;
-import java.util.function.IntConsumer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.HasherCollection;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
@@ -181,7 +169,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public final void constructorTest_Empty() {
 
         final BloomFilter bf = createEmptyFilter(shape);
-        final long[] lb = bf.getBits();
+        final long[] lb = BloomFilter.asBitMapArray( bf );
         assertEquals(0, lb.length);
     }
 
@@ -193,7 +181,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         Hasher hasher = new SimpleHasher(0,1);
 
         final BloomFilter bf = createFilter(shape, hasher);
-        final long[] lb = bf.getBits();
+        final long[] lb = BloomFilter.asBitMapArray(bf);
         assertEquals(0x1FFFF, lb[0]);
         assertEquals(1, lb.length);
     }
@@ -207,7 +195,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         final SimpleHasher hasher = new SimpleHasher(63,1);
         final BloomFilter bf = createFilter(new Shape(2, 72), hasher );
-        final long[] lb = bf.getBits();
+        final long[] lb = BloomFilter.asBitMapArray(bf);
         assertEquals(2, lb.length);
         assertEquals(0x8000000000000000L, lb[0]);
         assertEquals(0x1, lb[1]);

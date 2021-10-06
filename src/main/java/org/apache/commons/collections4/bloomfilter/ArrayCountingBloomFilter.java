@@ -16,15 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.PrimitiveIterator;
-import java.util.PrimitiveIterator.OfInt;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 import java.util.stream.IntStream;
 
+import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -39,7 +36,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  * in {@link #isValid()} for details.
  *
  * <p>All the operations in the filter assume the counts are currently valid,
- * for example cardinality or contains operations. Behaviour of an invalid
+ * for example cardinality or contains operations. Behavior of an invalid
  * filter is undefined. It will no longer function identically to a standard
  * Bloom filter that is the merge of all the Bloom filters that have been added
  * to and not later subtracted from the counting Bloom filter.
@@ -56,6 +53,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  */
 public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
+    /**
+     * The shape of this Bloom filter.
+     */
     private final Shape shape;
 
     /**
@@ -90,50 +90,6 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     private int state;
 
     /**
-     * An iterator of all indexes with non-zero counts.
-     *
-     * <p>In the event that the filter state is invalid any index with a negative count
-     * will also be produced by the iterator.
-     */
-    private class IndexIterator implements PrimitiveIterator.OfInt {
-        /** The next non-zero index (or counts.length). */
-        private int next;
-
-        /**
-         * Create an instance.
-         */
-        IndexIterator() {
-            advance();
-        }
-
-        /**
-         * Advance to the next non-zero index.
-         */
-        void advance() {
-            while (next < counts.length && counts[next] == 0) {
-                next++;
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            return next < counts.length;
-        }
-
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                final int result = next++;
-                advance();
-                return result;
-            }
-            // Currently unreachable as the iterator is only used by
-            // the StaticHasher which iterates correctly.
-            throw new NoSuchElementException();
-        }
-    }
-
-    /**
      * Constructs an empty counting Bloom filter with the specified shape.
      *
      * @param shape the shape of the filter
@@ -155,60 +111,10 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
         return (int) IntStream.range( 0,  counts.length ).filter( i -> counts[i] > 0 ).count();
     }
 
-    @Override
-    public boolean contains(final BloomFilter other) {
-        Objects.requireNonNull( other, "other");
-        try {
-            other.forEachIndex( idx -> {if ( this.counts[idx] == 0  ) { throw new ArrayCountingBloomFilter.NoMatchException(); }} );
-        } catch (NoMatchException e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean contains(final Hasher hasher) {
-        Objects.requireNonNull( hasher, "hasher");
-        return contains(hasher.iterator(getShape()));
-    }
-
     /**
-     * Return true if this filter is has non-zero counts for each index in the iterator.
-     *
-     * @param iter the iterator
-     * @return true if this filter contains all the indexes
+     * Clones the filter.  Used to create merged values.
+     * @return A clone of this filter.
      */
-    private boolean contains(final OfInt iter) {
-        while (iter.hasNext()) {
-            if (counts[iter.nextInt()] == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public long[] getBits() {
-        final BitSet bs = new BitSet();
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0) {
-                bs.set(i);
-            }
-        }
-        return bs.toLongArray();
-    }
-
-    /**
-     * Returns an iterator over the enabled indexes in this filter.
-     * Any index with a non-zero count is considered enabled.
-     * The iterator returns indexes in their natural order.
-     *
-     * @return an iterator over the enabled indexes
-     */
-    private PrimitiveIterator.OfInt iterator() {
-        return new IndexIterator();
-    }
-
     protected ArrayCountingBloomFilter makeClone() {
         ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.add( this );
@@ -220,7 +126,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public CountingBloomFilter merge(BloomFilter other) {
         Objects.requireNonNull( other, "other");
         CountingBloomFilter filter = makeClone();
-        filter.add( BitCountProducer.Factory.simple( other ));
+        filter.add( BitCountProducer.from(other));
         return filter;
     }
 
@@ -228,34 +134,32 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public CountingBloomFilter merge(Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
         ArrayCountingBloomFilter filter = makeClone();
-        filter.mergeInPlace( hasher );
+        filter.add( BitCountProducer.from( hasher.indices(shape)));
         return filter;
     }
 
     @Override
     public boolean mergeInPlace(final BloomFilter other) {
         Objects.requireNonNull( other, "other");
-        return add( BitCountProducer.Factory.simple(other) );
+        return add( BitCountProducer.from(other) );
     }
 
     @Override
     public boolean mergeInPlace(final Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
-        hasher.forEach( h -> add( BitCountProducer.Factory.from( shape, h )));
-        return isValid();
+        return add( BitCountProducer.from( hasher.indices(shape)));
     }
 
     @Override
     public boolean remove(final BloomFilter other) {
         Objects.requireNonNull( other, "other");
-        return subtract( BitCountProducer.Factory.simple(other));
+        return subtract( BitCountProducer.from(other));
     }
 
     @Override
     public boolean remove(final Hasher hasher) {
         Objects.requireNonNull( hasher, "hasher");
-        hasher.forEach( h -> subtract( BitCountProducer.Factory.from( shape, h )));
-        return isValid();
+        return subtract( BitCountProducer.from( hasher.indices(shape)));
     }
 
     @Override
@@ -314,12 +218,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public void forEachBitMap(LongConsumer consumer) {
         Objects.requireNonNull( consumer, "consumer");
-        if (cardinality() == 0) {
-            return;
-        }
-        BitMapBuilder builder = new BitMapBuilder( consumer );
-        forEachIndex(  builder );
-        builder.finish();
+        BitMapProducer.fromIndexProducer( this, shape).forEachBitMap(consumer);
     }
 
     /**
@@ -346,55 +245,25 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
         counts[idx] = updated;
     }
 
-    @Override
-    public int[] getIndices() {
-        return IntStream.range( 0,  counts.length ).filter( i -> counts[i] > 0 ).toArray();
-    }
 
     @Override
     public Shape getShape() {
         return shape;
     }
 
-    private  static class BitMapBuilder implements IntConsumer {
-
-        LongConsumer consumer;
-        long bucket = 0;
-        long bucektIdx=0;
-
-        BitMapBuilder( LongConsumer consumer ) {
-            this.consumer = consumer;
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        try {
+            indexProducer.forEachIndex( idx -> {if ( this.counts[idx] == 0  ) { throw new NoMatchException(); }} );
+        } catch (NoMatchException e) {
+            return false;
         }
-
-        @Override
-        public void accept( int i ) {
-            int nextIndex = BitMap.getLongIndex( i );
-            while (nextIndex > bucektIdx)
-            {
-                consumer.accept(bucket);
-                bucket =0;
-                bucektIdx++;
-            }
-            bucket |= BitMap.getLongBit( i );
-        }
-
-        public void finish() {
-            if (bucket != 0) {
-                consumer.accept( bucket );
-            }
-        }
+        return true;
     }
 
-    /**
-     * An exception throwns when no match was found in the byte buffer.
-     *
-     */
-    private class NoMatchException extends RuntimeException {
-
-        public NoMatchException() {
-            super();
-        }
-
+    @Override
+    public boolean contains(BitMapProducer bitMapProducer) {
+        return contains( IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
 }

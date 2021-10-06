@@ -55,9 +55,6 @@ public final class Shape {
      */
     private final int numberOfBits;
 
-
-
-
     /**
      * Constructs a filter configuration with the specified number of items ({@code n}) and
      * bits ({@code m}).
@@ -177,6 +174,11 @@ public final class Shape {
                 numberOfBits, numberOfHashFunctions);
     }
 
+    /**
+     * Estimate the number of items in a Bloom filter with this shape and the specified number of bits enabled.
+     * @param hammingValue the number of enabled  bits.
+     * @return An estimate of the number of items in the Bloom filter.
+     */
     public double estimateN( int hammingValue ) {
         double c = hammingValue;
         double m = numberOfBits;
@@ -453,8 +455,5 @@ public final class Shape {
             // value of k can not be above Integer.MAX_VALUE.
             return (int) k;
         }
-
-
-
     }
 }

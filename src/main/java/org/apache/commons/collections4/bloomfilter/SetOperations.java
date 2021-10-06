@@ -38,20 +38,20 @@ public final class SetOperations {
     }
 
     private static BitSet and(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(first.getBits());
-        result.and(BitSet.valueOf(second.getBits()));
+        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
+        result.and(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
         return result;
     }
 
     private static BitSet or(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(first.getBits());
-        result.or(BitSet.valueOf(second.getBits()));
+        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
+        result.or(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
         return result;
     }
 
     private static BitSet xor(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(first.getBits());
-        result.xor(BitSet.valueOf(second.getBits()));
+        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
+        result.xor(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
         return result;
     }
 

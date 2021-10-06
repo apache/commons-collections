@@ -14,25 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
-
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+package org.apache.commons.collections4.bloomfilter.exceptions;
 
 /**
- * Tests for the {@link ArrayCountingBloomFilter}.
+ * An exception to short circuit Bloom filter match functionality using producers.
+ *
  */
-public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest {
+public class NoMatchException extends RuntimeException {
 
-    @Override
-    protected ArrayCountingBloomFilter createEmptyFilter(Shape shape) {
-        return new ArrayCountingBloomFilter( shape );
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Constructor.
+     */
+    public NoMatchException() {
     }
-
-    @Override
-    protected ArrayCountingBloomFilter createFilter(Shape shape, Hasher hasher) {
-        ArrayCountingBloomFilter filter = createEmptyFilter( shape );
-        filter.add( BitCountProducer.from( hasher.indices(shape)));
-        return filter;
-    }
-
 }
