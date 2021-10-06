@@ -16,17 +16,13 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Consumer;
-
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
+import java.util.function.IntConsumer;
 
 /**
  * Produces bit counts for counting type Bloom filters.
  *
  */
-public interface BitCountProducer {
+public interface BitCountProducer extends IndexProducer {
 
     /**
      * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
@@ -39,64 +35,25 @@ public interface BitCountProducer {
      */
     void forEachCount(BitCountConsumer consumer);
 
+    @Override
+    default void forEachIndex(IntConsumer consumer) {
+        forEachCount( (i,v) -> consumer.accept( i ));
+    }
+
     /**
-     * Factory to construct BitCountProducers from common Bloom filter and Hashers.
-     *
+     * Creates a BitCountProducer from an IndexProducer.  The resulting
+     * producer will count each enabled bit once.
+     * @param idx An index producer.
+     * @return A BitCountProducer with the same indices as the IndexProducer.
      */
-    public static class Factory {
-        /**
-         * Creates a BitCountProducer from a bloom filter.
-         *
-         *  If the filter implements the BitCountProducer it is returned unchanged.
-         *  If the filter does not implement the BitCountProducer each enabled bit is
-         *  returned with a count of one (1).
-         *
-         * @param filter the Bloom filter to count.
-         * @return The BitCountProducer for the Bloom filter.
-         */
-        public static BitCountProducer from( BloomFilter filter ) {
-            return (filter instanceof BitCountProducer) ? (BitCountProducer) filter : simple( filter );
-        }
+    public static BitCountProducer from( IndexProducer idx ) {
+        return new BitCountProducer() {
+            @Override
+            public void forEachCount(BitCountConsumer consumer) {
+                idx.forEachIndex( i -> consumer.accept(i, 1 ) );
+            }
 
-        /**
-         * Create a BitCountProducer from a bloom filter without regard to previous BitCountProducer
-         * implementation.
-         *
-         *  for each enabled bit a count of 1 is returned.
-         *
-         * @param filter The Bloom filter to create the BitCountProducer from.
-         * @return the BitCountProducer for the Bloom filter.
-         */
-        public static BitCountProducer simple( BloomFilter filter ) {
-            return new BitCountProducer() {
-
-                @Override
-                public void forEachCount(BitCountConsumer consumer) {
-                    for (int i : filter.getIndices() )
-                    {
-                        consumer.accept(i, 1);
-                    }
-                }
-            };
-        }
-
-        /**
-         * Creates a Bit count producer from a shape and hasher.
-         * @param shape The shape to use
-         * @param hasher the hasher to use.
-         * @return A BitCountProducer for the hasher produced values.
-         */
-        public static BitCountProducer from( Shape shape, Hasher hasher ) {
-            return new BitCountProducer() {
-
-                @Override
-                public void forEachCount(BitCountConsumer consumer) {
-                    final Set<Integer> distinct = new TreeSet<>();
-                    hasher.iterator(shape).forEachRemaining((Consumer<Integer>) distinct::add );
-                    distinct.forEach( i -> consumer.accept(i, 1));
-                }
-            };
-        }
+        };
     }
 
     /**

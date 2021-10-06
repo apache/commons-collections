@@ -19,9 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
- * Tests for the {@link SimpleBloomFilter}.
+ * Tests for the {@link SparseBloomFilter}.
  */
-public class SparseBloomFilterTest extends AbstractBloomFilterTest {
+public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFilter> {
     @Override
     protected SparseBloomFilter createEmptyFilter(final Shape shape) {
         return new SparseBloomFilter(shape);

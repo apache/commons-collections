@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.PrimitiveIterator;
-import java.util.function.IntConsumer;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
@@ -30,10 +30,33 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  */
 public interface BloomFilter extends IndexProducer, BitMapProducer {
 
+    /**
+     * Return the Bloom filter data as a BitMap array.
+     * @param filter the filter to get the data from.
+     * @return An array of BitMap long.
+     */
+    public static long[] asBitMapArray( BloomFilter filter ) {
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(filter.getShape());
+        filter.forEachBitMap( builder );
+        return builder.getArray();
+    }
+
+    /**
+     * Return the Bloom filter data as an array of indices for the enabled bits.
+     * @param filter the Filter to get the data from.
+     * @return An array of indices for enabled bits in the Bloom filter.
+     */
+    public static int[] asIndexArray( BloomFilter filter ) {
+        List<Integer> lst = new ArrayList<Integer>();
+        filter.forEachIndex( lst::add );
+        return lst.stream().mapToInt( Integer::intValue ).toArray();
+    }
+
+
     // Query Operations
 
     /**
-     * This method is used to determine the best mechod for matching.  For `sparse` implementations the `getIndices()`
+     * This method is used to determine the best method for matching.  For `sparse` implementations the `getIndices()`
      * method is more efficient.  Implementers should determine if it is easier for the implementation to return am array of
      * Indices (sparse) or a bit map as an array of unsigned longs.
      * @return
@@ -41,47 +64,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     boolean isSparse();
 
     /**
-     * Gets an array of little-endian long values representing the bits of this filter.
-     *
-     * <p>The returned array will have length {@code ceil(m / 64)} where {@code m} is the
-     * number of bits in the filter and {@code ceil} is the ceiling function.
-     * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
-     * index is enabled.
-     *
-     * @return the {@code long[]} representation of this filter
-     */
-    default long[] getBits() {
-
-        if (cardinality() == 0) {
-            return new long[0];
-        }
-
-        BitMapProducer.ArrayBuilder consumer = new BitMapProducer.ArrayBuilder(getShape());
-        forEachBitMap( consumer );
-        return consumer.trim();
-    }
-
-    /**
-     * Gets an array of indices of bits that are enabled.
-     * Array must be in sorted order.
-     * @return an array of indices for bits that are enabled in the filter.
-     */
-    default int[]  getIndices() {
-        int[] result = new int[ cardinality() ];
-        IntConsumer consumer = new IntConsumer() {
-            int idx = 0;
-            @Override
-            public void accept(int i) {
-                result[idx++] = i;
-            }
-        };
-        forEachIndex( consumer );
-        return result;
-    }
-
-    /**
      * Gets the shape that was used when the filter was built.
-     * @return The shape the flter was built with.
+     * @return The shape the filter was built with.
      */
     Shape getShape();
 
@@ -96,50 +80,14 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean contains(BloomFilter other) {
         Objects.requireNonNull( other, "other");
-        if (isSparse()) {
-            int[] myIndicies = getIndices();
-            if (other.isSparse()) {
-                int[] otherIndicies = other.getIndices();
-                if (otherIndicies.length > myIndicies.length) {
-                    return false;
-                }
-                return Arrays.stream( otherIndicies ).allMatch( i -> Arrays.binarySearch( myIndicies, i) >= 0);
-            } else {
-                BitIterator iter = new BitIterator( other.getBits() );
-                while (iter.hasNext())
-                {
-                    if (Arrays.binarySearch( myIndicies, iter.next()) < 0) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        } else {
-            long[] myBits = getBits();
-            if (other.isSparse()) {
-                return Arrays.stream( other.getIndices() ).allMatch( i -> BitMap.contains( myBits, i ));
-            } else {
-                long[] otherBits = other.getBits();
-                if (myBits.length != otherBits.length)
-                {
-                    return false;
-                }
-                for (int i=0;i<myBits.length;i++)
-                {
-                    if ((myBits[i] & otherBits[i]) != otherBits[i])
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
+        return isSparse() ? contains( (IndexProducer) other) :
+            contains( (BitMapProducer) other );
     }
 
     /**
-     * Returns {@code true} if this filter contains the specified decomposed Bloom filter.
+     * Returns {@code true} if this filter contains the bits specified in the hasher.
      * Specifically this returns {@code true} if this filter is enabled for all bit indexes
-     * identified by the {@code hasher}. Using the bit representations this is
+     * identified by the {@code hasher}. Using the BitMap representations this is
      * effectively {@code (this AND hasher) == hasher}.
      *
      * @param hasher the hasher to provide the indexes
@@ -150,17 +98,31 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean contains(Hasher hasher) {
         Objects.requireNonNull( hasher, "Hasher");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions()), shape ) ?
-                new SparseBloomFilter(getShape(), hasher) :
-                    new SimpleBloomFilter(getShape(), hasher);
-        return contains( result );
+        return contains( hasher.indices(shape));
     }
 
-    // Modification Operations
+    /**
+     * Returns {@code true} if this filter contains the indices specified IndexProducer.
+     * Specifically this returns {@code true} if this filter is enabled for all bit indexes
+     * identified by the {@code IndexProducer}.
+     *
+     * @param indexProducer the IndexProducer to provide the indexes
+     * @return true if this filter is enabled for all bits specified by the IndexProducer
+     */
+    boolean contains(IndexProducer indexProducer);
 
     /**
-     * Merges the specified Bloom filter withthis Bloom filter creating a new Bloom filter.
-     * Specifically all bit indexes that are enabled in the {@code other} filter will be
+     * Returns {@code true} if this filter contains the bits specified in the BitMaps produced by the
+     * bitMapProducer.
+     *
+     * @param bitMapProducer the the {@code BitMapProducer} to provide the BitMaps.
+     * @return true if this filter is enabled for all bits specified by the BitMaps
+     */
+    boolean contains(BitMapProducer bitMapProducer);
+
+    /**
+     * Merges the specified Bloom filter with this Bloom filter creating a new Bloom filter.
+     * Specifically all bit indexes that are enabled in the {@code other} and in @code this} filter will be
      * enabled in the resulting filter.
      *
      * @param other the other Bloom filter
@@ -180,11 +142,10 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
      * Merges the specified Hasher with this Bloom filter and returns a new Bloom filter.
-     * Specifically all bit indexes that are identified by the {@code hasher} will be enabled
-     * in the resulting filter.
+     * Specifically all bit indexes that are identified by the {@code hasher} and in {@code this} Bloom filter
+     * be enabled in the resulting filter.
      *
-     *
-     * @param hasher the hasher to provide the indexes
+     * @param hasher the hasher to provide the indices
      * @return the new Bloom filter.
      */
     default BloomFilter merge(Hasher hasher) {
@@ -193,7 +154,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions())+ cardinality(), shape ) ?
                 new SparseBloomFilter(shape, hasher) :
                     new SimpleBloomFilter(shape, hasher);
-
         result.mergeInPlace( this );
         return result;
     }
@@ -280,58 +240,4 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Objects.requireNonNull( other, "other");
         return estimateN() + other.estimateN() - estimateUnion(  other );
     }
-
-    /**
-     * Iterates over the enabled bits in an array of bit maps.  Useful for when a
-     * array of bitmaps is available but an iterator of indices is needed.
-     *
-     */
-    public class BitIterator implements PrimitiveIterator.OfInt {
-        private long[] bits;
-        private int bucket;
-        private int offset;
-        private int next;
-
-        /**
-         * Constructs a bit iterator from an array of bit maps
-         * @param bits the array of bit maps.
-         */
-        BitIterator( long[] bits ) {
-            this.bits = bits;
-            bucket = 0;
-            offset = -1;
-            next = -1;
-        }
-        @Override
-        public boolean hasNext() {
-            while (next<0 && bucket < bits.length) {
-
-                offset++;
-                if (offset>=64)
-                {
-                    offset=0;
-                    bucket++;
-                }
-                if (bucket < bits.length && 0 != (bits[bucket] & (1L << offset))) {
-                    next = (bucket*64)+offset;
-                }
-            }
-            return next >= 0;
-        }
-
-
-        @SuppressWarnings("cast") // Cast to long to workaround a bug in animal-sniffer.
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                try {
-                    return next;
-                } finally {
-                    next = -1;
-                }
-            }
-            throw new NoSuchElementException();
-        }
-    }
-
 }

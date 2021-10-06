@@ -21,7 +21,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 /**
  * Tests for the {@link SimpleBloomFilter}.
  */
-public class SimpleBloomFilterTest extends AbstractBloomFilterTest {
+public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFilter> {
     @Override
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
         return new SimpleBloomFilter(shape);

@@ -16,25 +16,34 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
+import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
- * A bloom filter using a Java BitSet to track enabled bits. This is a standard
+ * A bloom filter using an array of BitMaps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
 public class SimpleBloomFilter implements BloomFilter {
 
     /**
-     * The bitSet that defines this BloomFilter.
+     * The array of BitMap longs that defines this Bloom filter.
      */
-    private final BitSet bitSet;
+    private long[] bitMap;
+
+    /**
+     * The Shape of this Bloom filter
+     */
     private final Shape shape;
+
+    /**
+     * The cardinality of this Bloom filter.
+     */
+    private int cardinality;
 
     /**
      * Constructs an empty BitSetBloomFilter.
@@ -43,7 +52,8 @@ public class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(Shape shape) {
         Objects.requireNonNull( shape, "shape");
         this.shape = shape;
-        this.bitSet = new BitSet();
+        this.bitMap = new long[0];
+        this.cardinality = 0;
     }
 
     /**
@@ -52,19 +62,26 @@ public class SimpleBloomFilter implements BloomFilter {
      * @param hasher the Hasher to initialize the filter with.
      */
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
-        this( shape );
+        Objects.requireNonNull( shape, "shape");
         Objects.requireNonNull( hasher, "hasher");
-        hasher.iterator(shape).forEachRemaining( (IntConsumer) i -> bitSet.set(i));
+        this.shape = shape;
+
+        BitMapProducer producer = BitMapProducer.fromIndexProducer( hasher.indices(shape), shape);
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
+        producer.forEachBitMap( builder );
+        this.bitMap = builder.getArray();
+        this.cardinality = 0;
+        forEachBitMap( w -> this.cardinality += Long.bitCount(w));
     }
 
     @Override
     public boolean mergeInPlace(BloomFilter other) {
         Objects.requireNonNull( other, "other");
-        if (other.isSparse()) {
-            other.forEachIndex( bitSet::set );
-        } else {
-            bitSet.or( BitSet.valueOf(other.getBits() ));
-        }
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape, this.bitMap);
+        other.forEachBitMap( builder );
+        this.bitMap = builder.getArray();
+        this.cardinality = 0;
+        forEachBitMap( w -> this.cardinality += Long.bitCount(w));
         return true;
     }
 
@@ -80,31 +97,48 @@ public class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public int cardinality() {
-        return bitSet.cardinality();
-    }
-
-    @Override
-    public long[] getBits() {
-        return bitSet.toLongArray();
+        return this.cardinality;
     }
 
     @Override
     public void forEachIndex(IntConsumer consumer) {
         Objects.requireNonNull( consumer, "consumer");
-        for (int i = bitSet.nextSetBit(0); i >= 0; i = bitSet.nextSetBit(i+1)) {
-            consumer.accept(i);
-            if (i == Integer.MAX_VALUE) {
-                break; // or (i+1) would overflow
-            }
-        }
+        IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
     }
 
     @Override
     public void forEachBitMap(LongConsumer consumer) {
         Objects.requireNonNull( consumer, "consumer");
-        for ( long l : getBits() ) {
+        for ( long l : bitMap ) {
             consumer.accept(l);
         }
+    }
+
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        return contains( BitMapProducer.fromIndexProducer(indexProducer, shape));
+    }
+
+
+    @Override
+    public boolean contains(BitMapProducer bitMapProducer) {
+        LongConsumer consumer = new LongConsumer() {
+            int i=0;
+            @Override
+            public void accept(long w) {
+                if ((bitMap[i++] & w) != w)
+                { throw new NoMatchException();
+                }
+            }};
+            try {
+                bitMapProducer.forEachBitMap( consumer );
+                return true;
+            }
+            catch(NoMatchException e)
+            {
+                return false;
+            }
+
     }
 
 }

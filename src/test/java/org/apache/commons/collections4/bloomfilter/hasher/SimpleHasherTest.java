@@ -18,12 +18,9 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-import java.util.NoSuchElementException;
-import java.util.PrimitiveIterator;
-import java.util.PrimitiveIterator.OfInt;
-
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
@@ -42,11 +39,14 @@ public class SimpleHasherTest {
     @Test
     public void testIterator() {
         Shape shape = new Shape( 5, 10 );
-        OfInt iter = hasher.iterator(shape);
-        for (int i=1;i<6;i++) {
-            assertEquals( i, iter.next() );
+        Integer[] expected = { 1,2,3,4,5};
+        List<Integer> lst = new ArrayList<Integer>();
+        IndexProducer producer = hasher.indices(shape);
+        producer.forEachIndex( lst::add );
+        assertEquals( expected.length, lst.size());
+        for (int i=0;i< expected.length;i++) {
+            assertEquals( expected[i], lst.get(i) );
         }
-        assertFalse( iter.hasNext());
     }
 
 }

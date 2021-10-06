@@ -20,11 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.PrimitiveIterator;
+import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
+import java.util.function.IntConsumer;
+import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
@@ -33,12 +32,10 @@ import org.apache.commons.collections4.bloomfilter.Shape;
  */
 public class HasherCollection implements Hasher {
 
-
     /**
-     * The list of hashers to be used to generate the iterator.
-     * Package private for access by the iterator.
+     * The list of hashers to be used to generate the indices.
      */
-    final List<Hasher> hashers;
+    private final List<Hasher> hashers;
 
     /**
      * Constructs an empty HasherCollection.
@@ -48,16 +45,17 @@ public class HasherCollection implements Hasher {
     }
 
     /**
-     * Constructs a DynamicHasher.
+     * Constructs a HasherCollection from a collection of Hasher objects.
      *
-     * @param hashers A collections of Hashers to build the iterator with.
+     * @param hashers A collections of Hashers to build the indices with.
      */
     public HasherCollection(final Collection<Hasher> hashers) {
+        Objects.requireNonNull( hashers, "hashers");
         this.hashers = new ArrayList<>(hashers);
     }
 
     /**
-     * Constructs a DynamicHasher.
+     * Constructor.
      *
      * @param function the function to use.
      * @param buffers the byte buffers that will be hashed.
@@ -66,17 +64,35 @@ public class HasherCollection implements Hasher {
         this( Arrays.asList(hashers));
     }
 
+    /**
+     * Adds a hasher to the collection.
+     * @param hasher The hasher to add.
+     */
     public void add(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
         hashers.add(hasher);
     }
 
+    /**
+     * Add all the Hashers in a collection to this HasherCollection.
+     * @param hashers The hashers to add.
+     */
     public void add(Collection<Hasher> hashers) {
+        Objects.requireNonNull( hashers, "hashers");
         hashers.addAll(hashers);
     }
 
     @Override
-    public PrimitiveIterator.OfInt iterator(final Shape shape) {
-        return new Iterator(shape);
+    public IndexProducer indices(final Shape shape) {
+        Objects.requireNonNull( shape, "shape");
+        return new IndexProducer() {
+            @Override
+            public void forEachIndex(IntConsumer consumer) {
+                for (Hasher hasher : hashers) {
+                    hasher.indices( shape ).forEachIndex(consumer);
+                }
+            }
+        };
     }
 
     @Override
@@ -91,60 +107,9 @@ public class HasherCollection implements Hasher {
 
     @Override
     public void forEach(Consumer<Hasher> consumer) {
+        Objects.requireNonNull( consumer, "consumer");
         for (Hasher h : this.hashers) {
             h.forEach(consumer);
         }
     }
-
-
-    /**
-     * The iterator of integers.
-     *
-     * <p>This assumes that the list of buffers is not empty.
-     */
-    private class Iterator implements PrimitiveIterator.OfInt {
-
-        /** The iterator over the hashers */
-        private final java.util.Iterator<Hasher> wrappedIterator;
-
-        /** The shape of the filter we are createing */
-        private final Shape shape;
-
-        /** The iterator over the internal hasher */
-        private PrimitiveIterator.OfInt current;
-
-
-        /**
-         * Constructs iterator with the specified shape.
-         *
-         * @param shape
-         */
-        private Iterator(final Shape shape) {
-            this.shape = shape;
-            wrappedIterator = hashers.iterator();
-            current = null;
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (current == null || !current.hasNext()) {
-                if (wrappedIterator.hasNext()) {
-                    current = wrappedIterator.next().iterator(shape);
-                } else {
-                    current = null;
-                }
-            }
-            return current != null && current.hasNext();
-        }
-
-        @SuppressWarnings("cast") // Cast to long to workaround a bug in animal-sniffer.
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                return current.nextInt();
-            }
-            throw new NoSuchElementException();
-        }
-    }
-
 }

@@ -19,20 +19,8 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.ToIntBiFunction;
-
-import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -54,43 +42,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
             }
         }
     };
-
-
-//    /**
-//     * Function to convert int arrays to BloomFilters for testing.
-//     */
-//    private final Function<int[], BloomFilter> converter = counts -> {
-//        final BloomFilter testingFilter = new SimpleBloomFilter(shape);
-//        testingFilter.merge(new FixedIndexesTestHasher(shape, counts));
-//        return testingFilter;
-//    };
-
-//    @Override
-//    protected ArrayCountingBloomFilter createEmptyFilter(final Shape shape) {
-//        return new ArrayCountingBloomFilter(shape);
-//    }
-//
-//    @Override
-//    protected ArrayCountingBloomFilter createFilter(final Hasher hasher, final Shape shape) {
-//        final ArrayCountingBloomFilter result = new ArrayCountingBloomFilter(shape);
-//        result.merge( hasher );
-//        return result;
-//    }
-
-//    private ArrayCountingBloomFilter createFromCounts(final int[] counts) {
-//        // Use a dummy filter to add the counts to an empty filter
-//        final CountingBloomFilter dummy = new ArrayCountingBloomFilter(shape) {
-//            @Override
-//            public void forEachCount(final BitCountConsumer action) {
-//                for (int i = 0; i < counts.length; i++) {
-//                    action.accept(i, counts[i]);
-//                }
-//            }
-//        };
-//        final ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(shape);
-//        bf.add(dummy);
-//        return bf;
-//    }
 
     /**
      * Assert the counts match the expected values. Values are for indices starting
@@ -122,9 +73,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     public void constructorTest_Hasher_Duplicates() {
         // bit hasher has duplicates for 11, 12,13,14,15,16, and 17
         final CountingBloomFilter bf = createFilter( shape, from1);
-        bf.add( BitCountProducer.Factory.from( shape , from11) );
+        bf.add( BitCountProducer.from( from11.indices(shape)) );
 
-        final long[] lb = bf.getBits();
+        final long[] lb = BloomFilter.asBitMapArray(bf);
         assertEquals(1, lb.length);
         assertEquals(bigHashValue, lb[0]);
 
@@ -196,7 +147,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     @Test
     public void subtractTest() {
         final CountingBloomFilter bf1 = createFilter( shape, from1);
-        bf1.add( BitCountProducer.Factory.from( shape , from11) );
+        bf1.add( BitCountProducer.from( from11.indices(shape)));
 
         final CountingBloomFilter bf2 = createFilter( shape, from11);
 
@@ -235,7 +186,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     @Test
     public void removeTest() {
         final CountingBloomFilter bf1 = createFilter( shape, from1);
-        bf1.add( BitCountProducer.Factory.from( shape , from11) );
+        bf1.add( BitCountProducer.from( from11.indices(shape)));
 
         assertTrue( "Remove should work", bf1.remove(new SimpleBloomFilter( shape, from11)) );
         assertFalse( "Should not contain", bf1.contains( from11 ));

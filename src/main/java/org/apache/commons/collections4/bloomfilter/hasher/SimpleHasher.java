@@ -17,20 +17,31 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
+import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 
 
 /**
- * A Hasher ithat implemente combinatorial hashing.
+ * A Hasher that implements combinatorial hashing.
  * @since 4.5
  */
 public final class SimpleHasher implements Hasher {
 
+    /**
+     * The initial hash value.
+     */
     private final long initial;
+
+    /**
+     * The value to increment the hash value by.
+     */
     private final long increment;
 
 
@@ -46,8 +57,8 @@ public final class SimpleHasher implements Hasher {
 
 
     /**
-     * Gets an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape.  The iterator will not return the same value multiple
+     * Gets an IndexProducer that produces indices based on the shape.
+     * The iterator will not return the same value multiple
      * times.  Values will be returned in ascending order.
      *
      * @param shape {@inheritDoc}
@@ -55,8 +66,32 @@ public final class SimpleHasher implements Hasher {
      * @throws IllegalArgumentException {@inheritDoc}
      */
     @Override
-    public OfInt iterator(final Shape shape) {
-        return new Iterator(shape);
+    public IndexProducer indices(final Shape shape) {
+        Objects.requireNonNull( shape, "shape");
+
+        return new IndexProducer() {
+            /** The number of hash functions per item. */
+            private final int k = shape.getNumberOfHashFunctions();
+            /** The number of bits in the shape. */
+            private final long m =  shape.getNumberOfBits();
+
+            /** The index of the next item. */
+            private long next = SimpleHasher.this.initial;
+            /** The count of hash functions for the current item. */
+            private int functionCount = 0;
+
+            @Override
+            public void forEachIndex(IntConsumer consumer) {
+                Objects.requireNonNull( consumer, "consumer");
+                TreeSet<Integer> seen = new TreeSet<Integer>();
+                while (functionCount < k) {
+                    seen.add((int) Long.remainderUnsigned( next, m ));
+                    functionCount++;
+                    next += SimpleHasher.this.increment;
+                }
+                seen.stream().mapToInt( s -> s.intValue() ).forEach(consumer);
+            }
+        };
     }
 
     @Override
@@ -66,54 +101,7 @@ public final class SimpleHasher implements Hasher {
 
     @Override
     public void forEach(Consumer<Hasher> consumer) {
+        Objects.requireNonNull( consumer, "consumer");
         consumer.accept( this );
     }
-
-    /**
-     * The iterator of integers.
-     *
-     * <p>This assumes that the list of buffers is not empty.
-     */
-    private class Iterator implements PrimitiveIterator.OfInt {
-        /** The number of hash functions per item. */
-        private final int k;
-        /** The number of bits in the shape. */
-        private final long m;
-
-        /** The index of the next item. */
-        private long next;
-        /** The count of hash functions for the current item. */
-        private int functionCount;
-
-        /**
-         * Constructs iterator with the specified shape.
-         *
-         * @param shape
-         */
-        private Iterator(final Shape shape) {
-            // Assumes that shape returns non-zero positive values for hash functions and bits
-            k = shape.getNumberOfHashFunctions();
-            m = shape.getNumberOfBits();
-            next = SimpleHasher.this.initial;
-            functionCount = 0;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return functionCount < k;
-        }
-
-        @SuppressWarnings("cast") // Cast to long to workaround a bug in animal-sniffer.
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                int result = (int) Long.remainderUnsigned( next, m );
-                functionCount++;
-                next += SimpleHasher.this.increment;
-                return result;
-            }
-            throw new NoSuchElementException();
-        }
-    }
-
 }

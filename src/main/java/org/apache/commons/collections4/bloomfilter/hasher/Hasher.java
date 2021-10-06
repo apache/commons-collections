@@ -16,11 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.util.PrimitiveIterator;
 import java.util.function.Consumer;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
-import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
+import org.apache.commons.collections4.bloomfilter.IndexProducer;
 
 /**
  * A Hasher represents items of arbitrary byte size as a byte representation of
@@ -49,22 +48,19 @@ import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountCons
 public interface Hasher {
 
     /**
-     * Gets an iterator of integers that are the bits to enable in the Bloom
-     * filter based on the shape.
+     * Creates an IndexProducer that for this hasher based on the Shape.
      *
-     * <p>The iterator will create indexes within the range defined by the number of bits in
-     * the shape. The total number of indexes will respect the number of hash functions per item
+     * <p>The iterator will create indices within the range defined by the number of bits in
+     * the shape. The total number of indices will respect the number of hash functions per item
      * defined by the shape. However the count of indexes may not be a multiple of the number of
      * hash functions if the implementation has removed duplicates.
      *
      * <p>No guarantee is made as to order of values.
      *
-     * @param shape the shape of the desired Bloom filter
+     * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
-     * @throws IllegalArgumentException if the hasher cannot generate indexes for
-     * the specified @{@code shape}
      */
-    PrimitiveIterator.OfInt iterator(Shape shape);
+    IndexProducer indices(Shape shape);
 
     /**
      * Gets the number of items that will be hashed by the iterator.
