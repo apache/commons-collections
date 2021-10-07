@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Objects;
+
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions.
  */
@@ -113,6 +115,7 @@ public class BitMap {
      * @return true if the cardinality is sparse within the bucket.
      */
     public static boolean isSparse( int cardinality, Shape shape ) {
+        Objects.requireNonNull( shape, "shape");
         return numberOfBuckets(shape.getNumberOfBits()-1)*2 >= cardinality;
     }
 

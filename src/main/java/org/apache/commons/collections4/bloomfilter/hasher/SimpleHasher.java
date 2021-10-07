@@ -16,12 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.PrimitiveIterator;
-import java.util.PrimitiveIterator.OfInt;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
@@ -30,6 +26,10 @@ import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
  * A Hasher that implements combinatorial hashing.
+ * <p>
+ * Common use for this hasher is to generate a byte array as the output of a hashing
+ * or MessageDigest algorithm.</p>
+ *
  * @since 4.5
  */
 public final class SimpleHasher implements Hasher {
@@ -44,6 +44,42 @@ public final class SimpleHasher implements Hasher {
      */
     private final long increment;
 
+
+    /**
+     * Convert bytes to long.
+     * @param byteArray the byte array to extract the values from.
+     * @param offset the offset to start extraction from.
+     * @param len the length of the extraction, may be longer than 8.
+     * @return
+     */
+    private static final long toLong (byte[] byteArray, int offset, int len)
+    {
+       long val = 0;
+       len = Math.min(len, Long.BYTES);
+       for (int i = 0;i<len;i++)
+       {
+          val <<= 8;
+          val |= (byteArray [offset+i] & 0x00FF);
+       }
+       return val;
+    }
+
+    /**
+     * Constructs the SimpleHasher from a byte array.
+     * The byte array is split in 2 and each half is interpreted as a long value.
+     * Excess bytes are ignored.
+     * @param buffer the buffer to extract the longs from.
+     * @throws IllegalArgumentException is buffer length is zero.
+     */
+    public SimpleHasher( byte[] buffer ) {
+        if (buffer.length == 0)
+        {
+            throw new IllegalArgumentException( "buffer length must be greater than 0");
+        }
+        int segment = buffer.length/2;
+        this.initial = toLong( buffer, 0, segment );
+        this.increment = toLong( buffer, segment, buffer.length-segment);
+    }
 
     /**
      * Constructs the SimpleHasher from 2 longs.  The long values will be interpreted as unsigned values.
@@ -97,11 +133,5 @@ public final class SimpleHasher implements Hasher {
     @Override
     public int size() {
         return 1;
-    }
-
-    @Override
-    public void forEach(Consumer<Hasher> consumer) {
-        Objects.requireNonNull( consumer, "consumer");
-        consumer.accept( this );
     }
 }

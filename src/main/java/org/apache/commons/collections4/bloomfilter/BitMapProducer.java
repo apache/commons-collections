@@ -37,11 +37,11 @@ import java.util.function.LongConsumer;
 public interface BitMapProducer {
 
     /**
-     * Performs the given action for each {@code index} that represents an enabled bit.
+     * Each BitMap is passed to the consumer in order.
      * Any exceptions thrown by the action are relayed to the caller.
      *
-     * @param consumer the action to be performed for each non-zero bit index.
-     * @throws NullPointerException if the specified action is null
+     * @param consumer the consumer of the BitMaps.
+     * @throws NullPointerException if the specified consumer is null
      */
     void forEachBitMap(LongConsumer consumer);
 
@@ -52,6 +52,8 @@ public interface BitMapProducer {
      * @return A BitMapProducer that produces the BitMap equivalent of the Indices from the producer.
      */
     public static BitMapProducer fromIndexProducer( IndexProducer producer, Shape shape ) {
+        Objects.requireNonNull( producer, "producer");
+        Objects.requireNonNull( shape, "shape");
 
         return new BitMapProducer() {
             private int maxBucket = -1;
@@ -59,7 +61,8 @@ public interface BitMapProducer {
 
             @Override
             public void forEachBitMap(LongConsumer consumer) {
-                /* we can not assume that all the processes ints will be in order
+                Objects.requireNonNull( consumer, "consumer");
+                /* we can not assume that all the ints will be in order
                  * and not repeated.  This is because the HasherCollection does
                  * not make the guarantee.
                  */

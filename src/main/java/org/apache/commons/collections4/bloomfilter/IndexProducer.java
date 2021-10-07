@@ -21,13 +21,13 @@ import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
 /**
- * An object that produces indices for or of a Bloom filter.
+ * An object that produces indices of a Bloom filter.
  *
  */
 public interface IndexProducer {
 
     /**
-     * Performs the given action for each {@code index} that represents an enabled bit.
+     * Each index is passed to the consumer.
      * Any exceptions thrown by the action are relayed to the caller.
      *
      * @param consumer the action to be performed for each non-zero bit index.

@@ -118,66 +118,60 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
 
 
     /**
-     * Adds the specified counting Bloom filter to this Bloom filter. Specifically
-     * all counts for the indexes identified by the {@code other} filter will be incremented
-     * by their corresponding counts in the {@code other} filter.
+     * Adds the specified BitCountProducer to this Bloom filter. Specifically
+     * all counts for the indexes identified by the {@code other} will be incremented
+     * by their corresponding values in the {@code other}.
      *
-     * <p>This method will return true if the filter is valid after the operation.
+     * <p>This method will return true if the filter is valid after the operation.</p>
      *
-     * @param other the other counting Bloom filter
+     * @param other the BitCountProducer to add.
      * @return true if the addition was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
      * @see #isValid()
      */
     boolean add(BitCountProducer other);
 
     /**
-     * Adds the specified counting Bloom filter to this Bloom filter. Specifically
-     * all counts for the indexes identified by the {@code other} filter will be decremented
-     * by their corresponding counts in the {@code other} filter.
+     * Adds the specified BitCountProducer to this Bloom filter. Specifically
+     * all counts for the indexes identified by the {@code other} will be decremented
+     * by their corresponding values in the {@code other}.
      *
-     * <p>This method will return true if the filter is valid after the operation.
+     * <p>This method will return true if the filter is valid after the operation.</p>
      *
-     * @param other the other counting Bloom filter
+     * @param other the BitCountProducer to subtract.
      * @return true if the subtraction was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
      * @see #isValid()
      */
     boolean subtract(BitCountProducer other);
 
     /**
-     * Merges the specified Bloom filter into this Bloom filter. Specifically all bit indexes
-     * that are enabled in the {@code other} filter will be enabled in this filter.
+     * Merges the specified Bloom filter into this Bloom filter to produce a new CountingBloomFilter.
+     * Specifically the new Bloom filter will contain all the counts of this filter and in addition
+     * all bit indexes that are enabled in the {@code other} filter will be incremented
+     * by one in the new filter.
      *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the {@code other} Bloom filter.
+     * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
+     * should be called on the new filter.</p>
      *
      * @param other the other Bloom filter
-     * @return true if the merge was successful
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
+     * @return A new CountingBloomFilter instance.
      */
     @Override
     CountingBloomFilter merge(BloomFilter other);
 
     /**
-     * Merges the specified decomposed Bloom filter into this Bloom filter. Specifically all
-     * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
+     * Merges the specified hasher with this Bloom filter to create a new CountingBloomFilter.
+     * Specifically the new Bloom filter will contain all the counts of this filter and in addition
+     * all bit indexes specified by the {@code hasher} will be incremented
+     * by one in the new filter.
      *
      * For HasherCollections each SimpleHasher will be considered a single item and increment
      * the counts separately.
      *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the specified decomposed Bloom filter.
+     * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
+     * should be called on the new filter.</p>
      *
      * @param hasher the hasher to provide the indexes
-     * @return true if the merge was successful
-     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
-     * this filter
+     * @return A new CountingBloomFilter instance.
      */
     @Override
     CountingBloomFilter merge(Hasher hasher);
