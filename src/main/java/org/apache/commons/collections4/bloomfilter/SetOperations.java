@@ -16,13 +16,126 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
+import java.util.function.LongBinaryOperator;
+import java.util.function.LongConsumer;
+import java.util.function.LongUnaryOperator;
 
 /**
  * Implementations of set operations on Bloom filters.
  *
  */
 public final class SetOperations {
+
+
+    /**
+     * Calculates cardinality from BitMaps.
+     *
+     * When there are 2 words to compare the op2 is executed and then the cardinality
+     * of the resulting word is calculated.
+     *
+     * When there is only one word to execute on the op1 is executed and the cardinality
+     * of the resulting word is caluclated.
+     *
+     * The calculated cardinalities are summed to return the cardinality of the operation.
+     *
+     */
+    private static class CardCounter implements LongConsumer {
+        /**
+         * The calculated cardinality
+         */
+        private int cardinality = 0;
+        /**
+         * The index into the array of words
+         */
+        private int idx=0;
+        /**
+         * The array of words
+         */
+        private long[] words;
+        /**
+         * The operator to execute for 2 words
+         */
+        private LongBinaryOperator op2;
+        /**
+         * The operator to execute for a single word;
+         */
+        private LongUnaryOperator op1;
+
+        /**
+         * Constructor.
+         * @param words The array of BitMap words for a Bloom filter
+         * @param op2 The operation to execute when there are two words to compare.
+         * @param op1 The operation to execute when there is only one word to cmpare.
+         */
+        public CardCounter( long[] words, LongBinaryOperator op2, LongUnaryOperator op1 ) {
+            this.words = words;
+            this.op2 = op2;
+            this.op1 = op1;
+        }
+
+        @Override
+        public void accept(long word) {
+            if (idx<words.length) {
+                cardinality += Long.bitCount( op2.applyAsLong( words[idx++], word ));
+            } else {
+                cardinality += Long.bitCount( op1.applyAsLong( word ));
+            }
+        }
+
+        /**
+         * Gets the cardinality value.
+         * @return The accumulated cardinality.
+         */
+        int getCardinality() {
+            for ( ;idx<words.length;idx++) {
+                cardinality += Long.bitCount( op1.applyAsLong(words[idx]) );
+            }
+            return cardinality;
+        }
+    }
+
+
+    /**
+     * Calculates the cardinality of the logical AND of the BitMaps for the two filters.
+     * @param first the first filter.
+     * @param second the second filter
+     * @return the cardinality of the AND of the filters.
+     */
+    public static int andCardinality(final BloomFilter first, final BloomFilter second) {
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder( first.getShape());
+        first.forEachBitMap( builder );
+        CardCounter lc = new CardCounter(builder.getArray(), (x,y)->x&y, (x)->0);
+        second.forEachBitMap(lc);
+        return lc.getCardinality();
+    }
+
+    /**
+     * Calculates the cardinality of the logical OR of the BitMaps for the two filters.
+     * @param first the first filter.
+     * @param second the second filter
+     * @return the cardinality of the OR of the filters.
+     */
+    public static int orCardinality(final BloomFilter first, final BloomFilter second) {
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder( first.getShape());
+        first.forEachBitMap( builder );
+        CardCounter lc = new CardCounter(builder.getArray(), (x,y)->x|y, (x)->x);
+        second.forEachBitMap(lc);
+        return lc.getCardinality();
+    }
+
+    /**
+     * Calculates the cardinality of the logical XOR of the BitMaps for the two filters.
+     * @param first the first filter.
+     * @param second the second filter
+     * @return the cardinality of the XOR of the filters.
+     */
+    public static int xorCardinality(final BloomFilter first, final BloomFilter second) {
+        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder( first.getShape());
+        first.forEachBitMap( builder );
+        CardCounter lc = new CardCounter(builder.getArray(), (x,y)->x^y, (x)->x);
+        second.forEachBitMap(lc);
+        return lc.getCardinality();
+    }
 
     /**
      * Calculates the Cosine distance between two Bloom filters.
@@ -37,24 +150,6 @@ public final class SetOperations {
         return 1.0 - cosineSimilarity(first, second);
     }
 
-    private static BitSet and(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
-        result.and(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
-        return result;
-    }
-
-    private static BitSet or(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
-        result.or(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
-        return result;
-    }
-
-    private static BitSet xor(final BloomFilter first, final BloomFilter second) {
-        BitSet result = BitSet.valueOf(BloomFilter.asBitMapArray(first));
-        result.xor(BitSet.valueOf(BloomFilter.asBitMapArray(second)));
-        return result;
-    }
-
     /**
      * Calculates the Cosine similarity between two Bloom filters.
      * <p> Also known as Orchini similarity and the Tucker coefficient of congruence or
@@ -67,7 +162,7 @@ public final class SetOperations {
      * @return the Cosine similarity.
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
-        final int numerator = and( first, second).cardinality();
+        final int numerator = andCardinality( first, second);
         return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
     }
 
@@ -81,7 +176,7 @@ public final class SetOperations {
      * @return the Hamming distance.
      */
     public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
-        return xor(first,second).cardinality();
+        return xorCardinality(first,second);
     }
 
     /**
@@ -107,7 +202,7 @@ public final class SetOperations {
      * @return the Jaccard similarity.
      */
     public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
-        final int orCard = or(first,second).cardinality();
+        final int orCard = orCardinality(first,second);
         // if the orCard is zero then the hamming distance will also be zero.
         return orCard == 0 ? 0 : hammingDistance(first, second) / (double) orCard;
     }

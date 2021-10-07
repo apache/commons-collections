@@ -16,46 +16,27 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.util.function.Consumer;
-
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 
 /**
- * A Hasher represents items of arbitrary byte size as a byte representation of
- * fixed size (a hash). The hash representations can be used to create indexes
- * for a Bloom filter.
- *
- * <p>The hash for each item is created using a hash function; use of different
- * seeds allows generation of different hashes for the same item. The hashes can
- * be dynamically converted into the bit index representation used by a Bloom
- * filter. The shape of the Bloom filter defines the number of indexes per item
- * and the range of the indexes. The hasher can generate the correct number of
- * indexes in the range required by the Bloom filter for each item it
- * represents.
- *
- * <p>Note that the process of generating hashes and mapping them to a Bloom
- * filter shape may create duplicate indexes. The hasher may generate fewer than
- * the required number of hash functions per item if duplicates have been
- * removed. Implementations of {@code iterator()} may return duplicate values
- * and may return values in a random order. See implementation javadoc notes as
- * to the guarantees provided by the specific implementation.
- *
- * <p>Hashers have an identity based on the hashing algorithm used.
+ * A Hasher create IndexProducer based on the hash implementation and the
+ * provided Shape.
  *
  * @since 4.5
  */
 public interface Hasher {
 
     /**
-     * Creates an IndexProducer that for this hasher based on the Shape.
+     * Creates an IndexProducer for this hasher based on the Shape.
      *
-     * <p>The iterator will create indices within the range defined by the number of bits in
+     * <p>The @{code IndexProducer} will create indices within the range defined by the number of bits in
      * the shape. The total number of indices will respect the number of hash functions per item
-     * defined by the shape. However the count of indexes may not be a multiple of the number of
-     * hash functions if the implementation has removed duplicates.
+     * defined by the shape. However the count of indices may not be a multiple of the number of
+     * hash functions once implementation has removed duplicates.</p>
      *
-     * <p>No guarantee is made as to order of values.
+     * <p>No guarantee is made as to order of indices.</p>
+     * <p>Duplicates indices for a single item must be removed.</p>
      *
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
@@ -63,20 +44,10 @@ public interface Hasher {
     IndexProducer indices(Shape shape);
 
     /**
-     * Gets the number of items that will be hashed by the iterator.
-     * @return The number of items that will be hashed by the iterator.
+     * Gets the number of items that will be hashed by the {@code IndexProducer}.
+     * @return The number of items that will be hashed by the {@code IndexProducer}.
      */
     int size();
-
-    /**
-     * Performs the given action for each hasher.
-     *
-     * For collections of hashers, this method must be called on each hasher in the collection.
-     *
-     * @param consumer the action to be performed for each hasher
-     * @throws NullPointerException if the specified action is null
-     */
-    void forEach(Consumer<Hasher> consumer);
 
 
 }

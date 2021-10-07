@@ -34,10 +34,6 @@ import java.util.Objects;
  * <dd>{@code m = ceil((n * ln(p)) / ln(1 / pow(2, ln(2))))}</dd> <dt>Number of
  * Functions ({@code k})</dt> <dd>{@code k = round((m / n) * ln(2))}</dd> </dl>
  *
- * <h2>Comparisons</h2> <p> For purposes of equality checking and hashCode
- * calculations a {@code Shape} is defined by the hashing function identity, the number of
- * bits ({@code m}), and the number of functions ({@code k}). </p>
- *
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
  * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
  * [Wikipedia]</a>

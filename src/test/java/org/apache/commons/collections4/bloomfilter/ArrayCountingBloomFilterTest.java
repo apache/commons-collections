@@ -21,7 +21,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
-public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest {
+public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest<ArrayCountingBloomFilter> {
 
     @Override
     protected ArrayCountingBloomFilter createEmptyFilter(Shape shape) {

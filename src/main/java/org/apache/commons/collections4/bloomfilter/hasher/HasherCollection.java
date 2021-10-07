@@ -21,13 +21,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
- * The class that performs hashing on demand.
+ * A collection of Hashers.  Useful when the generation of a Bloom filter depends upon
+ * multiple items.  Hashers for each item are added to the HasherCollection and then
+ * the collection is used wherever a Hasher can be used in the API.
+ *
  * @since 4.5
  */
 public class HasherCollection implements Hasher {
@@ -103,13 +105,5 @@ public class HasherCollection implements Hasher {
             i += h.size();
         }
         return i;
-    }
-
-    @Override
-    public void forEach(Consumer<Hasher> consumer) {
-        Objects.requireNonNull( consumer, "consumer");
-        for (Hasher h : this.hashers) {
-            h.forEach(consumer);
-        }
     }
 }

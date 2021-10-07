@@ -18,10 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.PrimitiveIterator;
-
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**

@@ -40,7 +40,6 @@ public class ShapeFactoryTest {
      * k = 3
      */
 
-    private final Shape shape = new Shape(3, 24 );
 
     /**
      * Tests that if the number of items less than 1 an IllegalArgumentException is thrown.
