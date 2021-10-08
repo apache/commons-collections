@@ -18,11 +18,27 @@
 package org.apache.commons.collections4.properties;
 
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class SortedPropertiesTest {
+
+    @Test
+    public void testEntrySet() {
+        final SortedProperties sortedProperties = new SortedProperties();
+        for (char ch = 'Z'; ch >= 'A'; ch--) {
+            sortedProperties.put(String.valueOf(ch), "Value" + ch);
+        }
+        final Iterator<Map.Entry<Object, Object>> entries = sortedProperties.entrySet().iterator();
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            final Map.Entry<Object, Object> entry = entries.next();
+            Assert.assertEquals(String.valueOf(ch), entry.getKey());
+            Assert.assertEquals("Value" + ch, entry.getValue());
+        }
+    }
 
     @Test
     public void testKeys() {

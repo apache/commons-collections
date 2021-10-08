@@ -73,6 +73,9 @@
     <action issue="COLLECTIONS-786" type="fix" dev="kinow" due-to="vandrewskis">
       Fix PassiveExpiringMap documentation for methods that involve accessing the entire map.
     </action>
+    <action type="fix" dev="ggregory" due-to="Michael Berry">
+      SortedProperties should sort entrySet() as well as keys() #256.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
@@ -203,6 +206,7 @@
       Bump checkstyle from 8.43 to 8.44 #243.
       Bump checkstyle from 8.44 to 8.45 #245.
       Bump checkstyle from 8.45 to 8.45.1 #246.
+      Bump checkstyle from 8.45.1 to 9.0 #248.
     </action>
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
@@ -233,13 +237,13 @@
       Update actions/checkout from v1 to v2.3.4 #166 #173 #183 #193.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update maven-pmd-plugin from 3.12.0 to 3.14.0 #167 #196.
+      Update maven-pmd-plugin from 3.12.0 to 3.15.0 #167 #196 #253.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
       Update optional commons-codec from 1.14 to 1.15.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump commons.junit.version from 5.6.2 to 5.7.2 #181 #213 #236.
+      Bump commons.junit.version from 5.6.2 to 5.8.1 #181 #213 #236 #252 #254.
     </action>
     <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
       Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
