@@ -17,8 +17,6 @@
 package org.apache.commons.collections4.list;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
 
