@@ -23,6 +23,7 @@ import java.util.function.LongUnaryOperator;
 /**
  * Implementations of set operations on Bloom filters.
  *
+ * @since 4.5
  */
 public final class SetOperations {
 

@@ -23,6 +23,7 @@ import java.util.function.LongConsumer;
 /**
  * An object that produces indices of a Bloom filter.
  *
+ * @since 4.5
  */
 public interface IndexProducer {
 

@@ -21,7 +21,8 @@ import java.util.function.IntConsumer;
 /**
  * Produces bit counts for counting type Bloom filters.
  *
- */
+ * @since 4.5
+*/
 public interface BitCountProducer extends IndexProducer {
 
     /**

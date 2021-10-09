@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter.exceptions;
 /**
  * An exception to short circuit Bloom filter match functionality using producers.
  *
+ * @since 4.5
  */
 public class NoMatchException extends RuntimeException {
 
