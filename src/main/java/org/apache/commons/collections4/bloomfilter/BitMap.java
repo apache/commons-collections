@@ -20,6 +20,7 @@ import java.util.Objects;
 
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions.
+ * @since 4.5
  */
 public class BitMap {
     /** A bit shift to apply to an integer to divided by 64 (2^6). */

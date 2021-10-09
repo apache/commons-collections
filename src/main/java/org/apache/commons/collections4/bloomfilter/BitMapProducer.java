@@ -33,6 +33,7 @@ import java.util.function.LongConsumer;
  *
  * The producer may produce empty bit maps at the end of the sequence.
  *
+ * @since 4.5
  */
 public interface BitMapProducer {
 
