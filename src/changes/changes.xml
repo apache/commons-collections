@@ -76,6 +76,9 @@
     <action type="fix" dev="ggregory" due-to="Michael Berry">
       SortedProperties should sort entrySet() as well as keys() #256.
     </action>
+    <action issue="COLLECTIONS-796" type="fix" dev="kinow" due-to="Clemens Kurz">
+      SetUniqueList.createSetBasedOnList doesn't add list elements to return value.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.

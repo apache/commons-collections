@@ -118,12 +118,12 @@ public final class UnmodifiableList<E>
 
     @Override
     public ListIterator<E> listIterator() {
-        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator());
+        return UnmodifiableListIterator.unmodifiableListIterator(decorated().listIterator());
     }
 
     @Override
     public ListIterator<E> listIterator(final int index) {
-        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator(index));
+        return UnmodifiableListIterator.unmodifiableListIterator(decorated().listIterator(index));
     }
 
     @Override
