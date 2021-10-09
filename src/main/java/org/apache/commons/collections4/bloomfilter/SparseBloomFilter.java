@@ -120,7 +120,23 @@ public class SparseBloomFilter implements BloomFilter {
         if (cardinality() == 0) {
             return;
         }
-        BitMapProducer.fromIndexProducer( this, shape).forEachBitMap(consumer);
+        // because our indices are always in order we can
+        // shorten the time necessary to create the longs for the
+        // consumer
+        long bitMap =0;
+        int idx=0;
+        for (int i : indices) {
+            if (BitMap.getLongIndex(i) != idx) {
+                consumer.accept( bitMap );
+                bitMap = 0;
+                idx = BitMap.getLongIndex(i);
+            }
+            bitMap |= BitMap.getLongBit(i);
+        }
+        if (bitMap != 0)
+        {
+            consumer.accept( bitMap );
+        }
     }
 
     @Override
