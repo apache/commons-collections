@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -290,7 +291,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         resetFull();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
         try {
-            mapCol.put((K) "four", (Collection<V>) Arrays.asList("four"));
+            mapCol.put((K) "four", (Collection<V>) Collections.singletonList("four"));
             fail();
         } catch (final UnsupportedOperationException e) {
         }

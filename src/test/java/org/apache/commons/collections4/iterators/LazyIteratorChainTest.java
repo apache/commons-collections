@@ -99,7 +99,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
             iter.next();
         } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
+                       e.getClass().equals(NoSuchElementException.class));
         }
     }
 

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -66,7 +67,7 @@ public class LoopingIteratorTest {
      */
     @Test
     public void testLooping1() throws Exception {
-        final List<String> list = Arrays.asList("a");
+        final List<String> list = Collections.singletonList("a");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
         assertTrue(loop.hasNext(), "1st hasNext should return true");

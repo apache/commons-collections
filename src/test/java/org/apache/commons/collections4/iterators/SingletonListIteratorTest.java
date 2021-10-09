@@ -102,14 +102,14 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
             iter.next();
         } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+                e.getClass().equals(NoSuchElementException.class));
         }
         iter.previous();
         try {
             iter.previous();
         } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+                e.getClass().equals(NoSuchElementException.class));
         }
     }
 
