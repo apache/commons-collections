@@ -51,7 +51,7 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * </p>
  * <p>
  * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
- * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
+ * length &amp; fixed length keys. Some methods, such as {@link org.apache.commons.collections4.Trie#prefixMap(Object)}
  * are suited only to variable length keys.
  * </p>
  *
