@@ -66,7 +66,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     public void testGetSet() {
         final PredicatedSortedSet<E> set = makeTestSet();
-        assertTrue("returned set should not be null", set.decorated() != null);
+        assertNotNull("returned set should not be null", set.decorated());
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +79,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", !set.contains(testString));
+        assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
     }
 
     @SuppressWarnings("unchecked")
@@ -96,16 +96,16 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Aone"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Atwo"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Bthree"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("Afour"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("Aone"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("Atwo"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("Bthree"));
+        assertFalse("Set shouldn't contain illegal element", set.contains("Afour"));
     }
 
     public void testComparator() {
         final SortedSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
     @Override

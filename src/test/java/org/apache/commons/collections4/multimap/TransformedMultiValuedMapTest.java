@@ -61,16 +61,16 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsKey(els[i]));
-            assertEquals(true, map.containsValue(els[i]));
-            assertEquals(true, map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsKey(els[i]));
+            assertTrue(map.containsValue(els[i]));
+            assertTrue(map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
         }
 
         final Collection<V> coll = map.remove(els[0]);
         assertNotNull(coll);
         assertEquals(0, coll.size());
-        assertEquals(true, map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
+        assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
     }
 
     @SuppressWarnings("unchecked")
@@ -84,12 +84,12 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsValue(els[i]));
-            assertEquals(true, map.containsKey(els[i]));
-            assertEquals(true, map.get((K) els[i]).contains(Integer.valueOf((String) els[i])));
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
+            assertTrue(map.get((K) els[i]).contains(Integer.valueOf((String) els[i])));
         }
-        assertEquals(true, map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
+        assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
 
     // -----------------------------------------------------------------------
@@ -106,11 +106,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
                         null,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
-        assertEquals(true, trans.get((K) "A").contains("1"));
-        assertEquals(true, trans.get((K) "B").contains("2"));
-        assertEquals(true, trans.get((K) "C").contains("3"));
+        assertTrue(trans.get((K) "A").contains("1"));
+        assertTrue(trans.get((K) "B").contains("2"));
+        assertTrue(trans.get((K) "C").contains("3"));
         trans.put((K) "D", (V) "4");
-        assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
+        assertTrue(trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
     @SuppressWarnings("unchecked")
@@ -126,11 +126,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
                         null,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
-        assertEquals(true, trans.get((K) "A").contains(Integer.valueOf(1)));
-        assertEquals(true, trans.get((K) "B").contains(Integer.valueOf(2)));
-        assertEquals(true, trans.get((K) "C").contains(Integer.valueOf(3)));
+        assertTrue(trans.get((K) "A").contains(Integer.valueOf(1)));
+        assertTrue(trans.get((K) "B").contains(Integer.valueOf(2)));
+        assertTrue(trans.get((K) "C").contains(Integer.valueOf(3)));
         trans.put((K) "D", (V) "4");
-        assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
+        assertTrue(trans.get((K) "D").contains(Integer.valueOf(4)));
 
         final MultiValuedMap<K, V> baseMap = new ArrayListValuedHashMap<>();
         final MultiValuedMap<K, V> transMap = TransformedMultiValuedMap
@@ -141,7 +141,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertEquals(0, transMap.size());
         transMap.put((K) "D", (V) "4");
         assertEquals(1, transMap.size());
-        assertEquals(true, transMap.get((K) "D").contains(Integer.valueOf(4)));
+        assertTrue(transMap.get((K) "D").contains(Integer.valueOf(4)));
     }
 
 //    public void testCreate() throws Exception {

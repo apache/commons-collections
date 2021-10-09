@@ -85,12 +85,10 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
-        assertTrue("returned entryset should not be null",
-            map.entrySet() != null);
+        assertNotNull("returned entryset should not be null", map.entrySet());
         map = decorateMap(new TreeMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertTrue("returned entryset should contain one entry",
-            map.entrySet().size() == 1);
+        assertEquals("returned entryset should contain one entry", 1, map.entrySet().size());
         map = decorateMap(map, null, null);
     }
 
@@ -111,8 +109,8 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             // expected
         }
 
-        assertTrue(!map.containsKey(Integer.valueOf(3)));
-        assertTrue(!map.containsValue(Integer.valueOf(3)));
+        assertFalse(map.containsKey(Integer.valueOf(3)));
+        assertFalse(map.containsValue(Integer.valueOf(3)));
 
         final Map<K, V> map2 = new HashMap<>();
         map2.put((K) "A", (V) "a");
@@ -172,8 +170,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap((K) "A", (K) "C").lastKey());
 
         final Comparator<? super K> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
     @SuppressWarnings("unchecked")
@@ -204,8 +201,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap((K) "C", (K) "A").lastKey());
 
         final Comparator<? super K> c = map.comparator();
-        assertTrue("reverse order, so comparator should be reverseStringComparator",
-            c == reverseStringComparator);
+        assertSame("reverse order, so comparator should be reverseStringComparator", c, reverseStringComparator);
     }
 
     @Override

@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,19 +89,19 @@ public class MultiKeyTest {
     public void testConstructors() throws Exception {
         MultiKey<Integer> mk;
         mk = new MultiKey<>(ONE, TWO);
-        assertTrue(Arrays.equals(new Object[] { ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{ONE, TWO}, mk.getKeys());
 
         mk = new MultiKey<>(ONE, TWO, THREE);
-        assertTrue(Arrays.equals(new Object[] { ONE, TWO, THREE }, mk.getKeys()));
+        assertArrayEquals(new Object[]{ONE, TWO, THREE}, mk.getKeys());
 
         mk = new MultiKey<>(ONE, TWO, THREE, FOUR);
-        assertTrue(Arrays.equals(new Object[] { ONE, TWO, THREE, FOUR }, mk.getKeys()));
+        assertArrayEquals(new Object[]{ONE, TWO, THREE, FOUR}, mk.getKeys());
 
         mk = new MultiKey<>(ONE, TWO, THREE, FOUR, FIVE);
-        assertTrue(Arrays.equals(new Object[] { ONE, TWO, THREE, FOUR, FIVE }, mk.getKeys()));
+        assertArrayEquals(new Object[]{ONE, TWO, THREE, FOUR, FIVE}, mk.getKeys());
 
         mk = new MultiKey<>(new Integer[] { THREE, FOUR, ONE, TWO }, false);
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
     }
 
     @Test
@@ -110,27 +109,27 @@ public class MultiKeyTest {
         MultiKey<Integer> mk;
         Integer[] keys = new Integer[] { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<>(keys);
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         keys[3] = FIVE;  // no effect
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
 
         keys = new Integer[] {};
         mk = new MultiKey<>(keys);
-        assertTrue(Arrays.equals(new Object[] {}, mk.getKeys()));
+        assertArrayEquals(new Object[]{}, mk.getKeys());
 
         keys = new Integer[] { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<>(keys, true);
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         keys[3] = FIVE;  // no effect
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
 
         keys = new Integer[] { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<>(keys, false);
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         // change key - don't do this!
         // the hashcode of the MultiKey is now broken
         keys[3] = FIVE;
-        assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, FIVE }, mk.getKeys()));
+        assertArrayEquals(new Object[]{THREE, FOUR, ONE, FIVE}, mk.getKeys());
     }
 
     @Test
@@ -158,9 +157,9 @@ public class MultiKeyTest {
 
         assertEquals(mk1, mk1);
         assertEquals(mk1, mk2);
-        assertFalse(mk1.equals(mk3));
-        assertFalse(mk1.equals(""));
-        assertFalse(mk1.equals(null));
+        assertNotEquals(mk1, mk3);
+        assertNotEquals("", mk1);
+        assertNotEquals(null, mk1);
     }
 
     @Test
@@ -229,8 +228,8 @@ public class MultiKeyTest {
         final Integer[] keys = new Integer[] { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, true);
         final Object[] array = mk.getKeys();
-        assertTrue(array != keys);
-        assertTrue(Arrays.equals(array, keys));
+        assertNotSame(array, keys);
+        assertArrayEquals(array, keys);
         assertSame(ONE, array[0]);
         assertSame(TWO, array[1]);
         assertEquals(2, array.length);
@@ -241,8 +240,8 @@ public class MultiKeyTest {
         final Integer[] keys = new Integer[] { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, false);
         final Object[] array = mk.getKeys();
-        assertTrue(array != keys);  // still not equal
-        assertTrue(Arrays.equals(array, keys));
+        assertNotSame(array, keys);  // still not equal
+        assertArrayEquals(array, keys);
         assertSame(ONE, array[0]);
         assertSame(TWO, array[1]);
         assertEquals(2, array.length);
@@ -263,8 +262,8 @@ public class MultiKeyTest {
         final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
         final MultiKey<Object> mk3 = new MultiKey<>(ONE, "TWO");
 
-        assertTrue(mk1.hashCode() == mk1.hashCode());
-        assertTrue(mk1.hashCode() == mk2.hashCode());
+        assertEquals(mk1.hashCode(), mk1.hashCode());
+        assertEquals(mk1.hashCode(), mk2.hashCode());
         assertTrue(mk1.hashCode() != mk3.hashCode());
 
         final int total = (0 ^ ONE.hashCode()) ^ TWO.hashCode();

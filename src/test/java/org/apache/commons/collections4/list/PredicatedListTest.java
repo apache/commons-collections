@@ -72,7 +72,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", !list.contains(i));
+        assertFalse("Collection shouldn't contain illegal element", list.contains(i));
     }
 
     @SuppressWarnings("unchecked")
@@ -89,10 +89,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("List shouldn't contain illegal element", !list.contains("one"));
-        assertTrue("List shouldn't contain illegal element", !list.contains("two"));
-        assertTrue("List shouldn't contain illegal element", !list.contains(Integer.valueOf(3)));
-        assertTrue("List shouldn't contain illegal element", !list.contains("four"));
+        assertFalse("List shouldn't contain illegal element", list.contains("one"));
+        assertFalse("List shouldn't contain illegal element", list.contains("two"));
+        assertFalse("List shouldn't contain illegal element", list.contains(Integer.valueOf(3)));
+        assertFalse("List shouldn't contain illegal element", list.contains("four"));
     }
 
     @SuppressWarnings("unchecked")

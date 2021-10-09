@@ -102,7 +102,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
             assertEquals(even, iter.next());
             assertEquals(0, iter.getIteratorIndex());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateEvenOdd() {
@@ -112,7 +112,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
             assertEquals(Integer.valueOf(i), iter.next());
             assertEquals(i % 2, iter.getIteratorIndex());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateOddEven() {
@@ -122,7 +122,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
             assertEquals(Integer.valueOf(i), iter.next());
             assertEquals(i % 2 == 0 ? 1 : 0, iter.getIteratorIndex());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateEvenEven() {
@@ -137,7 +137,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
             assertEquals(even, iter.next());
             assertEquals(1, iter.getIteratorIndex());
         }
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testIterateFibEvenOdd() {
@@ -203,7 +203,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertEquals(Integer.valueOf(21), iter.next()); // fib   21
         assertEquals(0, iter.getIteratorIndex());
 
-        assertTrue(!iter.hasNext());
+        assertFalse(iter.hasNext());
     }
 
     public void testRemoveFromSingle() {

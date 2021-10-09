@@ -79,13 +79,12 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse("Iterator should now be empty", iter.hasNext());
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
         }
     }
 
@@ -135,7 +134,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         }
 
         assertTrue("List is empty", list1.isEmpty());
-        assertTrue("List is empty", list2.size() == 1);
+        assertEquals("List is empty", 1, list2.size());
         assertTrue("List is empty", list3.isEmpty());
     }
 
@@ -154,12 +153,12 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals("B", chain.next());
         assertTrue("should have next", chain.hasNext());
         assertEquals("C", chain.next());
-        assertTrue("should not have next", !chain.hasNext());
+        assertFalse("should not have next", chain.hasNext());
     }
 
     public void testEmptyChain() {
         final IteratorChain<Object> chain = new IteratorChain<>();
-        assertEquals(false, chain.hasNext());
+        assertFalse(chain.hasNext());
         try {
             chain.next();
             fail();

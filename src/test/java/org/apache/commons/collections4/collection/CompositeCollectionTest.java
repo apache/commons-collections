@@ -334,9 +334,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         final Collection<E> removing = new ArrayList<>(one);
         c.addComposited(one, two);
         c.removeAll(removing);
-        assertTrue(!c.contains("1"));
-        assertTrue(!one.contains("1"));
-        assertTrue(!two.contains("1"));
+        assertFalse(c.contains("1"));
+        assertFalse(one.contains("1"));
+        assertFalse(two.contains("1"));
         c.removeAll(null);
         assertFalse(c.contains("1"));
         assertFalse(one.contains("1"));
@@ -356,13 +356,13 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         final Predicate<E> predicate = e -> e == "1";
         c.addComposited(one, two);
         c.removeIf(predicate);
-        assertTrue(!c.contains("1"));
-        assertTrue(!one.contains("1"));
-        assertTrue(!two.contains("1"));
+        assertFalse(c.contains("1"));
+        assertFalse(one.contains("1"));
+        assertFalse(two.contains("1"));
         c.removeIf(null);
-        assertTrue(!c.contains("1"));
-        assertTrue(!one.contains("1"));
-        assertTrue(!two.contains("1"));
+        assertFalse(c.contains("1"));
+        assertFalse(one.contains("1"));
+        assertFalse(two.contains("1"));
     }
 
     @SuppressWarnings("unchecked")

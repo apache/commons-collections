@@ -66,7 +66,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
-        assertTrue("Stack is not empty", !stack.empty());
+        assertFalse("Stack is not empty", stack.empty());
         assertEquals("Stack size is one", 1, stack.size());
         assertEquals("Top item is 'First Item'",
                      "First Item", (String) stack.peek());

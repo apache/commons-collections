@@ -56,13 +56,13 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsKey(els[i]));
-            assertEquals(true, map.containsValue(els[i]));
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsKey(els[i]));
+            assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
-        assertEquals(null, map.remove(els[0]));
+        assertNull(map.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 
         map = TransformedMap.transformingMap(new HashMap(), null,
@@ -72,9 +72,9 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsValue(els[i]));
-            assertEquals(true, map.containsKey(els[i]));
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
             assertEquals(Integer.valueOf((String) els[i]), map.get(els[i]));
         }
 

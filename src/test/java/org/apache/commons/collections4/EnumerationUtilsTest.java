@@ -57,7 +57,7 @@ public class EnumerationUtilsTest {
         } catch (final IndexOutOfBoundsException e) {
             // expected
         }
-        assertTrue(!en.hasMoreElements());
+        assertFalse(en.hasMoreElements());
     }
 
     @Test

@@ -124,17 +124,17 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         final LRUMap<K, V> map = new LRUMap<>(2);
         assertEquals(0, map.size());
-        assertEquals(false, map.isFull());
+        assertFalse(map.isFull());
         assertEquals(2, map.maxSize());
 
         map.put(keys[0], values[0]);
         assertEquals(1, map.size());
-        assertEquals(false, map.isFull());
+        assertFalse(map.isFull());
         assertEquals(2, map.maxSize());
 
         map.put(keys[1], values[1]);
         assertEquals(2, map.size());
-        assertEquals(true, map.isFull());
+        assertTrue(map.isFull());
         assertEquals(2, map.maxSize());
         kit = map.keySet().iterator();
         assertSame(keys[0], kit.next());
@@ -145,7 +145,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         map.put(keys[2], values[2]);
         assertEquals(2, map.size());
-        assertEquals(true, map.isFull());
+        assertTrue(map.isFull());
         assertEquals(2, map.maxSize());
         kit = map.keySet().iterator();
         assertSame(keys[1], kit.next());
@@ -156,7 +156,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         map.put(keys[2], values[0]);
         assertEquals(2, map.size());
-        assertEquals(true, map.isFull());
+        assertTrue(map.isFull());
         assertEquals(2, map.maxSize());
         kit = map.keySet().iterator();
         assertSame(keys[1], kit.next());
@@ -167,7 +167,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         map.put(keys[1], values[3]);
         assertEquals(2, map.size());
-        assertEquals(true, map.isFull());
+        assertTrue(map.isFull());
         assertEquals(2, map.maxSize());
         kit = map.keySet().iterator();
         assertSame(keys[2], kit.next());
@@ -339,9 +339,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("a", map.value);
         assertEquals("C", map.entry.getKey());  // entry is reused
         assertEquals("c", map.entry.getValue());  // entry is reused
-        assertEquals(false, map.containsKey("A"));
-        assertEquals(true, map.containsKey("B"));
-        assertEquals(true, map.containsKey("C"));
+        assertFalse(map.containsKey("A"));
+        assertTrue(map.containsKey("B"));
+        assertTrue(map.containsKey("C"));
     }
 
     static class MockLRUMapSubclass<K, V> extends LRUMap<K, V> {
@@ -377,9 +377,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         map.put((K) "C", (V) "c");  // should remove oldest, which is A=a, but this is blocked
         assertEquals(3, map.size());
         assertEquals(2, map.maxSize());
-        assertEquals(true, map.containsKey("A"));
-        assertEquals(true, map.containsKey("B"));
-        assertEquals(true, map.containsKey("C"));
+        assertTrue(map.containsKey("A"));
+        assertTrue(map.containsKey("B"));
+        assertTrue(map.containsKey("C"));
     }
 
     @SuppressWarnings("unchecked")
@@ -393,9 +393,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         map.put((K) "C", (V) "c");  // should remove oldest, which is A=a, but this is blocked
         assertEquals(3, map.size());
         assertEquals(2, map.maxSize());
-        assertEquals(true, map.containsKey("A"));
-        assertEquals(true, map.containsKey("B"));
-        assertEquals(true, map.containsKey("C"));
+        assertTrue(map.containsKey("A"));
+        assertTrue(map.containsKey("B"));
+        assertTrue(map.containsKey("C"));
     }
 
     static class MockLRUMapSubclassBlocksRemove<K, V> extends LRUMap<K, V> {
@@ -425,9 +425,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         map.put((K) "C", (V) "c");  // should remove oldest, which is A=a  but this is blocked - so advance to B=b
         assertEquals(2, map.size());
         assertEquals(2, map.maxSize());
-        assertEquals(true, map.containsKey("A"));
-        assertEquals(false, map.containsKey("B"));
-        assertEquals(true, map.containsKey("C"));
+        assertTrue(map.containsKey("A"));
+        assertFalse(map.containsKey("B"));
+        assertTrue(map.containsKey("C"));
     }
 
     static class MockLRUMapSubclassFirstBlocksRemove<K, V> extends LRUMap<K, V> {
@@ -486,7 +486,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(one, map.header.after.key);  // LRU
         assertEquals(two, map.header.after.after.key);
         assertEquals(three, map.header.after.after.after.key);  // MRU
@@ -498,7 +498,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(two, map.header.after.key);  // LRU
         assertEquals(three, map.header.after.after.key);
         assertEquals(four, map.header.after.after.after.key);  // MRU
@@ -510,7 +510,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(two, map.header.after.key);  // LRU
         assertEquals(four, map.header.after.after.key);
         assertEquals(three, map.header.after.after.after.key);  // MRU
@@ -522,7 +522,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(four, map.header.after.key);  // LRU
         assertEquals(three, map.header.after.after.key);
         assertEquals(five, map.header.after.after.after.key);  // MRU
@@ -535,7 +535,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(four, map.header.after.key);  // LRU
         assertEquals(three, map.header.after.after.key);
         assertEquals(five, map.header.after.after.after.key);  // MRU
@@ -547,7 +547,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
-        assertEquals(null, map.header.next);
+        assertNull(map.header.next);
         assertEquals(three, map.header.after.key);  // LRU
         assertEquals(five, map.header.after.after.key);
         assertEquals(six, map.header.after.after.after.key);  // MRU
