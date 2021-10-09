@@ -455,6 +455,9 @@
     <contributor>
       <name>Chen Guoping</name>
     </contributor>
+    <contributor>
+      <name>Stefano Cordio</name>
+    </contributor>
   </contributors>
 
   <dependencies>
