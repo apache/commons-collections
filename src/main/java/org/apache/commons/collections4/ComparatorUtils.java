@@ -100,7 +100,7 @@ public class ComparatorUtils {
     @SuppressWarnings("unchecked")
     public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
         return chainedComparator(
-            (Comparator<E>[]) comparators.toArray(EMPTY_COMPARATOR_ARRAY)
+                comparators.toArray(EMPTY_COMPARATOR_ARRAY)
         );
     }
 
