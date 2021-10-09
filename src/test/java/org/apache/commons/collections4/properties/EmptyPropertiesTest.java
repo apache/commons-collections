@@ -266,12 +266,12 @@ public class EmptyPropertiesTest {
                 try (PrintStream out = new PrintStream(expected)) {
                     PropertiesFactory.INSTANCE.createProperties().save(out, comments);
                 }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
                 expected.reset();
                 try (PrintStream out = new PrintStream(expected)) {
                     new Properties().save(out, comments);
                 }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
             }
         }
     }
