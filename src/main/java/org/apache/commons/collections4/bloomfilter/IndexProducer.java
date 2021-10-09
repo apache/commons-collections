@@ -56,9 +56,10 @@ public interface IndexProducer {
                                 consumer.accept( (wordIdx*64)+i) ;
                             }
                         }
-                    }};
-                    producer.forEachBitMap( longConsumer::accept );
-
+                        wordIdx++;
+                    }
+                };
+                producer.forEachBitMap( longConsumer::accept );
             }
 
         };
