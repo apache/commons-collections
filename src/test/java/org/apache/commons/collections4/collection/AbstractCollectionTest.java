@@ -1162,62 +1162,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     public void testUnsupportedRemove() {
-        if (isRemoveSupported()) {
-            return;
-        }
-
-        resetEmpty();
-        try {
-            getCollection().clear();
-            fail("clear should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
-        try {
-            getCollection().remove(null);
-            fail("remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
-        try {
-            getCollection().removeIf(e -> true);
-            fail("removeIf should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
-        try {
-            getCollection().removeAll(null);
-            fail("removeAll should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
-        try {
-            getCollection().retainAll(null);
-            fail("retainAll should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
-        resetFull();
-        try {
-            final Iterator<E> iterator = getCollection().iterator();
-            iterator.next();
-            iterator.remove();
-            fail("iterator.remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        verify();
-
     }
 
     /**

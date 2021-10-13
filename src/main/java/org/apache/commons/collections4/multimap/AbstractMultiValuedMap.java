@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.Key;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
@@ -322,14 +323,15 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     @Override
     public MultiSet<K> keys() {
         if (keysMultiSetView == null) {
-            keysMultiSetView = UnmodifiableMultiSet.unmodifiableMultiSet(new KeysMultiSet());
+            //keysMultiSetView = UnmodifiableMultiSet.unmodifiableMultiSet(new KeysMultiSet());
+            keysMultiSetView = new KeysMultiSet();
         }
         return keysMultiSetView;
     }
 
     @Override
     public Map<K, Collection<V>> asMap() {
-        return asMapView != null ? asMapView : (asMapView = new AsMap(map));
+        return asMapView != null ? asMapView : new AsMap(map);
     }
 
     /**
@@ -362,7 +364,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this != obj) {
             return true;
         }
         if (obj instanceof MultiValuedMap) {
