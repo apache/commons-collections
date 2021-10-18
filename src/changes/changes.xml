@@ -241,7 +241,7 @@
       Update tests from commons-io:commons-io 2.6 to 2.11.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update actions/checkout from v1 to v2.3.4 #166 #173 #183 #193.
+      Update actions/checkout from v1 to v2.3.5 #166 #173 #183 #193 #262.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
       Update maven-pmd-plugin from 3.12.0 to 3.15.0 #167 #196 #253.
