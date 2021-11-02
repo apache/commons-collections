@@ -214,6 +214,7 @@
       Bump checkstyle from 8.45 to 8.45.1 #246.
       Bump checkstyle from 8.45.1 to 9.0 #248.
       Bump checkstyle from 9.0 to 9.0.1 #257.
+      Bump checkstyle from 9.0.1 to 9.1 #263.
     </action>
     <action dev="ggregory" type="update" due-to="Chen, Bruno P. Kinoshita, Gary Gregory, Michael Osipov">
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
