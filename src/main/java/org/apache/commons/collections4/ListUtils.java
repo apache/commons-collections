@@ -101,10 +101,12 @@ public class ListUtils {
     private static class Partition<T> extends AbstractList<List<T>> {
         private final List<T> list;
         private final int size;
+        private final boolean isBalanced;
 
-        private Partition(final List<T> list, final int size) {
+        private Partition(final List<T> list, final int size, final boolean isBalanced) {
             this.list = list;
             this.size = size;
+            this.isBalanced = isBalanced;
         }
 
         @Override
@@ -117,9 +119,25 @@ public class ListUtils {
                 throw new IndexOutOfBoundsException("Index " + index + " must be less than size " +
                                                     listSize);
             }
-            final int start = index * size;
-            final int end = Math.min(start + size, list.size());
-            return list.subList(start, end);
+            int start;
+            int currentPartitionSize;
+            if (isBalanced) {
+                // evenly distribute partitions
+                currentPartitionSize = (int) Math.ceil((double) list.size() / (double) listSize);
+                start = index * currentPartitionSize;
+                // remainder of above is the threshold for which indices greater than will have one less element
+                final int threshold = (list.size() % listSize);
+                // when currentPartitionSize is 1 or threshold is 0 there's nothing to balance
+                // when index hasn't crossed the threshold we don't need balancing yet
+                if (currentPartitionSize > 1 && threshold > 0 && index >= threshold) {
+                    start -= (index - threshold); // adjust start as partitions before threshold have one less element
+                    currentPartitionSize--; // currentPartitionSize is decremented as threshold is crossed
+                }
+            } else {
+                start = index * size;
+                currentPartitionSize = Math.min(size, list.size() - start);
+            }
+            return list.subList(start, start + currentPartitionSize);
         }
 
         @Override
@@ -486,13 +504,52 @@ public class ListUtils {
      * @throws NullPointerException if list is null
      * @throws IllegalArgumentException if size is not strictly positive
      * @since 4.0
+     * @see ListUtils#partitionBalanced(List, int)
      */
     public static <T> List<List<T>> partition(final List<T> list, final int size) {
         Objects.requireNonNull(list, "list");
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");
         }
-        return new Partition<>(list, size);
+        return new Partition<>(list, size, false);
+    }
+
+    /**
+     * Returns consecutive {@link List#subList(int, int) sublists} of a
+     * list, partitioned in a way to balance entries across all sublists. For example,
+     * partitioning a list containing {@code [a, b, c, d, e]} with a partition
+     * size of 3 yields {@code [[a, b, c], [d, e]]} -- an outer list containing
+     * two inner lists of three and two elements, all in the original order. Partitioning
+     * the same input list with a partition size of 4 also yields {@code [[a, b, c], [d, e]]}
+     * since putting 4 elements in the first partition makes it unbalanced as the last
+     * partition would only have 1 element.
+     * <p>
+     * The outer list is unmodifiable, but reflects the latest state of the
+     * source list. The inner lists are sublist views of the original list,
+     * produced on demand using {@link List#subList(int, int)}, and are subject
+     * to all the usual caveats about modification as explained in that API.
+     * The size of the produced list is always equals to the size of the list
+     * produced by using the same input with the {@link ListUtils#partition(List, int)}
+     * method.
+     * <p>
+     * Adapted from http://code.google.com/p/guava-libraries/
+     *
+     * @param <T> the element type
+     * @param list  the list to return consecutive balanced sublists of
+     * @param size  the desired maximum size of each sublist
+     * @return a list of consecutive sublists balanced to have maximum size difference
+     * of 1 between them
+     * @throws NullPointerException if list is null
+     * @throws IllegalArgumentException if size is not strictly positive
+     * @since 4.5
+     * @see ListUtils#partition(List, int)
+     */
+    public static <T> List<List<T>> partitionBalanced(final List<T> list, final int size) {
+        Objects.requireNonNull(list, "list");
+        if (size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+        return new Partition<>(list, size, true);
     }
 
     /**

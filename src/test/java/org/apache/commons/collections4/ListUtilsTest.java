@@ -24,9 +24,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.apache.commons.lang3.tuple.Triple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -323,18 +327,44 @@ public class ListUtilsTest {
     }
 
     @Test
-    @SuppressWarnings("boxing") // OK in test code
     public void testPartition() {
-        final List<Integer> strings = new ArrayList<>();
-        for (int i = 0; i <= 6; i++) {
-            strings.add(i);
-        }
+        final List<Integer> strings = IntStream.rangeClosed(0, 6).boxed().collect(Collectors.toList());
 
+        // [0,1,2,3,4,5,6] -> [[0,1,2],[3,4,5],[6]]
         final List<List<Integer>> partition = ListUtils.partition(strings, 3);
 
         assertNotNull(partition);
         assertEquals(3, partition.size());
+        assertEquals(3, partition.get(0).size());
+        assertEquals(3, partition.get(1).size());
         assertEquals(1, partition.get(2).size());
+
+        // [0,1,2,3,4,5,6] -> [[0,1,2,3],[4,5,6]]
+        final List<List<Integer>> partition4 = ListUtils.partition(strings, 4);
+        assertNotNull(partition4);
+        assertEquals(2, partition4.size());
+        assertEquals(4, partition4.get(0).size());
+        assertEquals(3, partition4.get(1).size());
+
+        // [0,1,2,3,4,5,6] -> [[0,1,2,3,4],[5,6]]
+        final List<List<Integer>> partition5 = ListUtils.partition(strings, 5);
+        assertNotNull(partition5);
+        assertEquals(2, partition5.size());
+        assertEquals(5, partition5.get(0).size());
+        assertEquals(2, partition5.get(1).size());
+
+        // [0,1,2,3,4,5,6] -> [[0,1,2,3,4,5],[6]]
+        final List<List<Integer>> partition6 = ListUtils.partition(strings, 6);
+        assertNotNull(partition6);
+        assertEquals(2, partition6.size());
+        assertEquals(6, partition6.get(0).size());
+        assertEquals(1, partition6.get(1).size());
+
+        // [0,1,2,3,4,5,6] -> [[0,1,2,3,4,5,6]]
+        final List<List<Integer>> partition7 = ListUtils.partition(strings, 7);
+        assertNotNull(partition7);
+        assertEquals(1, partition7.size());
+        assertEquals(7, partition7.get(0).size());
 
         try {
             ListUtils.partition(null, 3);
@@ -351,10 +381,130 @@ public class ListUtilsTest {
             fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
 
+        final List<List<Integer>> partitionMin = ListUtils.partition(strings, 1);
+        assertEquals(strings.size(), partitionMin.size());
+        for (int i = 0; i < strings.size(); i++) {
+            assertEquals(1, partitionMin.get(i).size());
+            assertEquals(strings.get(i), partitionMin.get(i).get(0));
+        }
+
         final List<List<Integer>> partitionMax = ListUtils.partition(strings, Integer.MAX_VALUE);
         assertEquals(1, partitionMax.size());
         assertEquals(strings.size(), partitionMax.get(0).size());
         assertEquals(strings, partitionMax.get(0));
+
+        // Edge case: partitioning empty list doesn't throw exception
+        IntStream.rangeClosed(1, 5).forEach(it -> {
+            final List<List<String>> partitionEmptyList = ListUtils.partition(new ArrayList<>(), it);
+            assertEquals(0, partitionEmptyList.size());
+            assertTrue(partitionEmptyList.isEmpty());
+        });
+
+        // Edge case: partitioning single value list doesn't throw exception
+        IntStream.rangeClosed(1, 5).forEach(it -> {
+            final List<List<String>> partitionSingleElemList = ListUtils.partition(Collections.singletonList("42"), it);
+            assertFalse(partitionSingleElemList.isEmpty());
+            assertEquals(1, partitionSingleElemList.size());
+            assertEquals("42", partitionSingleElemList.get(0).get(0));
+        });
+    }
+
+    @Test
+    public void testPartitionBalanced() {
+        final List<String> evenList = IntStream.rangeClosed(0, 9).mapToObj(it -> it + "").collect(Collectors.toList());
+        final List<String> oddList = IntStream.rangeClosed(0, 12).mapToObj(it -> it + "").collect(Collectors.toList());
+        Stream.of(
+                        Triple.of(evenList, "0|1|2|3|4|5|6|7|8|9", 1),
+                        Triple.of(evenList, "0,1|2,3|4,5|6,7|8,9", 2),
+                        Triple.of(evenList, "0,1,2|3,4,5|6,7|8,9", 3), // balanced
+                        Triple.of(evenList, "0,1,2,3|4,5,6|7,8,9", 4), // balanced
+                        Triple.of(evenList, "0,1,2,3,4|5,6,7,8,9", 5),
+                        Triple.of(evenList, "0,1,2,3,4|5,6,7,8,9", 6), // balanced
+                        Triple.of(evenList, "0,1,2,3,4|5,6,7,8,9", 7), // balanced
+                        Triple.of(evenList, "0,1,2,3,4|5,6,7,8,9", 8), // balanced
+                        Triple.of(evenList, "0,1,2,3,4|5,6,7,8,9", 9), // balanced
+                        Triple.of(evenList, "0,1,2,3,4,5,6,7,8,9", 10),
+                        Triple.of(evenList, "0,1,2,3,4,5,6,7,8,9", 11),
+                        Triple.of(evenList, "0,1,2,3,4,5,6,7,8,9", 12),
+                        Triple.of(oddList, "0|1|2|3|4|5|6|7|8|9|10|11|12", 1),
+                        Triple.of(oddList, "0,1|2,3|4,5|6,7|8,9|10,11|12", 2),
+                        Triple.of(oddList, "0,1,2|3,4,5|6,7,8|9,10|11,12", 3), // balanced
+                        Triple.of(oddList, "0,1,2,3|4,5,6|7,8,9|10,11,12", 4), // balanced
+                        Triple.of(oddList, "0,1,2,3,4|5,6,7,8|9,10,11,12", 5), // balanced
+                        Triple.of(oddList, "0,1,2,3,4|5,6,7,8|9,10,11,12", 6), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 7),
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 8), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 9), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 10), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 11), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6|7,8,9,10,11,12", 12), // balanced
+                        Triple.of(oddList, "0,1,2,3,4,5,6,7,8,9,10,11,12", 13),
+                        Triple.of(oddList, "0,1,2,3,4,5,6,7,8,9,10,11,12", 14)
+                )
+                .forEach(testCase -> {
+                    final Integer partitionSize = testCase.getRight();
+                    final String expectedResult = testCase.getMiddle();
+                    final List<List<String>> partition = ListUtils.partitionBalanced(testCase.getLeft(), partitionSize);
+                    final List<String> expectedPartitions = Arrays.asList(expectedResult.split("\\|"));
+                    assertEquals(expectedPartitions.size(), partition.size());
+                    for (int i = 0; i < expectedPartitions.size(); i++) {
+                        assertArrayEquals(expectedPartitions.get(i).split(","), partition.get(i).toArray());
+                    }
+                });
+
+        try {
+            ListUtils.partitionBalanced(null, 3);
+            fail("failed to check for null argument");
+        } catch (final NullPointerException ignored) {}
+
+        try {
+            ListUtils.partitionBalanced(oddList, 0);
+            fail("failed to check for size argument");
+        } catch (final IllegalArgumentException ignored) {}
+
+        try {
+            ListUtils.partitionBalanced(oddList, -10);
+            fail("failed to check for size argument");
+        } catch (final IllegalArgumentException ignored) {}
+
+        final List<List<String>> lists = ListUtils.partitionBalanced(oddList, 10);
+        try {
+            lists.get(-1);
+            fail("failed to check for index out of bounds");
+        } catch (final IndexOutOfBoundsException ignored) {}
+
+        try {
+            lists.get(oddList.size());
+            fail("failed to check for index out of bounds");
+        } catch (final IndexOutOfBoundsException ignored) {}
+
+        final List<List<String>> partitionMin = ListUtils.partitionBalanced(oddList, 1);
+        assertEquals(oddList.size(), partitionMin.size());
+        for (int i = 0; i < oddList.size(); i++) {
+            assertEquals(1, partitionMin.get(i).size());
+            assertEquals(oddList.get(i), partitionMin.get(i).get(0));
+        }
+
+        final List<List<String>> partitionMax = ListUtils.partitionBalanced(oddList, Integer.MAX_VALUE);
+        assertEquals(1, partitionMax.size());
+        assertEquals(oddList.size(), partitionMax.get(0).size());
+        assertEquals(oddList, partitionMax.get(0));
+
+        // Edge case: partitioning empty list doesn't throw exception
+        IntStream.rangeClosed(1, 5).forEach(it -> {
+            final List<List<String>> partitionEmptyList = ListUtils.partitionBalanced(new ArrayList<>(), it);
+            assertEquals(0, partitionEmptyList.size());
+            assertTrue(partitionEmptyList.isEmpty());
+        });
+
+        // Edge case: partitioning single value list doesn't throw exception
+        IntStream.rangeClosed(1, 5).forEach(it -> {
+            final List<List<String>> partitionSingleElemList =
+                    ListUtils.partitionBalanced(Collections.singletonList("42"), it);
+            assertFalse(partitionSingleElemList.isEmpty());
+            assertEquals(1, partitionSingleElemList.size());
+            assertEquals("42", partitionSingleElemList.get(0).get(0));
+        });
     }
 
     @Test
