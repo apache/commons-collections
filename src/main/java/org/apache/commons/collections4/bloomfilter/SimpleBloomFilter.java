@@ -62,11 +62,19 @@ public class SimpleBloomFilter implements BloomFilter {
      * @param hasher the Hasher to initialize the filter with.
      */
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
+        this( shape, BitMapProducer.fromIndexProducer( Objects.requireNonNull( hasher, "hasher").indices(shape), shape));
+    }
+
+    /**
+     * Constructor.
+     * @param shape The shape for the filter.
+     * @param producer the BitMap Producer to initialize the filter with.
+     */
+    public SimpleBloomFilter(final Shape shape, BitMapProducer producer ) {
         Objects.requireNonNull( shape, "shape");
-        Objects.requireNonNull( hasher, "hasher");
+        Objects.requireNonNull( producer, "producer");
         this.shape = shape;
 
-        BitMapProducer producer = BitMapProducer.fromIndexProducer( hasher.indices(shape), shape);
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
         producer.forEachBitMap( builder );
         this.bitMap = builder.getArray();
