@@ -46,6 +46,26 @@ public interface BitMapProducer {
      */
     void forEachBitMap(LongConsumer consumer);
 
+
+    /**
+     * Creates a BitMapProducer from an array of Long.
+     * @param bitMaps the bitMaps to return.
+     * @return a BitMapProducer.
+     */
+    public static BitMapProducer fromLongArray( long[] bitMaps ) {
+        return new BitMapProducer() {
+
+            @Override
+            public void forEachBitMap(LongConsumer consumer) {
+                for (long word : bitMaps)
+                {
+                    consumer.accept(word);
+                }
+            }
+
+        };
+    }
+
     /**
      * Creates a BitMapProducer from an IndexProducer.
      * @param producer the IndexProducer that specifies the indexes of the bits to enable.

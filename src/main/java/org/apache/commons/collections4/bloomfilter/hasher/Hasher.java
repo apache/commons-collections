@@ -49,5 +49,11 @@ public interface Hasher {
      */
     int size();
 
-
+    /**
+     * Returns true if there are no items to be hashed.
+     * @return {@code true} if there are no items to be hashed.
+     */
+    default boolean isEmpty() {
+        return size() == 0;
+    }
 }
