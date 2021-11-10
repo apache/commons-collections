@@ -62,7 +62,11 @@ public class SimpleBloomFilter implements BloomFilter {
      * @param hasher the Hasher to initialize the filter with.
      */
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
-        this( shape, BitMapProducer.fromIndexProducer( Objects.requireNonNull( hasher, "hasher").indices(shape), shape));
+        Objects.requireNonNull( shape, "shape");
+        Objects.requireNonNull( hasher, "hasher");
+        this.shape = shape;
+        this.bitMap = new long[0];
+        mergeInPlace( hasher );
     }
 
     /**
@@ -78,8 +82,24 @@ public class SimpleBloomFilter implements BloomFilter {
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
         producer.forEachBitMap( builder );
         this.bitMap = builder.getArray();
-        this.cardinality = 0;
-        forEachBitMap( w -> this.cardinality += Long.bitCount(w));
+        this.cardinality = -1;
+    }
+
+    @Override
+    public boolean mergeInPlace(Hasher hasher) {
+        Objects.requireNonNull( hasher, "hasher");
+        Shape shape = getShape();
+
+        hasher.indices(shape).forEachIndex( idx -> {
+            if (bitMap.length <= BitMap.getLongIndex(idx)) {
+                long[] newMap = new long[BitMap.numberOfBuckets( idx )];
+                System.arraycopy( bitMap, 0, newMap, 0, bitMap.length);
+                bitMap = newMap;
+            }
+            BitMap.set( bitMap, idx);
+        });
+        this.cardinality = -1;
+        return true;
     }
 
     @Override
@@ -88,8 +108,7 @@ public class SimpleBloomFilter implements BloomFilter {
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape, this.bitMap);
         other.forEachBitMap( builder );
         this.bitMap = builder.getArray();
-        this.cardinality = 0;
-        forEachBitMap( w -> this.cardinality += Long.bitCount(w));
+        this.cardinality = -1;
         return true;
     }
 
@@ -105,6 +124,14 @@ public class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public int cardinality() {
+        if (this.cardinality == -1) {
+            synchronized( this ) {
+                if (this.cardinality == -1) {
+                    this.cardinality = 0;
+                    forEachBitMap( w -> this.cardinality += Long.bitCount(w));
+                }
+            }
+        }
         return this.cardinality;
     }
 
@@ -124,7 +151,12 @@ public class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
-        return contains( BitMapProducer.fromIndexProducer(indexProducer, shape));
+        try {
+            indexProducer.forEachIndex( idx -> {if (!BitMap.contains( bitMap, idx)) { throw new NoMatchException(); }} );
+            return true;
+        } catch (NoMatchException e) {
+            return false;
+        }
     }
 
 

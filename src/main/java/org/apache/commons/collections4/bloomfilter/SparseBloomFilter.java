@@ -126,10 +126,10 @@ public class SparseBloomFilter implements BloomFilter {
         long bitMap =0;
         int idx=0;
         for (int i : indices) {
-            if (BitMap.getLongIndex(i) != idx) {
+            while (BitMap.getLongIndex(i) != idx) {
                 consumer.accept( bitMap );
                 bitMap = 0;
-                idx = BitMap.getLongIndex(i);
+                idx++;
             }
             bitMap |= BitMap.getLongBit(i);
         }
