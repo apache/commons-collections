@@ -46,7 +46,16 @@ public class BitMap {
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
      */
     public static boolean contains( long[] buckets, int idx ) {
-        return (buckets[ getLongIndex( idx )] & getLongBit( idx )) != 0;
+        return (getLongIndex(idx) < buckets.length && (buckets[ getLongIndex( idx )] & getLongBit( idx )) != 0);
+    }
+
+    /**
+     * Sets the bit in the buckets
+     * @param buckets  The array of bit buckets
+     * @param idx the index of the bit to set.
+     */
+    public static void set( long[] buckets, int idx ) {
+        buckets[ getLongIndex( idx )] |= getLongBit( idx );
     }
 
     /**

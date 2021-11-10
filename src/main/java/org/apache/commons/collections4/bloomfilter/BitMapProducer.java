@@ -138,7 +138,7 @@ public interface BitMapProducer {
                             "initialValue length (%s) is longer than shape length (%s)", initialValue.length, result.length));
                 }
                 bucketCount = initialValue.length;
-                System.arraycopy(initialValue, 0, result, 0, bucketCount);
+                System.arraycopy(initialValue, 0, result, 0, initialValue.length);
             }
         }
 

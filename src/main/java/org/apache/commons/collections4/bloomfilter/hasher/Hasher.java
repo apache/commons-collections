@@ -35,6 +35,8 @@ public interface Hasher {
      * defined by the shape. However the count of indices may not be a multiple of the number of
      * hash functions once implementation has removed duplicates.</p>
      *
+     * <p>This IndexProducer must be deterministic in that it mustreturn the same indices for the
+     * same Shape.</p>
      * <p>No guarantee is made as to order of indices.</p>
      * <p>Duplicates indices for a single item must be removed.</p>
      *
