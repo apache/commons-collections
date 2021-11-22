@@ -29,29 +29,28 @@ import org.junit.jupiter.api.Test;
  */
 public class SingleItemHasherCollectionTest {
 
-    private SimpleHasher hasher1 = new SimpleHasher( 1,1 );
-    private SimpleHasher hasher2 = new SimpleHasher( 2, 2 );
-    private HasherCollection hasher = new SingleItemHasherCollection( hasher1, hasher2 );
+    private SimpleHasher hasher1 = new SimpleHasher(1, 1);
+    private SimpleHasher hasher2 = new SimpleHasher(2, 2);
+    private HasherCollection hasher = new SingleItemHasherCollection(hasher1, hasher2);
 
     @Test
     public void sizeTest() {
-        assertEquals( 1, hasher.size() );
-        HasherCollection hasher3 = new SingleItemHasherCollection( hasher, new SimpleHasher( 3, 3 ));
-        assertEquals( 1, hasher3.size() );
+        assertEquals(1, hasher.size());
+        HasherCollection hasher3 = new SingleItemHasherCollection(hasher, new SimpleHasher(3, 3));
+        assertEquals(1, hasher3.size());
 
     }
 
-
     @Test
     public void testIndices() {
-        Shape shape = new Shape( 5, 10 );
-        Integer[] expected = { 1,2,3,4,5,6,8,0 };
+        Shape shape = new Shape(5, 10);
+        Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
         List<Integer> lst = new ArrayList<Integer>();
         IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex( lst::add );
-        assertEquals( expected.length, lst.size());
-        for (int i=0;i< expected.length;i++) {
-            assertEquals( expected[i], lst.get(i) );
+        producer.forEachIndex(lst::add);
+        assertEquals(expected.length, lst.size());
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], lst.get(i));
         }
     }
 

@@ -43,7 +43,7 @@ public interface IndexProducer {
      * @param producer the @{code BitMapProducer}
      * @return a new @{code IndexProducer}.
      */
-    public static IndexProducer fromBitMapProducer(BitMapProducer producer) {
+    static IndexProducer fromBitMapProducer(BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");
         return new IndexProducer() {
             @Override

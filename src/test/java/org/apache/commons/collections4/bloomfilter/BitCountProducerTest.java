@@ -17,13 +17,8 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.IntConsumer;
 
 import org.junit.Test;
@@ -36,26 +31,26 @@ public class BitCountProducerTest {
 
             @Override
             public void forEachIndex(IntConsumer consumer) {
-                consumer.accept( 0 );
-                consumer.accept( 1 );
-                consumer.accept( 63 );
-                consumer.accept( 64 );
-                consumer.accept( 127 );
-                consumer.accept( 128 );
+                consumer.accept(0);
+                consumer.accept(1);
+                consumer.accept(63);
+                consumer.accept(64);
+                consumer.accept(127);
+                consumer.accept(128);
             }
         };
         BitCountProducer producer = BitCountProducer.from(iProducer);
-        Map<Integer,Integer> m = new HashMap<Integer,Integer>();
+        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
 
-        producer.forEachCount( (i,v) -> m.put(i, v));
+        producer.forEachCount((i, v) -> m.put(i, v));
 
-        assertEquals( 6, m.size());
-        assertEquals( Integer.valueOf(1), m.get(0));
-        assertEquals( Integer.valueOf(1), m.get(1));
-        assertEquals( Integer.valueOf(1), m.get(63));
-        assertEquals( Integer.valueOf(1), m.get(64));
-        assertEquals( Integer.valueOf(1), m.get(127));
-        assertEquals( Integer.valueOf(1), m.get(128));
+        assertEquals(6, m.size());
+        assertEquals(Integer.valueOf(1), m.get(0));
+        assertEquals(Integer.valueOf(1), m.get(1));
+        assertEquals(Integer.valueOf(1), m.get(63));
+        assertEquals(Integer.valueOf(1), m.get(64));
+        assertEquals(Integer.valueOf(1), m.get(127));
+        assertEquals(Integer.valueOf(1), m.get(128));
 
     }
 

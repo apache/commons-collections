@@ -33,7 +33,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param filter the filter to get the data from.
      * @return An array of BitMap long.
      */
-    public static long[] asBitMapArray(BloomFilter filter) {
+    static long[] asBitMapArray(BloomFilter filter) {
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(filter.getShape());
         filter.forEachBitMap(builder);
         return builder.getArray();
@@ -44,7 +44,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param filter the Filter to get the data from.
      * @return An array of indices for enabled bits in the Bloom filter.
      */
-    public static int[] asIndexArray(BloomFilter filter) {
+    static int[] asIndexArray(BloomFilter filter) {
         List<Integer> lst = new ArrayList<Integer>();
         filter.forEachIndex(lst::add);
         return lst.stream().mapToInt(Integer::intValue).toArray();

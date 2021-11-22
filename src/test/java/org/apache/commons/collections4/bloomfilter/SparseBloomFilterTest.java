@@ -29,6 +29,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
 
     @Override
     protected SparseBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return  new SparseBloomFilter(shape, hasher);
+        return new SparseBloomFilter(shape, hasher);
     }
 }

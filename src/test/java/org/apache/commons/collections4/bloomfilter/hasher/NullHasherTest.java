@@ -33,17 +33,16 @@ public class NullHasherTest {
 
     @Test
     public void sizeTest() {
-        assertEquals( 0, hasher.size() );
+        assertEquals(0, hasher.size());
     }
 
     @Test
     public void testIterator() {
-        Shape shape = new Shape( 5, 10 );
+        Shape shape = new Shape(5, 10);
         List<Integer> lst = new ArrayList<Integer>();
         IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex( lst::add );
-        assertEquals( 0, lst.size());
+        producer.forEachIndex(lst::add);
+        assertEquals(0, lst.size());
     }
-
 
 }

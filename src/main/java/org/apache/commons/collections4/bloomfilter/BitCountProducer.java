@@ -47,7 +47,7 @@ public interface BitCountProducer extends IndexProducer {
      * @param idx An index producer.
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */
-    public static BitCountProducer from(IndexProducer idx) {
+    static BitCountProducer from(IndexProducer idx) {
         return new BitCountProducer() {
             @Override
             public void forEachCount(BitCountConsumer consumer) {

@@ -29,6 +29,6 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
 
     @Override
     protected SimpleBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return  new SimpleBloomFilter(shape, hasher);
+        return new SimpleBloomFilter(shape, hasher);
     }
 }

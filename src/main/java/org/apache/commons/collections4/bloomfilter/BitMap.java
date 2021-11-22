@@ -166,5 +166,4 @@ public class BitMap {
         Objects.requireNonNull(shape, "shape");
         return cardinality <= (numberOfBitMaps(shape.getNumberOfBits()) * 2);
     }
-
 }
