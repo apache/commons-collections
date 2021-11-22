@@ -36,6 +36,10 @@ public class SparseBloomFilter implements BloomFilter {
      * The bitSet that defines this BloomFilter.
      */
     private final TreeSet<Integer> indices;
+
+    /**
+     * The shape of this BloomFilter
+     */
     private final Shape shape;
 
     /**
@@ -43,7 +47,7 @@ public class SparseBloomFilter implements BloomFilter {
      *
      */
     public SparseBloomFilter(Shape shape) {
-        Objects.requireNonNull( shape, "shape");
+        Objects.requireNonNull(shape, "shape");
         this.shape = shape;
         this.indices = new TreeSet<Integer>();
     }
@@ -54,9 +58,9 @@ public class SparseBloomFilter implements BloomFilter {
      * @param hasher the hasher to provide the initial data.
      */
     public SparseBloomFilter(final Shape shape, Hasher hasher) {
-        this( shape );
-        Objects.requireNonNull( hasher, "hasher");
-        hasher.indices(shape).forEachIndex( this.indices::add );
+        this(shape);
+        Objects.requireNonNull(hasher, "hasher");
+        hasher.indices(shape).forEachIndex(this.indices::add);
     }
 
     /**
@@ -68,26 +72,25 @@ public class SparseBloomFilter implements BloomFilter {
      */
     public SparseBloomFilter(Shape shape, List<Integer> indices) {
         this(shape);
-        Objects.requireNonNull( indices, "indices");
-        this.indices.addAll( indices );
+        Objects.requireNonNull(indices, "indices");
+        this.indices.addAll(indices);
         if (this.indices.last() >= shape.getNumberOfBits()) {
-            throw new IllegalArgumentException(
-                    String.format( "Value in list {} is greater than maximum value ({})",
-                            this.indices.last(), shape.getNumberOfBits()));
+            throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
+                    this.indices.last(), shape.getNumberOfBits()));
         }
     }
 
     @Override
     public boolean mergeInPlace(Hasher hasher) {
-        Objects.requireNonNull( hasher, "hasher");
-        hasher.indices(shape).forEachIndex( this.indices::add );
+        Objects.requireNonNull(hasher, "hasher");
+        hasher.indices(shape).forEachIndex(this.indices::add);
         return true;
     }
 
     @Override
     public boolean mergeInPlace(BloomFilter other) {
-        Objects.requireNonNull( other, "other");
-        other.forEachIndex( indices::add );
+        Objects.requireNonNull(other, "other");
+        other.forEachIndex(indices::add);
         return true;
     }
 
@@ -108,41 +111,44 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public void forEachIndex(IntConsumer consumer) {
-        Objects.requireNonNull( consumer, "consumer");
-        for (int value : indices ) {
-            consumer.accept( value );
+        Objects.requireNonNull(consumer, "consumer");
+        for (int value : indices) {
+            consumer.accept(value);
         }
     }
 
     @Override
     public void forEachBitMap(LongConsumer consumer) {
-        Objects.requireNonNull( consumer, "consumer");
+        Objects.requireNonNull(consumer, "consumer");
         if (cardinality() == 0) {
             return;
         }
         // because our indices are always in order we can
         // shorten the time necessary to create the longs for the
         // consumer
-        long bitMap =0;
-        int idx=0;
+        long bitMap = 0;
+        int idx = 0;
         for (int i : indices) {
             while (BitMap.getLongIndex(i) != idx) {
-                consumer.accept( bitMap );
+                consumer.accept(bitMap);
                 bitMap = 0;
                 idx++;
             }
             bitMap |= BitMap.getLongBit(i);
         }
-        if (bitMap != 0)
-        {
-            consumer.accept( bitMap );
+        if (bitMap != 0) {
+            consumer.accept(bitMap);
         }
     }
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
         try {
-            indexProducer.forEachIndex( idx -> { if (!indices.contains(idx)) { throw new NoMatchException(); }});
+            indexProducer.forEachIndex(idx -> {
+                if (!indices.contains(idx)) {
+                    throw new NoMatchException();
+                }
+            });
             return true;
         } catch (NoMatchException e) {
             return false;
@@ -151,8 +157,7 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        return contains( IndexProducer.fromBitMapProducer(bitMapProducer));
+        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
-
 
 }

@@ -27,7 +27,9 @@ import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
  * A collection of Hashers.  Useful when the generation of a Bloom filter depends upon
- * multiple items.  Hashers for each item are added to the HasherCollection and then
+ * multiple items.
+ *
+ * Hashers for each item are added to the HasherCollection and then
  * the collection is used wherever a Hasher can be used in the API.
  *
  * @since 4.5
@@ -52,7 +54,7 @@ public class HasherCollection implements Hasher {
      * @param hashers A collections of Hashers to build the indices with.
      */
     public HasherCollection(final Collection<Hasher> hashers) {
-        Objects.requireNonNull( hashers, "hashers");
+        Objects.requireNonNull(hashers, "hashers");
         this.hashers = new ArrayList<>(hashers);
     }
 
@@ -63,7 +65,7 @@ public class HasherCollection implements Hasher {
      * @param buffers the byte buffers that will be hashed.
      */
     public HasherCollection(Hasher... hashers) {
-        this( Arrays.asList(hashers));
+        this(Arrays.asList(hashers));
     }
 
     /**
@@ -71,7 +73,7 @@ public class HasherCollection implements Hasher {
      * @param hasher The hasher to add.
      */
     public void add(Hasher hasher) {
-        Objects.requireNonNull( hasher, "hasher");
+        Objects.requireNonNull(hasher, "hasher");
         hashers.add(hasher);
     }
 
@@ -80,28 +82,35 @@ public class HasherCollection implements Hasher {
      * @param hashers The hashers to add.
      */
     public void add(Collection<Hasher> hashers) {
-        Objects.requireNonNull( hashers, "hashers");
+        Objects.requireNonNull(hashers, "hashers");
         hashers.addAll(hashers);
     }
 
     @Override
     public IndexProducer indices(final Shape shape) {
-        Objects.requireNonNull( shape, "shape");
+        Objects.requireNonNull(shape, "shape");
         return new IndexProducer() {
             @Override
             public void forEachIndex(IntConsumer consumer) {
                 for (Hasher hasher : hashers) {
-                    hasher.indices( shape ).forEachIndex(consumer);
+                    hasher.indices(shape).forEachIndex(consumer);
                 }
             }
         };
     }
 
+    /**
+     * Allow child classes access to the hashers.
+     * @return hashers
+     */
+    protected List<Hasher> getHashers() {
+        return hashers;
+    }
+
     @Override
     public int size() {
         int i = 0;
-        for (Hasher h : hashers )
-        {
+        for (Hasher h : hashers) {
             i += h.size();
         }
         return i;

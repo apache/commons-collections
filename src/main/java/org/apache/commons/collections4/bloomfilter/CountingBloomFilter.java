@@ -27,7 +27,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  * to and not later subtracted from the counting Bloom filter. The functional
  * state of a CountingBloomFilter at the start and end of a series of merge and
  * subsequent remove operations of the same Bloom filters, irrespective of
- * remove order, is expected to be the same.
+ * remove order, is expected to be the same.</p>
  *
  * <p>Removal of a filter that has not previously been merged results in an
  * invalid state where the counts no longer represent a sum of merged Bloom
@@ -36,118 +36,121 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
  * undetected. The CountingBloomFilter maintains a state flag that is used as a
  * warning that an operation was performed that resulted in invalid counts and
  * thus an invalid state. For example this may occur if a count for an index was
- * set to negative following a remove operation.
+ * set to negative following a remove operation.</p>
  *
  * <p>Implementations should document the expected state of the filter after an
  * operation that generates invalid counts, and any potential recovery options.
  * An implementation may support a reversal of the operation to restore the
  * state to that prior to the operation. In the event that invalid counts are
  * adjusted to a valid range then it should be documented if there has been
- * irreversible information loss.
+ * irreversible information loss.</p>
  *
  * <p>Implementations may choose to throw an exception during an operation that
  * generates invalid counts. Implementations should document the expected state
  * of the filter after such an operation. For example are the counts not updated,
- * partially updated or updated entirely before the exception is raised.
+ * partially updated or updated entirely before the exception is raised.</p>
  *
  * @since 4.5
  */
 public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
 
-
-
     // Query Operations
 
     /**
-     * Returns true if the internal state is valid. This flag is a warning that an addition or
+     * Returns  {@code true} if the internal state is valid.
+     *
+     * <p>This flag is a warning that an addition or
      * subtraction of counts from this filter resulted in an invalid count for one or more
      * indexes. For example this may occur if a count for an index was
      * set to negative following a subtraction operation, or overflows an {@code int} following an
-     * addition operation.
+     * addition operation.</p>
      *
      * <p>A counting Bloom filter that has an invalid state is no longer ensured to function
      * identically to a standard Bloom filter instance that is the merge of all the Bloom filters
-     * that have been added to and not later subtracted from this counting Bloom filter.
+     * that have been added to and not later subtracted from this counting Bloom filter.</p>
      *
      * <p>Note: The change to an invalid state may or may not be reversible. Implementations
      * are expected to document their policy on recovery from an addition or removal operation
-     * that generated an invalid state.
+     * that generated an invalid state.</p>
      *
-     * @return true if the state is valid
+     * @return {@code true} if the state is valid
      */
     boolean isValid();
 
     // Modification Operations
 
-
     /**
-     * Removes the specified Bloom filter from this Bloom filter. Specifically
-     * all counts for the indexes identified by the {@code other} filter will be decremented by 1.
+     * Removes the specified Bloom filter from this Bloom filter.
+     *
+     * <p>Specifically
+     * all counts for the indexes identified by the {@code other} filter will be decremented by 1.</p>
      *
      * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored; only
-     * the enabled indexes are used.
+     * the enabled indexes are used.</p>
      *
-     * <p>This method will return true if the filter is valid after the operation.
+     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param other the other Bloom filter
-     * @return true if the removal was successful and the state is valid
-     * @throws IllegalArgumentException if the shape of the other filter does not match
-     * the shape of this filter
+     * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CountingBloomFilter)
      */
     boolean remove(BloomFilter other);
 
     /**
-     * Removes the specified hasher from the Bloom filter from this Bloom filter. Specifically
+     * Removes the specified hasher from the Bloom filter from this Bloom filter.
+     *
+     * <p>Specifically
      * all counts for the <em>distinct</em> indexes identified by the {@code hasher} will be
-     * decremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.
+     * decremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.</p>
      *
-     * For HasherCollections each SimpleHasher will be considered a single item and decremented
-     * from the counts separately.
+     * <p>For HasherCollections each enclosed Hasher will be considered a single item and decremented
+     * from the counts separately.</p>
      *
-     * <p>This method will return true if the filter is valid after the operation.
+     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param hasher the hasher to provide the indexes
-     * @return true if the removal was successful and the state is valid
-     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
-     * this filter
+     * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      */
     boolean remove(Hasher hasher);
 
-
     /**
-     * Adds the specified BitCountProducer to this Bloom filter. Specifically
-     * all counts for the indexes identified by the {@code other} will be incremented
-     * by their corresponding values in the {@code other}.
+     * Adds the specified BitCountProducer to this Bloom filter.
      *
-     * <p>This method will return true if the filter is valid after the operation.</p>
+     * <p>Specifically
+     * all counts for the indexes identified by the {@code other} will be incremented
+     * by their corresponding values in the {@code other}.</p>
+     *
+     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param other the BitCountProducer to add.
-     * @return true if the addition was successful and the state is valid
+     * @return {@code true} if the addition was successful and the state is valid
      * @see #isValid()
      */
     boolean add(BitCountProducer other);
 
     /**
-     * Adds the specified BitCountProducer to this Bloom filter. Specifically
+     * Adds the specified BitCountProducer to this Bloom filter.
+     *
+     * <p>Specifically
      * all counts for the indexes identified by the {@code other} will be decremented
-     * by their corresponding values in the {@code other}.
+     * by their corresponding values in the {@code other}.</p>
      *
      * <p>This method will return true if the filter is valid after the operation.</p>
      *
      * @param other the BitCountProducer to subtract.
-     * @return true if the subtraction was successful and the state is valid
+     * @return {@code true} if the subtraction was successful and the state is valid
      * @see #isValid()
      */
     boolean subtract(BitCountProducer other);
 
     /**
      * Merges the specified Bloom filter into this Bloom filter to produce a new CountingBloomFilter.
-     * Specifically the new Bloom filter will contain all the counts of this filter and in addition
+     *
+     * <p>Specifically the new Bloom filter will contain all the counts of this filter and in addition
      * all bit indexes that are enabled in the {@code other} filter will be incremented
-     * by one in the new filter.
+     * by one in the new filter.</p>
      *
      * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
      * should be called on the new filter.</p>
@@ -160,12 +163,13 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
 
     /**
      * Merges the specified hasher with this Bloom filter to create a new CountingBloomFilter.
-     * Specifically the new Bloom filter will contain all the counts of this filter and in addition
-     * all bit indexes specified by the {@code hasher} will be incremented
-     * by one in the new filter.
      *
-     * For HasherCollections each SimpleHasher will be considered a single item and increment
-     * the counts separately.
+     * <p>Specifically the new Bloom filter will contain all the counts of this filter and in addition
+     * all bit indexes specified by the {@code hasher} will be incremented
+     * by one in the new filter.</p>
+     *
+     * <p>For HasherCollections each enclosed Hasher will be considered a single item and increment
+     * the counts separately.</p>
      *
      * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
      * should be called on the new filter.</p>

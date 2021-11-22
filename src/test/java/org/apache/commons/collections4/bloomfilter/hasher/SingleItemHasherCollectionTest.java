@@ -25,19 +25,19 @@ import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link HasherCollection}.
+ * Tests the {@link SingleItemHasherCollection}.
  */
-public class HasherCollectionTest {
+public class SingleItemHasherCollectionTest {
 
     private SimpleHasher hasher1 = new SimpleHasher( 1,1 );
     private SimpleHasher hasher2 = new SimpleHasher( 2, 2 );
-    private HasherCollection hasher = new HasherCollection( hasher1, hasher2 );
+    private HasherCollection hasher = new SingleItemHasherCollection( hasher1, hasher2 );
 
     @Test
     public void sizeTest() {
-        assertEquals( 2, hasher.size() );
-        HasherCollection hasher3 = new HasherCollection( hasher, new SimpleHasher( 3, 3 ));
-        assertEquals( 3, hasher3.size() );
+        assertEquals( 1, hasher.size() );
+        HasherCollection hasher3 = new SingleItemHasherCollection( hasher, new SimpleHasher( 3, 3 ));
+        assertEquals( 1, hasher3.size() );
 
     }
 
@@ -45,13 +45,13 @@ public class HasherCollectionTest {
     @Test
     public void testIndices() {
         Shape shape = new Shape( 5, 10 );
-        Integer[] expected = { 1,2,3,4,5,2,4,6,8,0 };
+        Integer[] expected = { 1,2,3,4,5,6,8,0 };
         List<Integer> lst = new ArrayList<Integer>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex( lst::add );
         assertEquals( expected.length, lst.size());
         for (int i=0;i< expected.length;i++) {
-            assertEquals( String.format("error at position %d", i), expected[i], lst.get(i) );
+            assertEquals( expected[i], lst.get(i) );
         }
     }
 

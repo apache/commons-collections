@@ -14,4 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Exceptions specific to Bloom filter processing.
+ */
 package org.apache.commons.collections4.bloomfilter.exceptions;

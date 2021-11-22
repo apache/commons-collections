@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -32,9 +33,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param filter the filter to get the data from.
      * @return An array of BitMap long.
      */
-    public static long[] asBitMapArray( BloomFilter filter ) {
+    public static long[] asBitMapArray(BloomFilter filter) {
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(filter.getShape());
-        filter.forEachBitMap( builder );
+        filter.forEachBitMap(builder);
         return builder.getArray();
     }
 
@@ -43,20 +44,24 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param filter the Filter to get the data from.
      * @return An array of indices for enabled bits in the Bloom filter.
      */
-    public static int[] asIndexArray( BloomFilter filter ) {
+    public static int[] asIndexArray(BloomFilter filter) {
         List<Integer> lst = new ArrayList<Integer>();
-        filter.forEachIndex( lst::add );
-        return lst.stream().mapToInt( Integer::intValue ).toArray();
+        filter.forEachIndex(lst::add);
+        return lst.stream().mapToInt(Integer::intValue).toArray();
     }
-
 
     // Query Operations
 
     /**
-     * This method is used to determine the best method for matching.  For `sparse` implementations the `getIndices()`
-     * method is more efficient.  Implementers should determine if it is easier for the implementation to return am array of
-     * Indices (sparse) or a bit map as an array of unsigned longs.
-     * @return
+     * This method is used to determine the best method for matching.
+     *
+     * <p>For `sparse` implementations
+     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
+     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
+     * for the implementation to produce indexes of BitMap blocks.</p>
+     *
+     * @return {@code true} if the implementation is sparse {@code false} otherwise.
+     * @see BitMap
      */
     boolean isSparse();
 
@@ -67,44 +72,45 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     Shape getShape();
 
     /**
-     * Returns {@code true} if this filter contains the specified filter. Specifically this
+     * Returns {@code true} if this filter contains the specified filter.
+     *
+     * <p>Specifically this
      * returns {@code true} if this filter is enabled for all bits that are enabled in the
      * {@code other} filter. Using the bit representations this is
-     * effectively {@code (this AND other) == other}.
+     * effectively {@code (this AND other) == other}.</p>
      *
      * @param other the other Bloom filter
      * @return true if all enabled bits in the other filter are enabled in this filter.
      */
     default boolean contains(BloomFilter other) {
-        Objects.requireNonNull( other, "other");
-        return isSparse() ? contains( (IndexProducer) other) :
-            contains( (BitMapProducer) other );
+        Objects.requireNonNull(other, "other");
+        return isSparse() ? contains((IndexProducer) other) : contains((BitMapProducer) other);
     }
 
     /**
      * Returns {@code true} if this filter contains the bits specified in the hasher.
-     * Specifically this returns {@code true} if this filter is enabled for all bit indexes
+     *
+     * <p>Specifically this returns {@code true} if this filter is enabled for all bit indexes
      * identified by the {@code hasher}. Using the BitMap representations this is
-     * effectively {@code (this AND hasher) == hasher}.
+     * effectively {@code (this AND hasher) == hasher}.</p>
      *
      * @param hasher the hasher to provide the indexes
      * @return true if this filter is enabled for all bits specified by the hasher
-     * @throws IllegalArgumentException if the hasher cannot generate indices for the shape of
-     * this filter
      */
     default boolean contains(Hasher hasher) {
-        Objects.requireNonNull( hasher, "Hasher");
+        Objects.requireNonNull(hasher, "Hasher");
         Shape shape = getShape();
-        return contains( hasher.indices(shape));
+        return contains(hasher.indices(shape));
     }
 
     /**
      * Returns {@code true} if this filter contains the indices specified IndexProducer.
-     * Specifically this returns {@code true} if this filter is enabled for all bit indexes
-     * identified by the {@code IndexProducer}.
+     *
+     * <p>Specifically this returns {@code true} if this filter is enabled for all bit indexes
+     * identified by the {@code IndexProducer}.</p>
      *
      * @param indexProducer the IndexProducer to provide the indexes
-     * @return true if this filter is enabled for all bits specified by the IndexProducer
+     * @return {@code true} if this filter is enabled for all bits specified by the IndexProducer
      */
     boolean contains(IndexProducer indexProducer);
 
@@ -113,55 +119,60 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * bitMapProducer.
      *
      * @param bitMapProducer the the {@code BitMapProducer} to provide the BitMaps.
-     * @return true if this filter is enabled for all bits specified by the BitMaps
+     * @return {@code true} if this filter is enabled for all bits specified by the BitMaps
      */
     boolean contains(BitMapProducer bitMapProducer);
 
     /**
      * Merges the specified Bloom filter with this Bloom filter creating a new Bloom filter.
-     * Specifically all bit indexes that are enabled in the {@code other} and in @code this} filter will be
-     * enabled in the resulting filter.
+     *
+     * <p>Specifically all bit indexes that are enabled in the {@code other} and in @code this} filter will be
+     * enabled in the resulting filter.</p>
      *
      * @param other the other Bloom filter
      * @return The new Bloom filter.
      */
     default BloomFilter merge(BloomFilter other) {
-        Objects.requireNonNull( other, "other");
+        Objects.requireNonNull(other, "other");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse( (cardinality() + other.cardinality()), getShape() ) ?
-                new SparseBloomFilter(shape) :
-                    new SimpleBloomFilter(shape);
+        BloomFilter result = BitMap.isSparse((cardinality() + other.cardinality()), getShape())
+                ? new SparseBloomFilter(shape)
+                        : new SimpleBloomFilter(shape);
 
-        result.mergeInPlace( this );
-        result.mergeInPlace( other );
+        result.mergeInPlace(this);
+        result.mergeInPlace(other);
         return result;
     }
 
     /**
      * Merges the specified Hasher with this Bloom filter and returns a new Bloom filter.
-     * Specifically all bit indexes that are identified by the {@code hasher} and in {@code this} Bloom filter
-     * be enabled in the resulting filter.
+     *
+     * <p>Specifically all bit indexes that are identified by the {@code hasher} and in {@code this} Bloom filter
+     * be enabled in the resulting filter.</p>
      *
      * @param hasher the hasher to provide the indices
      * @return the new Bloom filter.
      */
     default BloomFilter merge(Hasher hasher) {
-        Objects.requireNonNull( hasher, "hasher");
+        Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions())+ cardinality(), shape ) ?
-                new SparseBloomFilter(shape, hasher) :
-                    new SimpleBloomFilter(shape, hasher);
-        result.mergeInPlace( this );
+        BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
+                ? new SparseBloomFilter(shape, hasher)
+                        : new SimpleBloomFilter(shape, hasher);
+        result.mergeInPlace(this);
         return result;
     }
 
     /**
-     * Merges the specified Bloom filter into this Bloom filter. Specifically all
-     * bit indexes that are identified by the {@code other} will be enabled in this filter.
+     * Merges the specified Bloom filter into this Bloom filter.
      *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the specified Bloom filter.
+     * <p>Specifically all
+     * bit indexes that are identified by the {@code other} will be enabled in this filter.</p>
+     *
+     * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter may or may not contain
+     * the {@code other} Bloom filter.</em>  This state may occur in complex Bloom filter implementations like
+     * counting Bloom filters.</p>
      *
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
@@ -172,30 +183,33 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Merges the specified hasher into this Bloom filter. Specifically all
      * bit indexes that are identified by the {@code hasher} will be enabled in this filter.
      *
-     * <p>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter is not ensured to contain
-     * the specified Bloom filter.
+     * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter may or may not contain
+     * the {@code other} Bloom filter.</em>  This state may occur in complex Bloom filter implementations like
+     * counting Bloom filters.</p>
      *
      * @param hasher The hasher to merge.
      * @return true if the merge was successful
      */
     default boolean mergeInPlace(Hasher hasher) {
-        Objects.requireNonNull( hasher, "hasher");
+        Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse( (hasher.size() * shape.getNumberOfHashFunctions())+cardinality(),shape ) ?
-                new SparseBloomFilter(getShape(), hasher) :
-                    new SimpleBloomFilter(getShape(), hasher);
-        return mergeInPlace( result );
+        BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
+                ? new SparseBloomFilter(getShape(), hasher)
+                        : new SimpleBloomFilter(getShape(), hasher);
+        return mergeInPlace(result);
     }
 
     /**
-     * Determines if the bloom filter is "full". Full is defined as having no unset
-     * bits.
+     * Determines if the bloom filter is "full".
      *
-     * @return true if the filter is full.
+     * <p>Full is defined as having no unset
+     * bits.</p>
+     *
+     * @return {@code true} if the filter is full, {@code false} otherwise.
      */
     default boolean isFull(Shape shape) {
-        Objects.requireNonNull( shape, "shape");
+        Objects.requireNonNull(shape, "shape");
         return cardinality() == shape.getNumberOfBits();
     }
 
@@ -204,7 +218,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     /**
      * Gets the cardinality (number of enabled bits) of this Bloom filter.
      *
-     * <p>This is also known as the Hamming value.</p>
+     * <p>This is also known as the Hamming value or Hamming number.</p>
      *
      * @return the cardinality of this filter
      */
@@ -212,29 +226,50 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
      * Estimates the number of items in the Bloom filter.
+     *
+     * <p>By default this is the rounding of the {@code Shape.estimateN(cardinality)} calculation for the
+     * shape and cardinality of this filter.</p>
+     *
+     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
+     * is a probabilistic structure this value is an estimate.</p>
+     *
      * @return an estimate of the number of items in the bloom filter.
+     * @see Shape#estimateN(int)
      */
     default int estimateN() {
-        return (int) Math.round( getShape().estimateN( cardinality() ));
+        return (int) Math.round(getShape().estimateN(cardinality()));
     }
 
     /**
      * Estimates the number of items in the union of this Bloom filter with the other bloom filter.
+     *
+     * <p>By default this is the {@code estimateN()} of the merging of this filter with the {@code other} filter.</p>
+     *
+     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
+     * is a probabilistic structure this value is an estimate.</p>
+     *
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the union.
+     * @see #estimateN()
      */
-    default int estimateUnion( BloomFilter other) {
-        Objects.requireNonNull( other, "other");
-        return this.merge( other ).estimateN();
+    default int estimateUnion(BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        return this.merge(other).estimateN();
     }
 
     /**
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
+     *
+     * <p>By default this is the {@code estimateN() + other.estimateN() - estimateUnion(other)} </p>
+     *
+     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
+     * is a probabilistic structure this value is an estimate.</p>
+     *
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the intersection.
      */
-    default int estimateIntersection( BloomFilter other) {
-        Objects.requireNonNull( other, "other");
-        return estimateN() + other.estimateN() - estimateUnion(  other );
+    default int estimateIntersection(BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        return estimateN() + other.estimateN() - estimateUnion(other);
     }
 }

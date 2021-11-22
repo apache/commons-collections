@@ -22,14 +22,14 @@ import java.util.function.IntConsumer;
  * Produces bit counts for counting type Bloom filters.
  *
  * @since 4.5
-*/
+ */
 public interface BitCountProducer extends IndexProducer {
 
     /**
      * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
      * Any exceptions thrown by the action are relayed to the caller.
      *
-     * Must only process each index once, and must process indexes in order.
+     * <p>Must only process each index once, and must process indexes in order.</p>
      *
      * @param consumer the action to be performed for each non-zero bit count
      * @throws NullPointerException if the specified action is null
@@ -38,7 +38,7 @@ public interface BitCountProducer extends IndexProducer {
 
     @Override
     default void forEachIndex(IntConsumer consumer) {
-        forEachCount( (i,v) -> consumer.accept( i ));
+        forEachCount((i, v) -> consumer.accept(i));
     }
 
     /**
@@ -47,11 +47,11 @@ public interface BitCountProducer extends IndexProducer {
      * @param idx An index producer.
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */
-    public static BitCountProducer from( IndexProducer idx ) {
+    public static BitCountProducer from(IndexProducer idx) {
         return new BitCountProducer() {
             @Override
             public void forEachCount(BitCountConsumer consumer) {
-                idx.forEachIndex( i -> consumer.accept(i, 1 ) );
+                idx.forEachIndex(i -> consumer.accept(i, 1));
             }
 
         };
