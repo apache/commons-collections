@@ -17,10 +17,14 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
+
+import java.util.function.IntConsumer;
+
+import org.apache.commons.collections4.bloomfilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 
 /**
- * A Hasher create IndexProducer based on the hash implementation and the
+ * A Hasher creates IndexProducer based on the hash implementation and the
  * provided Shape.
  *
  * @since 4.5
@@ -35,8 +39,9 @@ public interface Hasher {
      * defined by the shape. However the count of indices may not be a multiple of the number of
      * hash functions once implementation has removed duplicates.</p>
      *
-     * <p>This IndexProducer must be deterministic in that it mustreturn the same indices for the
+     * <p>This IndexProducer must be deterministic in that it must return the same indices for the
      * same Shape.</p>
+     *
      * <p>No guarantee is made as to order of indices.</p>
      * <p>Duplicates indices for a single item must be removed.</p>
      *
@@ -58,4 +63,81 @@ public interface Hasher {
     default boolean isEmpty() {
         return size() == 0;
     }
+
+    /**
+     * A convenience class for Hasher implementations to filter out duplicate indices.
+     *
+     * <p><em>If the index is negative the behavior is not defined.</em></p>
+     *
+     * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
+     * @since 4.5
+     */
+    public class Filter {
+        private long[] bits;
+        private int size;
+
+        /**
+         * Constructor.
+         *
+         * @param size The number of numbers to track. Values from 0 to size-1 will be tracked.
+         */
+        public Filter(int size) {
+            bits = new long[BitMap.numberOfBitMaps(size)];
+            this.size = size;
+        }
+
+        /**
+         * Test if the number has not been seen.
+         *
+         * <p>The first time a number is tested the method returns {@code true} and returns
+         * {@code false} for every time after that.</p>
+         *
+         * <p><em>If the input is negative the behavior is not defined.</em></p>
+         *
+         * <p><em>Note: only positive number are
+         * @param number the number to check.
+         * @return {@code true} if the number has not been seen, {@code false} otherwise.
+         */
+        public boolean test(int number) {
+            BitMap.checkPositive(number);
+            if (number >= size) {
+                throw new IndexOutOfBoundsException(String.format("number to large %d >= %d", number, size));
+            }
+            boolean retval = !BitMap.contains(bits, number);
+            BitMap.set(bits, number);
+            return retval;
+        }
+    }
+
+    /**
+     * Class to wrap an that an IntConsumer only receives an integer value once.
+     *
+     * <p><em>If the index is negative the behavior is not defined.</em></p>
+     *
+     * @since 4.5
+     */
+    public class FilteredIntConsumer implements IntConsumer {
+        private Hasher.Filter filter;
+        private IntConsumer consumer;
+
+        /**
+         * Constructor.
+         * @param shape The shape of the output.
+         * @param consumer to wrap.
+         */
+        public FilteredIntConsumer(int maxIntegerValue, IntConsumer consumer) {
+            this.filter = new Hasher.Filter(maxIntegerValue);
+            this.consumer = consumer;
+        }
+
+        @Override
+        public void accept(int value) {
+            if (filter.test(value)) {
+                consumer.accept(value);
+                ;
+            }
+
+        }
+    }
+
 }
