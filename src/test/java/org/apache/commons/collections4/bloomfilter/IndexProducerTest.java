@@ -13,7 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.apache.commons.collections4.bloomfilter;
+ */
+package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,34 +30,31 @@ public class IndexProducerTest {
 
     }
 
-
-
     @Test
     public void fromBitMapProducerTest() {
-        TestingBitMapProducer producer = new TestingBitMapProducer( new long[] { 1L, 2L, 3L } );
-        IndexProducer underTest = IndexProducer.fromBitMapProducer( producer );
+        TestingBitMapProducer producer = new TestingBitMapProducer(new long[] { 1L, 2L, 3L });
+        IndexProducer underTest = IndexProducer.fromBitMapProducer(producer);
         List<Integer> lst = new ArrayList<Integer>();
 
-        underTest.forEachIndex( lst::add );
-        assertEquals( 4, lst.size() );
-        assertEquals( Integer.valueOf(0), lst.get(0) );
-        assertEquals( Integer.valueOf(1+64), lst.get(1) );
-        assertEquals( Integer.valueOf(0+128), lst.get(2) );
-        assertEquals( Integer.valueOf(1+128), lst.get(3) );
+        underTest.forEachIndex(lst::add);
+        assertEquals(4, lst.size());
+        assertEquals(Integer.valueOf(0), lst.get(0));
+        assertEquals(Integer.valueOf(1 + 64), lst.get(1));
+        assertEquals(Integer.valueOf(0 + 128), lst.get(2));
+        assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        producer = new TestingBitMapProducer( new long[] { 0xFFFFFFFFFFFFFFFFL } );
-        underTest = IndexProducer.fromBitMapProducer( producer );
+        producer = new TestingBitMapProducer(new long[] { 0xFFFFFFFFFFFFFFFFL });
+        underTest = IndexProducer.fromBitMapProducer(producer);
         lst = new ArrayList<Integer>();
 
-        underTest.forEachIndex( lst::add );
+        underTest.forEachIndex(lst::add);
 
-        assertEquals( 64, lst.size() );
-        for (int i=0;i<64;i++) {
-            assertEquals( Integer.valueOf(i), lst.get(i) );
+        assertEquals(64, lst.size());
+        for (int i = 0; i < 64; i++) {
+            assertEquals(Integer.valueOf(i), lst.get(i));
         }
 
     }
-
 
     private class TestingBitMapProducer implements BitMapProducer {
         long[] values;
@@ -72,7 +70,5 @@ public class IndexProducerTest {
             }
         }
     }
-
-
 
 }

@@ -52,7 +52,7 @@ public interface BitMapProducer {
      * @param bitMaps the bitMaps to return.
      * @return a BitMapProducer.
      */
-    public static BitMapProducer fromLongArray(long[] bitMaps) {
+    static BitMapProducer fromLongArray(long[] bitMaps) {
         return new BitMapProducer() {
 
             @Override
@@ -71,7 +71,7 @@ public interface BitMapProducer {
      * @param shape the desired shape.
      * @return A BitMapProducer that produces the BitMap equivalent of the Indices from the producer.
      */
-    public static BitMapProducer fromIndexProducer(IndexProducer producer, Shape shape) {
+    static BitMapProducer fromIndexProducer(IndexProducer producer, Shape shape) {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(shape, "shape");
 
@@ -108,7 +108,7 @@ public interface BitMapProducer {
      * A LongConsumer that builds an Array of BitMaps as produced by a BitMapProducer.
      *
      */
-    public class ArrayBuilder implements LongConsumer {
+    class ArrayBuilder implements LongConsumer {
         private long[] result;
         private int idx = 0;
         private int bucketCount = 0;

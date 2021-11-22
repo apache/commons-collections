@@ -31,24 +31,24 @@ public class BitMapProducerTest {
 
             @Override
             public void forEachIndex(IntConsumer consumer) {
-                consumer.accept( 0 );
-                consumer.accept( 1 );
-                consumer.accept( 63 );
-                consumer.accept( 64 );
-                consumer.accept( 127 );
-                consumer.accept( 128 );
+                consumer.accept(0);
+                consumer.accept(1);
+                consumer.accept(63);
+                consumer.accept(64);
+                consumer.accept(127);
+                consumer.accept(128);
             }
         };
-        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, new Shape( 1, 200 ));
+        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, new Shape(1, 200));
         List<Long> lst = new ArrayList<Long>();
-        producer.forEachBitMap( lst::add );
-        long[] buckets = lst.stream().mapToLong( l -> l.longValue()).toArray();
-        assertTrue( BitMap.contains( buckets, 0));
-        assertTrue( BitMap.contains( buckets, 1));
-        assertTrue( BitMap.contains( buckets, 63));
-        assertTrue( BitMap.contains( buckets, 64));
-        assertTrue( BitMap.contains( buckets, 127));
-        assertTrue( BitMap.contains( buckets, 128));
+        producer.forEachBitMap(lst::add);
+        long[] buckets = lst.stream().mapToLong(l -> l.longValue()).toArray();
+        assertTrue(BitMap.contains(buckets, 0));
+        assertTrue(BitMap.contains(buckets, 1));
+        assertTrue(BitMap.contains(buckets, 63));
+        assertTrue(BitMap.contains(buckets, 64));
+        assertTrue(BitMap.contains(buckets, 127));
+        assertTrue(BitMap.contains(buckets, 128));
     }
 
 }

@@ -50,7 +50,7 @@ public final class SimpleHasher implements Hasher {
      * @param len the length of the extraction, may be longer than 8.
      * @return
      */
-    private static final long toLong(byte[] byteArray, int offset, int len) {
+    private static long toLong(byte[] byteArray, int offset, int len) {
         long val = 0;
         len = Math.min(len, Long.BYTES);
         for (int i = 0; i < len; i++) {

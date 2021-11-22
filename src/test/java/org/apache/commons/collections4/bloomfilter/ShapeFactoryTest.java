@@ -19,14 +19,12 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link Shape} class.
  */
 public class ShapeFactoryTest {
-
 
     /*
      * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
@@ -39,7 +37,6 @@ public class ShapeFactoryTest {
      *
      * k = 3
      */
-
 
     /**
      * Tests that if the number of items less than 1 an IllegalArgumentException is thrown.
@@ -59,7 +56,7 @@ public class ShapeFactoryTest {
             // expected
         }
         try {
-            Shape.Factory.fromNP(0, 0.02 );
+            Shape.Factory.fromNP(0, 0.02);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -72,19 +69,19 @@ public class ShapeFactoryTest {
     @Test
     public void badNumberOfBitsTest() {
         try {
-            Shape.Factory.fromNM( 5, 0 );
+            Shape.Factory.fromNM(5, 0);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
         }
         try {
-            Shape.Factory.fromNMK( 5, 0, 7 );
+            Shape.Factory.fromNMK(5, 0, 7);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
         }
         try {
-            Shape.Factory.fromPMK( 0.035, 0, 7 );
+            Shape.Factory.fromPMK(0.035, 0, 7);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -116,7 +113,7 @@ public class ShapeFactoryTest {
     @Test
     public void badProbabilityTest() {
         try {
-            Shape.Factory.fromNMK( 4000, 8, 1);
+            Shape.Factory.fromNMK(4000, 8, 1);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // expected
@@ -128,19 +125,18 @@ public class ShapeFactoryTest {
             // do nothing.
         }
         try {
-            Shape.Factory.fromNP( 10, 1.0);
+            Shape.Factory.fromNP(10, 1.0);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
         try {
-            Shape.Factory.fromNP( 10, Double.NaN);
+            Shape.Factory.fromNP(10, Double.NaN);
             fail("Should have thrown IllegalArgumentException");
         } catch (final IllegalArgumentException expected) {
             // do nothing.
         }
     }
-
 
     /**
      * Tests that when the number of items, number of bits and number of hash functions is passed the values are
@@ -151,11 +147,11 @@ public class ShapeFactoryTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
          */
-        final Shape filterConfig = Shape.Factory.fromNMK( 5, 24, 4);
+        final Shape filterConfig = Shape.Factory.fromNMK(5, 24, 4);
 
         assertEquals(24, filterConfig.getNumberOfBits());
         assertEquals(4, filterConfig.getNumberOfHashFunctions());
-        assertEquals(0.102194782, filterConfig.getProbability(5 ), 0.000001);
+        assertEquals(0.102194782, filterConfig.getProbability(5), 0.000001);
     }
 
     /**
@@ -172,9 +168,6 @@ public class ShapeFactoryTest {
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(0.100375138, filterConfig.getProbability(5), 0.000001);
     }
-
-
-
 
     /**
      * Tests that if calculated number of bits is greater than Integer.MAX_VALUE an IllegalArgumentException is thrown.
@@ -194,14 +187,11 @@ public class ShapeFactoryTest {
      */
     @Test
     public void probabilityTest() {
-        Shape shape = Shape.Factory.fromNMK(5, 24, 3 );
+        Shape shape = Shape.Factory.fromNMK(5, 24, 3);
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(0.100375138, shape.getProbability(5), 0.000001);
     }
-
-
-
 
     /**
      * Tests the calculated values of calling the constructor with the probability, number of bits and number of hash
@@ -212,13 +202,11 @@ public class ShapeFactoryTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
-        final Shape shape = Shape.Factory.fromPMK( 0.1, 24, 3);
+        final Shape shape = Shape.Factory.fromPMK(0.1, 24, 3);
 
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(0.100375138, shape.getProbability(5), 0.000001);
     }
-
-
 
 }

@@ -72,7 +72,7 @@ public interface Hasher {
      * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
      * @since 4.5
      */
-    public class Filter {
+    class Filter {
         private long[] bits;
         private int size;
 
@@ -116,7 +116,7 @@ public interface Hasher {
      *
      * @since 4.5
      */
-    public class FilteredIntConsumer implements IntConsumer {
+    class FilteredIntConsumer implements IntConsumer {
         private Hasher.Filter filter;
         private IntConsumer consumer;
 

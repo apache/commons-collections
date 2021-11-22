@@ -29,12 +29,11 @@ import org.junit.jupiter.api.Test;
  */
 public class SetOperationsTest {
 
-
-    protected final SimpleHasher from1 = new SimpleHasher( 1, 1 );
+    protected final SimpleHasher from1 = new SimpleHasher(1, 1);
     protected final long from1Value = 0x3FFFEL;
-    protected final SimpleHasher from11 = new SimpleHasher( 11, 1 );
+    protected final SimpleHasher from11 = new SimpleHasher(11, 1);
     protected final long from11Value = 0xFFFF800L;
-    protected final HasherCollection bigHasher = new HasherCollection( from1, from11 );
+    protected final HasherCollection bigHasher = new HasherCollection(from1, from11);
     protected final long bigHashValue = 0xFFFFFFEL;
     private final Shape shape = new Shape(17, 72);
 
@@ -47,17 +46,15 @@ public class SetOperationsTest {
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
-
         assertEquals(0.0, SetOperations.cosineDistance(filter1, filter2), 0.0001);
         assertEquals(0.0, SetOperations.cosineDistance(filter2, filter1), 0.0001);
 
-        Shape shape2 = new Shape( 2, 72 );
+        Shape shape2 = new Shape(2, 72);
         filter1 = new SimpleBloomFilter(shape2, from1);
-        filter2 = new SimpleBloomFilter(shape2, new SimpleHasher( 2, 1 ));
+        filter2 = new SimpleBloomFilter(shape2, new SimpleHasher(2, 1));
 
         assertEquals(0.5, SetOperations.cosineDistance(filter1, filter2), 0.0001);
         assertEquals(0.5, SetOperations.cosineDistance(filter2, filter1), 0.0001);
-
 
         filter1 = new SimpleBloomFilter(shape, from1);
         filter2 = new SimpleBloomFilter(shape, from11);
@@ -76,7 +73,6 @@ public class SetOperationsTest {
         BloomFilter filter2 = new SimpleBloomFilter(shape);
         BloomFilter filter3 = new SimpleBloomFilter(shape);
 
-
         assertEquals(1.0, SetOperations.cosineDistance(filter1, filter2), 0.0001);
         assertEquals(1.0, SetOperations.cosineDistance(filter2, filter1), 0.0001);
         assertEquals(1.0, SetOperations.cosineDistance(filter2, filter3), 0.0001);
@@ -90,7 +86,6 @@ public class SetOperationsTest {
     public final void cosineSimilarityTest() {
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
-
 
         assertEquals(1.0, SetOperations.cosineSimilarity(filter1, filter2), 0.0001);
         assertEquals(1.0, SetOperations.cosineSimilarity(filter2, filter1), 0.0001);
@@ -118,8 +113,6 @@ public class SetOperationsTest {
         assertEquals(0.0, SetOperations.cosineSimilarity(filter3, filter1), 0.0001);
     }
 
-
-
     /**
      * Tests that the Hamming distance is correctly calculated.
      */
@@ -131,7 +124,7 @@ public class SetOperationsTest {
         assertEquals(0, SetOperations.hammingDistance(filter1, filter2));
         assertEquals(0, SetOperations.hammingDistance(filter2, filter1));
 
-        filter2 = new SimpleBloomFilter( shape, from11);
+        filter2 = new SimpleBloomFilter(shape, from11);
 
         assertEquals(20, SetOperations.hammingDistance(filter1, filter2));
         assertEquals(20, SetOperations.hammingDistance(filter2, filter1));
@@ -147,7 +140,6 @@ public class SetOperationsTest {
 
         assertEquals(1.0, SetOperations.jaccardDistance(filter1, filter2), 0.0001);
         assertEquals(1.0, SetOperations.jaccardDistance(filter2, filter1), 0.0001);
-
 
         filter2 = new SimpleBloomFilter(shape, from11);
 
@@ -206,60 +198,60 @@ public class SetOperationsTest {
 
     @Test
     public final void orCardinalityTest() {
-        Shape shape = new Shape( 3, 128);
-        SparseBloomFilter filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63, 64));
-        SparseBloomFilter filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 5, SetOperations.orCardinality(shape, filter1, filter2) );
-        assertEquals( 5, SetOperations.orCardinality(shape, filter2, filter1) );
+        Shape shape = new Shape(3, 128);
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63, 64));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(5, SetOperations.orCardinality(shape, filter1, filter2));
+        assertEquals(5, SetOperations.orCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 5, SetOperations.orCardinality(shape, filter1, filter2) );
-        assertEquals( 5, SetOperations.orCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(5, SetOperations.orCardinality(shape, filter1, filter2));
+        assertEquals(5, SetOperations.orCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(5, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 4, SetOperations.orCardinality(shape, filter1, filter2) );
-        assertEquals( 4, SetOperations.orCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(5, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(4, SetOperations.orCardinality(shape, filter1, filter2));
+        assertEquals(4, SetOperations.orCardinality(shape, filter2, filter1));
     }
 
     @Test
     public final void andCardinalityTest() {
-        Shape shape = new Shape( 3, 128);
-        SparseBloomFilter filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63, 64));
-        SparseBloomFilter filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 1, SetOperations.andCardinality(shape, filter1, filter2) );
-        assertEquals( 1, SetOperations.andCardinality(shape, filter2, filter1) );
+        Shape shape = new Shape(3, 128);
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63, 64));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(1, SetOperations.andCardinality(shape, filter1, filter2));
+        assertEquals(1, SetOperations.andCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 0, SetOperations.andCardinality(shape, filter1, filter2) );
-        assertEquals( 0, SetOperations.andCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(0, SetOperations.andCardinality(shape, filter1, filter2));
+        assertEquals(0, SetOperations.andCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(5, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 1, SetOperations.andCardinality(shape, filter1, filter2) );
-        assertEquals( 1, SetOperations.andCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(5, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(1, SetOperations.andCardinality(shape, filter1, filter2));
+        assertEquals(1, SetOperations.andCardinality(shape, filter2, filter1));
 
     }
 
     @Test
     public final void xorCardinalityTest() {
-        Shape shape = new Shape( 3, 128);
-        SparseBloomFilter filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63, 64));
-        SparseBloomFilter filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 4, SetOperations.xorCardinality(shape, filter1, filter2) );
-        assertEquals( 4, SetOperations.xorCardinality(shape, filter2, filter1) );
+        Shape shape = new Shape(3, 128);
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63, 64));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(4, SetOperations.xorCardinality(shape, filter1, filter2));
+        assertEquals(4, SetOperations.xorCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(1, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 5, SetOperations.xorCardinality(shape, filter1, filter2) );
-        assertEquals( 5, SetOperations.xorCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(1, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(5, SetOperations.xorCardinality(shape, filter1, filter2));
+        assertEquals(5, SetOperations.xorCardinality(shape, filter2, filter1));
 
-        filter1 = new SparseBloomFilter( shape,  Arrays.asList(5, 63 ));
-        filter2 = new SparseBloomFilter( shape,  Arrays.asList(5, 64, 69));
-        assertEquals( 3, SetOperations.xorCardinality(shape, filter1, filter2) );
-        assertEquals( 3, SetOperations.xorCardinality(shape, filter2, filter1) );
+        filter1 = new SparseBloomFilter(shape, Arrays.asList(5, 63));
+        filter2 = new SparseBloomFilter(shape, Arrays.asList(5, 64, 69));
+        assertEquals(3, SetOperations.xorCardinality(shape, filter1, filter2));
+        assertEquals(3, SetOperations.xorCardinality(shape, filter2, filter1));
 
     }
 }

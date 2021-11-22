@@ -65,7 +65,7 @@ public final class SetOperations {
          * @param op2 The operation to execute when there are two BitMaps to compare.
          * @param op1 The operation to execute when there is only one BitMap to cmpare.
          */
-        public CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
+        CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
             BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
             producer.forEachBitMap(builder);
             this.bitMaps = builder.getArray();
