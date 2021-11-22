@@ -29,7 +29,9 @@ public interface IndexProducer {
 
     /**
      * Each index is passed to the consumer.
-     * Any exceptions thrown by the action are relayed to the caller.
+     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
+     *
+     * <p>Indices ordering is not guaranteed</p>
      *
      * @param consumer the action to be performed for each non-zero bit index.
      * @throws NullPointerException if the specified action is null
@@ -41,26 +43,26 @@ public interface IndexProducer {
      * @param producer the @{code BitMapProducer}
      * @return a new @{code IndexProducer}.
      */
-    public static IndexProducer fromBitMapProducer( BitMapProducer producer ) {
-        Objects.requireNonNull( producer, "producer");
+    public static IndexProducer fromBitMapProducer(BitMapProducer producer) {
+        Objects.requireNonNull(producer, "producer");
         return new IndexProducer() {
             @Override
             public void forEachIndex(IntConsumer consumer) {
-                LongConsumer longConsumer = new LongConsumer(){
+                LongConsumer longConsumer = new LongConsumer() {
                     int wordIdx = 0;
+
                     @Override
                     public void accept(long word) {
-                        for (int i = 0;i<64;i++)
-                        {
-                            long mask = 1L<<i;
+                        for (int i = 0; i < 64; i++) {
+                            long mask = 1L << i;
                             if ((word & mask) == mask) {
-                                consumer.accept( (wordIdx*64)+i) ;
+                                consumer.accept((wordIdx * 64) + i);
                             }
                         }
                         wordIdx++;
                     }
                 };
-                producer.forEachBitMap( longConsumer::accept );
+                producer.forEachBitMap(longConsumer::accept);
             }
 
         };

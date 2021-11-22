@@ -39,7 +39,7 @@ import java.util.Objects;
  * [Wikipedia]</a>
  * @since 4.5
  */
-public final class Shape {
+public final class Shape implements Comparable<Shape> {
 
     /**
      * Number of hash functions to create a filter ({@code k}).
@@ -94,19 +94,21 @@ public final class Shape {
      */
     private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
         if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException("Number of hash functions must be greater than 0: " + numberOfHashFunctions);
+            throw new IllegalArgumentException(
+                    "Number of hash functions must be greater than 0: " + numberOfHashFunctions);
         }
         return numberOfHashFunctions;
     }
 
     @Override
+    public int compareTo(Shape other) {
+        int i = Integer.compare(numberOfBits, other.numberOfBits);
+        return i == 0 ? Integer.compare(numberOfHashFunctions, other.numberOfHashFunctions) : i;
+    }
+
+    @Override
     public boolean equals(final Object o) {
-        if (o instanceof Shape) {
-            final Shape other = (Shape) o;
-            return numberOfBits == other.numberOfBits &&
-                    numberOfHashFunctions == other.numberOfHashFunctions;
-        }
-        return false;
+        return (o instanceof Shape) ? compareTo((Shape) o) == 0 : false;
     }
 
     @Override
@@ -124,7 +126,6 @@ public final class Shape {
         return numberOfBits;
     }
 
-
     /**
      * Gets the number of hash functions used to construct the filter.
      * This is also known as {@code k}.
@@ -135,19 +136,18 @@ public final class Shape {
         return numberOfHashFunctions;
     }
 
-
     /**
      * Calculates the probability of false positives ({@code p}) given
      * numberOfItems ({@code n}), numberOfBits ({@code m}) and numberOfHashFunctions ({@code k}).
      * <pre>p = pow(1 - exp(-k / (m / n)), k)</pre>
      *
      * <p>This is the probability that a Bloom filter will return true for the presence of an item
-     * when it does not contain the item.
+     * when it does not contain the item.</p>
      *
      * <p>The probability assumes that the Bloom filter is filled with the expected number of
      * items. If the filter contains fewer items then the actual probability will be lower.
-     * Thus this returns the worst-case false positive probability for a filter that has not
-     * exceeded its expected number of items.
+     * Thus, this returns the worst-case false positive probability for a filter that has not
+     * exceeded its expected number of items.</p>
      *
      * @param numberOfItems the number of items hashed into the Bloom filter.
      * @return the probability of false positives.
@@ -166,8 +166,7 @@ public final class Shape {
 
     @Override
     public String toString() {
-        return String.format("Shape[ m=%s k=%s ]",
-                numberOfBits, numberOfHashFunctions);
+        return String.format("Shape[ m=%s k=%s ]", numberOfBits, numberOfHashFunctions);
     }
 
     /**
@@ -175,17 +174,17 @@ public final class Shape {
      * @param hammingValue the number of enabled  bits.
      * @return An estimate of the number of items in the Bloom filter.
      */
-    public double estimateN( int hammingValue ) {
+    public double estimateN(int hammingValue) {
         double c = hammingValue;
         double m = numberOfBits;
         double k = numberOfHashFunctions;
-        return  -(m / k) * Math.log(1.0 - (c / m));
+        return -(m / k) * Math.log(1.0 - (c / m));
     }
 
     /**
      * The factory to assist in the creation of proper Shapes.
      *
-     * In the methods of this factory the `fraom` names are appended with the standard variable
+     * In the methods of this factory the `from` names are appended with the standard variable
      * names in the order expected:
      *
      * <dl>
@@ -196,7 +195,6 @@ public final class Shape {
      * </dl>
      */
     public static class Factory {
-
 
         /**
          * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
@@ -225,20 +223,19 @@ public final class Shape {
          * @param probability The desired false-positive probability in the range {@code (0, 1)}
          * @param numberOfBits The number of bits in the filter
          * @param numberOfHashFunctions The number of hash functions in the filter
-         * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)};
-         * if {@code numberOfBits < 1}; if {@code numberOfHashFunctions < 1}; or if the actual
+         * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)},
+         * {@code numberOfBits < 1}, {@code numberOfHashFunctions < 1}, or the actual
          * probability is {@code >= 1.0}
          */
-        public static  Shape fromPMK(final double probability, final int numberOfBits,
-                final int numberOfHashFunctions) {
+        public static Shape fromPMK(final double probability, final int numberOfBits, final int numberOfHashFunctions) {
             checkProbability(probability);
             checkNumberOfBits(numberOfBits);
             checkNumberOfHashFunctions(numberOfHashFunctions);
 
             // Number of items (n):
             // n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))
-            final double n = Math.ceil(numberOfBits /
-                    (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
+            final double n = Math.ceil(numberOfBits
+                    / (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
 
             // log of probability is always < 0
             // number of hash functions is >= 1
@@ -251,10 +248,9 @@ public final class Shape {
             // similarly we can not produce a number greater than numberOfBits so we
             // do not have to check for Integer.MAX_VALUE either.
 
-
-            Shape shape = new Shape( numberOfHashFunctions, numberOfBits );
+            Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
             // check that probability is within range
-            checkCalculatedProbability(shape.getProbability( (int) n ));
+            checkCalculatedProbability(shape.getProbability((int) n));
             return shape;
         }
 
@@ -275,25 +271,26 @@ public final class Shape {
          *
          * @param numberOfItems Number of items to be placed in the filter
          * @param probability The desired false-positive probability in the range {@code (0, 1)}
-         * @throws IllegalArgumentException if {@code numberOfItems < 1}; if the desired probability
-         * is not in the range {@code (0, 1)}; or if the actual probability is {@code >= 1.0}
+         * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired probability
+         * is not in the range {@code (0, 1)} or if the actual probability is {@code >= 1.0}.
          * @see #getProbability()
          */
-        public static Shape fromNP (final int numberOfItems, final double probability) {
+        public static Shape fromNP(final int numberOfItems, final double probability) {
             checkNumberOfItems(numberOfItems);
             checkProbability(probability);
 
             // Number of bits (m)
             final double m = Math.ceil(numberOfItems * Math.log(probability) / DENOMINATOR);
             if (m > Integer.MAX_VALUE) {
-                throw new IllegalArgumentException("Resulting filter has more than " + Integer.MAX_VALUE + " bits: " + m);
+                throw new IllegalArgumentException(
+                        "Resulting filter has more than " + Integer.MAX_VALUE + " bits: " + m);
             }
             int numberOfBits = (int) m;
 
             int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-            Shape shape = new Shape( numberOfHashFunctions, numberOfBits );
+            Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
             // check that probability is within range
-            checkCalculatedProbability(shape.getProbability( numberOfItems ));
+            checkCalculatedProbability(shape.getProbability(numberOfItems));
             return shape;
         }
 
@@ -310,18 +307,17 @@ public final class Shape {
          *
          * @param numberOfItems Number of items to be placed in the filter
          * @param numberOfBits The number of bits in the filter
-         * @throws IllegalArgumentException if {@code numberOfItems < 1}; if {@code numberOfBits < 1};
-         * if the calculated number of hash function is {@code < 1};
-         * or if the actual probability is {@code >= 1.0}
+         * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
+         * the calculated number of hash function is {@code < 1}, or if the actual probability is {@code >= 1.0}
          * @see #getProbability()
          */
         public static Shape fromNM(final int numberOfItems, final int numberOfBits) {
             checkNumberOfItems(numberOfItems);
             checkNumberOfBits(numberOfBits);
             int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-            Shape shape = new Shape( numberOfHashFunctions, numberOfBits );
+            Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
             // check that probability is within range
-            checkCalculatedProbability(shape.getProbability( numberOfItems ));
+            checkCalculatedProbability(shape.getProbability(numberOfItems));
             return shape;
         }
 
@@ -336,19 +332,18 @@ public final class Shape {
          * @param numberOfItems Number of items to be placed in the filter
          * @param numberOfBits The number of bits in the filter.
          * @param numberOfHashFunctions The number of hash functions in the filter
-         * @throws IllegalArgumentException if {@code numberOfItems < 1}; if {@code numberOfBits < 1};
-         * if {@code numberOfHashFunctions < 1}; or if the actual probability is {@code >= 1.0}
+         * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
+         * {@code numberOfHashFunctions < 1}, or if the actual probability is {@code >= 1.0}.
          * @see #getProbability()
          */
-        public static Shape fromNMK (final int numberOfItems, final int numberOfBits,
-                final int numberOfHashFunctions) {
+        public static Shape fromNMK(final int numberOfItems, final int numberOfBits, final int numberOfHashFunctions) {
             checkNumberOfItems(numberOfItems);
             checkNumberOfBits(numberOfBits);
             checkNumberOfHashFunctions(numberOfHashFunctions);
             // check that probability is within range
-            Shape shape = new Shape( numberOfHashFunctions, numberOfBits );
+            Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
             // check that probability is within range
-            checkCalculatedProbability(shape.getProbability( numberOfItems ));
+            checkCalculatedProbability(shape.getProbability(numberOfItems));
             return shape;
         }
 
@@ -357,7 +352,7 @@ public final class Shape {
          *
          * @param numberOfItems the number of items
          * @return the number of items
-         * @throws IllegalArgumentException if the number of items is {@code < 1}
+         * @throws IllegalArgumentException if the number of items is {@code < 1}.
          */
         private static int checkNumberOfItems(final int numberOfItems) {
             if (numberOfItems < 1) {
@@ -371,7 +366,7 @@ public final class Shape {
          *
          * @param numberOfBits the number of bits
          * @return the number of bits
-         * @throws IllegalArgumentException if the number of bits is {@code < 1}
+         * @throws IllegalArgumentException if the number of bits is {@code < 1}.
          */
         private static int checkNumberOfBits(final int numberOfBits) {
             if (numberOfBits < 1) {
@@ -385,11 +380,12 @@ public final class Shape {
          *
          * @param numberOfHashFunctions the number of hash functions
          * @return the number of hash functions
-         * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
+         * @throws IllegalArgumentException if the number of hash functions is {@code < 1}.
          */
         private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
             if (numberOfHashFunctions < 1) {
-                throw new IllegalArgumentException("Number of hash functions must be greater than 0: " + numberOfHashFunctions);
+                throw new IllegalArgumentException(
+                        "Number of hash functions must be greater than 0: " + numberOfHashFunctions);
             }
             return numberOfHashFunctions;
         }
@@ -403,7 +399,8 @@ public final class Shape {
         private static void checkProbability(final double probability) {
             // Using the negation of within the desired range will catch NaN
             if (!(probability > 0.0 && probability < 1.0)) {
-                throw new IllegalArgumentException("Probability must be greater than 0 and less than 1: " + probability);
+                throw new IllegalArgumentException(
+                        "Probability must be greater than 0 and less than 1: " + probability);
             }
         }
 
@@ -415,7 +412,7 @@ public final class Shape {
          * construction.
          *
          * @param probability the probability
-         * @throws IllegalArgumentException if the probability is {@code >= 1.0}
+         * @throws IllegalArgumentException if the probability is {@code >= 1.0}.
          */
         private static void checkCalculatedProbability(final double probability) {
             // We do not need to check for p <= 0.0 since we only allow positive values for
@@ -452,4 +449,5 @@ public final class Shape {
             return (int) k;
         }
     }
+
 }
