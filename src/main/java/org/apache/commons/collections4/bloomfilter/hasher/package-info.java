@@ -55,9 +55,6 @@
  *  <p>Other implementations of the Hasher are easy to implement.  Hashers that represent single items should make use of the
  *  {@code Hahser.Filter} and/or {@code Hahser.FileredIntConsumer} classes to filter out duplicate indices.</p>
  *
- *
- *
- *
  * With the exception of the HasherCollection, a Hasher represents an item of arbitrary
  * byte size as multiple byte representations of fixed size (multiple hashes). The hashers
  * are be used to create indices for a Bloom filter.</p>
@@ -75,9 +72,9 @@
  * than the required number of hash values per item after duplicates have been
  * removed.</p>
  *
- * <h2>Footnotes</a>
+ * <h2>Footnotes</h2>
  *
- * <a name="footnote1>1.</a> Kirsch, Adam and Michael Mitzenmacher,
+ * <a name="footnote1">1.</a> Kirsch, Adam and Michael Mitzenmacher,
  * <a href='https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf'>"Building a Better Bloom Filter"</a>,
  * Harvard Computer Science Group Technical Report TR-02-05.
  *

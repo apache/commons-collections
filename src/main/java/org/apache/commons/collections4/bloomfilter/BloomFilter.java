@@ -203,14 +203,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     /**
      * Determines if the bloom filter is "full".
      *
-     * <p>Full is defined as having no unset
-     * bits.</p>
+     * <p>Full is defined as having no unset bits.</p>
      *
      * @return {@code true} if the filter is full, {@code false} otherwise.
      */
-    default boolean isFull(Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return cardinality() == shape.getNumberOfBits();
+    default boolean isFull() {
+        return cardinality() == getShape().getNumberOfBits();
     }
 
     // Counting Operations

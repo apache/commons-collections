@@ -82,27 +82,25 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the specified Bloom filter from this Bloom filter.
      *
-     * <p>Specifically
-     * all counts for the indexes identified by the {@code other} filter will be decremented by 1.</p>
+     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be decremented by 1,</p>
      *
-     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored; only
-     * the enabled indexes are used.</p>
+     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored and it is treated as an
+     * IndexProducer.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param other the other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CountingBloomFilter)
+     * @see #subtract(BitCountProducer)
      */
     boolean remove(BloomFilter other);
 
     /**
      * Removes the specified hasher from the Bloom filter from this Bloom filter.
      *
-     * <p>Specifically
-     * all counts for the <em>distinct</em> indexes identified by the {@code hasher} will be
-     * decremented by 1. If the {@code hasher} contains duplicate bit indexes these are ignored.</p>
+     * <p>Specifically all counts for the indices produced by the {@code hasher} will be
+     * decremented by 1.</p>
      *
      * <p>For HasherCollections each enclosed Hasher will be considered a single item and decremented
      * from the counts separately.</p>
@@ -112,6 +110,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param hasher the hasher to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
+     * @see #subtract(BitCountProducer)
      */
     boolean remove(Hasher hasher);
 
@@ -127,6 +126,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param other the BitCountProducer to add.
      * @return {@code true} if the addition was successful and the state is valid
      * @see #isValid()
+     * @see #subtract(BitCountProducer)
      */
     boolean add(BitCountProducer other);
 
@@ -142,6 +142,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param other the BitCountProducer to subtract.
      * @return {@code true} if the subtraction was successful and the state is valid
      * @see #isValid()
+     * @see #add(BitCountProducer)
      */
     boolean subtract(BitCountProducer other);
 

@@ -45,6 +45,7 @@ public class SparseBloomFilter implements BloomFilter {
     /**
      * Constructs an empty BitSetBloomFilter.
      *
+     * @param shape The shape of the filter.
      */
     public SparseBloomFilter(Shape shape) {
         Objects.requireNonNull(shape, "shape");

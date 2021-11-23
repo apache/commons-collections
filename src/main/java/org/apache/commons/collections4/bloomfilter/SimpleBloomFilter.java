@@ -46,8 +46,9 @@ public class SimpleBloomFilter implements BloomFilter {
     private int cardinality;
 
     /**
-     * Constructs an empty BitSetBloomFilter.
+     * Constructs an empty SimpleBloomFilter.
      *
+     * @param shape The shape for the filter.
      */
     public SimpleBloomFilter(Shape shape) {
         Objects.requireNonNull(shape, "shape");

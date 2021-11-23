@@ -92,11 +92,11 @@ public interface Hasher {
          * <p>The first time a number is tested the method returns {@code true} and returns
          * {@code false} for every time after that.</p>
          *
-         * <p><em>If the input is negative the behavior is not defined.</em></p>
+         * <p><em>If the input is not in the range [0,size) an IndexOutOfBoundsException exception is thrown.</em></p>
          *
-         * <p><em>Note: only positive number are
          * @param number the number to check.
          * @return {@code true} if the number has not been seen, {@code false} otherwise.
+         * @see Hasher.Filter#Filter(int)
          */
         public boolean test(int number) {
             BitMap.checkPositive(number);
@@ -122,11 +122,12 @@ public interface Hasher {
 
         /**
          * Constructor.
-         * @param shape The shape of the output.
+         * <p>integers ouside the range [0,size) will throw an IndexOutOfBoundsException.
+         * @param size The number of integers to track. Values in the range [0,size) will be tracked.
          * @param consumer to wrap.
          */
-        public FilteredIntConsumer(int maxIntegerValue, IntConsumer consumer) {
-            this.filter = new Hasher.Filter(maxIntegerValue);
+        public FilteredIntConsumer(int size, IntConsumer consumer) {
+            this.filter = new Hasher.Filter(size);
             this.consumer = consumer;
         }
 
