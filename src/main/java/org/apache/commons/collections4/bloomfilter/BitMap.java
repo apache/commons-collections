@@ -88,7 +88,7 @@ public class BitMap {
      *
      * @param limit the number of bitmaps in a collection.
      * @param bitIndex the bit index
-     * @returns the index for the bitmap in the array.
+     * @return the index for the bitmap in the array.
      * @throws IndexOutOfBoundsException if the index is not positive
      * @see #getLongIndex(int)
      */
