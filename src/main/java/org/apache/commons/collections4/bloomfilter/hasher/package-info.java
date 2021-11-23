@@ -30,8 +30,9 @@
  *  <h3>SimpleHasher</h3>
  *
  *  <p>The SimpleHasher represents one item being added to the Bloom filter.  It utilizes the combinatorial strategy
- *  as described by Krisch and Mitzenmacher[<a href='#footnote1'>1</a>].  Generally, a hash value is created by hashing
- *  together multiple properties of the item being added. The hash value is then used to create a SimpleHasher.</p>
+ *  as described by <a href='https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf'>Krisch and Mitzenmacher</a>.
+ *  Generally, a hash value is created by hashing together multiple properties of the item being added. The hash value is
+ *  then used to create a SimpleHasher.</p>
  *
  *  <p>This hasher represents a single item and thus does not return duplicate indices.</p>
  *
@@ -55,7 +56,7 @@
  *  <p>Other implementations of the Hasher are easy to implement.  Hashers that represent single items should make use of the
  *  {@code Hahser.Filter} and/or {@code Hahser.FileredIntConsumer} classes to filter out duplicate indices.</p>
  *
- * With the exception of the HasherCollection, a Hasher represents an item of arbitrary
+ * <p>With the exception of the HasherCollection, a Hasher represents an item of arbitrary
  * byte size as multiple byte representations of fixed size (multiple hashes). The hashers
  * are be used to create indices for a Bloom filter.</p>
  *

@@ -271,7 +271,7 @@ public final class Shape implements Comparable<Shape> {
          *
          * @param numberOfItems Number of items to be placed in the filter
          * @param probability The desired false-positive probability in the range {@code (0, 1)}
-         * @returns a valid Shape
+         * @return a valid Shape
          * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired probability
          * is not in the range {@code (0, 1)} or if the actual probability is {@code >= 1.0}.
          */
