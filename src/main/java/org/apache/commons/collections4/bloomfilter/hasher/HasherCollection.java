@@ -61,8 +61,7 @@ public class HasherCollection implements Hasher {
     /**
      * Constructor.
      *
-     * @param function the function to use.
-     * @param buffers the byte buffers that will be hashed.
+     * @param hashers A list of Hashers to initialize the collection with.
      */
     public HasherCollection(Hasher... hashers) {
         this(Arrays.asList(hashers));

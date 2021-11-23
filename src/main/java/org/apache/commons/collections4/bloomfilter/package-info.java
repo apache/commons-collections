@@ -42,7 +42,7 @@
  * representation of the internal structure.  Additional methods are available in the {@code BitMap} to assist in
  * manipulation of the representations.</p>
  *
- * <p>The bloom filter code is an interface that requires implementation of 6 methods:
+ * <p>The bloom filter code is an interface that requires implementation of 6 methods:</p>
  * <ul>
  * <li>{@code cardinality()}
  * returns the number of bits enabled in the Bloom filter.</li>
@@ -64,7 +64,7 @@
  * utilizes either the {@code BitMapProducer} or {@code IndexProducer} from the argument to enable extra bits
  * in the internal representation of the Bloom filter..</li>
  * </ul>
- * </p>
+ *
  * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.
  * </p>
  *
@@ -73,7 +73,6 @@
  * <p>The counting bloom filter extends the Bloom filter by counting the number of times a specific bit has been
  * enabled or disabled.  This allows the removal (opposite of merge) of Bloom filters at the expense of additional
  * overhead.</p>
- *  <li>
  *
  * <h3>Shape</h3>
  *

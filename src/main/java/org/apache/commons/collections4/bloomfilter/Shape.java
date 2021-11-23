@@ -151,7 +151,6 @@ public final class Shape implements Comparable<Shape> {
      *
      * @param numberOfItems the number of items hashed into the Bloom filter.
      * @return the probability of false positives.
-     * @see #getNumberOfItems()
      */
     public double getProbability(int numberOfItems) {
         if (numberOfItems < 0) {
@@ -223,6 +222,7 @@ public final class Shape implements Comparable<Shape> {
          * @param probability The desired false-positive probability in the range {@code (0, 1)}
          * @param numberOfBits The number of bits in the filter
          * @param numberOfHashFunctions The number of hash functions in the filter
+         * @return a valid Shape.
          * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)},
          * {@code numberOfBits < 1}, {@code numberOfHashFunctions < 1}, or the actual
          * probability is {@code >= 1.0}
@@ -271,9 +271,9 @@ public final class Shape implements Comparable<Shape> {
          *
          * @param numberOfItems Number of items to be placed in the filter
          * @param probability The desired false-positive probability in the range {@code (0, 1)}
+         * @returns a valid Shape
          * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired probability
          * is not in the range {@code (0, 1)} or if the actual probability is {@code >= 1.0}.
-         * @see #getProbability()
          */
         public static Shape fromNP(final int numberOfItems, final double probability) {
             checkNumberOfItems(numberOfItems);
@@ -307,9 +307,9 @@ public final class Shape implements Comparable<Shape> {
          *
          * @param numberOfItems Number of items to be placed in the filter
          * @param numberOfBits The number of bits in the filter
+         * @return a valid Shape.
          * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
          * the calculated number of hash function is {@code < 1}, or if the actual probability is {@code >= 1.0}
-         * @see #getProbability()
          */
         public static Shape fromNM(final int numberOfItems, final int numberOfBits) {
             checkNumberOfItems(numberOfItems);
@@ -332,9 +332,9 @@ public final class Shape implements Comparable<Shape> {
          * @param numberOfItems Number of items to be placed in the filter
          * @param numberOfBits The number of bits in the filter.
          * @param numberOfHashFunctions The number of hash functions in the filter
+         * @return a valid Shape.
          * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
          * {@code numberOfHashFunctions < 1}, or if the actual probability is {@code >= 1.0}.
-         * @see #getProbability()
          */
         public static Shape fromNMK(final int numberOfItems, final int numberOfBits, final int numberOfHashFunctions) {
             checkNumberOfItems(numberOfItems);
