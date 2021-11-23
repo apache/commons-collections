@@ -278,7 +278,7 @@
       Migrate assert to Assertions #209.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump actions/cache from v2 to v2.1.6 #214 #225 #239.
+      Bump actions/cache from v2 to v2.1.7 #214 #225 #239 #266.
     </action>
     <action issue="COLLECTIONS-781" type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
