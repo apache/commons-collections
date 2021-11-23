@@ -201,13 +201,13 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // create empty filter
         BloomFilter filter = createEmptyFilter(shape);
-        assertFalse("Should not be full", filter.isFull(shape));
+        assertFalse("Should not be full", filter.isFull());
 
         filter = createFilter(shape, fullHasher);
-        assertTrue("Should be full", filter.isFull(shape));
+        assertTrue("Should be full", filter.isFull());
 
         filter = createFilter(shape, new SimpleHasher(1, 3));
-        assertFalse("Should not be full", filter.isFull(shape));
+        assertFalse("Should not be full", filter.isFull());
     }
 
     /**
