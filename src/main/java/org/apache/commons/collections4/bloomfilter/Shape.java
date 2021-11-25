@@ -174,7 +174,7 @@ public final class Shape implements Comparable<Shape> {
      * <p><em>Note:</em></p>
      * <ul>
      * <li> if hammingValue == numberOfBits, then result is infinity.</li>
-     * <li> if hammingValue > numberOfBits, then result is NaN.</li>
+     * <li> if hammingValue &gt; numberOfBits, then result is NaN.</li>
      * </ul>
      *
      * @param hammingValue the number of enabled  bits.
