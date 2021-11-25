@@ -29,7 +29,18 @@ import org.apache.commons.collections4.bloomfilter.Shape;
  */
 public final class NullHasher implements Hasher {
 
+    /**
+     * The instance of the Null Hasher.
+     */
     public static final NullHasher INSTANCE = new NullHasher();
+
+
+    private static final IndexProducer PRODUCER = new IndexProducer() {
+        @Override
+        public void forEachIndex(IntConsumer consumer) {
+            // do nothing
+        }
+    };
 
     private NullHasher() {
     }
@@ -37,13 +48,7 @@ public final class NullHasher implements Hasher {
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-
-        return new IndexProducer() {
-            @Override
-            public void forEachIndex(IntConsumer consumer) {
-                // do nothing
-            }
-        };
+        return PRODUCER;
     }
 
     @Override

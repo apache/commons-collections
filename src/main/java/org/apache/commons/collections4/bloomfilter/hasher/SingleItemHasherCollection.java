@@ -32,14 +32,27 @@ import org.apache.commons.collections4.bloomfilter.Shape;
  */
 public class SingleItemHasherCollection extends HasherCollection {
 
+    /**
+     * Constructs an empty SingleItemHasherCollection.
+     */
     public SingleItemHasherCollection() {
         super();
     }
 
+    /**
+     * Constructs a SingleItemHasherCollection from a collection of Hasher objects.
+     *
+     * @param hashers A collections of Hashers to build the indices with.
+     */
     public SingleItemHasherCollection(Collection<Hasher> hashers) {
         super(hashers);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param hashers A list of Hashers to initialize the collection with.
+     */
     public SingleItemHasherCollection(Hasher... hashers) {
         super(hashers);
     }

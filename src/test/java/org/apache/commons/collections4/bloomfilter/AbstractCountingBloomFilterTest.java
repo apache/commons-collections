@@ -81,8 +81,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf, bigHashCounts);
     }
 
+    @Override
     @Test
-    public void containsTest_Mixed() {
+    public void containsTest() {
         final BloomFilter bf = new SimpleBloomFilter(shape, from1);
         final CountingBloomFilter bf2 = createFilter(shape, bigHasher);
 
@@ -90,7 +91,11 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue("BF2 Should contain itself", bf2.contains(bf2));
         assertFalse("BF should not contain BF2", bf.contains(bf2));
         assertTrue("BF2 should contain BF", bf2.contains(bf));
+        BitMapProducer producer = bf2;
+        assertTrue("BF2 should contain BF bitMapProducer", bf2.contains(producer) );
+
     }
+
 
     /**
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
@@ -185,6 +190,23 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.add(BitCountProducer.from(from11.indices(shape)));
 
         assertTrue("Remove should work", bf1.remove(new SimpleBloomFilter(shape, from11)));
+        assertFalse("Should not contain", bf1.contains(from11));
+        assertTrue("Should contain", bf1.contains(from1));
+
+        assertCounts(bf1, from1Counts);
+
+    }
+
+    /**
+     * Tests that merge correctly updates the counts when a CountingBloomFilter is
+     * passed.
+     */
+    @Test
+    public void removeTest_hasher() {
+        final CountingBloomFilter bf1 = createFilter(shape, from1);
+        bf1.add(BitCountProducer.from(from11.indices(shape)));
+
+        assertTrue("Remove should work", bf1.remove(from11));
         assertFalse("Should not contain", bf1.contains(from11));
         assertTrue("Should contain", bf1.contains(from1));
 

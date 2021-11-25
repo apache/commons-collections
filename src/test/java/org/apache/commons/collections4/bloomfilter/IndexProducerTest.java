@@ -26,10 +26,6 @@ import org.junit.jupiter.api.Test;
 
 public class IndexProducerTest {
 
-    public IndexProducerTest() {
-
-    }
-
     @Test
     public void fromBitMapProducerTest() {
         TestingBitMapProducer producer = new TestingBitMapProducer(new long[] { 1L, 2L, 3L });

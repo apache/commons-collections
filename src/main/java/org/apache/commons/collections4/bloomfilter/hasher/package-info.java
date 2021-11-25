@@ -38,7 +38,7 @@
  *
  *  <h3>HasherCollection</h3>
  *
- *  <p>The HasherCollection is a collection of Hashers that implemehts the Hasher interface.  Each hasher within the collection
+ *  <p>The HasherCollection is a collection of Hashers that implements the Hasher interface.  Each hasher within the collection
  *  represents a single item, or in the case of a HasherCollections multiple items.</p>
  *
  *  <p>This hahser represents multiple items and thus may return duplicate indices.</p>
@@ -72,12 +72,6 @@
  * remove all duplicate values for a single item.  Thus the hasher may generate fewer
  * than the required number of hash values per item after duplicates have been
  * removed.</p>
- *
- * <h2>Footnotes</h2>
- *
- * <a name="footnote1">1.</a> Kirsch, Adam and Michael Mitzenmacher,
- * <a href='https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf'>"Building a Better Bloom Filter"</a>,
- * Harvard Computer Science Group Technical Report TR-02-05.
  *
  * @see org.apache.commons.collections4.bloomfilter.IndexProducer
  * @since 4.5

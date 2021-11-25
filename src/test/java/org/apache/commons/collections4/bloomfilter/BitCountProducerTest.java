@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.IntConsumer;
 
@@ -52,6 +55,24 @@ public class BitCountProducerTest {
         assertEquals(Integer.valueOf(1), m.get(127));
         assertEquals(Integer.valueOf(1), m.get(128));
 
+    }
+
+    @Test
+    public void forEachIndexTest() {
+        BitCountProducer producer = new BitCountProducer() {
+
+            @Override
+            public void forEachCount(BitCountConsumer consumer) {
+                consumer.accept(1, 11);
+                consumer.accept(3, 13);
+            }
+        };
+
+        List<Integer> lst = new ArrayList<Integer>();
+        producer.forEachIndex( lst::add );
+        assertEquals( 2, lst.size() );
+        assertEquals( Integer.valueOf(1), lst.get(0) );
+        assertEquals( Integer.valueOf(3), lst.get(1) );
     }
 
 }

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,11 @@ public class NullHasherTest {
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(0, lst.size());
+    }
+
+    @Test
+    public void isEmptyTest() {
+        assertTrue( hasher.isEmpty() );
     }
 
 }

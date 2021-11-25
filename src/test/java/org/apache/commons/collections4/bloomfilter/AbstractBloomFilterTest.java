@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.HasherCollection;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
@@ -63,6 +63,16 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      */
     protected abstract T createFilter(Shape shape, Hasher hasher);
 
+    @Test
+    public void asIndexArrayTest() {
+        final BloomFilter bf = createFilter( shape, from1 );
+        int[] ary = BloomFilter.asIndexArray( bf );
+        assertEquals( 17, ary.length );
+        for (int i=0; i<ary.length; i++) {
+            assertEquals( "Error at position "+i, i+1, ary[i] );
+        }
+
+    }
     /**
      * Tests that the andCardinality calculations are correct.
      *
@@ -98,8 +108,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf = createFilter(shape, from1);
         final BloomFilter bf2 = createFilter(shape, bigHasher);
 
-        assertEquals(1.0, bf.estimateIntersection(bf2));
-        assertEquals(1.0, bf2.estimateIntersection(bf));
+        assertEquals(1, bf.estimateIntersection(bf2));
+        assertEquals(1, bf2.estimateIntersection(bf));
     }
 
     @Test
@@ -107,8 +117,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf = createFilter(shape, from1);
         final BloomFilter bf2 = createEmptyFilter(shape);
 
-        assertEquals(0.0, bf.estimateIntersection(bf2));
-        assertEquals(0.0, bf2.estimateIntersection(bf));
+        assertEquals(0, bf.estimateIntersection(bf2));
+        assertEquals(0, bf2.estimateIntersection(bf));
     }
 
     /**
@@ -122,8 +132,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         final BloomFilter bf2 = createFilter(shape, from11);
 
-        assertEquals(2.0, bf.estimateUnion(bf2));
-        assertEquals(2.0, bf2.estimateUnion(bf));
+        assertEquals(2, bf.estimateUnion(bf2));
+        assertEquals(2, bf2.estimateUnion(bf));
     }
 
     @Test
@@ -131,8 +141,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf = createFilter(shape, from1);
         final BloomFilter bf2 = createEmptyFilter(shape);
 
-        assertEquals(1.0, bf.estimateUnion(bf2));
-        assertEquals(1.0, bf2.estimateUnion(bf));
+        assertEquals(1, bf.estimateUnion(bf2));
+        assertEquals(1, bf2.estimateUnion(bf));
     }
 
     /**

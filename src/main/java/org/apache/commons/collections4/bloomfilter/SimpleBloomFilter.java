@@ -74,6 +74,7 @@ public class SimpleBloomFilter implements BloomFilter {
      * Constructor.
      * @param shape The shape for the filter.
      * @param producer the BitMap Producer to initialize the filter with.
+     * @throws IllegalArgumentException if the producer returns too many bit maps.
      */
     public SimpleBloomFilter(final Shape shape, BitMapProducer producer) {
         Objects.requireNonNull(shape, "shape");
@@ -81,8 +82,13 @@ public class SimpleBloomFilter implements BloomFilter {
         this.shape = shape;
 
         BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
-        producer.forEachBitMap(builder);
-        this.bitMap = builder.getArray();
+        try {
+            producer.forEachBitMap(builder);
+            this.bitMap = builder.getArray();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException( String.format("BitMapProducer should only send %s maps",
+                    BitMap.numberOfBitMaps( shape.getNumberOfBits())), e);
+        }
         this.cardinality = -1;
     }
 
