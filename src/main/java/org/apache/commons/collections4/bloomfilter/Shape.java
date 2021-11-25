@@ -170,6 +170,13 @@ public final class Shape implements Comparable<Shape> {
 
     /**
      * Estimate the number of items in a Bloom filter with this shape and the specified number of bits enabled.
+     *
+     * <p><em>Note:</em></p>
+     * <ul>
+     * <li> if hammingValue == numberOfBits, then result is infinity.</li>
+     * <li> if hammingValue > numberOfBits, then result is NaN.</li>
+     * </ul>
+     *
      * @param hammingValue the number of enabled  bits.
      * @return An estimate of the number of items in the Bloom filter.
      */
@@ -206,6 +213,13 @@ public final class Shape implements Comparable<Shape> {
          * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
          */
         private static final double DENOMINATOR = -LN_2 * LN_2;
+
+        /**
+         * Do not instantiate.
+         */
+        private Factory() {
+
+        }
 
         /**
          * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the

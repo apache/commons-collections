@@ -135,9 +135,7 @@ public interface Hasher {
         public void accept(int value) {
             if (filter.test(value)) {
                 consumer.accept(value);
-                ;
             }
-
         }
     }
 

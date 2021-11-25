@@ -17,6 +17,8 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,14 @@ public class HasherCollectionTest {
         assertEquals(2, hasher.size());
         HasherCollection hasher3 = new HasherCollection(hasher, new SimpleHasher(3, 3));
         assertEquals(3, hasher3.size());
+    }
 
+    @Test
+    public void isEmptyTest() {
+        HasherCollection hasher = new HasherCollection();
+        assertTrue( hasher.isEmpty() );
+        hasher.add( hasher1 );
+        assertFalse( hasher.isEmpty() );
     }
 
     @Test
