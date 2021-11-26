@@ -87,6 +87,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue("BF2 Should contain itself", bf2.contains(bf2));
         assertFalse("BF should not contain BF2", bf.contains(bf2));
         assertTrue("BF2 should contain BF", bf2.contains(bf));
+
     }
 
     @Test
@@ -97,6 +98,25 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertFalse("BF Should not contain this hasher", bf.contains(new SimpleHasher(1, 3)));
     }
 
+    @Test
+    public void containsTest_IndexProducer() {
+        final BloomFilter bf = createFilter(shape, bigHasher);
+
+        IndexProducer indexProducer = new SimpleHasher(1,1).indices(shape);
+        assertTrue("BF Should contain this hasher", bf.contains(indexProducer));
+        indexProducer = new SimpleHasher(1,3).indices(shape);
+        assertFalse("BF Should not contain this hasher", bf.contains(indexProducer));
+    }
+
+    @Test
+    public void containsTest_BitMapProducer() {
+        final BloomFilter bf = createFilter(shape, bigHasher);
+
+        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1,1).indices(shape), shape);
+        assertTrue("BF Should contain this hasher", bf.contains(bitMapProducer));
+        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1,3).indices(shape), shape);
+        assertFalse("BF Should not contain this hasher", bf.contains(bitMapProducer));
+    }
     /**
      * Tests that the andCardinality calculations are correct.
      *

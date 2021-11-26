@@ -82,7 +82,7 @@ public class HasherCollection implements Hasher {
      */
     public void add(Collection<Hasher> hashers) {
         Objects.requireNonNull(hashers, "hashers");
-        hashers.addAll(hashers);
+        this.hashers.addAll(hashers);
     }
 
     @Override
