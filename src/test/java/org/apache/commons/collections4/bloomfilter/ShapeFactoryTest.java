@@ -209,4 +209,20 @@ public class ShapeFactoryTest {
         assertEquals(0.100375138, shape.getProbability(5), 0.000001);
     }
 
+    /**
+     * Tests the calculated values of calling the constructor with the probability, number of bits and number of hash
+     * functions.
+     */
+    @Test
+    public void fromNP_test() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
+         */
+        final double probability = 1.0/2000000;
+        final Shape shape = Shape.Factory.fromNP(10, probability );
+
+        assertEquals(302, shape.getNumberOfBits());
+        assertEquals(21, shape.getNumberOfHashFunctions());
+    }
+
 }

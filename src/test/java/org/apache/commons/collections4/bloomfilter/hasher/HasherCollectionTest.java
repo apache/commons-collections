@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
@@ -33,10 +34,10 @@ public class HasherCollectionTest {
 
     private SimpleHasher hasher1 = new SimpleHasher(1, 1);
     private SimpleHasher hasher2 = new SimpleHasher(2, 2);
-    private HasherCollection hasher = new HasherCollection(hasher1, hasher2);
 
     @Test
     public void sizeTest() {
+        HasherCollection hasher = new HasherCollection(hasher1, hasher2);
         assertEquals(2, hasher.size());
         HasherCollection hasher3 = new HasherCollection(hasher, new SimpleHasher(3, 3));
         assertEquals(3, hasher3.size());
@@ -52,6 +53,8 @@ public class HasherCollectionTest {
 
     @Test
     public void testIndices() {
+        HasherCollection hasher = new HasherCollection(hasher1, hasher2);
+        assertEquals(2, hasher.size());
         Shape shape = new Shape(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 2, 4, 6, 8, 0 };
         List<Integer> lst = new ArrayList<Integer>();
@@ -61,6 +64,13 @@ public class HasherCollectionTest {
         for (int i = 0; i < expected.length; i++) {
             assertEquals(String.format("error at position %d", i), expected[i], lst.get(i));
         }
+    }
+
+    @Test
+    public void testAdd_collection() {
+        HasherCollection hasher = new HasherCollection();
+        hasher.add( Arrays.asList( hasher1, hasher2));
+        assertEquals(2, hasher.size());
     }
 
 }
