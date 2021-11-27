@@ -502,7 +502,7 @@ public class ListUtilsTest {
     }
     
     @Test
-    public void testremoveNullElements() {
+    public void testRemoveNullElements() {
         final List<String> list = new ArrayList<>();
         list.add(a);
         list.add(null);
