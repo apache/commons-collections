@@ -102,9 +102,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void containsTest_IndexProducer() {
         final BloomFilter bf = createFilter(shape, bigHasher);
 
-        IndexProducer indexProducer = new SimpleHasher(1,1).indices(shape);
+        IndexProducer indexProducer = new SimpleHasher(1, 1).indices(shape);
         assertTrue("BF Should contain this hasher", bf.contains(indexProducer));
-        indexProducer = new SimpleHasher(1,3).indices(shape);
+        indexProducer = new SimpleHasher(1, 3).indices(shape);
         assertFalse("BF Should not contain this hasher", bf.contains(indexProducer));
     }
 
@@ -112,9 +112,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void containsTest_BitMapProducer() {
         final BloomFilter bf = createFilter(shape, bigHasher);
 
-        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1,1).indices(shape), shape);
+        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 1).indices(shape), shape);
         assertTrue("BF Should contain this hasher", bf.contains(bitMapProducer));
-        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1,3).indices(shape), shape);
+        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(shape), shape);
         assertFalse("BF Should not contain this hasher", bf.contains(bitMapProducer));
     }
     /**
