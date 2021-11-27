@@ -76,12 +76,12 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
             try {
                 map.containsKey(els[i]);
                 fail();
             } catch (final ClassCastException ex) {}
-            assertEquals(true, map.containsValue(els[i]));
+            assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
@@ -100,9 +100,9 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsValue(els[i]));
-            assertEquals(true, map.containsKey(els[i]));
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
             assertEquals(Integer.valueOf((String) els[i]), map.get(els[i]));
         }
 

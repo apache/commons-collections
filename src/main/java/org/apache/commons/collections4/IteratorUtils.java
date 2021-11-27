@@ -469,7 +469,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static <E> ListIterator<E> unmodifiableListIterator(final ListIterator<E> listIterator) {
-        return UnmodifiableListIterator.umodifiableListIterator(listIterator);
+        return UnmodifiableListIterator.unmodifiableListIterator(listIterator);
     }
 
     /**

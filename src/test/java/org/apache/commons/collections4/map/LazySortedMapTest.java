@@ -80,7 +80,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
         map = lazySortedMap(new TreeMap<Integer, Number>(), FactoryUtils.<Number>nullFactory());
         final Number o = map.get(5);
-        assertEquals(null, o);
+        assertNull(o);
         assertEquals(1, map.size());
 
     }
@@ -100,8 +100,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap("A", "C").lastKey());
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
     public void testReverseSortOrder() {
@@ -119,8 +118,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap("C", "A").lastKey());
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == reverseStringComparator);
+        assertSame("natural order, so comparator should be null", c, reverseStringComparator);
     }
 
     public void testTransformerDecorate() {

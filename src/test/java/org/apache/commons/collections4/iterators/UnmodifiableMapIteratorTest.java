@@ -83,7 +83,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         it = getMap().mapIterator();
-        assertTrue(it != UnmodifiableMapIterator.unmodifiableMapIterator(it));
+        assertNotSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         try {
             UnmodifiableMapIterator.unmodifiableMapIterator(null);

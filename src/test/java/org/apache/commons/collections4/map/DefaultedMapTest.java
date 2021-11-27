@@ -52,14 +52,14 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> map = new DefaultedMap<>((V) "NULL");
 
         assertEquals(0, map.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -70,15 +70,15 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -89,15 +89,15 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
     }
 
@@ -113,16 +113,16 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
-        assertEquals(true, map.containsKey("Key"));
+        assertTrue(map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
-        assertEquals(false, map.containsKey("NotInMap"));
+        assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }

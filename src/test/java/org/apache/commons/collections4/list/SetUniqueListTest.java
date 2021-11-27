@@ -16,14 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
+import org.apache.commons.collections4.set.UnmodifiableSet;
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * JUnit tests.
@@ -194,7 +191,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // repeat the test with a different class than HashSet;
         // which means subclassing SetUniqueList below
         list = new ArrayList<>();
-        uniqueList = new SetUniqueList307(list, new java.util.TreeSet<E>());
+        uniqueList = new SetUniqueList307(list, new TreeSet<E>());
 
         uniqueList.add((E) hello);
         uniqueList.add((E) world);
@@ -558,12 +555,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testSubListIsUnmodifiable() {
         resetFull();
         final List<E> subList = getCollection().subList(1, 3);
-        try {
-            subList.remove(0);
-            fail("subList should be unmodifiable");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertEquals(2, subList.size());
+        assertThrows(UnsupportedOperationException.class, () -> subList.remove(0));
     }
 
     @SuppressWarnings("unchecked")
@@ -616,11 +609,31 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         }
     }
 
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.fullCollection.version4.obj");
-//    }
+    @SuppressWarnings("unchecked")
+    public void testCreateSetBasedOnList() {
+        final List<String> list = new ArrayList<>();
+        list.add("One");
+        list.add("Two");
+        @SuppressWarnings("rawtypes") final SetUniqueList setUniqueList = (SetUniqueList) makeObject();
 
+        // Standard case with HashSet
+        final Set<String> setBasedOnList = setUniqueList.createSetBasedOnList(new HashSet<>(), list);
+        assertEquals(list.size(), setBasedOnList.size());
+        list.forEach(item -> assertTrue(setBasedOnList.contains(item)));
+
+        // Use different Set than HashSet
+        final Set<String> setBasedOnList1 = setUniqueList.createSetBasedOnList(new TreeSet<>(), list);
+        assertEquals(list.size(), setBasedOnList1.size());
+        list.forEach(item -> assertTrue(setBasedOnList1.contains(item)));
+
+        // throws internally NoSuchMethodException --> results in HashSet
+        final Set<String> setBasedOnList2 = setUniqueList.createSetBasedOnList(UnmodifiableSet.unmodifiableSet(new HashSet<>()), list);
+        assertEquals(list.size(), setBasedOnList2.size());
+        list.forEach(item -> assertTrue(setBasedOnList2.contains(item)));
+
+        // provide null values as Parameter
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
+
+    }
 }

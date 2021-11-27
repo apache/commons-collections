@@ -43,7 +43,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @return a new unmodifiable list iterator
      * @throws NullPointerException if the iterator is null
      */
-    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
+    public static <E> ListIterator<E> unmodifiableListIterator(final ListIterator<? extends E> iterator) {
         Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast
@@ -51,6 +51,14 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
             return tmpIterator;
         }
         return new UnmodifiableListIterator<>(iterator);
+    }
+
+    /**
+     * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
+     */
+    @Deprecated
+    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
+        return unmodifiableListIterator(iterator);
     }
 
     /**

@@ -455,6 +455,12 @@
     <contributor>
       <name>Chen Guoping</name>
     </contributor>
+    <contributor>
+      <name>Stefano Cordio</name>
+    </contributor>
+    <contributor>
+      <name>Arturo Bernal</name>
+    </contributor>
   </contributors>
 
   <dependencies>
@@ -571,7 +577,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.1.2</checkstyle.version>
-    <checkstyle.dep.version>9.0</checkstyle.dep.version>
+    <checkstyle.dep.version>9.1</checkstyle.dep.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>

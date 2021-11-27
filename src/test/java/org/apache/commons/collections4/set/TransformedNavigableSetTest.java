@@ -68,10 +68,10 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
-            assertEquals(true, set.contains(Integer.valueOf((String) els[i])));
+            assertTrue(set.contains(Integer.valueOf((String) els[i])));
         }
 
-        assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
+        assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
     public void testTransformedSet_decorateTransform() {
@@ -82,10 +82,10 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (final Object el : els) {
-            assertEquals(true, set.contains(Integer.valueOf((String) el)));
+            assertTrue(set.contains(Integer.valueOf((String) el)));
         }
 
-        assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
+        assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override
