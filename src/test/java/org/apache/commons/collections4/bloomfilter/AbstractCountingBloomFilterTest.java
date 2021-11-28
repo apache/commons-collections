@@ -27,10 +27,12 @@ import org.junit.jupiter.api.Test;
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
 public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
-        extends AbstractBloomFilterTest<T> {
+extends AbstractBloomFilterTest<T> {
     protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
-    protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
-    protected int[] bigHashCounts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
+    protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            0 };
+    protected int[] bigHashCounts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 0 };
 
     protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
 
@@ -92,10 +94,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse("BF should not contain BF2", bf.contains(bf2));
         assertTrue("BF2 should contain BF", bf2.contains(bf));
         BitMapProducer producer = bf2;
-        assertTrue("BF2 should contain BF bitMapProducer", bf2.contains(producer) );
+        assertTrue("BF2 should contain BF bitMapProducer", bf2.contains(producer));
 
     }
-
 
     /**
      * Tests that merging bloom filters works as expected with a generic BloomFilter.

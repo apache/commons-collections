@@ -17,8 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import static org.junit.Assert.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,18 +41,13 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Test
     public void constructorTest() {
 
-        SimpleBloomFilter filter = new SimpleBloomFilter( shape, BitMapProducer.fromLongArray( new long[] { 500L }) );
+        SimpleBloomFilter filter = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(new long[] { 500L }));
         List<Long> lst = new ArrayList<Long>();
-        filter.forEachBitMap( lst::add );
-        assertEquals( 1, lst.size() );
-        assertEquals( 500L, lst.get(0).intValue() );
+        filter.forEachBitMap(lst::add);
+        assertEquals(1, lst.size());
+        assertEquals(500L, lst.get(0).intValue());
 
-        try {
-            filter = new SimpleBloomFilter( shape,
-                    BitMapProducer.fromLongArray( new long[] { 500L, 400L, 300L }) );
-            fail( "Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // do nothing
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
     }
 }

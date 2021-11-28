@@ -18,7 +18,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +35,9 @@ public class SimpleHasherTest {
 
     @Test
     public void constructor_byteTest() {
-        try {
-            hasher = new SimpleHasher( new byte[0] );
-            fail( "Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
     }
+
     @Test
     public void sizeTest() {
         assertEquals(1, hasher.size());
@@ -49,7 +45,7 @@ public class SimpleHasherTest {
 
     @Test
     public void isEmptyTest() {
-        assertFalse( hasher.isEmpty() );
+        assertFalse(hasher.isEmpty());
     }
 
     @Test

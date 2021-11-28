@@ -16,8 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.fail;
-
+import static org.junit.Assert.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,30 +39,21 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
 
     @Test
     public void constructor_indexOutOfRange() {
-        Shape shape = new Shape( 1, 5 );
+        Shape shape = new Shape(1, 5);
         List<Integer> lst = new ArrayList();
-        lst.add( 5 );
-        try {
-            new SparseBloomFilter( shape, lst );
-            fail( "Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // do nothing;
-        }
+        lst.add(5);
+        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
+
         lst.clear();
-        lst.add( -1 );
-        try {
-            new SparseBloomFilter( shape, lst );
-            fail( "Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // do nothing;
-        }
+        lst.add(-1);
+        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
     }
 
     @Test
     public void constructor_noValues() {
-        Shape shape = new Shape( 1, 5 );
+        Shape shape = new Shape(1, 5);
         List<Integer> lst = new ArrayList();
-        new SparseBloomFilter( shape, lst );
+        new SparseBloomFilter(shape, lst);
     }
 
 }

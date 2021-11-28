@@ -48,7 +48,7 @@ public class NullHasherTest {
 
     @Test
     public void isEmptyTest() {
-        assertTrue( hasher.isEmpty() );
+        assertTrue(hasher.isEmpty());
     }
 
 }

@@ -46,9 +46,9 @@ public class HasherCollectionTest {
     @Test
     public void isEmptyTest() {
         HasherCollection hasher = new HasherCollection();
-        assertTrue( hasher.isEmpty() );
-        hasher.add( hasher1 );
-        assertFalse( hasher.isEmpty() );
+        assertTrue(hasher.isEmpty());
+        hasher.add(hasher1);
+        assertFalse(hasher.isEmpty());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class HasherCollectionTest {
     @Test
     public void testAdd_collection() {
         HasherCollection hasher = new HasherCollection();
-        hasher.add( Arrays.asList( hasher1, hasher2));
+        hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(2, hasher.size());
     }
 

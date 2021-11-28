@@ -16,9 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
 
 /**
@@ -43,24 +42,9 @@ public class ShapeFactoryTest {
      */
     @Test
     public void badNumberOfItemsTest() {
-        try {
-            Shape.Factory.fromNM(0, 24);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromNMK(0, 24, 5);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromNP(0, 0.02);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNM(0, 24));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNMK(0, 24, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNP(0, 0.02));
     }
 
     /**
@@ -68,24 +52,9 @@ public class ShapeFactoryTest {
      */
     @Test
     public void badNumberOfBitsTest() {
-        try {
-            Shape.Factory.fromNM(5, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromNMK(5, 0, 7);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromPMK(0.035, 0, 7);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNM(5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNMK(5, 0, 7));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromPMK(0.035, 0, 7));
     }
 
     /**
@@ -93,18 +62,8 @@ public class ShapeFactoryTest {
      */
     @Test
     public void badNumberOfHashFunctionsTest() {
-        try {
-            Shape.Factory.fromNMK(5, 26, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromPMK(0.35, 26, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNMK(5, 26, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromPMK(0.35, 26, 0));
     }
 
     /**
@@ -112,30 +71,10 @@ public class ShapeFactoryTest {
      */
     @Test
     public void badProbabilityTest() {
-        try {
-            Shape.Factory.fromNMK(4000, 8, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
-        try {
-            Shape.Factory.fromNP(10, 0.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
-        try {
-            Shape.Factory.fromNP(10, 1.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
-        try {
-            Shape.Factory.fromNP(10, Double.NaN);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNMK(4000, 8, 1));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNP(10, 0.0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNP(10, 1.0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNP(10, Double.NaN));
     }
 
     /**
@@ -174,12 +113,7 @@ public class ShapeFactoryTest {
      */
     @Test
     public void numberOfBitsOverflowTest() {
-        try {
-            Shape.Factory.fromNP(Integer.MAX_VALUE, 0.1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNP(Integer.MAX_VALUE, 0.1));
     }
 
     /**
@@ -218,8 +152,8 @@ public class ShapeFactoryTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
-        final double probability = 1.0/2000000;
-        final Shape shape = Shape.Factory.fromNP(10, probability );
+        final double probability = 1.0 / 2000000;
+        final Shape shape = Shape.Factory.fromNP(10, probability);
 
         assertEquals(302, shape.getNumberOfBits());
         assertEquals(21, shape.getNumberOfHashFunctions());

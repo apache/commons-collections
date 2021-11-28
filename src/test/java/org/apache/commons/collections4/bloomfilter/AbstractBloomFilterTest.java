@@ -38,7 +38,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
             new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
             new SimpleHasher(67, 1)/* 67-83 */
-    );
+            );
     protected final long[] fullHashValue = { 0xFFFFFFFFFFFFFFFFL, 0xFFFFFL };
 
     /**
@@ -65,14 +65,15 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void asIndexArrayTest() {
-        final BloomFilter bf = createFilter( shape, from1 );
-        int[] ary = BloomFilter.asIndexArray( bf );
-        assertEquals( 17, ary.length );
-        for (int i=0; i<ary.length; i++) {
-            assertEquals( "Error at position "+i, i+1, ary[i] );
+        final BloomFilter bf = createFilter(shape, from1);
+        int[] ary = BloomFilter.asIndexArray(bf);
+        assertEquals(17, ary.length);
+        for (int i = 0; i < ary.length; i++) {
+            assertEquals("Error at position " + i, i + 1, ary[i]);
         }
 
     }
+
     /**
      * Tests that the andCardinality calculations are correct.
      *
@@ -117,6 +118,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(shape), shape);
         assertFalse("BF Should not contain this hasher", bf.contains(bitMapProducer));
     }
+
     /**
      * Tests that the andCardinality calculations are correct.
      *
