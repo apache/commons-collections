@@ -35,15 +35,14 @@ public class SingleItemHasherCollectionTest {
     private SimpleHasher hasher1 = new SimpleHasher(1, 1);
     private SimpleHasher hasher2 = new SimpleHasher(2, 2);
 
-
     @Test
     public void sizeTest() {
         SingleItemHasherCollection hasher = new SingleItemHasherCollection();
-        assertEquals(0, hasher.size() );
-        hasher.add( NullHasher.INSTANCE );
         assertEquals(0, hasher.size());
-        hasher.add( hasher1 );
-        hasher.add( hasher2 );
+        hasher.add(NullHasher.INSTANCE);
+        assertEquals(0, hasher.size());
+        hasher.add(hasher1);
+        hasher.add(hasher2);
         assertEquals(1, hasher.size());
         HasherCollection hasher3 = new SingleItemHasherCollection(hasher, new SimpleHasher(3, 3));
         assertEquals(1, hasher3.size());
@@ -53,13 +52,12 @@ public class SingleItemHasherCollectionTest {
     @Test
     public void isEmptyTest() {
         SingleItemHasherCollection hasher = new SingleItemHasherCollection();
-        assertTrue( hasher.isEmpty() );
-        hasher.add( NullHasher.INSTANCE );
-        assertTrue( hasher.isEmpty() );
-        hasher.add( hasher1 );
-        assertFalse( hasher.isEmpty() );
+        assertTrue(hasher.isEmpty());
+        hasher.add(NullHasher.INSTANCE);
+        assertTrue(hasher.isEmpty());
+        hasher.add(hasher1);
+        assertFalse(hasher.isEmpty());
     }
-
 
     @Test
     public void testIndices() {
@@ -78,7 +76,7 @@ public class SingleItemHasherCollectionTest {
     @Test
     public void testAdd_collection() {
         HasherCollection hasher = new SingleItemHasherCollection();
-        hasher.add( Arrays.asList( hasher1, hasher2));
+        hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(1, hasher.size());
         Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
         List<Integer> lst = new ArrayList<Integer>();

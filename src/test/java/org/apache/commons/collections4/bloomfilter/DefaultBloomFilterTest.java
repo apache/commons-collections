@@ -47,13 +47,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         DefaultBloomFilter(Shape shape, Hasher hasher) {
-            this( shape );
-            hasher.indices(shape).forEachIndex( indices::add );
+            this(shape);
+            hasher.indices(shape).forEachIndex(indices::add);
         }
 
         @Override
         public void forEachIndex(IntConsumer consumer) {
-            indices.forEach( i -> consumer.accept( i.intValue() ) );
+            indices.forEach(i -> consumer.accept(i.intValue()));
         }
 
         @Override
@@ -74,11 +74,11 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         @Override
         public boolean contains(IndexProducer indexProducer) {
             try {
-                indexProducer.forEachIndex( i -> {
-                    if (!indices.contains( i )) {
+                indexProducer.forEachIndex(i -> {
+                    if (!indices.contains(i)) {
                         throw new NoMatchException();
                     }
-                } );
+                });
                 return true;
             } catch (NoMatchException e) {
                 return false;
@@ -87,12 +87,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(BitMapProducer bitMapProducer) {
-            return contains( IndexProducer.fromBitMapProducer(bitMapProducer) );
+            return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 
         @Override
         public boolean mergeInPlace(BloomFilter other) {
-            other.forEachIndex( indices::add );
+            other.forEachIndex(indices::add);
             return true;
         }
 

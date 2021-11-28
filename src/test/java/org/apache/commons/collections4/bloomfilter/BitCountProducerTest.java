@@ -69,10 +69,10 @@ public class BitCountProducerTest {
         };
 
         List<Integer> lst = new ArrayList<Integer>();
-        producer.forEachIndex( lst::add );
-        assertEquals( 2, lst.size() );
-        assertEquals( Integer.valueOf(1), lst.get(0) );
-        assertEquals( Integer.valueOf(3), lst.get(1) );
+        producer.forEachIndex(lst::add);
+        assertEquals(2, lst.size());
+        assertEquals(Integer.valueOf(1), lst.get(0));
+        assertEquals(Integer.valueOf(3), lst.get(1));
     }
 
 }

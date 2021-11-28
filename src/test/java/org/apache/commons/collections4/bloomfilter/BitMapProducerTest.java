@@ -17,8 +17,8 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,26 +56,22 @@ public class BitMapProducerTest {
 
     @Test
     public void fromLongArrayTest() {
-        long[] ary = new long[] {1L, 2L, 3L, 4L, 5L};
-        BitMapProducer producer = BitMapProducer.fromLongArray( ary );
+        long[] ary = new long[] { 1L, 2L, 3L, 4L, 5L };
+        BitMapProducer producer = BitMapProducer.fromLongArray(ary);
         List<Long> lst = new ArrayList<Long>();
-        producer.forEachBitMap( lst::add );
-        assertEquals( Long.valueOf(1), lst.get(0) );
-        assertEquals( Long.valueOf(2), lst.get(1) );
-        assertEquals( Long.valueOf(3), lst.get(2) );
-        assertEquals( Long.valueOf(4), lst.get(3) );
-        assertEquals( Long.valueOf(5), lst.get(4) );
+        producer.forEachBitMap(lst::add);
+        assertEquals(Long.valueOf(1), lst.get(0));
+        assertEquals(Long.valueOf(2), lst.get(1));
+        assertEquals(Long.valueOf(3), lst.get(2));
+        assertEquals(Long.valueOf(4), lst.get(3));
+        assertEquals(Long.valueOf(5), lst.get(4));
 
     }
 
     @Test
     public void arrayBuilderTest() {
-        try {
-            new BitMapProducer.ArrayBuilder( new Shape( 1, 4 ), new long[] {1L, 2L, 3L, 4L, 5L });
-            fail( "Should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException expected) {
-            // do nothing
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> new BitMapProducer.ArrayBuilder(new Shape(1, 4), new long[] { 1L, 2L, 3L, 4L, 5L }));
     }
 
 }

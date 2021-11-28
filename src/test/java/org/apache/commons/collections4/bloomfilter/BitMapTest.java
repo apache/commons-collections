@@ -18,9 +18,8 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.junit.Test;
 
 public class BitMapTest {
@@ -135,11 +134,6 @@ public class BitMapTest {
 
     @Test
     public void checkRangeTest() {
-        try {
-            BitMap.checkRange( 1, Long.SIZE + 1);
-            fail( "Should have thrown IndexOutOfBoundsException" );
-        } catch (IndexOutOfBoundsException expected) {
-            //
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> BitMap.checkRange(1, Long.SIZE + 1));
     }
 }
