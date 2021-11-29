@@ -27,12 +27,12 @@ import org.junit.jupiter.api.Test;
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
 public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
-extends AbstractBloomFilterTest<T> {
+        extends AbstractBloomFilterTest<T> {
     protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
     protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            0 };
+        0 };
     protected int[] bigHashCounts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 0 };
+        1, 0 };
 
     protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
 
