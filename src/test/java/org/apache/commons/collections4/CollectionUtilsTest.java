@@ -2417,6 +2417,11 @@ public class CollectionUtilsTest extends MockTestCase {
 		assertEquals(1, retStrLists.get(2).size());
 		assertEquals(strList5, retStrLists.get(2).get(0));
 
+		// test with empty collection
+		List<String> emptyList = new ArrayList<>();
+		List<List<String>> emptyPartitions = CollectionUtils.partitionByChunkSize(emptyList, 2);
+		assertEquals(0, emptyPartitions.size());
+
 		// test exception scenarios
 		try {
 			CollectionUtils.partitionByChunkSize(listWithNullElements, -2);
@@ -2430,13 +2435,6 @@ public class CollectionUtilsTest extends MockTestCase {
 			fail("failed to check if input collection is null");
 		} catch (final NullPointerException e) {
 			assertEquals("input collection must not be null", e.getMessage());
-		}
-
-		try {
-			CollectionUtils.partitionByChunkSize(new ArrayList<>(), 2);
-			fail("failed to check if input collection is empty");
-		} catch (final IllegalArgumentException e) {
-			assertEquals("input collection must not be empty", e.getMessage());
 		}
 
 		try {

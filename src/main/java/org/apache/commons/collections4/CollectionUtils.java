@@ -2165,7 +2165,11 @@ public class CollectionUtils {
 	 * {@code collection} where the first two collections will have three elements
 	 * each and the final collection will have one element. Ordering of elements
 	 * would be based on that of the {@link Iterator} of the given
-	 * {@code collection}.
+	 * {@code collection}. Passing an empty collection {@code collection} as input
+	 * would return an empty list {@link List}. Passing chunkSize {@code chunkSize}
+	 * greater than the size of input collection {@code collection} would return a
+	 * list {@link List} with just one element which would inturn be the input
+	 * collection {@code collection} itself.
 	 *
 	 * @param            <E> the type of Collection
 	 * @param collection the collection to be partitioned
@@ -2173,7 +2177,6 @@ public class CollectionUtils {
 	 *                   smaller)
 	 * @return a list of collections (type as that of given input collection)
 	 * @throws NullPointerException     if the input collection is null
-	 * @throws IllegalArgumentException if the input collection is empty
 	 * @throws IllegalArgumentException if the input chunkSize is lesser than or
 	 *                                  equal to 0
 	 * @throws IllegalArgumentException if new instance of input collection cannot
@@ -2182,9 +2185,6 @@ public class CollectionUtils {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
 		Objects.requireNonNull(collection, "input collection must not be null");
-		if (collection.size() == 0) {
-			throw new IllegalArgumentException("input collection must not be empty");
-		}
 		if (chunkSize <= 0) {
 			throw new IllegalArgumentException("input chunk size must be greater than 0");
 		}
