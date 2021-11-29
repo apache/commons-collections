@@ -2179,7 +2179,7 @@ public class CollectionUtils {
 	 * @throws IllegalArgumentException if new instance of input collection cannot
 	 *                                  be instantiated
 	 */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
 		Objects.requireNonNull(collection, "input collection must not be null");
 		if (collection.size() == 0) {
