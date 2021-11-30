@@ -2346,108 +2346,108 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
-	@Test
-	public void testPartitionByChunkSize() {
-		// test with Set
-		final Set<Number> set = new HashSet<>();
-		for (int i = 1; i <= 7; i++) {
-			set.add(i);
-		}
-		List<Set<Number>> setPartitions = CollectionUtils.partitionByChunkSize(set, 3);
-		assertEquals(3, setPartitions.size());
-		assertEquals(3, setPartitions.get(0).size());
-		assertEquals(3, setPartitions.get(1).size());
-		assertEquals(1, setPartitions.get(2).size());
+    @Test
+    public void testPartitionByChunkSize() {
+        // test with Set
+        final Set<Number> set = new HashSet<>();
+        for (int i = 1; i <= 7; i++) {
+            set.add(i);
+        }
+        List<Set<Number>> setPartitions = CollectionUtils.partitionByChunkSize(set, 3);
+        assertEquals(3, setPartitions.size());
+        assertEquals(3, setPartitions.get(0).size());
+        assertEquals(3, setPartitions.get(1).size());
+        assertEquals(1, setPartitions.get(2).size());
 
-		// test for max chunk size use-case
-		List<Set<Number>> setPartitionMaxSize = CollectionUtils.partitionByChunkSize(set, Integer.MAX_VALUE);
-		assertEquals(1, setPartitionMaxSize.size());
-		assertEquals(set, setPartitionMaxSize.get(0));
+        // test for max chunk size use-case
+        List<Set<Number>> setPartitionMaxSize = CollectionUtils.partitionByChunkSize(set, Integer.MAX_VALUE);
+        assertEquals(1, setPartitionMaxSize.size());
+        assertEquals(set, setPartitionMaxSize.get(0));
 
-		// test with List, have duplicate values
-		final List<Number> list = new ArrayList<>();
-		for (int i = 1; i <= 7; i++) {
-			list.add(i);
-		}
-		list.add(7L);
-		list.add(7L);
-		List<List<Number>> listPartitions = CollectionUtils.partitionByChunkSize(list, 2);
-		assertEquals(5, listPartitions.size());
-		assertEquals(2, listPartitions.get(0).size());
-		assertEquals(2, listPartitions.get(1).size());
-		assertEquals(2, listPartitions.get(2).size());
-		assertEquals(2, listPartitions.get(3).size());
-		assertEquals(1, listPartitions.get(4).size());
+        // test with List, have duplicate values
+        final List<Number> list = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            list.add(i);
+        }
+        list.add(7L);
+        list.add(7L);
+        List<List<Number>> listPartitions = CollectionUtils.partitionByChunkSize(list, 2);
+        assertEquals(5, listPartitions.size());
+        assertEquals(2, listPartitions.get(0).size());
+        assertEquals(2, listPartitions.get(1).size());
+        assertEquals(2, listPartitions.get(2).size());
+        assertEquals(2, listPartitions.get(3).size());
+        assertEquals(1, listPartitions.get(4).size());
 
-		// test with List, have null elements
-		final List<Number> listWithNullElements = new ArrayList<>();
-		for (int i = 1; i <= 6; i++) {
-			listWithNullElements.add(i);
-		}
-		listWithNullElements.add(null);
-		listWithNullElements.add(7L);
-		List<List<Number>> listPartitionsWithNullElements = CollectionUtils.partitionByChunkSize(listWithNullElements,
-				2);
-		assertEquals(4, listPartitionsWithNullElements.size());
-		assertEquals(2, listPartitionsWithNullElements.get(0).size());
-		assertEquals(2, listPartitionsWithNullElements.get(1).size());
-		assertEquals(2, listPartitionsWithNullElements.get(2).size());
-		assertEquals(2, listPartitionsWithNullElements.get(3).size());
+        // test with List, have null elements
+        final List<Number> listWithNullElements = new ArrayList<>();
+        for (int i = 1; i <= 6; i++) {
+            listWithNullElements.add(i);
+        }
+        listWithNullElements.add(null);
+        listWithNullElements.add(7L);
+        List<List<Number>> listPartitionsWithNullElements = CollectionUtils.partitionByChunkSize(listWithNullElements,
+                2);
+        assertEquals(4, listPartitionsWithNullElements.size());
+        assertEquals(2, listPartitionsWithNullElements.get(0).size());
+        assertEquals(2, listPartitionsWithNullElements.get(1).size());
+        assertEquals(2, listPartitionsWithNullElements.get(2).size());
+        assertEquals(2, listPartitionsWithNullElements.get(3).size());
 
-		// test with nested Collection
-		List<List<String>> strLists = new ArrayList<>();
-		List<String> strList1 = Arrays.asList("1", "one");
-		strLists.add(strList1);
-		List<String> strList2 = Arrays.asList("2");
-		strLists.add(strList2);
-		List<String> strList3 = Arrays.asList("3", "three");
-		strLists.add(strList3);
-		List<String> strList4 = Arrays.asList("4", null);
-		strLists.add(strList4);
-		List<String> strList5 = Arrays.asList("5", "five");
-		strLists.add(strList5);
-		List<List<List<String>>> retStrLists = CollectionUtils.partitionByChunkSize(strLists, 2);
-		assertEquals(3, retStrLists.size());
-		assertEquals(2, retStrLists.get(0).size());
-		assertEquals(strList1, retStrLists.get(0).get(0));
-		assertEquals(strList2, retStrLists.get(0).get(1));
-		assertEquals(2, retStrLists.get(1).size());
-		assertEquals(strList3, retStrLists.get(1).get(0));
-		assertEquals(strList4, retStrLists.get(1).get(1));
-		assertEquals(1, retStrLists.get(2).size());
-		assertEquals(strList5, retStrLists.get(2).get(0));
+        // test with nested Collection
+        List<List<String>> strLists = new ArrayList<>();
+        List<String> strList1 = Arrays.asList("1", "one");
+        strLists.add(strList1);
+        List<String> strList2 = Arrays.asList("2");
+        strLists.add(strList2);
+        List<String> strList3 = Arrays.asList("3", "three");
+        strLists.add(strList3);
+        List<String> strList4 = Arrays.asList("4", null);
+        strLists.add(strList4);
+        List<String> strList5 = Arrays.asList("5", "five");
+        strLists.add(strList5);
+        List<List<List<String>>> retStrLists = CollectionUtils.partitionByChunkSize(strLists, 2);
+        assertEquals(3, retStrLists.size());
+        assertEquals(2, retStrLists.get(0).size());
+        assertEquals(strList1, retStrLists.get(0).get(0));
+        assertEquals(strList2, retStrLists.get(0).get(1));
+        assertEquals(2, retStrLists.get(1).size());
+        assertEquals(strList3, retStrLists.get(1).get(0));
+        assertEquals(strList4, retStrLists.get(1).get(1));
+        assertEquals(1, retStrLists.get(2).size());
+        assertEquals(strList5, retStrLists.get(2).get(0));
 
-		// test with empty collection
-		List<String> emptyList = new ArrayList<>();
-		List<List<String>> emptyPartitions = CollectionUtils.partitionByChunkSize(emptyList, 2);
-		assertEquals(0, emptyPartitions.size());
+        // test with empty collection
+        List<String> emptyList = new ArrayList<>();
+        List<List<String>> emptyPartitions = CollectionUtils.partitionByChunkSize(emptyList, 2);
+        assertEquals(0, emptyPartitions.size());
 
-		// test exception scenarios
-		try {
-			CollectionUtils.partitionByChunkSize(listWithNullElements, -2);
-			fail("failed to check if input chunk size is greater than 0");
-		} catch (final IllegalArgumentException e) {
-			assertEquals("input chunk size must be greater than 0", e.getMessage());
-		}
+        // test exception scenarios
+        try {
+            CollectionUtils.partitionByChunkSize(listWithNullElements, -2);
+            fail("failed to check if input chunk size is greater than 0");
+        } catch (final IllegalArgumentException e) {
+            assertEquals("input chunk size must be greater than 0", e.getMessage());
+        }
 
-		try {
-			CollectionUtils.partitionByChunkSize(null, 2);
-			fail("failed to check if input collection is null");
-		} catch (final NullPointerException e) {
-			assertEquals("input collection must not be null", e.getMessage());
-		}
+        try {
+            CollectionUtils.partitionByChunkSize(null, 2);
+            fail("failed to check if input collection is null");
+        } catch (final NullPointerException e) {
+            assertEquals("input collection must not be null", e.getMessage());
+        }
 
-		try {
-			@SuppressWarnings("rawtypes")
-			Collection mockCollection = createMock(Collection.class);
-			expect(mockCollection.size()).andReturn(10).anyTimes();
-			expect(mockCollection.iterator()).andReturn(createMock(Iterator.class)).anyTimes();
-			replay();
-			CollectionUtils.partitionByChunkSize(mockCollection, 2);
-			fail("failed to check if input collection is empty");
-		} catch (final IllegalArgumentException e) {
-			assertEquals("unable to get instance of given input collection", e.getMessage());
-		}
-	}
+        try {
+            @SuppressWarnings("rawtypes")
+            Collection mockCollection = createMock(Collection.class);
+            expect(mockCollection.size()).andReturn(10).anyTimes();
+            expect(mockCollection.iterator()).andReturn(createMock(Iterator.class)).anyTimes();
+            replay();
+            CollectionUtils.partitionByChunkSize(mockCollection, 2);
+            fail("failed to check if input collection is empty");
+        } catch (final IllegalArgumentException e) {
+            assertEquals("unable to get instance of given input collection", e.getMessage());
+        }
+    }
 
 }
