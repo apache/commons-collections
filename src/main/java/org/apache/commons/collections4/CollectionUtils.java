@@ -2156,58 +2156,58 @@ public class CollectionUtils {
         return collection.iterator().next();
     }
 
-	/**
-	 * Returns partitions of given collection {@code collection}, each of size
-	 * {@code chunkSize} (the final partition may be smaller). For example,
-	 * partitioning a collection {@code collection} containing
-	 * {@code [a, b, c, d, e, f, g]} with a chunkSize {@code chunkSize} of 3 yields
-	 * an outer list {@link List} containing three collections of type
-	 * {@code collection} where the first two collections will have three elements
-	 * each and the final collection will have one element. Ordering of elements
-	 * would be based on that of the {@link Iterator} of the given
-	 * {@code collection}. Passing an empty collection {@code collection} as input
-	 * would return an empty list {@link List}. Passing chunkSize {@code chunkSize}
-	 * greater than the size of input collection {@code collection} would return a
-	 * list {@link List} with just one element which would inturn be the input
-	 * collection {@code collection} itself.
-	 *
-	 * @param            <E> the type of Collection
-	 * @param collection the collection to be partitioned
-	 * @param chunkSize  the desired size of each partition (the last may be
-	 *                   smaller)
-	 * @return a list of collections (type as that of given input collection)
-	 * @throws NullPointerException     if the input collection is null
-	 * @throws IllegalArgumentException if the input chunkSize is lesser than or
-	 *                                  equal to 0
-	 * @throws IllegalArgumentException if new instance of input collection cannot
-	 *                                  be instantiated
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
-		Objects.requireNonNull(collection, "input collection must not be null");
-		if (chunkSize <= 0) {
-			throw new IllegalArgumentException("input chunk size must be greater than 0");
-		}
-		List<E> returnList = new ArrayList<>();
-		Iterator iterator = collection.iterator();
-		int counter = chunkSize;
-		try {
-			E tempCollection = (E) collection.getClass().newInstance();
-			while (iterator.hasNext()) {
-				tempCollection.add(iterator.next());
-				counter--;
-				if (counter == 0) {
-					returnList.add(tempCollection);
-					tempCollection = (E) collection.getClass().newInstance();
-					counter = chunkSize;
-				}
-			}
-			if (tempCollection.size() > 0) {
-				returnList.add(tempCollection);
-			}
-		} catch (IllegalAccessException | InstantiationException e) {
-			throw new IllegalArgumentException("unable to get instance of given input collection");
-		}
-		return returnList;
-	}
+    /**
+     * Returns partitions of given collection {@code collection}, each of size
+     * {@code chunkSize} (the final partition may be smaller). For example,
+     * partitioning a collection {@code collection} containing
+     * {@code [a, b, c, d, e, f, g]} with a chunkSize {@code chunkSize} of 3 yields
+     * an outer list {@link List} containing three collections of type
+     * {@code collection} where the first two collections will have three elements
+     * each and the final collection will have one element. Ordering of elements
+     * would be based on that of the {@link Iterator} of the given
+     * {@code collection}. Passing an empty collection {@code collection} as input
+     * would return an empty list {@link List}. Passing chunkSize {@code chunkSize}
+     * greater than the size of input collection {@code collection} would return a
+     * list {@link List} with just one element which would inturn be the input
+     * collection {@code collection} itself.
+     *
+     * @param            <E> the type of Collection
+     * @param collection the collection to be partitioned
+     * @param chunkSize  the desired size of each partition (the last may be
+     *                   smaller)
+     * @return a list of collections (type as that of given input collection)
+     * @throws NullPointerException     if the input collection is null
+     * @throws IllegalArgumentException if the input chunkSize is lesser than or
+     *                                  equal to 0
+     * @throws IllegalArgumentException if new instance of input collection cannot
+     *                                  be instantiated
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
+        Objects.requireNonNull(collection, "input collection must not be null");
+        if (chunkSize <= 0) {
+            throw new IllegalArgumentException("input chunk size must be greater than 0");
+        }
+        List<E> returnList = new ArrayList<>();
+        Iterator iterator = collection.iterator();
+        int counter = chunkSize;
+        try {
+            E tempCollection = (E) collection.getClass().newInstance();
+            while (iterator.hasNext()) {
+                tempCollection.add(iterator.next());
+                counter--;
+                if (counter == 0) {
+                    returnList.add(tempCollection);
+                    tempCollection = (E) collection.getClass().newInstance();
+                    counter = chunkSize;
+                }
+            }
+            if (tempCollection.size() > 0) {
+                returnList.add(tempCollection);
+            }
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new IllegalArgumentException("unable to get instance of given input collection");
+        }
+        return returnList;
+    }
 }
