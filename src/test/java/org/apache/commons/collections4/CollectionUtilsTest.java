@@ -2429,7 +2429,7 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IllegalArgumentException e) {
             assertEquals("input chunk size must be greater than 0", e.getMessage());
         }
-        
+
         try {
             CollectionUtils.partitionByChunkSize(listWithNullElements, 0);
             fail("failed to check if input chunk size is greater than 0");
