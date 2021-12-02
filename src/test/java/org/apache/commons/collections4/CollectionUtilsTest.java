@@ -2429,6 +2429,13 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final IllegalArgumentException e) {
             assertEquals("input chunk size must be greater than 0", e.getMessage());
         }
+        
+        try {
+            CollectionUtils.partitionByChunkSize(listWithNullElements, 0);
+            fail("failed to check if input chunk size is greater than 0");
+        } catch (final IllegalArgumentException e) {
+            assertEquals("input chunk size must be greater than 0", e.getMessage());
+        }
 
         try {
             CollectionUtils.partitionByChunkSize(null, 2);
@@ -2440,8 +2447,7 @@ public class CollectionUtilsTest extends MockTestCase {
         try {
             @SuppressWarnings("rawtypes")
             Collection mockCollection = createMock(Collection.class);
-            expect(mockCollection.size()).andReturn(10).anyTimes();
-            expect(mockCollection.iterator()).andReturn(createMock(Iterator.class)).anyTimes();
+            expect(mockCollection.stream()).andReturn(Arrays.asList("").stream());
             replay();
             CollectionUtils.partitionByChunkSize(mockCollection, 2);
             fail("failed to check if input collection is empty");

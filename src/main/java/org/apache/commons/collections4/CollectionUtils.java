@@ -30,6 +30,9 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
@@ -2168,7 +2171,7 @@ public class CollectionUtils {
      * {@code collection}. Passing an empty collection {@code collection} as input
      * would return an empty list {@link List}. Passing chunkSize {@code chunkSize}
      * greater than the size of input collection {@code collection} would return a
-     * list {@link List} with just one element which would inturn be the input
+     * list {@link List} with just one element which would in-turn be the input
      * collection {@code collection} itself.
      *
      * @param            <E> the type of Collection
@@ -2183,31 +2186,21 @@ public class CollectionUtils {
      *                                  be instantiated
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
+    public static <T extends Collection> List<T> partitionByChunkSize(final T collection, int chunkSize) {
         Objects.requireNonNull(collection, "input collection must not be null");
         if (chunkSize <= 0) {
             throw new IllegalArgumentException("input chunk size must be greater than 0");
         }
-        List<E> returnList = new ArrayList<>();
-        Iterator iterator = collection.iterator();
-        int counter = chunkSize;
-        try {
-            E tempCollection = (E) collection.getClass().newInstance();
-            while (iterator.hasNext()) {
-                tempCollection.add(iterator.next());
-                counter--;
-                if (counter == 0) {
-                    returnList.add(tempCollection);
-                    tempCollection = (E) collection.getClass().newInstance();
-                    counter = chunkSize;
-                }
+        Supplier<T> supplier = () -> {
+            try {
+                return (T) collection.getClass().newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new IllegalArgumentException("unable to get instance of given input collection");
             }
-            if (tempCollection.size() > 0) {
-                returnList.add(tempCollection);
-            }
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new IllegalArgumentException("unable to get instance of given input collection");
-        }
-        return returnList;
+        };
+        final AtomicInteger counter = new AtomicInteger(0);
+        final Map<Integer, T> map = (Map<Integer, T>) collection.stream().collect(
+                Collectors.groupingBy((i -> counter.getAndIncrement() / chunkSize), Collectors.toCollection(supplier)));
+        return new ArrayList<>(map.values());
     }
 }
