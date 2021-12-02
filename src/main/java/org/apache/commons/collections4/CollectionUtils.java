@@ -2167,7 +2167,7 @@ public class CollectionUtils {
      * an outer list {@link List} containing three collections of type
      * {@code collection} where the first two collections will have three elements
      * each and the final collection will have one element. Ordering of elements
-     * would be based on that of the {@link Iterator} of the given
+     * would be based on that of the {@link Stream} of the given
      * {@code collection}. Passing an empty collection {@code collection} as input
      * would return an empty list {@link List}. Passing chunkSize {@code chunkSize}
      * greater than the size of input collection {@code collection} would return a
@@ -2186,20 +2186,20 @@ public class CollectionUtils {
      *                                  be instantiated
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T extends Collection> List<T> partitionByChunkSize(final T collection, int chunkSize) {
+    public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
         Objects.requireNonNull(collection, "input collection must not be null");
         if (chunkSize <= 0) {
             throw new IllegalArgumentException("input chunk size must be greater than 0");
         }
-        Supplier<T> supplier = () -> {
+        Supplier<E> supplier = () -> {
             try {
-                return (T) collection.getClass().newInstance();
+                return (E) collection.getClass().newInstance();
             } catch (IllegalAccessException | InstantiationException e) {
                 throw new IllegalArgumentException("unable to get instance of given input collection");
             }
         };
         final AtomicInteger counter = new AtomicInteger(0);
-        final Map<Integer, T> map = (Map<Integer, T>) collection.stream().collect(
+        final Map<Integer, E> map = (Map<Integer, E>) collection.stream().collect(
                 Collectors.groupingBy((i -> counter.getAndIncrement() / chunkSize), Collectors.toCollection(supplier)));
         return new ArrayList<>(map.values());
     }
