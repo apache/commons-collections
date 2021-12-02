@@ -500,7 +500,7 @@ public class ListUtilsTest {
 
         assertEquals(expected, result);
     }
-    
+
     @Test
     public void testRemoveNullElements() {
         final List<String> list = new ArrayList<>();
@@ -534,11 +534,5 @@ public class ListUtilsTest {
             assertEquals("input list must not be null", e.getMessage());
         }
 
-        try {
-            ListUtils.removeNullElements(new ArrayList<>());
-            fail("failed to check if input list is empty");
-        } catch (final IllegalArgumentException e) {
-            assertEquals("input list must not be empty", e.getMessage());
-        }
     }
 }
