@@ -748,14 +748,14 @@ public class ListUtils {
     /**
      * Returns a new list by removing all null elements from the given list.
      *
-     * @param <E> the element type
-     * @param list  the input list, must not be null and must not be empty
+     * @param      <E> the element type
+     * @param list the input list, must not be null and must not be empty
      * @return a new list by removing all null elements from the given list
-     * @throws NullPointerException if the input list is null
+     * @throws NullPointerException     if the input list is null
      * @throws IllegalArgumentException if the input list is empty
      */
     public static <E> List<E> removeNullElements(final List<E> list) {
-    	Objects.requireNonNull(list, "input list must not be null");
+        Objects.requireNonNull(list, "input list must not be null");
         if (list.size() == 0) {
             throw new IllegalArgumentException("input list must not be empty");
         }

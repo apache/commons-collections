@@ -517,28 +517,28 @@ public class ListUtilsTest {
         expected.add(x);
 
         assertEquals(expected, result);
-        
+
         final List<String> nullOnlyList = new ArrayList<>();
         nullOnlyList.add(null);
         nullOnlyList.add(null);
         nullOnlyList.add(null);
-        
+
         final List<String> emptyList = ListUtils.removeNullElements(nullOnlyList);
         assertNotNull(emptyList);
         assertEquals(0, emptyList.size());
-        
+
         try {
             ListUtils.removeNullElements(null);
             fail("failed to check if input list is null");
         } catch (final NullPointerException e) {
-        	assertEquals("input list must not be null",e.getMessage());
+            assertEquals("input list must not be null", e.getMessage());
         }
 
         try {
             ListUtils.removeNullElements(new ArrayList<>());
             fail("failed to check if input list is empty");
         } catch (final IllegalArgumentException e) {
-        	assertEquals("input list must not be empty",e.getMessage());
+            assertEquals("input list must not be empty", e.getMessage());
         }
     }
 }
