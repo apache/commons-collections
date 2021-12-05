@@ -75,14 +75,37 @@ public class SparseBloomFilter implements BloomFilter {
         this(shape);
         Objects.requireNonNull(indices, "indices");
         this.indices.addAll(indices);
-        if (! this.indices.isEmpty()) {
+        if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
                         this.indices.last(), shape.getNumberOfBits()));
             }
-            if (this.indices.first() < 0 ) {
-                throw new IllegalArgumentException(String.format("Value in list {} is less than 0",
-                        this.indices.first()));
+            if (this.indices.first() < 0) {
+                throw new IllegalArgumentException(
+                        String.format("Value in list {} is less than 0", this.indices.first()));
+            }
+        }
+    }
+
+    /**
+     * Constructs a populated Bloom filter.
+     * @param shape the shape of the filter.
+     * @param indices an index producer for the indices to to enable.
+     * @throws IllegalArgumentException if indices contains a value greater than the number
+     * of bits in the shape.
+     */
+    public SparseBloomFilter(Shape shape, IndexProducer indices) {
+        this(shape);
+        Objects.requireNonNull(indices, "indices");
+        indices.forEachIndex(this.indices::add);
+        if (!this.indices.isEmpty()) {
+            if (this.indices.last() >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
+                        this.indices.last(), shape.getNumberOfBits()));
+            }
+            if (this.indices.first() < 0) {
+                throw new IllegalArgumentException(
+                        String.format("Value in list {} is less than 0", this.indices.first()));
             }
         }
     }
