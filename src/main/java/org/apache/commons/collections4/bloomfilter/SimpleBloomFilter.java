@@ -178,7 +178,7 @@ public class SimpleBloomFilter implements BloomFilter {
 
             @Override
             public void accept(long w) {
-                if ((bitMap[i++] & w) != w) {
+                if ( i>= bitMap.length || (bitMap[i++] & w) != w) {
                     throw new NoMatchException();
                 }
             }

@@ -52,7 +52,7 @@ public interface BitMapProducer {
      * @param bitMaps the bitMaps to return.
      * @return a BitMapProducer.
      */
-    static BitMapProducer fromLongArray(long[] bitMaps) {
+    static BitMapProducer fromLongArray(long... bitMaps) {
         return new BitMapProducer() {
 
             @Override

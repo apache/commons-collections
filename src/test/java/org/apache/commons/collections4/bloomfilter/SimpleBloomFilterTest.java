@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +52,14 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
 
         assertThrows(IllegalArgumentException.class,
                 () -> new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
+    }
+
+    @Test
+    public void differentBitMapLengthTest() {
+        BloomFilter bf1 = new SimpleBloomFilter( shape, BitMapProducer.fromLongArray( 1l,2l ) );
+        BloomFilter bf2 = new SimpleBloomFilter( shape, BitMapProducer.fromLongArray( 1l ));
+
+        assertTrue( bf1.contains( bf2 ));
+        assertFalse( bf2.contains( bf1 ));
     }
 }
