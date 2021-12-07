@@ -337,7 +337,7 @@ public class PassiveExpiringMap<K, V>
      */
     @Override
     public boolean containsKey(final Object key) {
-        removeIfExpired(key, now());
+        removeAllExpired(now());
         return super.containsKey(key);
     }
 
