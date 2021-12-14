@@ -56,10 +56,10 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
 
     @Test
     public void differentBitMapLengthTest() {
-        BloomFilter bf1 = new SimpleBloomFilter( shape, BitMapProducer.fromLongArray( 1l,2l ) );
-        BloomFilter bf2 = new SimpleBloomFilter( shape, BitMapProducer.fromLongArray( 1l ));
+        BloomFilter bf1 = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(1L, 2L));
+        BloomFilter bf2 = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(1L));
 
-        assertTrue( bf1.contains( bf2 ));
-        assertFalse( bf2.contains( bf1 ));
+        assertTrue(bf1.contains(bf2));
+        assertFalse(bf2.contains(bf1));
     }
 }
