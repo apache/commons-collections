@@ -86,8 +86,8 @@ public class SimpleBloomFilter implements BloomFilter {
             producer.forEachBitMap(builder);
             this.bitMap = builder.getArray();
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException( String.format("BitMapProducer should only send %s maps",
-                    BitMap.numberOfBitMaps( shape.getNumberOfBits())), e);
+            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
+                    BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
         }
         this.cardinality = -1;
     }
@@ -178,7 +178,7 @@ public class SimpleBloomFilter implements BloomFilter {
 
             @Override
             public void accept(long w) {
-                if ( i>= bitMap.length || (bitMap[i++] & w) != w) {
+                if (i >= bitMap.length || (bitMap[i++] & w) != w) {
                     throw new NoMatchException();
                 }
             }
