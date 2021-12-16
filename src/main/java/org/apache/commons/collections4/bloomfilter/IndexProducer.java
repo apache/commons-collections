@@ -53,13 +53,15 @@ public interface IndexProducer {
 
                     @Override
                     public void accept(long word) {
-                        for (int i = 0; i < 64; i++) {
-                            long mask = 1L << i;
-                            if ((word & mask) == mask) {
-                                consumer.accept((wordIdx * 64) + i);
+                        int i = wordIdx;
+                        while (word != 0) {
+                            if ((word & 1) == 1) {
+                                consumer.accept(i);
                             }
+                            word >>>= 1;
+                            i++;
                         }
-                        wordIdx++;
+                        wordIdx += 64;
                     }
                 };
                 producer.forEachBitMap(longConsumer::accept);
