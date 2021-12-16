@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.IntConsumer;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
@@ -45,9 +46,17 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return An array of indices for enabled bits in the Bloom filter.
      */
     static int[] asIndexArray(BloomFilter filter) {
-        List<Integer> lst = new ArrayList<Integer>();
-        filter.forEachIndex(lst::add);
-        return lst.stream().mapToInt(Integer::intValue).toArray();
+        int[] result = new int[filter.cardinality()];
+
+        filter.forEachIndex(new IntConsumer() {
+            int i = 0;
+
+            @Override
+            public void accept(int idx) {
+                result[i++] = idx;
+            }
+        });
+        return result;
     }
 
     // Query Operations
@@ -137,7 +146,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((cardinality() + other.cardinality()), getShape())
                 ? new SparseBloomFilter(shape)
-                        : new SimpleBloomFilter(shape);
+                : new SimpleBloomFilter(shape);
 
         result.mergeInPlace(this);
         result.mergeInPlace(other);
@@ -158,7 +167,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
                 ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
+                : new SimpleBloomFilter(shape, hasher);
         result.mergeInPlace(this);
         return result;
     }
@@ -196,7 +205,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
                 ? new SparseBloomFilter(getShape(), hasher)
-                        : new SimpleBloomFilter(getShape(), hasher);
+                : new SimpleBloomFilter(getShape(), hasher);
         return mergeInPlace(result);
     }
 
