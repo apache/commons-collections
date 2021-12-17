@@ -143,9 +143,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default BloomFilter merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse((cardinality() + other.cardinality()), getShape())
-                ? new SparseBloomFilter(shape)
-                        : new SimpleBloomFilter(shape);
+        BloomFilter result = shape.isSparse((cardinality() + other.cardinality())) ? new SparseBloomFilter(shape)
+                : new SimpleBloomFilter(shape);
 
         result.mergeInPlace(this);
         result.mergeInPlace(other);
@@ -164,7 +163,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default BloomFilter merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
+        BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
                         : new SimpleBloomFilter(shape, hasher);
         result.mergeInPlace(this);
@@ -202,9 +201,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
-                ? new SparseBloomFilter(getShape(), hasher)
-                        : new SimpleBloomFilter(getShape(), hasher);
+        BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
+                ? new SparseBloomFilter(shape, hasher)
+                        : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
 

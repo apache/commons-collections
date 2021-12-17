@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions and visa versa.
  *
@@ -68,37 +66,7 @@ public class BitMap {
      * @throws IndexOutOfBoundsException if idx specifies a bit not in the range being tracked.
      */
     public static void set(long[] bitMaps, int idx) {
-        bitMaps[checkRange(bitMaps.length, idx)] |= getLongBit(idx);
-    }
-
-    /**
-     * Checks that the index is positive.
-     *
-     * @param bitIndex the bit index
-     * @throws IndexOutOfBoundsException if the index is not positive
-     */
-    public static void checkPositive(final int bitIndex) {
-        if (bitIndex < 0) {
-            throw new IndexOutOfBoundsException("Negative bitIndex: " + bitIndex);
-        }
-    }
-
-    /**
-     * Checks that the bitIndex produces a value in the range of a collection.
-     *
-     * @param limit the number of bitmaps in a collection.
-     * @param bitIndex the bit index
-     * @return the index for the bitmap in the array.
-     * @throws IndexOutOfBoundsException if the index is not positive
-     * @see #getLongIndex(int)
-     */
-    public static int checkRange(final int limit, final int bitIndex) {
-        checkPositive(bitIndex);
-        int idx = getLongIndex(bitIndex);
-        if (limit <= idx) {
-            throw new IndexOutOfBoundsException("bitIndex to large: " + bitIndex);
-        }
-        return idx;
+        bitMaps[getLongIndex(idx)] |= getLongBit(idx);
     }
 
     /**
@@ -147,25 +115,4 @@ public class BitMap {
         return 1L << bitIndex;
     }
 
-    /**
-     * Determines if a cardinality is sparse based on the shape.
-     * <p>This method assumes that BitMaps are 64bits and indexes are 32bits.  If the memory
-     * necessary to store the cardinality as indexes is less than the estimated memory for BitMaps,
-     * the cardinality is determined to be {@code sparse}.</p>
-     * @param cardinality the cardinality to check.
-     * @param shape the Shape to check against
-     * @return true if the cardinality is sparse within the shape.
-     */
-    public static boolean isSparse(int cardinality, Shape shape) {
-        /*
-         * Since the size of a BitMap is a long and the size of an index is an int,
-         * there can be 2 indexes for each bitmap. In Bloom filters indexes are evenly
-         * distributed across the range of possible values, Thus if the cardinality
-         * (number of indexes) is less than or equal to 2*number of BitMaps the
-         * cardinality is sparse within the shape.
-         */
-
-        Objects.requireNonNull(shape, "shape");
-        return cardinality <= (numberOfBitMaps(shape.getNumberOfBits()) * 2);
-    }
 }

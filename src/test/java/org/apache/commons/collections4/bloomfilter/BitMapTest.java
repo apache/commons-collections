@@ -18,23 +18,10 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class BitMapTest {
-
-    @Test
-    public void checkPositiveTest() {
-        BitMap.checkPositive(0);
-        BitMap.checkPositive(0);
-        try {
-            BitMap.checkPositive(-1);
-
-        } catch (IndexOutOfBoundsException expected) {
-            // do nothing
-        }
-    }
 
     @Test
     public void getLongBitTest() {
@@ -52,22 +39,6 @@ public class BitMapTest {
         assertEquals(1, BitMap.getLongIndex(64));
         assertEquals(1, BitMap.getLongIndex(127));
         assertEquals(2, BitMap.getLongIndex(128));
-    }
-
-    @Test
-    public void isSparseTest() {
-        Shape shape = new Shape(17, 64);
-        assertTrue(BitMap.isSparse(0, shape));
-        assertTrue(BitMap.isSparse(1, shape));
-        assertTrue(BitMap.isSparse(2, shape));
-        assertFalse(BitMap.isSparse(3, shape));
-
-        shape = new Shape(17, 64 * 3);
-
-        for (int i = 0; i < 7; i++) {
-            assertTrue(BitMap.isSparse(i, shape));
-        }
-        assertFalse(BitMap.isSparse(7, shape));
     }
 
     @Test
@@ -132,8 +103,4 @@ public class BitMapTest {
 
     }
 
-    @Test
-    public void checkRangeTest() {
-        assertThrows(IndexOutOfBoundsException.class, () -> BitMap.checkRange(1, Long.SIZE + 1));
-    }
 }
