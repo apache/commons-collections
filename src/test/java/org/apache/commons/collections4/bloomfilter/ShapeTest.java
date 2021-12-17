@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.Test;
@@ -97,6 +99,22 @@ public class ShapeTest {
         assertEquals(0.0, shape.getProbability(0), 0.0);
 
         assertThrows(IllegalArgumentException.class, () -> shape.getProbability(-1));
+    }
+
+    @Test
+    public void isSparseTest() {
+        Shape shape = new Shape(17, 64);
+        assertTrue(shape.isSparse(0));
+        assertTrue(shape.isSparse(1));
+        assertTrue(shape.isSparse(2));
+        assertFalse(shape.isSparse(3));
+
+        shape = new Shape(17, 64 * 3);
+
+        for (int i = 0; i < 7; i++) {
+            assertTrue(shape.isSparse(i));
+        }
+        assertFalse(shape.isSparse(7));
     }
 
 }

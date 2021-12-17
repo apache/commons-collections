@@ -169,6 +169,26 @@ public final class Shape implements Comparable<Shape> {
     }
 
     /**
+     * Determines if a cardinality is sparse based on the shape.
+     * <p>This method assumes that BitMaps are 64bits and indexes are 32bits.  If the memory
+     * necessary to store the cardinality as indexes is less than the estimated memory for BitMaps,
+     * the cardinality is determined to be {@code sparse}.</p>
+     * @param cardinality the cardinality to check.
+     * @param shape the Shape to check against
+     * @return true if the cardinality is sparse within the shape.
+     */
+    public boolean isSparse(int cardinality) {
+        /*
+         * Since the size of a BitMap is a long and the size of an index is an int,
+         * there can be 2 indexes for each bitmap. In Bloom filters indexes are evenly
+         * distributed across the range of possible values, Thus if the cardinality
+         * (number of indexes) is less than or equal to 2*number of BitMaps the
+         * cardinality is sparse within the shape.
+         */
+        return cardinality <= (BitMap.numberOfBitMaps(getNumberOfBits()) * 2);
+    }
+
+    /**
      * Estimate the number of items in a Bloom filter with this shape and the specified number of bits enabled.
      *
      * <p><em>Note:</em></p>

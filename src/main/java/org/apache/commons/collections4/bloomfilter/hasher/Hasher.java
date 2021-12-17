@@ -99,7 +99,9 @@ public interface Hasher {
          * @see Hasher.Filter#Filter(int)
          */
         public boolean test(int number) {
-            BitMap.checkPositive(number);
+            if (number < 0) {
+                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
+            }
             if (number >= size) {
                 throw new IndexOutOfBoundsException(String.format("number to large %d >= %d", number, size));
             }
