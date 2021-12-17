@@ -27,11 +27,14 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
-     * Any exceptions thrown by the action are relayed to the caller.
+     * Any exceptions thrown by the action are relayed to the caller.  The predicate is applied to each
+     * index-count pair, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further pairs are processed.
      *
      * <p>Must only process each index once, and must process indexes in order.</p>
      *
      * @param consumer the action to be performed for each non-zero bit count
+     * @return {@code true} if all count pairs return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified action is null
      */
     boolean forEachCount(BitCountConsumer consumer);

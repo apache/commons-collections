@@ -37,7 +37,7 @@ public interface IndexProducer {
      * <p>Indices ordering is not guaranteed</p>
      *
      * @param predicate the action to be performed for each non-zero bit index.
-     * @returns {@code true} if all indexes return true from consumer, {@code false} otherwise.
+     * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified action is null
      */
     boolean forEachIndex(IntPredicate predicate);

@@ -174,7 +174,6 @@ public final class Shape implements Comparable<Shape> {
      * necessary to store the cardinality as indexes is less than the estimated memory for BitMaps,
      * the cardinality is determined to be {@code sparse}.</p>
      * @param cardinality the cardinality to check.
-     * @param shape the Shape to check against
      * @return true if the cardinality is sparse within the shape.
      */
     public boolean isSparse(int cardinality) {

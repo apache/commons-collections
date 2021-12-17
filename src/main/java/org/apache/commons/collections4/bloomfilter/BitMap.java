@@ -81,7 +81,6 @@ public class BitMap {
      *
      * @param bitIndex the bit index (assumed to be positive)
      * @return the index of the BitMap in an array of BitMaps.
-     * @see #checkPositive(int)
      */
     public static int getLongIndex(final int bitIndex) {
         // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is
@@ -105,7 +104,6 @@ public class BitMap {
      *
      * @param bitIndex the bit index (assumed to be positive)
      * @return the filter bit
-     * @see #checkPositive(int)
      */
     public static long getLongBit(final int bitIndex) {
         // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
