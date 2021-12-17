@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
@@ -106,14 +106,17 @@ public final class SimpleHasher implements Hasher {
             private long next = SimpleHasher.this.initial;
 
             @Override
-            public void forEachIndex(IntConsumer consumer) {
+            public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                FilteredIntConsumer filtered = new FilteredIntConsumer(shape.getNumberOfBits(), consumer);
+                FilteredIntPredicate filtered = new FilteredIntPredicate(shape.getNumberOfBits(), consumer);
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     int value = (int) Long.remainderUnsigned(next, shape.getNumberOfBits());
-                    filtered.accept(value);
+                    if (!filtered.test(value)) {
+                        return false;
+                    }
                     next += SimpleHasher.this.increment;
                 }
+                return true;
             }
         };
     }

@@ -19,10 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeSet;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -54,6 +53,16 @@ public class SparseBloomFilter implements BloomFilter {
     }
 
     /**
+     * Addes the index to the indices.
+     * @param idx the index to add.
+     * @return {@code true} always
+     */
+    private boolean add(int idx) {
+        indices.add(idx);
+        return true;
+    }
+
+    /**
      * Constructs a populated Bloom filter.
      * @param shape the shape for the bloom filter.
      * @param hasher the hasher to provide the initial data.
@@ -61,7 +70,7 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(final Shape shape, Hasher hasher) {
         this(shape);
         Objects.requireNonNull(hasher, "hasher");
-        hasher.indices(shape).forEachIndex(this.indices::add);
+        hasher.indices(shape).forEachIndex(this::add);
     }
 
     /**
@@ -97,7 +106,7 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape, IndexProducer indices) {
         this(shape);
         Objects.requireNonNull(indices, "indices");
-        indices.forEachIndex(this.indices::add);
+        indices.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
@@ -113,14 +122,14 @@ public class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        hasher.indices(shape).forEachIndex(this.indices::add);
+        hasher.indices(shape).forEachIndex(this::add);
         return true;
     }
 
     @Override
     public boolean mergeInPlace(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        other.forEachIndex(indices::add);
+        other.forEachIndex(this::add);
         return true;
     }
 
@@ -140,18 +149,21 @@ public class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public void forEachIndex(IntConsumer consumer) {
+    public boolean forEachIndex(IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int value : indices) {
-            consumer.accept(value);
+            if (!consumer.test(value)) {
+                return false;
+            }
         }
+        return true;
     }
 
     @Override
-    public void forEachBitMap(LongConsumer consumer) {
+    public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         if (cardinality() == 0) {
-            return;
+            return true;
         }
         // because our indices are always in order we can
         // shorten the time necessary to create the longs for the
@@ -160,29 +172,23 @@ public class SparseBloomFilter implements BloomFilter {
         int idx = 0;
         for (int i : indices) {
             while (BitMap.getLongIndex(i) != idx) {
-                consumer.accept(bitMap);
+                if (!consumer.test(bitMap)) {
+                    return false;
+                }
                 bitMap = 0;
                 idx++;
             }
             bitMap |= BitMap.getLongBit(i);
         }
         if (bitMap != 0) {
-            consumer.accept(bitMap);
+            return consumer.test(bitMap);
         }
+        return true;
     }
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
-        try {
-            indexProducer.forEachIndex(idx -> {
-                if (!indices.contains(idx)) {
-                    throw new NoMatchException();
-                }
-            });
-            return true;
-        } catch (NoMatchException e) {
-            return false;
-        }
+        return indexProducer.forEachIndex(indices::contains);
     }
 
     @Override

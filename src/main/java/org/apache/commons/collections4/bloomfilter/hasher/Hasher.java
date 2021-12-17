@@ -18,7 +18,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
 
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
@@ -110,15 +110,15 @@ public interface Hasher {
     }
 
     /**
-     * Class to wrap an that an IntConsumer only receives an integer value once.
+     * Class to wrap an that an IntPredicate only receives an integer value once.
      *
      * <p><em>If the index is negative the behavior is not defined.</em></p>
      *
      * @since 4.5
      */
-    class FilteredIntConsumer implements IntConsumer {
+    class FilteredIntPredicate implements IntPredicate {
         private Hasher.Filter filter;
-        private IntConsumer consumer;
+        private IntPredicate consumer;
 
         /**
          * Constructor.
@@ -126,16 +126,14 @@ public interface Hasher {
          * @param size The number of integers to track. Values in the range [0,size) will be tracked.
          * @param consumer to wrap.
          */
-        public FilteredIntConsumer(int size, IntConsumer consumer) {
+        public FilteredIntPredicate(int size, IntPredicate consumer) {
             this.filter = new Hasher.Filter(size);
             this.consumer = consumer;
         }
 
         @Override
-        public void accept(int value) {
-            if (filter.test(value)) {
-                consumer.accept(value);
-            }
+        public boolean test(int value) {
+            return filter.test(value) ? consumer.test(value) : true;
         }
     }
 

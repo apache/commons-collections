@@ -18,7 +18,8 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
+
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 
@@ -74,10 +75,10 @@ public class SingleItemHasherCollection extends HasherCollection {
 
         return new IndexProducer() {
             @Override
-            public void forEachIndex(IntConsumer consumer) {
+            public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                FilteredIntConsumer filtered = new FilteredIntConsumer(shape.getNumberOfBits() - 1, consumer);
-                baseProducer.forEachIndex(filtered);
+                FilteredIntPredicate filtered = new FilteredIntPredicate(shape.getNumberOfBits() - 1, consumer);
+                return baseProducer.forEachIndex(filtered);
             }
         };
     }

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.junit.Test;
 
@@ -33,13 +33,9 @@ public class BitMapProducerTest {
         IndexProducer iProducer = new IndexProducer() {
 
             @Override
-            public void forEachIndex(IntConsumer consumer) {
-                consumer.accept(0);
-                consumer.accept(1);
-                consumer.accept(63);
-                consumer.accept(64);
-                consumer.accept(127);
-                consumer.accept(128);
+            public boolean forEachIndex(IntPredicate consumer) {
+                return consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
+                        && consumer.test(127) && consumer.test(128);
             }
         };
         BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, new Shape(1, 200));

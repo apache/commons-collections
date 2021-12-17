@@ -17,11 +17,10 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 import java.util.stream.IntStream;
 
-import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -196,29 +195,31 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public void forEachCount(final BitCountProducer.BitCountConsumer consumer) {
+    public boolean forEachCount(final BitCountProducer.BitCountConsumer consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0) {
-                consumer.accept(i, counts[i]);
+            if (counts[i] != 0 && !consumer.test(i, counts[i])) {
+                return false;
             }
         }
+        return true;
     }
 
     @Override
-    public void forEachIndex(IntConsumer consumer) {
+    public boolean forEachIndex(IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0) {
-                consumer.accept(i);
+            if (counts[i] != 0 && !consumer.test(i)) {
+                return false;
             }
         }
+        return true;
     }
 
     @Override
-    public void forEachBitMap(LongConsumer consumer) {
+    public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
+        return BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
     }
 
     /**
@@ -226,11 +227,13 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
      *
      * @param idx the index
      * @param addend the amount to add
+     * @return {@code true} always.
      */
-    protected void add(final int idx, final int addend) {
+    protected boolean add(final int idx, final int addend) {
         final int updated = counts[idx] + addend;
         state |= updated;
         counts[idx] = updated;
+        return true;
     }
 
     /**
@@ -238,11 +241,13 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
      *
      * @param idx the index
      * @param subtrahend the amount to subtract
+     * @return {@code true} always.
      */
-    protected void subtract(final int idx, final int subtrahend) {
+    protected boolean subtract(final int idx, final int subtrahend) {
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;
+        return true;
     }
 
     @Override
@@ -252,16 +257,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
-        try {
-            indexProducer.forEachIndex(idx -> {
-                if (this.counts[idx] == 0) {
-                    throw new NoMatchException();
-                }
-            });
-        } catch (NoMatchException e) {
-            return false;
-        }
-        return true;
+        return indexProducer.forEachIndex((idx) -> this.counts[idx] != 0);
     }
 
     @Override
