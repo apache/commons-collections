@@ -40,7 +40,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     @Test
     public void constructor_indexOutOfRange() {
         Shape shape = new Shape(1, 5);
-        List<Integer> lst = new ArrayList();
+        List<Integer> lst = new ArrayList<Integer>();
         lst.add(5);
         assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
 
@@ -52,7 +52,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     @Test
     public void constructor_noValues() {
         Shape shape = new Shape(1, 5);
-        List<Integer> lst = new ArrayList();
+        List<Integer> lst = new ArrayList<Integer>();
         new SparseBloomFilter(shape, lst);
     }
 

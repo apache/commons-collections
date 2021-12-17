@@ -18,8 +18,8 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 
 /**
  * Produces BitMap longs for a Bloom filter.
@@ -39,13 +39,17 @@ import java.util.function.LongConsumer;
 public interface BitMapProducer {
 
     /**
-     * Each BitMap is passed to the consumer in order.
-     * Any exceptions thrown by the action are relayed to the caller.
+     * Each BitMap is passed to the predicate in order.  The predicate is applied to each
+     * bitmap value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further bitmaps are processed.
      *
-     * @param consumer the consumer of the BitMaps.
+     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
+     *
+     * @param predicate the function to execute
+     * @return {@code true} if all bitmaps returned {@code true}, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
-    void forEachBitMap(LongConsumer consumer);
+    boolean forEachBitMap(LongPredicate predicate);
 
     /**
      * Creates a BitMapProducer from an array of Long.
@@ -56,10 +60,13 @@ public interface BitMapProducer {
         return new BitMapProducer() {
 
             @Override
-            public void forEachBitMap(LongConsumer consumer) {
+            public boolean forEachBitMap(LongPredicate predicate) {
                 for (long word : bitMaps) {
-                    consumer.accept(word);
+                    if (!predicate.test(word)) {
+                        return false;
+                    }
                 }
+                return true;
             }
 
         };
@@ -80,26 +87,30 @@ public interface BitMapProducer {
             private long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
 
             @Override
-            public void forEachBitMap(LongConsumer consumer) {
-                Objects.requireNonNull(consumer, "consumer");
+            public boolean forEachBitMap(LongPredicate predicate) {
+                Objects.requireNonNull(predicate, "predicate");
                 /*
                  * we can not assume that all the ints will be in order and not repeated. This
                  * is because the HasherCollection does not make the guarantee.
                  */
                 // process all the ints into a array of BitMaps
-                IntConsumer builder = new IntConsumer() {
+                IntPredicate builder = new IntPredicate() {
                     @Override
-                    public void accept(int i) {
+                    public boolean test(int i) {
                         int bucketIdx = BitMap.getLongIndex(i);
                         maxBucket = maxBucket < bucketIdx ? bucketIdx : maxBucket;
                         result[bucketIdx] |= BitMap.getLongBit(i);
+                        return true;
                     }
                 };
                 producer.forEachIndex(builder);
                 // send the bitmaps to the consumer.
                 for (int bucket = 0; bucket <= maxBucket; bucket++) {
-                    consumer.accept(result[bucket]);
+                    if (!predicate.test(result[bucket])) {
+                        return false;
+                    }
                 }
+                return true;
             }
         };
     }
@@ -108,7 +119,7 @@ public interface BitMapProducer {
      * A LongConsumer that builds an Array of BitMaps as produced by a BitMapProducer.
      *
      */
-    class ArrayBuilder implements LongConsumer {
+    class ArrayBuilder implements LongPredicate {
         private long[] result;
         private int idx = 0;
         private int bucketCount = 0;
@@ -143,9 +154,10 @@ public interface BitMapProducer {
         }
 
         @Override
-        public void accept(long bitmap) {
+        public boolean test(long bitmap) {
             result[idx++] |= bitmap;
             bucketCount = bucketCount >= idx ? bucketCount : idx;
+            return true;
         }
 
         /**

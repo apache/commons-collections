@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.LongConsumer;
+import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -60,10 +60,13 @@ public class IndexProducerTest {
         }
 
         @Override
-        public void forEachBitMap(LongConsumer consumer) {
+        public boolean forEachBitMap(LongPredicate consumer) {
             for (long l : values) {
-                consumer.accept(l);
+                if (!consumer.test(l)) {
+                    return false;
+                }
             }
+            return true;
         }
     }
 

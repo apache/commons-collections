@@ -17,10 +17,9 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -105,6 +104,7 @@ public class SimpleBloomFilter implements BloomFilter {
                 bitMap = newMap;
             }
             BitMap.set(bitMap, idx);
+            return true;
         });
         this.cardinality = -1;
         return true;
@@ -136,7 +136,10 @@ public class SimpleBloomFilter implements BloomFilter {
             synchronized (this) {
                 if (this.cardinality == -1) {
                     this.cardinality = 0;
-                    forEachBitMap(w -> this.cardinality += Long.bitCount(w));
+                    forEachBitMap(w -> {
+                        this.cardinality += Long.bitCount(w);
+                        return true;
+                    });
                 }
             }
         }
@@ -144,52 +147,39 @@ public class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public void forEachIndex(IntConsumer consumer) {
+    public boolean forEachIndex(IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
+        return IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
     }
 
     @Override
-    public void forEachBitMap(LongConsumer consumer) {
+    public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (long l : bitMap) {
-            consumer.accept(l);
+            if (!consumer.test(l)) {
+                return false;
+            }
         }
+        return true;
     }
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
-        try {
-            indexProducer.forEachIndex(idx -> {
-                if (!BitMap.contains(bitMap, idx)) {
-                    throw new NoMatchException();
-                }
-            });
-            return true;
-        } catch (NoMatchException e) {
-            return false;
-        }
+        return indexProducer.forEachIndex(idx -> BitMap.contains(bitMap, idx));
     }
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        LongConsumer consumer = new LongConsumer() {
+        LongPredicate consumer = new LongPredicate() {
             int i = 0;
 
             @Override
-            public void accept(long w) {
-                if (i >= bitMap.length || (bitMap[i++] & w) != w) {
-                    throw new NoMatchException();
-                }
+            public boolean test(long w) {
+                return i < bitMap.length && (bitMap[i++] & w) == w;
             }
         };
-        try {
-            bitMapProducer.forEachBitMap(consumer);
-            return true;
-        } catch (NoMatchException e) {
-            return false;
-        }
 
+        return bitMapProducer.forEachBitMap(consumer);
     }
 
 }

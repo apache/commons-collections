@@ -21,7 +21,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
+
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 
@@ -90,10 +91,13 @@ public class HasherCollection implements Hasher {
         Objects.requireNonNull(shape, "shape");
         return new IndexProducer() {
             @Override
-            public void forEachIndex(IntConsumer consumer) {
+            public boolean forEachIndex(IntPredicate consumer) {
                 for (Hasher hasher : hashers) {
-                    hasher.indices(shape).forEachIndex(consumer);
+                    if (!hasher.indices(shape).forEachIndex(consumer)) {
+                        return false;
+                    }
                 }
+                return true;
             }
         };
     }

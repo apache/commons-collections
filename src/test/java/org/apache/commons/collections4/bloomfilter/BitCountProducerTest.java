@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.junit.Test;
 
@@ -33,19 +33,18 @@ public class BitCountProducerTest {
         IndexProducer iProducer = new IndexProducer() {
 
             @Override
-            public void forEachIndex(IntConsumer consumer) {
-                consumer.accept(0);
-                consumer.accept(1);
-                consumer.accept(63);
-                consumer.accept(64);
-                consumer.accept(127);
-                consumer.accept(128);
+            public boolean forEachIndex(IntPredicate consumer) {
+                return consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
+                        && consumer.test(127) && consumer.test(128);
             }
         };
         BitCountProducer producer = BitCountProducer.from(iProducer);
         Map<Integer, Integer> m = new HashMap<Integer, Integer>();
 
-        producer.forEachCount((i, v) -> m.put(i, v));
+        producer.forEachCount((i, v) -> {
+            m.put(i, v);
+            return true;
+        });
 
         assertEquals(6, m.size());
         assertEquals(Integer.valueOf(1), m.get(0));
@@ -62,9 +61,8 @@ public class BitCountProducerTest {
         BitCountProducer producer = new BitCountProducer() {
 
             @Override
-            public void forEachCount(BitCountConsumer consumer) {
-                consumer.accept(1, 11);
-                consumer.accept(3, 13);
+            public boolean forEachCount(BitCountConsumer consumer) {
+                return consumer.test(1, 11) && consumer.test(3, 13);
             }
         };
 

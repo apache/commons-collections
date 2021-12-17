@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
 public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
-        extends AbstractBloomFilterTest<T> {
+extends AbstractBloomFilterTest<T> {
     protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
     protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         0 };
@@ -37,10 +37,13 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
 
         @Override
-        public void forEachCount(BitCountProducer.BitCountConsumer consumer) {
+        public boolean forEachCount(BitCountProducer.BitCountConsumer consumer) {
             for (int i = 1; i < 18; i++) {
-                consumer.accept(i, Integer.MAX_VALUE);
+                if (!consumer.test(i, Integer.MAX_VALUE)) {
+                    return false;
+                }
             }
+            return true;
         }
     };
 
@@ -53,7 +56,10 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
      */
     private static void assertCounts(final CountingBloomFilter bf, final int[] expected) {
         final Map<Integer, Integer> m = new HashMap<>();
-        bf.forEachCount(m::put);
+        bf.forEachCount((i, c) -> {
+            m.put(i, c);
+            return true;
+        });
         int zeros = 0;
         for (int i = 0; i < expected.length; i++) {
             if (m.get(i) == null) {

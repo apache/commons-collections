@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 /**
  * Produces bit counts for counting type Bloom filters.
@@ -34,11 +34,11 @@ public interface BitCountProducer extends IndexProducer {
      * @param consumer the action to be performed for each non-zero bit count
      * @throws NullPointerException if the specified action is null
      */
-    void forEachCount(BitCountConsumer consumer);
+    boolean forEachCount(BitCountConsumer consumer);
 
     @Override
-    default void forEachIndex(IntConsumer consumer) {
-        forEachCount((i, v) -> consumer.accept(i));
+    default boolean forEachIndex(IntPredicate predicate) {
+        return forEachCount((i, v) -> predicate.test(i));
     }
 
     /**
@@ -50,8 +50,8 @@ public interface BitCountProducer extends IndexProducer {
     static BitCountProducer from(IndexProducer idx) {
         return new BitCountProducer() {
             @Override
-            public void forEachCount(BitCountConsumer consumer) {
-                idx.forEachIndex(i -> consumer.accept(i, 1));
+            public boolean forEachCount(BitCountConsumer consumer) {
+                return idx.forEachIndex(i -> consumer.test(i, 1));
             }
 
         };
@@ -72,6 +72,6 @@ public interface BitCountProducer extends IndexProducer {
          * @param index the bit index
          * @param count the count at the specified bit index
          */
-        void accept(int index, int count);
+        boolean test(int index, int count);
     }
 }

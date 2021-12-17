@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.LongBinaryOperator;
-import java.util.function.LongConsumer;
+import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
 
 /**
@@ -37,7 +37,7 @@ public final class SetOperations {
      * <p>The calculated cardinalities are summed to return the cardinality of the operation.</p>
      *
      */
-    private static class CardCounter implements LongConsumer {
+    private static class CardCounter implements LongPredicate {
         /**
          * The calculated cardinality
          */
@@ -74,12 +74,13 @@ public final class SetOperations {
         }
 
         @Override
-        public void accept(long bitMap) {
+        public boolean test(long bitMap) {
             if (idx < bitMaps.length) {
                 cardinality += Long.bitCount(op2.applyAsLong(bitMaps[idx++], bitMap));
             } else {
                 cardinality += Long.bitCount(op1.applyAsLong(bitMap));
             }
+            return true;
         }
 
         /**

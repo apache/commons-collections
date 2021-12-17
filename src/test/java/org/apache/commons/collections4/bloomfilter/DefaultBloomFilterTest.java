@@ -17,10 +17,9 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.TreeSet;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.exceptions.NoMatchException;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
@@ -48,17 +47,25 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         DefaultBloomFilter(Shape shape, Hasher hasher) {
             this(shape);
-            hasher.indices(shape).forEachIndex(indices::add);
+            hasher.indices(shape).forEachIndex((i) -> {
+                indices.add(i);
+                return true;
+            });
         }
 
         @Override
-        public void forEachIndex(IntConsumer consumer) {
-            indices.forEach(i -> consumer.accept(i.intValue()));
+        public boolean forEachIndex(IntPredicate consumer) {
+            for (Integer i : indices) {
+                if (!consumer.test(i)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         @Override
-        public void forEachBitMap(LongConsumer consumer) {
-            BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
+        public boolean forEachBitMap(LongPredicate consumer) {
+            return BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
         }
 
         @Override
@@ -73,16 +80,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(IndexProducer indexProducer) {
-            try {
-                indexProducer.forEachIndex(i -> {
-                    if (!indices.contains(i)) {
-                        throw new NoMatchException();
-                    }
-                });
-                return true;
-            } catch (NoMatchException e) {
-                return false;
-            }
+            return indexProducer.forEachIndex((i) -> indices.contains(i));
         }
 
         @Override
@@ -92,7 +90,10 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean mergeInPlace(BloomFilter other) {
-            other.forEachIndex(indices::add);
+            other.forEachIndex((i) -> {
+                indices.add(i);
+                return true;
+            });
             return true;
         }
 

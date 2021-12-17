@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
@@ -34,11 +34,10 @@ public final class NullHasher implements Hasher {
      */
     public static final NullHasher INSTANCE = new NullHasher();
 
-
     private static final IndexProducer PRODUCER = new IndexProducer() {
         @Override
-        public void forEachIndex(IntConsumer consumer) {
-            // do nothing
+        public boolean forEachIndex(IntPredicate consumer) {
+            return true;
         }
     };
 

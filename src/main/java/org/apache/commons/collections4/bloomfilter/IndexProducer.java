@@ -17,8 +17,8 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 
 /**
  * An object that produces indices of a Bloom filter.
@@ -28,15 +28,19 @@ import java.util.function.LongConsumer;
 public interface IndexProducer {
 
     /**
-     * Each index is passed to the consumer.
+     * Each index is passed to the predicate.  The predicate is applied to each
+     * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further indices are processed.
+     *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
      * <p>Indices ordering is not guaranteed</p>
      *
-     * @param consumer the action to be performed for each non-zero bit index.
+     * @param predicate the action to be performed for each non-zero bit index.
+     * @returns {@code true} if all indexes return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified action is null
      */
-    void forEachIndex(IntConsumer consumer);
+    boolean forEachIndex(IntPredicate predicate);
 
     /**
      * Creates an IndexProducer from a @{code BitMapProducer}.
@@ -47,24 +51,27 @@ public interface IndexProducer {
         Objects.requireNonNull(producer, "producer");
         return new IndexProducer() {
             @Override
-            public void forEachIndex(IntConsumer consumer) {
-                LongConsumer longConsumer = new LongConsumer() {
+            public boolean forEachIndex(IntPredicate consumer) {
+                LongPredicate longPredicate = new LongPredicate() {
                     int wordIdx = 0;
 
                     @Override
-                    public void accept(long word) {
+                    public boolean test(long word) {
                         int i = wordIdx;
                         while (word != 0) {
                             if ((word & 1) == 1) {
-                                consumer.accept(i);
+                                if (!consumer.test(i)) {
+                                    return false;
+                                }
                             }
                             word >>>= 1;
                             i++;
                         }
                         wordIdx += 64;
+                        return true;
                     }
                 };
-                producer.forEachBitMap(longConsumer::accept);
+                return producer.forEachBitMap(longPredicate::test);
             }
 
         };

@@ -16,10 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
@@ -48,12 +46,13 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     static int[] asIndexArray(BloomFilter filter) {
         int[] result = new int[filter.cardinality()];
 
-        filter.forEachIndex(new IntConsumer() {
+        filter.forEachIndex(new IntPredicate() {
             int i = 0;
 
             @Override
-            public void accept(int idx) {
+            public boolean test(int idx) {
                 result[i++] = idx;
+                return true;
             }
         });
         return result;
@@ -146,7 +145,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((cardinality() + other.cardinality()), getShape())
                 ? new SparseBloomFilter(shape)
-                : new SimpleBloomFilter(shape);
+                        : new SimpleBloomFilter(shape);
 
         result.mergeInPlace(this);
         result.mergeInPlace(other);
@@ -167,7 +166,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
                 ? new SparseBloomFilter(shape, hasher)
-                : new SimpleBloomFilter(shape, hasher);
+                        : new SimpleBloomFilter(shape, hasher);
         result.mergeInPlace(this);
         return result;
     }
@@ -205,7 +204,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = BitMap.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality(), shape)
                 ? new SparseBloomFilter(getShape(), hasher)
-                : new SimpleBloomFilter(getShape(), hasher);
+                        : new SimpleBloomFilter(getShape(), hasher);
         return mergeInPlace(result);
     }
 
