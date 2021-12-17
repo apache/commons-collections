@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -2196,8 +2197,9 @@ public class CollectionUtils {
         }
         Supplier<E> supplier = () -> {
             try {
-                return (E) collection.getClass().newInstance();
-            } catch (IllegalAccessException | InstantiationException e) {
+                return (E) collection.getClass().getDeclaredConstructor().newInstance();
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException
+                    | InstantiationException e) {
                 throw new IllegalArgumentException("unable to get instance of given input collection");
             }
         };
