@@ -65,7 +65,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean forEachBitMap(LongPredicate consumer) {
-            return BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
+            return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
         }
 
         @Override

@@ -38,7 +38,7 @@ public class BitMapProducerTest {
                         && consumer.test(127) && consumer.test(128);
             }
         };
-        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, new Shape(1, 200));
+        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, 200);
         List<Long> lst = new ArrayList<Long>();
         producer.forEachBitMap(lst::add);
         long[] buckets = lst.stream().mapToLong(l -> l.longValue()).toArray();
