@@ -75,16 +75,16 @@ public interface BitMapProducer {
     /**
      * Creates a BitMapProducer from an IndexProducer.
      * @param producer the IndexProducer that specifies the indexes of the bits to enable.
-     * @param shape the desired shape.
+     * @param numberOfBits the number of bits in the Bloom filter.
      * @return A BitMapProducer that produces the BitMap equivalent of the Indices from the producer.
      */
-    static BitMapProducer fromIndexProducer(IndexProducer producer, Shape shape) {
+    static BitMapProducer fromIndexProducer(IndexProducer producer, int numberOfBits) {
         Objects.requireNonNull(producer, "producer");
-        Objects.requireNonNull(shape, "shape");
+        Objects.requireNonNull(numberOfBits, "numberOfBits");
 
         return new BitMapProducer() {
             private int maxBucket = -1;
-            private long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+            private long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
 
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
