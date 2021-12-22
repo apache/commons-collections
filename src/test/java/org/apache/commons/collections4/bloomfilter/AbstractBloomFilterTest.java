@@ -113,9 +113,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void containsTest_BitMapProducer() {
         final BloomFilter bf = createFilter(shape, bigHasher);
 
-        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 1).indices(shape), shape);
+        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 1).indices(shape), shape.getNumberOfBits());
         assertTrue("BF Should contain this hasher", bf.contains(bitMapProducer));
-        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(shape), shape);
+        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(shape), shape.getNumberOfBits());
         assertFalse("BF Should not contain this hasher", bf.contains(bitMapProducer));
     }
 
