@@ -219,7 +219,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        return BitMapProducer.fromIndexProducer(this, shape).forEachBitMap(consumer);
+        return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
     }
 
     /**
