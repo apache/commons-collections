@@ -70,4 +70,28 @@ public class BitMapProducerTest {
                 () -> new BitMapProducer.ArrayBuilder(new Shape(1, 4), new long[] { 1L, 2L, 3L, 4L, 5L }));
     }
 
+    @Test
+    public void verifyBitMapping() {
+        int limit = Integer.SIZE+Long.SIZE;
+        IndexProducer iProducer = new IndexProducer() {
+
+            @Override
+            public boolean forEachIndex(IntPredicate consumer) {
+                for (int i=0;i<limit;i++) {
+                    if (!consumer.test(i)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
+        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
+        List<Long> lst = new ArrayList<Long>();
+        producer.forEachBitMap(lst::add);
+        long expected = ~0L;
+        assertEquals( expected, lst.get(0).longValue());
+        expected &= 0XFFFFFFFFL;
+        assertEquals( expected, lst.get(1).longValue() );
+    }
+
 }
