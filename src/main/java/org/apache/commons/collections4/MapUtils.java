@@ -2043,6 +2043,17 @@ public class MapUtils {
         out.println(debug ? "} " + map.getClass().getName() : "}");
     }
 
+    public static Map<T, T1> fromKeySetAndValues(Set<T> keys, Collection<T1> values) {
+      if (keys.size() != values.size()) {
+        throw new RuntimeException("Size of keys and values must match");
+      }
+      Map<T, T1> ret = new HashMap<>();
+      for (T k : keys) {
+        ret.put(k, values.indexOf(k));
+      }
+      return ret;
+    }
+
     /**
      * Don't allow instances.
      */
