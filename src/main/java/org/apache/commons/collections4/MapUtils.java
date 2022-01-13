@@ -1136,7 +1136,7 @@ public class MapUtils {
     public static <K> String getString(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             final Object answer = map.get(key);
-            if (answer != null) {
+            if (answer != null && answer != "") {
                 return answer.toString();
             }
         }
