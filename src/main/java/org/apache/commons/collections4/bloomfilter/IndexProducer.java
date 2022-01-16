@@ -43,6 +43,27 @@ public interface IndexProducer {
     boolean forEachIndex(IntPredicate predicate);
 
     /**
+     * Creates an IndexProducer from an array of integers
+     * @param values the index values
+     * @return an IndexProducer that uses the values.
+     */
+    static IndexProducer fromIntArray( final int[] values ) {
+        return new IndexProducer() {
+
+            @Override
+            public boolean forEachIndex(IntPredicate predicate) {
+                for (int value : values) {
+                    if (! predicate.test(value)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+        };
+    }
+
+    /**
      * Creates an IndexProducer from a @{code BitMapProducer}.
      * @param producer the @{code BitMapProducer}
      * @return a new @{code IndexProducer}.

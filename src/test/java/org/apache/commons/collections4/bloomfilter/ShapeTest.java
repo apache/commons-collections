@@ -117,4 +117,9 @@ public class ShapeTest {
         assertFalse(shape.isSparse(7));
     }
 
+    @Test
+    public void toStringTest() {
+        assertEquals("Shape[ m=5 k=3 ]", new Shape(3, 5).toString());
+    }
+
 }

@@ -64,6 +64,7 @@ public class ShapeFactoryTest {
     public void badNumberOfHashFunctionsTest() {
         assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNMK(5, 26, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromPMK(0.35, 26, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.Factory.fromNM(2, 1));
     }
 
     /**

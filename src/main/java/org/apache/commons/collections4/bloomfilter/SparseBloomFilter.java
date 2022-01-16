@@ -86,12 +86,12 @@ public class SparseBloomFilter implements BloomFilter {
         this.indices.addAll(indices);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
+                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
                         this.indices.last(), shape.getNumberOfBits()));
             }
             if (this.indices.first() < 0) {
                 throw new IllegalArgumentException(
-                        String.format("Value in list {} is less than 0", this.indices.first()));
+                        String.format("Value in list %s is less than 0", this.indices.first()));
             }
         }
     }
@@ -109,12 +109,12 @@ public class SparseBloomFilter implements BloomFilter {
         indices.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format("Value in list {} is greater than maximum value ({})",
+                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
                         this.indices.last(), shape.getNumberOfBits()));
             }
             if (this.indices.first() < 0) {
                 throw new IllegalArgumentException(
-                        String.format("Value in list {} is less than 0", this.indices.first()));
+                        String.format("Value in list %s is less than 0", this.indices.first()));
             }
         }
     }
@@ -180,10 +180,7 @@ public class SparseBloomFilter implements BloomFilter {
             }
             bitMap |= BitMap.getLongBit(i);
         }
-        if (bitMap != 0) {
-            return consumer.test(bitMap);
-        }
-        return true;
+        return consumer.test(bitMap);
     }
 
     @Override

@@ -53,7 +53,8 @@ public class HasherCollectionTest {
 
     @Test
     public void testIndices() {
-        HasherCollection hasher = new HasherCollection(hasher1, hasher2);
+        // use Arrays.asList to test Collection constructor
+        HasherCollection hasher = new HasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
         assertEquals(2, hasher.size());
         Shape shape = new Shape(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 2, 4, 6, 8, 0 };

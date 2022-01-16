@@ -88,6 +88,7 @@ public class BitMapTest {
     public void contains_boundaryConditionTest() {
         long[] ary = new long[1];
 
+        assertFalse(BitMap.contains(ary, -1));
         assertFalse(BitMap.contains(ary, 0));
         ary[0] = 0x01;
         assertTrue(BitMap.contains(ary, 0));
@@ -95,6 +96,7 @@ public class BitMapTest {
         assertFalse(BitMap.contains(ary, 63));
         ary[0] = (1L << 63);
         assertTrue(BitMap.contains(ary, 63));
+        assertFalse(BitMap.contains(ary, 64));
 
         ary = new long[2];
         assertFalse(BitMap.contains(ary, 64));
