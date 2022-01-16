@@ -39,6 +39,7 @@ public class HasherFilterTest {
         }
 
         assertThrows(IndexOutOfBoundsException.class, () -> filter.test(10));
+        assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
     }
 
 }

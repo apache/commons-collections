@@ -74,6 +74,20 @@ public class SingleItemHasherCollectionTest {
     }
 
     @Test
+    public void testConstructor_with_list() {
+        HasherCollection hasher = new SingleItemHasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
+        Shape shape = new Shape(5, 10);
+        Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
+        List<Integer> lst = new ArrayList<Integer>();
+        IndexProducer producer = hasher.indices(shape);
+        producer.forEachIndex(lst::add);
+        assertEquals(expected.length, lst.size());
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], lst.get(i));
+        }
+    }
+
+    @Test
     public void testAdd_collection() {
         HasherCollection hasher = new SingleItemHasherCollection();
         hasher.add(Arrays.asList(hasher1, hasher2));

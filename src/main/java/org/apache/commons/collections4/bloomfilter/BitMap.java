@@ -54,7 +54,9 @@ public class BitMap {
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
      */
     public static boolean contains(long[] bitMaps, int idx) {
-        return (idx >= 0 && getLongIndex(idx) < bitMaps.length && (bitMaps[getLongIndex(idx)] & getLongBit(idx)) != 0);
+        return (idx >= 0 &&
+                getLongIndex(idx) < bitMaps.length &&
+                (bitMaps[getLongIndex(idx)] & getLongBit(idx)) != 0);
     }
 
     /**

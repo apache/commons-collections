@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +58,73 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         Shape shape = new Shape(1, 5);
         List<Integer> lst = new ArrayList<Integer>();
         new SparseBloomFilter(shape, lst);
+    }
+
+    @Test
+    public void producer_constructor() {
+        int[] values = { 0, 2, 4, 6, 8 };
+        Shape shape = new Shape(5, 10);
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
+        List<Integer> lst = new ArrayList<Integer>();
+        filter.forEachIndex(x -> {
+            lst.add(x);
+            return true;
+        });
+        assertEquals(5, lst.size());
+        for (int value : values) {
+            assertTrue("Missing " + value, lst.contains(Integer.valueOf(value)));
+        }
+    }
+
+    @Test
+    public void producer_constructor_duplicate_values() {
+        int[] values = { 0, 2, 4, 2, 8 };
+        Shape shape = new Shape(5, 10);
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
+        List<Integer> lst = new ArrayList<Integer>();
+        filter.forEachIndex(x -> {
+            lst.add(x);
+            return true;
+        });
+        assertEquals(4, lst.size());
+        for (int value : values) {
+            assertTrue("Missing " + value, lst.contains(Integer.valueOf(value)));
+        }
+    }
+
+    @Test
+    public void producer_constructor_negative_value() {
+        int[] values = { 0, 2, 4, -2, 8 };
+        Shape shape = new Shape(5, 10);
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, indices));
+    }
+
+    @Test
+    public void producer_constructor_value_too_large() {
+        int[] values = { 0, 2, 4, 12, 8 };
+        Shape shape = new Shape(5, 10);
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, indices));
+    }
+
+    @Test
+    public void producer_constructor_no_indices() {
+        Shape shape = new Shape(5, 10);
+        IndexProducer indices = IndexProducer.fromIntArray(new int[0]);
+        BloomFilter filter = new SparseBloomFilter(shape, indices);
+        assertEquals(0, filter.cardinality());
+    }
+
+    @Test
+    public void for_each_bitmap_early_exit() {
+
+        Shape shape = new Shape(5, 100);
+        IndexProducer indices = IndexProducer.fromIntArray(new int[] { 66, 67 });
+        BloomFilter filter = new SparseBloomFilter(shape, indices);
+        assertFalse(filter.forEachBitMap(AbstractBitMapProducerTest.FALSE_CONSUMER));
     }
 
 }
