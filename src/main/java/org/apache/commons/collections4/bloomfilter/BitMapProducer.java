@@ -32,7 +32,7 @@ import java.util.function.LongPredicate;
  * index is enabled.
  *
  * The producer may stop at the last non zero BitMap or may produce zero value bit maps to the limit determined by
- * a shape..
+ * a shape.
  *
  * @since 4.5
  */

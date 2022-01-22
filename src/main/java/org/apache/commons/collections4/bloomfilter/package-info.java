@@ -62,7 +62,7 @@
  *
  * <li>{@code mergeInPlace(BloomFilter)} which
  * utilizes either the {@code BitMapProducer} or {@code IndexProducer} from the argument to enable extra bits
- * in the internal representation of the Bloom filter..</li>
+ * in the internal representation of the Bloom filter.</li>
  * </ul>
  *
  * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.
@@ -88,8 +88,8 @@
  *  initialized by using a standard {@code MessageDigest} or other Hash function to hash the item to insert and
  *  then splitting the hash bytes in half and considering each as a long value.</p>
  *
- *  <p>Other implementations of the Hasher are easy to implement, and should make use of the {@code Hahser.Filter}
- *  and/r {@code Hahser.FileredIntConsumer} classes to filter out duplicate indices.</p>
+ *  <p>Other implementations of the Hasher are easy to implement, and should make use of the {@code Hasher.Filter}
+ *  and/r {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices.</p>
  *
  * <h2>References</h2>
  *
