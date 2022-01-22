@@ -63,7 +63,7 @@ public class BitMap {
      * Sets the bit in the bitmaps.
      * <p><em>Does not perform range checking</em></p>
      *
-     * @param bitMaps  The array of bit maps..
+     * @param bitMaps  The array of bit maps.
      * @param idx the index of the bit to set.
      * @throws IndexOutOfBoundsException if idx specifies a bit not in the range being tracked.
      */

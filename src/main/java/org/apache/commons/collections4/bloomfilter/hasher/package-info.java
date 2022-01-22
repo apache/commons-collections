@@ -41,7 +41,7 @@
  *  <p>The HasherCollection is a collection of Hashers that implements the Hasher interface.  Each hasher within the collection
  *  represents a single item, or in the case of a HasherCollections multiple items.</p>
  *
- *  <p>This hahser represents multiple items and thus may return duplicate indices.</p>
+ *  <p>This hasher represents multiple items and thus may return duplicate indices.</p>
  *
  *  <h3>SingleItemHasherCollection</h3>
  *
@@ -54,7 +54,7 @@
  *  <h3>Other Implementations</h3>
  *
  *  <p>Other implementations of the Hasher are easy to implement.  Hashers that represent single items should make use of the
- *  {@code Hahser.Filter} and/or {@code Hahser.FileredIntConsumer} classes to filter out duplicate indices.</p>
+ *  {@code Hasher.Filter} and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices.</p>
  *
  * <p>With the exception of the HasherCollection, a Hasher represents an item of arbitrary
  * byte size as multiple byte representations of fixed size (multiple hashes). The hashers

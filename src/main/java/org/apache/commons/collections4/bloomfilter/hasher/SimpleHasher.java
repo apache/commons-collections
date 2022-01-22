@@ -79,7 +79,7 @@ public final class SimpleHasher implements Hasher {
 
     /**
      * Constructs the SimpleHasher from 2 longs.  The long values will be interpreted as unsigned values.
-     * @param initial The initial value for the hasher..
+     * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
     public SimpleHasher(long initial, long increment) {

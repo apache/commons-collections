@@ -63,7 +63,7 @@ public final class SetOperations {
          * Constructor.
          * @param BitMaps The array of BitMap BitMaps for a Bloom filter
          * @param op2 The operation to execute when there are two BitMaps to compare.
-         * @param op1 The operation to execute when there is only one BitMap to cmpare.
+         * @param op1 The operation to execute when there is only one BitMap to compare.
          */
         CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
             BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
