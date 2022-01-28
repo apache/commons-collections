@@ -167,7 +167,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is {@code null}
      */
     public static void debugPrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), true);
+        verbosePrintInternal(out, label, map, new ArrayDeque<>(), true);
     }
 
     /**
@@ -1967,7 +1967,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is {@code null}
      */
     public static void verbosePrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), false);
+        verbosePrintInternal(out, label, map, new ArrayDeque<>(), false);
     }
 
     /**

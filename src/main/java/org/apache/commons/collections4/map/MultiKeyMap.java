@@ -114,7 +114,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * Constructs a new MultiKeyMap that decorates a {@code HashedMap}.
      */
     public MultiKeyMap() {
-        this(new HashedMap<MultiKey<? extends K>, V>());
+        this(new HashedMap<>());
     }
 
     /**

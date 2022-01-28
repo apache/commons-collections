@@ -114,7 +114,7 @@ public class ListOrderedMap<K, V>
      * @since 3.1
      */
     public ListOrderedMap() {
-        this(new HashMap<K, V>());
+        this(new HashMap<>());
     }
 
     /**

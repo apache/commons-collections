@@ -53,7 +53,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * Constructs an empty {@link TreeBag}.
      */
     public TreeBag() {
-        super(new TreeMap<E, MutableInteger>());
+        super(new TreeMap<>());
     }
 
     /**
@@ -63,7 +63,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * @param comparator the comparator to use
      */
     public TreeBag(final Comparator<? super E> comparator) {
-        super(new TreeMap<E, MutableInteger>(comparator));
+        super(new TreeMap<>(comparator));
     }
 
     /**
@@ -139,7 +139,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         in.defaultReadObject();
         @SuppressWarnings("unchecked")  // This will fail at runtime if the stream is incorrect
         final Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
-        super.doReadObject(new TreeMap<E, MutableInteger>(comp), in);
+        super.doReadObject(new TreeMap<>(comp), in);
     }
 
 }
