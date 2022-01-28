@@ -62,7 +62,7 @@ public class InstantiateFactory<T> implements Factory<T> {
         Objects.requireNonNull(classToInstantiate, "classToInstantiate");
         if (paramTypes == null && args != null
             || paramTypes != null && args == null
-            || paramTypes != null && args != null && paramTypes.length != args.length) {
+            || paramTypes != null && paramTypes.length != args.length) {
             throw new IllegalArgumentException("Parameter types must match the arguments");
         }
 
