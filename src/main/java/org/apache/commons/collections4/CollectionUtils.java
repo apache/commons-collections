@@ -1189,7 +1189,7 @@ public class CollectionUtils {
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
                                                final Transformer<? super I, ? extends O> transformer) {
-        return collect(inputIterator, transformer, new ArrayList<O>());
+        return collect(inputIterator, transformer, new ArrayList<>());
     }
 
     /**
@@ -1892,7 +1892,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
-                collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(retain, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
@@ -2031,7 +2031,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
-                collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(remove, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {

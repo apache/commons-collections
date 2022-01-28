@@ -46,7 +46,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
      * Constructs an empty {@link HashBag}.
      */
     public HashBag() {
-        super(new HashMap<E, MutableInteger>());
+        super(new HashMap<>());
     }
 
     /**
@@ -79,7 +79,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        super.doReadObject(new HashMap<E, MutableInteger>(), in);
+        super.doReadObject(new HashMap<>(), in);
     }
 
 }

@@ -76,11 +76,11 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
         Objects.requireNonNull(list, "list");
         if (list.isEmpty()) {
-            return new SetUniqueList<>(list, new HashSet<E>());
+            return new SetUniqueList<>(list, new HashSet<>());
         }
         final List<E> temp = new ArrayList<>(list);
         list.clear();
-        final SetUniqueList<E> sl = new SetUniqueList<>(list, new HashSet<E>());
+        final SetUniqueList<E> sl = new SetUniqueList<>(list, new HashSet<>());
         sl.addAll(temp);
         return sl;
     }

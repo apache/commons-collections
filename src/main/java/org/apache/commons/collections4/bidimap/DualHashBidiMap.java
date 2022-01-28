@@ -52,7 +52,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      * Creates an empty {@code HashBidiMap}.
      */
     public DualHashBidiMap() {
-        super(new HashMap<K, V>(), new HashMap<V, K>());
+        super(new HashMap<>(), new HashMap<>());
     }
 
     /**
@@ -62,7 +62,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      * @param map  the map whose mappings are to be placed in this map
      */
     public DualHashBidiMap(final Map<? extends K, ? extends V> map) {
-        super(new HashMap<K, V>(), new HashMap<V, K>());
+        super(new HashMap<>(), new HashMap<>());
         putAll(map);
     }
 

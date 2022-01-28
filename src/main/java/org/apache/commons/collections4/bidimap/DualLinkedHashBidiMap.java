@@ -46,7 +46,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
      * Creates an empty {@code HashBidiMap}.
      */
     public DualLinkedHashBidiMap() {
-        super(new LinkedHashMap<K, V>(), new LinkedHashMap<V, K>());
+        super(new LinkedHashMap<>(), new LinkedHashMap<>());
     }
 
     /**
@@ -56,7 +56,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
      * @param map the map whose mappings are to be placed in this map
      */
     public DualLinkedHashBidiMap(final Map<? extends K, ? extends V> map) {
-        super(new LinkedHashMap<K, V>(), new LinkedHashMap<V, K>());
+        super(new LinkedHashMap<>(), new LinkedHashMap<>());
         putAll(map);
     }
 

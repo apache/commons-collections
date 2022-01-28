@@ -351,7 +351,7 @@ public class SetUtils {
      * @since 4.1
      */
     public static <E> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(new IdentityHashMap<E, Boolean>());
+        return Collections.newSetFromMap(new IdentityHashMap<>());
     }
 
     /**
