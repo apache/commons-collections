@@ -596,7 +596,7 @@ public class ListUtils {
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.select(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**
@@ -616,7 +616,7 @@ public class ListUtils {
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**

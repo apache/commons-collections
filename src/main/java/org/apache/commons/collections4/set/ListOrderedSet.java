@@ -133,7 +133,7 @@ public class ListOrderedSet<E>
      * @since 3.1
      */
     public ListOrderedSet() {
-        super(new HashSet<E>());
+        super(new HashSet<>());
         setOrder = new ArrayList<>();
     }
 
