@@ -51,6 +51,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @param array the array to iterate over
      * @throws NullPointerException if {@code array} is {@code null}
      */
+    @SafeVarargs
     public ObjectArrayIterator(final E... array) {
         this(array, 0, array.length);
     }

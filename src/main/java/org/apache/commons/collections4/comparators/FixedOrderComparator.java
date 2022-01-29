@@ -91,6 +91,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @param items  the items that the comparator can compare in order
      * @throws NullPointerException if the array is null
      */
+    @SafeVarargs
     public FixedOrderComparator(final T... items) {
         for (final T item : Objects.requireNonNull(items, "items")) {
             add(item);

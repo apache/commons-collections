@@ -86,6 +86,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      * @param iterators  the array of iterators
      * @throws NullPointerException if any iterator is null
      */
+    @SafeVarargs
     public ZippingIterator(final Iterator<? extends E>... iterators) {
         // create a mutable list to be able to remove exhausted iterators
         final List<Iterator<? extends E>> list = new ArrayList<>();

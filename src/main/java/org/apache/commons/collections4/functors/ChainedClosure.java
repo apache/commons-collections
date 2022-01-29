@@ -44,6 +44,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
+    @SafeVarargs
     public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
         FunctorUtils.validate(closures);
         if (closures.length == 0) {
@@ -85,6 +86,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @param clone  if {@code true} the input argument will be cloned
      * @param closures  the closures to chain, no nulls
      */
+    @SafeVarargs
     private ChainedClosure(final boolean clone, final Closure<? super E>... closures) {
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
     }
@@ -95,6 +97,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param closures  the closures to chain, copied, no nulls
      */
+    @SafeVarargs
     public ChainedClosure(final Closure<? super E>... closures) {
         this(true, closures);
     }

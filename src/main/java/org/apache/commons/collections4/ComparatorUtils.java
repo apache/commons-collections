@@ -77,6 +77,7 @@ public class ComparatorUtils {
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
      */
+    @SafeVarargs
     public static <E> Comparator<E> chainedComparator(final Comparator<E>... comparators) {
         final ComparatorChain<E> chain = new ComparatorChain<>();
         for (final Comparator<E> comparator : comparators) {

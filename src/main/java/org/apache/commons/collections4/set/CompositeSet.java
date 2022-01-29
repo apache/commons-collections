@@ -81,6 +81,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @param sets  the initial sets in the composite
      */
+    @SafeVarargs
     public CompositeSet(final Set<E>... sets) {
         addComposited(sets);
     }

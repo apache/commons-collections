@@ -167,6 +167,7 @@ public class IterableUtils {
      * @return a new iterable, combining the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
+    @SafeVarargs
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E>... iterables) {
         checkNotNull(iterables);
         return new FluentIterable<E>() {
@@ -874,6 +875,7 @@ public class IterableUtils {
      * @return a list containing the output collections
      * @throws NullPointerException if any predicate is null
      */
+    @SafeVarargs
     public static <O> List<List<O>> partition(final Iterable<? extends O> iterable,
                                               final Predicate<? super O>... predicates) {
 
@@ -918,8 +920,9 @@ public class IterableUtils {
      * @return a list containing the output collections
      * @throws NullPointerException if any predicate is null
      */
+    @SafeVarargs
     public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> iterable,
-            final Factory<R> partitionFactory, final Predicate<? super O>... predicates) {
+                                                                 final Factory<R> partitionFactory, final Predicate<? super O>... predicates) {
 
         if (iterable == null) {
             final Iterable<O> empty = emptyIterable();

@@ -105,6 +105,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @param elements  the elements to be contained in the FluentIterable
      * @return a new FluentIterable containing the provided elements
      */
+    @SafeVarargs
     public static <T> FluentIterable<T> of(final T... elements) {
         return of(Arrays.asList(elements));
     }

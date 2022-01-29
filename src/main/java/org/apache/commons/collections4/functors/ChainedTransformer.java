@@ -50,6 +50,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws NullPointerException if the transformers array is null
      * @throws NullPointerException if any transformer in the array is null
      */
+    @SafeVarargs
     public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
         FunctorUtils.validate(transformers);
         if (transformers.length == 0) {
@@ -97,6 +98,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param transformers  the transformers to chain, copied, no nulls
      */
+    @SafeVarargs
     public ChainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
         this(true, transformers);
     }

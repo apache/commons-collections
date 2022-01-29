@@ -198,6 +198,7 @@ public class TransformerUtils {
      * @throws NullPointerException if the transformers array or any of the transformers is null
      * @see ChainedTransformer
      */
+    @SafeVarargs
     public static <T> Transformer<T, T> chainedTransformer(
             final Transformer<? super T, ? extends T>... transformers) {
         return ChainedTransformer.chainedTransformer(transformers);
