@@ -28,12 +28,12 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return new SimpleHasher(0, 1).indices(new Shape(17, 72));
+        return new SimpleHasher(0, 1).indices(Shape.fromKM(17, 72));
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        throw new NotImplementedException();
+        throw new NotImplementedException("createEmptyProducer() should not be executed");
     }
 
 }

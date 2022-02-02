@@ -52,11 +52,10 @@ public class BitMap {
      * @param bitMaps  The array of bit maps.
      * @param idx the index of the bit to locate.
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
+     * @throws IndexOutOfBoundsException if idx specifies a bit not in the range being tracked.
      */
     public static boolean contains(long[] bitMaps, int idx) {
-        return (idx >= 0 &&
-                getLongIndex(idx) < bitMaps.length &&
-                (bitMaps[getLongIndex(idx)] & getLongBit(idx)) != 0);
+        return (bitMaps[getLongIndex(idx)] & getLongBit(idx)) != 0;
     }
 
     /**

@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
@@ -50,9 +50,20 @@ public class SimpleHasherTest {
 
     @Test
     public void testIterator() {
-        Shape shape = new Shape(5, 10);
+        Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5 };
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
+        IndexProducer producer = hasher.indices(shape);
+        producer.forEachIndex(lst::add);
+        assertEquals(expected.length, lst.size());
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], lst.get(i));
+        }
+    }
+
+    private void assertConstructorBuffer(Shape shape, byte[] buffer, Integer[] expected) {
+        SimpleHasher hasher = new SimpleHasher(buffer);
+        List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());
@@ -63,83 +74,15 @@ public class SimpleHasherTest {
 
     @Test
     public void constructorBufferTest() {
-        Shape shape = new Shape(5, 10);
-        byte[] buffer = { 1, 1 };
-        SimpleHasher hasher = new SimpleHasher(buffer);
-        Integer[] expected = { 1, 2, 3, 4, 5 };
-        List<Integer> lst = new ArrayList<Integer>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
 
-        buffer = new byte[] { 1 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 0, 1, 2, 3, 4 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-
-        buffer = new byte[] { 1, 0, 1 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 1, 2, 3, 4, 5 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-
-        buffer = new byte[] { 0, 1, 0, 1 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 1, 2, 3, 4, 5 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-
-        buffer = new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 1, 2, 3, 4, 5 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-
-        buffer = new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 1, 2, 3, 4, 5 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-
-        buffer = new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 };
-        hasher = new SimpleHasher(buffer);
-        expected = new Integer[] { 1, 2, 3, 4, 5 };
-        lst = new ArrayList<Integer>();
-        producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
+        Shape shape = Shape.fromKM(5, 10);
+        assertConstructorBuffer( shape, new byte[] { 1, 1 }, new Integer[]  { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer( shape, new byte[] { 1 }, new Integer[] { 0, 1, 2, 3, 4 });
+        assertConstructorBuffer( shape, new byte[] { 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer( shape, new byte[] { 0, 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 }, new Integer[] { 1, 2, 3, 4, 5 });;
+        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 }, new Integer[] { 1, 2, 3, 4, 5 });
     }
 
 }

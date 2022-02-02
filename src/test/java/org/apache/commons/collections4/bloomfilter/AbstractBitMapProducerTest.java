@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.LongPredicate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public abstract class AbstractBitMapProducerTest {
 
@@ -61,16 +62,14 @@ public abstract class AbstractBitMapProducerTest {
 
     @Test
     public void forEachBitMap_test_false() {
-
-        assertFalse("non-empty should be false", createProducer().forEachBitMap(FALSE_CONSUMER));
-        assertTrue("empty should be true", createEmptyProducer().forEachBitMap(FALSE_CONSUMER));
-
+        assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
+        assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true" );
     }
 
     @Test
     public void forEachBitMap_test_true() {
-        assertTrue("non-empty should be true", createProducer().forEachBitMap(TRUE_CONSUMER));
-        assertTrue("empty should be true", createEmptyProducer().forEachBitMap(TRUE_CONSUMER));
+        assertTrue( createProducer().forEachBitMap(TRUE_CONSUMER),"non-empty should be true");
+        assertTrue( createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
 
     }
 }

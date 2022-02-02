@@ -72,16 +72,25 @@ public interface Hasher {
      * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
      * @since 4.5
      */
-    class Filter {
+    final class Filter implements IntPredicate {
         private long[] bits;
         private int size;
+
+        /**
+         * Creates an instance for the specified size.
+         * @param size The number of numbers to track. Values from 0 to size-1 will be tracked.
+         * @return
+         */
+        public static Filter of(int size) {
+            return new Filter(size);
+        }
 
         /**
          * Constructor.
          *
          * @param size The number of numbers to track. Values from 0 to size-1 will be tracked.
          */
-        public Filter(int size) {
+        private Filter(int size) {
             bits = new long[BitMap.numberOfBitMaps(size)];
             this.size = size;
         }
@@ -98,12 +107,13 @@ public interface Hasher {
          * @return {@code true} if the number has not been seen, {@code false} otherwise.
          * @see Hasher.Filter#Filter(int)
          */
+        @Override
         public boolean test(int number) {
             if (number < 0) {
                 throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
             }
             if (number >= size) {
-                throw new IndexOutOfBoundsException(String.format("number to large %d >= %d", number, size));
+                throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
             }
             boolean retval = !BitMap.contains(bits, number);
             BitMap.set(bits, number);
@@ -112,7 +122,8 @@ public interface Hasher {
     }
 
     /**
-     * Class to wrap an that an IntPredicate only receives an integer value once.
+     * Wrapper for IntPredicate to ensure that the predicate only sees unique values.
+     * All duplicate values are filtered out.
      *
      * <p><em>If the index is negative the behavior is not defined.</em></p>
      *
@@ -123,8 +134,8 @@ public interface Hasher {
         private IntPredicate consumer;
 
         /**
-         * Constructor.
-         * <p>integers ouside the range [0,size) will throw an IndexOutOfBoundsException.
+         * Constructs an instance wrapping the specified IntPredicate.
+         * <p>integers outside the range [0,size) will throw an IndexOutOfBoundsException.</p>
          * @param size The number of integers to track. Values in the range [0,size) will be tracked.
          * @param consumer to wrap.
          */

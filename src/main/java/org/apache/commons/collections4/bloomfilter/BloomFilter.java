@@ -30,10 +30,10 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     /**
      * Return the Bloom filter data as a BitMap array.
      * @param filter the filter to get the data from.
-     * @return An array of BitMap long.
+     * @return An array of BitMap data.
      */
     static long[] asBitMapArray(BloomFilter filter) {
-        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(filter.getShape());
+        ArrayBuilder builder = new ArrayBuilder(filter.getShape());
         filter.forEachBitMap(builder);
         return builder.getArray();
     }
@@ -165,7 +165,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
+                : new SimpleBloomFilter(shape, hasher);
         result.mergeInPlace(this);
         return result;
     }
@@ -203,7 +203,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
+                : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
 
@@ -235,8 +235,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * <p>By default this is the rounding of the {@code Shape.estimateN(cardinality)} calculation for the
      * shape and cardinality of this filter.</p>
      *
-     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
-     * is a probabilistic structure this value is an estimate.</p>
+     * <p>This produces an estimate roughly equivalent to the number of Hashers that have been merged into the filter.</p>
      *
      * @return an estimate of the number of items in the bloom filter.
      * @see Shape#estimateN(int)
@@ -250,8 +249,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      *
      * <p>By default this is the {@code estimateN()} of the merging of this filter with the {@code other} filter.</p>
      *
-     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
-     * is a probabilistic structure this value is an estimate.</p>
+     * <p>This produces an estimate roughly equivalent to the number of unique Hashers that have been merged into either
+     * of the filters.</p>
      *
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the union.
@@ -267,8 +266,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      *
      * <p>By default this is the {@code estimateN() + other.estimateN() - estimateUnion(other)} </p>
      *
-     * <p>An item is roughly equivalent to the number of Hashers that have been merged.  As the Bloom filter
-     * is a probabilistic structure this value is an estimate.</p>
+     * <p>This produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
+     * of the filters.</p>
      *
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the intersection.

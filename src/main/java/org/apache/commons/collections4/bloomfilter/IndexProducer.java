@@ -25,6 +25,7 @@ import java.util.function.LongPredicate;
  *
  * @since 4.5
  */
+@FunctionalInterface
 public interface IndexProducer {
 
     /**
@@ -47,13 +48,13 @@ public interface IndexProducer {
      * @param values the index values
      * @return an IndexProducer that uses the values.
      */
-    static IndexProducer fromIntArray( final int[] values ) {
+    static IndexProducer fromIntArray(final int[] values) {
         return new IndexProducer() {
 
             @Override
             public boolean forEachIndex(IntPredicate predicate) {
                 for (int value : values) {
-                    if (! predicate.test(value)) {
+                    if (!predicate.test(value)) {
                         return false;
                     }
                 }
@@ -64,9 +65,9 @@ public interface IndexProducer {
     }
 
     /**
-     * Creates an IndexProducer from a @{code BitMapProducer}.
-     * @param producer the @{code BitMapProducer}
-     * @return a new @{code IndexProducer}.
+     * Creates an IndexProducer from a {@code BitMapProducer}.
+     * @param producer the {@code BitMapProducer}
+     * @return a new {@code IndexProducer}.
      */
     static IndexProducer fromBitMapProducer(BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");

@@ -21,7 +21,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 
 public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndexProducerTest {
 
-    protected Shape shape = new Shape(17, 72);
+    protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
     protected IndexProducer createProducer() {
