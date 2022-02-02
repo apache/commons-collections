@@ -34,17 +34,12 @@ public class SimpleHasherTest {
     private SimpleHasher hasher = new SimpleHasher(1, 1);
 
     @Test
-    public void constructor_byteTest() {
-        assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
-    }
-
-    @Test
-    public void sizeTest() {
+    public void testSize() {
         assertEquals(1, hasher.size());
     }
 
     @Test
-    public void isEmptyTest() {
+    public void testIsEmpty() {
         assertFalse(hasher.isEmpty());
     }
 
@@ -73,7 +68,7 @@ public class SimpleHasherTest {
     }
 
     @Test
-    public void constructorBufferTest() {
+    public void testConstructor() {
 
         Shape shape = Shape.fromKM(5, 10);
         assertConstructorBuffer(shape, new byte[] { 1, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
@@ -87,6 +82,9 @@ public class SimpleHasherTest {
         ;
         assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
                 new Integer[] { 1, 2, 3, 4, 5 });
-    }
+
+        // test empty buffer
+        assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
+}
 
 }

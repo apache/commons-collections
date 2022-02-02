@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class BitMapTest {
 
     @Test
-    public void getLongBitTest() {
+    public final void testGetLongBit() {
         assertEquals(1, BitMap.getLongBit(0));
         assertEquals(0x8000000000000000L, BitMap.getLongBit(63));
         assertEquals(1, BitMap.getLongBit(64));
@@ -35,7 +35,7 @@ public class BitMapTest {
     }
 
     @Test
-    public void getLongIndexTest() {
+    public final void testGetLongIndex() {
         assertEquals(0, BitMap.getLongIndex(0));
         assertEquals(0, BitMap.getLongIndex(63));
         assertEquals(1, BitMap.getLongIndex(64));
@@ -44,7 +44,7 @@ public class BitMapTest {
     }
 
     @Test
-    public void numberOfBitMapsTest() {
+    public final void testNumberOfBitMaps() {
         assertEquals(0, BitMap.numberOfBitMaps(0), "Number of bits 0");
         for (int i = 1; i < 65; i++) {
             assertEquals(1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
@@ -57,7 +57,7 @@ public class BitMapTest {
     }
 
     @Test
-    public void setTest() {
+    public final void testSet() {
         long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
         for (int i = 0; i < 129; i++) {
             BitMap.set(bitMaps, i);
@@ -69,7 +69,7 @@ public class BitMapTest {
     }
 
     @Test
-    public void containsTest() {
+    public final void testContains() {
         long[] bitMaps = new long[1];
 
         for (int i = 0; i < 64; i++) {
@@ -84,10 +84,8 @@ public class BitMapTest {
             }
 
         }
-    }
 
-    @Test
-    public void contains_boundaryConditionTest() {
+        // test boundary conditions
         long[] ary = new long[1];
 
         final long[] aryT = ary;

@@ -39,7 +39,7 @@ public class SetOperationsTest {
      * Tests that the Cosine similarity is correctly calculated.
      */
     @Test
-    public final void cosineDistanceTest() {
+    public final void testCosineDistance() {
 
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
@@ -70,25 +70,16 @@ public class SetOperationsTest {
         expected = 1 - (dotProduct / Math.sqrt(cardinalityA * cardinalityB));
         assertEquals(expected, SetOperations.cosineDistance(filter1, filter2));
         assertEquals(expected, SetOperations.cosineDistance(filter2, filter1));
-    }
 
-    /**
-     * Tests that the Cosine distance is correctly calculated when one or
-     * both filters are empty
-     */
-    @Test
-    public final void cosineDistanceTest_NoValues() {
-        BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
-        BloomFilter filter2 = new SimpleBloomFilter(shape);
+        // test with no values
+        filter1 = new SimpleBloomFilter(shape, from1);
+        filter2 = new SimpleBloomFilter(shape);
         BloomFilter filter3 = new SimpleBloomFilter(shape);
 
-        @SuppressWarnings("unused")
-        int dotProduct = /* [1,2] & [] = [] = */ 0;
-        @SuppressWarnings("unused")
-        int cardinalityA = 2;
-        @SuppressWarnings("unused")
-        int cardinalityB = 0;
-        double expected = /* 1 - (dotProduct/Math.sqrt( cardinalityA * cardinalityB )) = */ 1.0;
+        dotProduct = /* [1,2] & [] = [] = */ 0;
+        cardinalityA = 2;
+        cardinalityB = 0;
+        expected = /* 1 - (dotProduct/Math.sqrt( cardinalityA * cardinalityB )) = */ 1.0;
         assertEquals(expected, SetOperations.cosineDistance(filter1, filter2));
         assertEquals(expected, SetOperations.cosineDistance(filter2, filter1));
 
@@ -104,7 +95,7 @@ public class SetOperationsTest {
      * Tests that the Cosine similarity is correctly calculated.
      */
     @Test
-    public final void cosineSimilarityTest() {
+    public final void testCosineSimilarity() {
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
@@ -122,18 +113,13 @@ public class SetOperationsTest {
         filter2 = new SimpleBloomFilter(shape, from11);
         assertEquals(expected, SetOperations.cosineSimilarity(filter1, filter2));
         assertEquals(expected, SetOperations.cosineSimilarity(filter2, filter1));
-    }
 
-    /**
-     * Tests that the Cosine similarity is correctly calculated when one or
-     * both filters are empty
-     */
-    @Test
-    public final void cosineSimilarityTest_NoValues() {
-        final BloomFilter filter1 = new SimpleBloomFilter(shape);
-        final BloomFilter filter2 = new SimpleBloomFilter(shape);
+
+        // test no values
+        filter1 = new SimpleBloomFilter(shape);
+        filter2 = new SimpleBloomFilter(shape);
         // build a filter
-        final BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
+        BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
 
         assertEquals(0.0, SetOperations.cosineSimilarity(filter1, filter2));
         assertEquals(0.0, SetOperations.cosineSimilarity(filter2, filter1));
@@ -145,7 +131,7 @@ public class SetOperationsTest {
      * Tests that the Hamming distance is correctly calculated.
      */
     @Test
-    public final void hammingDistanceTest() {
+    public final void testHammingDistance() {
         final BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
@@ -163,8 +149,8 @@ public class SetOperationsTest {
      * Tests that the Jaccard distance is correctly calculated.
      */
     @Test
-    public final void jaccardDistanceTest() {
-        final BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
+    public final void testJaccardDistance() {
+        BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
         // 1 - jaccardSimilarity -- see jaccardSimilarityTest
@@ -177,17 +163,11 @@ public class SetOperationsTest {
         int union = /* [1..17] | [11..27] = [1..27] = */ 27;
         assertEquals(1 - (intersection / union), SetOperations.jaccardDistance(filter1, filter2));
         assertEquals(1 - (intersection / union), SetOperations.jaccardDistance(filter2, filter1));
-    }
 
-    /**
-     * Tests that the Jaccard distance is correctly calculated when one or
-     * both filters are empty
-     */
-    @Test
-    public final void jaccardDistanceTest_NoValues() {
-        final BloomFilter filter1 = new SimpleBloomFilter(shape);
-        final BloomFilter filter2 = new SimpleBloomFilter(shape);
-        final BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
+// test no values
+         filter1 = new SimpleBloomFilter(shape);
+        filter2 = new SimpleBloomFilter(shape);
+        BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
 
         // 1 - jaccardSimilarity -- see jaccardSimilarityTest
         assertEquals(1.0, SetOperations.jaccardDistance(filter1, filter2));
@@ -200,8 +180,8 @@ public class SetOperationsTest {
      * Tests that the Jaccard similarity is correctly calculated.
      */
     @Test
-    public final void jaccardSimilarityTest() {
-        final BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
+    public final void testJaccardSimilarity() {
+        BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
         double intersection = /* [1..17] & [1..17] = [1..17] = */ 17.0;
@@ -215,29 +195,23 @@ public class SetOperationsTest {
         union = /* [1..17] | [11..27] = [1..27] = */ 27;
         assertEquals(intersection / union, SetOperations.jaccardSimilarity(filter1, filter2));
         assertEquals(intersection / union, SetOperations.jaccardSimilarity(filter2, filter1));
-    }
 
-    /**
-     * Tests that the Jaccard similarity is correctly calculated when one or
-     * both filters are empty
-     */
-    @Test
-    public final void jaccardSimilarityTest_NoValues() {
-        final BloomFilter filter1 = new SimpleBloomFilter(shape);
-        final BloomFilter filter2 = new SimpleBloomFilter(shape);
-        final BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
+        // test no values
+        filter1 = new SimpleBloomFilter(shape);
+        filter2 = new SimpleBloomFilter(shape);
+         BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
 
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter1, filter2));
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter2, filter1));
 
-        double intersection = /* [] & [1..17] = [] = */ 0.0;
-        int union = /* [] | [1..17] = [] = */ 17;
+        intersection = /* [] & [1..17] = [] = */ 0.0;
+        union = /* [] | [1..17] = [] = */ 17;
         assertEquals(intersection / union, SetOperations.jaccardSimilarity(filter1, filter3));
         assertEquals(intersection / union, SetOperations.jaccardSimilarity(filter3, filter1));
     }
 
     @Test
-    public final void orCardinalityTest() {
+    public final void testOrCardinality() {
         Shape shape = Shape.fromKM(3, 128);
         SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 1, 63, 64 }));
         SparseBloomFilter filter2 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 5, 64, 69 }));
@@ -256,7 +230,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void andCardinalityTest() {
+    public final void testAndCardinality() {
         Shape shape = Shape.fromKM(3, 128);
         SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 1, 63, 64 }));
         SparseBloomFilter filter2 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 5, 64, 69 }));
@@ -276,7 +250,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void xorCardinalityTest() {
+    public final void testXorCardinality() {
         Shape shape = Shape.fromKM(3, 128);
         SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 1, 63, 64 }));
         SparseBloomFilter filter2 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 5, 64, 69 }));

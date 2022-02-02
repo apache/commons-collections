@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class BitCountProducerTest {
 
     @Test
-    public void fromIndexProducer() {
+    public final void testFromIndexProducer() {
         IndexProducer iProducer = new IndexProducer() {
 
             @Override
@@ -57,7 +57,7 @@ public class BitCountProducerTest {
     }
 
     @Test
-    public void forEachIndexTest() {
+    public final void testForEachIndex() {
         BitCountProducer producer = new BitCountProducer() {
 
             @Override

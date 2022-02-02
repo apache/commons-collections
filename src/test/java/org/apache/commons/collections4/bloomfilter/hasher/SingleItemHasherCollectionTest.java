@@ -61,7 +61,7 @@ public class SingleItemHasherCollectionTest {
     }
 
     @Test
-    public void isEmptyTest() {
+    public void testIsEmpty() {
         SingleItemHasherCollection hasher = new SingleItemHasherCollection();
         assertTrue(hasher.isEmpty());
         hasher.add(new Hasher() {
@@ -96,7 +96,7 @@ public class SingleItemHasherCollectionTest {
     }
 
     @Test
-    public void testConstructor_with_list() {
+    public void testConstructor() {
         HasherCollection hasher = new SingleItemHasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
         Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
@@ -110,7 +110,7 @@ public class SingleItemHasherCollectionTest {
     }
 
     @Test
-    public void testAdd_collection() {
+    public void testAdd() {
         HasherCollection hasher = new SingleItemHasherCollection();
         hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(1, hasher.size());

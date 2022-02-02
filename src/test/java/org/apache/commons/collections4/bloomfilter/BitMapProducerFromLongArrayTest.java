@@ -50,7 +50,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
     }
 
     @Test
-    public void verifyBitMapping() {
+    public void testFromIndexProducer() {
         int limit = Integer.SIZE + Long.SIZE;
         IndexProducer iProducer = new IndexProducer() {
 

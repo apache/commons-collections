@@ -68,7 +68,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected abstract T createFilter(Shape shape, Hasher hasher);
 
     @Test
-    public void asIndexArrayTest() {
+    final public void testAsIndexArray() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         int[] ary = BloomFilter.asIndexArray(bf);
         assertEquals(17, ary.length);
@@ -84,7 +84,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    public void containsTest() {
+    final public void testContains() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
 
@@ -93,36 +93,20 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertFalse(bf.contains(bf2), "BF should not contain BF2");
         assertTrue(bf2.contains(bf), "BF2 should contain BF");
 
-    }
-
-    @Test
-    public void containsTest_Hasher() {
-        final BloomFilter bf = createFilter(getTestShape(), bigHasher);
-
-        assertTrue(bf.contains(new SimpleHasher(1, 1)), "BF Should contain this hasher");
-        assertFalse(bf.contains(new SimpleHasher(1, 3)), "BF Should not contain this hasher");
-    }
-
-    @Test
-    public void containsTest_IndexProducer() {
-        final BloomFilter bf = createFilter(getTestShape(), bigHasher);
+        assertTrue(bf2.contains(new SimpleHasher(1, 1)), "BF2 Should contain this hasher");
+        assertFalse(bf2.contains(new SimpleHasher(1, 3)), "BF2 Should not contain this hasher");
 
         IndexProducer indexProducer = new SimpleHasher(1, 1).indices(getTestShape());
-        assertTrue(bf.contains(indexProducer), "BF Should contain this hasher");
+        assertTrue(bf2.contains(indexProducer), "BF2 Should contain this hasher");
         indexProducer = new SimpleHasher(1, 3).indices(getTestShape());
-        assertFalse(bf.contains(indexProducer), "BF Should not contain this hasher");
-    }
-
-    @Test
-    public void containsTest_BitMapProducer() {
-        final BloomFilter bf = createFilter(getTestShape(), bigHasher);
+        assertFalse(bf2.contains(indexProducer), "BF2 Should not contain this hasher");
 
         BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 1).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
-        assertTrue(bf.contains(bitMapProducer), "BF Should contain this hasher");
+        assertTrue(bf2.contains(bitMapProducer), "BF2 Should contain this hasher");
         bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
-        assertFalse(bf.contains(bitMapProducer), "BF Should not contain this hasher");
+        assertFalse(bf2.contains(bitMapProducer), "BF2 Should not contain this hasher");
     }
 
     /**
@@ -131,22 +115,18 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    public void estimateIntersectionTest() {
+    final public void testEestimateIntersection() {
 
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
 
         assertEquals(1, bf.estimateIntersection(bf2));
         assertEquals(1, bf2.estimateIntersection(bf));
-    }
 
-    @Test
-    public void estimateIntersectionTest_empty() {
-        final BloomFilter bf = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createEmptyFilter(getTestShape());
+        final BloomFilter bf3 = createEmptyFilter(getTestShape());
 
-        assertEquals(0, bf.estimateIntersection(bf2));
-        assertEquals(0, bf2.estimateIntersection(bf));
+        assertEquals(0, bf.estimateIntersection(bf3));
+        assertEquals(0, bf3.estimateIntersection(bf));
     }
 
     /**
@@ -155,29 +135,24 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    public void estimateUnionTest() {
+    final public void testEstimateUnion() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
-
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
 
         assertEquals(2, bf.estimateUnion(bf2));
         assertEquals(2, bf2.estimateUnion(bf));
-    }
 
-    @Test
-    public void estimateUnionTest_empty() {
-        final BloomFilter bf = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createEmptyFilter(getTestShape());
+        final BloomFilter bf3 = createEmptyFilter(getTestShape());
 
-        assertEquals(1, bf.estimateUnion(bf2));
-        assertEquals(1, bf2.estimateUnion(bf));
+        assertEquals(1, bf.estimateUnion(bf3));
+        assertEquals(1, bf3.estimateUnion(bf));
     }
 
     /**
      * Tests that the size estimate is correctly calculated.
      */
     @Test
-    public void estimateNTest() {
+    final public void testEstimateN() {
         // build a filter
         BloomFilter filter1 = new SimpleBloomFilter(getTestShape(), from1);
         assertEquals(1, filter1.estimateN());
@@ -197,31 +172,28 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that creating an empty hasher works as expected.
      */
     @Test
-    public final void constructorTest_Empty() {
+    public final void testConstructor() {
+        // test empty
         final BloomFilter bf = createEmptyFilter(getTestShape());
         final long[] lb = BloomFilter.asBitMapArray(bf);
         assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
-    }
 
-    /**
-     * Tests that creating a filter with a hasher works as expected.
-     */
-    @Test
-    public final void constructorTest_Hasher() {
+        // test hasher
         Hasher hasher = new SimpleHasher(0, 1);
 
-        final BloomFilter bf = createFilter(getTestShape(), hasher);
-        final long[] lb = BloomFilter.asBitMapArray(bf);
-        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
-        assertEquals(0x1FFFF, lb[0]);
+        final BloomFilter bf2 = createFilter(getTestShape(), hasher);
+        final long[] lb2 = BloomFilter.asBitMapArray(bf2);
+        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb2.length);
+        assertEquals(0x1FFFF, lb2[0]);
     }
 
     /**
-     * Tests that getBits() works correctly when multiple long values are returned.
+     * Tests that asBitMapArray works correctly.
      */
     @Test
-    public final void getBitsTest_SpanLong() {
+    public final void testAsBitMapArray() {
 
+        // test when multiple long values are returned.
         final SimpleHasher hasher = new SimpleHasher(63, 1);
         final BloomFilter bf = createFilter(Shape.fromKM(2, 72), hasher);
         final long[] lb = BloomFilter.asBitMapArray(bf);
@@ -234,7 +206,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that isFull() returns the proper values.
      */
     @Test
-    public final void isFullTest() {
+    public final void testIsFull() {
 
         // create empty filter
         BloomFilter filter = createEmptyFilter(getTestShape());
@@ -251,8 +223,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
      */
     @Test
-    public final void mergeTest_Bloomfilter() {
+    public final void testMerge() {
 
+        // test with BloomFilter
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
 
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
@@ -266,51 +239,38 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf4.contains(bf2), "Should contain bf2");
         assertTrue(bf4.contains(bf3), "Should contain bf3");
         assertTrue(bf3.contains(bf4), "Should contain bf4");
-    }
 
-    @Test
-    public final void mergeTest_Hasher() {
+        // test with Hasher
 
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
-
-        final BloomFilter bf3 = bf1.merge(from11);
-        assertTrue(bf3.contains(bf1), "Should contain bf1");
-        assertTrue(bf3.contains(bf2), "Should contain bf2");
+        final BloomFilter bf5 = bf1.merge(from11);
+        assertTrue(bf5.contains(bf1), "Should contain bf1");
+        assertTrue(bf5.contains(bf2), "Should contain bf2");
     }
 
     /**
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
      */
     @Test
-    public final void mergeInPlaceTest_Bloomfilter() {
+    public final void testMergeInPlace() {
 
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
-
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
+        final  BloomFilter bf3 = bf1.merge(bf2);
 
-        final BloomFilter bf3 = bf1.merge(bf2);
+        // test with BloomFilter
 
         bf1.mergeInPlace(bf2);
 
         assertTrue(bf1.contains(bf2), "Should contain bf2");
         assertTrue(bf1.contains(bf3), "Should contain bf3");
 
-    }
+        // test with hasher
 
-    @Test
-    public final void mergeInPlaceTest_Hasher() {
+        final BloomFilter bf4 = createFilter(getTestShape(), from1);
+        bf4.mergeInPlace(from11);
 
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
-
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
-
-        final BloomFilter bf3 = bf1.merge(bf2);
-
-        bf1.mergeInPlace(from11);
-
-        assertTrue(bf1.contains(bf2), "Should contain Bf2");
-        assertTrue(bf1.contains(bf3), "Should contain Bf3");
+        assertTrue(bf4.contains(bf2), "Should contain Bf2");
+        assertTrue(bf4.contains(bf3), "Should contain Bf3");
     }
 
 }
