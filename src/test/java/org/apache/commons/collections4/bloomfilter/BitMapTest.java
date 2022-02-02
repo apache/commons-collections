@@ -45,14 +45,14 @@ public class BitMapTest {
 
     @Test
     public void numberOfBitMapsTest() {
-        assertEquals( 0, BitMap.numberOfBitMaps(0),"Number of bits 0");
+        assertEquals(0, BitMap.numberOfBitMaps(0), "Number of bits 0");
         for (int i = 1; i < 65; i++) {
-            assertEquals( 1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
+            assertEquals(1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
         }
         for (int i = 65; i < 129; i++) {
             assertEquals(2, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
         }
-        assertEquals( 3, BitMap.numberOfBitMaps(129), "Number of bits 129");
+        assertEquals(3, BitMap.numberOfBitMaps(129), "Number of bits 129");
 
     }
 
@@ -61,7 +61,7 @@ public class BitMapTest {
         long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
         for (int i = 0; i < 129; i++) {
             BitMap.set(bitMaps, i);
-            assertTrue(BitMap.contains(bitMaps, i),String.format("Failed at index: %d", i));
+            assertTrue(BitMap.contains(bitMaps, i), String.format("Failed at index: %d", i));
         }
         assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[0]);
         assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[1]);
@@ -77,9 +77,9 @@ public class BitMapTest {
             BitMap.set(bitMaps, i);
             for (int j = 0; j < 64; j++) {
                 if (j == i) {
-                    assertTrue( BitMap.contains(bitMaps, j), String.format("Failed at index: %d for %d", i, j));
+                    assertTrue(BitMap.contains(bitMaps, j), String.format("Failed at index: %d for %d", i, j));
                 } else {
-                    assertFalse( BitMap.contains(bitMaps, j), String.format("Failed at index %d for %d", i, j));
+                    assertFalse(BitMap.contains(bitMaps, j), String.format("Failed at index %d for %d", i, j));
                 }
             }
 
@@ -100,7 +100,6 @@ public class BitMapTest {
         ary[0] = (1L << 63);
         assertTrue(BitMap.contains(ary, 63));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> BitMap.contains(aryT, 64));
-
 
         ary = new long[2];
         assertFalse(BitMap.contains(ary, 64));

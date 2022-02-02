@@ -26,7 +26,6 @@ import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
 
-
 public class BitCountProducerTest {
 
     @Test

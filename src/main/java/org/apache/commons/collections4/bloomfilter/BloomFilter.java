@@ -28,9 +28,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
-     * Return the Bloom filter data as a BitMap array.
+     * Return the Bloom filter data as a bit map array.
      * @param filter the filter to get the data from.
-     * @return An array of BitMap data.
+     * @return An array of bit map data.
      */
     static long[] asBitMapArray(BloomFilter filter) {
         ArrayBuilder builder = new ArrayBuilder(filter.getShape());
@@ -66,7 +66,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * <p>For `sparse` implementations
      * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
      * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
-     * for the implementation to produce indexes of BitMap blocks.</p>
+     * for the implementation to produce indexes of bit map blocks.</p>
      *
      * @return {@code true} if the implementation is sparse {@code false} otherwise.
      * @see BitMap
@@ -99,7 +99,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Returns {@code true} if this filter contains the bits specified in the hasher.
      *
      * <p>Specifically this returns {@code true} if this filter is enabled for all bit indexes
-     * identified by the {@code hasher}. Using the BitMap representations this is
+     * identified by the {@code hasher}. Using the bit map representations this is
      * effectively {@code (this AND hasher) == hasher}.</p>
      *
      * @param hasher the hasher to provide the indexes
@@ -123,11 +123,11 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     boolean contains(IndexProducer indexProducer);
 
     /**
-     * Returns {@code true} if this filter contains the bits specified in the BitMaps produced by the
+     * Returns {@code true} if this filter contains the bits specified in the bit maps produced by the
      * bitMapProducer.
      *
-     * @param bitMapProducer the the {@code BitMapProducer} to provide the BitMaps.
-     * @return {@code true} if this filter is enabled for all bits specified by the BitMaps
+     * @param bitMapProducer the the {@code BitMapProducer} to provide the bit maps.
+     * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     boolean contains(BitMapProducer bitMapProducer);
 
@@ -165,7 +165,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                : new SimpleBloomFilter(shape, hasher);
+                        : new SimpleBloomFilter(shape, hasher);
         result.mergeInPlace(this);
         return result;
     }
@@ -203,7 +203,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                : new SimpleBloomFilter(shape, hasher);
+                        : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
 

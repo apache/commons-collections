@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,7 +26,6 @@ import java.util.function.LongPredicate;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
-
 
 /**
  * Tests for the {@link BloomFilter}.

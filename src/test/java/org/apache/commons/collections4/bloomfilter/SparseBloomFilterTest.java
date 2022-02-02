@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,7 +26,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
-
 
 /**
  * Tests for the {@link SparseBloomFilter}.
@@ -76,7 +73,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         });
         assertEquals(5, lst.size());
         for (int value : values) {
-            assertTrue( lst.contains(Integer.valueOf(value)), "Missing " + value);
+            assertTrue(lst.contains(Integer.valueOf(value)), "Missing " + value);
         }
     }
 
@@ -93,7 +90,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         });
         assertEquals(4, lst.size());
         for (int value : values) {
-            assertTrue( lst.contains(Integer.valueOf(value)), "Missing " + value);
+            assertTrue(lst.contains(Integer.valueOf(value)), "Missing " + value);
         }
     }
 

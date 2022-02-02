@@ -21,7 +21,7 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**
- * Produces BitMap longs for a Bloom filter.
+ * Produces bit map longs for a Bloom filter.
  *
  * Each bit map is a little-endian long value representing a block of bits of this filter.
  *
@@ -30,7 +30,7 @@ import java.util.function.LongPredicate;
  * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
  * index is enabled.
  * </p><p>
- * The producer may stop at the last non zero BitMap or may produce zero value bit maps to the limit determined by
+ * The producer may stop at the last non zero bit map or may produce zero value bit maps to the limit determined by
  * a shape.
  * </p>
  * @since 4.5
@@ -39,21 +39,21 @@ import java.util.function.LongPredicate;
 public interface BitMapProducer {
 
     /**
-     * Each BitMap is passed to the predicate in order.  The predicate is applied to each
-     * bitmap value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bitmaps are processed.
+     * Each bit map is passed to the predicate in order.  The predicate is applied to each
+     * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further bit maps are processed.
      *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
      * @param predicate the function to execute
-     * @return {@code true} if all bitmaps returned {@code true}, {@code false} otherwise.
+     * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
     boolean forEachBitMap(LongPredicate predicate);
 
     /**
      * Creates a BitMapProducer from an array of Long.
-     * @param bitMaps the bitMaps to return.
+     * @param bitMaps the bit maps to return.
      * @return a BitMapProducer.
      */
     static BitMapProducer fromLongArray(long... bitMaps) {
@@ -76,7 +76,7 @@ public interface BitMapProducer {
      * Creates a BitMapProducer from an IndexProducer.
      * @param producer the IndexProducer that specifies the indexes of the bits to enable.
      * @param numberOfBits the number of bits in the Bloom filter.
-     * @return A BitMapProducer that produces the BitMap equivalent of the Indices from the producer.
+     * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
      */
     static BitMapProducer fromIndexProducer(IndexProducer producer, int numberOfBits) {
         Objects.requireNonNull(producer, "producer");
@@ -93,7 +93,7 @@ public interface BitMapProducer {
                  * we can not assume that all the ints will be in order and not repeated. This
                  * is because the HasherCollection does not make the guarantee.
                  */
-                // process all the ints into a array of BitMaps
+                // process all the ints into a array of bit maps
                 IntPredicate builder = new IntPredicate() {
                     @Override
                     public boolean test(int i) {
@@ -104,7 +104,7 @@ public interface BitMapProducer {
                     }
                 };
                 producer.forEachIndex(builder);
-                // send the bitmaps to the consumer.
+                // send the bit maps to the consumer.
                 for (int bucket = 0; bucket <= maxBucket; bucket++) {
                     if (!predicate.test(result[bucket])) {
                         return false;

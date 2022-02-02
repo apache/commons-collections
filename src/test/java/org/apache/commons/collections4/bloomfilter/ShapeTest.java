@@ -42,7 +42,6 @@ public class ShapeTest {
 
     private final Shape shape = Shape.fromKM(3, 24);
 
-
     /**
      * Test equality of shape.
      */
@@ -65,7 +64,7 @@ public class ShapeTest {
         for (int i = 0; i < 24; i++) {
             double c = i;
             double expected = -(24.0 / 3.0) * Math.log1p(-c / 24.0);
-            assertEquals(expected, shape.estimateN(i), "Error on "+i);
+            assertEquals(expected, shape.estimateN(i), "Error on " + i);
         }
 
         assertEquals(Double.POSITIVE_INFINITY, shape.estimateN(24));
@@ -76,8 +75,8 @@ public class ShapeTest {
     @Test
     public void getProbabilityTest() {
         for (int i = 0; i <= 24; i++) {
-            double expected = Math.pow( -Math.expm1(-3.0 * i / 24), 3 );
-            assertEquals(expected, shape.getProbability(i), "error at "+i);
+            double expected = Math.pow(-Math.expm1(-3.0 * i / 24), 3);
+            assertEquals(expected, shape.getProbability(i), "error at " + i);
         }
 
         assertEquals(0.0, shape.getProbability(0), 0.0);
@@ -87,18 +86,18 @@ public class ShapeTest {
 
     @Test
     public void isSparseTest() {
-//        Shape shape = Shape.fromKM(17, 64);
-//        assertTrue(shape.isSparse(0));
-//        assertTrue(shape.isSparse(1));
-//        assertTrue(shape.isSparse(2));
-//        assertFalse(shape.isSparse(3));
-//
-//        shape = Shape.fromKM(17, 64 * 3);
-//
-//        for (int i = 0; i < 7; i++) {
-//            assertTrue(shape.isSparse(i));
-//        }
-//        assertFalse(shape.isSparse(7));
+        //        Shape shape = Shape.fromKM(17, 64);
+        //        assertTrue(shape.isSparse(0));
+        //        assertTrue(shape.isSparse(1));
+        //        assertTrue(shape.isSparse(2));
+        //        assertFalse(shape.isSparse(3));
+        //
+        //        shape = Shape.fromKM(17, 64 * 3);
+        //
+        //        for (int i = 0; i < 7; i++) {
+        //            assertTrue(shape.isSparse(i));
+        //        }
+        //        assertFalse(shape.isSparse(7));
 
         int functions = 1; // Ignored
         for (int i = 1; i <= 3; i++) {
@@ -106,10 +105,10 @@ public class ShapeTest {
             Shape shape = Shape.fromKM(functions, bits);
             for (int n = 0; n <= bits; n++) {
                 final int c = n;
-                // is sparse when number of bits stored as integers is less than 2 times the number of bitmaps
+                // is sparse when number of bits stored as integers is less than 2 times the
+                // number of bitmaps
                 Assertions.assertEquals(n * Integer.SIZE <= Math.ceil((double) bits / Long.SIZE) * Long.SIZE,
-                                        shape.isSparse(n),
-                                        () -> String.format("n=%d : bits=%d", c, bits));
+                        shape.isSparse(n), () -> String.format("n=%d : bits=%d", c, bits));
             }
         }
 
@@ -192,7 +191,8 @@ public class ShapeTest {
         assertEquals(4, shape.getNumberOfHashFunctions());
         assertEquals(0.102194782, shape.getProbability(5), 0.000001);
 
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK( Integer.MAX_VALUE, Integer.MAX_VALUE,Integer.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class,
+                () -> Shape.fromNMK(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 0, 5));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(0, 5, 5));
@@ -207,7 +207,6 @@ public class ShapeTest {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 5));
     }
-
 
     /**
      * Tests that the number of items and number of bits is passed the other values are calculated correctly.
@@ -263,13 +262,14 @@ public class ShapeTest {
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(0.100375138, shape.getProbability(5), 0.000001);
 
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( Math.nextDown( 1.0 ), Integer.MAX_VALUE, Integer.MAX_VALUE));
-        shape = Shape.fromPMK( Math.nextUp( 0.0 ), 5, 5);
-        assertEquals( 1.0, shape.getProbability( Integer.MAX_VALUE ));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( Math.nextDown( 1.0 ), 5, 5));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.0, 5, 5));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.5, 0, 5));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.5, 5, 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> Shape.fromPMK(Math.nextDown(1.0), Integer.MAX_VALUE, Integer.MAX_VALUE));
+        shape = Shape.fromPMK(Math.nextUp(0.0), 5, 5);
+        assertEquals(1.0, shape.getProbability(Integer.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(Math.nextDown(1.0), 5, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.0, 5, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.5, 0, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.5, 5, 0));
     }
 
     /**
@@ -287,12 +287,11 @@ public class ShapeTest {
         assertEquals(302, shape.getNumberOfBits());
         assertEquals(21, shape.getNumberOfHashFunctions());
 
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextDown( 1.0 )));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextDown(1.0)));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(0, probability));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(5, 0.0 ));
-        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextUp( 0.0 ) ));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(5, 0.0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextUp(0.0)));
 
     }
-
 
 }
