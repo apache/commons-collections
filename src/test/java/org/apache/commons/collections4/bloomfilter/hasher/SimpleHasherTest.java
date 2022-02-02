@@ -76,13 +76,17 @@ public class SimpleHasherTest {
     public void constructorBufferTest() {
 
         Shape shape = Shape.fromKM(5, 10);
-        assertConstructorBuffer( shape, new byte[] { 1, 1 }, new Integer[]  { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer( shape, new byte[] { 1 }, new Integer[] { 0, 1, 2, 3, 4 });
-        assertConstructorBuffer( shape, new byte[] { 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer( shape, new byte[] { 0, 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 }, new Integer[] { 1, 2, 3, 4, 5 });;
-        assertConstructorBuffer( shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer(shape, new byte[] { 1, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer(shape, new byte[] { 1 }, new Integer[] { 0, 1, 2, 3, 4 });
+        assertConstructorBuffer(shape, new byte[] { 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer(shape, new byte[] { 0, 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+                new Integer[] { 1, 2, 3, 4, 5 });
+        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
+                new Integer[] { 1, 2, 3, 4, 5 });
+        ;
+        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
+                new Integer[] { 1, 2, 3, 4, 5 });
     }
 
 }

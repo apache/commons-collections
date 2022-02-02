@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions and visa versa.
  *
- * <p>The functions view an array of longs as a collection of bitmaps each containing 64 bits.  The bits are arranged
+ * <p>The functions view an array of longs as a collection of bit maps each containing 64 bits.  The bits are arranged
  * in memory as a little-endian long value.  This matches the requirements of the BitMapProducer interface.</p>
  *
  * @since 4.5
@@ -33,21 +33,21 @@ public class BitMap {
     }
 
     /**
-     * Calculates the number of bitmaps (longs) required for the numberOfBits parameter.
+     * Calculates the number of bit maps (longs) required for the numberOfBits parameter.
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
 
-     * @param numberOfBits the number of bits to store in the array of bitmaps.
-     * @return the number of bitmaps necessary.
+     * @param numberOfBits the number of bits to store in the array of bit maps.
+     * @return the number of bit maps necessary.
      */
     public static int numberOfBitMaps(int numberOfBits) {
         return numberOfBits == 0 ? 0 : ((numberOfBits - 1) >> DIVIDE_BY_64) + 1;
     }
 
     /**
-     * Checks if the specified index bit is enabled in the array of bit bitmaps.
+     * Checks if the specified index bit is enabled in the array of bit maps.
      *
-     * If the bit specified by idx is not in the bitMap false is returned.
+     * If the bit specified by idx is not in the bit map false is returned.
      *
      * @param bitMaps  The array of bit maps.
      * @param idx the index of the bit to locate.
@@ -59,7 +59,7 @@ public class BitMap {
     }
 
     /**
-     * Sets the bit in the bitmaps.
+     * Sets the bit in the bit maps.
      * <p><em>Does not perform range checking</em></p>
      *
      * @param bitMaps  The array of bit maps.
@@ -81,7 +81,7 @@ public class BitMap {
      * is not defined.</em></p>
      *
      * @param bitIndex the bit index (assumed to be positive)
-     * @return the index of the BitMap in an array of BitMaps.
+     * @return the index of the bit map in an array of bit maps.
      */
     public static int getLongIndex(final int bitIndex) {
         // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is

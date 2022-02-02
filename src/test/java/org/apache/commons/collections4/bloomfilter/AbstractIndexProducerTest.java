@@ -16,15 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
-
 
 public abstract class AbstractIndexProducerTest {
 
@@ -60,9 +57,9 @@ public abstract class AbstractIndexProducerTest {
             }
         };
 
-        assertFalse( createProducer().forEachIndex(consumer), "non-empty should be false");
+        assertFalse(createProducer().forEachIndex(consumer), "non-empty should be false");
         if (supportsEmpty()) {
-            assertTrue( createEmptyProducer().forEachIndex(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachIndex(consumer), "empty should be true");
         }
     }
 
@@ -76,9 +73,9 @@ public abstract class AbstractIndexProducerTest {
             }
         };
 
-        assertTrue( createProducer().forEachIndex(consumer), "non-empty should be true");
+        assertTrue(createProducer().forEachIndex(consumer), "non-empty should be true");
         if (supportsEmpty()) {
-            assertTrue( createEmptyProducer().forEachIndex(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachIndex(consumer), "empty should be true");
         }
     }
 }

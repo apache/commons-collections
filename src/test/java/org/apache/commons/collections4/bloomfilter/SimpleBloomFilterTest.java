@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,14 +44,15 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Test
     public void constructorTest() {
 
-        SimpleBloomFilter filter = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(new long[] { 500L }));
+        SimpleBloomFilter filter = new SimpleBloomFilter(getTestShape(),
+                BitMapProducer.fromLongArray(new long[] { 500L }));
         List<Long> lst = new ArrayList<Long>();
         filter.forEachBitMap(lst::add);
-        assertEquals(BitMap.numberOfBitMaps( getTestShape().getNumberOfBits()), lst.size());
+        assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), lst.size());
         assertEquals(500L, lst.get(0).intValue());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
+        assertThrows(IllegalArgumentException.class, () -> new SimpleBloomFilter(getTestShape(),
+                BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
     }
 
     @Test

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,7 +39,7 @@ public class SingleItemHasherCollectionTest {
     public void sizeTest() {
         SingleItemHasherCollection hasher = new SingleItemHasherCollection();
         assertEquals(0, hasher.size());
-        hasher.add( new Hasher() {
+        hasher.add(new Hasher() {
 
             @Override
             public IndexProducer indices(Shape shape) {
@@ -50,7 +49,8 @@ public class SingleItemHasherCollectionTest {
             @Override
             public int size() {
                 return 0;
-            }});
+            }
+        });
         assertEquals(0, hasher.size());
         hasher.add(hasher1);
         hasher.add(hasher2);
@@ -64,7 +64,7 @@ public class SingleItemHasherCollectionTest {
     public void isEmptyTest() {
         SingleItemHasherCollection hasher = new SingleItemHasherCollection();
         assertTrue(hasher.isEmpty());
-        hasher.add( new Hasher() {
+        hasher.add(new Hasher() {
 
             @Override
             public IndexProducer indices(Shape shape) {
@@ -74,7 +74,9 @@ public class SingleItemHasherCollectionTest {
             @Override
             public int size() {
                 return 0;
-            }});        assertTrue(hasher.isEmpty());
+            }
+        });
+        assertTrue(hasher.isEmpty());
         hasher.add(hasher1);
         assertFalse(hasher.isEmpty());
     }

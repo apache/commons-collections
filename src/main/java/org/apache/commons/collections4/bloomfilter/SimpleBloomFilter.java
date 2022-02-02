@@ -23,19 +23,19 @@ import java.util.function.LongPredicate;
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
- * A bloom filter using an array of BitMaps to track enabled bits. This is a standard
+ * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
 public class SimpleBloomFilter implements BloomFilter {
 
     /**
-     * The array of BitMap longs that defines this Bloom filter.  Will be null if the filter is empty.
+     * The array of bit map longs that defines this Bloom filter.  Will be null if the filter is empty.
      */
     private long[] bitMap;
 
     /**
-     * The Shape of this Bloom filter
+     * The Shape of this Bloom filter.
      */
     private final Shape shape;
 
@@ -71,7 +71,7 @@ public class SimpleBloomFilter implements BloomFilter {
     /**
      * Creates a populated instance.
      * @param shape The shape for the filter.
-     * @param producer the BitMap producer to initialize the filter with.
+     * @param producer the BitMapProducer to initialize the filter with.
      * @throws IllegalArgumentException if the producer returns too many bit maps.
      */
     public SimpleBloomFilter(final Shape shape, BitMapProducer producer) {
@@ -81,7 +81,7 @@ public class SimpleBloomFilter implements BloomFilter {
         needsBitMap();
 
         try {
-            producer.forEachBitMap( new LongPredicate() {
+            producer.forEachBitMap(new LongPredicate() {
                 int idx = 0;
 
                 @Override
@@ -90,9 +90,7 @@ public class SimpleBloomFilter implements BloomFilter {
                     return true;
                 }
 
-
             });
-
 
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
@@ -101,11 +99,15 @@ public class SimpleBloomFilter implements BloomFilter {
         this.cardinality = -1;
     }
 
+    /**
+     * Creates the bit map array if necessary.
+     */
     private void needsBitMap() {
         if (bitMap == null) {
             bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
         }
     }
+
     @Override
     public boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
@@ -124,7 +126,7 @@ public class SimpleBloomFilter implements BloomFilter {
     public boolean mergeInPlace(BloomFilter other) {
         Objects.requireNonNull(other, "other");
         needsBitMap();
-        other.forEachBitMap( new LongPredicate() {
+        other.forEachBitMap(new LongPredicate() {
             int idx = 0;
 
             @Override
@@ -132,7 +134,6 @@ public class SimpleBloomFilter implements BloomFilter {
                 bitMap[idx++] |= value;
                 return true;
             }
-
 
         });
         this.cardinality = -1;
@@ -174,7 +175,7 @@ public class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        if (bitMap !=  null) {
+        if (bitMap != null) {
             for (long l : bitMap) {
                 if (!consumer.test(l)) {
                     return false;

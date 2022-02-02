@@ -44,7 +44,7 @@ public interface IndexProducer {
     boolean forEachIndex(IntPredicate predicate);
 
     /**
-     * Creates an IndexProducer from an array of integers
+     * Creates an IndexProducer from an array of integers.
      * @param values the index values
      * @return an IndexProducer that uses the values.
      */

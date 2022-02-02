@@ -39,7 +39,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
             new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
             new SimpleHasher(67, 1)/* 67-83 */
-    );
+            );
     protected final long[] fullHashValue = { 0xFFFFFFFFFFFFFFFFL, 0xFFFFFL };
 
     /**
@@ -73,7 +73,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         int[] ary = BloomFilter.asIndexArray(bf);
         assertEquals(17, ary.length);
         for (int i = 0; i < ary.length; i++) {
-            assertEquals( i + 1, ary[i], "Error at position " + i);
+            assertEquals(i + 1, ary[i], "Error at position " + i);
         }
 
     }
@@ -88,10 +88,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
 
-        assertTrue( bf.contains(bf), "BF Should contain itself");
-        assertTrue( bf2.contains(bf2),"BF2 Should contain itself");
-        assertFalse( bf.contains(bf2), "BF should not contain BF2");
-        assertTrue( bf2.contains(bf), "BF2 should contain BF");
+        assertTrue(bf.contains(bf), "BF Should contain itself");
+        assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
+        assertFalse(bf.contains(bf2), "BF should not contain BF2");
+        assertTrue(bf2.contains(bf), "BF2 should contain BF");
 
     }
 
@@ -99,8 +99,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void containsTest_Hasher() {
         final BloomFilter bf = createFilter(getTestShape(), bigHasher);
 
-        assertTrue(bf.contains(new SimpleHasher(1, 1)),"BF Should contain this hasher");
-        assertFalse(bf.contains(new SimpleHasher(1, 3)),"BF Should not contain this hasher");
+        assertTrue(bf.contains(new SimpleHasher(1, 1)), "BF Should contain this hasher");
+        assertFalse(bf.contains(new SimpleHasher(1, 3)), "BF Should not contain this hasher");
     }
 
     @Test
@@ -108,9 +108,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf = createFilter(getTestShape(), bigHasher);
 
         IndexProducer indexProducer = new SimpleHasher(1, 1).indices(getTestShape());
-        assertTrue( bf.contains(indexProducer),"BF Should contain this hasher");
+        assertTrue(bf.contains(indexProducer), "BF Should contain this hasher");
         indexProducer = new SimpleHasher(1, 3).indices(getTestShape());
-        assertFalse( bf.contains(indexProducer),"BF Should not contain this hasher");
+        assertFalse(bf.contains(indexProducer), "BF Should not contain this hasher");
     }
 
     @Test
@@ -122,7 +122,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf.contains(bitMapProducer), "BF Should contain this hasher");
         bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
-        assertFalse( bf.contains(bitMapProducer),"BF Should not contain this hasher");
+        assertFalse(bf.contains(bitMapProducer), "BF Should not contain this hasher");
     }
 
     /**
@@ -200,7 +200,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public final void constructorTest_Empty() {
         final BloomFilter bf = createEmptyFilter(getTestShape());
         final long[] lb = BloomFilter.asBitMapArray(bf);
-        assertTrue(BitMap.numberOfBitMaps( getTestShape().getNumberOfBits()) >= lb.length);
+        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
     }
 
     /**
@@ -212,7 +212,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         final BloomFilter bf = createFilter(getTestShape(), hasher);
         final long[] lb = BloomFilter.asBitMapArray(bf);
-        assertTrue(BitMap.numberOfBitMaps( getTestShape().getNumberOfBits()) >= lb.length);
+        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
         assertEquals(0x1FFFF, lb[0]);
     }
 
@@ -223,7 +223,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public final void getBitsTest_SpanLong() {
 
         final SimpleHasher hasher = new SimpleHasher(63, 1);
-        final BloomFilter bf = createFilter( Shape.fromKM(2, 72), hasher);
+        final BloomFilter bf = createFilter(Shape.fromKM(2, 72), hasher);
         final long[] lb = BloomFilter.asBitMapArray(bf);
         assertEquals(2, lb.length);
         assertEquals(0x8000000000000000L, lb[0]);
@@ -238,13 +238,13 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // create empty filter
         BloomFilter filter = createEmptyFilter(getTestShape());
-        assertFalse(filter.isFull(),"Should not be full");
+        assertFalse(filter.isFull(), "Should not be full");
 
         filter = createFilter(getTestShape(), fullHasher);
-        assertTrue(filter.isFull(),"Should be full");
+        assertTrue(filter.isFull(), "Should be full");
 
         filter = createFilter(getTestShape(), new SimpleHasher(1, 3));
-        assertFalse(filter.isFull(),"Should not be full");
+        assertFalse(filter.isFull(), "Should not be full");
     }
 
     /**
@@ -258,14 +258,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
 
         final BloomFilter bf3 = bf1.merge(bf2);
-        assertTrue( bf3.contains(bf1),"Should contain bf1");
-        assertTrue(bf3.contains(bf2),"Should contain bf2");
+        assertTrue(bf3.contains(bf1), "Should contain bf1");
+        assertTrue(bf3.contains(bf2), "Should contain bf2");
 
         final BloomFilter bf4 = bf2.merge(bf1);
-        assertTrue(bf4.contains(bf1),"Should contain bf1");
-        assertTrue( bf4.contains(bf2),"Should contain bf2");
-        assertTrue( bf4.contains(bf3),"Should contain bf3");
-        assertTrue( bf3.contains(bf4),"Should contain bf4");
+        assertTrue(bf4.contains(bf1), "Should contain bf1");
+        assertTrue(bf4.contains(bf2), "Should contain bf2");
+        assertTrue(bf4.contains(bf3), "Should contain bf3");
+        assertTrue(bf3.contains(bf4), "Should contain bf4");
     }
 
     @Test
@@ -275,8 +275,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
 
         final BloomFilter bf3 = bf1.merge(from11);
-        assertTrue(bf3.contains(bf1),"Should contain bf1");
-        assertTrue( bf3.contains(bf2),"Should contain bf2");
+        assertTrue(bf3.contains(bf1), "Should contain bf1");
+        assertTrue(bf3.contains(bf2), "Should contain bf2");
     }
 
     /**
@@ -293,8 +293,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         bf1.mergeInPlace(bf2);
 
-        assertTrue(bf1.contains(bf2),"Should contain bf2");
-        assertTrue( bf1.contains(bf3),"Should contain bf3");
+        assertTrue(bf1.contains(bf2), "Should contain bf2");
+        assertTrue(bf1.contains(bf3), "Should contain bf3");
 
     }
 
@@ -309,8 +309,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         bf1.mergeInPlace(from11);
 
-        assertTrue( bf1.contains(bf2),"Should contain Bf2");
-        assertTrue( bf1.contains(bf3), "Should contain Bf3");
+        assertTrue(bf1.contains(bf2), "Should contain Bf2");
+        assertTrue(bf1.contains(bf3), "Should contain Bf3");
     }
 
 }

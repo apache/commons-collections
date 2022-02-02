@@ -37,7 +37,7 @@ public class SparseBloomFilter implements BloomFilter {
     private final TreeSet<Integer> indices;
 
     /**
-     * The shape of this BloomFilter
+     * The shape of this BloomFilter.
      */
     private final Shape shape;
 

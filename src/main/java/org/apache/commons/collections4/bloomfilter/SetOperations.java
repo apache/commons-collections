@@ -28,43 +28,43 @@ import java.util.function.LongUnaryOperator;
 public final class SetOperations {
 
     /**
-     * A helper class that calculates cardinality as the cardinality of the result of an operation on a two BitMap arrays.
+     * A helper class that calculates cardinality as the cardinality of the result of an operation on a two bit map arrays.
      *
      * <p>The first array is build in the constructor.  The second array is processed as a LongConsumer.  Whenever there are
      * two values the op2 operation is used.  Whenever the one array is longer than the other the op1 operation is used on the
-     * bitMaps that do not have matching entries.</p>
+     * bit maps that do not have matching entries.</p>
      *
      * <p>The calculated cardinalities are summed to return the cardinality of the operation.</p>
      *
      */
     private static class CardCounter implements LongPredicate {
         /**
-         * The calculated cardinality
+         * The calculated cardinality.
          */
         private int cardinality = 0;
         /**
-         * The index into the array of BitMaps
+         * The index into the array of bit maps.
          */
         private int idx = 0;
         /**
-         * The array of BitMaps
+         * The array of bit maps.
          */
         private long[] bitMaps;
         /**
-         * The operator to execute for 2 BitMaps
+         * The operator to execute for 2 bit maps.
          */
         private LongBinaryOperator op2;
         /**
-         * The operator to execute for a single BitMap;
+         * The operator to execute for a single bit map.
          */
         private LongUnaryOperator op1;
 
         /**
          * Constructor.
-         * @param producer The the producer for the initial BitMaps.
+         * @param producer The the producer for the initial bit maps.
          * @param The shape of the Bloom filter
-         * @param op2 The operation to execute when there are two BitMaps to compare.
-         * @param op1 The operation to execute when there is only one BitMap to compare.
+         * @param op2 The operation to execute when there are two bit maps to compare.
+         * @param op1 The operation to execute when there is only one bit map to compare.
          */
         CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
             ArrayBuilder builder = new ArrayBuilder(shape);
@@ -97,7 +97,7 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of the logical {@code AND} of the BitMaps for the two filters.
+     * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
      * @param shape the shape of the filter
      * @param first the first BitMapProducer.
      * @param second the second BitMapProducer
@@ -110,7 +110,7 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of the logical {@code OR} of the BitMaps for the two filters.
+     * Calculates the cardinality of the logical {@code OR} of the bit maps for the two filters.
      * @param shape the shape of the filter
      * @param first the first BitMapProducer.
      * @param second the second BitMapProducer
@@ -123,7 +123,7 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of the logical {@code XOR} of the BitMaps for the two filters.
+     * Calculates the cardinality of the logical {@code XOR} of the bit maps for the two filters.
      * @param shape the shape of the filter
      * @param first the first BitMapProducer.
      * @param second the second BitMapProducer
@@ -161,7 +161,8 @@ public final class SetOperations {
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
         final int numerator = andCardinality(first.getShape(), first, second);
-        // Given that the cardinality is an int then the product as a double will not overflow, we can use one sqrt:
+        // Given that the cardinality is an int then the product as a double will not
+        // overflow, we can use one sqrt:
         return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality() * second.cardinality()));
     }
 

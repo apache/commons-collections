@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -64,7 +63,7 @@ public class HasherCollectionTest {
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());
         for (int i = 0; i < expected.length; i++) {
-            assertEquals( expected[i], lst.get(i), String.format("error at position %d", i));
+            assertEquals(expected[i], lst.get(i), String.format("error at position %d", i));
         }
     }
 

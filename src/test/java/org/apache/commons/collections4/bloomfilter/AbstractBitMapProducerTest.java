@@ -23,7 +23,6 @@ import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
-
 public abstract class AbstractBitMapProducerTest {
 
     /**
@@ -63,13 +62,13 @@ public abstract class AbstractBitMapProducerTest {
     @Test
     public void forEachBitMap_test_false() {
         assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
-        assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true" );
+        assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true");
     }
 
     @Test
     public void forEachBitMap_test_true() {
-        assertTrue( createProducer().forEachBitMap(TRUE_CONSUMER),"non-empty should be true");
-        assertTrue( createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
+        assertTrue(createProducer().forEachBitMap(TRUE_CONSUMER), "non-empty should be true");
+        assertTrue(createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
 
     }
 }

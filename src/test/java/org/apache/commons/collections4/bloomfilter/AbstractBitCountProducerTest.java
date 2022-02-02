@@ -56,9 +56,9 @@ public abstract class AbstractBitCountProducerTest {
             }
         };
 
-        assertFalse( createProducer().forEachCount(consumer),"non-empty should be false");
+        assertFalse(createProducer().forEachCount(consumer), "non-empty should be false");
         if (supportsEmpty()) {
-            assertTrue( createEmptyProducer().forEachCount(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachCount(consumer), "empty should be true");
         }
     }
 
@@ -72,9 +72,9 @@ public abstract class AbstractBitCountProducerTest {
             }
         };
 
-        assertTrue( createProducer().forEachCount(consumer), "non-empty should be true");
+        assertTrue(createProducer().forEachCount(consumer), "non-empty should be true");
         if (supportsEmpty()) {
-            assertTrue(  createEmptyProducer().forEachCount(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachCount(consumer), "empty should be true");
         }
     }
 }

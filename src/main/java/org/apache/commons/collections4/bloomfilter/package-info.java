@@ -57,7 +57,7 @@
  * returns the shape the Bloom filter was created with.</li>
 
  * <li>{@code isSparse()} which
- * returns true if an the implementation tracks indices natively, false if BitMaps are used.  In cases where
+ * returns true if an the implementation tracks indices natively, false if bit maps are used.  In cases where
  * neither are used the {@code isSparse} return value should reflect which is faster to produce.</li>
  *
  * <li>{@code mergeInPlace(BloomFilter)} which
