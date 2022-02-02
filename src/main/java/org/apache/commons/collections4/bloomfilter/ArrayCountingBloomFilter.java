@@ -257,7 +257,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
-        return indexProducer.forEachIndex((idx) -> this.counts[idx] != 0);
+        return indexProducer.forEachIndex( idx -> this.counts[idx] != 0);
     }
 
     @Override

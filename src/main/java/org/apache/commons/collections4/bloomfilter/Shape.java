@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
 
+
 /**
  * The definition of a Bloom filter shape.
  *
@@ -27,19 +28,35 @@ import java.util.Objects;
  *
  * <h2>Interrelatedness of values</h2>
  *
- * <dl> <dt>Number of Items ({@code n})</dt>
- * <dd>{@code n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))}</dd> <dt>Probability of
- * False Positives ({@code p})</dt> <dd>{@code p = pow(1 - exp(-k / (m / n)), k)}</dd> <dt>Number
- * of Bits ({@code m})</dt>
- * <dd>{@code m = ceil((n * ln(p)) / ln(1 / pow(2, ln(2))))}</dd> <dt>Number of
- * Functions ({@code k})</dt> <dd>{@code k = round((m / n) * ln(2))}</dd> </dl>
+ * <dl>
+ * <dt>Number of Items ({@code n})</dt>
+ * <dd>{@code n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))}</dd>
+ * <dt>Probability of False Positives ({@code p})</dt>
+ * <dd>{@code p = pow(1 - exp(-k / (m / n)), k)}</dd>
+ * <dt>Number of Bits ({@code m})</dt>
+ * <dd>{@code m = ceil((n * ln(p)) / ln(1 / pow(2, ln(2))))}</dd>
+ * <dt>Number of Functions ({@code k})</dt>
+ * <dd>{@code k = round((m / n) * ln(2))}</dd>
+ * </dl>
  *
- * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
+ * @see <a href="https://hur.st/bloomfilter">Bloom Filter calculator</a>
  * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
  * [Wikipedia]</a>
  * @since 4.5
  */
 public final class Shape implements Comparable<Shape> {
+
+    /**
+     * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
+     */
+    private static final double LN_2 = Math.log(2.0);
+
+    /**
+     * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
+     *
+     * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
+     */
+    private static final double DENOMINATOR = -LN_2 * LN_2;
 
     /**
      * Number of hash functions to create a filter ({@code k}).
@@ -52,53 +69,18 @@ public final class Shape implements Comparable<Shape> {
     private final int numberOfBits;
 
     /**
-     * Constructs a filter configuration with the specified number of items ({@code n}) and
+     * Constructs a filter configuration with the specified number of hashFunctions ({@code k}) and
      * bits ({@code m}).
-     *
-     * <p>The optimal number of hash functions ({@code k}) is computed.
-     * <pre>k = round((m / n) * ln(2))</pre>
-     *
-     * <p>The false-positive probability is computed using the number of items, bits and hash
-     * functions. An exception is raised if this is greater than or equal to 1 (i.e. the
-     * shape is invalid for use as a Bloom filter).
      *
      * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
      * @param numberOfBits The number of bits in the filter
      * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
-    public Shape(final int numberOfHashFunctions, final int numberOfBits) {
-        this.numberOfBits = checkNumberOfBits(numberOfBits);
+    private Shape(final int numberOfHashFunctions, final int numberOfBits) {
         this.numberOfHashFunctions = checkNumberOfHashFunctions(numberOfHashFunctions);
+        this.numberOfBits = checkNumberOfBits(numberOfBits);
     }
 
-    /**
-     * Check number of bits is strictly positive.
-     *
-     * @param numberOfBits the number of bits
-     * @return the number of bits
-     * @throws IllegalArgumentException if the number of bits is {@code < 1}
-     */
-    private static int checkNumberOfBits(final int numberOfBits) {
-        if (numberOfBits < 1) {
-            throw new IllegalArgumentException("Number of bits must be greater than 0: " + numberOfBits);
-        }
-        return numberOfBits;
-    }
-
-    /**
-     * Check number of hash functions is strictly positive
-     *
-     * @param numberOfHashFunctions the number of hash functions
-     * @return the number of hash functions
-     * @throws IllegalArgumentException if the number of hash functions is {@code < 1}
-     */
-    private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
-        if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException(
-                    "Number of hash functions must be greater than 0: " + numberOfHashFunctions);
-        }
-        return numberOfHashFunctions;
-    }
 
     @Override
     public int compareTo(Shape other) {
@@ -159,13 +141,13 @@ public final class Shape implements Comparable<Shape> {
         if (numberOfItems == 0) {
             return 0;
         }
-        return Math.pow(1.0 - Math.exp(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
+        return Math.pow(-Math.expm1(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
                 numberOfHashFunctions);
     }
 
     @Override
     public String toString() {
-        return String.format("Shape[ m=%s k=%s ]", numberOfBits, numberOfHashFunctions);
+        return String.format("Shape[k=%s m=%s]", numberOfHashFunctions, numberOfBits);
     }
 
     /**
@@ -192,18 +174,18 @@ public final class Shape implements Comparable<Shape> {
      *
      * <p><em>Note:</em></p>
      * <ul>
-     * <li> if hammingValue == numberOfBits, then result is infinity.</li>
-     * <li> if hammingValue &gt; numberOfBits, then result is NaN.</li>
+     * <li> if cardinality == numberOfBits, then result is infinity.</li>
+     * <li> if cardinality &gt; numberOfBits, then result is NaN.</li>
      * </ul>
      *
-     * @param hammingValue the number of enabled  bits.
+     * @param cardinality the number of enabled  bits also known as the hamming value.
      * @return An estimate of the number of items in the Bloom filter.
      */
-    public double estimateN(int hammingValue) {
-        double c = hammingValue;
+    public double estimateN(int cardinality) {
+        double c = cardinality;
         double m = numberOfBits;
         double k = numberOfHashFunctions;
-        return -(m / k) * Math.log(1.0 - (c / m));
+        return -(m / k) * Math.log1p(-c / m);
     }
 
     /**
@@ -219,26 +201,7 @@ public final class Shape implements Comparable<Shape> {
      * <dt>{@code P})</dt><dd>The probability of a collision once N items have been placed in the Bloom filter</dd>
      * </dl>
      */
-    public static class Factory {
 
-        /**
-         * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
-         */
-        private static final double LN_2 = Math.log(2.0);
-
-        /**
-         * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
-         *
-         * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
-         */
-        private static final double DENOMINATOR = -LN_2 * LN_2;
-
-        /**
-         * Do not instantiate.
-         */
-        private Factory() {
-
-        }
 
         /**
          * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the
@@ -268,7 +231,7 @@ public final class Shape implements Comparable<Shape> {
             // Number of items (n):
             // n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))
             final double n = Math.ceil(numberOfBits
-                    / (-numberOfHashFunctions / Math.log(1 - Math.exp(Math.log(probability) / numberOfHashFunctions))));
+                    / (-numberOfHashFunctions / Math.log( -Math.expm1( Math.log(probability) / numberOfHashFunctions))));
 
             // log of probability is always < 0
             // number of hash functions is >= 1
@@ -325,6 +288,18 @@ public final class Shape implements Comparable<Shape> {
             // check that probability is within range
             checkCalculatedProbability(shape.getProbability(numberOfItems));
             return shape;
+        }
+
+        /**
+         * Constructs a filter configuration with the specified number of hashFunctions ({@code k}) and
+         * bits ({@code m}).
+         *
+         * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
+         * @param numberOfBits The number of bits in the filter
+         * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
+         */
+        public static Shape fromKM(final int numberOfHashFunctions, final int numberOfBits) {
+            return new Shape( numberOfHashFunctions, numberOfBits);
         }
 
         /**
@@ -481,6 +456,6 @@ public final class Shape implements Comparable<Shape> {
             // value of k can not be above Integer.MAX_VALUE.
             return (int) k;
         }
-    }
+
 
 }

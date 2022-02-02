@@ -57,7 +57,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     // Query Operations
 
     /**
-     * Returns  {@code true} if the internal state is valid.
+     * Returns {@code true} if the internal state is valid.
      *
      * <p>This flag is a warning that an addition or
      * subtraction of counts from this filter resulted in an invalid count for one or more

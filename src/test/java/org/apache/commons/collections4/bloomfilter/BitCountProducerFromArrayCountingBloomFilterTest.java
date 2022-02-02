@@ -21,7 +21,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 
 public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBitCountProducerTest {
 
-    protected Shape shape = new Shape(17, 72);
+    protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
     protected BitCountProducer createProducer() {

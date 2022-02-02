@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,23 +40,8 @@ public class ShapeTest {
      * k = 3
      */
 
-    private final Shape shape = new Shape(3, 24);
+    private final Shape shape = Shape.fromKM(3, 24);
 
-    /**
-     * Tests that if the number of bits less than 1 an IllegalArgumentException is thrown.
-     */
-    @Test
-    public void constructor_items_bits_BadNumberOfBitsTest() {
-        assertThrows(IllegalArgumentException.class, () -> new Shape(5, 0));
-    }
-
-    /**
-     * Tests that if the number of hash functions is less than 1 an exception is thrown.
-     */
-    @Test
-    public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
-        assertThrows(IllegalArgumentException.class, () -> new Shape(0, 5));
-    }
 
     /**
      * Test equality of shape.
@@ -67,33 +52,32 @@ public class ShapeTest {
         assertEquals(shape, shape);
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(24, shape.getNumberOfBits());
-        assertEquals(shape.hashCode(), new Shape(3, 24).hashCode());
+        assertEquals(shape.hashCode(), Shape.fromKM(3, 24).hashCode());
         assertNotEquals(shape, null);
-        assertNotEquals(shape, new Shape(3, 25));
-        assertNotEquals(shape, new Shape(4, 24));
+        assertNotEquals(shape, Shape.fromKM(3, 25));
+        assertNotEquals(shape, Shape.fromKM(4, 24));
+        assertNotEquals(shape, "text");
+        assertNotEquals(shape, Integer.valueOf(3));
     }
 
     @Test
     public void estimateNTest() {
-        double[] expected = { 0.0, 0.3404769153503671, 0.6960910159170385, 1.068251140996181, 1.4585724543516367,
-            1.8689188094520417, 2.301456579614247, 2.758723890333837, 3.243720864865314, 3.7600290339658846,
-            4.311972005861497, 4.90483578309127, 5.545177444479562, 6.2412684603966, 7.003749898831201,
-            7.8466340240938095, 8.788898309344876, 9.85714945034106, 11.090354888959125, 12.54892734331076,
-            14.334075753824441, 16.635532333438686, 19.879253198304, 25.424430642783573 };
         for (int i = 0; i < 24; i++) {
-            assertEquals(expected[i], shape.estimateN(i), 0.00000000000000001);
+            double c = i;
+            double expected = -(24.0 / 3.0) * Math.log1p(-c / 24.0);
+            assertEquals(expected, shape.estimateN(i), "Error on "+i);
         }
+
+        assertEquals(Double.POSITIVE_INFINITY, shape.estimateN(24));
+
+        assertEquals(Double.NaN, shape.estimateN(25));
     }
 
     @Test
     public void getProbabilityTest() {
-        double[] expected = { 0.0, 0.0016223626694561954, 0.010823077182670957, 0.030579354491777785,
-            0.06091618422799686, 0.1003751381786711, 0.14689159766038104, 0.19829601428155866, 0.25258045782764715,
-            0.3080221532988778, 0.3632228594351169, 0.4171013016177174, 0.4688617281200601, 0.5179525036637239,
-            0.5640228015164387, 0.6068817738972262, 0.6464623147796981, 0.6827901771310362, 0.7159584363083427,
-            0.7461068849672469, 0.7734057607554121, 0.7980431551369204, 0.8202154721379679, 0.8401203636727712 };
-        for (int i = 0; i < 24; i++) {
-            assertEquals(expected[i], shape.getProbability(i), 0.000000000000001);
+        for (int i = 0; i <= 24; i++) {
+            double expected = Math.pow( -Math.expm1(-3.0 * i / 24), 3 );
+            assertEquals(expected, shape.getProbability(i), "error at "+i);
         }
 
         assertEquals(0.0, shape.getProbability(0), 0.0);
@@ -103,23 +87,212 @@ public class ShapeTest {
 
     @Test
     public void isSparseTest() {
-        Shape shape = new Shape(17, 64);
-        assertTrue(shape.isSparse(0));
-        assertTrue(shape.isSparse(1));
-        assertTrue(shape.isSparse(2));
-        assertFalse(shape.isSparse(3));
+//        Shape shape = Shape.fromKM(17, 64);
+//        assertTrue(shape.isSparse(0));
+//        assertTrue(shape.isSparse(1));
+//        assertTrue(shape.isSparse(2));
+//        assertFalse(shape.isSparse(3));
+//
+//        shape = Shape.fromKM(17, 64 * 3);
+//
+//        for (int i = 0; i < 7; i++) {
+//            assertTrue(shape.isSparse(i));
+//        }
+//        assertFalse(shape.isSparse(7));
 
-        shape = new Shape(17, 64 * 3);
-
-        for (int i = 0; i < 7; i++) {
-            assertTrue(shape.isSparse(i));
+        int functions = 1; // Ignored
+        for (int i = 1; i <= 3; i++) {
+            int bits = i * Long.SIZE;
+            Shape shape = Shape.fromKM(functions, bits);
+            for (int n = 0; n <= bits; n++) {
+                final int c = n;
+                // is sparse when number of bits stored as integers is less than 2 times the number of bitmaps
+                Assertions.assertEquals(n * Integer.SIZE <= Math.ceil((double) bits / Long.SIZE) * Long.SIZE,
+                                        shape.isSparse(n),
+                                        () -> String.format("n=%d : bits=%d", c, bits));
+            }
         }
-        assertFalse(shape.isSparse(7));
+
     }
 
     @Test
     public void toStringTest() {
-        assertEquals("Shape[ m=5 k=3 ]", new Shape(3, 5).toString());
+        assertEquals("Shape[k=3 m=5]", Shape.fromKM(3, 5).toString());
     }
+
+    /*
+     * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+     *
+     * n = 5
+     *
+     * p = 0.100375138 (1 in 10)
+     *
+     * m = 24 (3B)
+     *
+     * k = 3
+     */
+
+    /**
+     * Tests that if the number of items less than 1 an IllegalArgumentException is thrown.
+     */
+    @Test
+    public void badNumberOfItemsTest() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(0, 24));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(0, 24, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(0, 0.02));
+    }
+
+    /**
+     * Tests that if the number of bits is less than 1 an exception is thrown
+     */
+    @Test
+    public void badNumberOfBitsTest() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 0, 7));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.035, 0, 7));
+    }
+
+    /**
+     * Tests that if the number of hash functions is less than 1 an exception is thrown.
+     */
+    @Test
+    public void badNumberOfHashFunctionsTest() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 7));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 26, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.35, 26, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(2, 1));
+    }
+
+    /**
+     * Tests that if the calculated probability is greater than or equal to 1 an IllegalArgumentException is thrown
+     */
+    @Test
+    public void badProbabilityTest() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(4000, 8, 1));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, 0.0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, 1.0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, Double.NaN));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, Double.POSITIVE_INFINITY));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, Double.NEGATIVE_INFINITY));
+    }
+
+    /**
+     * Tests that when the number of items, number of bits and number of hash functions is passed the values are
+     * calculated correctly.
+     */
+    @Test
+    public void fromNMK_test() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
+         */
+        Shape shape = Shape.fromNMK(5, 24, 4);
+
+        assertEquals(24, shape.getNumberOfBits());
+        assertEquals(4, shape.getNumberOfHashFunctions());
+        assertEquals(0.102194782, shape.getProbability(5), 0.000001);
+
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK( Integer.MAX_VALUE, Integer.MAX_VALUE,Integer.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 0, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(0, 5, 5));
+
+    }
+
+    /**
+     * Tests that if the number of bits less than 1 an IllegalArgumentException is thrown.
+     */
+    @Test
+    public void fromKM_Test() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 5));
+    }
+
+
+    /**
+     * Tests that the number of items and number of bits is passed the other values are calculated correctly.
+     */
+    @Test
+    public void fromNM_Test() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&m=24
+         */
+        Shape shape = Shape.fromNM(5, 24);
+
+        assertEquals(24, shape.getNumberOfBits());
+        assertEquals(3, shape.getNumberOfHashFunctions());
+        assertEquals(0.100375138, shape.getProbability(5), 0.000001);
+
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(5, 0));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(0, 5));
+
+    }
+
+    /**
+     * Tests that if calculated number of bits is greater than Integer.MAX_VALUE an IllegalArgumentException is thrown.
+     */
+    @Test
+    public void numberOfBitsOverflowTest() {
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, 0.1));
+    }
+
+    /**
+     * Tests that the probability is calculated correctly.
+     */
+    @Test
+    public void probabilityTest() {
+        Shape shape = Shape.fromNMK(5, 24, 3);
+        assertEquals(24, shape.getNumberOfBits());
+        assertEquals(3, shape.getNumberOfHashFunctions());
+        assertEquals(0.100375138, shape.getProbability(5), 0.000001);
+
+    }
+
+    /**
+     * Tests the calculated values of calling the constructor with the probability, number of bits and number of hash
+     * functions.
+     */
+    @Test
+    public void fromPMK_test() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
+         */
+        Shape shape = Shape.fromPMK(0.1, 24, 3);
+
+        assertEquals(24, shape.getNumberOfBits());
+        assertEquals(3, shape.getNumberOfHashFunctions());
+        assertEquals(0.100375138, shape.getProbability(5), 0.000001);
+
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( Math.nextDown( 1.0 ), Integer.MAX_VALUE, Integer.MAX_VALUE));
+        shape = Shape.fromPMK( Math.nextUp( 0.0 ), 5, 5);
+        assertEquals( 1.0, shape.getProbability( Integer.MAX_VALUE ));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( Math.nextDown( 1.0 ), 5, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.0, 5, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.5, 0, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK( 0.5, 5, 0));
+    }
+
+    /**
+     * Tests the calculated values of calling the constructor with the probability, number of bits and number of hash
+     * functions.
+     */
+    @Test
+    public void fromNP_test() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
+         */
+        final double probability = 1.0 / 2000000;
+        Shape shape = Shape.fromNP(10, probability);
+
+        assertEquals(302, shape.getNumberOfBits());
+        assertEquals(21, shape.getNumberOfHashFunctions());
+
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextDown( 1.0 )));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(0, probability));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(5, 0.0 ));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(Integer.MAX_VALUE, Math.nextUp( 0.0 ) ));
+
+    }
+
 
 }

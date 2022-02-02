@@ -16,10 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,14 +57,14 @@ public class HasherCollectionTest {
         // use Arrays.asList to test Collection constructor
         HasherCollection hasher = new HasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
         assertEquals(2, hasher.size());
-        Shape shape = new Shape(5, 10);
+        Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 2, 4, 6, 8, 0 };
         List<Integer> lst = new ArrayList<Integer>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());
         for (int i = 0; i < expected.length; i++) {
-            assertEquals(String.format("error at position %d", i), expected[i], lst.get(i));
+            assertEquals( expected[i], lst.get(i), String.format("error at position %d", i));
         }
     }
 

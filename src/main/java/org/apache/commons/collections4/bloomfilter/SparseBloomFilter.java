@@ -49,7 +49,7 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
-        this.indices = new TreeSet<Integer>();
+        this.indices = new TreeSet<>();
     }
 
     /**

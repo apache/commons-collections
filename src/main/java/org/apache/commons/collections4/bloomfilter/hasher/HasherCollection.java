@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
@@ -29,10 +30,10 @@ import org.apache.commons.collections4.bloomfilter.Shape;
 /**
  * A collection of Hashers.  Useful when the generation of a Bloom filter depends upon
  * multiple items.
- *
+ * <p>
  * Hashers for each item are added to the HasherCollection and then
  * the collection is used wherever a Hasher can be used in the API.
- *
+ * </p>
  * @since 4.5
  */
 public class HasherCollection implements Hasher {
@@ -107,7 +108,7 @@ public class HasherCollection implements Hasher {
      * @return hashers
      */
     protected List<Hasher> getHashers() {
-        return hashers;
+        return Collections.unmodifiableList(hashers);
     }
 
     @Override

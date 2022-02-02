@@ -23,6 +23,7 @@ import java.util.function.IntPredicate;
  *
  * @since 4.5
  */
+@FunctionalInterface
 public interface BitCountProducer extends IndexProducer {
 
     /**

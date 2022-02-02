@@ -16,10 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher.Filter;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link Hasher.Filter}.
@@ -28,7 +30,7 @@ public class HasherFilterTest {
 
     @Test
     public void testBasicFiltering() {
-        Hasher.Filter filter = new Hasher.Filter(10);
+        Hasher.Filter filter = Filter.of(10);
 
         for (int i = 0; i < 10; i++) {
             assertTrue(filter.test(i));

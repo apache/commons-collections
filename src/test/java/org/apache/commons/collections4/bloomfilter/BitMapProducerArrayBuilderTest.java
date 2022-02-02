@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertThrows;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class BitMapProducerArrayBuilderTest {
 
     @Test
     public void arrayBuilderTest() {
         assertThrows(IllegalArgumentException.class,
-                () -> new BitMapProducer.ArrayBuilder(new Shape(1, 4), new long[] { 1L, 2L, 3L, 4L, 5L }));
+                () -> new ArrayBuilder(Shape.fromKM(1, 4), new long[] { 1L, 2L, 3L, 4L, 5L }));
     }
 }

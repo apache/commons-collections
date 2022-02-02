@@ -16,16 +16,18 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link SimpleBloomFilter}.
@@ -44,20 +46,20 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Test
     public void constructorTest() {
 
-        SimpleBloomFilter filter = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(new long[] { 500L }));
+        SimpleBloomFilter filter = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(new long[] { 500L }));
         List<Long> lst = new ArrayList<Long>();
         filter.forEachBitMap(lst::add);
-        assertEquals(1, lst.size());
+        assertEquals(BitMap.numberOfBitMaps( getTestShape().getNumberOfBits()), lst.size());
         assertEquals(500L, lst.get(0).intValue());
 
         assertThrows(IllegalArgumentException.class,
-                () -> new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
+                () -> new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
     }
 
     @Test
     public void differentBitMapLengthTest() {
-        BloomFilter bf1 = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(1L, 2L));
-        BloomFilter bf2 = new SimpleBloomFilter(shape, BitMapProducer.fromLongArray(1L));
+        BloomFilter bf1 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L, 2L));
+        BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L));
 
         assertTrue(bf1.contains(bf2));
         assertFalse(bf2.contains(bf1));

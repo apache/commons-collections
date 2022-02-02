@@ -61,12 +61,13 @@ public final class SetOperations {
 
         /**
          * Constructor.
-         * @param BitMaps The array of BitMap BitMaps for a Bloom filter
+         * @param producer The the producer for the initial BitMaps.
+         * @param The shape of the Bloom filter
          * @param op2 The operation to execute when there are two BitMaps to compare.
          * @param op1 The operation to execute when there is only one BitMap to compare.
          */
         CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
-            BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
+            ArrayBuilder builder = new ArrayBuilder(shape);
             producer.forEachBitMap(builder);
             this.bitMaps = builder.getArray();
             this.op2 = op2;
@@ -160,7 +161,8 @@ public final class SetOperations {
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
         final int numerator = andCardinality(first.getShape(), first, second);
-        return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
+        // Given that the cardinality is an int then the product as a double will not overflow, we can use one sqrt:
+        return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality() * second.cardinality()));
     }
 
     /**
@@ -197,9 +199,8 @@ public final class SetOperations {
      * @return the Jaccard similarity.
      */
     public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
-        final int orCard = orCardinality(first.getShape(), first, second);
-        // if the orCard is zero then the hamming distance will also be zero.
-        return orCard == 0 ? 0 : hammingDistance(first, second) / (double) orCard;
+        final int intersection = andCardinality(first.getShape(), first, second);
+        return intersection == 0 ? 0 : intersection / (double) orCardinality(first.getShape(), first, second);
     }
 
     /**

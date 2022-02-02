@@ -16,10 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 public class BitMapTest {
 
@@ -43,14 +45,14 @@ public class BitMapTest {
 
     @Test
     public void numberOfBitMapsTest() {
-        assertEquals("Number of bits 0", 0, BitMap.numberOfBitMaps(0));
+        assertEquals( 0, BitMap.numberOfBitMaps(0),"Number of bits 0");
         for (int i = 1; i < 65; i++) {
-            assertEquals(String.format("Number of bits %d", i), 1, BitMap.numberOfBitMaps(i));
+            assertEquals( 1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
         }
         for (int i = 65; i < 129; i++) {
-            assertEquals(String.format("Number of bits %d", i), 2, BitMap.numberOfBitMaps(i));
+            assertEquals(2, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
         }
-        assertEquals("Number of bits 129", 3, BitMap.numberOfBitMaps(129));
+        assertEquals( 3, BitMap.numberOfBitMaps(129), "Number of bits 129");
 
     }
 
@@ -59,7 +61,7 @@ public class BitMapTest {
         long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
         for (int i = 0; i < 129; i++) {
             BitMap.set(bitMaps, i);
-            assertTrue(String.format("Failed at index: %d", i), BitMap.contains(bitMaps, i));
+            assertTrue(BitMap.contains(bitMaps, i),String.format("Failed at index: %d", i));
         }
         assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[0]);
         assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[1]);
@@ -75,9 +77,9 @@ public class BitMapTest {
             BitMap.set(bitMaps, i);
             for (int j = 0; j < 64; j++) {
                 if (j == i) {
-                    assertTrue(String.format("Failed at index: %d for %d", i, j), BitMap.contains(bitMaps, j));
+                    assertTrue( BitMap.contains(bitMaps, j), String.format("Failed at index: %d for %d", i, j));
                 } else {
-                    assertFalse(String.format("Failed at index %d for %d", i, j), BitMap.contains(bitMaps, j));
+                    assertFalse( BitMap.contains(bitMaps, j), String.format("Failed at index %d for %d", i, j));
                 }
             }
 
@@ -88,7 +90,8 @@ public class BitMapTest {
     public void contains_boundaryConditionTest() {
         long[] ary = new long[1];
 
-        assertFalse(BitMap.contains(ary, -1));
+        final long[] aryT = ary;
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> BitMap.contains(aryT, -1));
         assertFalse(BitMap.contains(ary, 0));
         ary[0] = 0x01;
         assertTrue(BitMap.contains(ary, 0));
@@ -96,7 +99,8 @@ public class BitMapTest {
         assertFalse(BitMap.contains(ary, 63));
         ary[0] = (1L << 63);
         assertTrue(BitMap.contains(ary, 63));
-        assertFalse(BitMap.contains(ary, 64));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> BitMap.contains(aryT, 64));
+
 
         ary = new long[2];
         assertFalse(BitMap.contains(ary, 64));

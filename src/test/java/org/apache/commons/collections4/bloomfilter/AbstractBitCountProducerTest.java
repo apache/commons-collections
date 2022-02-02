@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
 import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
+import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitCountProducerTest {
 
@@ -56,9 +56,9 @@ public abstract class AbstractBitCountProducerTest {
             }
         };
 
-        assertFalse("non-empty should be false", createProducer().forEachCount(consumer));
+        assertFalse( createProducer().forEachCount(consumer),"non-empty should be false");
         if (supportsEmpty()) {
-            assertTrue("empty should be true", createEmptyProducer().forEachCount(consumer));
+            assertTrue( createEmptyProducer().forEachCount(consumer), "empty should be true");
         }
     }
 
@@ -72,9 +72,9 @@ public abstract class AbstractBitCountProducerTest {
             }
         };
 
-        assertTrue("non-empty should be true", createProducer().forEachCount(consumer));
+        assertTrue( createProducer().forEachCount(consumer), "non-empty should be true");
         if (supportsEmpty()) {
-            assertTrue("empty should be true", createEmptyProducer().forEachCount(consumer));
+            assertTrue(  createEmptyProducer().forEachCount(consumer), "empty should be true");
         }
     }
 }

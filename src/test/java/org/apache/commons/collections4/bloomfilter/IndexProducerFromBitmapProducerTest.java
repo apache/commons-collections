@@ -34,6 +34,17 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
 
     @Override
     protected IndexProducer createProducer() {
+        /* Creates an index producer that produces the values:
+         * 0, 65, 128, and 129
+         @formatter:off
+                Index2    Index1     Index0
+         bit       128        64          0
+                     |         |          |
+         1L =>       |         |    ...0001
+         2L =>       |   ...0010
+         3L => ...0011
+         @formatter:on
+         */
         TestingBitMapProducer producer = new TestingBitMapProducer(new long[] { 1L, 2L, 3L });
         return IndexProducer.fromBitMapProducer(producer);
     }

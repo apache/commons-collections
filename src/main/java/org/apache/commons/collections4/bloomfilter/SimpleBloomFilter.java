@@ -30,7 +30,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 public class SimpleBloomFilter implements BloomFilter {
 
     /**
-     * The array of BitMap longs that defines this Bloom filter.
+     * The array of BitMap longs that defines this Bloom filter.  Will be null if the filter is empty.
      */
     private long[] bitMap;
 
@@ -45,19 +45,19 @@ public class SimpleBloomFilter implements BloomFilter {
     private int cardinality;
 
     /**
-     * Constructs an empty SimpleBloomFilter.
+     * Creates an empty instance.
      *
      * @param shape The shape for the filter.
      */
     public SimpleBloomFilter(Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
-        this.bitMap = new long[0];
+        this.bitMap = null;
         this.cardinality = 0;
     }
 
     /**
-     * Constructor.
+     * Creates a populated instance.
      * @param shape The shape for the filter.
      * @param hasher the Hasher to initialize the filter with.
      */
@@ -65,25 +65,35 @@ public class SimpleBloomFilter implements BloomFilter {
         Objects.requireNonNull(shape, "shape");
         Objects.requireNonNull(hasher, "hasher");
         this.shape = shape;
-        this.bitMap = new long[0];
         mergeInPlace(hasher);
     }
 
     /**
-     * Constructor.
+     * Creates a populated instance.
      * @param shape The shape for the filter.
-     * @param producer the BitMap Producer to initialize the filter with.
+     * @param producer the BitMap producer to initialize the filter with.
      * @throws IllegalArgumentException if the producer returns too many bit maps.
      */
     public SimpleBloomFilter(final Shape shape, BitMapProducer producer) {
         Objects.requireNonNull(shape, "shape");
         Objects.requireNonNull(producer, "producer");
         this.shape = shape;
+        needsBitMap();
 
-        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape);
         try {
-            producer.forEachBitMap(builder);
-            this.bitMap = builder.getArray();
+            producer.forEachBitMap( new LongPredicate() {
+                int idx = 0;
+
+                @Override
+                public boolean test(long value) {
+                    bitMap[idx++] = value;
+                    return true;
+                }
+
+
+            });
+
+
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
                     BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
@@ -91,18 +101,18 @@ public class SimpleBloomFilter implements BloomFilter {
         this.cardinality = -1;
     }
 
+    private void needsBitMap() {
+        if (bitMap == null) {
+            bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        }
+    }
     @Override
     public boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
+        needsBitMap();
         Shape shape = getShape();
 
         hasher.indices(shape).forEachIndex(idx -> {
-            int lidx = BitMap.getLongIndex(idx);
-            if (bitMap.length <= lidx) {
-                long[] newMap = new long[lidx + 1];
-                System.arraycopy(bitMap, 0, newMap, 0, bitMap.length);
-                bitMap = newMap;
-            }
             BitMap.set(bitMap, idx);
             return true;
         });
@@ -113,9 +123,18 @@ public class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean mergeInPlace(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        BitMapProducer.ArrayBuilder builder = new BitMapProducer.ArrayBuilder(shape, this.bitMap);
-        other.forEachBitMap(builder);
-        this.bitMap = builder.getArray();
+        needsBitMap();
+        other.forEachBitMap( new LongPredicate() {
+            int idx = 0;
+
+            @Override
+            public boolean test(long value) {
+                bitMap[idx++] |= value;
+                return true;
+            }
+
+
+        });
         this.cardinality = -1;
         return true;
     }
@@ -155,9 +174,11 @@ public class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (long l : bitMap) {
-            if (!consumer.test(l)) {
-                return false;
+        if (bitMap !=  null) {
+            for (long l : bitMap) {
+                if (!consumer.test(l)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -165,21 +186,25 @@ public class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(IndexProducer indexProducer) {
+        needsBitMap();
         return indexProducer.forEachIndex(idx -> BitMap.contains(bitMap, idx));
     }
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        LongPredicate consumer = new LongPredicate() {
-            int i = 0;
+        if (bitMap != null) {
+            LongPredicate consumer = new LongPredicate() {
+                int i = 0;
 
-            @Override
-            public boolean test(long w) {
-                return i < bitMap.length && (bitMap[i++] & w) == w;
-            }
-        };
+                @Override
+                public boolean test(long w) {
+                    return i < bitMap.length && (bitMap[i++] & w) == w;
+                }
+            };
 
-        return bitMapProducer.forEachBitMap(consumer);
+            return bitMapProducer.forEachBitMap(consumer);
+        }
+        return false;
     }
 
 }

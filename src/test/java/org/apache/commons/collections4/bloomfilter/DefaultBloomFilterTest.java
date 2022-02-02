@@ -16,8 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.TreeSet;
 import java.util.function.IntPredicate;
@@ -25,7 +27,8 @@ import java.util.function.LongPredicate;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * Tests for the {@link BloomFilter}.
@@ -43,7 +46,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     @Test
     public void mergeInPlace_hasher_sparse_branch_test() {
-        DefaultBloomFilter filter = new DefaultBloomFilter(new Shape(3, 150));
+        DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
         assertTrue(filter.mergeInPlace(hasher));
         assertEquals(3, filter.cardinality());
@@ -51,7 +54,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     @Test
     public void merge_hasher_sparse_branch_test() {
-        DefaultBloomFilter filter = new DefaultBloomFilter(new Shape(3, 150));
+        DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
         BloomFilter newFilter = filter.merge(hasher);
         assertTrue(newFilter instanceof SparseBloomFilter);
@@ -60,7 +63,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     @Test
     public void merge_bloomfilter_sparse_branch_test() {
-        Shape shape = new Shape(3, 150);
+        Shape shape = Shape.fromKM(3, 150);
         DefaultBloomFilter filter = new DefaultBloomFilter(shape);
         DefaultBloomFilter filter2 = new DefaultBloomFilter(shape, new SimpleHasher(0, 1));
         BloomFilter newFilter = filter.merge(filter2);
