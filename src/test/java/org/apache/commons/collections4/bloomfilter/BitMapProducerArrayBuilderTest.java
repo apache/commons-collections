@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class BitMapProducerArrayBuilderTest {
 
     @Test
-    public void arrayBuilderTest() {
+    public final void testArrayBuilder() {
         assertThrows(IllegalArgumentException.class,
                 () -> new ArrayBuilder(Shape.fromKM(1, 4), new long[] { 1L, 2L, 3L, 4L, 5L }));
     }

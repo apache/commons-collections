@@ -36,7 +36,7 @@ public class HasherCollectionTest {
     private SimpleHasher hasher2 = new SimpleHasher(2, 2);
 
     @Test
-    public void sizeTest() {
+    public void testSize() {
         HasherCollection hasher = new HasherCollection(hasher1, hasher2);
         assertEquals(2, hasher.size());
         HasherCollection hasher3 = new HasherCollection(hasher, new SimpleHasher(3, 3));
@@ -44,7 +44,7 @@ public class HasherCollectionTest {
     }
 
     @Test
-    public void isEmptyTest() {
+    public void testIsEmpty() {
         HasherCollection hasher = new HasherCollection();
         assertTrue(hasher.isEmpty());
         hasher.add(hasher1);
@@ -68,7 +68,7 @@ public class HasherCollectionTest {
     }
 
     @Test
-    public void testAdd_collection() {
+    public void testAdd() {
         HasherCollection hasher = new HasherCollection();
         hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(2, hasher.size());

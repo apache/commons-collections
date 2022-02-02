@@ -50,7 +50,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
     }
 
     @Test
-    public void fromBitMapProducerTest() {
+    public final void testFromBitMapProducerTest() {
         IndexProducer underTest = createProducer();
         List<Integer> lst = new ArrayList<Integer>();
 

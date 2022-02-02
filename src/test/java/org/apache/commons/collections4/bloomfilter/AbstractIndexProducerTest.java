@@ -25,6 +25,21 @@ import org.junit.jupiter.api.Test;
 
 public abstract class AbstractIndexProducerTest {
 
+    public final static IntPredicate TRUE_PREDICATE = new IntPredicate() {
+
+        @Override
+        public boolean test(int arg0) {
+            return true;
+        }
+    };
+
+    public final static IntPredicate FALSE_PREDICATE = new IntPredicate() {
+
+        @Override
+        public boolean test(int arg0) {
+            return false;
+        }
+    };
     /**
      * Creates a producer with some data.
      * @return a producer with some data
@@ -47,35 +62,16 @@ public abstract class AbstractIndexProducerTest {
     }
 
     @Test
-    public void forEachIndex_test_false() {
+    public final void testForEachIndex() {
 
-        IntPredicate consumer = new IntPredicate() {
-
-            @Override
-            public boolean test(int arg0) {
-                return false;
-            }
-        };
-
-        assertFalse(createProducer().forEachIndex(consumer), "non-empty should be false");
+        assertFalse(createProducer().forEachIndex(FALSE_PREDICATE), "non-empty should be false");
         if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachIndex(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachIndex(FALSE_PREDICATE), "empty should be true");
         }
-    }
 
-    @Test
-    public void forEachIndex_test_true() {
-        IntPredicate consumer = new IntPredicate() {
-
-            @Override
-            public boolean test(int arg0) {
-                return true;
-            }
-        };
-
-        assertTrue(createProducer().forEachIndex(consumer), "non-empty should be true");
+        assertTrue(createProducer().forEachIndex(TRUE_PREDICATE), "non-empty should be true");
         if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachIndex(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachIndex(TRUE_PREDICATE), "empty should be true");
         }
     }
 }

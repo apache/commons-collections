@@ -42,7 +42,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void mergeInPlace_hasher_sparse_branch_test() {
+    public void testDefaultBloomFilterSimpleSpecificMergeInPlace() {
         DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
         assertTrue(filter.mergeInPlace(hasher));
@@ -50,7 +50,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void merge_hasher_sparse_branch_test() {
+    public void testDefaultBloomFilterSparseSpecificMergeInPlace() {
         DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
         BloomFilter newFilter = filter.merge(hasher);
@@ -59,7 +59,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void merge_bloomfilter_sparse_branch_test() {
+    public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
         DefaultBloomFilter filter = new DefaultBloomFilter(shape);
         DefaultBloomFilter filter2 = new DefaultBloomFilter(shape, new SimpleHasher(0, 1));

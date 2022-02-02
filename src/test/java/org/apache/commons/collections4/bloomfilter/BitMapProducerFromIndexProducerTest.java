@@ -52,7 +52,7 @@ public class BitMapProducerFromIndexProducerTest extends AbstractBitMapProducerT
     }
 
     @Test
-    public void fromIndexProducer() {
+    public final  void testFromIndexProducer() {
         List<Long> lst = new ArrayList<Long>();
         createProducer().forEachBitMap(lst::add);
         long[] buckets = lst.stream().mapToLong(l -> l.longValue()).toArray();

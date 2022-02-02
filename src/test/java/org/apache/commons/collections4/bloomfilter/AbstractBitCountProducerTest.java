@@ -25,6 +25,28 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractBitCountProducerTest {
 
     /**
+     * A testing BitCountConsumer that always returns false.
+     */
+    public static  BitCountConsumer FALSE_CONSUMER = new BitCountConsumer() {
+
+        @Override
+        public boolean test(int index, int count) {
+            return false;
+        }
+    };
+
+    /**
+     * A testing BitCountConsumer that always returns true.
+     */
+    public static BitCountConsumer TRUE_CONSUMER = new BitCountConsumer() {
+
+        @Override
+        public boolean test(int index, int count) {
+            return true;
+        }
+    };
+
+    /**
      * Creates a producer with some data.
      * @return a producer with some data
      */
@@ -46,35 +68,16 @@ public abstract class AbstractBitCountProducerTest {
     }
 
     @Test
-    public void forEachCount_test_false() {
+    final public void testForEachCount() {
 
-        BitCountConsumer consumer = new BitCountConsumer() {
 
-            @Override
-            public boolean test(int index, int count) {
-                return false;
-            }
-        };
 
-        assertFalse(createProducer().forEachCount(consumer), "non-empty should be false");
+        assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
+        assertTrue(createProducer().forEachCount(TRUE_CONSUMER), "non-empty should be true");
         if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachCount(consumer), "empty should be true");
+            assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
+            assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
         }
     }
 
-    @Test
-    public void forEachCount_test_true() {
-        BitCountConsumer consumer = new BitCountConsumer() {
-
-            @Override
-            public boolean test(int index, int count) {
-                return true;
-            }
-        };
-
-        assertTrue(createProducer().forEachCount(consumer), "non-empty should be true");
-        if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachCount(consumer), "empty should be true");
-        }
-    }
 }

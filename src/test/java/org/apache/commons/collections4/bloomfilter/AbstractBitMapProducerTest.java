@@ -60,13 +60,9 @@ public abstract class AbstractBitMapProducerTest {
     protected abstract BitMapProducer createEmptyProducer();
 
     @Test
-    public void forEachBitMap_test_false() {
+    final public void testForEachBitMap() {
         assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true");
-    }
-
-    @Test
-    public void forEachBitMap_test_true() {
         assertTrue(createProducer().forEachBitMap(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
 

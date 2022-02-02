@@ -56,7 +56,7 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     }
 
     @Test
-    public void differentBitMapLengthTest() {
+    public void testDifferentBitMapLength() {
         BloomFilter bf1 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L, 2L));
         BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L));
 
