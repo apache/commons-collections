@@ -39,7 +39,7 @@ public class BitCountProducerTest {
             }
         };
         BitCountProducer producer = BitCountProducer.from(iProducer);
-        Map<Integer, Integer> m = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> m = new HashMap<>();
 
         producer.forEachCount((i, v) -> {
             m.put(i, v);
@@ -65,7 +65,7 @@ public class BitCountProducerTest {
             }
         };
 
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         producer.forEachIndex(lst::add);
         assertEquals(2, lst.size());
         assertEquals(Integer.valueOf(1), lst.get(0));
