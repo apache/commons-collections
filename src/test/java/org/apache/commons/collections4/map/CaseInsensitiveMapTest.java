@@ -24,6 +24,7 @@ import java.util.Set;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
+import org.easymock.EasyMock;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
@@ -146,5 +147,20 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertTrue(!caseInsensitiveMap.containsValue("One")
             || !caseInsensitiveMap.containsValue("Three")); // ones collapsed
         assertEquals("Four", caseInsensitiveMap.get(null));
+    }
+
+    // COLLECTIONS-803
+    public void testPutConvertKeyOnlyOnce() {
+        CaseInsensitiveMap mock = EasyMock.partialMockBuilder(CaseInsensitiveMap.class)
+                .withConstructor(Map.class)
+                .withArgs(new HashMap<>())
+                .addMockedMethod("convertKey")
+                .createMock();
+        EasyMock.expect(mock.convertKey("Key")).andReturn("key").once();
+        EasyMock.replay(mock);
+
+        mock.put("Key", "value");
+
+        EasyMock.verify(mock);
     }
 }
