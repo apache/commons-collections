@@ -71,7 +71,6 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         for (int i = 0; i < 64; i++) {
             assertEquals(Integer.valueOf(i), lst.get(i));
         }
-
     }
 
     private class TestingBitMapProducer implements BitMapProducer {
@@ -91,5 +90,4 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
             return true;
         }
     }
-
 }

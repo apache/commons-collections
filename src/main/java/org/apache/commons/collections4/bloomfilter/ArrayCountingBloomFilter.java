@@ -264,5 +264,4 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public boolean contains(BitMapProducer bitMapProducer) {
         return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
-
 }

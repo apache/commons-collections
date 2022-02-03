@@ -114,7 +114,6 @@ public class SetOperationsTest {
         assertEquals(expected, SetOperations.cosineSimilarity(filter1, filter2));
         assertEquals(expected, SetOperations.cosineSimilarity(filter2, filter1));
 
-
         // test no values
         filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
@@ -165,7 +164,7 @@ public class SetOperationsTest {
         assertEquals(1 - (intersection / union), SetOperations.jaccardDistance(filter2, filter1));
 
 // test no values
-         filter1 = new SimpleBloomFilter(shape);
+        filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
         BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
 
@@ -199,7 +198,7 @@ public class SetOperationsTest {
         // test no values
         filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
-         BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
+        BloomFilter filter3 = new SimpleBloomFilter(shape, from1);
 
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter1, filter2));
         assertEquals(0.0, SetOperations.jaccardSimilarity(filter2, filter1));
@@ -246,7 +245,6 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 5, 64, 69 }));
         assertEquals(1, SetOperations.andCardinality(shape, filter1, filter2));
         assertEquals(1, SetOperations.andCardinality(shape, filter2, filter1));
-
     }
 
     @Test
@@ -266,6 +264,5 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIntArray(new int[] { 5, 64, 69 }));
         assertEquals(3, SetOperations.xorCardinality(shape, filter1, filter2));
         assertEquals(3, SetOperations.xorCardinality(shape, filter2, filter1));
-
     }
 }

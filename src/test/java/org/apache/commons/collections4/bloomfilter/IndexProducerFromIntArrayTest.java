@@ -27,5 +27,4 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
     protected IndexProducer createProducer() {
         return IndexProducer.fromIntArray(new int[] { 1, 2, 3, 4, 5 });
     }
-
 }

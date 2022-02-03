@@ -149,5 +149,4 @@ public interface Hasher {
             return filter.test(value) ? consumer.test(value) : true;
         }
     }
-
 }

@@ -85,6 +85,5 @@ public class SimpleHasherTest {
 
         // test empty buffer
         assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
-}
-
+    }
 }

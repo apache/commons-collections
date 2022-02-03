@@ -39,7 +39,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
             new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
             new SimpleHasher(67, 1)/* 67-83 */
-            );
+    );
     protected final long[] fullHashValue = { 0xFFFFFFFFFFFFFFFFL, 0xFFFFFL };
 
     /**
@@ -68,14 +68,13 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected abstract T createFilter(Shape shape, Hasher hasher);
 
     @Test
-    final public void testAsIndexArray() {
+    public final void testAsIndexArray() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         int[] ary = BloomFilter.asIndexArray(bf);
         assertEquals(17, ary.length);
         for (int i = 0; i < ary.length; i++) {
             assertEquals(i + 1, ary[i], "Error at position " + i);
         }
-
     }
 
     /**
@@ -84,7 +83,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    final public void testContains() {
+    public final void testContains() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
 
@@ -115,7 +114,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    final public void testEestimateIntersection() {
+    public final void testEestimateIntersection() {
 
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
@@ -135,7 +134,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    final public void testEstimateUnion() {
+    public final void testEstimateUnion() {
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
 
@@ -152,7 +151,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the size estimate is correctly calculated.
      */
     @Test
-    final public void testEstimateN() {
+    public final void testEstimateN() {
         // build a filter
         BloomFilter filter1 = new SimpleBloomFilter(getTestShape(), from1);
         assertEquals(1, filter1.estimateN());
@@ -255,7 +254,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
-        final  BloomFilter bf3 = bf1.merge(bf2);
+        final BloomFilter bf3 = bf1.merge(bf2);
 
         // test with BloomFilter
 
@@ -272,5 +271,4 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
     }
-
 }

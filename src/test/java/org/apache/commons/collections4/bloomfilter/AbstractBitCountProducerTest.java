@@ -27,7 +27,7 @@ public abstract class AbstractBitCountProducerTest {
     /**
      * A testing BitCountConsumer that always returns false.
      */
-    public static  BitCountConsumer FALSE_CONSUMER = new BitCountConsumer() {
+    public static BitCountConsumer FALSE_CONSUMER = new BitCountConsumer() {
 
         @Override
         public boolean test(int index, int count) {
@@ -68,9 +68,7 @@ public abstract class AbstractBitCountProducerTest {
     }
 
     @Test
-    final public void testForEachCount() {
-
-
+    public final void testForEachCount() {
 
         assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(createProducer().forEachCount(TRUE_CONSUMER), "non-empty should be true");
@@ -79,5 +77,4 @@ public abstract class AbstractBitCountProducerTest {
             assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
         }
     }
-
 }

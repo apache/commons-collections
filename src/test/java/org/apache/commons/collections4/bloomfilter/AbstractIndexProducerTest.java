@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 public abstract class AbstractIndexProducerTest {
 
-    public final static IntPredicate TRUE_PREDICATE = new IntPredicate() {
+    public static final IntPredicate TRUE_PREDICATE = new IntPredicate() {
 
         @Override
         public boolean test(int arg0) {
@@ -33,13 +33,14 @@ public abstract class AbstractIndexProducerTest {
         }
     };
 
-    public final static IntPredicate FALSE_PREDICATE = new IntPredicate() {
+    public static final IntPredicate FALSE_PREDICATE = new IntPredicate() {
 
         @Override
         public boolean test(int arg0) {
             return false;
         }
     };
+
     /**
      * Creates a producer with some data.
      * @return a producer with some data

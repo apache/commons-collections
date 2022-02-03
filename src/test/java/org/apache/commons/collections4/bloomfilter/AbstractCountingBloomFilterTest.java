@@ -26,7 +26,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
-public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter> extends AbstractBloomFilterTest<T> {
+public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
+        extends AbstractBloomFilterTest<T> {
     protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
     protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         0 };
@@ -100,7 +101,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf2.contains(bf), "BF2 should contain BF");
         BitMapProducer producer = bf2;
         assertTrue(bf2.contains(producer), "BF2 should contain BF bitMapProducer");
-
     }
 
     /**
@@ -130,7 +130,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         CountingBloomFilter bf6 = bf5.merge(new SimpleBloomFilter(getTestShape(), from1));
         assertFalse(bf6.isValid(), "Should not be valid");
-
     }
 
     /**
@@ -172,7 +171,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         assertCounts(bf1, from1Counts);
 
-// test underflow
+        // test underflow
         final CountingBloomFilter bf3 = createFilter(getTestShape(), from1);
 
         final CountingBloomFilter bf4 = createFilter(getTestShape(), from11);
@@ -183,7 +182,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(bf4), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 });
-
     }
 
     /**
@@ -201,7 +199,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         assertCounts(bf1, from1Counts);
 
-       // with hasher
+        // with hasher
         final CountingBloomFilter bf2 = createFilter(getTestShape(), from1);
         bf2.add(BitCountProducer.from(from11.indices(getTestShape())));
 
@@ -223,8 +221,5 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(bf4), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
-
     }
-
-
 }

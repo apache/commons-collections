@@ -133,6 +133,5 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         public int cardinality() {
             return indices.size();
         }
-
     }
 }

@@ -53,7 +53,6 @@ public class BitCountProducerTest {
         assertEquals(Integer.valueOf(1), m.get(64));
         assertEquals(Integer.valueOf(1), m.get(127));
         assertEquals(Integer.valueOf(1), m.get(128));
-
     }
 
     @Test
@@ -72,5 +71,4 @@ public class BitCountProducerTest {
         assertEquals(Integer.valueOf(1), lst.get(0));
         assertEquals(Integer.valueOf(3), lst.get(1));
     }
-
 }

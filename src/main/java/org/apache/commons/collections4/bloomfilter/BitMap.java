@@ -113,5 +113,4 @@ public class BitMap {
         // this will identify an incorrect bit.
         return 1L << bitIndex;
     }
-
 }

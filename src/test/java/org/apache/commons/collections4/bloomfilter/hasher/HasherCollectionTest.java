@@ -73,5 +73,4 @@ public class HasherCollectionTest {
         hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(2, hasher.size());
     }
-
 }

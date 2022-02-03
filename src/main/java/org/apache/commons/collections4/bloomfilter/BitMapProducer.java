@@ -68,7 +68,6 @@ public interface BitMapProducer {
                 }
                 return true;
             }
-
         };
     }
 
@@ -114,5 +113,4 @@ public interface BitMapProducer {
             }
         };
     }
-
 }

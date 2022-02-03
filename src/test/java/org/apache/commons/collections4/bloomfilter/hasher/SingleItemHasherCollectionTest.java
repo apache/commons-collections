@@ -57,7 +57,6 @@ public class SingleItemHasherCollectionTest {
         assertEquals(1, hasher.size());
         HasherCollection hasher3 = new SingleItemHasherCollection(hasher, new SimpleHasher(3, 3));
         assertEquals(1, hasher3.size());
-
     }
 
     @Test
