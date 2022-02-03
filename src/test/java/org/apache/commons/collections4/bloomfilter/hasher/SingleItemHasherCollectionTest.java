@@ -85,7 +85,7 @@ public class SingleItemHasherCollectionTest {
         HasherCollection hasher = new SingleItemHasherCollection(hasher1, hasher2);
         Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());
@@ -99,7 +99,7 @@ public class SingleItemHasherCollectionTest {
         HasherCollection hasher = new SingleItemHasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
         Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());
@@ -114,7 +114,7 @@ public class SingleItemHasherCollectionTest {
         hasher.add(Arrays.asList(hasher1, hasher2));
         assertEquals(1, hasher.size());
         Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(Shape.fromKM(5, 10));
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());

@@ -46,7 +46,7 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
 
         SimpleBloomFilter filter = new SimpleBloomFilter(getTestShape(),
                 BitMapProducer.fromLongArray(new long[] { 500L }));
-        List<Long> lst = new ArrayList<Long>();
+        List<Long> lst = new ArrayList<>();
         filter.forEachBitMap(lst::add);
         assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), lst.size());
         assertEquals(500L, lst.get(0).intValue());

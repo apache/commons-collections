@@ -58,7 +58,7 @@ public class HasherCollectionTest {
         assertEquals(2, hasher.size());
         Shape shape = Shape.fromKM(5, 10);
         Integer[] expected = { 1, 2, 3, 4, 5, 2, 4, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
         assertEquals(expected.length, lst.size());

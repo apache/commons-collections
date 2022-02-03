@@ -74,7 +74,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         DefaultBloomFilter(Shape shape) {
             this.shape = shape;
-            this.indices = new TreeSet<Integer>();
+            this.indices = new TreeSet<>();
         }
 
         DefaultBloomFilter(Shape shape, Hasher hasher) {

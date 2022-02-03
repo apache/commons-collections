@@ -40,7 +40,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
 
     @Test
     public void constructorTest() {
-        List<Long> lst = new ArrayList<Long>();
+        List<Long> lst = new ArrayList<>();
         createProducer().forEachBitMap(lst::add);
         assertEquals(Long.valueOf(1), lst.get(0));
         assertEquals(Long.valueOf(2), lst.get(1));
@@ -65,7 +65,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
             }
         };
         BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
-        List<Long> lst = new ArrayList<Long>();
+        List<Long> lst = new ArrayList<>();
         producer.forEachBitMap(lst::add);
         long expected = ~0L;
         assertEquals(expected, lst.get(0).longValue());

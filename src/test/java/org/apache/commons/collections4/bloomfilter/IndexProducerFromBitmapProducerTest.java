@@ -52,7 +52,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
     @Test
     public final void testFromBitMapProducerTest() {
         IndexProducer underTest = createProducer();
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
         assertEquals(4, lst.size());
@@ -63,7 +63,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
 
         BitMapProducer producer = new TestingBitMapProducer(new long[] { 0xFFFFFFFFFFFFFFFFL });
         underTest = IndexProducer.fromBitMapProducer(producer);
-        lst = new ArrayList<Integer>();
+        lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
 

@@ -30,7 +30,7 @@ public class IndexProducerTest {
     public void fromBitMapProducerTest() {
         TestingBitMapProducer producer = new TestingBitMapProducer(new long[] { 1L, 2L, 3L });
         IndexProducer underTest = IndexProducer.fromBitMapProducer(producer);
-        List<Integer> lst = new ArrayList<Integer>();
+        List<Integer> lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
         assertEquals(4, lst.size());
@@ -41,7 +41,7 @@ public class IndexProducerTest {
 
         producer = new TestingBitMapProducer(new long[] { 0xFFFFFFFFFFFFFFFFL });
         underTest = IndexProducer.fromBitMapProducer(producer);
-        lst = new ArrayList<Integer>();
+        lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
 
