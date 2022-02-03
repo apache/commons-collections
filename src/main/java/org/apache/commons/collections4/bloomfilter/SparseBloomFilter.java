@@ -52,8 +52,15 @@ public class SparseBloomFilter implements BloomFilter {
         this.indices = new TreeSet<>();
     }
 
+    @Override
+    public SparseBloomFilter copy() {
+        SparseBloomFilter result = new SparseBloomFilter(shape);
+        result.indices.addAll(indices);
+        return result;
+    }
+
     /**
-     * Addes the index to the indices.
+     * Adds the index to the indices.
      * @param idx the index to add.
      * @return {@code true} always
      */

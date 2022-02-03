@@ -101,6 +101,13 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
+    public ArrayCountingBloomFilter copy() {
+        ArrayCountingBloomFilter result = new ArrayCountingBloomFilter(shape);
+        System.arraycopy(counts, 0, result.counts, 0, shape.getNumberOfBits());
+        return result;
+    }
+
+    @Override
     public boolean isSparse() {
         return true;
     }

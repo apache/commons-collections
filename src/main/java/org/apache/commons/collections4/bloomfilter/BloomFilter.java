@@ -58,6 +58,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         return result;
     }
 
+    /**
+     * Creates a new instance of the BloomFilter with the same properties as the current one.
+     * @return a copy of this BloomFilter
+     */
+    BloomFilter copy();
+
     // Query Operations
 
     /**
@@ -131,6 +137,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     boolean contains(BitMapProducer bitMapProducer);
 
+    // update operations
+
     /**
      * Merges the specified Bloom filter with this Bloom filter creating a new Bloom filter.
      *
@@ -142,11 +150,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default BloomFilter merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        Shape shape = getShape();
-        BloomFilter result = shape.isSparse((cardinality() + other.cardinality())) ? new SparseBloomFilter(shape)
-                : new SimpleBloomFilter(shape);
-
-        result.mergeInPlace(this);
+        BloomFilter result = copy();
         result.mergeInPlace(other);
         return result;
     }
@@ -162,11 +166,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default BloomFilter merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        Shape shape = getShape();
-        BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
-                ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
-        result.mergeInPlace(this);
+        BloomFilter result = copy();
+        result.mergeInPlace(hasher);
         return result;
     }
 
@@ -203,9 +204,11 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
+                : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
+
+    // Counting Operations
 
     /**
      * Determines if the bloom filter is "full".
@@ -217,8 +220,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean isFull() {
         return cardinality() == getShape().getNumberOfBits();
     }
-
-    // Counting Operations
 
     /**
      * Gets the cardinality (number of enabled bits) of this Bloom filter.

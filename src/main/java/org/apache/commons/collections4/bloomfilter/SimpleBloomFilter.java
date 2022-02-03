@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -97,6 +98,16 @@ public class SimpleBloomFilter implements BloomFilter {
         this.cardinality = -1;
     }
 
+    @Override
+    public SimpleBloomFilter copy() {
+        SimpleBloomFilter result = new SimpleBloomFilter(shape);
+        if (bitMap != null) {
+            result.bitMap = Arrays.copyOf(bitMap, bitMap.length);
+        }
+        result.cardinality = cardinality;
+        return result;
+    }
+
     /**
      * Creates the bit map array if necessary.
      */
@@ -151,13 +162,11 @@ public class SimpleBloomFilter implements BloomFilter {
     public int cardinality() {
         if (this.cardinality == -1) {
             synchronized (this) {
-                if (this.cardinality == -1) {
-                    this.cardinality = 0;
-                    forEachBitMap(w -> {
-                        this.cardinality += Long.bitCount(w);
-                        return true;
-                    });
-                }
+                this.cardinality = 0;
+                forEachBitMap(w -> {
+                    this.cardinality += Long.bitCount(w);
+                    return true;
+                });
             }
         }
         return this.cardinality;

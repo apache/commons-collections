@@ -54,7 +54,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
         BloomFilter newFilter = filter.merge(hasher);
-        assertTrue(newFilter instanceof SparseBloomFilter);
         assertEquals(3, newFilter.cardinality());
     }
 
@@ -64,7 +63,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         DefaultBloomFilter filter = new DefaultBloomFilter(shape);
         DefaultBloomFilter filter2 = new DefaultBloomFilter(shape, new SimpleHasher(0, 1));
         BloomFilter newFilter = filter.merge(filter2);
-        assertTrue(newFilter instanceof SparseBloomFilter);
         assertEquals(3, newFilter.cardinality());
     }
 
@@ -83,6 +81,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                 indices.add(i);
                 return true;
             });
+        }
+
+        @Override
+        public DefaultBloomFilter copy() {
+            DefaultBloomFilter result = new DefaultBloomFilter(shape);
+            result.indices.addAll(indices);
+            return result;
         }
 
         @Override
