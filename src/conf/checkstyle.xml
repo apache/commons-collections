@@ -63,7 +63,25 @@ limitations under the License.
       <!-- Indentation style recommended by Oracle -->
       <property name="caseIndent" value="0"/>
     </module>
+    <!--  start of custom modules -->
       <module name="JavadocStyle"/>
-    
+      <!-- 
+      <module name="EmptyLineSeparator">
+        <property name="tokens" value="IMPORT, STATIC_IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF, STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF, RECORD_DEF, COMPACT_CTOR_DEF" />
+      	<property name="allowMultipleEmptyLines" value="false"/>
+      	<property name="allowNoEmptyLineBetweenFields" value="false"/>
+      	<property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+      </module>
+      -->
+    <!-- end of custom modules -->
  </module>
+ <!--  start of custom modules -->
+   <module name="RegexpMultiline">
+   <!--  matches blank line before closing brace  -->
+   <!-- \s matches whitespace character, $ matches end of line. -->
+  <property name="format" value="\s+$\s*\}"/>
+  <property name="message" value="Extra blank line" />
+</module>
+    <!-- end of custom modules -->
+ 
 </module>

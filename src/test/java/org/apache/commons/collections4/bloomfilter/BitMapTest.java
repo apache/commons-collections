@@ -53,7 +53,6 @@ public class BitMapTest {
             assertEquals(2, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
         }
         assertEquals(3, BitMap.numberOfBitMaps(129), "Number of bits 129");
-
     }
 
     @Test
@@ -82,7 +81,6 @@ public class BitMapTest {
                     assertFalse(BitMap.contains(bitMaps, j), String.format("Failed at index %d for %d", i, j));
                 }
             }
-
         }
 
         // test boundary conditions
@@ -103,7 +101,5 @@ public class BitMapTest {
         assertFalse(BitMap.contains(ary, 64));
         ary[1] = 1;
         assertTrue(BitMap.contains(ary, 64));
-
     }
-
 }

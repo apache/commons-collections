@@ -57,7 +57,6 @@ public interface BitCountProducer extends IndexProducer {
             public boolean forEachCount(BitCountConsumer consumer) {
                 return idx.forEachIndex(i -> consumer.test(i, 1));
             }
-
         };
     }
 

@@ -60,7 +60,6 @@ public interface IndexProducer {
                 }
                 return true;
             }
-
         };
     }
 
@@ -95,7 +94,6 @@ public interface IndexProducer {
                 };
                 return producer.forEachBitMap(longPredicate::test);
             }
-
         };
     }
 }

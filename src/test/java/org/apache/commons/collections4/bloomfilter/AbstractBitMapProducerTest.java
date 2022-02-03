@@ -28,7 +28,7 @@ public abstract class AbstractBitMapProducerTest {
     /**
      * A testing consumer that always returns false.
      */
-    public static LongPredicate FALSE_CONSUMER = new LongPredicate() {
+    public static final LongPredicate FALSE_CONSUMER = new LongPredicate() {
 
         @Override
         public boolean test(long arg0) {
@@ -39,7 +39,7 @@ public abstract class AbstractBitMapProducerTest {
     /**
      * A testing consumer that always returns true.
      */
-    public static LongPredicate TRUE_CONSUMER = new LongPredicate() {
+    public static final LongPredicate TRUE_CONSUMER = new LongPredicate() {
 
         @Override
         public boolean test(long arg0) {
@@ -60,11 +60,10 @@ public abstract class AbstractBitMapProducerTest {
     protected abstract BitMapProducer createEmptyProducer();
 
     @Test
-    final public void testForEachBitMap() {
+    public final void testForEachBitMap() {
         assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true");
         assertTrue(createProducer().forEachBitMap(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
-
     }
 }

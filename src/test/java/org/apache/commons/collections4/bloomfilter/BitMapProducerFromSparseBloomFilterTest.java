@@ -33,5 +33,4 @@ public class BitMapProducerFromSparseBloomFilterTest extends AbstractBitMapProdu
     protected BitMapProducer createEmptyProducer() {
         return new SparseBloomFilter(shape);
     }
-
 }

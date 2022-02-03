@@ -89,9 +89,7 @@ public class SimpleBloomFilter implements BloomFilter {
                     bitMap[idx++] = value;
                     return true;
                 }
-
             });
-
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
                     BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
@@ -134,7 +132,6 @@ public class SimpleBloomFilter implements BloomFilter {
                 bitMap[idx++] |= value;
                 return true;
             }
-
         });
         this.cardinality = -1;
         return true;
@@ -207,5 +204,4 @@ public class SimpleBloomFilter implements BloomFilter {
         }
         return false;
     }
-
 }

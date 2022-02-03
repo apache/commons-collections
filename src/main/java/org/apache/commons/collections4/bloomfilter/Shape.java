@@ -451,5 +451,4 @@ public final class Shape implements Comparable<Shape> {
         // value of k can not be above Integer.MAX_VALUE.
         return (int) k;
     }
-
 }

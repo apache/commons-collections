@@ -192,5 +192,4 @@ public class SparseBloomFilter implements BloomFilter {
     public boolean contains(BitMapProducer bitMapProducer) {
         return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
-
 }

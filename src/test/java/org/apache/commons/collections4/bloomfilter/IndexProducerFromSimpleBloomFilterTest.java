@@ -33,5 +33,4 @@ public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProduce
     protected IndexProducer createEmptyProducer() {
         return new SparseBloomFilter(shape);
     }
-
 }

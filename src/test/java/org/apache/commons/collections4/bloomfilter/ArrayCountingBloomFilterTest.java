@@ -34,5 +34,4 @@ public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTes
         filter.add(BitCountProducer.from(hasher.indices(shape)));
         return filter;
     }
-
 }

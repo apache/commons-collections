@@ -72,5 +72,4 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
         expected &= 0XFFFFFFFFL;
         assertEquals(expected, lst.get(1).longValue());
     }
-
 }

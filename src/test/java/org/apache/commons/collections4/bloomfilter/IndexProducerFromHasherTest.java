@@ -35,5 +35,4 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
     protected IndexProducer createEmptyProducer() {
         throw new NotImplementedException("createEmptyProducer() should not be executed");
     }
-
 }

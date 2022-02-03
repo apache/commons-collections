@@ -47,7 +47,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         Shape shape = Shape.fromKM(1, 5);
         List<Integer> lst = new ArrayList<>();
 
-     // test no values
+        // test no values
 
         new SparseBloomFilter(shape, lst);
         // test index out of range
@@ -58,8 +58,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         lst.clear();
         lst.add(-1);
         assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
-
-
     }
 
     private void assertConstructor(Shape shape, int[] values, int[] expected) {
@@ -85,15 +83,15 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     public void producer_constructor() {
         Shape shape = Shape.fromKM(5, 10);
 
-        assertConstructor( shape, new int[] { 0, 2, 4, 6, 8 }, new int[] {0,2,4,6,8 } );
+        assertConstructor(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
         // test duplicate values
-        assertConstructor( shape, new int[] { 0, 2, 4, 2, 8 }, new int[] {0,2,4,8 } );
-       // test negative values
-        assertFailedConstructor( shape, new int[] { 0, 2, 4, -2, 8 } );
+        assertConstructor(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
+        // test negative values
+        assertFailedConstructor(shape, new int[] { 0, 2, 4, -2, 8 });
         // test index too large
-        assertFailedConstructor( shape, new int[] { 0, 2, 4, 12, 8 } );
+        assertFailedConstructor(shape, new int[] { 0, 2, 4, 12, 8 });
         // test no indicies
-        assertConstructor( shape, new int[0], new int[0] );
+        assertConstructor(shape, new int[0], new int[0]);
     }
 
     @Test
@@ -104,7 +102,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         BloomFilter filter = new SparseBloomFilter(shape, indices);
         EarlyExitTestPredicate consumer = new EarlyExitTestPredicate();
         assertFalse(filter.forEachBitMap(consumer));
-        assertEquals( 1, consumer.passes );
+        assertEquals(1, consumer.passes);
     }
 
     class EarlyExitTestPredicate implements LongPredicate {
@@ -116,5 +114,4 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
             return false;
         }
     }
-
 }
