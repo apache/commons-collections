@@ -44,6 +44,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     /**
      * The shape of the Bloom filters for testing.
+     * <ul>
+     *  <li>Hash functions (k) = 17
+     *  <li>Number of bits (m) = 72
+     * </ul>
      * @return the testing shape.
      */
     protected final Shape getTestShape() {
