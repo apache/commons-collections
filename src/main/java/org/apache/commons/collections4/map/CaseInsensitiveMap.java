@@ -142,6 +142,70 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
+     * Puts a key-value mapping into this map.
+     *
+     * @param key  the key to add
+     * @param value  the value to add
+     * @return the value previously mapped to this key, null if none
+     */
+    @Override
+    public V put(final K key, final V value) {
+        final Object convertedKey = convertKey(key);
+        final int hashCode = hash(convertedKey);
+        final int index = hashIndex(hashCode, data.length);
+        HashEntry<K, V> entry = data[index];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(convertedKey, entry.key)) {
+                final V oldValue = entry.getValue();
+                updateEntry(entry, value);
+                return oldValue;
+            }
+            entry = entry.next;
+        }
+
+        addMappingWithoutKeyConversion(index, hashCode, convertedKey, value);
+        return null;
+    }
+
+    /**
+     * Adds a new key-value mapping into this map.
+     * <p>
+     * This implementation calls {@code createEntry()}, {@code addEntry()}
+     * and {@code checkCapacity()}.
+     * It also handles changes to {@code modCount} and {@code size}.
+     * Subclasses could override to fully control adds to the map.
+     *
+     * @param hashIndex  the index into the data array to store at
+     * @param hashCode  the hash code of the key to add
+     * @param key  the key to add
+     * @param value  the value to add
+     */
+    private void addMappingWithoutKeyConversion(final int hashIndex, final int hashCode, final Object key, final V value) {
+        modCount++;
+        final HashEntry<K, V> entry = createEntryWithoutKeyConversion(data[hashIndex], hashCode, key, value);
+        addEntry(entry, hashIndex);
+        size++;
+        checkCapacity();
+    }
+
+    /**
+     * Creates an entry to store the key-value data.
+     * <p>
+     * This implementation creates a new HashEntry instance.
+     * Subclasses can override this to return a different storage class,
+     * or implement caching.
+     *
+     * @param next  the next entry in sequence
+     * @param hashCode  the hash code to use
+     * @param key  the key to store
+     * @param value  the value to store
+     * @return the newly created entry
+     */
+    private HashEntry<K, V> createEntryWithoutKeyConversion(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
+        return new HashEntry<>(next, hashCode, key, value);
+    }
+
+    /**
      * Clones the map without cloning the keys or values.
      *
      * @return a shallow clone
