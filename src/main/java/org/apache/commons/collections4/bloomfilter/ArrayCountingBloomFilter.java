@@ -104,6 +104,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public ArrayCountingBloomFilter copy() {
         ArrayCountingBloomFilter result = new ArrayCountingBloomFilter(shape);
         System.arraycopy(counts, 0, result.counts, 0, shape.getNumberOfBits());
+        result.state = this.state;
         return result;
     }
 
@@ -117,21 +118,10 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
         return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
     }
 
-    /**
-     * Clones the filter.  Used to create merged values.
-     * @return A clone of this filter.
-     */
-    protected ArrayCountingBloomFilter makeClone() {
-        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        filter.add(this);
-        filter.state = this.state;
-        return filter;
-    }
-
     @Override
     public CountingBloomFilter merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        CountingBloomFilter filter = makeClone();
+        CountingBloomFilter filter = copy();
         filter.add(BitCountProducer.from(other));
         return filter;
     }
@@ -139,7 +129,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public CountingBloomFilter merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        ArrayCountingBloomFilter filter = makeClone();
+        ArrayCountingBloomFilter filter = copy();
         filter.add(BitCountProducer.from(hasher.indices(shape)));
         return filter;
     }
