@@ -150,6 +150,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     }
 
     // COLLECTIONS-803
+    @SuppressWarnings("unchecked")
     public void testPutConvertKeyOnlyOnce() {
         CaseInsensitiveMap mock = EasyMock.partialMockBuilder(CaseInsensitiveMap.class)
                 .withConstructor(Map.class)
