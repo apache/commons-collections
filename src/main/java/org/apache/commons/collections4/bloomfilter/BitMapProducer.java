@@ -32,8 +32,8 @@ import java.util.function.LongPredicate;
  * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
  * index is enabled.
  * </p><p><em>
- * The default implementation of the {@code makePredicate()} method is slow and should be reimplemented in the
- * implementing classes.</em></p>
+ * The default implementations of the {@code makePredicate()} and {@code asBitMapArray} methods
+ * are slow and should be reimplemented in the implementing classes where possible.</em></p>
  *
  * @since 4.5
  */

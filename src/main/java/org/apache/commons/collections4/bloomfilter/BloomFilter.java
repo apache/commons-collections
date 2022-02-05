@@ -22,9 +22,10 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 /**
  * The interface that describes a Bloom filter.
  * <p>
- * <em>See implementation notes for BitMapProducer.</em>
+ * <em>See implementation notes for BitMapProducer and IndexProducer.</em>
  * </p>
  * @see BitMapProducer
+ * @see IndexProducer
  * @since 4.5
  */
 public interface BloomFilter extends IndexProducer, BitMapProducer {
