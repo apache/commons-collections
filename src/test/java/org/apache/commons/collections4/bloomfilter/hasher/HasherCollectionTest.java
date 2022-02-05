@@ -17,60 +17,81 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
-import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link HasherCollection}.
  */
-public class HasherCollectionTest {
+public class HasherCollectionTest extends AbstractHasherTest {
 
-    private SimpleHasher hasher1 = new SimpleHasher(1, 1);
-    private SimpleHasher hasher2 = new SimpleHasher(2, 2);
+    @Override
+    protected HasherCollection createHasher() {
+        return new HasherCollection(new SimpleHasher(1, 1), new SimpleHasher(2, 2));
+    }
 
+    @Override
+    protected HasherCollection createEmptyHasher() {
+        return new HasherCollection();
+    }
+
+    @Override
     @Test
     public void testSize() {
-        HasherCollection hasher = new HasherCollection(hasher1, hasher2);
+        HasherCollection hasher = createHasher();
         assertEquals(2, hasher.size());
-        HasherCollection hasher3 = new HasherCollection(hasher, new SimpleHasher(3, 3));
-        assertEquals(3, hasher3.size());
+        assertEquals(2, hasher.getHashers().size());
+        hasher = createEmptyHasher();
+        assertEquals(0, createEmptyHasher().size());
+        assertEquals(0, createEmptyHasher().getHashers().size());
+    }
+
+    protected void nestedTest(HasherCollectionTest nestedTest) {
+        nestedTest.testAsIndexArray();
+        nestedTest.testForEachIndex();
+        nestedTest.testIsEmpty();
+        nestedTest.testSize();
+        nestedTest.testAdd();
     }
 
     @Test
-    public void testIsEmpty() {
-        HasherCollection hasher = new HasherCollection();
-        assertTrue(hasher.isEmpty());
-        hasher.add(hasher1);
-        assertFalse(hasher.isEmpty());
-    }
+    public void testCollectionConstructor() {
+        List<Hasher> lst = Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+        HasherCollectionTest nestedTest = new HasherCollectionTest() {
+            @Override
+            protected HasherCollection createHasher() {
+                return new HasherCollection(lst);
+            }
 
-    @Test
-    public void testIndices() {
-        // use Arrays.asList to test Collection constructor
-        HasherCollection hasher = new HasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
-        assertEquals(2, hasher.size());
-        Shape shape = Shape.fromKM(5, 10);
-        Integer[] expected = { 1, 2, 3, 4, 5, 2, 4, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i), String.format("error at position %d", i));
-        }
+            @Override
+            protected HasherCollection createEmptyHasher() {
+                return new HasherCollection();
+            }
+        };
+        nestedTest(nestedTest);
+
+        nestedTest = new HasherCollectionTest() {
+            @Override
+            protected HasherCollection createHasher() {
+                return new HasherCollection(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+            }
+
+            @Override
+            protected HasherCollection createEmptyHasher() {
+                return new HasherCollection();
+            }
+        };
+        nestedTest(nestedTest);
     }
 
     @Test
     public void testAdd() {
-        HasherCollection hasher = new HasherCollection();
-        hasher.add(Arrays.asList(hasher1, hasher2));
-        assertEquals(2, hasher.size());
+        HasherCollection hasher = createHasher();
+        hasher.add(new SimpleHasher(2, 2));
+        assertEquals(3, hasher.size());
+
+        hasher.add(Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2)));
+        assertEquals(5, hasher.size());
     }
 }

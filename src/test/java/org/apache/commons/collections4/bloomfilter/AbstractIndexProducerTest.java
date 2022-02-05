@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -53,26 +54,43 @@ public abstract class AbstractIndexProducerTest {
      */
     protected abstract IndexProducer createEmptyProducer();
 
-    /**
-     * Determines if empty tests should be run.  Some producers do not implement an empty
-     * version.  Tests for those classes should return false.
-     * @return
-     */
-    protected boolean supportsEmpty() {
-        return true;
-    }
+    // /**
+    // * Determines if empty tests should be run. Some producers do not implement an
+    // empty
+    // * version. Tests for those classes should return false.
+    // * @return
+    // */
+    // protected boolean supportsEmpty() {
+    // return true;
+    // }
 
     @Test
     public final void testForEachIndex() {
 
         assertFalse(createProducer().forEachIndex(FALSE_PREDICATE), "non-empty should be false");
-        if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachIndex(FALSE_PREDICATE), "empty should be true");
-        }
+
+        assertTrue(createEmptyProducer().forEachIndex(FALSE_PREDICATE), "empty should be true");
 
         assertTrue(createProducer().forEachIndex(TRUE_PREDICATE), "non-empty should be true");
-        if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachIndex(TRUE_PREDICATE), "empty should be true");
-        }
+        assertTrue(createEmptyProducer().forEachIndex(TRUE_PREDICATE), "empty should be true");
+    }
+
+    @Test
+    public final void testAsIndexArray() {
+        int ary[] = createEmptyProducer().asIndexArray();
+        assertEquals(0, ary.length);
+
+        IndexProducer producer = createProducer();
+        final int tary[] = producer.asIndexArray();
+        assertTrue(producer.forEachIndex(new IntPredicate() {
+            int idx = 0;
+
+            @Override
+            public boolean test(int value) {
+                assertEquals(tary[idx], value, "Error at position " + idx);
+                idx++;
+                return true;
+            }
+        }));
     }
 }

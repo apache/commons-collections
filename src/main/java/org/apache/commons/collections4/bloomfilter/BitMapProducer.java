@@ -18,10 +18,8 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**
@@ -33,9 +31,10 @@ import java.util.function.LongPredicate;
  * number of bits in the filter and {@code ceil} is the ceiling function.
  * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
  * index is enabled.
- * </p><p>
- * The default implementation of the {@code apply()} method is very slow and should be reimplemented in the
- * implementing classes.
+ * </p><p><em>
+ * The default implementation of the {@code makePredicate()} method is slow and should be reimplemented in the
+ * implementing classes.</em></p>
+ *
  * @since 4.5
  */
 @FunctionalInterface
@@ -73,24 +72,24 @@ public interface BitMapProducer {
      * <li>Any changes made to the {@code func} arguments will not survive outside of the {@code func} call.</li>
      * </ul>
      * </p><p>
-     * The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
-     * of BitMapProducer that have local arrays reimplement this method.</p>
+     * <em>The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
+     * of BitMapProducer that have local arrays reimplement this method.</em></p>
      *
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      * @see #asBitMapArray()
      */
-    default LongPredicate makePredicate( LongBiFunction func ) {
+    default LongPredicate makePredicate(LongBiFunction func) {
         long[] ary = asBitMapArray();
 
         return new LongPredicate() {
-            int idx=0;
+            int idx = 0;
 
             @Override
-            public boolean test( long other ) {
-                return func.test( idx>ary.length?0l:ary[idx++], other );
+            public boolean test(long other) {
+                return func.test(idx > ary.length ? 0L : ary[idx++], other);
             }
-       };
+        };
     }
 
     /**
@@ -103,9 +102,9 @@ public interface BitMapProducer {
      */
     default long[] asBitMapArray() {
         List<Long> lst = new ArrayList<>();
-        forEachBitMap( lst::add );
-        long[] result = new long[ lst.size() ];
-        for (int i=0;i<lst.size();i++) {
+        forEachBitMap(lst::add);
+        long[] result = new long[lst.size()];
+        for (int i = 0; i < lst.size(); i++) {
             result[i] = lst.get(i);
         }
         return result;
@@ -130,20 +129,20 @@ public interface BitMapProducer {
 
             @Override
             public long[] asBitMapArray() {
-                return Arrays.copyOf( bitMaps, bitMaps.length);
+                return Arrays.copyOf(bitMaps, bitMaps.length);
             }
 
             @Override
-            public LongPredicate makePredicate( LongBiFunction func ) {
+            public LongPredicate makePredicate(LongBiFunction func) {
 
                 return new LongPredicate() {
-                    int idx=0;
+                    int idx = 0;
 
                     @Override
-                    public boolean test( long other ) {
-                        return func.test( idx>=bitMaps.length?0l:bitMaps[idx++], other );
+                    public boolean test(long other) {
+                        return func.test(idx >= bitMaps.length ? 0L : bitMaps[idx++], other);
                     }
-               };
+                };
             }
         };
     }
@@ -159,7 +158,10 @@ public interface BitMapProducer {
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
         long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
-        producer.forEachIndex( i -> {BitMap.set(result, i);return true;});
-        return fromLongArray( result );
+        producer.forEachIndex(i -> {
+            BitMap.set(result, i);
+            return true;
+        });
+        return fromLongArray(result);
     }
 }

@@ -163,7 +163,7 @@ public class SetOperationsTest {
         assertEquals(1 - (intersection / union), SetOperations.jaccardDistance(filter1, filter2));
         assertEquals(1 - (intersection / union), SetOperations.jaccardDistance(filter2, filter1));
 
-// test no values
+        // test no values
         filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
         BloomFilter filter3 = new SimpleBloomFilter(shape, from1);

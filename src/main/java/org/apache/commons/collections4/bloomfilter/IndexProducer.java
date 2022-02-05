@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -95,5 +97,27 @@ public interface IndexProducer {
                 return producer.forEachBitMap(longPredicate::test);
             }
         };
+    }
+
+    /**
+     * Return a copy of the IndexProducer data as an int array.
+     * <p>
+     * The default implementation of this method is slow.  It is recommended
+     * that implementing classes reimplement this method.
+     * </p>
+     * @return An int array of the data.
+     */
+    default int[] asIndexArray() {
+        List<Integer> lst = new ArrayList<>();
+        forEachIndex(i -> {
+            lst.add(i);
+            return true;
+        });
+
+        int[] result = new int[lst.size()];
+        for (int i = 0; i < lst.size(); i++) {
+            result[i] = lst.get(i);
+        }
+        return result;
     }
 }
