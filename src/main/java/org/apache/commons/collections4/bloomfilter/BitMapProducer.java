@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -30,9 +34,8 @@ import java.util.function.LongPredicate;
  * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
  * index is enabled.
  * </p><p>
- * The producer may stop at the last non zero bit map or may produce zero value bit maps to the limit determined by
- * a shape.
- * </p>
+ * The default implementation of the {@code apply()} method is very slow and should be reimplemented in the
+ * implementing classes.
  * @since 4.5
  */
 @FunctionalInterface
@@ -52,13 +55,69 @@ public interface BitMapProducer {
     boolean forEachBitMap(LongPredicate predicate);
 
     /**
+     * Applies the {@code func} to each bit map pair in order.
+     * <p>
+     * Creates a LongPredicate that is used in apply {@code func} to this BitMapProducer
+     * and another.  For example:
+     * <pre>
+     * BitMapProducer a = ....;
+     * BitMapProducer b = ....;
+     * LongPredicate predicate = a.apply( (x,y) -> x==y );
+     * boolean result = b.apply( predicate );
+     * </pre>
+     * The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
+     * </p><p>
+     * Notes:
+     * <ul>
+     * <li>The resulting LongPredicate should only be used once.</li>
+     * <li>Any changes made to the {@code func} arguments will not survive outside of the {@code func} call.</li>
+     * </ul>
+     * </p><p>
+     * The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
+     * of BitMapProducer that have local arrays reimplement this method.</p>
+     *
+     * @param func The function to apply.
+     * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
+     * @see #asBitMapArray()
+     */
+    default LongPredicate makePredicate( LongBiFunction func ) {
+        long[] ary = asBitMapArray();
+
+        return new LongPredicate() {
+            int idx=0;
+
+            @Override
+            public boolean test( long other ) {
+                return func.test( idx>ary.length?0l:ary[idx++], other );
+            }
+       };
+    }
+
+    /**
+     * Return a copy of the BitMapProducer data as a bit map array.
+     * <p>
+     * The default implementation of this method is slow.  It is recommended
+     * that implementing classes reimplement this method.
+     * </p>
+     * @return An array of bit map data.
+     */
+    default long[] asBitMapArray() {
+        List<Long> lst = new ArrayList<>();
+        forEachBitMap( lst::add );
+        long[] result = new long[ lst.size() ];
+        for (int i=0;i<lst.size();i++) {
+            result[i] = lst.get(i);
+        }
+        return result;
+    }
+
+    /**
      * Creates a BitMapProducer from an array of Long.
      * @param bitMaps the bit maps to return.
      * @return a BitMapProducer.
      */
     static BitMapProducer fromLongArray(long... bitMaps) {
         return new BitMapProducer() {
-
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
                 for (long word : bitMaps) {
@@ -67,6 +126,24 @@ public interface BitMapProducer {
                     }
                 }
                 return true;
+            }
+
+            @Override
+            public long[] asBitMapArray() {
+                return Arrays.copyOf( bitMaps, bitMaps.length);
+            }
+
+            @Override
+            public LongPredicate makePredicate( LongBiFunction func ) {
+
+                return new LongPredicate() {
+                    int idx=0;
+
+                    @Override
+                    public boolean test( long other ) {
+                        return func.test( idx>=bitMaps.length?0l:bitMaps[idx++], other );
+                    }
+               };
             }
         };
     }
@@ -81,36 +158,8 @@ public interface BitMapProducer {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
-        return new BitMapProducer() {
-            private int maxBucket = -1;
-            private long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
-
-            @Override
-            public boolean forEachBitMap(LongPredicate predicate) {
-                Objects.requireNonNull(predicate, "predicate");
-                /*
-                 * we can not assume that all the ints will be in order and not repeated. This
-                 * is because the HasherCollection does not make the guarantee.
-                 */
-                // process all the ints into a array of bit maps
-                IntPredicate builder = new IntPredicate() {
-                    @Override
-                    public boolean test(int i) {
-                        int bucketIdx = BitMap.getLongIndex(i);
-                        maxBucket = maxBucket < bucketIdx ? bucketIdx : maxBucket;
-                        result[bucketIdx] |= BitMap.getLongBit(i);
-                        return true;
-                    }
-                };
-                producer.forEachIndex(builder);
-                // send the bit maps to the consumer.
-                for (int bucket = 0; bucket <= maxBucket; bucket++) {
-                    if (!predicate.test(result[bucket])) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        };
+        long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
+        producer.forEachIndex( i -> {BitMap.set(result, i);return true;});
+        return fromLongArray( result );
     }
 }

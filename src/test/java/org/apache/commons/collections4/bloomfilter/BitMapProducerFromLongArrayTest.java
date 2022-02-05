@@ -34,7 +34,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
 
     @Override
     protected BitMapProducer createEmptyProducer() {
-        long[] ary = new long[0];
+        long[] ary = new long[] {0,0,0,0,0};
         return BitMapProducer.fromLongArray(ary);
     }
 

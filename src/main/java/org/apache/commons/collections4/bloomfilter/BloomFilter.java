@@ -28,17 +28,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
-     * Return the Bloom filter data as a bit map array.
-     * @param filter the filter to get the data from.
-     * @return An array of bit map data.
-     */
-    static long[] asBitMapArray(BloomFilter filter) {
-        ArrayBuilder builder = new ArrayBuilder(filter.getShape());
-        filter.forEachBitMap(builder);
-        return builder.getArray();
-    }
-
-    /**
      * Return the Bloom filter data as an array of indices for the enabled bits.
      * @param filter the Filter to get the data from.
      * @return An array of indices for enabled bits in the Bloom filter.
@@ -135,7 +124,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param bitMapProducer the the {@code BitMapProducer} to provide the bit maps.
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
-    boolean contains(BitMapProducer bitMapProducer);
+    default boolean contains(BitMapProducer bitMapProducer) {
+        return bitMapProducer.forEachBitMap( this.makePredicate( (x,y)-> (x & y) == y ));
+    }
 
     // update operations
 
