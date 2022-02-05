@@ -66,7 +66,6 @@ public abstract class AbstractIndexProducerTest {
 
         assertTrue(populated.forEachIndex(TRUE_PREDICATE), "non-empty should be true");
         assertTrue(empty.forEachIndex(TRUE_PREDICATE), "empty should be true");
-
     }
 
     @Test

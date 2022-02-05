@@ -79,7 +79,6 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
             }
         };
         executeNestedTest(nestedTest);
-
     }
 
     @Test

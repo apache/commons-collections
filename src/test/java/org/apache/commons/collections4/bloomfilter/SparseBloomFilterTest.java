@@ -76,7 +76,5 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
             }
         };
         executeNestedTest(nestedTest);
-
     }
-
 }
