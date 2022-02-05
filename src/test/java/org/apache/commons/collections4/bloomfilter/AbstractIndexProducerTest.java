@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -54,25 +55,18 @@ public abstract class AbstractIndexProducerTest {
      */
     protected abstract IndexProducer createEmptyProducer();
 
-    // /**
-    // * Determines if empty tests should be run. Some producers do not implement an
-    // empty
-    // * version. Tests for those classes should return false.
-    // * @return
-    // */
-    // protected boolean supportsEmpty() {
-    // return true;
-    // }
-
     @Test
     public final void testForEachIndex() {
 
-        assertFalse(createProducer().forEachIndex(FALSE_PREDICATE), "non-empty should be false");
+        IndexProducer populated = createProducer();
+        IndexProducer empty = createEmptyProducer();
+        assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
 
-        assertTrue(createEmptyProducer().forEachIndex(FALSE_PREDICATE), "empty should be true");
+        assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
 
-        assertTrue(createProducer().forEachIndex(TRUE_PREDICATE), "non-empty should be true");
-        assertTrue(createEmptyProducer().forEachIndex(TRUE_PREDICATE), "empty should be true");
+        assertTrue(populated.forEachIndex(TRUE_PREDICATE), "non-empty should be true");
+        assertTrue(empty.forEachIndex(TRUE_PREDICATE), "empty should be true");
+
     }
 
     @Test

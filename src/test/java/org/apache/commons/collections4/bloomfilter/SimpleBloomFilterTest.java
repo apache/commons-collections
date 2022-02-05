@@ -16,13 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
@@ -41,18 +36,50 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
         return new SimpleBloomFilter(shape, hasher);
     }
 
+    private void executeNestedTest(SimpleBloomFilterTest nestedTest) {
+        nestedTest.testAsBitMapArray();
+        nestedTest.testContains();
+        nestedTest.testEstimateIntersection();
+        nestedTest.testEstimateN();
+        nestedTest.testEstimateUnion();
+        nestedTest.testIsFull();
+        nestedTest.testMerge();
+        nestedTest.testMergeInPlace();
+    }
+
     @Test
-    public void constructorTest() {
+    public void testConstructors() {
 
-        SimpleBloomFilter filter = new SimpleBloomFilter(getTestShape(),
-                BitMapProducer.fromLongArray(new long[] { 500L }));
-        List<Long> lst = new ArrayList<>();
-        filter.forEachBitMap(lst::add);
-        assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), lst.size());
-        assertEquals(500L, lst.get(0).intValue());
+        // copy of Sparse
+        SimpleBloomFilterTest nestedTest = new SimpleBloomFilterTest() {
 
-        assertThrows(IllegalArgumentException.class, () -> new SimpleBloomFilter(getTestShape(),
-                BitMapProducer.fromLongArray(new long[] { 500L, 400L, 300L })));
+            @Override
+            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
+                return new SimpleBloomFilter(new SparseBloomFilter(shape));
+            }
+
+            @Override
+            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
+                return new SimpleBloomFilter(new SparseBloomFilter(shape, hasher));
+            }
+        };
+        executeNestedTest(nestedTest);
+
+        // copy of Simple
+        nestedTest = new SimpleBloomFilterTest() {
+
+            @Override
+            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
+                return new SimpleBloomFilter(new SimpleBloomFilter(shape));
+            }
+
+            @Override
+            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
+                return new SimpleBloomFilter(new SimpleBloomFilter(shape, hasher));
+            }
+        };
+        executeNestedTest(nestedTest);
+
     }
 
     @Test

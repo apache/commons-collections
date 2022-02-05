@@ -18,27 +18,26 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.IntPredicate;
-
 import org.junit.jupiter.api.Test;
 
-public class BitCountProducerTest {
+public class BitCountProducerFromIndexProducerTest extends AbstractBitCountProducerTest {
+
+    @Override
+    protected BitCountProducer createProducer() {
+        return BitCountProducer.from(IndexProducer.fromIntArray(new int[] { 0, 1, 63, 64, 127, 128 }));
+    }
+
+    @Override
+    protected BitCountProducer createEmptyProducer() {
+        return BitCountProducer.from(IndexProducer.fromIntArray(new int[0]));
+    }
 
     @Test
     public final void testFromIndexProducer() {
-        IndexProducer iProducer = new IndexProducer() {
 
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                return consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
-                        && consumer.test(127) && consumer.test(128);
-            }
-        };
-        BitCountProducer producer = BitCountProducer.from(iProducer);
+        BitCountProducer producer = createProducer();
         Map<Integer, Integer> m = new HashMap<>();
 
         producer.forEachCount((i, v) -> {
@@ -53,22 +52,5 @@ public class BitCountProducerTest {
         assertEquals(Integer.valueOf(1), m.get(64));
         assertEquals(Integer.valueOf(1), m.get(127));
         assertEquals(Integer.valueOf(1), m.get(128));
-    }
-
-    @Test
-    public final void testForEachIndex() {
-        BitCountProducer producer = new BitCountProducer() {
-
-            @Override
-            public boolean forEachCount(BitCountConsumer consumer) {
-                return consumer.test(1, 11) && consumer.test(3, 13);
-            }
-        };
-
-        List<Integer> lst = new ArrayList<>();
-        producer.forEachIndex(lst::add);
-        assertEquals(2, lst.size());
-        assertEquals(Integer.valueOf(1), lst.get(0));
-        assertEquals(Integer.valueOf(3), lst.get(1));
     }
 }

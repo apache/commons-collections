@@ -16,15 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.LongPredicate;
-
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
 
@@ -42,76 +33,50 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         return new SparseBloomFilter(shape, hasher);
     }
 
-    @Test
-    public void testSparseBloomFilterSpecificConstructor() {
-        Shape shape = Shape.fromKM(1, 5);
-        List<Integer> lst = new ArrayList<>();
-
-        // test no values
-
-        new SparseBloomFilter(shape, lst);
-        // test index out of range
-
-        lst.add(5);
-        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
-
-        lst.clear();
-        lst.add(-1);
-        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, lst));
-    }
-
-    private void assertConstructor(Shape shape, int[] values, int[] expected) {
-        IndexProducer indices = IndexProducer.fromIntArray(values);
-        SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
-        List<Integer> lst = new ArrayList<>();
-        filter.forEachIndex(x -> {
-            lst.add(x);
-            return true;
-        });
-        assertEquals(expected.length, lst.size());
-        for (int value : expected) {
-            assertTrue(lst.contains(Integer.valueOf(value)), "Missing " + value);
-        }
-    }
-
-    private void assertFailedConstructor(Shape shape, int[] values) {
-        IndexProducer indices = IndexProducer.fromIntArray(values);
-        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, indices));
+    private void executeNestedTest(SparseBloomFilterTest nestedTest) {
+        nestedTest.testContains();
+        nestedTest.testEstimateIntersection();
+        nestedTest.testEstimateN();
+        nestedTest.testEstimateUnion();
+        nestedTest.testForEachBitMapEarlyExit();
+        nestedTest.testIsFull();
+        nestedTest.testMerge();
+        nestedTest.testMergeInPlace();
     }
 
     @Test
-    public void producer_constructor() {
-        Shape shape = Shape.fromKM(5, 10);
+    public void testConstructors() {
 
-        assertConstructor(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
-        // test duplicate values
-        assertConstructor(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
-        // test negative values
-        assertFailedConstructor(shape, new int[] { 0, 2, 4, -2, 8 });
-        // test index too large
-        assertFailedConstructor(shape, new int[] { 0, 2, 4, 12, 8 });
-        // test no indicies
-        assertConstructor(shape, new int[0], new int[0]);
+        // copy of Sparse
+        SparseBloomFilterTest nestedTest = new SparseBloomFilterTest() {
+
+            @Override
+            protected SparseBloomFilter createEmptyFilter(Shape shape) {
+                return new SparseBloomFilter(new SparseBloomFilter(shape));
+            }
+
+            @Override
+            protected SparseBloomFilter createFilter(Shape shape, Hasher hasher) {
+                return new SparseBloomFilter(new SparseBloomFilter(shape, hasher));
+            }
+        };
+        executeNestedTest(nestedTest);
+
+        // copy of Simple
+        nestedTest = new SparseBloomFilterTest() {
+
+            @Override
+            protected SparseBloomFilter createEmptyFilter(Shape shape) {
+                return new SparseBloomFilter(new SimpleBloomFilter(shape));
+            }
+
+            @Override
+            protected SparseBloomFilter createFilter(Shape shape, Hasher hasher) {
+                return new SparseBloomFilter(new SimpleBloomFilter(shape, hasher));
+            }
+        };
+        executeNestedTest(nestedTest);
+
     }
 
-    @Test
-    public void testForEachBitMapEarlyExit() {
-
-        Shape shape = Shape.fromKM(5, 100);
-        IndexProducer indices = IndexProducer.fromIntArray(new int[] { 66, 67 });
-        BloomFilter filter = new SparseBloomFilter(shape, indices);
-        EarlyExitTestPredicate consumer = new EarlyExitTestPredicate();
-        assertFalse(filter.forEachBitMap(consumer));
-        assertEquals(1, consumer.passes);
-    }
-
-    class EarlyExitTestPredicate implements LongPredicate {
-        int passes = 0;
-
-        @Override
-        public boolean test(long arg0) {
-            passes++;
-            return false;
-        }
-    }
 }

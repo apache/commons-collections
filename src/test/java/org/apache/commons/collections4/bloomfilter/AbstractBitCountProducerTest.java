@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractBitCountProducerTest {
+public abstract class AbstractBitCountProducerTest extends AbstractIndexProducerTest {
 
     /**
      * A testing BitCountConsumer that always returns false.
@@ -50,12 +50,14 @@ public abstract class AbstractBitCountProducerTest {
      * Creates a producer with some data.
      * @return a producer with some data
      */
+    @Override
     protected abstract BitCountProducer createProducer();
 
     /**
      * Creates an producer without data.
      * @return a producer that has no data.
      */
+    @Override
     protected abstract BitCountProducer createEmptyProducer();
 
     /**
