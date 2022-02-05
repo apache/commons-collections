@@ -18,7 +18,12 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.LongPredicate;
 
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.HasherCollection;
@@ -39,7 +44,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
             new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
             new SimpleHasher(67, 1)/* 67-83 */
-    );
+            );
     protected final long[] fullHashValue = { 0xFFFFFFFFFFFFFFFFL, 0xFFFFFL };
 
     /**
@@ -108,7 +113,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param filterFactory the factory function to create the filter
      */
     @Test
-    public final void testEestimateIntersection() {
+    public final void testEstimateIntersection() {
 
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
@@ -159,25 +164,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         filter1.mergeInPlace(new SimpleHasher(17, 1));
 
         assertEquals(3, filter1.estimateN());
-    }
-
-    /**
-     * Tests that creating an empty hasher works as expected.
-     */
-    @Test
-    public final void testConstructor() {
-        // test empty
-        final BloomFilter bf = createEmptyFilter(getTestShape());
-        final long[] lb = bf.asBitMapArray();
-        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
-
-        // test hasher
-        Hasher hasher = new SimpleHasher(0, 1);
-
-        final BloomFilter bf2 = createFilter(getTestShape(), hasher);
-        final long[] lb2 = bf2.asBitMapArray();
-        assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb2.length);
-        assertEquals(0x1FFFF, lb2[0]);
     }
 
     /**
@@ -275,4 +261,60 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
     }
+
+    private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
+        List<Integer> lst = new ArrayList<>();
+        filter.forEachIndex(x -> {
+            lst.add(x);
+            return true;
+        });
+        assertEquals(expected.length, lst.size());
+        for (int value : expected) {
+            assertTrue(lst.contains(Integer.valueOf(value)), "Missing " + value);
+        }
+    }
+
+    private void assertFailedIndexProducerConstructor(Shape shape, int[] values) {
+        IndexProducer indices = IndexProducer.fromIntArray(values);
+        assertThrows(IllegalArgumentException.class, () -> new SparseBloomFilter(shape, indices));
+    }
+
+    @Test
+    public void testIndexProducerConstructor() {
+        Shape shape = Shape.fromKM(5, 10);
+
+        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
+        // test duplicate values
+        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
+        // test negative values
+        assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, -2, 8 });
+        // test index too large
+        assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, 12, 8 });
+        // test no indicies
+        assertIndexProducerConstructor(shape, new int[0], new int[0]);
+    }
+
+    @Test
+    public void testForEachBitMapEarlyExit() {
+
+        Shape shape = Shape.fromKM(5, 100);
+        IndexProducer indices = IndexProducer.fromIntArray(new int[] { 66, 67 });
+        BloomFilter filter = new SparseBloomFilter(shape, indices);
+        EarlyExitTestPredicate consumer = new EarlyExitTestPredicate();
+        assertFalse(filter.forEachBitMap(consumer));
+        assertEquals(1, consumer.passes);
+    }
+
+    class EarlyExitTestPredicate implements LongPredicate {
+        int passes = 0;
+
+        @Override
+        public boolean test(long arg0) {
+            passes++;
+            return false;
+        }
+    }
+
 }

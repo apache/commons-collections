@@ -54,8 +54,24 @@ public class SimpleBloomFilter implements BloomFilter {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
         this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        ;
         this.cardinality = 0;
+    }
+
+    /**
+     * Creates an instance that is equivalent to {@code other}.
+     *
+     * @param other The bloom filter to copy.
+     */
+    public SimpleBloomFilter(BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        this.shape = other.getShape();
+        this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        this.cardinality = 0;
+        if (other.isSparse()) {
+            mergeInPlace((IndexProducer) other);
+        } else {
+            mergeInPlace((BitMapProducer) other);
+        }
     }
 
     /**
@@ -72,28 +88,25 @@ public class SimpleBloomFilter implements BloomFilter {
     /**
      * Creates a populated instance.
      * @param shape The shape for the filter.
+     * @param producer the IndexProducer to initialize the filter with.
+     * @throws IllegalArgumentException if the producer returns too many bit maps.
+     */
+    public SimpleBloomFilter(final Shape shape, IndexProducer producer) {
+        this(shape);
+        Objects.requireNonNull(producer, "producer");
+        mergeInPlace(producer);
+    }
+
+    /**
+     * Creates a populated instance.
+     * @param shape The shape for the filter.
      * @param producer the BitMapProducer to initialize the filter with.
      * @throws IllegalArgumentException if the producer returns too many bit maps.
      */
     public SimpleBloomFilter(final Shape shape, BitMapProducer producer) {
         this(shape);
         Objects.requireNonNull(producer, "producer");
-
-        try {
-            producer.forEachBitMap(new LongPredicate() {
-                int i = 0;
-
-                @Override
-                public boolean test(long value) {
-                    bitMap[i++] = value;
-                    return true;
-                }
-            });
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
-                    BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
-        }
-        this.cardinality = -1;
+        mergeInPlace(producer);
     }
 
     @Override
@@ -121,18 +134,62 @@ public class SimpleBloomFilter implements BloomFilter {
         return result;
     }
 
-    private void mergeInPlace(IndexProducer indexProducer) {
-        indexProducer.forEachIndex(idx -> {
-            BitMap.set(bitMap, idx);
+    /**
+     * Recalculates the cardinality.
+     */
+    private void recalcCardinality() {
+        this.cardinality = 0;
+        forEachBitMap(w -> {
+            this.cardinality += Long.bitCount(w);
             return true;
         });
+    }
+
+    /**
+     * Performs a merge in place using an IndexProducer.
+     * @param indexProducer the IndexProducer to merge from.
+     * @throws IllegalArgumentException if producer sends illegal value.
+     */
+    private void mergeInPlace(IndexProducer indexProducer) {
+        try {
+            indexProducer.forEachIndex(idx -> {
+                BitMap.set(bitMap, idx);
+                return true;
+            });
+            recalcCardinality();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(String.format("IndexProducer should only send values in the range[0,%s]",
+                    shape.getNumberOfBits() - 1), e);
+        }
+    }
+
+    /**
+     * Performs a merge in place using an BitMapProducer.
+     * @param bitMapProducer the BitMapProducer to merge from.
+     * @throws IllegalArgumentException if producer sends illegal value.
+     */
+    private void mergeInPlace(BitMapProducer bitMapProducer) {
+        try {
+            bitMapProducer.forEachBitMap(new LongPredicate() {
+                int idx = 0;
+
+                @Override
+                public boolean test(long value) {
+                    bitMap[idx++] |= value;
+                    return true;
+                }
+            });
+            recalcCardinality();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
+                    BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
+        }
     }
 
     @Override
     public boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         mergeInPlace(hasher.indices(shape));
-        this.cardinality = -1;
         return true;
     }
 
@@ -142,17 +199,8 @@ public class SimpleBloomFilter implements BloomFilter {
         if (other.isSparse()) {
             mergeInPlace((IndexProducer) other);
         } else {
-            other.forEachBitMap(new LongPredicate() {
-                int idx = 0;
-
-                @Override
-                public boolean test(long value) {
-                    bitMap[idx++] |= value;
-                    return true;
-                }
-            });
+            mergeInPlace((BitMapProducer) other);
         }
-        this.cardinality = -1;
         return true;
     }
 
@@ -168,16 +216,7 @@ public class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public int cardinality() {
-        if (this.cardinality == -1) {
-            synchronized (this) {
-                this.cardinality = 0;
-                forEachBitMap(w -> {
-                    this.cardinality += Long.bitCount(w);
-                    return true;
-                });
-            }
-        }
-        return this.cardinality;
+        return cardinality;
     }
 
     @Override

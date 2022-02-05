@@ -177,7 +177,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
                 ? new SparseBloomFilter(shape, hasher)
-                : new SimpleBloomFilter(shape, hasher);
+                        : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
 
