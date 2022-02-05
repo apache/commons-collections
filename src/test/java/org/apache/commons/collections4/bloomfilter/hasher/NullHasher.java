@@ -41,7 +41,7 @@ public final class NullHasher implements Hasher {
         }
     };
 
-    public NullHasher() {
+    private NullHasher() {
     }
 
     @Override

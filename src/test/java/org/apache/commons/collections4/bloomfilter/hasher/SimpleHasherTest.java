@@ -37,7 +37,7 @@ public class SimpleHasherTest extends AbstractHasherTest {
 
     @Override
     protected Hasher createEmptyHasher() {
-        return new NullHasher();
+        return NullHasher.INSTANCE;
     }
 
     private void assertConstructorBuffer(Shape shape, byte[] buffer, Integer[] expected) {

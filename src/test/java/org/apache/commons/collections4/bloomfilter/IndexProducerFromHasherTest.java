@@ -28,6 +28,6 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return new NullHasher().indices(Shape.fromKM(17, 72));
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
 }
