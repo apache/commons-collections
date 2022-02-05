@@ -17,109 +17,79 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
-import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link SingleItemHasherCollection}.
  */
-public class SingleItemHasherCollectionTest {
+public class SingleItemHasherCollectionTest extends HasherCollectionTest {
 
     private SimpleHasher hasher1 = new SimpleHasher(1, 1);
     private SimpleHasher hasher2 = new SimpleHasher(2, 2);
 
+    @Override
+    protected SingleItemHasherCollection createHasher() {
+        return new SingleItemHasherCollection(hasher1, hasher2);
+    }
+
+    @Override
+    protected SingleItemHasherCollection createEmptyHasher() {
+        return new SingleItemHasherCollection();
+    }
+
+    @Override
     @Test
-    public void sizeTest() {
-        SingleItemHasherCollection hasher = new SingleItemHasherCollection();
-        assertEquals(0, hasher.size());
-        hasher.add(new Hasher() {
-
-            @Override
-            public IndexProducer indices(Shape shape) {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-        });
-        assertEquals(0, hasher.size());
-        hasher.add(hasher1);
-        hasher.add(hasher2);
+    public void testSize() {
+        HasherCollection hasher = createHasher();
         assertEquals(1, hasher.size());
-        HasherCollection hasher3 = new SingleItemHasherCollection(hasher, new SimpleHasher(3, 3));
-        assertEquals(1, hasher3.size());
+        assertEquals(2, hasher.getHashers().size());
+        hasher = createEmptyHasher();
+        assertEquals(0, createEmptyHasher().size());
+        assertEquals(0, createEmptyHasher().getHashers().size());
     }
 
-    @Test
-    public void testIsEmpty() {
-        SingleItemHasherCollection hasher = new SingleItemHasherCollection();
-        assertTrue(hasher.isEmpty());
-        hasher.add(new Hasher() {
-
-            @Override
-            public IndexProducer indices(Shape shape) {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-        });
-        assertTrue(hasher.isEmpty());
-        hasher.add(hasher1);
-        assertFalse(hasher.isEmpty());
-    }
-
-    @Test
-    public void testIndices() {
-        HasherCollection hasher = new SingleItemHasherCollection(hasher1, hasher2);
-        Shape shape = Shape.fromKM(5, 10);
-        Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-    }
-
-    @Test
-    public void testConstructor() {
-        HasherCollection hasher = new SingleItemHasherCollection(Arrays.asList(new Hasher[] { hasher1, hasher2 }));
-        Shape shape = Shape.fromKM(5, 10);
-        Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
-    }
-
+    @Override
     @Test
     public void testAdd() {
-        HasherCollection hasher = new SingleItemHasherCollection();
-        hasher.add(Arrays.asList(hasher1, hasher2));
+        SingleItemHasherCollection hasher = createHasher();
+        hasher.add(new SimpleHasher(2, 2));
         assertEquals(1, hasher.size());
-        Integer[] expected = { 1, 2, 3, 4, 5, 6, 8, 0 };
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(Shape.fromKM(5, 10));
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
+        assertEquals(3, hasher.getHashers().size());
+        hasher.add(Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2)));
+        assertEquals(1, hasher.size());
+        assertEquals(5, hasher.getHashers().size());
+    }
+
+    @Override
+    @Test
+    public void testCollectionConstructor() {
+        List<Hasher> lst = Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+        SingleItemHasherCollectionTest nestedTest = new SingleItemHasherCollectionTest() {
+            @Override
+            protected SingleItemHasherCollection createHasher() {
+                return new SingleItemHasherCollection(lst);
+            }
+
+            @Override
+            protected SingleItemHasherCollection createEmptyHasher() {
+                return new SingleItemHasherCollection();
+            }
+        };
+        nestedTest(nestedTest);
+
+        nestedTest = new SingleItemHasherCollectionTest() {
+            @Override
+            protected SingleItemHasherCollection createHasher() {
+                return new SingleItemHasherCollection(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+            }
+
+            @Override
+            protected SingleItemHasherCollection createEmptyHasher() {
+                return new SingleItemHasherCollection();
+            }
+        };
+        nestedTest(nestedTest);
     }
 }

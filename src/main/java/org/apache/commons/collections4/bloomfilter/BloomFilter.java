@@ -17,35 +17,17 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.IntPredicate;
-
 import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
  * The interface that describes a Bloom filter.
+ * <p>
+ * <em>See implementation notes for BitMapProducer.</em>
+ * </p>
+ * @see BitMapProducer
  * @since 4.5
  */
 public interface BloomFilter extends IndexProducer, BitMapProducer {
-
-    /**
-     * Return the Bloom filter data as an array of indices for the enabled bits.
-     * @param filter the Filter to get the data from.
-     * @return An array of indices for enabled bits in the Bloom filter.
-     */
-    static int[] asIndexArray(BloomFilter filter) {
-        int[] result = new int[filter.cardinality()];
-
-        filter.forEachIndex(new IntPredicate() {
-            int i = 0;
-
-            @Override
-            public boolean test(int idx) {
-                result[i++] = idx;
-                return true;
-            }
-        });
-        return result;
-    }
 
     /**
      * Creates a new instance of the BloomFilter with the same properties as the current one.
@@ -125,7 +107,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(BitMapProducer bitMapProducer) {
-        return bitMapProducer.forEachBitMap( this.makePredicate( (x,y)-> (x & y) == y ));
+        return bitMapProducer.forEachBitMap(this.makePredicate((x, y) -> (x & y) == y));
     }
 
     // update operations

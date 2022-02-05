@@ -16,15 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import org.apache.commons.collections4.bloomfilter.hasher.NullHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
-
-    @Override
-    protected boolean supportsEmpty() {
-        return false;
-    }
 
     @Override
     protected IndexProducer createProducer() {
@@ -33,6 +28,6 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        throw new NotImplementedException("createEmptyProducer() should not be executed");
+        return new NullHasher().indices(Shape.fromKM(17, 72));
     }
 }

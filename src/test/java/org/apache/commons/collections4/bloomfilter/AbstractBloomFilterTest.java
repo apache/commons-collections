@@ -71,16 +71,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      */
     protected abstract T createFilter(Shape shape, Hasher hasher);
 
-    @Test
-    public final void testAsIndexArray() {
-        final BloomFilter bf = createFilter(getTestShape(), from1);
-        int[] ary = BloomFilter.asIndexArray(bf);
-        assertEquals(17, ary.length);
-        for (int i = 0; i < ary.length; i++) {
-            assertEquals(i + 1, ary[i], "Error at position " + i);
-        }
-    }
-
     /**
      * Tests that the andCardinality calculations are correct.
      *
@@ -264,14 +254,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         long[] bf1Val = bf1.asBitMapArray();
         long[] bf2Val = bf2.asBitMapArray();
-        for (int i=0;i<bf1Val.length;i++) {
+        for (int i = 0; i < bf1Val.length; i++) {
             bf1Val[i] |= bf2Val[i];
         }
         bf1.mergeInPlace(bf2);
 
         long[] bf1New = bf1.asBitMapArray();
-        for (int i=0;i<bf1Val.length;i++) {
-            assertEquals( bf1Val[i], bf1New[i], "Bad value at "+i );
+        for (int i = 0; i < bf1Val.length; i++) {
+            assertEquals(bf1Val[i], bf1New[i], "Bad value at " + i);
         }
 
         assertTrue(bf1.contains(bf2), "Should contain bf2");

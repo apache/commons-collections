@@ -112,10 +112,14 @@ public final class SimpleHasher implements Hasher {
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     int value = (int) Long.remainderUnsigned(next, shape.getNumberOfBits());
                     if (!filtered.test(value)) {
+                        // reset next
+                        next = SimpleHasher.this.initial;
                         return false;
                     }
                     next += SimpleHasher.this.increment;
                 }
+                // reset next
+                next = SimpleHasher.this.initial;
                 return true;
             }
         };

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -55,17 +54,17 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public long[] asBitMapArray() {
-        long[] result = new long[ BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
         LongPredicate filler = new LongPredicate() {
-            int idx= 0;
+            int idx = 0;
 
             @Override
             public boolean test(long value) {
-                result[idx++]=value;
+                result[idx++] = value;
                 return true;
             }
         };
-        forEachBitMap( filler );
+        forEachBitMap(filler);
         return result;
     }
 
@@ -186,7 +185,7 @@ public class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        int limit = BitMap.numberOfBitMaps( shape.getNumberOfBits() )-1;
+        int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits()) - 1;
         // because our indices are always in order we can
         // shorten the time necessary to create the longs for the
         // consumer
@@ -205,9 +204,9 @@ public class SparseBloomFilter implements BloomFilter {
         if (!consumer.test(bitMap)) {
             return false;
         }
-        idx+=2;
+        idx += 2;
         while (idx < limit) {
-            if (!consumer.test(0l)) {
+            if (!consumer.test(0L)) {
                 return false;
             }
             idx++;

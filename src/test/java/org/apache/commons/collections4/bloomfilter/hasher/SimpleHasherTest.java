@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -29,31 +28,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the {@link SimpleHasher}.
  */
-public class SimpleHasherTest {
+public class SimpleHasherTest extends AbstractHasherTest {
 
-    private SimpleHasher hasher = new SimpleHasher(1, 1);
-
-    @Test
-    public void testSize() {
-        assertEquals(1, hasher.size());
+    @Override
+    protected Hasher createHasher() {
+        return new SimpleHasher(1, 1);
     }
 
-    @Test
-    public void testIsEmpty() {
-        assertFalse(hasher.isEmpty());
-    }
-
-    @Test
-    public void testIterator() {
-        Shape shape = Shape.fromKM(5, 10);
-        Integer[] expected = { 1, 2, 3, 4, 5 };
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
+    @Override
+    protected Hasher createEmptyHasher() {
+        return new NullHasher();
     }
 
     private void assertConstructorBuffer(Shape shape, byte[] buffer, Integer[] expected) {
@@ -79,7 +63,6 @@ public class SimpleHasherTest {
                 new Integer[] { 1, 2, 3, 4, 5 });
         assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
                 new Integer[] { 1, 2, 3, 4, 5 });
-        ;
         assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
                 new Integer[] { 1, 2, 3, 4, 5 });
 

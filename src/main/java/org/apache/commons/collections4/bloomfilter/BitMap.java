@@ -36,7 +36,7 @@ public class BitMap {
      * Calculates the number of bit maps (longs) required for the numberOfBits parameter.
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
-
+     *
      * @param numberOfBits the number of bits to store in the array of bit maps.
      * @return the number of bit maps necessary.
      */
