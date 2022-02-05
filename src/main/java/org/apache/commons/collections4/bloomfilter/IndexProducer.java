@@ -24,6 +24,9 @@ import java.util.function.LongPredicate;
 
 /**
  * An object that produces indices of a Bloom filter.
+ * <p><em>
+ * The default implementation of {@code asIndexArray} is slow.  Implementers should reimplement the
+ * method where possible.</em></p>
  *
  * @since 4.5
  */
@@ -101,10 +104,10 @@ public interface IndexProducer {
 
     /**
      * Return a copy of the IndexProducer data as an int array.
-     * <p>
+     * <p><em>
      * The default implementation of this method is slow.  It is recommended
      * that implementing classes reimplement this method.
-     * </p>
+     * </em></p>
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
