@@ -67,9 +67,7 @@ public final class SetOperations {
          * @param op1 The operation to execute when there is only one bit map to compare.
          */
         CardCounter(BitMapProducer producer, Shape shape, LongBinaryOperator op2, LongUnaryOperator op1) {
-            ArrayBuilder builder = new ArrayBuilder(shape);
-            producer.forEachBitMap(builder);
-            this.bitMaps = builder.getArray();
+            this.bitMaps = producer.asBitMapArray();
             this.op2 = op2;
             this.op1 = op1;
         }

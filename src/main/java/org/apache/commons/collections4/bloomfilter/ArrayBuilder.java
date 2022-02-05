@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.LongPredicate;
 
@@ -24,52 +26,29 @@ import java.util.function.LongPredicate;
  * A LongConsumer that builds an Array of bit maps as produced by a BitMapProducer.
  *
  */
-public class ArrayBuilder implements LongPredicate {
-    private long[] result;
-    private int idx = 0;
-    private int bucketCount = 0;
-
-    /**
-     * Constructor that creates an empty ArrayBuilder.
-     * @param shape The shape used to generate the bit maps.
-     */
-    public ArrayBuilder(Shape shape) {
-        this(shape, null);
-    }
-
-    /**
-     * Constructor that creates an array builder with an initial value.
-     * @param shape The shape used to generate the bit maps.
-     * @param initialValue an array of bit map values to initialize the builder with.  May be {@code null}.
-     * @throws IllegalArgumentException is the length of initialValue is greater than the number of
-     * bit maps as specified by the number of bits in the Shape.
-     */
-    public ArrayBuilder(Shape shape, long[] initialValue) {
-        Objects.requireNonNull(shape, "shape");
-        result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        if (initialValue != null) {
-            if (initialValue.length > result.length) {
-                throw new IllegalArgumentException(
-                        String.format("initialValue length (%s) is longer than shape length (%s)", initialValue.length,
-                                result.length));
-            }
-            bucketCount = initialValue.length;
-            System.arraycopy(initialValue, 0, result, 0, initialValue.length);
-        }
-    }
-
-    @Override
-    public boolean test(long bitMap) {
-        result[idx++] |= bitMap;
-        bucketCount = bucketCount >= idx ? bucketCount : idx;
-        return true;
-    }
-
-    /**
-     * Returns the array.
-     * @return the Array of bit maps.
-     */
-    public long[] getArray() {
-        return Arrays.copyOf(result, bucketCount);
-    }
-}
+//class ArrayBuilder implements LongPredicate {
+//    private List<Long> result;
+//
+//    /**
+//     * Constructor that creates an empty ArrayBuilder.
+//     * @param shape The shape used to generate the bit maps.
+//     */
+//    public ArrayBuilder() {
+//        result = new ArrayList<>();
+//    }
+//
+//    @Override
+//    public boolean test(long bitMap) {
+//        result = bitMap;
+//        bitMapCount = bitMapCount >= idx ? bitMapCount : idx;
+//        return true;
+//    }
+//
+//    /**
+//     * Returns the array.
+//     * @return the Array of bit maps.
+//     */
+//    public long[] getArray() {
+//        return Arrays.copyOf(result, bitMapCount);
+//    }
+//}

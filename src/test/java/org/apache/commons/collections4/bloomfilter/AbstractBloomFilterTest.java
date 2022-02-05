@@ -178,14 +178,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public final void testConstructor() {
         // test empty
         final BloomFilter bf = createEmptyFilter(getTestShape());
-        final long[] lb = BloomFilter.asBitMapArray(bf);
+        final long[] lb = bf.asBitMapArray();
         assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb.length);
 
         // test hasher
         Hasher hasher = new SimpleHasher(0, 1);
 
         final BloomFilter bf2 = createFilter(getTestShape(), hasher);
-        final long[] lb2 = BloomFilter.asBitMapArray(bf2);
+        final long[] lb2 = bf2.asBitMapArray();
         assertTrue(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()) >= lb2.length);
         assertEquals(0x1FFFF, lb2[0]);
     }
@@ -199,7 +199,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test when multiple long values are returned.
         final SimpleHasher hasher = new SimpleHasher(63, 1);
         final BloomFilter bf = createFilter(Shape.fromKM(2, 72), hasher);
-        final long[] lb = BloomFilter.asBitMapArray(bf);
+        final long[] lb = bf.asBitMapArray();
         assertEquals(2, lb.length);
         assertEquals(0x8000000000000000L, lb[0]);
         assertEquals(0x1, lb[1]);
@@ -262,7 +262,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // test with BloomFilter
 
+        long[] bf1Val = bf1.asBitMapArray();
+        long[] bf2Val = bf2.asBitMapArray();
+        for (int i=0;i<bf1Val.length;i++) {
+            bf1Val[i] |= bf2Val[i];
+        }
         bf1.mergeInPlace(bf2);
+
+        long[] bf1New = bf1.asBitMapArray();
+        for (int i=0;i<bf1Val.length;i++) {
+            assertEquals( bf1Val[i], bf1New[i], "Bad value at "+i );
+        }
 
         assertTrue(bf1.contains(bf2), "Should contain bf2");
         assertTrue(bf1.contains(bf3), "Should contain bf3");

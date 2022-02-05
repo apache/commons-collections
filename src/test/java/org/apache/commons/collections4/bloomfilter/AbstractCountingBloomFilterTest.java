@@ -83,8 +83,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         final CountingBloomFilter bf = createFilter(getTestShape(), from1);
         bf.add(BitCountProducer.from(from11.indices(getTestShape())));
 
-        final long[] lb = BloomFilter.asBitMapArray(bf);
-        assertEquals(1, lb.length);
+        final long[] lb = bf.asBitMapArray();
+        assertEquals(2, lb.length);
         assertEquals(bigHashValue, lb[0]);
 
         assertCounts(bf, bigHashCounts);

@@ -16,9 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Arrays;
 import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
@@ -62,8 +65,34 @@ public abstract class AbstractBitMapProducerTest {
     @Test
     public final void testForEachBitMap() {
         assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
-        assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true");
+        assertFalse(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be false");
         assertTrue(createProducer().forEachBitMap(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
+    }
+
+    @Test
+    public final void testAsBitMapArray() {
+        long[] array = createEmptyProducer().asBitMapArray();
+        for( int i = 0;i<array.length; i++) {
+            assertEquals( 0, array[i], "Wrong value at "+i);
+        }
+
+        array = createProducer().asBitMapArray();
+        assertFalse( array.length == 0 );
+    }
+
+    @Test
+    public final void testMakePredicate() {
+        LongPredicate predicate = createEmptyProducer().makePredicate( (x,y) -> x==y);
+        assertTrue( createEmptyProducer().forEachBitMap( predicate ), "empty == empty failed");
+
+        predicate = createEmptyProducer().makePredicate( (x,y) -> x==y);
+        assertFalse( createProducer().forEachBitMap(predicate), "empty == not_empty failed");
+
+        predicate = createProducer().makePredicate( (x,y) -> x==y);
+        assertFalse( createEmptyProducer().forEachBitMap( predicate ), "not_empty == empty failed");
+
+        predicate = createProducer().makePredicate( (x,y) -> x==y);
+        assertTrue( createProducer().forEachBitMap(predicate), "not_empty == not_empty failed");
     }
 }
