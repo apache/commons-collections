@@ -316,5 +316,4 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             return false;
         }
     }
-
 }

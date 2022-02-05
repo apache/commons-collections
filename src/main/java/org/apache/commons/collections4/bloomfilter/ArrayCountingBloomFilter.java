@@ -261,4 +261,9 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public boolean contains(BitMapProducer bitMapProducer) {
         return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
+
+    @Override
+    public int[] asIndexArray() {
+        return IntStream.range(0, counts.length).filter(i -> counts[i] > 0).toArray();
+    }
 }
