@@ -21,6 +21,7 @@ import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
 
 /**
  * A Hasher that implements combinatorial hashing as as described by
@@ -108,10 +109,10 @@ public final class SimpleHasher implements Hasher {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                FilteredIntPredicate filtered = new FilteredIntPredicate(shape.getNumberOfBits(), consumer);
+                Filter filter = new Filter(shape, consumer);
+
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-                    int value = (int) Long.remainderUnsigned(next, shape.getNumberOfBits());
-                    if (!filtered.test(value)) {
+                    if (!filter.test((int) Long.remainderUnsigned(next, shape.getNumberOfBits()))) {
                         // reset next
                         next = SimpleHasher.this.initial;
                         return false;

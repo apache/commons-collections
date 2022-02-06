@@ -14,33 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter.hasher.filter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher.Filter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link Hasher.Filter}.
+ * Tests the Filter class.
  */
-public class HasherFilterTest {
+public class BitMapTrackerTest {
 
     @Test
-    public void testBasicFiltering() {
-        Hasher.Filter filter = Filter.of(10);
+    public void testSeen() {
+        Shape shape = Shape.fromKM(3, 12);
+        IndexTracker tracker = new BitMapTracker(shape);
 
-        for (int i = 0; i < 10; i++) {
-            assertTrue(filter.test(i));
-        }
+        assertFalse( tracker.seen(0) );
+        assertTrue( tracker.seen(0) );
+        assertFalse( tracker.seen(1) );
+        assertTrue( tracker.seen(1) );
+        assertFalse( tracker.seen(2) );
+        assertTrue( tracker.seen(2) );
 
-        for (int i = 0; i < 10; i++) {
-            assertFalse(filter.test(i));
-        }
+        assertFalse( tracker.seen(4) );
+        assertTrue( tracker.seen(4) );
 
-        assertThrows(IndexOutOfBoundsException.class, () -> filter.test(10));
-        assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
     }
 }

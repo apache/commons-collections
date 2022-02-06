@@ -14,20 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
+package org.apache.commons.collections4.bloomfilter.hasher.filter;
+
+import org.apache.commons.collections4.bloomfilter.BitMap;
+import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
- * A bi function that accepts long values.
+ * An IndexTracker implementation that uses an array of bit maps to track whether or not a
+ * number has been seen.
  * @since 4.5
  */
-@FunctionalInterface
-public interface LongBiFunction {
+public class BitMapTracker implements IndexTracker {
+    private long[] bits;
 
     /**
-     * A function that takes to long arguments and returns a boolean.
-     * @param x the first long argument.
-     * @param y the second long argument.
-     * @return true or false.
+     * Constructs a bit map based tracker for the specified shape.
+     * @param shape The shape that is being generated.
      */
-    boolean test(long x, long y);
+    public BitMapTracker(Shape shape) {
+        bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+    }
+
+    @Override
+    public boolean seen(int number) {
+        boolean retval = BitMap.contains(bits, number);
+        BitMap.set(bits, number);
+        return retval;
+    }
 }

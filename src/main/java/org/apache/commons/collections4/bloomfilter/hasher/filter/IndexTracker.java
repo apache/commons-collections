@@ -14,20 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
+package org.apache.commons.collections4.bloomfilter.hasher.filter;
 
 /**
- * A bi function that accepts long values.
+ * A functional interface that defines the seen function for the Hasher Filter.
  * @since 4.5
  */
 @FunctionalInterface
-public interface LongBiFunction {
-
+interface IndexTracker {
     /**
-     * A function that takes to long arguments and returns a boolean.
-     * @param x the first long argument.
-     * @param y the second long argument.
-     * @return true or false.
+     * Returns {@code true} if the number has been seen before, {@code false} otherwise.
+     * @param number the number to check
+     * @return {@code true} if the number has been seen before, {@code false} otherwise.
      */
-    boolean test(long x, long y);
+    boolean seen(int number);
 }

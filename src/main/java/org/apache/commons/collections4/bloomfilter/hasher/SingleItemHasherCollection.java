@@ -22,6 +22,7 @@ import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
 
 /**
  * A collection of Hashers that are combined to be a single item.  This differs from
@@ -77,8 +78,11 @@ public class SingleItemHasherCollection extends HasherCollection {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                FilteredIntPredicate filtered = new FilteredIntPredicate(shape.getNumberOfBits() - 1, consumer);
-                return baseProducer.forEachIndex(filtered);
+                int size = getHashers().size() == 0 ? 1 : getHashers().size();
+                Shape filterShape = Shape.fromKM(shape.getNumberOfHashFunctions() * size,
+                        shape.getNumberOfBits() * size);
+                Filter filter = new Filter(filterShape, consumer);
+                return baseProducer.forEachIndex(filter);
             }
         };
     }

@@ -64,7 +64,7 @@ limitations under the License.
       <property name="caseIndent" value="0"/>
     </module>
     <!--  start of custom modules -->
-<!--       <module name="JavadocStyle"/> -->
+      <module name="JavadocStyle"/>
 <!--       <module name="EmptyLineSeparator"> -->
 <!--         <property name="tokens" value="IMPORT, STATIC_IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF, STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF, RECORD_DEF, COMPACT_CTOR_DEF" /> -->
 <!--       	<property name="allowMultipleEmptyLines" value="false"/> -->
@@ -74,11 +74,11 @@ limitations under the License.
     <!-- end of custom modules -->
  </module>
  <!--  start of custom modules -->
-<!--  matches blank line before closing brace  -->
-<!--    <module name="RegexpMultiline"> -->
-<!-- 	  <property name="format" value="\s+$\s*\}"/> -->
-<!-- 	  <property name="message" value="Extra blank line" /> -->
-<!-- 	</module> -->
+ matches blank line before closing brace 
+   <module name="RegexpMultiline">
+	  <property name="format" value="\s+$\s*\}"/>
+	  <property name="message" value="Extra blank line" />
+	</module>
     <!-- end of custom modules -->
  
 </module>
