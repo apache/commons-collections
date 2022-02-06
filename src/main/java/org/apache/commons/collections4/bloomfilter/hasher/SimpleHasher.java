@@ -33,6 +33,12 @@ import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
  * @since 4.5
  */
 public final class SimpleHasher implements Hasher {
+    /**
+     * A default increment used when the requested increment is zero. This is the same
+     * default increment used in Java's SplittableRandom random number generator.  It is the
+     * fractional representation of the golden ratio (0.618...) with a base of 2^64.
+     */
+    public static final long DEFAULT_INCREMENT = 0x9e3779b97f4a7c15L;
 
     /**
      * The initial hash value.
@@ -66,6 +72,7 @@ public final class SimpleHasher implements Hasher {
      * <p>The byte array is split in 2 and each half is interpreted as a long value.
      * Excess bytes are ignored.  This simplifies the conversion from a Digest or hasher algorithm output
      * to the two values used by the SimpleHasher.</p>
+     * <p><em>If the second long is zero the DEFAULT_INCREMENT is used instead.</em></p>
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
      */
@@ -75,17 +82,19 @@ public final class SimpleHasher implements Hasher {
         }
         int segment = buffer.length / 2;
         this.initial = toLong(buffer, 0, segment);
-        this.increment = toLong(buffer, segment, buffer.length - segment);
+        long possibleIncrement = toLong(buffer, segment, buffer.length - segment);
+        this.increment = possibleIncrement == 0 ? DEFAULT_INCREMENT : possibleIncrement;
     }
 
     /**
      * Constructs the SimpleHasher from 2 longs.  The long values will be interpreted as unsigned values.
+     * <p><em>If the increment is zero the DEFAULT_INCREMENT is used instead.</em></p>
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
     public SimpleHasher(long initial, long increment) {
         this.initial = initial;
-        this.increment = increment;
+        this.increment = increment == 0 ? DEFAULT_INCREMENT : increment;
     }
 
     /**
