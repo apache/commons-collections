@@ -14,20 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
 
 /**
- * A bi function that accepts long values.
+ * Hasher Filter implementations and tools.
+ * <p>
+ * The classes and interfaces found in this package are intended to filter duplicates
+ * values from the {@code hasher.indices} methods.  Developers of hashers are expected to use
+ * the {@code Filter} implementation to perform the filtering.
  * @since 4.5
  */
-@FunctionalInterface
-public interface LongBiFunction {
-
-    /**
-     * A function that takes to long arguments and returns a boolean.
-     * @param x the first long argument.
-     * @param y the second long argument.
-     * @return true or false.
-     */
-    boolean test(long x, long y);
-}
+package org.apache.commons.collections4.bloomfilter.hasher.filter;

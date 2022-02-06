@@ -17,10 +17,6 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
-
-import java.util.function.IntPredicate;
-
-import org.apache.commons.collections4.bloomfilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 
 /**
@@ -62,91 +58,5 @@ public interface Hasher {
      */
     default boolean isEmpty() {
         return size() == 0;
-    }
-
-    /**
-     * A convenience class for Hasher implementations to filter out duplicate indices.
-     *
-     * <p><em>If the index is negative the behavior is not defined.</em></p>
-     *
-     * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
-     * @since 4.5
-     */
-    final class Filter implements IntPredicate {
-        private long[] bits;
-        private int size;
-
-        /**
-         * Creates an instance for the specified size.
-         * @param size The number of numbers to track. Values from 0 to size-1 will be tracked.
-         * @return
-         */
-        public static Filter of(int size) {
-            return new Filter(size);
-        }
-
-        /**
-         * Constructor.
-         *
-         * @param size The number of numbers to track. Values from 0 to size-1 will be tracked.
-         */
-        private Filter(int size) {
-            bits = new long[BitMap.numberOfBitMaps(size)];
-            this.size = size;
-        }
-
-        /**
-         * Test if the number has not been seen.
-         *
-         * <p>The first time a number is tested the method returns {@code true} and returns
-         * {@code false} for every time after that.</p>
-         *
-         * <p><em>If the input is not in the range [0,size) an IndexOutOfBoundsException exception is thrown.</em></p>
-         *
-         * @param number the number to check.
-         * @return {@code true} if the number has not been seen, {@code false} otherwise.
-         * @see Hasher.Filter#Filter(int)
-         */
-        @Override
-        public boolean test(int number) {
-            if (number < 0) {
-                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
-            }
-            if (number >= size) {
-                throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
-            }
-            boolean retval = !BitMap.contains(bits, number);
-            BitMap.set(bits, number);
-            return retval;
-        }
-    }
-
-    /**
-     * Wrapper for IntPredicate to ensure that the predicate only sees unique values.
-     * All duplicate values are filtered out.
-     *
-     * <p><em>If the index is negative the behavior is not defined.</em></p>
-     *
-     * @since 4.5
-     */
-    class FilteredIntPredicate implements IntPredicate {
-        private Hasher.Filter filter;
-        private IntPredicate consumer;
-
-        /**
-         * Constructs an instance wrapping the specified IntPredicate.
-         * <p>integers outside the range [0,size) will throw an IndexOutOfBoundsException.</p>
-         * @param size The number of integers to track. Values in the range [0,size) will be tracked.
-         * @param consumer to wrap.
-         */
-        public FilteredIntPredicate(int size, IntPredicate consumer) {
-            this.filter = new Hasher.Filter(size);
-            this.consumer = consumer;
-        }
-
-        @Override
-        public boolean test(int value) {
-            return filter.test(value) ? consumer.test(value) : true;
-        }
     }
 }
