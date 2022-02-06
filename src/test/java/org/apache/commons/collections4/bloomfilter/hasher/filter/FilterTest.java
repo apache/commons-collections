@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter.hasher.filter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections4.bloomfilter.BitMap;
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
@@ -41,26 +39,29 @@ public class FilterTest {
         Set<Integer> tracker = new HashSet<Integer>();
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        Filter filter = new Filter( shape, consumer::add, (i)->{return !tracker.add(i);} );
+        Filter filter = new Filter(shape, consumer::add, (i) -> {
+            return !tracker.add(i);
+        });
 
-        for (int i=0;i<12;i++) {
-            assertTrue( filter.test( i ) );
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
         }
-        assertEquals( 12, tracker.size() );
-        assertEquals( 12, consumer.size() );
+        assertEquals(12, tracker.size());
+        assertEquals(12, consumer.size());
 
-        for (int i=0;i<12;i++) {
-            assertTrue( filter.test( i ) );
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
         }
-        assertEquals( 12, tracker.size() );
-        assertEquals( 12, consumer.size() );
+        assertEquals(12, tracker.size());
+        assertEquals(12, consumer.size());
 
         assertThrows(IndexOutOfBoundsException.class, () -> filter.test(12));
         assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
     }
 
     @Test
-    public void testConstructor() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+    public void testConstructor()
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
         Field tracker = Filter.class.getDeclaredField("tracker");
         tracker.setAccessible(true);
         List<Integer> consumer = new ArrayList<Integer>();
@@ -68,21 +69,20 @@ public class FilterTest {
         // test even split
         int k = 2;
         int m = Long.SIZE;
-        Shape shape = Shape.fromKM(k,m);
-        Filter filter = new Filter( shape, consumer::add );
-        assertTrue( tracker.get(filter) instanceof ArrayTracker);
+        Shape shape = Shape.fromKM(k, m);
+        Filter filter = new Filter(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
 
         // test k ints < longs for m
         k = 1;
-        shape = Shape.fromKM(k,m);
-        filter = new Filter( shape, consumer::add );
-        assertTrue( tracker.get(filter) instanceof ArrayTracker);
+        shape = Shape.fromKM(k, m);
+        filter = new Filter(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
 
         // test k ints > longs for m
         k = 3;
-        shape = Shape.fromKM(k,m);
-        filter = new Filter( shape, consumer::add );
-        assertTrue( tracker.get(filter) instanceof BitMapTracker);
-
+        shape = Shape.fromKM(k, m);
+        filter = new Filter(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
     }
 }
