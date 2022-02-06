@@ -16,15 +16,9 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher.filter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
@@ -39,12 +33,12 @@ public class ArrayTrackerTest {
         Shape shape = Shape.fromKM(3, 12);
         IndexTracker tracker = new ArrayTracker(shape);
 
-        assertFalse( tracker.seen(0) );
-        assertTrue( tracker.seen(0) );
-        assertFalse( tracker.seen(1) );
-        assertTrue( tracker.seen(1) );
-        assertFalse( tracker.seen(2) );
-        assertTrue( tracker.seen(2) );
+        assertFalse(tracker.seen(0));
+        assertTrue(tracker.seen(0));
+        assertFalse(tracker.seen(1));
+        assertTrue(tracker.seen(1));
+        assertFalse(tracker.seen(2));
+        assertTrue(tracker.seen(2));
 
         assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(3));
         assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(-1));

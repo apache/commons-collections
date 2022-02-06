@@ -52,7 +52,7 @@ public final class Filter implements IntPredicate {
     }
 
     /**
-     * Creates an instance of Filter with the specified IndexTracker
+     * Creates an instance of Filter with the specified IndexTracker.
      *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values
