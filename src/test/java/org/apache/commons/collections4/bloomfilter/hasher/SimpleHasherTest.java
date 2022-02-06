@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
@@ -68,5 +70,26 @@ public class SimpleHasherTest extends AbstractHasherTest {
 
         // test empty buffer
         assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
+    }
+
+    @Test
+    public void testMod() {
+
+        long dividend;
+        int divisor;
+
+        dividend = 4133050040864586807L;
+        divisor = 1110442806;
+        assertEquals(SimpleHasher.mod(dividend, divisor), (int) Long.remainderUnsigned(dividend, divisor),
+                String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
+
+        Random r = new Random();
+        for (int i = 0; i < 10000; i++) {
+            dividend = r.nextLong();
+            divisor = Math.abs(r.nextInt());
+            assertEquals(SimpleHasher.mod(dividend, divisor), (int) Long.remainderUnsigned(dividend, divisor),
+                    String.format("failure with dividend=%s and divisor=%s.  Please correct and add to test cases",
+                            dividend, divisor));
+        }
     }
 }

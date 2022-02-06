@@ -41,6 +41,11 @@ public final class SimpleHasher implements Hasher {
     public static final long DEFAULT_INCREMENT = 0x9e3779b97f4a7c15L;
 
     /**
+     * This mask is used to obtain the value of an int as if it were unsigned.
+     */
+    private static final long LONG_MASK = 0xffffffffL;
+
+    /**
      * The initial hash value.
      */
     private final long initial;
@@ -98,6 +103,76 @@ public final class SimpleHasher implements Hasher {
     }
 
     /**
+     * This method divides a long < 0 as an unsigned long and returns the remainder.
+     *
+     * @param dividend the number to divide.
+     * @param divisor the divisor
+     * @return the remainder
+     */
+    private static int remainder(long dividend, int divisor) {
+        long longDivisor = divisor & LONG_MASK;
+        long remainder;
+        long quotient;
+        if (divisor == 1) {
+            return 0;
+        }
+
+        // Approximate the quotient and remainder
+        quotient = (dividend >>> 1) / (longDivisor >>> 1);
+        remainder = dividend - quotient * longDivisor;
+
+        // Correct the approximation
+        while (remainder < 0) {
+            remainder += longDivisor;
+            quotient--;
+        }
+        while (remainder >= longDivisor) {
+            remainder -= longDivisor;
+            quotient++;
+        }
+        return (int) remainder;
+    }
+
+    /**
+     * Calculates the modulus of an unsigned long value and an integer divisor.
+     * @param dividend the unsigned long value to divide.
+     * @param divisor the divisor
+     * @return the remainder.
+     */
+    static int mod(long dividend, int divisor) {
+        if (dividend >= 0) {
+            return (int) (dividend % divisor);
+        }
+
+        int highValue = (int) (((dividend & (LONG_MASK << Integer.SIZE)) >> Integer.SIZE) & LONG_MASK);
+        int lowValue = (int) (dividend & LONG_MASK);
+        // the truncated value of integer division
+        int trunk = 0;
+
+        long divisorLong = divisor & LONG_MASK;
+        // Normalize the divisor
+        int shift = Integer.numberOfLeadingZeros(divisor);
+        int rem = highValue;
+        long remLong = rem & LONG_MASK;
+        if (remLong >= divisorLong) {
+            trunk = (int) (remLong / divisorLong);
+            rem = (int) (remLong - (trunk * divisorLong));
+            remLong = rem & LONG_MASK;
+        }
+        long dividendEstimate = (remLong << 32) | (lowValue & LONG_MASK);
+        if (dividendEstimate >= 0) {
+            trunk = (int) (dividendEstimate / divisorLong);
+            rem = (int) (dividendEstimate - trunk * divisorLong);
+        } else {
+            rem = remainder(dividendEstimate, divisor);
+        }
+        remLong = rem & LONG_MASK;
+
+        // revert normalization of the divisor
+        return (shift > 0) ?  rem % divisor :  rem;
+    }
+
+    /**
      * Gets an IndexProducer that produces indices based on the shape.
      * The iterator will not return the same value multiple
      * times.  Values will be returned in ascending order.
@@ -121,7 +196,7 @@ public final class SimpleHasher implements Hasher {
                 Filter filter = new Filter(shape, consumer);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-                    if (!filter.test((int) Long.remainderUnsigned(next, shape.getNumberOfBits()))) {
+                    if (!filter.test(mod(next, shape.getNumberOfBits()))) {
                         // reset next
                         next = SimpleHasher.this.initial;
                         return false;
