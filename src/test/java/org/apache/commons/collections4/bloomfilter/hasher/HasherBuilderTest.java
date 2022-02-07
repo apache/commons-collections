@@ -16,82 +16,110 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher.Builder;
-import org.apache.commons.lang3.NotImplementedException;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests the
  * {@link org.apache.commons.collections4.bloomfilter.hasher.Hasher.Builder Hasher.Builder}.
  */
+@ExtendWith(MockitoExtension.class)
 public class HasherBuilderTest {
 
-    /**
-     * Simple class to collect byte[] items added to the builder.
-     */
-    private static class TestBuilder implements Hasher.Builder {
-        ArrayList<byte[]> items = new ArrayList<>();
+    private static final String ASCII_TEXT = "plain";
 
-        @Override
-        public Hasher build() {
-            throw new NotImplementedException("Not required");
-        }
+    @Mock
+    private Hasher.Builder builder;
 
-        @Override
-        public Builder with(final byte[] item) {
-            items.add(item);
-            return this;
-        }
-    }
+    @Captor
+    private ArgumentCaptor<byte[]> byteCaptor;
 
     /**
      * Tests that adding CharSequence items works correctly.
      */
-    @Test
-    public void withCharSequenceTest() {
-        final String ascii = "plain";
-        final String extended = getExtendedString();
-        for (final String s : new String[] {ascii, extended}) {
-            for (final Charset cs : new Charset[] {
-                StandardCharsets.ISO_8859_1, StandardCharsets.UTF_8, StandardCharsets.UTF_16
-            }) {
-                final TestBuilder builder = new TestBuilder();
-                builder.with(s, cs);
-                assertArrayEquals(s.getBytes(cs), builder.items.get(0));
-            }
-        }
+    @ParameterizedTest
+    @MethodSource("provideParamsForWithCharSequenceTest")
+    public void withCharSequenceTest(String s, Charset cs) {
+        when(builder.with(any())).thenReturn(builder);
+        when(builder.with(s, cs)).thenCallRealMethod();
+
+        builder.with(s, cs);
+
+        verify(builder, times(1)).with(any());
+        verify(builder).with(byteCaptor.capture());
+        assertArrayEquals(s.getBytes(cs), byteCaptor.getValue());
     }
 
     /**
      * Tests that adding unencoded CharSequence items works correctly.
      */
-    @Test
-    public void withUnencodedCharSequenceTest() {
-        final String ascii = "plain";
-        final String extended = getExtendedString();
-        for (final String s : new String[] {ascii, extended}) {
-            final TestBuilder builder = new TestBuilder();
-            builder.withUnencoded(s);
-            final byte[] encoded = builder.items.get(0);
-            final char[] original = s.toCharArray();
-            // Should be twice the length
-            assertEquals(original.length * 2, encoded.length);
-            // Should be little endian (lower bits first)
-            final CharBuffer buffer = ByteBuffer.wrap(encoded)
-                                                .order(ByteOrder.LITTLE_ENDIAN).asCharBuffer();
-            for (int i = 0; i < original.length; i++) {
-                assertEquals(original[i], buffer.get(i));
-            }
+    @ParameterizedTest
+    @MethodSource("provideParamsForWithUnencodedCharSequenceTest")
+    public void withUnencodedCharSequenceTest(String s) {
+        when(builder.with(any())).thenReturn(builder);
+        when(builder.withUnencoded(s)).thenCallRealMethod();
+
+        builder.withUnencoded(s);
+
+        verify(builder, times(1)).with(any());
+        verify(builder).with(byteCaptor.capture());
+
+        // Should be twice the length
+        final char[] original = s.toCharArray();
+        assertEquals(original.length * 2, byteCaptor.getValue().length);
+
+        // Should be little endian (lower bits first)
+        final CharBuffer buffer = ByteBuffer.wrap(byteCaptor.getValue())
+                .order(ByteOrder.LITTLE_ENDIAN).asCharBuffer();
+        for (int i = 0; i < original.length; i++) {
+            assertEquals(original[i], buffer.get(i));
         }
+    }
+
+    /**
+     * Gets a stream of arguments for test method: withCharSequenceTest.
+     *
+     * @return the stream of arguments
+     */
+    private static Stream<Arguments> provideParamsForWithCharSequenceTest() {
+        return Stream.of(
+            Arguments.of(ASCII_TEXT, StandardCharsets.ISO_8859_1),
+            Arguments.of(ASCII_TEXT, StandardCharsets.UTF_8),
+            Arguments.of(ASCII_TEXT, StandardCharsets.UTF_16),
+            Arguments.of(getExtendedString(), StandardCharsets.ISO_8859_1),
+            Arguments.of(getExtendedString(), StandardCharsets.UTF_8),
+            Arguments.of(getExtendedString(), StandardCharsets.UTF_16)
+        );
+    }
+
+    /**
+     * Gets a stream of arguments for test method: withUnencodedCharSequenceTest.
+     *
+     * @return the stream of arguments
+     */
+    private static Stream<Arguments> provideParamsForWithUnencodedCharSequenceTest() {
+        return Stream.of(
+            Arguments.of(ASCII_TEXT),
+            Arguments.of(getExtendedString())
+        );
     }
 
     /**
