@@ -17,9 +17,17 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * Tests the {@link SingleItemHasherCollection}.
@@ -31,7 +39,7 @@ public class SingleItemHasherCollectionTest extends HasherCollectionTest {
 
     @Override
     protected SingleItemHasherCollection createHasher() {
-        return new SingleItemHasherCollection(hasher1, hasher2);
+        return new SingleItemHasherCollection(hasher1,hasher2);
     }
 
     @Override
@@ -91,5 +99,35 @@ public class SingleItemHasherCollectionTest extends HasherCollectionTest {
             }
         };
         nestedTest(nestedTest);
+    }
+
+    @Override
+    public void testUniqueIndex() {
+        // create a hasher that produces duplicates with the specified shape.
+        // this setup produces 5, 17, 29, 41, 53, 65 two times
+        Shape shape = Shape.fromKM( 12, 72 );
+        Hasher hasher = new SimpleHasher( 5, 12 );
+        Set<Integer> set = new HashSet<>();
+        assertTrue( hasher.uniqueIndices( shape ).forEachIndex( set::add ), "Duplicate detected");
+        assertEquals( 6, set.size() );
+    }
+
+    @Override
+    @ParameterizedTest
+    @CsvSource({
+        "17, 72",
+        "3, 14",
+        "5, 67868",
+    })
+    public void testHashing(int k, int m) {
+        int[] count = {0};
+        HasherCollection hasher = createHasher();
+        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+            assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
+            count[0]++;
+            return true;
+        });
+        assertEquals(k * hasher.getHashers().size(), count[0],
+            () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
     }
 }

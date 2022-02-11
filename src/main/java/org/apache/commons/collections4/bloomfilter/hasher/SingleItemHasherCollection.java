@@ -59,18 +59,8 @@ public class SingleItemHasherCollection extends HasherCollection {
         super(hashers);
     }
 
-    /**
-     * Produces unique indices.
-     *
-     * <p>Specifically, this method create an IndexProducer that will not return duplicate indices.  The effect is
-     * to make the entire collection appear as one item.  This useful when working with complex Bloom filters like the
-     * CountingBloomFilter.</p>
-     *
-     * @param shape The shape of the desired Bloom filter.
-     * @return an IndexProducer that only produces unique values.
-     */
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexProducer uniqueIndices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         IndexProducer baseProducer = super.indices(shape);
 
@@ -78,9 +68,12 @@ public class SingleItemHasherCollection extends HasherCollection {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                int size = getHashers().size() == 0 ? 1 : getHashers().size();
-                Shape filterShape = Shape.fromKM(shape.getNumberOfHashFunctions() * size,
-                        shape.getNumberOfBits() * size);
+                int actualFuncCount = (getHashers().size() == 0 ? 1 : getHashers().size())
+                        * shape.getNumberOfHashFunctions();
+                if (actualFuncCount < 0 || actualFuncCount > shape.getNumberOfBits()) {
+                    actualFuncCount = shape.getNumberOfBits();
+                }
+                Shape filterShape = Shape.fromKM(actualFuncCount, shape.getNumberOfBits());
                 Filter filter = new Filter(filterShape, consumer);
                 return baseProducer.forEachIndex(filter);
             }

@@ -25,7 +25,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
 
 /**
  * A Hasher that implements combinatorial hashing as as described by
- * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch amd Mitzenmacher</a>.
+ * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a>.
  * <p>
  * Common use for this hasher is to generate a byte array as the output of a hashing
  * or MessageDigest algorithm.</p>
@@ -103,79 +103,20 @@ public final class SimpleHasher implements Hasher {
     }
 
     /**
-     * This method divides a long < 0 as an unsigned long and returns the remainder.
-     *
-     * @param dividend the number to divide.
-     * @param divisor the divisor
-     * @return the remainder
-     */
-    private static int remainder(long dividend, int divisor) {
-        long longDivisor = divisor & LONG_MASK;
-        long remainder;
-        long quotient;
-        if (divisor == 1) {
-            return 0;
-        }
-
-        // Approximate the quotient and remainder
-        quotient = (dividend >>> 1) / (longDivisor >>> 1);
-        remainder = dividend - quotient * longDivisor;
-
-        // Correct the approximation
-        while (remainder < 0) {
-            remainder += longDivisor;
-            quotient--;
-        }
-        while (remainder >= longDivisor) {
-            remainder -= longDivisor;
-            quotient++;
-        }
-        return (int) remainder;
-    }
-
-    /**
-     * Calculates the modulus of an unsigned long value and an integer divisor.
-     * @param dividend the unsigned long value to divide.
-     * @param divisor the divisor
-     * @return the remainder.
+     * Performs a modulus calculation and then ensures tha the result is positive.
+     * @param dividend a signed long value to calculate the modulus of.
+     * @param divisor the divisor for the modulus calculation.
+     * @return the remainder or modulus value.
      */
     static int mod(long dividend, int divisor) {
-        if (dividend >= 0) {
-            return (int) (dividend % divisor);
-        }
-
-        int highValue = (int) (((dividend & (LONG_MASK << Integer.SIZE)) >> Integer.SIZE) & LONG_MASK);
-        int lowValue = (int) (dividend & LONG_MASK);
-        // the truncated value of integer division
-        int trunk = 0;
-
-        long divisorLong = divisor & LONG_MASK;
-        // Normalize the divisor
-        int shift = Integer.numberOfLeadingZeros(divisor);
-        int rem = highValue;
-        long remLong = rem & LONG_MASK;
-        if (remLong >= divisorLong) {
-            trunk = (int) (remLong / divisorLong);
-            rem = (int) (remLong - (trunk * divisorLong));
-            remLong = rem & LONG_MASK;
-        }
-        long dividendEstimate = (remLong << 32) | (lowValue & LONG_MASK);
-        if (dividendEstimate >= 0) {
-            trunk = (int) (dividendEstimate / divisorLong);
-            rem = (int) (dividendEstimate - trunk * divisorLong);
-        } else {
-            rem = remainder(dividendEstimate, divisor);
-        }
-        remLong = rem & LONG_MASK;
-
-        // revert normalization of the divisor
-        return (shift > 0) ?  rem % divisor :  rem;
+        int result = (int) dividend % divisor;
+        return result < 0 ? result + divisor : result;
     }
 
     /**
      * Gets an IndexProducer that produces indices based on the shape.
      * The iterator will not return the same value multiple
-     * times.  Values will be returned in ascending order.
+     * times.
      *
      * @param shape {@inheritDoc}
      * @return {@inheritDoc}
@@ -187,24 +128,53 @@ public final class SimpleHasher implements Hasher {
 
         return new IndexProducer() {
 
-            /** The index of the next item. */
-            private long next = SimpleHasher.this.initial;
+            @Override
+            public boolean forEachIndex(IntPredicate consumer) {
+                Objects.requireNonNull(consumer, "consumer");
+                // Filter filter = new Filter(shape, consumer);
+
+                int bits = shape.getNumberOfBits();
+
+                // Set up for the modulus. Use a long index to avoid overflow.
+                long index = mod(initial, bits);
+                int inc = mod(increment, bits);
+
+                for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
+
+                    if (!consumer.test((int) index)) {
+                        return false;
+                    }
+                    index += inc;
+                    index = index >= bits ? index - bits : index;
+                }
+                return true;
+            }
+        };
+    }
+
+    @Override
+    public IndexProducer uniqueIndices(final Shape shape) {
+        return new IndexProducer() {
 
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 Filter filter = new Filter(shape, consumer);
 
+                int bits = shape.getNumberOfBits();
+
+                // Set up for the modulus. Use a long index to avoid overflow.
+                long index = mod(initial, bits);
+                int inc = mod(increment, bits);
+
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-                    if (!filter.test(mod(next, shape.getNumberOfBits()))) {
-                        // reset next
-                        next = SimpleHasher.this.initial;
+
+                    if (!filter.test((int) index)) {
                         return false;
                     }
-                    next += SimpleHasher.this.increment;
+                    index += inc;
+                    index = index >= bits ? index - bits : index;
                 }
-                // reset next
-                next = SimpleHasher.this.initial;
                 return true;
             }
         };

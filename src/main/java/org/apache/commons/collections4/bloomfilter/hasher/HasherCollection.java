@@ -103,6 +103,22 @@ public class HasherCollection implements Hasher {
         };
     }
 
+    @Override
+    public IndexProducer uniqueIndices(final Shape shape) {
+        Objects.requireNonNull(shape, "shape");
+        return new IndexProducer() {
+            @Override
+            public boolean forEachIndex(IntPredicate consumer) {
+                for (Hasher hasher : hashers) {
+                    if (!hasher.uniqueIndices(shape).forEachIndex(consumer)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
+    }
+
     /**
      * Allow child classes access to the hashers.
      * @return hashers

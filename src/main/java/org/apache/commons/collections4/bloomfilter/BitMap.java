@@ -47,15 +47,15 @@ public class BitMap {
     /**
      * Checks if the specified index bit is enabled in the array of bit maps.
      *
-     * If the bit specified by idx is not in the bit map false is returned.
+     * If the bit specified by bitIndex is not in the bit map false is returned.
      *
      * @param bitMaps  The array of bit maps.
-     * @param idx the index of the bit to locate.
+     * @param bitIndex the index of the bit to locate.
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
-     * @throws IndexOutOfBoundsException if idx specifies a bit not in the range being tracked.
+     * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
-    public static boolean contains(long[] bitMaps, int idx) {
-        return (bitMaps[getLongIndex(idx)] & getLongBit(idx)) != 0;
+    public static boolean contains(long[] bitMaps, int bitIndex) {
+        return (bitMaps[getLongIndex(bitIndex)] & getLongBit(bitIndex)) != 0;
     }
 
     /**
@@ -63,11 +63,11 @@ public class BitMap {
      * <p><em>Does not perform range checking</em></p>
      *
      * @param bitMaps  The array of bit maps.
-     * @param idx the index of the bit to set.
-     * @throws IndexOutOfBoundsException if idx specifies a bit not in the range being tracked.
+     * @param bitIndex the index of the bit to set.
+     * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
-    public static void set(long[] bitMaps, int idx) {
-        bitMaps[getLongIndex(idx)] |= getLongBit(idx);
+    public static void set(long[] bitMaps, int bitIndex) {
+        bitMaps[getLongIndex(bitIndex)] |= getLongBit(bitIndex);
     }
 
     /**

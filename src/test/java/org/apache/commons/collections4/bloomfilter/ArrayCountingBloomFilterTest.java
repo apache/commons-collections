@@ -31,7 +31,7 @@ public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTes
     @Override
     protected ArrayCountingBloomFilter createFilter(Shape shape, Hasher hasher) {
         ArrayCountingBloomFilter filter = createEmptyFilter(shape);
-        filter.add(BitCountProducer.from(hasher.indices(shape)));
+        filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
         return filter;
     }
 }

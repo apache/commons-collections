@@ -176,9 +176,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean mergeInPlace(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        BloomFilter result = shape.isSparse((hasher.size() * shape.getNumberOfHashFunctions()) + cardinality())
+        BloomFilter result = shape.isSparse(hasher.size() * shape.getNumberOfHashFunctions())
                 ? new SparseBloomFilter(shape, hasher)
-                        : new SimpleBloomFilter(shape, hasher);
+                : new SimpleBloomFilter(shape, hasher);
         return mergeInPlace(result);
     }
 

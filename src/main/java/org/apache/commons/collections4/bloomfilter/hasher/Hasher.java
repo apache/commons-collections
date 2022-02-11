@@ -39,12 +39,23 @@ public interface Hasher {
      * same Shape.</p>
      *
      * <p>No guarantee is made as to order of indices.</p>
-     * <p>Duplicates indices for a single item must be removed.</p>
+     * <p>Duplicates indices for a single item may be produced.</p>
      *
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
      */
-    IndexProducer indices(Shape shape);
+    IndexProducer indices(final Shape shape);
+
+    /**
+     * Creates an IndexProducer of unique indices for this hasher based on the Shape.
+     *
+     * <p>This is like the `indices(Shape)` method except that it add the guarantee that no
+     * duplicate values will be returned</p>
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the iterator of integers
+     */
+    IndexProducer uniqueIndices(final Shape shape);
 
     /**
      * Gets the number of items that will be hashed by the {@code IndexProducer}.
