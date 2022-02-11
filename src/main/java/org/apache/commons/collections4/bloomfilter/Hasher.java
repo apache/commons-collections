@@ -79,7 +79,7 @@ public interface Hasher {
      * @since 4.5
      */
     final class IndexFilter implements IntPredicate {
-        private final IndexTracker tracker;
+        private final IntPredicate tracker;
         private final int size;
         private final IntPredicate consumer;
 
@@ -113,9 +113,10 @@ public interface Hasher {
          *
          * @param shape The shape that is being generated.
          * @param consumer The consumer to accept the values
-         * @param tracker The index tracker to use.
+         * @param tracker An IntPredicate to filter out the duplicates.  Returns @{true} the first time
+         * a number is seen, {@code false } thereafter.
          */
-        IndexFilter(Shape shape, IntPredicate consumer, IndexTracker tracker) {
+        IndexFilter(Shape shape, IntPredicate consumer, IntPredicate tracker) {
             this.size = shape.getNumberOfBits();
             this.consumer = consumer;
             this.tracker = tracker;
@@ -141,21 +142,7 @@ public interface Hasher {
             if (number >= size) {
                 throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
             }
-            return tracker.seen(number) ? true : consumer.test(number);
-        }
-
-        /**
-         * A functional interface that defines the seen function for the Hasher Filter.
-         * @since 4.5
-         */
-        @FunctionalInterface
-        interface IndexTracker {
-            /**
-             * Returns {@code true} if the number has been seen before, {@code false} otherwise.
-             * @param number the number to check
-             * @return {@code true} if the number has been seen before, {@code false} otherwise.
-             */
-            boolean seen(int number);
+            return tracker.test(number) ? consumer.test(number) : true;
         }
 
         /**
@@ -163,28 +150,27 @@ public interface Hasher {
          * number has been seen.  Suitable for Shapes that have few hash functions.
          * @since 4.5
          */
-        static class ArrayTracker implements IndexTracker {
-            private int[] seenAry;
-            private int idx;
+        static class ArrayTracker implements IntPredicate {
+            private int[] seen;
+            private int populated;
 
             /**
              * Constructs the tracker based on the shape.
              * @param shape the shape to build the tracker for.
              */
             ArrayTracker(Shape shape) {
-                seenAry = new int[shape.getNumberOfHashFunctions()];
-                idx = 0;
+                seen = new int[shape.getNumberOfHashFunctions()];
             }
 
             @Override
-            public boolean seen(int number) {
-                for (int i = 0; i < idx; i++) {
-                    if (seenAry[i] == number) {
-                        return true;
+            public boolean test(int number) {
+                for (int i = 0; i < populated; i++) {
+                    if (seen[i] == number) {
+                        return false;
                     }
                 }
-                seenAry[idx++] = number;
-                return false;
+                seen[populated++] = number;
+                return true;
             }
         }
 
@@ -193,7 +179,7 @@ public interface Hasher {
          * number has been seen.
          * @since 4.5
          */
-        static class BitMapTracker implements IndexTracker {
+        static class BitMapTracker implements IntPredicate {
             private long[] bits;
 
             /**
@@ -205,12 +191,11 @@ public interface Hasher {
             }
 
             @Override
-            public boolean seen(int number) {
-                boolean retval = BitMap.contains(bits, number);
+            public boolean test(int number) {
+                boolean retval = ! BitMap.contains(bits, number);
                 BitMap.set(bits, number);
                 return retval;
             }
         }
     }
-
 }
