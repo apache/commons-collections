@@ -54,4 +54,9 @@ public final class NullHasher implements Hasher {
     public int size() {
         return 0;
     }
+
+    @Override
+    public IndexProducer uniqueIndices(Shape shape) {
+        return PRODUCER;
+    }
 }

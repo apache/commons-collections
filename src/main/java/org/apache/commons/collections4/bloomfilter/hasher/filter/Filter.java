@@ -38,7 +38,6 @@ public final class Filter implements IntPredicate {
      * Creates an instance optimized for the specified shape.
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
-     * @return a Filter optimized for the shape.
      */
     public Filter(Shape shape, IntPredicate consumer) {
         this.size = shape.getNumberOfBits();

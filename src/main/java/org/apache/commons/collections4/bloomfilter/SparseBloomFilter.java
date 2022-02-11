@@ -94,7 +94,7 @@ public class SparseBloomFilter implements BloomFilter {
     /**
      * Constructs a populated Bloom filter.
      * @param shape the shape of the filter.
-     * @param bitmaps a BitMapProducer for the bit maps to add.
+     * @param bitMaps a BitMapProducer for the bit maps to add.
      * @throws IllegalArgumentException if the bit maps contain a value greater than the number
      * of bits in the shape.
      */

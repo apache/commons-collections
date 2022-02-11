@@ -130,7 +130,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public CountingBloomFilter merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         ArrayCountingBloomFilter filter = copy();
-        filter.add(BitCountProducer.from(hasher.indices(shape)));
+        filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
         return filter;
     }
 
@@ -143,7 +143,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean mergeInPlace(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return add(BitCountProducer.from(hasher.indices(shape)));
+        return add(BitCountProducer.from(hasher.uniqueIndices(shape)));
     }
 
     @Override
@@ -155,7 +155,7 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean remove(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return subtract(BitCountProducer.from(hasher.indices(shape)));
+        return subtract(BitCountProducer.from(hasher.uniqueIndices(shape)));
     }
 
     @Override

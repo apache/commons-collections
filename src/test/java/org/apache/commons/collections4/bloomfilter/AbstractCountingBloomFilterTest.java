@@ -19,15 +19,22 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
 public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
-    extends AbstractBloomFilterTest<T> {
+        extends AbstractBloomFilterTest<T> {
     protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
     protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         0 };
@@ -221,5 +228,43 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(bf4), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+    }
+
+    @Test
+    public void testExcludesDuplicates() {
+
+        // create a hasher that produces duplicates with the specified shape.
+        // this setup produces 5, 17, 29, 41, 53, 65 two times
+        Shape shape = Shape.fromKM(12, 72);
+        SimpleHasher hasher = new SimpleHasher(5, 12);
+
+        CountingBloomFilter bf1 = createFilter(shape, hasher);
+        assertEquals(6, bf1.cardinality());
+        bf1.forEachCount((x, y) -> {
+            assertEquals(1, y, "Hasher in constructor results in value not equal to 1");
+            return true;
+        });
+
+        bf1 = createEmptyFilter(shape);
+        bf1.mergeInPlace(hasher);
+        assertEquals(6, bf1.cardinality());
+        bf1.forEachCount((x, y) -> {
+            assertEquals(1, y, "Hasher in mergeInPlace results in value not equal to 1");
+            return true;
+        });
+
+        bf1 = createEmptyFilter(shape);
+        CountingBloomFilter bf2 = bf1.merge(hasher);
+        assertEquals(6, bf2.cardinality());
+        bf2.forEachCount((x, y) -> {
+            assertEquals(1, y, "Hasher in merge results in value not equal to 1");
+            return true;
+        });
+
+        bf1 = createFilter(shape, hasher);
+        bf1.remove(hasher);
+        assertEquals(0, bf1.cardinality());
+        assertTrue(bf1.forEachCount((x, y) -> (false)), "Hasher in removes results in value not equal to 0");
+
     }
 }

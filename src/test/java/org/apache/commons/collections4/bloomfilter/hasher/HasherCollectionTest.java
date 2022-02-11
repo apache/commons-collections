@@ -17,8 +17,15 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -93,5 +100,26 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
         hasher.add(Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2)));
         assertEquals(5, hasher.size());
+    }
+
+
+    @Override
+    public void testUniqueIndex() {
+        // create a hasher that produces duplicates with the specified shape.
+        // this setup produces 5, 17, 29, 41, 53, 65 two times
+        Shape shape = Shape.fromKM( 12, 72 );
+        Hasher h1 = new SimpleHasher( 5, 12 );
+        HasherCollection hasher = createEmptyHasher();
+        hasher.add( h1 );
+        hasher.add( h1 );
+        List<Integer> lst = new ArrayList<>();
+        for (int i : new int[] { 5,17, 29, 41, 53, 65}) {
+            lst.add( i );
+            lst.add( i );
+        }
+
+        assertTrue( hasher.uniqueIndices( shape ).forEachIndex( i -> { return lst.remove( Integer.valueOf( i ));}), "unable to remove value" );
+        assertEquals( 0, lst.size() );
+
     }
 }

@@ -24,6 +24,8 @@ import org.apache.commons.collections4.bloomfilter.AbstractIndexProducerTest;
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
 
@@ -63,5 +65,26 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     public void testIsEmpty() {
         assertFalse(createHasher().isEmpty());
         assertTrue(createEmptyHasher().isEmpty());
+    }
+
+    @Test
+    abstract public void testUniqueIndex();
+
+    @ParameterizedTest
+    @CsvSource({
+        "17, 72",
+        "3, 14",
+        "5, 67868",
+    })
+    public void testHashing(int k, int m) {
+        int[] count = {0};
+        Hasher hasher = createHasher();
+        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {System.out.println( i );
+            assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
+            count[0]++;
+            return true;
+        });
+        assertEquals(k * hasher.size(), count[0],
+            () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
     }
 }

@@ -62,7 +62,7 @@ public final class SetOperations {
         /**
          * Constructor.
          * @param producer The the producer for the initial bit maps.
-         * @param The shape of the Bloom filter
+         * @param shape The shape of the Bloom filter
          * @param op2 The operation to execute when there are two bit maps to compare.
          * @param op1 The operation to execute when there is only one bit map to compare.
          */
