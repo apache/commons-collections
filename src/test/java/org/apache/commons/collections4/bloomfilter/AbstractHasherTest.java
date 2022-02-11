@@ -20,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.collections4.bloomfilter.Hasher;
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
-import org.apache.commons.collections4.bloomfilter.Shape;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -76,7 +73,6 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         int[] count = { 0 };
         Hasher hasher = createHasher();
         hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
-            System.out.println(i);
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return true;

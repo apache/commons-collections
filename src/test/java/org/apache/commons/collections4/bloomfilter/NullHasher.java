@@ -19,10 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 
-import org.apache.commons.collections4.bloomfilter.Hasher;
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
-import org.apache.commons.collections4.bloomfilter.Shape;
-
 /**
  * A Hasher that returns no values.
  *
