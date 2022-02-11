@@ -20,8 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.function.IntPredicate;
+
 import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.IndexTracker;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,16 +33,16 @@ public class ArrayTrackerTest {
     @Test
     public void testSeen() {
         Shape shape = Shape.fromKM(3, 12);
-        IndexTracker tracker = new ArrayTracker(shape);
+        IntPredicate tracker = new ArrayTracker(shape);
 
-        assertFalse(tracker.seen(0));
-        assertTrue(tracker.seen(0));
-        assertFalse(tracker.seen(1));
-        assertTrue(tracker.seen(1));
-        assertFalse(tracker.seen(2));
-        assertTrue(tracker.seen(2));
+        assertTrue(tracker.test(0));
+        assertFalse(tracker.test(0));
+        assertTrue(tracker.test(1));
+        assertFalse(tracker.test(1));
+        assertTrue(tracker.test(2));
+        assertFalse(tracker.test(2));
 
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(3));
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(-1));
     }
 }

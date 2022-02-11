@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
@@ -74,14 +76,15 @@ public abstract class AbstractIndexProducerTest {
         assertEquals(0, ary.length);
 
         IndexProducer producer = createProducer();
-        final int tary[] = producer.asIndexArray();
+        List<Integer> lst = new ArrayList<Integer>();
+        for (int i :  producer.asIndexArray()) {
+            lst.add( i );
+        }
         assertTrue(producer.forEachIndex(new IntPredicate() {
-            int idx = 0;
 
             @Override
             public boolean test(int value) {
-                assertEquals(tary[idx], value, "Error at position " + idx);
-                idx++;
+                assertTrue( lst.remove( Integer.valueOf(value) ), String.format("Instance of  %d was not found in lst", value));
                 return true;
             }
         }));

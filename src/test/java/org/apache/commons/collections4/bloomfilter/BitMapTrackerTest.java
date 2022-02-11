@@ -19,8 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.function.IntPredicate;
+
 import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.IndexTracker;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,16 +32,16 @@ public class BitMapTrackerTest {
     @Test
     public void testSeen() {
         Shape shape = Shape.fromKM(3, 12);
-        IndexTracker tracker = new BitMapTracker(shape);
+        IntPredicate tracker = new BitMapTracker(shape);
 
-        assertFalse(tracker.seen(0));
-        assertTrue(tracker.seen(0));
-        assertFalse(tracker.seen(1));
-        assertTrue(tracker.seen(1));
-        assertFalse(tracker.seen(2));
-        assertTrue(tracker.seen(2));
+        assertTrue(tracker.test(0));
+        assertFalse(tracker.test(0));
+        assertTrue(tracker.test(1));
+        assertFalse(tracker.test(1));
+        assertTrue(tracker.test(2));
+        assertFalse(tracker.test(2));
 
-        assertFalse(tracker.seen(4));
-        assertTrue(tracker.seen(4));
+        assertTrue(tracker.test(4));
+        assertFalse(tracker.test(4));
     }
 }

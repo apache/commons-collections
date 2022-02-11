@@ -47,9 +47,7 @@ public class IndexFilterTest {
         Set<Integer> tracker = new HashSet<Integer>();
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        IndexFilter filter = new IndexFilter(shape, consumer::add, (i) -> {
-            return !tracker.add(i);
-        });
+        IndexFilter filter = new IndexFilter(shape, consumer::add, tracker::add );
 
         for (int i = 0; i < 12; i++) {
             assertTrue(filter.test(i));
