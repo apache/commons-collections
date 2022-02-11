@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.HasherCollection;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
 /**

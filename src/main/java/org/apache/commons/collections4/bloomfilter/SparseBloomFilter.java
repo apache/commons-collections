@@ -21,8 +21,6 @@ import java.util.TreeSet;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-
 /**
  * A bloom filter using a TreeSet of integers to track enabled bits. This is a standard
  * implementation and should work well for most low cardinality Bloom filters.

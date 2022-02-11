@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
-
 public class BitMapProducerFromSimpleBloomFilterTest extends AbstractBitMapProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);

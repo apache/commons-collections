@@ -14,10 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
-
-import org.apache.commons.collections4.bloomfilter.Shape;
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
+package org.apache.commons.collections4.bloomfilter;
 
 /**
  * A Hasher creates IndexProducer based on the hash implementation and the

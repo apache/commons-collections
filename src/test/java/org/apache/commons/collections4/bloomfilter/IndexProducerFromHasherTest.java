@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.NullHasher;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
-
 public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override

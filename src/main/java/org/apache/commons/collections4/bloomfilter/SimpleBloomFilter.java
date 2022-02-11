@@ -21,8 +21,6 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-
 /**
  * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.

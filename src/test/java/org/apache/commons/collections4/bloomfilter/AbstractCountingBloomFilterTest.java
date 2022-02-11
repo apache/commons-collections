@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
+
 import org.junit.jupiter.api.Test;
 
 /**
