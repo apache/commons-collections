@@ -16,19 +16,26 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SplittableRandom;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.commons.collections4.bloomfilter.IndexFilter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.IndexFilter.BitMapTracker;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * Tests the Filter class.
@@ -58,6 +65,49 @@ public class IndexFilterTest {
 
         assertThrows(IndexOutOfBoundsException.class, () -> filter.test(12));
         assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "1, 64",
+        "2, 64",
+        "3, 64",
+        "7, 357",
+        "7, 17",
+    })
+    void testFilter(int k, int m) {
+        Shape shape = Shape.fromKM(k, m);
+        BitSet used = new BitSet(m);
+        for (int n = 0; n < 10; n++) {
+            used.clear();
+            List<Integer> consumer = new ArrayList<>();
+            IndexFilter filter = IndexFilter.create(shape, consumer::add);
+
+            // Make random indices; these may be duplicates
+            long seed = ThreadLocalRandom.current().nextLong();
+            SplittableRandom rng = new SplittableRandom(seed);
+            for (int i = Math.min(k, m / 2); i-- > 0;) {
+                int bit = rng.nextInt(m);
+                // duplicates should not alter the list size
+                int newSize = consumer.size() + (used.get(bit) ? 0 : 1);
+                assertTrue(filter.test(bit));
+                assertEquals(newSize, consumer.size(),
+                        () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+                used.set(bit);
+            }
+
+            // The list should have unique entries
+            assertArrayEquals(used.stream().toArray(),
+                consumer.stream().mapToInt(i -> (int) i).sorted().toArray());
+            final int size = consumer.size();
+
+            // Second observations do not change the list size
+            used.stream().forEach(bit -> {
+                assertTrue(filter.test(bit));
+                assertEquals(size, consumer.size(),
+                    () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+            });
+        }
     }
 
     @Test

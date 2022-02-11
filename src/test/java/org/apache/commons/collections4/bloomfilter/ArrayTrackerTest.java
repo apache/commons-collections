@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.collections4.bloomfilter.IndexFilter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.IndexFilter.IndexTracker;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.IndexTracker;
 import org.junit.jupiter.api.Test;
 
 /**
