@@ -14,12 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.IntPredicate;
-
-import org.apache.commons.collections4.bloomfilter.BitMap;
-import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
  * A convenience class for Hasher implementations to filter out duplicate indices.

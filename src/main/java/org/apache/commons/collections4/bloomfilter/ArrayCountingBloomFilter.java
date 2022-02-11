@@ -21,8 +21,6 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.stream.IntStream;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-
 /**
  * A counting Bloom filter using an int array to track counts for each enabled bit
  * index.

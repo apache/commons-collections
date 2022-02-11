@@ -23,8 +23,6 @@ import java.util.TreeSet;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
 /**

@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
 
 /**

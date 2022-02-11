@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.junit.jupiter.api.Test;
 
 /**

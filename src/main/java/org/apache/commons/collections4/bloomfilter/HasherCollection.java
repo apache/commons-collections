@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,9 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
-
-import org.apache.commons.collections4.bloomfilter.IndexProducer;
-import org.apache.commons.collections4.bloomfilter.Shape;
 
 /**
  * A collection of Hashers.  Useful when the generation of a Bloom filter depends upon

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-
 /**
  * The interface that describes a Bloom filter that associates a count with each
  * bit index to allow reversal of merge operations with remove operations.

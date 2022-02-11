@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 
 /**
  * The interface that describes a Bloom filter.
