@@ -26,21 +26,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections4.bloomfilter.Filter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.Filter.BitMapTracker;
+import org.apache.commons.collections4.bloomfilter.IndexFilter.ArrayTracker;
+import org.apache.commons.collections4.bloomfilter.IndexFilter.BitMapTracker;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the Filter class.
  */
-public class FilterTest {
+public class IndexFilterTest {
 
     @Test
     public void testFiltering() {
         Set<Integer> tracker = new HashSet<Integer>();
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        Filter filter = new Filter(shape, consumer::add, (i) -> {
+        IndexFilter filter = new IndexFilter(shape, consumer::add, (i) -> {
             return !tracker.add(i);
         });
 
@@ -63,7 +63,7 @@ public class FilterTest {
     @Test
     public void testConstructor()
             throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        Field tracker = Filter.class.getDeclaredField("tracker");
+        Field tracker = IndexFilter.class.getDeclaredField("tracker");
         tracker.setAccessible(true);
         List<Integer> consumer = new ArrayList<Integer>();
 
@@ -71,19 +71,19 @@ public class FilterTest {
         int k = 2;
         int m = Long.SIZE;
         Shape shape = Shape.fromKM(k, m);
-        Filter filter = new Filter(shape, consumer::add);
+        IndexFilter filter = IndexFilter.create(shape, consumer::add);
         assertTrue(tracker.get(filter) instanceof ArrayTracker);
 
         // test k ints < longs for m
         k = 1;
         shape = Shape.fromKM(k, m);
-        filter = new Filter(shape, consumer::add);
+        filter = IndexFilter.create(shape, consumer::add);
         assertTrue(tracker.get(filter) instanceof ArrayTracker);
 
         // test k ints > longs for m
         k = 3;
         shape = Shape.fromKM(k, m);
-        filter = new Filter(shape, consumer::add);
+        filter = IndexFilter.create(shape, consumer::add);
         assertTrue(tracker.get(filter) instanceof BitMapTracker);
     }
 }
