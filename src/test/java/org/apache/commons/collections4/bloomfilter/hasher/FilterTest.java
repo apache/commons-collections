@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher.filter;
+package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.ArrayTracker;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.BitMapTracker;
 import org.junit.jupiter.api.Test;
 
 /**

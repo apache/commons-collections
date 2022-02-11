@@ -22,7 +22,6 @@ import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
 
 /**
  * A collection of Hashers that are combined to be a single item.  This differs from

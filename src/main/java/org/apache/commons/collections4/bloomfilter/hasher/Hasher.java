@@ -44,7 +44,7 @@ public interface Hasher {
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
      */
-    IndexProducer indices(final Shape shape);
+    IndexProducer indices(Shape shape);
 
     /**
      * Creates an IndexProducer of unique indices for this hasher based on the Shape.
@@ -55,7 +55,7 @@ public interface Hasher {
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
      */
-    IndexProducer uniqueIndices(final Shape shape);
+    IndexProducer uniqueIndices(Shape shape);
 
     /**
      * Gets the number of items that will be hashed by the {@code IndexProducer}.

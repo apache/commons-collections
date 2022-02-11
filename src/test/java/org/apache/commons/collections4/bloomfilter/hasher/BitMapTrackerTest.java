@@ -14,36 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher.filter;
+package org.apache.commons.collections4.bloomfilter.hasher;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.BitMapTracker;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.IndexTracker;
+import org.junit.jupiter.api.Test;
 
 /**
- * An IndexTracker implementation that uses an array of integers to track whether or not a
- * number has been seen.  Suitable for Shapes that have few hash functions.
- * @since 4.5
+ * Tests the Filter class.
  */
-public class ArrayTracker implements IndexTracker {
-    private int[] seenAry;
-    private int idx;
+public class BitMapTrackerTest {
 
-    /**
-     * Constructs the tracker based on the shape.
-     * @param shape the shape to build the tracker for.
-     */
-    public ArrayTracker(Shape shape) {
-        seenAry = new int[shape.getNumberOfHashFunctions()];
-        idx = 0;
-    }
+    @Test
+    public void testSeen() {
+        Shape shape = Shape.fromKM(3, 12);
+        IndexTracker tracker = new BitMapTracker(shape);
 
-    @Override
-    public boolean seen(int number) {
-        for (int i = 0; i < idx; i++) {
-            if (seenAry[i] == number) {
-                return true;
-            }
-        }
-        seenAry[idx++] = number;
-        return false;
+        assertFalse(tracker.seen(0));
+        assertTrue(tracker.seen(0));
+        assertFalse(tracker.seen(1));
+        assertTrue(tracker.seen(1));
+        assertFalse(tracker.seen(2));
+        assertTrue(tracker.seen(2));
+
+        assertFalse(tracker.seen(4));
+        assertTrue(tracker.seen(4));
     }
 }

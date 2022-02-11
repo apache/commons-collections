@@ -21,7 +21,6 @@ import java.util.function.IntPredicate;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
 import org.apache.commons.collections4.bloomfilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.filter.Filter;
 
 /**
  * A Hasher that implements combinatorial hashing as as described by

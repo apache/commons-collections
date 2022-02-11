@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections4.bloomfilter.IndexProducer;
@@ -74,26 +73,27 @@ public class SimpleHasherTest extends AbstractHasherTest {
         assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
     }
 
-//    @Test
-//    void testModEdgeCases() {
-//        for (long dividend : new long[] {-1, -2, -3, -6378683, -23567468136887892L, Long.MIN_VALUE,
-//                345, 678686, 67868768686878924L, Long.MAX_VALUE}) {
-//            for (int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE}) {
-//                        SimpleHasher.mod(dividend, divisor),
-//                        () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
-//            }
-//        }
-//    }
+    // @Test
+    // void testModEdgeCases() {
+    // for (long dividend : new long[] {-1, -2, -3, -6378683, -23567468136887892L,
+    // Long.MIN_VALUE,
+    // 345, 678686, 67868768686878924L, Long.MAX_VALUE}) {
+    // for (int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE}) {
+    // SimpleHasher.mod(dividend, divisor),
+    // () -> String.format("failure with dividend=%s and divisor=%s.", dividend,
+    // divisor));
+    // }
+    // }
+    // }
 
     @Override
     public void testUniqueIndex() {
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM( 12, 72 );
-        Hasher hasher = new SimpleHasher( 5, 12 );
+        Shape shape = Shape.fromKM(12, 72);
+        Hasher hasher = new SimpleHasher(5, 12);
         Set<Integer> set = new HashSet<>();
-        assertTrue( hasher.uniqueIndices( shape ).forEachIndex( set::add ), "Duplicate detected");
-        assertEquals( 6, set.size() );
+        assertTrue(hasher.uniqueIndices(shape).forEachIndex(set::add), "Duplicate detected");
+        assertEquals(6, set.size());
     }
-
 }

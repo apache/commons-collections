@@ -68,23 +68,20 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     }
 
     @Test
-    abstract public void testUniqueIndex();
+    public abstract void testUniqueIndex();
 
     @ParameterizedTest
-    @CsvSource({
-        "17, 72",
-        "3, 14",
-        "5, 67868",
-    })
+    @CsvSource({ "17, 72", "3, 14", "5, 67868", })
     public void testHashing(int k, int m) {
-        int[] count = {0};
+        int[] count = { 0 };
         Hasher hasher = createHasher();
-        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {System.out.println( i );
+        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+            System.out.println(i);
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return true;
         });
         assertEquals(k * hasher.size(), count[0],
-            () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
+                () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
     }
 }
