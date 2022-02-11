@@ -23,10 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.collections4.bloomfilter.Hasher;
-import org.apache.commons.collections4.bloomfilter.HasherCollection;
-import org.apache.commons.collections4.bloomfilter.Shape;
-import org.apache.commons.collections4.bloomfilter.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
 /**

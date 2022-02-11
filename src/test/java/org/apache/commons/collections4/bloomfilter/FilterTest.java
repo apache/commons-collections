@@ -26,8 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections4.bloomfilter.Filter;
-import org.apache.commons.collections4.bloomfilter.Shape;
 import org.apache.commons.collections4.bloomfilter.Filter.ArrayTracker;
 import org.apache.commons.collections4.bloomfilter.Filter.BitMapTracker;
 import org.junit.jupiter.api.Test;
