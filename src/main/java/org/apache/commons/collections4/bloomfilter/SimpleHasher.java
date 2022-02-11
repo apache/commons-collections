@@ -37,11 +37,6 @@ public final class SimpleHasher implements Hasher {
     public static final long DEFAULT_INCREMENT = 0x9e3779b97f4a7c15L;
 
     /**
-     * This mask is used to obtain the value of an int as if it were unsigned.
-     */
-    private static final long LONG_MASK = 0xffffffffL;
-
-    /**
      * The initial hash value.
      */
     private final long initial;
@@ -109,15 +104,6 @@ public final class SimpleHasher implements Hasher {
         return result < 0 ? result + divisor : result;
     }
 
-    /**
-     * Gets an IndexProducer that produces indices based on the shape.
-     * The iterator will not return the same value multiple
-     * times.
-     *
-     * @param shape {@inheritDoc}
-     * @return {@inheritDoc}
-     * @throws IllegalArgumentException {@inheritDoc}
-     */
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
@@ -155,7 +141,7 @@ public final class SimpleHasher implements Hasher {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                Filter filter = new Filter(shape, consumer);
+                IndexFilter filter = IndexFilter.create(shape, consumer);
 
                 int bits = shape.getNumberOfBits();
 

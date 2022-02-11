@@ -26,7 +26,7 @@ import java.util.function.IntPredicate;
  * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
  * @since 4.5
  */
-public final class Filter implements IntPredicate {
+public final class IndexFilter implements IntPredicate {
     private IndexTracker tracker;
     private int size;
     private IntPredicate consumer;
@@ -36,7 +36,16 @@ public final class Filter implements IntPredicate {
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      */
-    public Filter(Shape shape, IntPredicate consumer) {
+    public static IndexFilter create(Shape shape, IntPredicate consumer) {
+        return new IndexFilter( shape, consumer );
+    }
+
+    /**
+     * Creates an instance optimized for the specified shape.
+     * @param shape The shape that is being generated.
+     * @param consumer The consumer to accept the values.
+     */
+    private IndexFilter(Shape shape, IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
         if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < shape.getNumberOfHashFunctions()
@@ -54,7 +63,7 @@ public final class Filter implements IntPredicate {
      * @param consumer The consumer to accept the values
      * @param tracker The index tracker to use.
      */
-    public Filter(Shape shape, IntPredicate consumer, IndexTracker tracker) {
+    public IndexFilter(Shape shape, IntPredicate consumer, IndexTracker tracker) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
         this.tracker = tracker;
@@ -70,7 +79,7 @@ public final class Filter implements IntPredicate {
      *
      * @param number the number to check.
      * @return {@code true} if the number has not been seen, {@code false} otherwise.
-     * @see Filter#Filter(int)
+     * @see IndexFilter#Filter(int)
      */
     @Override
     public boolean test(int number) {

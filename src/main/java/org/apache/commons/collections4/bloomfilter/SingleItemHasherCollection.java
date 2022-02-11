@@ -70,7 +70,7 @@ public class SingleItemHasherCollection extends HasherCollection {
                     actualFuncCount = shape.getNumberOfBits();
                 }
                 Shape filterShape = Shape.fromKM(actualFuncCount, shape.getNumberOfBits());
-                Filter filter = new Filter(filterShape, consumer);
+                IndexFilter filter = IndexFilter.create(filterShape, consumer);
                 return baseProducer.forEachIndex(filter);
             }
         };
