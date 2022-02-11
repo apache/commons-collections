@@ -20,13 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.collections4.bloomfilter.hasher.SimpleHasher;
 import org.junit.jupiter.api.Test;
 
@@ -265,6 +260,5 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.remove(hasher);
         assertEquals(0, bf1.cardinality());
         assertTrue(bf1.forEachCount((x, y) -> (false)), "Hasher in removes results in value not equal to 0");
-
     }
 }

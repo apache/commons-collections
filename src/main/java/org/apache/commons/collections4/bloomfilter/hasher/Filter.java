@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher.filter;
+package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.function.IntPredicate;
 
@@ -84,5 +84,73 @@ public final class Filter implements IntPredicate {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
         }
         return tracker.seen(number) ? true : consumer.test(number);
+    }
+
+    /**
+     * A functional interface that defines the seen function for the Hasher Filter.
+     * @since 4.5
+     */
+    @FunctionalInterface
+    interface IndexTracker {
+        /**
+         * Returns {@code true} if the number has been seen before, {@code false} otherwise.
+         * @param number the number to check
+         * @return {@code true} if the number has been seen before, {@code false} otherwise.
+         */
+        boolean seen(int number);
+    }
+
+    /**
+     * An IndexTracker implementation that uses an array of integers to track whether or not a
+     * number has been seen.  Suitable for Shapes that have few hash functions.
+     * @since 4.5
+     */
+    static class ArrayTracker implements IndexTracker {
+        private int[] seenAry;
+        private int idx;
+
+        /**
+         * Constructs the tracker based on the shape.
+         * @param shape the shape to build the tracker for.
+         */
+        ArrayTracker(Shape shape) {
+            seenAry = new int[shape.getNumberOfHashFunctions()];
+            idx = 0;
+        }
+
+        @Override
+        public boolean seen(int number) {
+            for (int i = 0; i < idx; i++) {
+                if (seenAry[i] == number) {
+                    return true;
+                }
+            }
+            seenAry[idx++] = number;
+            return false;
+        }
+    }
+
+    /**
+     * An IndexTracker implementation that uses an array of bit maps to track whether or not a
+     * number has been seen.
+     * @since 4.5
+     */
+    static class BitMapTracker implements IndexTracker {
+        private long[] bits;
+
+        /**
+         * Constructs a bit map based tracker for the specified shape.
+         * @param shape The shape that is being generated.
+         */
+        BitMapTracker(Shape shape) {
+            bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        }
+
+        @Override
+        public boolean seen(int number) {
+            boolean retval = BitMap.contains(bits, number);
+            BitMap.set(bits, number);
+            return retval;
+        }
     }
 }

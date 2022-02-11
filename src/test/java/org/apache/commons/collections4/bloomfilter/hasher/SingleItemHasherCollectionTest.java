@@ -39,7 +39,7 @@ public class SingleItemHasherCollectionTest extends HasherCollectionTest {
 
     @Override
     protected SingleItemHasherCollection createHasher() {
-        return new SingleItemHasherCollection(hasher1,hasher2);
+        return new SingleItemHasherCollection(hasher1, hasher2);
     }
 
     @Override
@@ -105,22 +105,18 @@ public class SingleItemHasherCollectionTest extends HasherCollectionTest {
     public void testUniqueIndex() {
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM( 12, 72 );
-        Hasher hasher = new SimpleHasher( 5, 12 );
+        Shape shape = Shape.fromKM(12, 72);
+        Hasher hasher = new SimpleHasher(5, 12);
         Set<Integer> set = new HashSet<>();
-        assertTrue( hasher.uniqueIndices( shape ).forEachIndex( set::add ), "Duplicate detected");
-        assertEquals( 6, set.size() );
+        assertTrue(hasher.uniqueIndices(shape).forEachIndex(set::add), "Duplicate detected");
+        assertEquals(6, set.size());
     }
 
     @Override
     @ParameterizedTest
-    @CsvSource({
-        "17, 72",
-        "3, 14",
-        "5, 67868",
-    })
+    @CsvSource({ "17, 72", "3, 14", "5, 67868", })
     public void testHashing(int k, int m) {
-        int[] count = {0};
+        int[] count = { 0 };
         HasherCollection hasher = createHasher();
         hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
@@ -128,6 +124,6 @@ public class SingleItemHasherCollectionTest extends HasherCollectionTest {
             return true;
         });
         assertEquals(k * hasher.getHashers().size(), count[0],
-            () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
+                () -> String.format("Did not produce k=%d * m=%d indices", k, hasher.size()));
     }
 }

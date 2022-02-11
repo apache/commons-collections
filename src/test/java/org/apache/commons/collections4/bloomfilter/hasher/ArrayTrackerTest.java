@@ -14,23 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher.filter;
+package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.IndexTracker;
+import org.apache.commons.collections4.bloomfilter.hasher.Filter.ArrayTracker;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the Filter class.
  */
-public class BitMapTrackerTest {
+public class ArrayTrackerTest {
 
     @Test
     public void testSeen() {
         Shape shape = Shape.fromKM(3, 12);
-        IndexTracker tracker = new BitMapTracker(shape);
+        IndexTracker tracker = new ArrayTracker(shape);
 
         assertFalse(tracker.seen(0));
         assertTrue(tracker.seen(0));
@@ -39,7 +42,7 @@ public class BitMapTrackerTest {
         assertFalse(tracker.seen(2));
         assertTrue(tracker.seen(2));
 
-        assertFalse(tracker.seen(4));
-        assertTrue(tracker.seen(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(3));
+        assertThrows(IndexOutOfBoundsException.class, () -> tracker.seen(-1));
     }
 }
