@@ -123,13 +123,4 @@ public class HasherCollection implements Hasher {
     protected List<Hasher> getHashers() {
         return Collections.unmodifiableList(hashers);
     }
-
-    @Override
-    public int size() {
-        int i = 0;
-        for (Hasher h : hashers) {
-            i += h.size();
-        }
-        return i;
-    }
 }

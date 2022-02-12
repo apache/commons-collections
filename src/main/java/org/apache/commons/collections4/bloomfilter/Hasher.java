@@ -57,20 +57,6 @@ public interface Hasher {
     IndexProducer uniqueIndices(Shape shape);
 
     /**
-     * Gets the number of items that will be hashed by the {@code IndexProducer}.
-     * @return The number of items that will be hashed by the {@code IndexProducer}.
-     */
-    int size();
-
-    /**
-     * Returns true if there are no items to be hashed.
-     * @return {@code true} if there are no items to be hashed.
-     */
-    default boolean isEmpty() {
-        return size() == 0;
-    }
-
-    /**
      * A convenience class for Hasher implementations to filter out duplicate indices.
      *
      * <p><em>If the index is negative the behavior is not defined.</em></p>
@@ -89,7 +75,7 @@ public interface Hasher {
          * @param consumer The consumer to accept the values.
          */
         public static IndexFilter create(Shape shape, IntPredicate consumer) {
-            return new IndexFilter( shape, consumer );
+            return new IndexFilter(shape, consumer);
         }
 
         /**
@@ -192,7 +178,7 @@ public interface Hasher {
 
             @Override
             public boolean test(int number) {
-                boolean retval = ! BitMap.contains(bits, number);
+                boolean retval = !BitMap.contains(bits, number);
                 BitMap.set(bits, number);
                 return retval;
             }

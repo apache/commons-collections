@@ -41,21 +41,13 @@ public class HasherCollectionTest extends AbstractHasherTest {
     }
 
     @Override
-    @Test
-    public void testSize() {
-        HasherCollection hasher = createHasher();
-        assertEquals(2, hasher.size());
-        assertEquals(2, hasher.getHashers().size());
-        hasher = createEmptyHasher();
-        assertEquals(0, createEmptyHasher().size());
-        assertEquals(0, createEmptyHasher().getHashers().size());
+    protected int getHasherSize(Hasher hasher) {
+        return ((HasherCollection) hasher).getHashers().size();
     }
 
     protected void nestedTest(HasherCollectionTest nestedTest) {
         nestedTest.testAsIndexArray();
         nestedTest.testForEachIndex();
-        nestedTest.testIsEmpty();
-        nestedTest.testSize();
         nestedTest.testAdd();
     }
 
@@ -93,10 +85,10 @@ public class HasherCollectionTest extends AbstractHasherTest {
     public void testAdd() {
         HasherCollection hasher = createHasher();
         hasher.add(new SimpleHasher(2, 2));
-        assertEquals(3, hasher.size());
+        assertEquals(3, hasher.getHashers().size());
 
         hasher.add(Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2)));
-        assertEquals(5, hasher.size());
+        assertEquals(5, hasher.getHashers().size());
     }
 
     @Override

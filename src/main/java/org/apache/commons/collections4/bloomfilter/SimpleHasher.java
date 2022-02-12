@@ -29,12 +29,6 @@ import java.util.function.IntPredicate;
  * @since 4.5
  */
 public final class SimpleHasher implements Hasher {
-    /**
-     * A default increment used when the requested increment is zero. This is the same
-     * default increment used in Java's SplittableRandom random number generator.  It is the
-     * fractional representation of the golden ratio (0.618...) with a base of 2^64.
-     */
-    public static final long DEFAULT_INCREMENT = 0x9e3779b97f4a7c15L;
 
     /**
      * The initial hash value.
@@ -68,9 +62,10 @@ public final class SimpleHasher implements Hasher {
      * <p>The byte array is split in 2 and each half is interpreted as a long value.
      * Excess bytes are ignored.  This simplifies the conversion from a Digest or hasher algorithm output
      * to the two values used by the SimpleHasher.</p>
-     * <p><em>If the second long is zero the DEFAULT_INCREMENT is used instead.</em></p>
+     * <p><em>If the second long is zero the default increment is used instead.</em></p>
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
+     * @see #getDefaultIncrement()
      */
     public SimpleHasher(byte[] buffer) {
         if (buffer.length == 0) {
@@ -79,29 +74,49 @@ public final class SimpleHasher implements Hasher {
         int segment = buffer.length / 2;
         this.initial = toLong(buffer, 0, segment);
         long possibleIncrement = toLong(buffer, segment, buffer.length - segment);
-        this.increment = possibleIncrement == 0 ? DEFAULT_INCREMENT : possibleIncrement;
+        this.increment = possibleIncrement == 0 ? getDefaultIncrement() : possibleIncrement;
     }
 
     /**
      * Constructs the SimpleHasher from 2 longs.  The long values will be interpreted as unsigned values.
-     * <p><em>If the increment is zero the DEFAULT_INCREMENT is used instead.</em></p>
+     * <p><em>If the increment is zero the default increment is used instead.</em></p>
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
+     * @see #getDefaultIncrement()
      */
     public SimpleHasher(long initial, long increment) {
         this.initial = initial;
-        this.increment = increment == 0 ? DEFAULT_INCREMENT : increment;
+        this.increment = increment == 0 ? getDefaultIncrement() : increment;
     }
 
     /**
-     * Performs a modulus calculation and then ensures tha the result is positive.
-     * @param dividend a signed long value to calculate the modulus of.
+     * Get the default increment used when the requested increment is zero.
+     * <p>
+     * By default this is the same
+     * default increment used in Java's SplittableRandom random number generator.  It is the
+     * fractional representation of the golden ratio (0.618...) with a base of 2^64.
+     * </p><p>
+     * Implementations may want to override this value to match defaults in legacy implementations.
+     * </p>
+     */
+    public long getDefaultIncrement() {
+        return 0x9e3779b97f4a7c15L;
+    }
+
+    /**
+     * Performs a modulus calculation on an unsigned long and an integer divisor.
+     * @param dividend a unsigned long value to calculate the modulus of.
      * @param divisor the divisor for the modulus calculation.
      * @return the remainder or modulus value.
      */
     static int mod(long dividend, int divisor) {
-        int result = (int) dividend % divisor;
-        return result < 0 ? result + divisor : result;
+        // See Hacker's Delight (2nd ed), section 9.3.
+        // Assume divisor is positive.
+        // Divide half the unsigned number and then double the quotient result.
+        final long quotient = ((dividend >>> 1) / divisor) << 1;
+        final long remainder = dividend - quotient * divisor;
+        // remainder in [0, 2 * divisor)
+        return (int) (remainder >= divisor ? remainder - divisor : remainder);
     }
 
     @Override
@@ -113,11 +128,13 @@ public final class SimpleHasher implements Hasher {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                // Filter filter = new Filter(shape, consumer);
-
                 int bits = shape.getNumberOfBits();
-
-                // Set up for the modulus. Use a long index to avoid overflow.
+                /*
+                 * Essentially this is computing a wrapped modulus from a start point and an
+                 * increment. So actually you only need two modulus operations before the loop.
+                 * This avoids any modulus operation inside the while loop. It uses a long index
+                 * to avoid overflow.
+                 */
                 long index = mod(initial, bits);
                 int inc = mod(increment, bits);
 
@@ -160,10 +177,5 @@ public final class SimpleHasher implements Hasher {
                 return true;
             }
         };
-    }
-
-    @Override
-    public int size() {
-        return 1;
     }
 }
