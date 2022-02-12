@@ -109,7 +109,7 @@ public interface Hasher {
         }
 
         /**
-         * Test if the number should be processed by teh {@code consumer}.
+         * Test if the number should be processed by the {@code consumer}.
          *
          * <p>If the number has <em>not</em> been seen before it is passed to the {@code consumer} and the result returned.
          * If the number has been seen before the {@code consumer} is not called and {@code true} returned.</p>
@@ -118,7 +118,6 @@ public interface Hasher {
          *
          * @param number the number to check.
          * @return {@code true} if processing should continue, {@code false} otherwise.
-         * @see IndexFilter#Filter(int)
          */
         @Override
         public boolean test(int number) {

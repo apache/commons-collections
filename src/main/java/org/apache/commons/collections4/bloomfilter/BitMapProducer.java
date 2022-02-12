@@ -61,7 +61,7 @@ public interface BitMapProducer {
      * <pre>
      * BitMapProducer a = ....;
      * BitMapProducer b = ....;
-     * LongPredicate predicate = a.apply( (x,y) -> x==y );
+     * LongPredicate predicate = a.apply( (x,y) -&gt; x==y );
      * boolean result = b.apply( predicate );
      * </pre>
      * The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
