@@ -47,7 +47,7 @@ public class IndexFilterTest {
         Set<Integer> tracker = new HashSet<Integer>();
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        IndexFilter filter = new IndexFilter(shape, consumer::add, tracker::add );
+        IndexFilter filter = new IndexFilter(shape, consumer::add, tracker::add);
 
         for (int i = 0; i < 12; i++) {
             assertTrue(filter.test(i));
@@ -66,13 +66,7 @@ public class IndexFilterTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-        "1, 64",
-        "2, 64",
-        "3, 64",
-        "7, 357",
-        "7, 17",
-    })
+    @CsvSource({ "1, 64", "2, 64", "3, 64", "7, 357", "7, 17", })
     void testFilter(int k, int m) {
         Shape shape = Shape.fromKM(k, m);
         BitSet used = new BitSet(m);
@@ -89,21 +83,18 @@ public class IndexFilterTest {
                 // duplicates should not alter the list size
                 int newSize = consumer.size() + (used.get(bit) ? 0 : 1);
                 assertTrue(filter.test(bit));
-                assertEquals(newSize, consumer.size(),
-                        () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+                assertEquals(newSize, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
                 used.set(bit);
             }
 
             // The list should have unique entries
-            assertArrayEquals(used.stream().toArray(),
-                consumer.stream().mapToInt(i -> (int) i).sorted().toArray());
+            assertArrayEquals(used.stream().toArray(), consumer.stream().mapToInt(i -> (int) i).sorted().toArray());
             final int size = consumer.size();
 
             // Second observations do not change the list size
             used.stream().forEach(bit -> {
                 assertTrue(filter.test(bit));
-                assertEquals(size, consumer.size(),
-                    () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+                assertEquals(size, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
             });
         }
     }

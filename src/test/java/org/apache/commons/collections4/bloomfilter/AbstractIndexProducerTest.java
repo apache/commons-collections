@@ -77,14 +77,15 @@ public abstract class AbstractIndexProducerTest {
 
         IndexProducer producer = createProducer();
         List<Integer> lst = new ArrayList<Integer>();
-        for (int i :  producer.asIndexArray()) {
-            lst.add( i );
+        for (int i : producer.asIndexArray()) {
+            lst.add(i);
         }
         assertTrue(producer.forEachIndex(new IntPredicate() {
 
             @Override
             public boolean test(int value) {
-                assertTrue( lst.remove( Integer.valueOf(value) ), String.format("Instance of  %d was not found in lst", value));
+                assertTrue(lst.remove(Integer.valueOf(value)),
+                        String.format("Instance of  %d was not found in lst", value));
                 return true;
             }
         }));
