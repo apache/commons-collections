@@ -44,4 +44,5 @@ jobs:
         distribution: adopt
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn -V package --file pom.xml --no-transfer-progress
+      # Use the default goal
+      run: mvn -V --file pom.xml --no-transfer-progress

@@ -57,21 +57,21 @@ public interface BitMapProducer {
      * Applies the {@code func} to each bit map pair in order.
      * <p>
      * Creates a LongPredicate that is used in apply {@code func} to this BitMapProducer
-     * and another.  For example:
+     * and another.  For example:</p>
      * <pre>
      * BitMapProducer a = ....;
      * BitMapProducer b = ....;
-     * LongPredicate predicate = a.apply( (x,y) -> x==y );
+     * LongPredicate predicate = a.apply( (x,y) -&gt; x==y );
      * boolean result = b.apply( predicate );
      * </pre>
-     * The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
+     * <p>The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
      * </p><p>
      * Notes:
-     * <ul>
+     * </p><ul>
      * <li>The resulting LongPredicate should only be used once.</li>
      * <li>Any changes made to the {@code func} arguments will not survive outside of the {@code func} call.</li>
      * </ul>
-     * </p><p>
+     * <p>
      * <em>The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
      * of BitMapProducer that have local arrays reimplement this method.</em></p>
      *

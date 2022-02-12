@@ -73,6 +73,7 @@ public interface Hasher {
          * Creates an instance optimized for the specified shape.
          * @param shape The shape that is being generated.
          * @param consumer The consumer to accept the values.
+         * @return an IndexFilter optimized for the specified shape.
          */
         public static IndexFilter create(Shape shape, IntPredicate consumer) {
             return new IndexFilter(shape, consumer);
@@ -109,7 +110,7 @@ public interface Hasher {
         }
 
         /**
-         * Test if the number should be processed by teh {@code consumer}.
+         * Test if the number should be processed by the {@code consumer}.
          *
          * <p>If the number has <em>not</em> been seen before it is passed to the {@code consumer} and the result returned.
          * If the number has been seen before the {@code consumer} is not called and {@code true} returned.</p>
@@ -118,7 +119,6 @@ public interface Hasher {
          *
          * @param number the number to check.
          * @return {@code true} if processing should continue, {@code false} otherwise.
-         * @see IndexFilter#Filter(int)
          */
         @Override
         public boolean test(int number) {
