@@ -588,6 +588,9 @@
     <commons.jacoco.version>0.8.7</commons.jacoco.version>
     <commons.junit.version>5.8.2</commons.junit.version>
 
+    <!-- Override commons parent version to allow build on java 17 -->
+    <commons.japicmp.version>0.15.4</commons.japicmp.version>
+
     <!--Commons Release Plugin -->
     <commons.bc.version>4.4</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
@@ -598,7 +601,7 @@
 
 
   <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check clirr:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
