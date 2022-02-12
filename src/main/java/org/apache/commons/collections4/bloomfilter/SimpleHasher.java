@@ -98,6 +98,7 @@ public final class SimpleHasher implements Hasher {
      * </p><p>
      * Implementations may want to override this value to match defaults in legacy implementations.
      * </p>
+     * @return The default increment to use when the requested increment is zero.
      */
     public long getDefaultIncrement() {
         return 0x9e3779b97f4a7c15L;

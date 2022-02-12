@@ -73,6 +73,7 @@ public interface Hasher {
          * Creates an instance optimized for the specified shape.
          * @param shape The shape that is being generated.
          * @param consumer The consumer to accept the values.
+         * @return an IndexFilter optimized for the specified shape.
          */
         public static IndexFilter create(Shape shape, IntPredicate consumer) {
             return new IndexFilter(shape, consumer);

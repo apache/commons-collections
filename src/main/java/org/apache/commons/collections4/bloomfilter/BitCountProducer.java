@@ -28,8 +28,8 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
-     * Any exceptions thrown by the action are relayed to the caller.  The predicate is applied to each
-     * index-count pair, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * Any exceptions thrown by the action are relayed to the caller.  The consumer is applied to each
+     * index-count pair, if the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.
      *
      * <p>Must only process each index once, and must process indexes in order.</p>
@@ -62,18 +62,20 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Represents an operation that accepts an {@code <index, count>} pair representing
-     * the count for a bit index in a Bit Count Producer Bloom filter and returns no result.
+     * the count for a bit index in a Bit Count Producer Bloom filter and returns {@code true}
+     * if processing should continue, {@code false} otherwise.
      *
-     * <p>Note: This is a functional interface as a primitive type specialization of
-     * {@link java.util.function.BiConsumer} for {@code int}.
+     * <p>Note: This is a functional interface as a specialization of
+     * {@link java.util.function.BiPredicate} for {@code int}.</p>
      */
     @FunctionalInterface
     interface BitCountConsumer {
         /**
          * Performs this operation on the given {@code <index, count>} pair.
          *
-         * @param index the bit index
-         * @param count the count at the specified bit index
+         * @param index the bit index.
+         * @param count the count at the specified bit index.
+         * @return {@code true} if processing should continue, {@code false} it processing should stop.
          */
         boolean test(int index, int count);
     }

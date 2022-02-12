@@ -292,6 +292,7 @@ public final class Shape implements Comparable<Shape> {
      *
      * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
      * @param numberOfBits The number of bits in the filter
+     * @return a valid Shape.
      * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
     public static Shape fromKM(final int numberOfHashFunctions, final int numberOfBits) {
