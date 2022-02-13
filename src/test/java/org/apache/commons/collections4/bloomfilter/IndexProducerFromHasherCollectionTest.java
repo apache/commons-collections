@@ -16,16 +16,16 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
+public class IndexProducerFromHasherCollectionTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return new SimpleHasher(0, 1).indices(Shape.fromKM(17, 72));
+        return new HasherCollection( new SimpleHasher(0, 1), new SimpleHasher( 0,2)).indices(Shape.fromKM(17, 72));
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+        return new HasherCollection().indices(Shape.fromKM(17, 72));
     }
 
 }

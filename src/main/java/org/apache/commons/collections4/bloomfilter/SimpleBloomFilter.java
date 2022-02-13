@@ -87,7 +87,7 @@ public class SimpleBloomFilter implements BloomFilter {
      * Creates a populated instance.
      * @param shape The shape for the filter.
      * @param indices the IndexProducer to initialize the filter with.
-     * @throws IllegalArgumentException if the producer returns too many bit maps.
+     * @throws IllegalArgumentException if producer sends illegal value.
      */
     public SimpleBloomFilter(final Shape shape, IndexProducer indices) {
         this(shape);
@@ -136,11 +136,7 @@ public class SimpleBloomFilter implements BloomFilter {
      * Recalculates the cardinality.
      */
     private void recalcCardinality() {
-        this.cardinality = 0;
-        forEachBitMap(w -> {
-            this.cardinality += Long.bitCount(w);
-            return true;
-        });
+        this.cardinality = SetOperations.cardinality(this);
     }
 
     /**

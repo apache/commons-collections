@@ -25,7 +25,7 @@ import java.util.function.LongPredicate;
 /**
  * Produces bit map longs for a Bloom filter.
  *
- * Each bit map is a little-endian long value representing a block of bits of this filter.
+ * Each bit map is a little-endian long value representing a block of bits of in a filter.
  *
  * <p>The returned array will have length {@code ceil(m / 64)} where {@code m} is the
  * number of bits in the filter and {@code ceil} is the ceiling function.
@@ -43,8 +43,9 @@ public interface BitMapProducer {
     /**
      * Each bit map is passed to the predicate in order.  The predicate is applied to each
      * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bit maps are processed.  The producer must produce the number of
-     * bitMaps expected from the calculation  {@code BitMap.numberOfBitMaps( shape.getNumberOfBits() )}.
+     * is returned, and no further bit maps are processed.</p>
+     *
+     * <p>If the producer is empty this method will return true.</p>
      *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
@@ -88,7 +89,7 @@ public interface BitMapProducer {
 
             @Override
             public boolean test(long other) {
-                return func.test(idx > ary.length ? 0L : ary[idx++], other);
+                return func.test(idx >= ary.length ? 0L : ary[idx++], other);
             }
         };
     }

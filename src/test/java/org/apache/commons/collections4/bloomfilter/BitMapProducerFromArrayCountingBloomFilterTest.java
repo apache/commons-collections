@@ -31,4 +31,5 @@ public class BitMapProducerFromArrayCountingBloomFilterTest extends AbstractBitM
     protected BitMapProducer createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
     }
+
 }

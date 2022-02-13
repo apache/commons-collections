@@ -61,10 +61,17 @@ public abstract class AbstractBitMapProducerTest {
      */
     protected abstract BitMapProducer createEmptyProducer();
 
+    protected boolean emptyIsZeroLength() { return false; }
+
     @Test
     public final void testForEachBitMap() {
         assertFalse(createProducer().forEachBitMap(FALSE_CONSUMER), "non-empty should be false");
-        assertFalse(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be false");
+        if (emptyIsZeroLength() ) {
+            assertTrue(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be true");
+        } else {
+            assertFalse(createEmptyProducer().forEachBitMap(FALSE_CONSUMER), "empty should be false");
+        }
+
         assertTrue(createProducer().forEachBitMap(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(createEmptyProducer().forEachBitMap(TRUE_CONSUMER), "empty should be true");
     }
@@ -89,7 +96,11 @@ public abstract class AbstractBitMapProducerTest {
         assertFalse(createProducer().forEachBitMap(predicate), "empty == not_empty failed");
 
         predicate = createProducer().makePredicate((x, y) -> x == y);
-        assertFalse(createEmptyProducer().forEachBitMap(predicate), "not_empty == empty failed");
+        if (emptyIsZeroLength()) {
+            assertTrue(createEmptyProducer().forEachBitMap(predicate), "not_empty == empty failed");
+        } else {
+            assertFalse(createEmptyProducer().forEachBitMap(predicate), "not_empty == empty passed");
+        }
 
         predicate = createProducer().makePredicate((x, y) -> x == y);
         assertTrue(createProducer().forEachBitMap(predicate), "not_empty == not_empty failed");
@@ -123,7 +134,36 @@ public abstract class AbstractBitMapProducerTest {
         assertEquals(1, passes[0]);
 
         passes[0] = 0;
-        assertFalse(createEmptyProducer().forEachBitMap( l -> {passes[0]++;return false;}));
-        assertEquals(1, passes[0]);
+        if (emptyIsZeroLength()) {
+            assertTrue(createEmptyProducer().forEachBitMap( l -> {passes[0]++;return false;}));
+            assertEquals(0, passes[0]);
+        } else {
+            assertFalse(createEmptyProducer().forEachBitMap( l -> {passes[0]++;return false;}));
+            assertEquals(1, passes[0]);
+        }
+    }
+
+    @Test
+    public void testMakePredicateEarlyExit() {
+
+     // test BitMapProducers of different length send 0 for missing values.
+        int[] count = new int[1];
+        LongBiPredicate lbp = new LongBiPredicate() {
+
+            @Override
+            public boolean test(long x, long y) {
+                count[0]++;
+                return false;
+            }
+        };
+        LongPredicate predicate = createEmptyProducer().makePredicate( lbp );
+        createProducer().forEachBitMap( predicate );
+        assertEquals( 1, count[0]);
+
+        Arrays.fill( count, 0 );
+        predicate = createProducer().makePredicate( lbp );
+        createEmptyProducer().forEachBitMap( predicate );
+        assertEquals( emptyIsZeroLength()?0:1, count[0]);
+
     }
 }

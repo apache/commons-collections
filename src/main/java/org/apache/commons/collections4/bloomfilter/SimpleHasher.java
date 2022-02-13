@@ -28,7 +28,7 @@ import java.util.function.IntPredicate;
  *
  * @since 4.5
  */
-public final class SimpleHasher implements Hasher {
+public class SimpleHasher implements Hasher {
 
     /**
      * The initial hash value.

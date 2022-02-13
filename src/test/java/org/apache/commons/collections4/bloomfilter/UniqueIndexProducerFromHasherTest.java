@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
+public class UniqueIndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return new SimpleHasher(0, 1).indices(Shape.fromKM(17, 72));
+        return new SimpleHasher(0, 1).uniqueIndices(Shape.fromKM(17, 72));
     }
 
     @Override

@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
+import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.NonSparseDefaultBloomFilter;
+import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.SparseDefaultBloomFilter;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -104,7 +106,16 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testConstructWithBadBitMapProducer() {
+    public void testConstructWitBitMapProducer() {
+        long[] values = { from11Value, 0x9L };
+        BloomFilter f = createFilter( getTestShape(), BitMapProducer.fromLongArray(values));
+        List<Long> lst = new ArrayList<>();
+        for (long l : values) {
+            lst.add(l);
+        }
+        assertTrue( f.forEachBitMap( l-> {return lst.remove(Long.valueOf(l));} ));
+        assertTrue( lst.isEmpty() );
+
         // too many bitmaps
         assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), new BadProducer( 3 )));
         // too few bitmaps
@@ -113,13 +124,24 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testConstructWithBadIndexProducer() {
+    public void testConstructWithIndexProducer() {
+        int[] values = new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17};
+        BloomFilter f = createFilter( getTestShape(), IndexProducer.fromIntArray( values ));
+        List<Integer> lst = new ArrayList<>();
+        for (int i : values) {
+            lst.add(i);
+        }
+        assertTrue( f.forEachIndex( i-> {return lst.remove(Integer.valueOf(i));} ));
+        assertTrue( lst.isEmpty() );
+
+
         // value to large
         assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), IndexProducer.fromIntArray( new int[] { getTestShape().getNumberOfBits() } )));
         // negative value
         assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), IndexProducer.fromIntArray( new int[] { -1 } )));
 
     }
+
 
     @Test
     public final void testContains() {
@@ -320,7 +342,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test with hasher returning numbers out of range
         assertThrows( IllegalArgumentException.class,()->bf1.mergeInPlace( new BadHasher( bf1.getShape().getNumberOfBits())));
         assertThrows( IllegalArgumentException.class,()->bf1.mergeInPlace( new BadHasher( -1 )));
-
     }
 
     private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {

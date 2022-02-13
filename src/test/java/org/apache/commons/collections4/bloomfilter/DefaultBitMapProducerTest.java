@@ -16,16 +16,43 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
+import java.util.function.LongPredicate;
+
+public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
     @Override
-    protected IndexProducer createProducer() {
-        return new SimpleHasher(0, 1).indices(Shape.fromKM(17, 72));
+    protected BitMapProducer createProducer() {
+        return new DefaultBitMapProducer( new long[] { 1L, 2L });
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    protected BitMapProducer createEmptyProducer() {
+        return new DefaultBitMapProducer( new long[0] ) ;
+    }
+
+    @Override
+    protected boolean emptyIsZeroLength() {
+        return true;
+    }
+
+
+    class DefaultBitMapProducer implements BitMapProducer {
+        long[] bitMaps;
+
+        DefaultBitMapProducer( long[] bitMaps ) {
+            this.bitMaps = bitMaps;
+        }
+
+        @Override
+        public boolean forEachBitMap(LongPredicate predicate) {
+            for( long bitmap : bitMaps ) {
+                if (! predicate.test( bitmap )) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 
 }
