@@ -44,7 +44,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     public AbstractSortedBidiMapTest(final String testName) {
         super(testName);
         sortedKeys = getAsList(getSampleKeys());
-        Collections.sort(sortedKeys);
+        sortedKeys.sort(null);
         sortedKeys = Collections.unmodifiableList(sortedKeys);
 
         final Map<K, V> map = new TreeMap<>();

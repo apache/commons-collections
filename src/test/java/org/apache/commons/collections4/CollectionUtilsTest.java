@@ -1229,7 +1229,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         final List<Integer> combinedList = new ArrayList<>(collectionD);
         combinedList.addAll(collectionE);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
 
         assertEquals(combinedList, result2, "Merge two lists 2");
 
@@ -1258,7 +1258,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Set<Integer> combinedSet = new HashSet<>(collectionD);
         combinedSet.addAll(collectionE);
         final List<Integer> combinedList = new ArrayList<>(combinedSet);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
 
         assertEquals(combinedList, result2, "Merge two lists 2 - ignore duplicates");
     }
