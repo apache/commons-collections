@@ -43,7 +43,8 @@ public interface BitMapProducer {
     /**
      * Each bit map is passed to the predicate in order.  The predicate is applied to each
      * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bit maps are processed.
+     * is returned, and no further bit maps are processed.  The producer must produce the number of
+     * bitMaps expected from the calculation  {@code BitMap.numberOfBitMaps( shape.getNumberOfBits() )}.
      *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
@@ -61,7 +62,7 @@ public interface BitMapProducer {
      * <pre>
      * BitMapProducer a = ....;
      * BitMapProducer b = ....;
-     * LongPredicate predicate = a.apply( (x,y) -&gt; x==y );
+     * LongPredicate predicate = a.test( (x,y) -&gt; x==y );
      * boolean result = b.apply( predicate );
      * </pre>
      * <p>The above example will execute a.bitmapValue == b.bitmapValue for every value in b.

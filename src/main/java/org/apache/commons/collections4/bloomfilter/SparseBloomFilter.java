@@ -65,6 +65,12 @@ public class SparseBloomFilter implements BloomFilter {
         }
     }
 
+    private void checkIndices( Shape shape ) {
+        if (this.indices.floor( -1 ) != null || this.indices.ceiling( shape.getNumberOfBits()) != null)
+        {
+            throw new IllegalArgumentException( String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+        }
+    }
     /**
      * Constructs a populated Bloom filter.
      * @param shape the shape for the bloom filter.
@@ -74,6 +80,8 @@ public class SparseBloomFilter implements BloomFilter {
         this(shape);
         Objects.requireNonNull(hasher, "hasher");
         hasher.indices(shape).forEachIndex(this::add);
+        checkIndices(shape);
+
     }
 
     /**
@@ -86,7 +94,8 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape, IndexProducer indices) {
         this(shape);
         Objects.requireNonNull(indices, "indices");
-        mergeInPlace(indices);
+        indices.forEachIndex(this::add);
+        checkIndices(shape);
     }
 
     /**
@@ -198,11 +207,13 @@ public class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits()) - 1;
-        // because our indices are always in order we can
-        // shorten the time necessary to create the longs for the
-        // consumer
+        int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits());
+        /* because our indices are always in order we can
+         shorten the time necessary to create the longs for the
+         consumer */
+        // the currenlty constructed bitMap
         long bitMap = 0;
+        // the bitmap we are working on
         int idx = 0;
         for (int i : indices) {
             while (BitMap.getLongIndex(i) != idx) {
@@ -214,10 +225,13 @@ public class SparseBloomFilter implements BloomFilter {
             }
             bitMap |= BitMap.getLongBit(i);
         }
+        // we fall through with data in the bitMap
         if (!consumer.test(bitMap)) {
             return false;
         }
-        idx += 2;
+        // account for hte bitMap in the previous block + the next one
+        idx++;
+        // while there are more blocks to generate send zero to the consumer.
         while (idx < limit) {
             if (!consumer.test(0L)) {
                 return false;

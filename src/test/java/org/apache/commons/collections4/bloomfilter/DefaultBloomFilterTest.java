@@ -79,6 +79,10 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                 indices.add(i);
                 return true;
             });
+            if (this.indices.floor( -1 ) != null || this.indices.ceiling( shape.getNumberOfBits()) != null)
+            {
+                throw new IllegalArgumentException( String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+            }
         }
 
         @Override

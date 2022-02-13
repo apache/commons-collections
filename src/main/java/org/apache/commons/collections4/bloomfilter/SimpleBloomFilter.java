@@ -149,16 +149,15 @@ public class SimpleBloomFilter implements BloomFilter {
      * @throws IllegalArgumentException if producer sends illegal value.
      */
     private void mergeInPlace(IndexProducer indexProducer) {
-        try {
-            indexProducer.forEachIndex(idx -> {
-                BitMap.set(bitMap, idx);
-                return true;
-            });
-            recalcCardinality();
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("IndexProducer should only send values in the range[0,%s]",
-                    shape.getNumberOfBits() - 1), e);
-        }
+        indexProducer.forEachIndex(idx -> {
+            if (idx<0 || idx>=shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format("IndexProducer should only send values in the range[0,%s]",
+                        shape.getNumberOfBits() - 1));
+            }
+            BitMap.set(bitMap, idx);
+            return true;
+        });
+        recalcCardinality();
     }
 
     /**
@@ -226,11 +225,9 @@ public class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        if (bitMap != null) {
-            for (long l : bitMap) {
-                if (!consumer.test(l)) {
-                    return false;
-                }
+        for (long l : bitMap) {
+            if (!consumer.test(l)) {
+                return false;
             }
         }
         return true;
