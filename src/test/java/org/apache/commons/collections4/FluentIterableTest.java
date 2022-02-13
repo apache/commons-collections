@@ -161,7 +161,7 @@ public class FluentIterableTest {
         final List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
         assertEquals(combinedList, result);
 
         try {
@@ -183,7 +183,7 @@ public class FluentIterableTest {
         final List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
         assertEquals(combinedList, result);
 
         // null comparator is equivalent to natural ordering
@@ -352,7 +352,7 @@ public class FluentIterableTest {
         List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
         assertEquals(combinedList, result);
 
         try {

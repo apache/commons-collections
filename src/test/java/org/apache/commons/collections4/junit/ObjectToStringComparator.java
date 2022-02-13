@@ -27,7 +27,7 @@ public final class ObjectToStringComparator implements Comparator<Object>, Seria
      *
      * @since 4.5
      */
-    public final ObjectToStringComparator INSTANCE = new ObjectToStringComparator();
+    public static final ObjectToStringComparator INSTANCE = new ObjectToStringComparator();
 
     private static final long serialVersionUID = 1L;
 
