@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,16 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Override
     protected SimpleBloomFilter createFilter(final Shape shape, final Hasher hasher) {
         return new SimpleBloomFilter(shape, hasher);
+    }
+
+    @Override
+    protected SimpleBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
+        return new SimpleBloomFilter(shape, producer);
+    }
+
+    @Override
+    protected SimpleBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
+        return new SimpleBloomFilter(shape, producer);
     }
 
     private void executeNestedTest(SimpleBloomFilterTest nestedTest) {
@@ -80,12 +91,4 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
         executeNestedTest(nestedTest);
     }
 
-    @Test
-    public void testDifferentBitMapLength() {
-        BloomFilter bf1 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L, 2L));
-        BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), BitMapProducer.fromLongArray(1L));
-
-        assertTrue(bf1.contains(bf2));
-        assertFalse(bf2.contains(bf1));
-    }
 }

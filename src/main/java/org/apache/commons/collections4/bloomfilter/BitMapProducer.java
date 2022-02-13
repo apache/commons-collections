@@ -80,7 +80,7 @@ public interface BitMapProducer {
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      * @see #asBitMapArray()
      */
-    default LongPredicate makePredicate(LongBiFunction func) {
+    default LongPredicate makePredicate(LongBiPredicate func) {
         long[] ary = asBitMapArray();
 
         return new LongPredicate() {
@@ -134,7 +134,7 @@ public interface BitMapProducer {
             }
 
             @Override
-            public LongPredicate makePredicate(LongBiFunction func) {
+            public LongPredicate makePredicate(LongBiPredicate func) {
 
                 return new LongPredicate() {
                     int idx = 0;

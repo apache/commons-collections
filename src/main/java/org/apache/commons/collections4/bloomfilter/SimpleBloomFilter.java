@@ -86,25 +86,25 @@ public class SimpleBloomFilter implements BloomFilter {
     /**
      * Creates a populated instance.
      * @param shape The shape for the filter.
-     * @param producer the IndexProducer to initialize the filter with.
+     * @param indices the IndexProducer to initialize the filter with.
      * @throws IllegalArgumentException if the producer returns too many bit maps.
      */
-    public SimpleBloomFilter(final Shape shape, IndexProducer producer) {
+    public SimpleBloomFilter(final Shape shape, IndexProducer indices) {
         this(shape);
-        Objects.requireNonNull(producer, "producer");
-        mergeInPlace(producer);
+        Objects.requireNonNull(indices, "indices");
+        mergeInPlace(indices);
     }
 
     /**
      * Creates a populated instance.
      * @param shape The shape for the filter.
-     * @param producer the BitMapProducer to initialize the filter with.
-     * @throws IllegalArgumentException if the producer returns too many bit maps.
+     * @param bitMaps the BitMapProducer to initialize the filter with.
+     * @throws IllegalArgumentException if the producer returns too many or too few bit maps.
      */
-    public SimpleBloomFilter(final Shape shape, BitMapProducer producer) {
+    public SimpleBloomFilter(final Shape shape, BitMapProducer bitMaps) {
         this(shape);
-        Objects.requireNonNull(producer, "producer");
-        mergeInPlace(producer);
+        Objects.requireNonNull(bitMaps, "bitMaps");
+        mergeInPlace(bitMaps);
     }
 
     @Override
@@ -113,13 +113,13 @@ public class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public LongPredicate makePredicate(LongBiFunction func) {
+    public LongPredicate makePredicate(LongBiPredicate func) {
         return new LongPredicate() {
             int idx = 0;
 
             @Override
             public boolean test(long other) {
-                return func.test(idx > bitMap.length ? 0 : bitMap[idx++], other);
+                return func.test(idx >= bitMap.length ? 0 : bitMap[idx++], other);
             }
         };
     }
@@ -167,19 +167,20 @@ public class SimpleBloomFilter implements BloomFilter {
      */
     private void mergeInPlace(BitMapProducer bitMapProducer) {
         try {
-            bitMapProducer.forEachBitMap(new LongPredicate() {
-                int idx = 0;
-
-                @Override
-                public boolean test(long value) {
-                    bitMap[idx++] |= value;
+            int[] idx = new int[1];
+            bitMapProducer.forEachBitMap( value -> {
+                    bitMap[idx[0]++] |= value;
                     return true;
                 }
-            });
+            );
+            if (idx[0] != bitMap.length) {
+                throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
+                        bitMap.length));
+            }
             recalcCardinality();
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
-                    BitMap.numberOfBitMaps(shape.getNumberOfBits())), e);
+                    bitMap.length), e);
         }
     }
 

@@ -107,8 +107,8 @@ public class SparseBloomFilter implements BloomFilter {
      */
     public SparseBloomFilter(Shape shape, BitMapProducer bitMaps) {
         this(shape);
-        Objects.requireNonNull(indices, "indices");
-        mergeInPlace(IndexProducer.fromBitMapProducer(bitMaps));
+        Objects.requireNonNull(bitMaps, "bitMaps");
+        mergeInPlace(IndexProducer.fromBitMapProducer(new CheckBitMapCount( bitMaps, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
     }
 
     @Override
@@ -248,6 +248,6 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+        return contains(IndexProducer.fromBitMapProducer(new CheckBitMapCount( bitMapProducer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
     }
 }

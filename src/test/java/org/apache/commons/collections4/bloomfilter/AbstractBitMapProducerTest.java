@@ -19,6 +19,8 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
 import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
@@ -91,5 +93,37 @@ public abstract class AbstractBitMapProducerTest {
 
         predicate = createProducer().makePredicate((x, y) -> x == y);
         assertTrue(createProducer().forEachBitMap(predicate), "not_empty == not_empty failed");
+
+        // test BitMapProducers of different length send 0 for missing values.
+        int[] count = new int[3];
+        LongBiPredicate lbp = new LongBiPredicate() {
+
+            @Override
+            public boolean test(long x, long y) {
+                if (x==0) { count[0]++; }
+                if (y==0) { count[1]++; }
+                count[2]++;
+                return true;
+            }
+        };
+        predicate = createEmptyProducer().makePredicate( lbp );
+        createProducer().forEachBitMap( predicate );
+        assertEquals( count[2], count[0]);
+
+        Arrays.fill( count, 0 );
+        predicate = createProducer().makePredicate( lbp );
+        createEmptyProducer().forEachBitMap( predicate );
+        assertEquals( count[2], count[1]);
+    }
+
+    @Test
+    public void testForEachBitMapEarlyExit() {
+        int[] passes = new int[1];
+        assertFalse(createProducer().forEachBitMap( l -> {passes[0]++;return false;}));
+        assertEquals(1, passes[0]);
+
+        passes[0] = 0;
+        assertFalse(createEmptyProducer().forEachBitMap( l -> {passes[0]++;return false;}));
+        assertEquals(1, passes[0]);
     }
 }

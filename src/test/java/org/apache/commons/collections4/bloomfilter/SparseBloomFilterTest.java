@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.function.LongPredicate;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,12 +34,21 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         return new SparseBloomFilter(shape, hasher);
     }
 
+    @Override
+    protected SparseBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
+        return new SparseBloomFilter(shape, producer);
+    }
+
+    @Override
+    protected SparseBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
+        return new SparseBloomFilter(shape, producer);
+    }
+
     private void executeNestedTest(SparseBloomFilterTest nestedTest) {
         nestedTest.testContains();
         nestedTest.testEstimateIntersection();
         nestedTest.testEstimateN();
         nestedTest.testEstimateUnion();
-        nestedTest.testForEachBitMapEarlyExit();
         nestedTest.testIsFull();
         nestedTest.testMerge();
         nestedTest.testMergeInPlace();
@@ -76,4 +87,5 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         };
         executeNestedTest(nestedTest);
     }
+
 }

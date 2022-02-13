@@ -39,6 +39,16 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         return new DefaultBloomFilter(shape, hasher);
     }
 
+    @Override
+    protected DefaultBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
+        return new DefaultBloomFilter(shape, producer);
+    }
+
+    @Override
+    protected DefaultBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
+        return new DefaultBloomFilter(shape, producer);
+    }
+
     @Test
     public void testDefaultBloomFilterSimpleSpecificMergeInPlace() {
         DefaultBloomFilter filter = new DefaultBloomFilter(Shape.fromKM(3, 150));
@@ -74,8 +84,16 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         DefaultBloomFilter(Shape shape, Hasher hasher) {
+            this(shape, hasher.indices(shape));
+        }
+
+        DefaultBloomFilter(Shape shape, BitMapProducer producer) {
+            this(shape, IndexProducer.fromBitMapProducer(new CheckBitMapCount( producer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        }
+
+        DefaultBloomFilter(Shape shape, IndexProducer producer) {
             this(shape);
-            hasher.indices(shape).forEachIndex((i) -> {
+            producer.forEachIndex((i) -> {
                 indices.add(i);
                 return true;
             });

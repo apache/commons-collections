@@ -21,7 +21,7 @@ package org.apache.commons.collections4.bloomfilter;
  * @since 4.5
  */
 @FunctionalInterface
-public interface LongBiFunction {
+public interface LongBiPredicate {
 
     /**
      * A function that takes to long arguments and returns a boolean.
