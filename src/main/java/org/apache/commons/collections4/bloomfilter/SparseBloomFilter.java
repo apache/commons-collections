@@ -65,12 +65,13 @@ public class SparseBloomFilter implements BloomFilter {
         }
     }
 
-    private void checkIndices( Shape shape ) {
-        if (this.indices.floor( -1 ) != null || this.indices.ceiling( shape.getNumberOfBits()) != null)
-        {
-            throw new IllegalArgumentException( String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+    private void checkIndices(Shape shape) {
+        if (this.indices.floor(-1) != null || this.indices.ceiling(shape.getNumberOfBits()) != null) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
         }
     }
+
     /**
      * Constructs a populated Bloom filter.
      * @param shape the shape for the bloom filter.
@@ -108,7 +109,8 @@ public class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape, BitMapProducer bitMaps) {
         this(shape);
         Objects.requireNonNull(bitMaps, "bitMaps");
-        mergeInPlace(IndexProducer.fromBitMapProducer(new CheckBitMapCount( bitMaps, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        mergeInPlace(IndexProducer
+                .fromBitMapProducer(new CheckBitMapCount(bitMaps, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
     }
 
     @Override
@@ -208,9 +210,10 @@ public class SparseBloomFilter implements BloomFilter {
     public boolean forEachBitMap(LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits());
-        /* because our indices are always in order we can
-         shorten the time necessary to create the longs for the
-         consumer */
+        /*
+         * because our indices are always in order we can shorten the time necessary to
+         * create the longs for the consumer
+         */
         // the currenlty constructed bitMap
         long bitMap = 0;
         // the bitmap we are working on
@@ -248,6 +251,7 @@ public class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(new CheckBitMapCount( bitMapProducer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        return contains(IndexProducer.fromBitMapProducer(
+                new CheckBitMapCount(bitMapProducer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
     }
 }

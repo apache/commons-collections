@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongPredicate;
-import java.util.function.LongUnaryOperator;
 
 /**
  * Implementations of set operations on BitMapProducers.
@@ -34,22 +33,26 @@ public final class SetOperations {
      * @param op a long binary operation on where x = first and y = second bitmap producers.
      * @return the calculated cardinality.
      */
-    private static int cardinality( BitMapProducer first, BitMapProducer second, LongBinaryOperator op ) {
+    private static int cardinality(BitMapProducer first, BitMapProducer second, LongBinaryOperator op) {
         int[] cardinality = new int[1];
 
-        LongPredicate lp = first.makePredicate( (x,y) -> {
-            cardinality[0] += Long.bitCount(op.applyAsLong(x,y));
+        LongPredicate lp = first.makePredicate((x, y) -> {
+            cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
             return true;
-            });
+        });
         second.forEachBitMap(lp);
         return cardinality[0];
     }
 
-    public static int cardinality( BitMapProducer producer ) {
+    public static int cardinality(BitMapProducer producer) {
         int[] cardinality = new int[1];
-        producer.forEachBitMap( l -> {cardinality[0]+= Long.bitCount(l); return true;});
+        producer.forEachBitMap(l -> {
+            cardinality[0] += Long.bitCount(l);
+            return true;
+        });
         return cardinality[0];
     }
+
     /**
      * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
      * @param first the first BitMapProducer.
@@ -57,7 +60,7 @@ public final class SetOperations {
      * @return the cardinality of the {@code AND} of the filters.
      */
     public static int andCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality( first, second, (x,y)->x&y );
+        return cardinality(first, second, (x, y) -> x & y);
     }
 
     /**
@@ -67,7 +70,7 @@ public final class SetOperations {
      * @return the cardinality of the {@code OR} of the filters.
      */
     public static int orCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality( first, second, (x,y)->x|y );
+        return cardinality(first, second, (x, y) -> x | y);
     }
 
     /**
@@ -77,7 +80,7 @@ public final class SetOperations {
      * @return the cardinality of the {@code XOR} of the filters.
      */
     public static int xorCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality( first, second, (x,y)->x^y );
+        return cardinality(first, second, (x, y) -> x ^ y);
     }
 
     /**

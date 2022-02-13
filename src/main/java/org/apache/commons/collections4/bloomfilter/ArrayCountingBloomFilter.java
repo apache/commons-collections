@@ -131,7 +131,8 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
         try {
             filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException( String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
         }
         return filter;
     }
@@ -146,9 +147,10 @@ public class ArrayCountingBloomFilter implements CountingBloomFilter {
     public boolean mergeInPlace(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         try {
-        return add(BitCountProducer.from(hasher.uniqueIndices(shape)));
+            return add(BitCountProducer.from(hasher.uniqueIndices(shape)));
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException( String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
         }
     }
 

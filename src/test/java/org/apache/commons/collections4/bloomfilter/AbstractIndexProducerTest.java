@@ -94,11 +94,17 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public void testForIndexEarlyExit() {
         int[] passes = new int[1];
-        assertFalse(createProducer().forEachIndex( i -> {passes[0]++;return false;}));
+        assertFalse(createProducer().forEachIndex(i -> {
+            passes[0]++;
+            return false;
+        }));
         assertEquals(1, passes[0]);
 
         passes[0] = 0;
-        assertTrue(createEmptyProducer().forEachIndex( i -> {passes[0]++;return false;}));
+        assertTrue(createEmptyProducer().forEachIndex(i -> {
+            passes[0]++;
+            return false;
+        }));
         assertEquals(0, passes[0]);
     }
 

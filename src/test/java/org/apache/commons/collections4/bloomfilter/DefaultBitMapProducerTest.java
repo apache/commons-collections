@@ -22,12 +22,12 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
     @Override
     protected BitMapProducer createProducer() {
-        return new DefaultBitMapProducer( new long[] { 1L, 2L });
+        return new DefaultBitMapProducer(new long[] { 1L, 2L });
     }
 
     @Override
     protected BitMapProducer createEmptyProducer() {
-        return new DefaultBitMapProducer( new long[0] ) ;
+        return new DefaultBitMapProducer(new long[0]);
     }
 
     @Override
@@ -35,18 +35,17 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
         return true;
     }
 
-
     class DefaultBitMapProducer implements BitMapProducer {
         long[] bitMaps;
 
-        DefaultBitMapProducer( long[] bitMaps ) {
+        DefaultBitMapProducer(long[] bitMaps) {
             this.bitMaps = bitMaps;
         }
 
         @Override
         public boolean forEachBitMap(LongPredicate predicate) {
-            for( long bitmap : bitMaps ) {
-                if (! predicate.test( bitmap )) {
+            for (long bitmap : bitMaps) {
+                if (!predicate.test(bitmap)) {
                     return false;
                 }
             }

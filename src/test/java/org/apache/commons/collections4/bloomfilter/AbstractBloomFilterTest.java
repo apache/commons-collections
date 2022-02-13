@@ -23,11 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.NonSparseDefaultBloomFilter;
-import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.SparseDefaultBloomFilter;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -100,48 +97,53 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testConstructWithBadHasher() {
         // value too large
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), new BadHasher( getTestShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class,
+                () -> createFilter(getTestShape(), new BadHasher(getTestShape().getNumberOfBits())));
         // negative value
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), new BadHasher( -1 )));
+        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadHasher(-1)));
     }
 
     @Test
     public void testConstructWitBitMapProducer() {
         long[] values = { from11Value, 0x9L };
-        BloomFilter f = createFilter( getTestShape(), BitMapProducer.fromLongArray(values));
+        BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromLongArray(values));
         List<Long> lst = new ArrayList<>();
         for (long l : values) {
             lst.add(l);
         }
-        assertTrue( f.forEachBitMap( l-> {return lst.remove(Long.valueOf(l));} ));
-        assertTrue( lst.isEmpty() );
+        assertTrue(f.forEachBitMap(l -> {
+            return lst.remove(Long.valueOf(l));
+        }));
+        assertTrue(lst.isEmpty());
 
         // too many bitmaps
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), new BadProducer( 3 )));
+        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(3)));
         // too few bitmaps
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), new BadProducer( 1 )));
+        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(1)));
 
     }
 
     @Test
     public void testConstructWithIndexProducer() {
-        int[] values = new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17};
-        BloomFilter f = createFilter( getTestShape(), IndexProducer.fromIntArray( values ));
+        int[] values = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
+        BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIntArray(values));
         List<Integer> lst = new ArrayList<>();
         for (int i : values) {
             lst.add(i);
         }
-        assertTrue( f.forEachIndex( i-> {return lst.remove(Integer.valueOf(i));} ));
-        assertTrue( lst.isEmpty() );
-
+        assertTrue(f.forEachIndex(i -> {
+            return lst.remove(Integer.valueOf(i));
+        }));
+        assertTrue(lst.isEmpty());
 
         // value to large
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), IndexProducer.fromIntArray( new int[] { getTestShape().getNumberOfBits() } )));
+        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(),
+                IndexProducer.fromIntArray(new int[] { getTestShape().getNumberOfBits() })));
         // negative value
-        assertThrows( IllegalArgumentException.class, ()->createFilter( getTestShape(), IndexProducer.fromIntArray( new int[] { -1 } )));
+        assertThrows(IllegalArgumentException.class,
+                () -> createFilter(getTestShape(), IndexProducer.fromIntArray(new int[] { -1 })));
 
     }
-
 
     @Test
     public final void testContains() {
@@ -168,15 +170,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
                 getTestShape().getNumberOfBits());
         assertFalse(bf2.contains(bitMapProducer), "BF2 Should not contain this hasher");
 
-       //Test different lengths
+        // Test different lengths
         bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf3= createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1), from1);
-        assertTrue( bf1.contains(bf3));
-        assertTrue( bf3.contains(bf1));
+        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
+                from1);
+        assertTrue(bf1.contains(bf3));
+        assertTrue(bf3.contains(bf1));
 
-        final BloomFilter bf4= createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1), bigHasher);
-        assertFalse( bf1.contains(bf4));
-        assertTrue( bf4.contains(bf1));
+        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
+                bigHasher);
+        assertFalse(bf1.contains(bf4));
+        assertTrue(bf4.contains(bf1));
 
     }
 
@@ -299,8 +303,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf5.contains(bf2), "Should contain bf2");
 
         // test with hasher returning numbers out of range
-        assertThrows( IllegalArgumentException.class,()->bf1.merge( new BadHasher( bf1.getShape().getNumberOfBits())));
-        assertThrows( IllegalArgumentException.class,()->bf1.merge( new BadHasher( -1 )));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
 
     }
 
@@ -340,8 +344,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
 
         // test with hasher returning numbers out of range
-        assertThrows( IllegalArgumentException.class,()->bf1.mergeInPlace( new BadHasher( bf1.getShape().getNumberOfBits())));
-        assertThrows( IllegalArgumentException.class,()->bf1.mergeInPlace( new BadHasher( -1 )));
+        assertThrows(IllegalArgumentException.class,
+                () -> bf1.mergeInPlace(new BadHasher(bf1.getShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(new BadHasher(-1)));
     }
 
     private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
@@ -381,24 +386,30 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testBitMapProducerSize() {
         int[] idx = new int[1];
-        createFilter( getTestShape(), from1 ).forEachBitMap( i -> { idx[0]++;return true;});
-        assertEquals( BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        createFilter(getTestShape(), from1).forEachBitMap(i -> {
+            idx[0]++;
+            return true;
+        });
+        assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
 
         idx[0] = 0;
-        createEmptyFilter( getTestShape() ).forEachBitMap( i -> { idx[0]++;return true;});
-        assertEquals( BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        createEmptyFilter(getTestShape()).forEachBitMap(i -> {
+            idx[0]++;
+            return true;
+        });
+        assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
 
     }
 
     /**
      * Testing class returns the value as the only value.
      */
-    class BadHasher implements  Hasher {
+    class BadHasher implements Hasher {
 
         IndexProducer producer;
 
-        BadHasher( int value ) {
-            this.producer = IndexProducer.fromIntArray( new int[] { value });
+        BadHasher(int value) {
+            this.producer = IndexProducer.fromIntArray(new int[] { value });
         }
 
         @Override
@@ -415,14 +426,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     class BadProducer implements BitMapProducer {
         int count;
 
-        BadProducer( int count ) {
+        BadProducer(int count) {
             this.count = count;
         }
 
         @Override
         public boolean forEachBitMap(LongPredicate predicate) {
-            for (int i=0;i<count;i++) {
-                predicate.test( 0L );
+            for (int i = 0; i < count; i++) {
+                predicate.test(0L);
             }
             return true;
         }

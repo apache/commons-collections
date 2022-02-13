@@ -108,8 +108,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(BitMapProducer bitMapProducer) {
-        return bitMapProducer.forEachBitMap(
-                this.makePredicate((x, y) -> (x & y) == y));
+        return bitMapProducer.forEachBitMap(this.makePredicate((x, y) -> (x & y) == y));
     }
 
     // update operations
@@ -273,7 +272,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
          */
         CheckBitMapCount(BitMapProducer wrapped, int numberOfBitMaps) {
             this.wrapped = wrapped;
-            this.numberOfBitMaps=numberOfBitMaps;
+            this.numberOfBitMaps = numberOfBitMaps;
         }
 
         @Override
@@ -289,9 +288,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
 
             };
             boolean result = wrapped.forEachBitMap(counter);
-            if (result && count[0]!=numberOfBitMaps) {
-                throw new IllegalArgumentException(String.format("BitMapProducer should exactly %s maps",
-                        numberOfBitMaps));
+            if (result && count[0] != numberOfBitMaps) {
+                throw new IllegalArgumentException(
+                        String.format("BitMapProducer should exactly %s maps", numberOfBitMaps));
             }
             return result;
         }

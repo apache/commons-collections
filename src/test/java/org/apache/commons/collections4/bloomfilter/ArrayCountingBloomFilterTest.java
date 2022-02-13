@@ -30,12 +30,13 @@ public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTes
 
     @Override
     protected ArrayCountingBloomFilter createFilter(Shape shape, Hasher hasher) {
-        return createFilter( shape, hasher.uniqueIndices(shape));
+        return createFilter(shape, hasher.uniqueIndices(shape));
     }
 
     @Override
     protected ArrayCountingBloomFilter createFilter(Shape shape, BitMapProducer producer) {
-        return createFilter( shape, IndexProducer.fromBitMapProducer(new CheckBitMapCount(producer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        return createFilter(shape, IndexProducer
+                .fromBitMapProducer(new CheckBitMapCount(producer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
     }
 
     @Override
@@ -45,9 +46,10 @@ public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTes
             filter.add(BitCountProducer.from(producer));
             return filter;
         } catch (ArrayIndexOutOfBoundsException e) {
-            // since ArrayCountingBloomFilter does not ahave a constructor that takes a hasher
+            // since ArrayCountingBloomFilter does not ahave a constructor that takes a
+            // hasher
             // we have to duplicate the expected results here.
-            throw new IllegalArgumentException( e );
+            throw new IllegalArgumentException(e);
         }
     }
 }

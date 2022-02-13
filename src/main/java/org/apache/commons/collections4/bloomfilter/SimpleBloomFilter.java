@@ -146,9 +146,9 @@ public class SimpleBloomFilter implements BloomFilter {
      */
     private void mergeInPlace(IndexProducer indexProducer) {
         indexProducer.forEachIndex(idx -> {
-            if (idx<0 || idx>=shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format("IndexProducer should only send values in the range[0,%s]",
-                        shape.getNumberOfBits() - 1));
+            if (idx < 0 || idx >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format(
+                        "IndexProducer should only send values in the range[0,%s]", shape.getNumberOfBits() - 1));
             }
             BitMap.set(bitMap, idx);
             return true;
@@ -164,19 +164,18 @@ public class SimpleBloomFilter implements BloomFilter {
     private void mergeInPlace(BitMapProducer bitMapProducer) {
         try {
             int[] idx = new int[1];
-            bitMapProducer.forEachBitMap( value -> {
-                    bitMap[idx[0]++] |= value;
-                    return true;
-                }
-            );
+            bitMapProducer.forEachBitMap(value -> {
+                bitMap[idx[0]++] |= value;
+                return true;
+            });
             if (idx[0] != bitMap.length) {
-                throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
-                        bitMap.length));
+                throw new IllegalArgumentException(
+                        String.format("BitMapProducer should only send %s maps", bitMap.length));
             }
             recalcCardinality();
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps",
-                    bitMap.length), e);
+            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps", bitMap.length),
+                    e);
         }
     }
 

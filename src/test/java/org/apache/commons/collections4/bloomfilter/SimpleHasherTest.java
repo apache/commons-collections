@@ -54,10 +54,10 @@ public class SimpleHasherTest extends AbstractHasherTest {
     }
 
     private void assertIncrement(SimpleHasher hasher, long defaultIncrement) {
-        assertEquals( defaultIncrement, hasher.getDefaultIncrement());
-        int[] values = hasher.indices( Shape.fromKM( 2, Integer.MAX_VALUE )).asIndexArray();
-        assertEquals( 0, values[0] );
-        assertEquals( Long.remainderUnsigned( defaultIncrement, Integer.MAX_VALUE), values[1] );
+        assertEquals(defaultIncrement, hasher.getDefaultIncrement());
+        int[] values = hasher.indices(Shape.fromKM(2, Integer.MAX_VALUE)).asIndexArray();
+        assertEquals(0, values[0]);
+        assertEquals(Long.remainderUnsigned(defaultIncrement, Integer.MAX_VALUE), values[1]);
     }
 
     @Test
@@ -80,28 +80,28 @@ public class SimpleHasherTest extends AbstractHasherTest {
         // test zero incrementer gets default
         // default increment from SimpleHasher.
         long defaultIncrement = 0x9e3779b97f4a7c15L;
-        SimpleHasher hasher = new SimpleHasher( 0, 0 );
-        assertIncrement( new SimpleHasher( 0, 0 ), defaultIncrement );
-        assertIncrement( new SimpleHasher( new byte[2] ), defaultIncrement );
+        SimpleHasher hasher = new SimpleHasher(0, 0);
+        assertIncrement(new SimpleHasher(0, 0), defaultIncrement);
+        assertIncrement(new SimpleHasher(new byte[2]), defaultIncrement);
 
         // test that changing default increment works
         defaultIncrement = 4;
         defaultIncrement = 4L;
-        hasher = new SimpleHasher( 0, 0 ) {
+        hasher = new SimpleHasher(0, 0) {
             @Override
             public long getDefaultIncrement() {
                 return 4L;
             }
         };
-        assertIncrement( hasher, defaultIncrement );
-        hasher = new SimpleHasher( new byte[2] ) {
+        assertIncrement(hasher, defaultIncrement);
+        hasher = new SimpleHasher(new byte[2]) {
             @Override
             public long getDefaultIncrement() {
                 return 4L;
             }
         };
 
-        assertEquals( defaultIncrement, hasher.getDefaultIncrement());
+        assertEquals(defaultIncrement, hasher.getDefaultIncrement());
 
     }
 

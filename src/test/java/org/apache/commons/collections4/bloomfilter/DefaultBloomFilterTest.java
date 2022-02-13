@@ -23,8 +23,6 @@ import java.util.TreeSet;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.NonSparseDefaultBloomFilter;
-import org.apache.commons.collections4.bloomfilter.DefaultBloomFilterTest.SparseDefaultBloomFilter;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -79,21 +77,19 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testMergeInPlaceWithDifferingSparseness() {
         int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-        Hasher hasher = new SimpleHasher(1,1);
+        Hasher hasher = new SimpleHasher(1, 1);
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace( hasher );
+        bf1.mergeInPlace(hasher);
         LongPredicate lp = bf1.makePredicate((x, y) -> x == y);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()),
-                getTestShape().getNumberOfBits()
-                ).forEachBitMap(lp));
+        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .forEachBitMap(lp));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace( hasher );
+        bf1.mergeInPlace(hasher);
         lp = bf1.makePredicate((x, y) -> x == y);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()),
-                getTestShape().getNumberOfBits()
-                ).forEachBitMap(lp));
+        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .forEachBitMap(lp));
 
     }
 
@@ -233,7 +229,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             result.indices.addAll(indices);
             return result;
         }
-
 
     }
 
