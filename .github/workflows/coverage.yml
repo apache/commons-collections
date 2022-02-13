@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Coveralls
+name: Coverage
 
 on: [push, pull_request]
 
@@ -39,9 +39,9 @@ jobs:
         distribution: adopt
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn -V test --file pom.xml --no-transfer-progress
+      run: mvn -V test jacoco:report --file pom.xml --no-transfer-progress
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@1.1.3
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        files: ./target/site/jacoco/jacoco.xml
