@@ -119,6 +119,9 @@
     <action dev="ggregory" type="add" due-to="Gary Gregory">
       Add ListUtils.getFirst() and getLast().
     </action>
+    <action dev="ggregory" type="add" due-to="Gary Gregory">
+      Add singleton ObjectToStringComparator.INSTANCE.
+    </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump actions/setup-java from v1.4.0 to v2 #174 #177 #186 #224.
