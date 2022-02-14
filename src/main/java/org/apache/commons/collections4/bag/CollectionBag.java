@@ -105,6 +105,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
+        if (coll == null) return false;
         final Iterator<?> e = coll.iterator();
         while (e.hasNext()) {
             if (!contains(e.next())) {

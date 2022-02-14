@@ -136,6 +136,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
+        if (coll == null) return false;
         if (coll instanceof Bag) {
             return containsAll((Bag<?>) coll);
         }
@@ -150,6 +151,9 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return {@code true} if the Bag contains all the collection
      */
     boolean containsAll(final Bag<?> other) {
+        if (other == null) {
+            return false;
+        }
         final Iterator<?> it = other.uniqueSet().iterator();
         while (it.hasNext()) {
             final Object current = it.next();

@@ -163,6 +163,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     @Override
     public boolean containsAll(final Collection<?> coll) {
+        if (coll == null) {
+            return false;
+        }
         for (final Object o : coll) {
             if (!contains(o)) {
                 return false;
