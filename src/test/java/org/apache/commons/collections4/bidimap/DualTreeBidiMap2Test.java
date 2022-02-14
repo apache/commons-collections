@@ -129,7 +129,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
         List<K> newSortedKeys = getAsList(getSampleKeys());
-        Collections.sort(newSortedKeys, new ReverseComparator<>(ComparableComparator.<K>comparableComparator()));
+        newSortedKeys.sort(new ReverseComparator<>(ComparableComparator.<K>comparableComparator()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
         final Iterator<K> mapIter = sm.keySet().iterator();
