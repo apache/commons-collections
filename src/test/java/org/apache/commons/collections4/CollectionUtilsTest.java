@@ -1268,13 +1268,13 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final String[] array = null;
-        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(list, array));
+        assertFalse(CollectionUtils.containsAny(list, array));
     }
 
     @Test
     public void testContainsAnyInArrayNullColl1() {
         final String[] oneArr = {"1"};
-        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(null, oneArr));
+        assertFalse(CollectionUtils.containsAny(null, oneArr));
     }
 
     @Test
@@ -1282,14 +1282,14 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final Collection<String> list2 = null;
-        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(list, list2));
+        assertFalse(CollectionUtils.containsAny(list, list2));
     }
 
     @Test
     public void testContainsAnyNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(null, list));
+        assertFalse(CollectionUtils.containsAny(null, list));
     }
 
     @Test
@@ -1297,15 +1297,15 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final Collection<String> list2 = null;
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.containsAny(list, list2));
+        assertFalse(CollectionUtils.containsAny(list, list2));
     }
 
     @Test
     public void testContainsAnyNullColl3() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        final String[] array = null;
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.containsAny(list, array));
+        final String[] array = null;;
+        assertFalse(CollectionUtils.containsAny(list, array));
     }
 
     @Test
@@ -1547,7 +1547,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testIsFullNullColl() {
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.isFull(null));
+        assertFalse(CollectionUtils.isFull(null));
     }
 
     @Test
@@ -1651,14 +1651,19 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testIsSubCollectionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () -> CollectionUtils.isSubCollection(null, list));
+        assertFalse(CollectionUtils.isSubCollection(null, list));
     }
 
     @Test
     public void testIsSubCollectionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () -> CollectionUtils.isSubCollection(list, null));
+        assertFalse(CollectionUtils.isSubCollection(list, null));
+    }
+
+    @Test
+    public void testIsSubCollectionNullColl1Coll2() {
+        assertTrue(CollectionUtils.isSubCollection(null, null));
     }
 
     @Test
