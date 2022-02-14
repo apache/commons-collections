@@ -27,10 +27,11 @@ import java.util.function.LongPredicate;
 public final class SetOperations {
 
     /**
-     * Calculates the cardinality using the {@code BitMapProducer.makePredicate} method.
+     * Calculates the cardinality of the result of a LongBinaryOperator using the
+     * {@code BitMapProducer.makePredicate} method.
      * @param first the first BitMapProducer
      * @param second the second BitMapProducer
-     * @param op a long binary operation on where x = first and y = second bitmap producers.
+     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
      * @return the calculated cardinality.
      */
     private static int cardinality(BitMapProducer first, BitMapProducer second, LongBinaryOperator op) {
@@ -44,6 +45,12 @@ public final class SetOperations {
         return cardinality[0];
     }
 
+    /**
+     * Calculates the cardinality of a BitMapProducer.  By necessity this method will visit each bit map
+     * created by the producer.
+     * @param producer the Producer to calculate the cardinality for.
+     * @return the cardinality of the bit maps produced by the producer.
+     */
     public static int cardinality(BitMapProducer producer) {
         int[] cardinality = new int[1];
         producer.forEachBitMap(l -> {
