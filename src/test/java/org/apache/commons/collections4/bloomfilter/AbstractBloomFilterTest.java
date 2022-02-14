@@ -120,7 +120,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(3)));
         // too few bitmaps
         assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(1)));
-
     }
 
     @Test
@@ -142,7 +141,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // negative value
         assertThrows(IllegalArgumentException.class,
                 () -> createFilter(getTestShape(), IndexProducer.fromIntArray(new int[] { -1 })));
-
     }
 
     @Test
@@ -181,7 +179,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
                 bigHasher);
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
-
     }
 
     /**
@@ -305,7 +302,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test with hasher returning numbers out of range
         assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
         assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
-
     }
 
     /**
@@ -398,7 +394,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             return true;
         });
         assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
-
     }
 
     /**
@@ -437,6 +432,5 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             }
             return true;
         }
-
     }
 }

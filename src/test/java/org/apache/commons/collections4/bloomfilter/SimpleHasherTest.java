@@ -102,7 +102,6 @@ public class SimpleHasherTest extends AbstractHasherTest {
         };
 
         assertEquals(defaultIncrement, hasher.getDefaultIncrement());
-
     }
 
     @Test

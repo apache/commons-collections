@@ -51,7 +51,5 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
             }
             return true;
         }
-
     }
-
 }

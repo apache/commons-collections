@@ -27,5 +27,4 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
     protected IndexProducer createEmptyProducer() {
         return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
-
 }

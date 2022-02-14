@@ -82,7 +82,6 @@ public class SparseBloomFilter implements BloomFilter {
         Objects.requireNonNull(hasher, "hasher");
         hasher.indices(shape).forEachIndex(this::add);
         checkIndices(shape);
-
     }
 
     /**

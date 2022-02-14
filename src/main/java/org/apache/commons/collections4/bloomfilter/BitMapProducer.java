@@ -43,7 +43,7 @@ public interface BitMapProducer {
     /**
      * Each bit map is passed to the predicate in order.  The predicate is applied to each
      * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bit maps are processed.</p>
+     * is returned, and no further bit maps are processed.
      *
      * <p>If the producer is empty this method will return true.</p>
      *
@@ -63,7 +63,7 @@ public interface BitMapProducer {
      * <pre>
      * BitMapProducer a = ....;
      * BitMapProducer b = ....;
-     * LongPredicate predicate = a.test( (x,y) -&gt; x==y );
+     * LongPredicate predicate = a.makePredicate( (x,y) -&gt; x==y );
      * boolean result = b.apply( predicate );
      * </pre>
      * <p>The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
@@ -72,6 +72,8 @@ public interface BitMapProducer {
      * </p><ul>
      * <li>The resulting LongPredicate should only be used once.</li>
      * <li>Any changes made to the {@code func} arguments will not survive outside of the {@code func} call.</li>
+     * <li>For an example of how to use {@code makePredicate} to apply non-binary functions across all pairs of
+     * bit maps see the SetOperations code.</li>
      * </ul>
      * <p>
      * <em>The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
@@ -79,7 +81,6 @@ public interface BitMapProducer {
      *
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
-     * @see #asBitMapArray()
      */
     default LongPredicate makePredicate(LongBiPredicate func) {
         long[] ary = asBitMapArray();

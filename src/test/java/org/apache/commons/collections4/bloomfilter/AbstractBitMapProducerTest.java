@@ -179,6 +179,5 @@ public abstract class AbstractBitMapProducerTest {
         predicate = createProducer().makePredicate(lbp);
         createEmptyProducer().forEachBitMap(predicate);
         assertEquals(emptyIsZeroLength() ? 0 : 1, count[0]);
-
     }
 }

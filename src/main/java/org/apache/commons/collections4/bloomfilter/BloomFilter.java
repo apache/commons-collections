@@ -285,7 +285,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
                     count[0]++;
                     return predicate.test(value);
                 }
-
             };
             boolean result = wrapped.forEachBitMap(counter);
             if (result && count[0] != numberOfBitMaps) {
@@ -294,7 +293,5 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             }
             return result;
         }
-
     }
-
 }

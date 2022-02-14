@@ -107,5 +107,4 @@ public abstract class AbstractIndexProducerTest {
         }));
         assertEquals(0, passes[0]);
     }
-
 }

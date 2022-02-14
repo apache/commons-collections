@@ -27,5 +27,4 @@ public class UniqueIndexProducerFromHasherCollectionTest extends AbstractIndexPr
     protected IndexProducer createEmptyProducer() {
         return new HasherCollection().uniqueIndices(Shape.fromKM(17, 72));
     }
-
 }
