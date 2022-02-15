@@ -48,7 +48,7 @@ import java.util.stream.IntStream;
  * @see Shape
  * @since 4.5
  */
-public class ArrayCountingBloomFilter implements CountingBloomFilter {
+final public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     /**
      * The shape of this Bloom filter.

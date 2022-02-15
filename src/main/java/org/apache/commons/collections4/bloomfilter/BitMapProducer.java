@@ -81,13 +81,30 @@ public interface BitMapProducer {
      * @return An array of bit map data.
      */
     default long[] asBitMapArray() {
-        List<Long> lst = new ArrayList<>();
-        forEachBitMap(lst::add);
-        long[] result = new long[lst.size()];
-        for (int i = 0; i < lst.size(); i++) {
-            result[i] = lst.get(i);
+        class Bits {
+            private long[] data = new long[16];
+            private int size;
+
+            boolean add(long bits) {
+                if (size == data.length) {
+                    // This will throw an out-of-memory error if there are too many bits.
+                    // Since bits are addressed using 32-bit signed integer indices
+                    // the maximum length should be ~2^31 / 2^6 = ~2^25.
+                    // Any more is a broken implementation.
+                    data = Arrays.copyOf(data, size * 2);
+                }
+                data[size++] = bits;
+                return true;
+            }
+
+            long[] toArray() {
+                // Edge case to avoid a large array copy
+                return size == data.length ? data : Arrays.copyOf(data, size);
+            }
         }
-        return result;
+        Bits bits = new Bits();
+        forEachBitMap(bits::add);
+        return bits.toArray();
     }
 
     /**
@@ -95,7 +112,7 @@ public interface BitMapProducer {
      * @param bitMaps the bit maps to return.
      * @return a BitMapProducer.
      */
-    static BitMapProducer fromLongArray(long... bitMaps) {
+    static BitMapProducer fromBitMapArray(long... bitMaps) {
         return new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
@@ -135,7 +152,7 @@ public interface BitMapProducer {
             BitMap.set(result, i);
             return true;
         });
-        return fromLongArray(result);
+        return fromBitMapArray(result);
     }
 
     class CountingLongPredicate implements LongPredicate {

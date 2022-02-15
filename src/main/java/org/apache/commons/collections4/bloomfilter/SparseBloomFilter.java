@@ -26,7 +26,7 @@ import java.util.function.LongPredicate;
  * implementation and should work well for most low cardinality Bloom filters.
  * @since 4.5
  */
-public class SparseBloomFilter implements BloomFilter {
+public final class SparseBloomFilter implements BloomFilter {
 
     /**
      * The bitSet that defines this BloomFilter.
@@ -115,16 +115,9 @@ public class SparseBloomFilter implements BloomFilter {
     @Override
     public long[] asBitMapArray() {
         long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        LongPredicate filler = new LongPredicate() {
-            int idx = 0;
-
-            @Override
-            public boolean test(long value) {
-                result[idx++] = value;
-                return true;
-            }
-        };
-        forEachBitMap(filler);
+        for (int i : indices) {
+            BitMap.set(result, i);
+        }
         return result;
     }
 

@@ -28,7 +28,7 @@ import org.apache.commons.collections4.bloomfilter.BitMapProducer.CountingLongPr
  * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
-public class SimpleBloomFilter implements BloomFilter {
+public final class SimpleBloomFilter implements BloomFilter {
 
     /**
      * The array of bit map longs that defines this Bloom filter.  Will be null if the filter is empty.

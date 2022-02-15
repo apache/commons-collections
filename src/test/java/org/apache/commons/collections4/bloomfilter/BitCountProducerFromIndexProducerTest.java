@@ -26,12 +26,12 @@ public class BitCountProducerFromIndexProducerTest extends AbstractBitCountProdu
 
     @Override
     protected BitCountProducer createProducer() {
-        return BitCountProducer.from(IndexProducer.fromIntArray(new int[] { 0, 1, 63, 64, 127, 128 }));
+        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[] { 0, 1, 63, 64, 127, 128 }));
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(IndexProducer.fromIntArray(new int[0]));
+        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[0]));
     }
 
     @Test

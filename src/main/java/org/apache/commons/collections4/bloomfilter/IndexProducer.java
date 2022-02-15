@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
@@ -53,7 +54,7 @@ public interface IndexProducer {
      * @param values the index values
      * @return an IndexProducer that uses the values.
      */
-    static IndexProducer fromIntArray(final int[] values) {
+    static IndexProducer fromIndexArray(final int... values) {
         return new IndexProducer() {
 
             @Override
@@ -111,16 +112,11 @@ public interface IndexProducer {
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        List<Integer> lst = new ArrayList<>();
+        BitSet result = new BitSet();
         forEachIndex(i -> {
-            lst.add(i);
+            result.set(i);
             return true;
         });
-
-        int[] result = new int[lst.size()];
-        for (int i = 0; i < lst.size(); i++) {
-            result[i] = lst.get(i);
-        }
-        return result;
+        return result.stream().toArray();
     }
 }

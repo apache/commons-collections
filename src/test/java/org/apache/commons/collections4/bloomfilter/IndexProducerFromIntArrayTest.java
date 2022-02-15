@@ -20,11 +20,11 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return IndexProducer.fromIntArray(new int[0]);
+        return IndexProducer.fromIndexArray(new int[0]);
     }
 
     @Override
     protected IndexProducer createProducer() {
-        return IndexProducer.fromIntArray(new int[] { 1, 2, 3, 4, 5 });
+        return IndexProducer.fromIndexArray(new int[] { 1, 2, 3, 4, 5 });
     }
 }

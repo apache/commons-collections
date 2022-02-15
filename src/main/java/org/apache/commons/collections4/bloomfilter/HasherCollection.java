@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -87,23 +88,13 @@ public class HasherCollection implements Hasher {
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return new IndexProducer() {
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                for (Hasher hasher : hashers) {
-                    if (!hasher.indices(shape).forEachIndex(consumer)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        };
+        return new HasherCollectionIndexProducer( shape );
     }
 
     @Override
     public IndexProducer uniqueIndices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return new IndexProducer() {
+        return new HasherCollectionIndexProducer(shape) {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 for (Hasher hasher : hashers) {
@@ -123,4 +114,53 @@ public class HasherCollection implements Hasher {
     protected List<Hasher> getHashers() {
         return Collections.unmodifiableList(hashers);
     }
+
+    /**
+     * IndexProducer that will return duplicates from the collection.
+     *
+     */
+    class HasherCollectionIndexProducer implements IndexProducer {
+        private final Shape shape;
+
+        HasherCollectionIndexProducer( Shape shape ) {
+            this.shape = shape;
+        }
+        @Override
+        public boolean forEachIndex(IntPredicate consumer) {
+            for (Hasher hasher : hashers) {
+                if (!hasher.indices(shape).forEachIndex(consumer)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public int[] asIndexArray() {
+            List<int[]> lst = new ArrayList<>();
+            int[] count = new int[1];
+            /*
+             * This method needs to return duplicate indices
+             */
+            for (Hasher hasher : hashers) {
+                int[] ary = hasher.indices(shape).asIndexArray();
+                lst.add( ary );
+                count[0] += ary.length;
+            }
+            if (lst.isEmpty()) {
+                return new int[0];
+            }
+            if (lst.size() == 1) {
+                return lst.get(0);
+            }
+            int[] result = new int[count[0]];
+            int offset=0;
+            for (int[] ary : lst) {
+                System.arraycopy(ary, 0, result, offset, ary.length);
+                offset += ary.length;
+            }
+            return result;
+        }
+    }
+
 }

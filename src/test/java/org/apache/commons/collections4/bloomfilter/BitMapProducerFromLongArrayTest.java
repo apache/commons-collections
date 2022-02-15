@@ -29,12 +29,12 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
     @Override
     protected BitMapProducer createProducer() {
         long[] ary = new long[] { 1L, 2L, 3L, 4L, 5L };
-        return BitMapProducer.fromLongArray(ary);
+        return BitMapProducer.fromBitMapArray(ary);
     }
 
     @Override
     protected BitMapProducer createEmptyProducer() {
-        return BitMapProducer.fromLongArray(new long[0]);
+        return BitMapProducer.fromBitMapArray(new long[0]);
     }
 
     @Override

@@ -106,7 +106,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testConstructWitBitMapProducer() {
         long[] values = { from11Value, 0x9L };
-        BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromLongArray(values));
+        BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
         List<Long> lst = new ArrayList<>();
         for (long l : values) {
             lst.add(l);
@@ -125,7 +125,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testConstructWithIndexProducer() {
         int[] values = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-        BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIntArray(values));
+        BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
         List<Integer> lst = new ArrayList<>();
         for (int i : values) {
             lst.add(i);
@@ -137,10 +137,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // value to large
         assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(),
-                IndexProducer.fromIntArray(new int[] { getTestShape().getNumberOfBits() })));
+                IndexProducer.fromIndexArray(new int[] { getTestShape().getNumberOfBits() })));
         // negative value
         assertThrows(IllegalArgumentException.class,
-                () -> createFilter(getTestShape(), IndexProducer.fromIntArray(new int[] { -1 })));
+                () -> createFilter(getTestShape(), IndexProducer.fromIndexArray(new int[] { -1 })));
     }
 
     @Test
@@ -346,7 +346,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
-        IndexProducer indices = IndexProducer.fromIntArray(values);
+        IndexProducer indices = IndexProducer.fromIndexArray(values);
         SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
         List<Integer> lst = new ArrayList<>();
         filter.forEachIndex(x -> {
@@ -360,7 +360,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     private void assertFailedIndexProducerConstructor(Shape shape, int[] values) {
-        IndexProducer indices = IndexProducer.fromIntArray(values);
+        IndexProducer indices = IndexProducer.fromIndexArray(values);
         assertThrows(IllegalArgumentException.class, () -> createFilter(shape, indices));
     }
 
@@ -404,7 +404,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         IndexProducer producer;
 
         BadHasher(int value) {
-            this.producer = IndexProducer.fromIntArray(new int[] { value });
+            this.producer = IndexProducer.fromIndexArray(new int[] { value });
         }
 
         @Override
