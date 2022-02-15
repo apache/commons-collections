@@ -263,4 +263,19 @@ public class SetOperationsTest {
         assertEquals(3, SetOperations.xorCardinality(filter1, filter2));
         assertEquals(3, SetOperations.xorCardinality(filter2, filter1));
     }
+
+    @Test
+    public final void testCommutativityOnMismatchedSizes() {
+        BitMapProducer p1 = BitMapProducer.fromLongArray( new long[] { 0x3l, 0x5l });
+        BitMapProducer p2 = BitMapProducer.fromLongArray( new long[] { 0x1l });
+
+        assertEquals( SetOperations.orCardinality( p1, p2 ), SetOperations.orCardinality( p2, p1 ));
+        assertEquals( SetOperations.xorCardinality( p1, p2 ), SetOperations.xorCardinality( p2, p1 ));
+        assertEquals( SetOperations.andCardinality( p1, p2 ), SetOperations.andCardinality( p2, p1 ));
+        assertEquals( SetOperations.hammingDistance( p1, p2 ), SetOperations.hammingDistance( p2, p1 ));
+        assertEquals( SetOperations.cosineDistance( p1, p2 ), SetOperations.cosineDistance( p2, p1 ));
+        assertEquals( SetOperations.cosineSimilarity( p1, p2 ), SetOperations.cosineSimilarity( p2, p1 ));
+        assertEquals( SetOperations.jaccardDistance( p1, p2 ), SetOperations.jaccardDistance( p2, p1 ));
+        assertEquals( SetOperations.jaccardSimilarity( p1, p2 ), SetOperations.jaccardSimilarity( p2, p1 ));
+    }
 }

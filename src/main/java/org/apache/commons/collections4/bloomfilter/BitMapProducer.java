@@ -56,43 +56,20 @@ public interface BitMapProducer {
     boolean forEachBitMap(LongPredicate predicate);
 
     /**
-     * Applies the {@code func} to each bit map pair in order.
-     * <p>
-     * Creates a LongPredicate that is used in apply {@code func} to this BitMapProducer
-     * and another.  For example:</p>
-     * <pre>
-     * BitMapProducer a = ....;
-     * BitMapProducer b = ....;
-     * LongPredicate predicate = a.makePredicate( (x,y) -&gt; x==y );
-     * boolean result = b.apply( predicate );
-     * </pre>
-     * <p>The above example will execute a.bitmapValue == b.bitmapValue for every value in b.
-     * </p><p>
-     * Notes:
-     * </p><ul>
-     * <li>The resulting LongPredicate should only be used once.</li>
-     * <li>Any changes made to the {@code func} arguments will not survive outside of the {@code func} call.</li>
-     * <li>For an example of how to use {@code makePredicate} to apply non-binary functions across all pairs of
-     * bit maps see the SetOperations code.</li>
-     * </ul>
+     * Applies the {@code func} to each bit map pair in order.  Will apply all of the bit maps from the other
+     * BitMapProducer to this producer.  If this producer does not have as many bit maps it will provide 0 (zero)
+     * for all excess calls to the LongBiPredicate.
      * <p>
      * <em>The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
      * of BitMapProducer that have local arrays reimplement this method.</em></p>
      *
+     * @param other The other BitMapProducer that provides the y values in the (x,y) pair.
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
-    default LongPredicate makePredicate(LongBiPredicate func) {
-        long[] ary = asBitMapArray();
-
-        return new LongPredicate() {
-            int idx = 0;
-
-            @Override
-            public boolean test(long other) {
-                return func.test(idx >= ary.length ? 0L : ary[idx++], other);
-            }
-        };
+    default boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
+        CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(),func);
+        return other.forEachBitMap(p) && p.forEachRemaining();
     }
 
     /**
@@ -136,16 +113,9 @@ public interface BitMapProducer {
             }
 
             @Override
-            public LongPredicate makePredicate(LongBiPredicate func) {
-
-                return new LongPredicate() {
-                    int idx = 0;
-
-                    @Override
-                    public boolean test(long other) {
-                        return func.test(idx >= bitMaps.length ? 0L : bitMaps[idx++], other);
-                    }
-                };
+            public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
+                CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
+                return other.forEachBitMap(p) && p.forEachRemaining();
             }
         };
     }
@@ -166,5 +136,27 @@ public interface BitMapProducer {
             return true;
         });
         return fromLongArray(result);
+    }
+
+    class CountingLongPredicate implements LongPredicate {
+        int idx = 0;
+        final long[] ary;
+        final LongBiPredicate func;
+
+        CountingLongPredicate(long[] ary, LongBiPredicate func) {
+            this.ary = ary;
+            this.func = func;
+        }
+        @Override
+        public boolean test(long other) {
+            return func.test(idx == ary.length ? 0 : ary[idx++], other);
+        }
+
+        boolean forEachRemaining() {
+            while (idx != ary.length && func.test(ary[idx], 0)) {
+                idx++;
+            }
+            return idx == ary.length;
+        }
     }
 }

@@ -21,6 +21,8 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
+import org.apache.commons.collections4.bloomfilter.BitMapProducer.CountingLongPredicate;
+
 /**
  * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
@@ -113,15 +115,9 @@ public class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public LongPredicate makePredicate(LongBiPredicate func) {
-        return new LongPredicate() {
-            int idx = 0;
-
-            @Override
-            public boolean test(long other) {
-                return func.test(idx >= bitMap.length ? 0 : bitMap[idx++], other);
-            }
-        };
+    public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
+        CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
+        return other.forEachBitMap(p) && p.forEachRemaining();
     }
 
     @Override

@@ -37,11 +37,10 @@ public final class SetOperations {
     private static int cardinality(BitMapProducer first, BitMapProducer second, LongBinaryOperator op) {
         int[] cardinality = new int[1];
 
-        LongPredicate lp = first.makePredicate((x, y) -> {
+        first.forEachBitMapPair(second, (x, y) -> {
             cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
             return true;
         });
-        second.forEachBitMap(lp);
         return cardinality[0];
     }
 
@@ -175,8 +174,14 @@ public final class SetOperations {
      * @return the Jaccard similarity.
      */
     public static double jaccardSimilarity(final BitMapProducer first, final BitMapProducer second) {
-        final int intersection = andCardinality(first, second);
-        return intersection == 0 ? 0 : intersection / (double) orCardinality(first, second);
+        int[] cardinality = new int[2];
+        first.forEachBitMapPair(second, (x, y) -> {
+            cardinality[0] += Long.bitCount(x & y);
+            cardinality[1] += Long.bitCount(x | y);
+            return true;
+        });
+        final int intersection = cardinality[0];
+        return intersection == 0 ? 0 : intersection / (double) cardinality[1];
     }
 
     /**

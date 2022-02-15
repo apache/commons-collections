@@ -108,7 +108,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(BitMapProducer bitMapProducer) {
-        return bitMapProducer.forEachBitMap(this.makePredicate((x, y) -> (x & y) == y));
+        return forEachBitMapPair( bitMapProducer, (x, y) -> (x & y) == y);
     }
 
     // update operations

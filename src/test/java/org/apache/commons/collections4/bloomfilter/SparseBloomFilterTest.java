@@ -147,8 +147,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         BloomFilter bf1 = createEmptyFilter( getTestShape() );
         BloomFilter bf2 = new SimpleBloomFilter( getTestShape(), from1 );
         bf1.mergeInPlace( bf2 );
-        LongPredicate lp = bf1.makePredicate((x, y) -> x == y);
-        assertTrue(bf2.forEachBitMap(lp));
+        assertTrue(bf2.forEachBitMapPair( bf1, (x, y) -> x == y));
 
     }
 }

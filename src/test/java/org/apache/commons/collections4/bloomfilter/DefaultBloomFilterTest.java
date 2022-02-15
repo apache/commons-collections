@@ -80,15 +80,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.mergeInPlace(hasher);
-        LongPredicate lp = bf1.makePredicate((x, y) -> x == y);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMap(lp));
+                .forEachBitMapPair( bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.mergeInPlace(hasher);
-        lp = bf1.makePredicate((x, y) -> x == y);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMap(lp));
+                .forEachBitMapPair( bf1, (x, y) -> x == y));
     }
 
     abstract static class AbstractDefaultBloomFilter implements BloomFilter {
