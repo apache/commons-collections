@@ -109,6 +109,16 @@ public final class SimpleBloomFilter implements BloomFilter {
         mergeInPlace(bitMaps);
     }
 
+    /**
+     * Copy constructor for {@code copy()} use.
+     * @param source
+     */
+    private SimpleBloomFilter(SimpleBloomFilter source) {
+        this.shape = source.shape;
+        this.bitMap = source.bitMap.clone();
+        this.cardinality = source.cardinality;
+    }
+
     @Override
     public long[] asBitMapArray() {
         return Arrays.copyOf(bitMap, bitMap.length);
@@ -122,17 +132,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public SimpleBloomFilter copy() {
-        SimpleBloomFilter result = new SimpleBloomFilter(shape);
-        System.arraycopy(bitMap, 0, result.bitMap, 0, result.bitMap.length);
-        result.cardinality = cardinality;
-        return result;
-    }
-
-    /**
-     * Recalculates the cardinality.
-     */
-    private void recalcCardinality() {
-        this.cardinality = SetOperations.cardinality(this);
+        return new SimpleBloomFilter( this );
     }
 
     /**
@@ -149,7 +149,7 @@ public final class SimpleBloomFilter implements BloomFilter {
             BitMap.set(bitMap, idx);
             return true;
         });
-        recalcCardinality();
+        cardinality = -1;
     }
 
     /**
@@ -164,13 +164,23 @@ public final class SimpleBloomFilter implements BloomFilter {
                 bitMap[idx[0]++] |= value;
                 return true;
             });
-            if (idx[0] != bitMap.length) {
+            // idx[0] will be limit+1 so decrement it
+            idx[0]--;
+            int idxLimit = BitMap.getLongIndex( shape.getNumberOfBits());
+            if (idxLimit<idx[0]) {
                 throw new IllegalArgumentException(
-                        String.format("BitMapProducer should only send %s maps", bitMap.length));
+                        String.format("BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
             }
-            recalcCardinality();
+            if (idxLimit==idx[0]) {
+                long excess = (bitMap[idxLimit] >> shape.getNumberOfBits());
+                if (excess !=0) {
+                    throw new IllegalArgumentException(
+                            String.format("BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
+                }
+            }
+            cardinality = -1;
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("BitMapProducer should only send %s maps", bitMap.length),
+            throw new IllegalArgumentException(String.format("BitMapProducer should send at most %s maps", bitMap.length),
                     e);
         }
     }
@@ -205,6 +215,10 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public int cardinality() {
+     // Lazy evaluation with caching
+        if (cardinality < 0) {
+            cardinality = SetOperations.cardinality(this);
+        }
         return cardinality;
     }
 

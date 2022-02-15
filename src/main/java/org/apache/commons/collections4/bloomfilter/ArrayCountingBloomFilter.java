@@ -98,12 +98,15 @@ final public class ArrayCountingBloomFilter implements CountingBloomFilter {
         counts = new int[shape.getNumberOfBits()];
     }
 
+    private ArrayCountingBloomFilter(ArrayCountingBloomFilter source) {
+        this.shape = source.shape;
+        this.state = source.state;
+        this.counts = source.counts.clone();
+    }
+
     @Override
     public ArrayCountingBloomFilter copy() {
-        ArrayCountingBloomFilter result = new ArrayCountingBloomFilter(shape);
-        System.arraycopy(counts, 0, result.counts, 0, shape.getNumberOfBits());
-        result.state = this.state;
-        return result;
+        return new ArrayCountingBloomFilter( this );
     }
 
     @Override

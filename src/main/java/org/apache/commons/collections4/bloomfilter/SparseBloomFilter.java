@@ -108,8 +108,12 @@ public final class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape, BitMapProducer bitMaps) {
         this(shape);
         Objects.requireNonNull(bitMaps, "bitMaps");
-        mergeInPlace(IndexProducer
-                .fromBitMapProducer(new CheckBitMapCount(bitMaps, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        mergeInPlace(IndexProducer.fromBitMapProducer(bitMaps));
+    }
+
+    private SparseBloomFilter(SparseBloomFilter source) {
+        shape = source.shape;
+        indices = new TreeSet<Integer>( source.indices );
     }
 
     @Override
@@ -123,9 +127,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public SparseBloomFilter copy() {
-        SparseBloomFilter result = new SparseBloomFilter(shape);
-        result.indices.addAll(indices);
-        return result;
+        return new SparseBloomFilter( this );
     }
 
     /**
@@ -243,7 +245,6 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(
-                new CheckBitMapCount(bitMapProducer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 }

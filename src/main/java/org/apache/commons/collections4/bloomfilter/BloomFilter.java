@@ -250,48 +250,4 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Objects.requireNonNull(other, "other");
         return estimateN() + other.estimateN() - estimateUnion(other);
     }
-
-    /**
-     * Convenience class to test that a bitMapProducer is producing the proper number of bitMaps.
-     * Primarily used in constructors.
-     */
-    class CheckBitMapCount implements BitMapProducer {
-        /**
-         * The original BitMapProducer.
-         */
-        private final BitMapProducer wrapped;
-        /**
-         * The number of bitmaps that {@code wrapped} should produce.
-         */
-        private final int numberOfBitMaps;
-
-        /**
-         *
-         * @param wrapped
-         * @param numberOfBitMaps
-         */
-        CheckBitMapCount(BitMapProducer wrapped, int numberOfBitMaps) {
-            this.wrapped = wrapped;
-            this.numberOfBitMaps = numberOfBitMaps;
-        }
-
-        @Override
-        public boolean forEachBitMap(LongPredicate predicate) {
-            int[] count = new int[1];
-            LongPredicate counter = new LongPredicate() {
-
-                @Override
-                public boolean test(long value) {
-                    count[0]++;
-                    return predicate.test(value);
-                }
-            };
-            boolean result = wrapped.forEachBitMap(counter);
-            if (result && count[0] != numberOfBitMaps) {
-                throw new IllegalArgumentException(
-                        String.format("BitMapProducer should exactly %s maps", numberOfBitMaps));
-            }
-            return result;
-        }
-    }
 }

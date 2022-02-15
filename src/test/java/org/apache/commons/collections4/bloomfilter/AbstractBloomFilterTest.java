@@ -116,10 +116,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         }));
         assertTrue(lst.isEmpty());
 
-        // too many bitmaps
-        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(3)));
-        // too few bitmaps
-        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadProducer(1)));
+        BitMapProducer badProducer = BitMapProducer.fromBitMapArray( 0L, Long.MAX_VALUE);
+        // values too large
+        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), badProducer));
     }
 
     @Test
@@ -170,12 +169,12 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // Test different lengths
         bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
+        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1),
                 from1);
         assertTrue(bf1.contains(bf3));
         assertTrue(bf3.contains(bf1));
 
-        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
+        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1),
                 bigHasher);
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
@@ -415,22 +414,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         @Override
         public IndexProducer uniqueIndices(Shape shape) {
             return producer;
-        }
-    }
-
-    class BadProducer implements BitMapProducer {
-        int count;
-
-        BadProducer(int count) {
-            this.count = count;
-        }
-
-        @Override
-        public boolean forEachBitMap(LongPredicate predicate) {
-            for (int i = 0; i < count; i++) {
-                predicate.test(0L);
-            }
-            return true;
         }
     }
 }

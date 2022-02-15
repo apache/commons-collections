@@ -103,8 +103,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         AbstractDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            this(shape, IndexProducer.fromBitMapProducer(
-                    new CheckBitMapCount(producer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+            this(shape, IndexProducer.fromBitMapProducer(producer));
         }
 
         AbstractDefaultBloomFilter(Shape shape, IndexProducer producer) {

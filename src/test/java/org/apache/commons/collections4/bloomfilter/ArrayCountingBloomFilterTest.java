@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.CheckBitMapCount;
-
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
@@ -35,8 +33,7 @@ public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTes
 
     @Override
     protected ArrayCountingBloomFilter createFilter(Shape shape, BitMapProducer producer) {
-        return createFilter(shape, IndexProducer
-                .fromBitMapProducer(new CheckBitMapCount(producer, BitMap.numberOfBitMaps(shape.getNumberOfBits()))));
+        return createFilter(shape, IndexProducer.fromBitMapProducer(producer));
     }
 
     @Override

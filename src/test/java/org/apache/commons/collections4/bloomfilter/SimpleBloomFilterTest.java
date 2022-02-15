@@ -56,23 +56,23 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Test
     public void testConstructors() {
 
-        // copy of Sparse
-        SimpleBloomFilterTest nestedTest = new SimpleBloomFilterTest() {
-
-            @Override
-            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
-                return new SimpleBloomFilter(new SparseBloomFilter(shape));
-            }
-
-            @Override
-            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
-                return new SimpleBloomFilter(new SparseBloomFilter(shape, hasher));
-            }
-        };
-        executeNestedTest(nestedTest);
-
+//        // copy of Sparse
+//        SimpleBloomFilterTest nestedTest = new SimpleBloomFilterTest() {
+//
+//            @Override
+//            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
+//                return new SimpleBloomFilter(new SparseBloomFilter(shape));
+//            }
+//
+//            @Override
+//            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
+//                return new SimpleBloomFilter(new SparseBloomFilter(shape, hasher));
+//            }
+//        };
+//        executeNestedTest(nestedTest);
+//
         // copy of Simple
-        nestedTest = new SimpleBloomFilterTest() {
+        SimpleBloomFilterTest nestedTest = new SimpleBloomFilterTest() {
 
             @Override
             protected SimpleBloomFilter createEmptyFilter(Shape shape) {
