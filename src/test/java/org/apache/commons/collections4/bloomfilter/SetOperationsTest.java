@@ -266,16 +266,16 @@ public class SetOperationsTest {
 
     @Test
     public final void testCommutativityOnMismatchedSizes() {
-        BitMapProducer p1 = BitMapProducer.fromBitMapArray( new long[] { 0x3l, 0x5l });
-        BitMapProducer p2 = BitMapProducer.fromBitMapArray( new long[] { 0x1l });
+        BitMapProducer p1 = BitMapProducer.fromBitMapArray(new long[] { 0x3L, 0x5L });
+        BitMapProducer p2 = BitMapProducer.fromBitMapArray(new long[] { 0x1L });
 
-        assertEquals( SetOperations.orCardinality( p1, p2 ), SetOperations.orCardinality( p2, p1 ));
-        assertEquals( SetOperations.xorCardinality( p1, p2 ), SetOperations.xorCardinality( p2, p1 ));
-        assertEquals( SetOperations.andCardinality( p1, p2 ), SetOperations.andCardinality( p2, p1 ));
-        assertEquals( SetOperations.hammingDistance( p1, p2 ), SetOperations.hammingDistance( p2, p1 ));
-        assertEquals( SetOperations.cosineDistance( p1, p2 ), SetOperations.cosineDistance( p2, p1 ));
-        assertEquals( SetOperations.cosineSimilarity( p1, p2 ), SetOperations.cosineSimilarity( p2, p1 ));
-        assertEquals( SetOperations.jaccardDistance( p1, p2 ), SetOperations.jaccardDistance( p2, p1 ));
-        assertEquals( SetOperations.jaccardSimilarity( p1, p2 ), SetOperations.jaccardSimilarity( p2, p1 ));
+        assertEquals(SetOperations.orCardinality(p1, p2), SetOperations.orCardinality(p2, p1));
+        assertEquals(SetOperations.xorCardinality(p1, p2), SetOperations.xorCardinality(p2, p1));
+        assertEquals(SetOperations.andCardinality(p1, p2), SetOperations.andCardinality(p2, p1));
+        assertEquals(SetOperations.hammingDistance(p1, p2), SetOperations.hammingDistance(p2, p1));
+        assertEquals(SetOperations.cosineDistance(p1, p2), SetOperations.cosineDistance(p2, p1));
+        assertEquals(SetOperations.cosineSimilarity(p1, p2), SetOperations.cosineSimilarity(p2, p1));
+        assertEquals(SetOperations.jaccardDistance(p1, p2), SetOperations.jaccardDistance(p2, p1));
+        assertEquals(SetOperations.jaccardSimilarity(p1, p2), SetOperations.jaccardSimilarity(p2, p1));
     }
 }

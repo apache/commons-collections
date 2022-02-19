@@ -162,5 +162,4 @@ public class HasherCollection implements Hasher {
             return result;
         }
     }
-
 }

@@ -48,7 +48,7 @@ import java.util.stream.IntStream;
  * @see Shape
  * @since 4.5
  */
-final public class ArrayCountingBloomFilter implements CountingBloomFilter {
+public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     /**
      * The shape of this Bloom filter.
@@ -241,7 +241,7 @@ final public class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @param addend the amount to add
      * @return {@code true} always.
      */
-    protected boolean add(final int idx, final int addend) {
+    private boolean add(final int idx, final int addend) {
         final int updated = counts[idx] + addend;
         state |= updated;
         counts[idx] = updated;
@@ -255,7 +255,7 @@ final public class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @param subtrahend the amount to subtract
      * @return {@code true} always.
      */
-    protected boolean subtract(final int idx, final int subtrahend) {
+    private boolean subtract(final int idx, final int subtrahend) {
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;

@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.function.LongPredicate;
-
 import org.junit.jupiter.api.Test;
 
 /**
@@ -97,7 +95,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71 };
         BloomFilter bf = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
 
-     // verify exit early before bitmap boundary
+        // verify exit early before bitmap boundary
         int[] passes = new int[1];
         assertFalse(bf.forEachBitMap(l -> {
             passes[0]++;
@@ -144,10 +142,9 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
 
     @Test
     public void testBloomFilterBasedMergeInPlaceEdgeCases() {
-        BloomFilter bf1 = createEmptyFilter( getTestShape() );
-        BloomFilter bf2 = new SimpleBloomFilter( getTestShape(), from1 );
-        bf1.mergeInPlace( bf2 );
-        assertTrue(bf2.forEachBitMapPair( bf1, (x, y) -> x == y));
-
+        BloomFilter bf1 = createEmptyFilter(getTestShape());
+        BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), from1);
+        bf1.mergeInPlace(bf2);
+        assertTrue(bf2.forEachBitMapPair(bf1, (x, y) -> x == y));
     }
 }

@@ -23,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.LongPredicate;
-
 import org.junit.jupiter.api.Test;
 
 /**
@@ -41,7 +39,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
             new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
             new SimpleHasher(67, 1)/* 67-83 */
-            );
+    );
     protected final long[] fullHashValue = { 0xffffffffffffffffL, 0xfffffL };
 
     /**
@@ -116,7 +114,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         }));
         assertTrue(lst.isEmpty());
 
-        BitMapProducer badProducer = BitMapProducer.fromBitMapArray( 0L, Long.MAX_VALUE);
+        BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
         // values too large
         assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), badProducer));
     }
@@ -169,12 +167,12 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // Test different lengths
         bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1),
+        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
                 from1);
         assertTrue(bf1.contains(bf3));
         assertTrue(bf3.contains(bf1));
 
-        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE-1),
+        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
                 bigHasher);
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
@@ -304,7 +302,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Tests that merging bloom filters works as expected with a generic BloomFilter.
+     * Tests that merging in place works as expected.
      */
     @Test
     public final void testMergeInPlace() {
@@ -332,7 +330,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // test with hasher
 
-        final BloomFilter bf4 = createFilter(getTestShape(), from1);
+        BloomFilter bf4 = createFilter(getTestShape(), from1);
         bf4.mergeInPlace(from11);
 
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
@@ -342,6 +340,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertThrows(IllegalArgumentException.class,
                 () -> bf1.mergeInPlace(new BadHasher(bf1.getShape().getNumberOfBits())));
         assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(new BadHasher(-1)));
+
+        // test error when bloom filter returns values out of range
+        final BloomFilter bf5 = new SimpleBloomFilter(
+                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
+                new SimpleHasher(Long.SIZE * 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf5));
+
+        final BloomFilter bf6 = new SparseBloomFilter(
+                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
+                new SimpleHasher(Long.SIZE * 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf6));
     }
 
     private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {

@@ -81,12 +81,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.mergeInPlace(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair( bf1, (x, y) -> x == y));
+                .forEachBitMapPair(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.mergeInPlace(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair( bf1, (x, y) -> x == y));
+                .forEachBitMapPair(bf1, (x, y) -> x == y));
     }
 
     abstract static class AbstractDefaultBloomFilter implements BloomFilter {
@@ -154,6 +154,16 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                 indices.add(i);
                 return true;
             });
+            if (!indices.isEmpty()) {
+                if (indices.last() >= shape.getNumberOfBits()) {
+                    throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
+                            indices.last(), shape.getNumberOfBits()));
+                }
+                if (indices.first() < 0) {
+                    throw new IllegalArgumentException(
+                            String.format("Value in list %s is less than 0", indices.first()));
+                }
+            }
             return true;
         }
 
