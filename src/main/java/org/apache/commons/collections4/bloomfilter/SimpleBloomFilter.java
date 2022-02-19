@@ -21,8 +21,6 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
-import org.apache.commons.collections4.bloomfilter.BitMapProducer.CountingLongPredicate;
-
 /**
  * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
@@ -132,7 +130,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public SimpleBloomFilter copy() {
-        return new SimpleBloomFilter( this );
+        return new SimpleBloomFilter(this);
     }
 
     /**
@@ -166,22 +164,23 @@ public final class SimpleBloomFilter implements BloomFilter {
             });
             // idx[0] will be limit+1 so decrement it
             idx[0]--;
-            int idxLimit = BitMap.getLongIndex( shape.getNumberOfBits());
-            if (idxLimit<idx[0]) {
-                throw new IllegalArgumentException(
-                        String.format("BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
+            int idxLimit = BitMap.getLongIndex(shape.getNumberOfBits());
+            if (idxLimit < idx[0]) {
+                throw new IllegalArgumentException(String.format(
+                        "BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
             }
-            if (idxLimit==idx[0]) {
+            if (idxLimit == idx[0]) {
                 long excess = (bitMap[idxLimit] >> shape.getNumberOfBits());
-                if (excess !=0) {
+                if (excess != 0) {
                     throw new IllegalArgumentException(
-                            String.format("BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
+                            String.format("BitMapProducer set a bit higher than the limit for the shape: %s",
+                                    shape.getNumberOfBits()));
                 }
             }
             cardinality = -1;
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(String.format("BitMapProducer should send at most %s maps", bitMap.length),
-                    e);
+            throw new IllegalArgumentException(
+                    String.format("BitMapProducer should send at most %s maps", bitMap.length), e);
         }
     }
 
@@ -215,7 +214,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public int cardinality() {
-     // Lazy evaluation with caching
+        // Lazy evaluation with caching
         if (cardinality < 0) {
             cardinality = SetOperations.cardinality(this);
         }

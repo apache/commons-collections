@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 
@@ -159,7 +157,10 @@ public class SimpleHasher implements Hasher {
                 /*
                  * This method needs to return duplicate indices
                  */
-                forEachIndex( i -> {result[idx[0]++]=i;return true;});
+                forEachIndex(i -> {
+                    result[idx[0]++] = i;
+                    return true;
+                });
                 return result;
             }
         };

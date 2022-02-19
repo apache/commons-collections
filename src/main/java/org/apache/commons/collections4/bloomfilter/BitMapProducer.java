@@ -16,9 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.LongPredicate;
 
@@ -68,7 +66,7 @@ public interface BitMapProducer {
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
     default boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
-        CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(),func);
+        CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
         return other.forEachBitMap(p) && p.forEachRemaining();
     }
 
@@ -164,6 +162,7 @@ public interface BitMapProducer {
             this.ary = ary;
             this.func = func;
         }
+
         @Override
         public boolean test(long other) {
             return func.test(idx == ary.length ? 0 : ary[idx++], other);

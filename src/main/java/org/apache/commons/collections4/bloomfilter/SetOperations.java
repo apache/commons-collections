@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.LongBinaryOperator;
-import java.util.function.LongPredicate;
 
 /**
  * Implementations of set operations on BitMapProducers.

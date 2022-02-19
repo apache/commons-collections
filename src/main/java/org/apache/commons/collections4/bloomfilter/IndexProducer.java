@@ -16,9 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;

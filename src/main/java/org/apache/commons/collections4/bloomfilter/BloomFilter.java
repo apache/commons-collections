@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.LongPredicate;
 
 /**
  * The interface that describes a Bloom filter.
@@ -108,7 +107,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(BitMapProducer bitMapProducer) {
-        return forEachBitMapPair( bitMapProducer, (x, y) -> (x & y) == y);
+        return forEachBitMapPair(bitMapProducer, (x, y) -> (x & y) == y);
     }
 
     // update operations

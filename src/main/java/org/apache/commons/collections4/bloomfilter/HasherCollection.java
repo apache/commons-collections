@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -88,7 +87,7 @@ public class HasherCollection implements Hasher {
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return new HasherCollectionIndexProducer( shape );
+        return new HasherCollectionIndexProducer(shape);
     }
 
     @Override
@@ -122,9 +121,10 @@ public class HasherCollection implements Hasher {
     class HasherCollectionIndexProducer implements IndexProducer {
         private final Shape shape;
 
-        HasherCollectionIndexProducer( Shape shape ) {
+        HasherCollectionIndexProducer(Shape shape) {
             this.shape = shape;
         }
+
         @Override
         public boolean forEachIndex(IntPredicate consumer) {
             for (Hasher hasher : hashers) {
@@ -144,7 +144,7 @@ public class HasherCollection implements Hasher {
              */
             for (Hasher hasher : hashers) {
                 int[] ary = hasher.indices(shape).asIndexArray();
-                lst.add( ary );
+                lst.add(ary);
                 count[0] += ary.length;
             }
             if (lst.isEmpty()) {
@@ -154,7 +154,7 @@ public class HasherCollection implements Hasher {
                 return lst.get(0);
             }
             int[] result = new int[count[0]];
-            int offset=0;
+            int offset = 0;
             for (int[] ary : lst) {
                 System.arraycopy(ary, 0, result, offset, ary.length);
                 offset += ary.length;

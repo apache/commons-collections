@@ -106,7 +106,7 @@ final public class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public ArrayCountingBloomFilter copy() {
-        return new ArrayCountingBloomFilter( this );
+        return new ArrayCountingBloomFilter(this);
     }
 
     @Override
@@ -143,7 +143,11 @@ final public class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean mergeInPlace(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return add(BitCountProducer.from(other));
+        try {
+            return add(BitCountProducer.from(other));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException( e );
+        }
     }
 
     @Override
