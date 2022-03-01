@@ -20,6 +20,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test the ArrayListIterator class.
@@ -104,15 +105,8 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
         iter = makeArrayListIterator(testArray);
 
-        try {
-            iter.set((E) "should fail");
-            fail("ListIterator#set should fail if next() or previous() have not yet been called.");
-        } catch (final IllegalStateException e) {
-            // expected
-        } catch (final Throwable t) { // should never happen
-            fail(t.toString());
-        }
-
+        ListIterator<E> finalIter = iter;
+        assertThrows(IllegalStateException.class, () -> finalIter.set((E) "should fail"), "ListIterator#set should fail if next() or previous() have not yet been called.");
     }
 
 }

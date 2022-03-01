@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,7 +28,6 @@ import org.junit.Test;
 
 /**
  * Tests for ComparatorChain.
- *
  */
 public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
@@ -67,11 +68,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
-            chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> chain.compare(i1, i2), "An exception should be thrown when a chain contains zero comparators.");
     }
 
     @Test
@@ -92,11 +90,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
-            chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> chain.compare(i1, i2));
     }
 
     @Test
@@ -188,4 +183,5 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
             return that instanceof ColumnComparator && colIndex == ((ColumnComparator) that).colIndex;
         }
     }
+
 }

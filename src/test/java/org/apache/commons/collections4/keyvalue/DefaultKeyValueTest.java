@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -25,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test the DefaultKeyValue class.
@@ -72,7 +73,6 @@ public class DefaultKeyValueTest<K, V> {
 
         kv.setValue(null);
         assertNull(kv.getValue());
-
     }
 
     @SuppressWarnings("unchecked")
@@ -84,25 +84,9 @@ public class DefaultKeyValueTest<K, V> {
 
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
-        try {
-            kv.setKey((K) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
-
-        try {
-            kv.setValue((V) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
+        assertThrows(IllegalArgumentException.class, () -> kv.setKey((K) kv));
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
     }
 
     /**
@@ -140,7 +124,6 @@ public class DefaultKeyValueTest<K, V> {
         // test that the KVP is independent of the Map.Entry
         entry.setValue(null);
         assertSame(value, kv.getValue());
-
     }
 
     @SuppressWarnings("unchecked")

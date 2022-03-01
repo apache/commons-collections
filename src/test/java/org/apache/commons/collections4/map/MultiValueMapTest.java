@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -397,12 +399,9 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
         final MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
         bytes = serialize(map2);
-        try {
-            result = deserialize(bytes);
-            fail("unsafe clazz accepted when de-serializing MultiValueMap");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+
+        byte[] finalBytes = bytes;
+        assertThrows(UnsupportedOperationException.class, () -> deserialize(finalBytes));
     }
 
     private byte[] serialize(final Object object) throws IOException {
@@ -453,6 +452,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
         assertEquals("Map is empty", 0, map2.size());
     }
+
     public void testFullMapCompatibility() throws Exception {
         final Map<?, ?> map = (Map<?, ?>) makeObject();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
