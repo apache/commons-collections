@@ -21,8 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests for COLLECTIONS-701.
@@ -33,16 +33,16 @@ public class Collections701Test {
     public void testArrayList() {
         final List<Object> list = new ArrayList<>();
         list.add(list);
-        Assert.assertEquals(1, list.size());
-        Assert.assertEquals(list, list.get(0));
+        Assertions.assertEquals(1, list.size());
+        Assertions.assertEquals(list, list.get(0));
     }
 
     @Test
     public void testHashSet() {
         final Set<Object> set = new HashSet<>();
         set.add(set);
-        Assert.assertEquals(1, set.size());
-        Assert.assertEquals(set, set.iterator().next());
+        Assertions.assertEquals(1, set.size());
+        Assertions.assertEquals(set, set.iterator().next());
     }
 
     @Test
@@ -50,7 +50,8 @@ public class Collections701Test {
         final List<Object> source = new ArrayList<>();
         final List<Object> list = SetUniqueList.setUniqueList(source);
         list.add(list);
-        Assert.assertEquals(1, list.size());
-        Assert.assertEquals(list, list.get(0));
+        Assertions.assertEquals(1, list.size());
+        Assertions.assertEquals(list, list.get(0));
     }
+
 }

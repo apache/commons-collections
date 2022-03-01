@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
-import org.junit.Assert;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
@@ -77,10 +77,10 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final int sizeBefore = fixedSizeList.size();
         //
         final boolean changed = decoratedList.add("New Value");
-        Assert.assertTrue(changed);
+        Assertions.assertTrue(changed);
         //
-        Assert.assertEquals("Modifying an the underlying list is allowed",
-                sizeBefore + 1, fixedSizeList.size());
+        Assertions.assertEquals(sizeBefore + 1, fixedSizeList.size(),
+                "Modifying an the underlying list is allowed");
     }
 
     private FixedSizeList<String> initFixedSizeList() {
@@ -127,19 +127,20 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
-        Assert.assertNotNull(subFixedSizeList);
-        Assert.assertEquals(0, subFixedSizeList.size());
+        Assertions.assertNotNull(subFixedSizeList);
+        Assertions.assertEquals(0, subFixedSizeList.size());
     }
 
     public void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertTrue(fixedSizeList.isFull());
+        Assertions.assertTrue(fixedSizeList.isFull());
     }
 
     public void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertEquals(2, fixedSizeList.maxSize());
+        Assertions.assertEquals(2, fixedSizeList.maxSize());
     }
+
 }

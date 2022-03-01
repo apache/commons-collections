@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -253,21 +253,21 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
     public void testAddNullLists2Args() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
     public void testAddNullListsVarArgs() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
     @SuppressWarnings("unchecked")
