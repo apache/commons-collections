@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
@@ -27,6 +29,7 @@ import java.util.Collection;
  * @since 3.0
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
+
     /** used as a flag in MapMutator tests */
     private boolean pass = false;
 
@@ -78,12 +81,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
-        try {
-            map.addComposited(three);
-            fail("Expecting IllegalArgumentException.");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> map.addComposited(three));
     }
 
     @SuppressWarnings("unchecked")

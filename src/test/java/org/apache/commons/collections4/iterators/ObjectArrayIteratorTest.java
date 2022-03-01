@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Tests the ObjectArrayIterator.
- *
  */
 public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -83,13 +84,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testNullArray() {
-        try {
-            makeArrayIterator(null);
-
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> makeArrayIterator(null));
     }
 
     @SuppressWarnings("unchecked")

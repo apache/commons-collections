@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,7 +65,6 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return false;
     }
 
-
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
@@ -73,12 +74,8 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         final Set<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSet.unmodifiableSet(set));
 
-        try {
-            UnmodifiableSet.unmodifiableSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSet.unmodifiableSet(null));
     }
-
 
     @Override
     public String getCompatibilityVersion() {

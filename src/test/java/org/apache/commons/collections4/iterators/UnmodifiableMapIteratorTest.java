@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,6 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 /**
  * Tests the UnmodifiableMapIterator.
- *
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
@@ -85,10 +86,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         it = getMap().mapIterator();
         assertNotSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
-        try {
-            UnmodifiableMapIterator.unmodifiableMapIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableMapIterator.unmodifiableMapIterator(null));
     }
 
 }

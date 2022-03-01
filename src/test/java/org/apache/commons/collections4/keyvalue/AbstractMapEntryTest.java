@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Abstract tests that can be extended to test any Map.Entry implementation.
@@ -108,15 +108,10 @@ public abstract class AbstractMapEntryTest<K, V> {
 
         final Map.Entry<K, V> entry = makeMapEntry();
 
-        try {
-            entry.setValue((V) entry);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
+        assertThrows(IllegalArgumentException.class, () -> entry.setValue((V) entry));
 
-            // check that the KVP's state has not changed
-            assertTrue(entry.getKey() == null && entry.getValue() == null);
-        }
+        // check that the KVP's state has not changed
+        assertTrue(entry.getKey() == null && entry.getValue() == null);
     }
 
     /**
