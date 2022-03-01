@@ -19,11 +19,10 @@ package org.apache.commons.collections4.iterators;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * Tests the ObjectArrayListIterator class.
- *
  */
 public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
@@ -97,7 +96,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
             x++;
         }
 
-        assertArrayEquals("The two arrays should have the same value, i.e. {0,1,2}", testData, result);
+        assertArrayEquals(testData, result, "The two arrays should have the same value, i.e. {0,1,2}");
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
         iter = makeArrayListIterator((E[]) testArray);
