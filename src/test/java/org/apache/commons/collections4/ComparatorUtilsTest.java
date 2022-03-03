@@ -16,9 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Comparator;
 
@@ -26,9 +27,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests ComparatorUtils.
- *
  */
 public class ComparatorUtilsTest {
+
     @Test
     public void booleanComparator() {
         Comparator<Boolean> comp = ComparatorUtils.booleanComparator(true);
@@ -63,19 +64,13 @@ public class ComparatorUtilsTest {
         assertEquals(Integer.valueOf(1), ComparatorUtils.max(1, 10, reversed));
         assertEquals(Integer.valueOf(-10), ComparatorUtils.max(10, -10, reversed));
 
-        try {
-            ComparatorUtils.max(1, null, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ComparatorUtils.max(1, null, null),
+                        "expecting NullPointerException"),
 
-        try {
-            ComparatorUtils.max(null, 10, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+                () -> assertThrows(NullPointerException.class, () -> ComparatorUtils.max(null, 10, null),
+                        "expecting NullPointerException")
+        );
     }
 
     @Test
@@ -89,19 +84,13 @@ public class ComparatorUtilsTest {
         assertEquals(Integer.valueOf(10), ComparatorUtils.min(1, 10, reversed));
         assertEquals(Integer.valueOf(10), ComparatorUtils.min(10, -10, reversed));
 
-        try {
-            ComparatorUtils.min(1, null, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ComparatorUtils.min(1, null, null),
+                        "expecting NullPointerException"),
 
-        try {
-            ComparatorUtils.min(null, 10, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+                () -> assertThrows(NullPointerException.class, () -> ComparatorUtils.min(null, 10, null),
+                        "expecting NullPointerException")
+        );
     }
 
     @Test

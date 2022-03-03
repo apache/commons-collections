@@ -17,7 +17,7 @@
 package org.apache.commons.collections4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
@@ -49,11 +49,9 @@ public class MultiSetUtilsTest {
     public void testEmptyMultiSet() {
         final MultiSet<Integer> empty = MultiSetUtils.emptyMultiSet();
         assertEquals(0, empty.size());
-        try {
-            empty.add(55);
-            fail("Empty multi set must be read-only");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> empty.add(55),
+                "Empty multi set must be read-only");
     }
 
     /**
@@ -64,17 +62,11 @@ public class MultiSetUtilsTest {
         final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
         assertEquals(multiSet, unmodifiable);
 
-        try {
-            unmodifiable.add("a");
-            fail("Empty multi set must be read-only");
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiable.add("a"),
+                "Empty multi set must be read-only");
 
-        try {
-            MultiSetUtils.unmodifiableMultiSet(null);
-            fail("Expecting NPE");
-        } catch (final NullPointerException e) {
-        }
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.unmodifiableMultiSet(null),
+                "Expecting NPE");
     }
 
     /**
@@ -97,22 +89,14 @@ public class MultiSetUtilsTest {
         assertEquals(multiSet.size(), predicated.size());
         assertEquals(multiSet.getCount("a"), predicated.getCount("a"));
 
-        try {
-            MultiSetUtils.predicatedMultiSet(null, predicate);
-            fail("Expecting NPE");
-        } catch (final NullPointerException e) {
-        }
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.predicatedMultiSet(null, predicate),
+                "Expecting NPE");
 
-        try {
-            MultiSetUtils.predicatedMultiSet(multiSet, null);
-            fail("Expecting NPE");
-        } catch (final NullPointerException e) {
-        }
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.predicatedMultiSet(multiSet, null),
+                "Expecting NPE");
 
-        try {
-            MultiSetUtils.predicatedMultiSet(multiSet, object -> object.equals("a"));
-            fail("Predicate is violated for all elements not being 'a'");
-        } catch (final IllegalArgumentException iae) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> MultiSetUtils.predicatedMultiSet(multiSet, object -> object.equals("a")),
+                "Predicate is violated for all elements not being 'a'");
     }
+
 }
