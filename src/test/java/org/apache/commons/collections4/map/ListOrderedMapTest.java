@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,14 +192,13 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
 
-        try {
-            lom.put(1, (K) "testInsert1", (V) "testInsert1v");
-            fail("should not be able to insert at pos 1 in empty Map");
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.put(-1, (K) "testInsert-1", (V) "testInsert-1v");
-            fail("should not be able to insert at pos -1 in empty Map");
-        } catch (final IndexOutOfBoundsException ex) {}
+        ListOrderedMap<K, V> finalLom = lom;
+        assertAll(
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(1, (K) "testInsert1", (V) "testInsert1v"),
+                        "should not be able to insert at pos 1 in empty Map"),
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(-1, (K) "testInsert-1", (V) "testInsert-1v"),
+                        "should not be able to insert at pos -1 in empty Map")
+        );
 
         // put where key doesn't exist
         lom.put(0, (K) "testInsert1", (V) "testInsert1v");
@@ -420,6 +422,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     public class TestKeyListView extends AbstractListTest<K> {
+
         TestKeyListView() {
             super("TestKeyListView");
         }
@@ -428,6 +431,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         public List<K> makeObject() {
             return ListOrderedMapTest.this.makeObject().keyList();
         }
+
         @Override
         public List<K> makeFullCollection() {
             return ListOrderedMapTest.this.makeFullMap().keyList();
@@ -437,29 +441,36 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         public K[] getFullElements() {
             return ListOrderedMapTest.this.getSampleKeys();
         }
+
         @Override
         public boolean isAddSupported() {
             return false;
         }
+
         @Override
         public boolean isRemoveSupported() {
             return false;
         }
+
         @Override
         public boolean isSetSupported() {
             return false;
         }
+
         @Override
         public boolean isNullSupported() {
             return ListOrderedMapTest.this.isAllowNullKey();
         }
+
         @Override
         public boolean isTestSerialization() {
             return false;
         }
+
     }
 
     public class TestValueListView extends AbstractListTest<V> {
+
         TestValueListView() {
             super("TestValueListView");
         }
@@ -468,6 +479,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         public List<V> makeObject() {
             return ListOrderedMapTest.this.makeObject().valueList();
         }
+
         @Override
         public List<V> makeFullCollection() {
             return ListOrderedMapTest.this.makeFullMap().valueList();
@@ -477,26 +489,32 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         public V[] getFullElements() {
             return ListOrderedMapTest.this.getSampleValues();
         }
+
         @Override
         public boolean isAddSupported() {
             return false;
         }
+
         @Override
         public boolean isRemoveSupported() {
             return true;
         }
+
         @Override
         public boolean isSetSupported() {
             return true;
         }
+
         @Override
         public boolean isNullSupported() {
             return ListOrderedMapTest.this.isAllowNullKey();
         }
+
         @Override
         public boolean isTestSerialization() {
             return false;
         }
+
     }
 
     @Override
@@ -522,4 +540,5 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     public ListOrderedMap<K, V> getMap() {
         return (ListOrderedMap<K, V>) super.getMap();
     }
+
 }

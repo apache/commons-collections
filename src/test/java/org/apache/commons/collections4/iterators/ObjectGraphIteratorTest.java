@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +28,6 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Testcase.
- *
  */
 public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
@@ -73,34 +74,20 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
 
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
+
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     public void testIteratorConstructor_null_next() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteratorConstructor_null_remove() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     public void testIteratorConstructorIteration_Empty() {
@@ -108,16 +95,10 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         final Iterator<Object> it = new ObjectGraphIterator<>(iteratorList.iterator());
 
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
+
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     public void testIteratorConstructorIteration_Simple() {
@@ -132,11 +113,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
             assertEquals(testArray[i], it.next());
         }
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteratorConstructorIteration_SimpleNoHasNext() {
@@ -149,11 +127,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         for (int i = 0; i < 6; i++) {
             assertEquals(testArray[i], it.next());
         }
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteratorConstructorIteration_WithEmptyIterators() {
@@ -172,11 +147,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
             assertEquals(testArray[i], it.next());
         }
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteratorConstructorRemove() {
@@ -232,16 +204,10 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         final Iterator<Object> it = new ObjectGraphIterator<>(null, null);
 
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
+
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     public void testIteration_RootNoTransformer() {
@@ -251,11 +217,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertTrue(it.hasNext());
         assertSame(forest, it.next());
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteration_Transformed1() {
@@ -266,11 +229,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertTrue(it.hasNext());
         assertSame(l1, it.next());
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteration_Transformed2() {
@@ -302,11 +262,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertTrue(it.hasNext());
         assertSame(l5, it.next());
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testIteration_Transformed3() {
@@ -338,14 +295,12 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertTrue(it.hasNext());
         assertSame(l5, it.next());
         assertFalse(it.hasNext());
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     static class LeafFinder implements Transformer<Object, Object> {
+
         @Override
         public Object transform(final Object input) {
             if (input instanceof Forest) {
@@ -362,9 +317,11 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
             }
             throw new ClassCastException();
         }
+
     }
 
     static class Forest {
+
         List<Tree> trees = new ArrayList<>();
 
         Tree addTree() {
@@ -379,9 +336,11 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         Iterator<Tree> treeIterator() {
             return trees.iterator();
         }
+
     }
 
     static class Tree {
+
         List<Branch> branches = new ArrayList<>();
 
         Branch addBranch() {
@@ -396,9 +355,11 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         Iterator<Branch> branchIterator() {
             return branches.iterator();
         }
+
     }
 
     static class Branch {
+
         List<Leaf> leaves = new ArrayList<>();
 
         Leaf addLeaf() {
@@ -413,9 +374,11 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         Iterator<Leaf> leafIterator() {
             return leaves.iterator();
         }
+
     }
 
     static class Leaf {
+
         String colour;
 
         String getColour() {
@@ -425,6 +388,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         void setColour(final String colour) {
             this.colour = colour;
         }
+
     }
 
 }
