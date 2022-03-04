@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
- *
  */
 public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -64,12 +63,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testNullArray() {
-        try {
-            new ArrayIterator<>(null);
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> new ArrayIterator<>(null));
     }
 
     public void testReset() {

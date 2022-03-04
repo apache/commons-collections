@@ -327,10 +327,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         resetFull();
         final ListIterator<E> it = getCollection().listIterator();
         it.next();
-        try {
-            it.set(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+
+        assertThrows(UnsupportedOperationException.class, () -> it.set(null));
     }
 
     @Override
@@ -634,6 +632,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // provide null values as Parameter
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
-
     }
+
 }

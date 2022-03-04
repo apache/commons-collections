@@ -58,7 +58,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return false;
     }
 
-
     public void testPrefixMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
@@ -202,10 +201,10 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         iterator = map.keySet().iterator();
         map.put("Amber", "Amber");
         Assertions.assertEquals(3, map.size());
-        try {
-            iterator.next();
-            Assertions.fail("CME expected");
-        } catch(final ConcurrentModificationException expected) {}
+
+        final Iterator<String> iterator1 = iterator;
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> iterator1.next());
+
         Assertions.assertEquals("Amber", map.firstKey());
         Assertions.assertEquals("Ammun", map.lastKey());
 
@@ -243,28 +242,28 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         map = trie.prefixMap("Ab");
         Assertions.assertTrue(map.isEmpty());
         Assertions.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assertions.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assertions.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+
+        final SortedMap<String, String> map1 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map1.firstKey());
+
+        final SortedMap<String, String> map2 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map2.lastKey());
+
         iterator = map.values().iterator();
         Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Albertooo");
         Assertions.assertTrue(map.isEmpty());
         Assertions.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assertions.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assertions.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+
+        final SortedMap<String, String> map3 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map3.firstKey(),
+                () -> "got a first key: " + map3.firstKey());
+
+        final SortedMap<String, String> map4 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map4.lastKey(),
+                () -> "got a last key: " + map4.lastKey());
+
         iterator = map.values().iterator();
         Assertions.assertFalse(iterator.hasNext());
 
@@ -274,14 +273,15 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         map = trie.prefixMap("\0");
         Assertions.assertTrue(map.isEmpty());
         Assertions.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assertions.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assertions.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+
+        final SortedMap<String, String> map5 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map5.firstKey(),
+                () -> "got a first key: " + map5.firstKey());
+
+        final SortedMap<String, String> map6 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map6.lastKey(),
+                () -> "got a last key: " + map6.lastKey());
+
         iterator = map.values().iterator();
         Assertions.assertFalse(iterator.hasNext());
     }
@@ -322,9 +322,10 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         iter.remove();
         Assertions.assertEquals(1, map.size());
         Assertions.assertEquals("Akko", iter.next());
-        if (iter.hasNext()) {
-            Assertions.fail("shouldn't have next (but was: " + iter.next() + ")");
-        }
+
+        final Iterator<String> iter1 = iter;
+        Assertions.assertFalse(iter.hasNext(), () -> "shouldn't have next (but was: " + iter1.next() + ")");
+
         Assertions.assertFalse(iter.hasNext());
     }
 
@@ -425,7 +426,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
-
 
     @Override
     public String getCompatibilityVersion() {

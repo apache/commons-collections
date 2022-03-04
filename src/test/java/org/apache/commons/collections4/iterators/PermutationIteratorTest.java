@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -162,12 +164,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
             resultsList.add(permutation);
         }
         //asking for another permutation should throw an exception
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     public void testPermutatorHasMore() {
@@ -189,4 +186,5 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
         assertFalse(it.hasNext());
     }
+
 }

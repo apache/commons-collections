@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -66,10 +68,8 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
         final OrderedMapIterator<K, V> it = makeEmptyIterator();
         assertFalse(it.hasPrevious());
-        try {
-            it.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+
+        assertThrows(NoSuchElementException.class, () -> it.previous());
     }
 
     /**
