@@ -80,9 +80,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
         final Set<Integer> set = new TreeSet<>();
-        hasher.iterator(getShape()).forEachRemaining((IntConsumer) idx -> {
-            set.add(idx);
-        });
+        hasher.iterator(getShape()).forEachRemaining((IntConsumer) set::add);
         final OfInt iter = this.hasher.iterator(getShape());
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
