@@ -34,6 +34,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.
@@ -59,7 +60,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * interface (prefix testBag). For Bag specific tests use the {@link #makeObject()} and
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull(),
  * otherwise the collection will be wrapped by a {@link CollectionBag} decorator.
- *
  */
 public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
@@ -107,7 +107,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag.addAll(Arrays.asList(getFullElements()));
         return bag;
     }
-
 
     @Override
     public void resetEmpty() {
@@ -379,12 +378,8 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         final Iterator<T> it = bag.iterator();
         it.next();
         bag.remove("A");
-        try {
-            it.next();
-            fail("Should throw ConcurrentModificationException");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+
+        assertThrows(ConcurrentModificationException.class, () -> it.next());
     }
 
     @SuppressWarnings("unchecked")
@@ -401,12 +396,8 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         it.next();
         it.next();
         it.next();
-        try {
-            it.next();
-            fail("Should throw NoSuchElementException");
-        } catch (final NoSuchElementException ex) {
-            // expected
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     @SuppressWarnings("unchecked")
@@ -425,12 +416,9 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(3, bag.size());
         it.remove();
         assertEquals(2, bag.size());
-        try {
-            it.remove();
-            fail("Should throw IllegalStateException");
-        } catch (final IllegalStateException ex) {
-            // expected
-        }
+
+        assertThrows(IllegalStateException.class, () -> it.remove());
+
         assertEquals(2, bag.size());
         it.next();
         it.remove();
@@ -590,7 +578,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         assertEquals(total, bag2.hashCode());
     }
 
-
     /**
      * Bulk test {@link Bag#uniqueSet()}.  This method runs through all of
      * the tests in {@link AbstractSetTest}.
@@ -604,6 +591,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     public class TestBagUniqueSet extends AbstractSetTest<T> {
+
         public TestBagUniqueSet() {
             super("");
         }
@@ -666,8 +654,8 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         public void verify() {
             super.verify();
         }
-    }
 
+    }
 
     /**
      * Compare the current serialized form of the Bag
@@ -696,4 +684,5 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
             assertEquals(bag, bag2);
         }
     }
+
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,7 +32,6 @@ import org.apache.commons.collections4.map.AbstractIterableMapTest;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
- *
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -208,10 +209,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     public void testBidiClear() {
         if (!isRemoveSupported()) {
-            try {
-                makeFullMap().clear();
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().clear());
             return;
         }
 
@@ -225,19 +223,14 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         map.clear();
         assertTrue("Map was not cleared.", map.isEmpty());
         assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
-
     }
 
     public void testBidiRemove() {
         if (!isRemoveSupported()) {
-            try {
-                makeFullMap().remove(getSampleKeys()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
-            try {
-                makeFullMap().removeValue(getSampleValues()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().remove(getSampleKeys()[0]));
+
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().removeValue(getSampleValues()[0]));
+
             return;
         }
 
@@ -329,8 +322,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestBidiMapEntrySet extends TestMapEntrySet {
+
         public TestBidiMapEntrySet() {
         }
+
         public void testMapEntrySetIteratorEntrySetValueCrossCheck() {
             final K key1 = getSampleKeys()[0];
             final K key2 = getSampleKeys()[1];
@@ -387,6 +382,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
                 it.remove();
             }
         }
+
     }
 
     public BulkTest bulkTestInverseMap() {
@@ -394,6 +390,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestInverseBidiMap extends AbstractBidiMapTest<V, K> {
+
         final AbstractBidiMapTest<K, V> main;
 
         public TestInverseBidiMap(final AbstractBidiMapTest<K, V> main) {
@@ -414,6 +411,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         public V[] getSampleKeys() {
             return main.getSampleValues();
         }
+
         @Override
         public K[] getSampleValues() {
             return main.getSampleKeys();
@@ -461,6 +459,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
+
         public TestBidiMapIterator() {
             super("TestBidiMapIterator");
         }
@@ -509,6 +508,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             super.verify();
             AbstractBidiMapTest.this.verify();
         }
+
     }
 
     public void testBidiMapIteratorSet() {
@@ -522,11 +522,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         final K key1 = it.next();
 
         if (!isSetValueSupported()) {
-            try {
-                it.setValue(newValue1);
-                fail();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> it.setValue(newValue1));
             return;
         }
 

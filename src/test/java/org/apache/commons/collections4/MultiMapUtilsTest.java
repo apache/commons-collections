@@ -19,8 +19,8 @@ package org.apache.commons.collections4;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,22 +43,16 @@ public class MultiMapUtilsTest {
     public void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
         assertTrue(map.isEmpty());
-        try {
-            map.put("key", "value");
-            fail("Should throw UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
 
     @Test
     public void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
-        try {
-            map.put("key", "value");
-            fail("Should throw UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
 
     @Test
