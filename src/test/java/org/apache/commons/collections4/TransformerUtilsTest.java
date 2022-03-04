@@ -185,7 +185,7 @@ public class TransformerUtilsTest {
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         assertEquals("B", TransformerUtils.chainedTransformer(a, b).transform(null));
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
-        Collection<Transformer<Object, Object>> coll = new ArrayList<>();
+        final Collection<Transformer<Object, Object>> coll = new ArrayList<>();
         coll.add(b);
         coll.add(a);
         assertEquals("A", TransformerUtils.chainedTransformer(coll).transform(null));
@@ -203,7 +203,7 @@ public class TransformerUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer(null, null)),
 
                 () -> assertThrows(NullPointerException.class, () -> {
-                    Collection<Transformer<Object, Object>> coll1 = new ArrayList<>();
+                    final Collection<Transformer<Object, Object>> coll1 = new ArrayList<>();
                     coll1.add(null);
                     coll1.add(null);
                     TransformerUtils.chainedTransformer(coll1);
@@ -400,7 +400,7 @@ public class TransformerUtilsTest {
 
         Transformer<Class<?>, Object> trans = TransformerUtils.instantiateTransformer(new Class[] { Long.class }, new Object[] { null });
 
-        Transformer<Class<?>, Object> finalTrans = trans;
+        final Transformer<Class<?>, Object> finalTrans = trans;
         assertThrows(FunctorException.class, () -> finalTrans.transform(String.class));
 
         trans = TransformerUtils.instantiateTransformer();

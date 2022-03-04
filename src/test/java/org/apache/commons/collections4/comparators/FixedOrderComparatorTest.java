@@ -156,7 +156,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     public void testUnknownObjectBehavior() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
 
-        FixedOrderComparator<String> finalComparator = comparator;
+        final FixedOrderComparator<String> finalComparator = comparator;
         assertThrows(IllegalArgumentException.class, () -> finalComparator.compare("New York", "Minneapolis"),
                 "Should have thrown a IllegalArgumentException");
 

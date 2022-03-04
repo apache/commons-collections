@@ -102,7 +102,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
         iter = makeArrayListIterator((E[]) testArray);
 
-        ListIterator<E> finalIter = iter;
+        final ListIterator<E> finalIter = iter;
         assertThrows(IllegalStateException.class, () -> finalIter.set((E) "should fail"), "ListIterator#set should fail if next() or previous() have not yet been called.");
     }
 
