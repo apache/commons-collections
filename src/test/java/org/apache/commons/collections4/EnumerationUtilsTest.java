@@ -50,7 +50,7 @@ public class EnumerationUtilsTest {
         assertEquals("one", EnumerationUtils.get(en, 1));
 
         // Enumerator, non-existent entry
-        Enumeration<String> finalEn = en;
+        final Enumeration<String> finalEn = en;
         assertThrows(IndexOutOfBoundsException.class, () -> EnumerationUtils.get(finalEn, 3));
 
         assertFalse(en.hasMoreElements());

@@ -394,13 +394,13 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     public void testUnsafeDeSerialization() throws Exception {
         final MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
         byte[] bytes = serialize(map1);
-        Object result = deserialize(bytes);
+        final Object result = deserialize(bytes);
         assertEquals(map1, result);
 
         final MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
         bytes = serialize(map2);
 
-        byte[] finalBytes = bytes;
+        final byte[] finalBytes = bytes;
         assertThrows(UnsupportedOperationException.class, () -> deserialize(finalBytes));
     }
 

@@ -71,18 +71,18 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         return Arrays.asList(
 
                 dynamicTest("Closure NoException", () -> {
-                    Closure<Integer> closure = generateNoExceptionClosure();
+                    final Closure<Integer> closure = generateNoExceptionClosure();
                     closure.execute(Integer.valueOf(0));
                 }),
 
                 dynamicTest("Closure IOException", () -> {
-                    Closure<Integer> closure = generateIOExceptionClosure();
+                    final Closure<Integer> closure = generateIOExceptionClosure();
                     final FunctorException thrown = assertThrows(FunctorException.class, () -> closure.execute(Integer.valueOf(0)));
                     assertTrue(thrown.getCause() instanceof IOException);
                 }),
 
                 dynamicTest("Closure NullPointerException", () -> {
-                    Closure<Integer> closure = generateNullPointerExceptionClosure();
+                    final Closure<Integer> closure = generateNullPointerExceptionClosure();
                     assertThrows(NullPointerException.class, () -> closure.execute(Integer.valueOf(0)));
                 })
 
