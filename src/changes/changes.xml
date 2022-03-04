@@ -82,6 +82,9 @@
     <action issue="COLLECTIONS-799" type="fix" dev="kinow" due-to="Stefano Cordio">
       UnmodifiableNavigableSet can be modified by pollFirst() and pollLast().
     </action>
+    <action type="fix" dev="ggregory" due-to="Arturo Bernal">
+      Use Java 8 and method reference. #274.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
