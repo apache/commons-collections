@@ -18,8 +18,8 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
  * Tests the {@link DynamicHasher}.
  */
 public class DynamicHasherTest {
+
     private DynamicHasher.Builder builder;
     private Shape shape;
 
@@ -63,6 +64,7 @@ public class DynamicHasherTest {
         public Signedness getSignedness() {
             return Signedness.SIGNED;
         }
+
     };
 
     /**
@@ -110,12 +112,8 @@ public class DynamicHasherTest {
             assertEquals(element, iter.nextInt());
         }
         assertFalse(iter.hasNext());
-        try {
-            iter.next();
-            fail("Should have thrown NoSuchElementException");
-        } catch (final NoSuchElementException ignore) {
-            // do nothing
-        }
+
+        assertThrows(NoSuchElementException.class, () -> iter.next(), "Should have thrown NoSuchElementException");
     }
 
     /**
@@ -126,11 +124,7 @@ public class DynamicHasherTest {
 
         final Hasher hasher = builder.with("Hello", StandardCharsets.UTF_8).build();
 
-        try {
-            hasher.iterator(new Shape(testFunction, 3, 72, 17));
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        assertThrows(IllegalArgumentException.class, () -> hasher.iterator(new Shape(testFunction, 3, 72, 17)), "Should have thrown IllegalArgumentException");
     }
+
 }

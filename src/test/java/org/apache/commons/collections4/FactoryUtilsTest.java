@@ -21,9 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -48,16 +47,8 @@ public class FactoryUtilsTest {
     public void testExceptionFactory() {
         assertNotNull(FactoryUtils.exceptionFactory());
         assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
-        try {
-            FactoryUtils.exceptionFactory().create();
-        } catch (final FunctorException ex) {
-            try {
-                FactoryUtils.exceptionFactory().create();
-            } catch (final FunctorException ex2) {
-                return;
-            }
-        }
-        fail();
+
+        assertThrows(FunctorException.class, () -> FactoryUtils.exceptionFactory().create());
     }
 
     // nullFactory
@@ -134,24 +125,15 @@ public class FactoryUtilsTest {
         final Mock2 proto = new Mock2(new Object());
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
-        try {
-            factory.create();
-        } catch (final FunctorException ex) {
-            assertTrue(ex.getCause() instanceof IOException);
-            return;
-        }
-        fail();
+
+        final FunctorException thrown = assertThrows(FunctorException.class, () -> factory.create());
+        assertTrue(thrown.getCause() instanceof IOException);
     }
 
     @Test
     public void testPrototypeFactoryPublicBad() {
         final Object proto = new Object();
-        try {
-            FactoryUtils.prototypeFactory(proto);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.prototypeFactory(proto));
     }
 
     public static class Mock1 {
