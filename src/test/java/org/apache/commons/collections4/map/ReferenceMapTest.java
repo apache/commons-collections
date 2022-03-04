@@ -88,8 +88,8 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map.containsValue(null));
         assertNull(map.remove(null));
         assertFalse(map.entrySet().contains(null));
-        assertFalse(map.keySet().contains(null));
-        assertFalse(map.values().contains(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
         try {
             map.put(null, null);
             fail();

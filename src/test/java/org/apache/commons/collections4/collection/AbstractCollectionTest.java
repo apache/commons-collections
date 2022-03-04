@@ -1093,7 +1093,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      */
     public void testCollectionToArray2() {
         resetEmpty();
-        Object[] a = new Object[] { new Object(), null, null };
+        Object[] a = { new Object(), null, null };
         Object[] array = getCollection().toArray(a);
         assertEquals("Given array shouldn't shrink", array, a);
         assertNull("Last element should be set to null", a[0]);

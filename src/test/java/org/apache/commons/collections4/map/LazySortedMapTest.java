@@ -39,7 +39,7 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    private class ReverseStringComparator implements Comparator<String> {
+    private static class ReverseStringComparator implements Comparator<String> {
         @Override
         public int compare(final String arg0, final String arg1) {
             return arg1.compareTo(arg0);

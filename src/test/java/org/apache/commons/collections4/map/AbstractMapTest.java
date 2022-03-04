@@ -299,7 +299,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
-        final Object[] result = new Object[] {
+        final Object[] result = {
             "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee",
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
             "key",
@@ -354,7 +354,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
-        final Object[] result = new Object[] {
+        final Object[] result = {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
             isAllowNullValue() && !JDK12 ? null : "nonnullvalue",
@@ -377,7 +377,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
-        final Object[] result = new Object[] {
+        final Object[] result = {
             isAllowNullValue() && !JDK12 && isAllowDuplicateValues() ? null : "newnonnullvalue",
             "newvalue",
             isAllowDuplicateValues() ? "newvalue" : "newvalue2",

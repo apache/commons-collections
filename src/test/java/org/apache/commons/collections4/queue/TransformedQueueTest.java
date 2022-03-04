@@ -65,7 +65,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<>(),
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, queue.size());
-        final Object[] elements = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] elements = { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < elements.length; i++) {
             queue.add(elements[i]);
             assertEquals(i + 1, queue.size());
@@ -81,7 +81,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void testTransformedQueue_decorateTransform() {
         final Queue originalQueue = new LinkedList();
-        final Object[] elements = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] elements = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalQueue, elements);
         final Queue<?> queue = TransformedQueue.transformedQueue(originalQueue,
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);

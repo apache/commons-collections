@@ -278,7 +278,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
-        map.keySet().remove(key);
+        map.remove(key);
 
         assertFalse("Key was not removed.", map.containsKey(key));
         assertFalse("Value was not removed.", map.containsValue(value));

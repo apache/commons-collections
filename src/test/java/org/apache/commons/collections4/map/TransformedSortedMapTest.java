@@ -65,7 +65,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @SuppressWarnings("unchecked")
     public void testTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         SortedMap<K, V> map = TransformedSortedMap
                 .transformingSortedMap(

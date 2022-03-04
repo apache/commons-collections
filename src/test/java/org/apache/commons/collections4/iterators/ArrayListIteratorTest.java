@@ -87,9 +87,9 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
-        final String[] testData = new String[] { "a", "b", "c" };
+        final String[] testData = { "a", "b", "c" };
 
-        final String[] result = new String[] { "0", "1", "2" };
+        final String[] result = { "0", "1", "2" };
 
         ListIterator<E> iter = makeArrayListIterator(testData);
         int x = 0;

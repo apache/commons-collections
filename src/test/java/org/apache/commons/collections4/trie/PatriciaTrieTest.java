@@ -61,7 +61,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     public void testPrefixMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
-        final String[] keys = new String[]{
+        final String[] keys = {
             "",
             "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
             "Alberts", "Allie", "Alliese", "Alabama", "Banane",
@@ -289,7 +289,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     public void testPrefixMapRemoval() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
-        final String[] keys = new String[]{
+        final String[] keys = {
             "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
             "Alberts", "Allie", "Alliese", "Alabama", "Banane",
             "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
@@ -338,15 +338,15 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals("测试", aTree.prefixMap("点").get("点评"));
         assertFalse(aTree.prefixMap("点").isEmpty());
         assertEquals(1, aTree.prefixMap("点").size());
-        assertEquals(1, aTree.prefixMap("点").keySet().size());
+        assertEquals(1, aTree.prefixMap("点").size());
         assertEquals(1, aTree.prefixMap("点").entrySet().size());
-        assertEquals(1, aTree.prefixMap("点评").values().size());
+        assertEquals(1, aTree.prefixMap("点评").size());
 
         aTree.clear();
         aTree.put("点评", "联盟");
         aTree.put("点版", "定向");
-        assertEquals(2, aTree.prefixMap("点").keySet().size());
-        assertEquals(2, aTree.prefixMap("点").values().size());
+        assertEquals(2, aTree.prefixMap("点").size());
+        assertEquals(2, aTree.prefixMap("点").size());
     }
 
     public void testPrefixMapSizes2() {
@@ -384,8 +384,8 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         prefixMap.clear();
         assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
@@ -398,8 +398,8 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         prefixMap.clear();
         assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<String>(), trie.keySet());
         assertEquals(new ArrayList<Integer>(0), new ArrayList<>(trie.values()));
     }
@@ -421,8 +421,8 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         for (final String key : keys) {
             prefixMap.remove(key);
         }
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }

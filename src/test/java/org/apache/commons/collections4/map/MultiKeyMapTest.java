@@ -121,8 +121,8 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         assertFalse(map.containsValue(null));
         assertNull(map.remove(null));
         assertFalse(map.entrySet().contains(null));
-        assertFalse(map.keySet().contains(null));
-        assertFalse(map.values().contains(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
         try {
             map.put(null, null);
             fail();

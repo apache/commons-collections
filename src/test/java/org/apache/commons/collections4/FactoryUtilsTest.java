@@ -240,7 +240,7 @@ public class FactoryUtilsTest {
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletons = new Object[] {
+        final Object[] singletons = {
             ExceptionFactory.INSTANCE,
         };
 

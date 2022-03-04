@@ -150,7 +150,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testKeySet() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
@@ -360,6 +360,6 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testValues() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 }
