@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,16 +57,10 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     public void testExceptionPredicate() {
         assertNotNull(PredicateUtils.exceptionPredicate());
         assertSame(PredicateUtils.exceptionPredicate(), PredicateUtils.exceptionPredicate());
-        try {
-            PredicateUtils.exceptionPredicate().evaluate(null);
-        } catch (final FunctorException ex) {
-            try {
-                PredicateUtils.exceptionPredicate().evaluate(cString);
-            } catch (final FunctorException ex2) {
-                return;
-            }
-        }
-        fail();
+
+        assertThrows(FunctorException.class, () -> PredicateUtils.exceptionPredicate().evaluate(null));
+
+        assertThrows(FunctorException.class, () -> PredicateUtils.exceptionPredicate().evaluate(cString));
     }
 
     // notNullPredicate
@@ -666,10 +659,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         final Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");
         assertFalse(PredicateUtils.transformedPredicate(t, p).evaluate(null));
         assertTrue(PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
-        try {
-            PredicateUtils.transformedPredicate(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+
+        assertThrows(NullPointerException.class, () -> PredicateUtils.transformedPredicate(null, null));
     }
 
     // misc tests
@@ -701,6 +692,5 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     protected Predicate<?> generatePredicate() {
         return truePredicate();  //Just return something to satisfy super class.
     }
+
 }
-
-
