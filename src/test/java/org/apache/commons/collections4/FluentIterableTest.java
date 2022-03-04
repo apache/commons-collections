@@ -213,7 +213,7 @@ public class FluentIterableTest {
     @Test
     public void forEach() {
         final AtomicInteger sum = new AtomicInteger(0);
-        final Closure<Integer> closure = input -> sum.addAndGet(input);
+        final Closure<Integer> closure = sum::addAndGet;
 
         FluentIterable.of(iterableA).forEach(closure);
         int expectedSum = 0;
