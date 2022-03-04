@@ -1496,7 +1496,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         final ArrayList<String> list = new ArrayList<>();
         final String prefix = "CursorableLinkedListTest";
         final String bulk = ".bulkTestSubList";
-        final String[] ignored = new String[] {
+        final String[] ignored = {
             ".testEmptyListSerialization",
             ".testFullListSerialization",
             ".testEmptyListCompatibility",

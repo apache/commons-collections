@@ -2022,7 +2022,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSize_Array() {
-        final Object[] objectArray = new Object[0];
+        final Object[] objectArray = {};
         assertEquals(0, CollectionUtils.size(objectArray));
 
         final String[] stringArray = new String[3];
@@ -2083,7 +2083,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSize_PrimitiveArray() {
-        final int[] intArray = new int[0];
+        final int[] intArray = {};
         assertEquals(0, CollectionUtils.size(intArray));
 
         final double[] doubleArray = new double[3];
@@ -2096,7 +2096,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_Array() {
-        final Object[] objectArray = new Object[0];
+        final Object[] objectArray = {};
         assertTrue(CollectionUtils.sizeIsEmpty(objectArray));
 
         final String[] stringArray = new String[3];
@@ -2162,7 +2162,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_PrimitiveArray() {
-        final int[] intArray = new int[0];
+        final int[] intArray = {};
         assertTrue(CollectionUtils.sizeIsEmpty(intArray));
 
         final double[] doubleArray = new double[3];

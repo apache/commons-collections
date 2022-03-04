@@ -53,7 +53,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         final Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertTrue(bag.isEmpty());
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
@@ -68,7 +68,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @SuppressWarnings("unchecked")
     public void testTransformedBag_decorateTransform() {
         final Bag<T> originalBag = new HashBag<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {
             originalBag.add((T) el);
         }

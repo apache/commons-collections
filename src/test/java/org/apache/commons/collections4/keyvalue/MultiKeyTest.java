@@ -120,7 +120,7 @@ public class MultiKeyTest {
     @Test
     public void testConstructorsByArray() throws Exception {
         MultiKey<Integer> mk;
-        Integer[] keys = new Integer[] { THREE, FOUR, ONE, TWO };
+        Integer[] keys = { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<>(keys);
         assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         keys[3] = FIVE;  // no effect
@@ -246,7 +246,7 @@ public class MultiKeyTest {
 
     @Test
     public void testGetKeysArrayConstructorCloned() {
-        final Integer[] keys = new Integer[] { ONE, TWO };
+        final Integer[] keys = { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, true);
         final Object[] array = mk.getKeys();
         assertNotSame(array, keys);
@@ -258,7 +258,7 @@ public class MultiKeyTest {
 
     @Test
     public void testGetKeysArrayConstructorNonCloned() {
-        final Integer[] keys = new Integer[] { ONE, TWO };
+        final Integer[] keys = { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, false);
         final Object[] array = mk.getKeys();
         assertNotSame(array, keys);  // still not equal

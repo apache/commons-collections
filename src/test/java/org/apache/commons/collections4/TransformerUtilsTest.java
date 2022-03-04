@@ -419,7 +419,7 @@ public class TransformerUtilsTest {
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletons = new Object[] {
+        final Object[] singletons = {
             ExceptionTransformer.INSTANCE,
             NOPTransformer.INSTANCE,
             StringValueTransformer.stringValueTransformer(),

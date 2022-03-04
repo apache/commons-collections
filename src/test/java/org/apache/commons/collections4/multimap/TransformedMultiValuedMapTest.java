@@ -51,7 +51,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     // -----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(),
@@ -75,7 +75,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @SuppressWarnings("unchecked")
     public void testValueTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(), null,

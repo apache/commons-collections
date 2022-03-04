@@ -129,7 +129,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
-        final Object[] result = new Object[] {
+        final Object[] result = {
             "one", "one", "two", "two",
             "three", "three"
         };
@@ -144,7 +144,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      */
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
-        final Object[] result = new Object[] {
+        final Object[] result = {
             "uno", "un", "dos", "deux",
             "tres", "trois"
         };

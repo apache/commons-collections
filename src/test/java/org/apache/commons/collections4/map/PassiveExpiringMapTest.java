@@ -214,7 +214,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
     public void testKeySet() {
         final Map<Integer, String> m = makeTestMap();
-        assertEquals(3, m.keySet().size());
+        assertEquals(3, m.size());
     }
 
     public void testPut() {
@@ -234,7 +234,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
     public void testValues() {
         final Map<Integer, String> m = makeTestMap();
-        assertEquals(3, m.values().size());
+        assertEquals(3, m.size());
     }
 
     public void testZeroTimeToLive() {
