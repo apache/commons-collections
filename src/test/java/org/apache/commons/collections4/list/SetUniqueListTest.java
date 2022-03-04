@@ -17,8 +17,6 @@
 package org.apache.commons.collections4.list;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
 
@@ -63,18 +61,18 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             Integer.valueOf(2),
             "Three",
             Integer.valueOf(4),
-            new Double(5),
-            new Float(6),
+            Double.valueOf(5),
+            Float.valueOf(6),
             "Seven",
             "Eight",
             "Nine",
             Integer.valueOf(10),
-            new Short((short) 11),
-            new Long(12),
+            Short.valueOf((short) 11),
+            Long.valueOf(12),
             "Thirteen",
             "14",
             "15",
-            new Byte((byte) 16)
+            Byte.valueOf((byte) 16)
         };
     }
 
@@ -236,7 +234,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     public void testFactory() {
-        final Integer[] array = new Integer[] { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
+        final Integer[] array = { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(array));
         final SetUniqueList<Integer> lset = SetUniqueList.setUniqueList(list);
 
@@ -329,10 +327,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         resetFull();
         final ListIterator<E> it = getCollection().listIterator();
         it.next();
-        try {
-            it.set(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+
+        assertThrows(UnsupportedOperationException.class, () -> it.set(null));
     }
 
     @Override
@@ -341,12 +337,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // override for set behavior
         resetFull();
         final int size = getCollection().size();
-        getCollection().set(0, (E) new Long(1000));
+        getCollection().set(0, (E) Long.valueOf(1000));
         assertEquals(size, getCollection().size());
 
-        getCollection().set(2, (E) new Long(1000));
+        getCollection().set(2, (E) Long.valueOf(1000));
         assertEquals(size - 1, getCollection().size());
-        assertEquals(new Long(1000), getCollection().get(1));  // set into 2, but shifted down to 1
+        assertEquals(Long.valueOf(1000), getCollection().get(1));  // set into 2, but shifted down to 1
     }
 
     @SuppressWarnings("unchecked")
@@ -600,12 +596,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
         if (extraVerify) {
             final int size = getCollection().size();
-            getCollection().add((E) new Long(1000));
+            getCollection().add((E) Long.valueOf(1000));
             assertEquals(size + 1, getCollection().size());
 
-            getCollection().add((E) new Long(1000));
+            getCollection().add((E) Long.valueOf(1000));
             assertEquals(size + 1, getCollection().size());
-            assertEquals(new Long(1000), getCollection().get(size));
+            assertEquals(Long.valueOf(1000), getCollection().get(size));
 
             getCollection().remove(size);
         }
@@ -636,6 +632,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // provide null values as Parameter
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
-
     }
+
 }

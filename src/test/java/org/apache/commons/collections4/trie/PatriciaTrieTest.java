@@ -31,7 +31,7 @@ import junit.framework.Test;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * JUnit tests for the PatriciaTrie.
@@ -58,11 +58,10 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return false;
     }
 
-
     public void testPrefixMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
-        final String[] keys = new String[]{
+        final String[] keys = {
             "",
             "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
             "Alberts", "Allie", "Alliese", "Alabama", "Banane",
@@ -80,216 +79,217 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         Map.Entry<String, String> entry;
 
         map = trie.prefixMap("Al");
-        Assert.assertEquals(8, map.size());
-        Assert.assertEquals("Alabama", map.firstKey());
-        Assert.assertEquals("Alliese", map.lastKey());
-        Assert.assertEquals("Albertoo", map.get("Albertoo"));
-        Assert.assertNotNull(trie.get("Xavier"));
-        Assert.assertNull(map.get("Xavier"));
-        Assert.assertNull(trie.get("Alice"));
-        Assert.assertNull(map.get("Alice"));
+        Assertions.assertEquals(8, map.size());
+        Assertions.assertEquals("Alabama", map.firstKey());
+        Assertions.assertEquals("Alliese", map.lastKey());
+        Assertions.assertEquals("Albertoo", map.get("Albertoo"));
+        Assertions.assertNotNull(trie.get("Xavier"));
+        Assertions.assertNull(map.get("Xavier"));
+        Assertions.assertNull(trie.get("Alice"));
+        Assertions.assertNull(map.get("Alice"));
         iterator = map.values().iterator();
-        Assert.assertEquals("Alabama", iterator.next());
-        Assert.assertEquals("Albert", iterator.next());
-        Assert.assertEquals("Alberto", iterator.next());
-        Assert.assertEquals("Albertoo", iterator.next());
-        Assert.assertEquals("Alberts", iterator.next());
-        Assert.assertEquals("Alien", iterator.next());
-        Assert.assertEquals("Allie", iterator.next());
-        Assert.assertEquals("Alliese", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Alabama", iterator.next());
+        Assertions.assertEquals("Albert", iterator.next());
+        Assertions.assertEquals("Alberto", iterator.next());
+        Assertions.assertEquals("Albertoo", iterator.next());
+        Assertions.assertEquals("Alberts", iterator.next());
+        Assertions.assertEquals("Alien", iterator.next());
+        Assertions.assertEquals("Allie", iterator.next());
+        Assertions.assertEquals("Alliese", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Albert");
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Albert", iterator.next());
-        Assert.assertEquals("Alberto", iterator.next());
-        Assert.assertEquals("Albertoo", iterator.next());
-        Assert.assertEquals("Alberts", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
-        Assert.assertEquals(4, map.size());
-        Assert.assertEquals("Albert", map.firstKey());
-        Assert.assertEquals("Alberts", map.lastKey());
-        Assert.assertNull(trie.get("Albertz"));
+        Assertions.assertEquals("Albert", iterator.next());
+        Assertions.assertEquals("Alberto", iterator.next());
+        Assertions.assertEquals("Albertoo", iterator.next());
+        Assertions.assertEquals("Alberts", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
+        Assertions.assertEquals(4, map.size());
+        Assertions.assertEquals("Albert", map.firstKey());
+        Assertions.assertEquals("Alberts", map.lastKey());
+        Assertions.assertNull(trie.get("Albertz"));
         map.put("Albertz", "Albertz");
-        Assert.assertEquals("Albertz", trie.get("Albertz"));
-        Assert.assertEquals(5, map.size());
-        Assert.assertEquals("Albertz", map.lastKey());
+        Assertions.assertEquals("Albertz", trie.get("Albertz"));
+        Assertions.assertEquals(5, map.size());
+        Assertions.assertEquals("Albertz", map.lastKey());
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Albert", iterator.next());
-        Assert.assertEquals("Alberto", iterator.next());
-        Assert.assertEquals("Albertoo", iterator.next());
-        Assert.assertEquals("Alberts", iterator.next());
-        Assert.assertEquals("Albertz", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
-        Assert.assertEquals("Albertz", map.remove("Albertz"));
+        Assertions.assertEquals("Albert", iterator.next());
+        Assertions.assertEquals("Alberto", iterator.next());
+        Assertions.assertEquals("Albertoo", iterator.next());
+        Assertions.assertEquals("Alberts", iterator.next());
+        Assertions.assertEquals("Albertz", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Albertz", map.remove("Albertz"));
 
         map = trie.prefixMap("Alberto");
-        Assert.assertEquals(2, map.size());
-        Assert.assertEquals("Alberto", map.firstKey());
-        Assert.assertEquals("Albertoo", map.lastKey());
+        Assertions.assertEquals(2, map.size());
+        Assertions.assertEquals("Alberto", map.firstKey());
+        Assertions.assertEquals("Albertoo", map.lastKey());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        Assert.assertEquals("Alberto", entry.getKey());
-        Assert.assertEquals("Alberto", entry.getValue());
+        Assertions.assertEquals("Alberto", entry.getKey());
+        Assertions.assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        Assert.assertEquals("Albertoo", entry.getKey());
-        Assert.assertEquals("Albertoo", entry.getValue());
-        Assert.assertFalse(entryIterator.hasNext());
+        Assertions.assertEquals("Albertoo", entry.getKey());
+        Assertions.assertEquals("Albertoo", entry.getValue());
+        Assertions.assertFalse(entryIterator.hasNext());
         trie.put("Albertoad", "Albertoad");
-        Assert.assertEquals(3, map.size());
-        Assert.assertEquals("Alberto", map.firstKey());
-        Assert.assertEquals("Albertoo", map.lastKey());
+        Assertions.assertEquals(3, map.size());
+        Assertions.assertEquals("Alberto", map.firstKey());
+        Assertions.assertEquals("Albertoo", map.lastKey());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        Assert.assertEquals("Alberto", entry.getKey());
-        Assert.assertEquals("Alberto", entry.getValue());
+        Assertions.assertEquals("Alberto", entry.getKey());
+        Assertions.assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        Assert.assertEquals("Albertoad", entry.getKey());
-        Assert.assertEquals("Albertoad", entry.getValue());
+        Assertions.assertEquals("Albertoad", entry.getKey());
+        Assertions.assertEquals("Albertoad", entry.getValue());
         entry = entryIterator.next();
-        Assert.assertEquals("Albertoo", entry.getKey());
-        Assert.assertEquals("Albertoo", entry.getValue());
-        Assert.assertFalse(entryIterator.hasNext());
-        Assert.assertEquals("Albertoo", trie.remove("Albertoo"));
-        Assert.assertEquals("Alberto", map.firstKey());
-        Assert.assertEquals("Albertoad", map.lastKey());
-        Assert.assertEquals(2, map.size());
+        Assertions.assertEquals("Albertoo", entry.getKey());
+        Assertions.assertEquals("Albertoo", entry.getValue());
+        Assertions.assertFalse(entryIterator.hasNext());
+        Assertions.assertEquals("Albertoo", trie.remove("Albertoo"));
+        Assertions.assertEquals("Alberto", map.firstKey());
+        Assertions.assertEquals("Albertoad", map.lastKey());
+        Assertions.assertEquals(2, map.size());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        Assert.assertEquals("Alberto", entry.getKey());
-        Assert.assertEquals("Alberto", entry.getValue());
+        Assertions.assertEquals("Alberto", entry.getKey());
+        Assertions.assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        Assert.assertEquals("Albertoad", entry.getKey());
-        Assert.assertEquals("Albertoad", entry.getValue());
-        Assert.assertFalse(entryIterator.hasNext());
-        Assert.assertEquals("Albertoad", trie.remove("Albertoad"));
+        Assertions.assertEquals("Albertoad", entry.getKey());
+        Assertions.assertEquals("Albertoad", entry.getValue());
+        Assertions.assertFalse(entryIterator.hasNext());
+        Assertions.assertEquals("Albertoad", trie.remove("Albertoad"));
         trie.put("Albertoo", "Albertoo");
 
         map = trie.prefixMap("X");
-        Assert.assertEquals(2, map.size());
-        Assert.assertFalse(map.containsKey("Albert"));
-        Assert.assertTrue(map.containsKey("Xavier"));
-        Assert.assertFalse(map.containsKey("Xalan"));
+        Assertions.assertEquals(2, map.size());
+        Assertions.assertFalse(map.containsKey("Albert"));
+        Assertions.assertTrue(map.containsKey("Xavier"));
+        Assertions.assertFalse(map.containsKey("Xalan"));
         iterator = map.values().iterator();
-        Assert.assertEquals("Xavier", iterator.next());
-        Assert.assertEquals("XyZ", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Xavier", iterator.next());
+        Assertions.assertEquals("XyZ", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("An");
-        Assert.assertEquals(1, map.size());
-        Assert.assertEquals("Anna", map.firstKey());
-        Assert.assertEquals("Anna", map.lastKey());
+        Assertions.assertEquals(1, map.size());
+        Assertions.assertEquals("Anna", map.firstKey());
+        Assertions.assertEquals("Anna", map.lastKey());
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Anna", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Anna", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Ban");
-        Assert.assertEquals(1, map.size());
-        Assert.assertEquals("Banane", map.firstKey());
-        Assert.assertEquals("Banane", map.lastKey());
+        Assertions.assertEquals(1, map.size());
+        Assertions.assertEquals("Banane", map.firstKey());
+        Assertions.assertEquals("Banane", map.lastKey());
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Banane", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Banane", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Am");
-        Assert.assertFalse(map.isEmpty());
-        Assert.assertEquals(3, map.size());
-        Assert.assertEquals("Amber", trie.remove("Amber"));
+        Assertions.assertFalse(map.isEmpty());
+        Assertions.assertEquals(3, map.size());
+        Assertions.assertEquals("Amber", trie.remove("Amber"));
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Amma", iterator.next());
-        Assert.assertEquals("Ammun", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Amma", iterator.next());
+        Assertions.assertEquals("Ammun", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
         iterator = map.keySet().iterator();
         map.put("Amber", "Amber");
-        Assert.assertEquals(3, map.size());
-        try {
-            iterator.next();
-            Assert.fail("CME expected");
-        } catch(final ConcurrentModificationException expected) {}
-        Assert.assertEquals("Amber", map.firstKey());
-        Assert.assertEquals("Ammun", map.lastKey());
+        Assertions.assertEquals(3, map.size());
+
+        final Iterator<String> iterator1 = iterator;
+        Assertions.assertThrows(ConcurrentModificationException.class, () -> iterator1.next());
+
+        Assertions.assertEquals("Amber", map.firstKey());
+        Assertions.assertEquals("Ammun", map.lastKey());
 
         map = trie.prefixMap("Ak\0");
-        Assert.assertTrue(map.isEmpty());
+        Assertions.assertTrue(map.isEmpty());
 
         map = trie.prefixMap("Ak");
-        Assert.assertEquals(2, map.size());
-        Assert.assertEquals("Akka", map.firstKey());
-        Assert.assertEquals("Akko", map.lastKey());
+        Assertions.assertEquals(2, map.size());
+        Assertions.assertEquals("Akka", map.firstKey());
+        Assertions.assertEquals("Akko", map.lastKey());
         map.put("Ak", "Ak");
-        Assert.assertEquals("Ak", map.firstKey());
-        Assert.assertEquals("Akko", map.lastKey());
-        Assert.assertEquals(3, map.size());
+        Assertions.assertEquals("Ak", map.firstKey());
+        Assertions.assertEquals("Akko", map.lastKey());
+        Assertions.assertEquals(3, map.size());
         trie.put("Al", "Al");
-        Assert.assertEquals(3, map.size());
-        Assert.assertEquals("Ak", map.remove("Ak"));
-        Assert.assertEquals("Akka", map.firstKey());
-        Assert.assertEquals("Akko", map.lastKey());
-        Assert.assertEquals(2, map.size());
+        Assertions.assertEquals(3, map.size());
+        Assertions.assertEquals("Ak", map.remove("Ak"));
+        Assertions.assertEquals("Akka", map.firstKey());
+        Assertions.assertEquals("Akko", map.lastKey());
+        Assertions.assertEquals(2, map.size());
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Akka", iterator.next());
-        Assert.assertEquals("Akko", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
-        Assert.assertEquals("Al", trie.remove("Al"));
+        Assertions.assertEquals("Akka", iterator.next());
+        Assertions.assertEquals("Akko", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Al", trie.remove("Al"));
 
         map = trie.prefixMap("Akka");
-        Assert.assertEquals(1, map.size());
-        Assert.assertEquals("Akka", map.firstKey());
-        Assert.assertEquals("Akka", map.lastKey());
+        Assertions.assertEquals(1, map.size());
+        Assertions.assertEquals("Akka", map.firstKey());
+        Assertions.assertEquals("Akka", map.lastKey());
         iterator = map.keySet().iterator();
-        Assert.assertEquals("Akka", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertEquals("Akka", iterator.next());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Ab");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+        Assertions.assertTrue(map.isEmpty());
+        Assertions.assertEquals(0, map.size());
+
+        final SortedMap<String, String> map1 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map1.firstKey());
+
+        final SortedMap<String, String> map2 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map2.lastKey());
+
         iterator = map.values().iterator();
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("Albertooo");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+        Assertions.assertTrue(map.isEmpty());
+        Assertions.assertEquals(0, map.size());
+
+        final SortedMap<String, String> map3 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map3.firstKey(),
+                () -> "got a first key: " + map3.firstKey());
+
+        final SortedMap<String, String> map4 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map4.lastKey(),
+                () -> "got a last key: " + map4.lastKey());
+
         iterator = map.values().iterator();
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
 
         map = trie.prefixMap("");
-        Assert.assertSame(trie, map); // stricter than necessary, but a good check
+        Assertions.assertSame(trie, map); // stricter than necessary, but a good check
 
         map = trie.prefixMap("\0");
-        Assert.assertTrue(map.isEmpty());
-        Assert.assertEquals(0, map.size());
-        try {
-            final Object o = map.firstKey();
-            Assert.fail("got a first key: " + o);
-        } catch(final NoSuchElementException nsee) {}
-        try {
-            final Object o = map.lastKey();
-            Assert.fail("got a last key: " + o);
-        } catch(final NoSuchElementException nsee) {}
+        Assertions.assertTrue(map.isEmpty());
+        Assertions.assertEquals(0, map.size());
+
+        final SortedMap<String, String> map5 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map5.firstKey(),
+                () -> "got a first key: " + map5.firstKey());
+
+        final SortedMap<String, String> map6 = map;
+        Assertions.assertThrows(NoSuchElementException.class, () -> map6.lastKey(),
+                () -> "got a last key: " + map6.lastKey());
+
         iterator = map.values().iterator();
-        Assert.assertFalse(iterator.hasNext());
+        Assertions.assertFalse(iterator.hasNext());
     }
 
     public void testPrefixMapRemoval() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
-        final String[] keys = new String[]{
+        final String[] keys = {
             "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
             "Alberts", "Allie", "Alliese", "Alabama", "Banane",
             "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
@@ -301,31 +301,32 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         }
 
         SortedMap<String, String> map = trie.prefixMap("Al");
-        Assert.assertEquals(8, map.size());
+        Assertions.assertEquals(8, map.size());
         Iterator<String> iter = map.keySet().iterator();
-        Assert.assertEquals("Alabama", iter.next());
-        Assert.assertEquals("Albert", iter.next());
-        Assert.assertEquals("Alberto", iter.next());
-        Assert.assertEquals("Albertoo", iter.next());
-        Assert.assertEquals("Alberts", iter.next());
-        Assert.assertEquals("Alien", iter.next());
+        Assertions.assertEquals("Alabama", iter.next());
+        Assertions.assertEquals("Albert", iter.next());
+        Assertions.assertEquals("Alberto", iter.next());
+        Assertions.assertEquals("Albertoo", iter.next());
+        Assertions.assertEquals("Alberts", iter.next());
+        Assertions.assertEquals("Alien", iter.next());
         iter.remove();
-        Assert.assertEquals(7, map.size());
-        Assert.assertEquals("Allie", iter.next());
-        Assert.assertEquals("Alliese", iter.next());
-        Assert.assertFalse(iter.hasNext());
+        Assertions.assertEquals(7, map.size());
+        Assertions.assertEquals("Allie", iter.next());
+        Assertions.assertEquals("Alliese", iter.next());
+        Assertions.assertFalse(iter.hasNext());
 
         map = trie.prefixMap("Ak");
-        Assert.assertEquals(2, map.size());
+        Assertions.assertEquals(2, map.size());
         iter = map.keySet().iterator();
-        Assert.assertEquals("Akka", iter.next());
+        Assertions.assertEquals("Akka", iter.next());
         iter.remove();
-        Assert.assertEquals(1, map.size());
-        Assert.assertEquals("Akko", iter.next());
-        if (iter.hasNext()) {
-            Assert.fail("shouldn't have next (but was: " + iter.next() + ")");
-        }
-        Assert.assertFalse(iter.hasNext());
+        Assertions.assertEquals(1, map.size());
+        Assertions.assertEquals("Akko", iter.next());
+
+        final Iterator<String> iter1 = iter;
+        Assertions.assertFalse(iter.hasNext(), () -> "shouldn't have next (but was: " + iter1.next() + ")");
+
+        Assertions.assertFalse(iter.hasNext());
     }
 
     public void testPrefixMapSizes() {
@@ -337,15 +338,15 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals("测试", aTree.prefixMap("点").get("点评"));
         assertFalse(aTree.prefixMap("点").isEmpty());
         assertEquals(1, aTree.prefixMap("点").size());
-        assertEquals(1, aTree.prefixMap("点").keySet().size());
+        assertEquals(1, aTree.prefixMap("点").size());
         assertEquals(1, aTree.prefixMap("点").entrySet().size());
-        assertEquals(1, aTree.prefixMap("点评").values().size());
+        assertEquals(1, aTree.prefixMap("点评").size());
 
         aTree.clear();
         aTree.put("点评", "联盟");
         aTree.put("点版", "定向");
-        assertEquals(2, aTree.prefixMap("点").keySet().size());
-        assertEquals(2, aTree.prefixMap("点").values().size());
+        assertEquals(2, aTree.prefixMap("点").size());
+        assertEquals(2, aTree.prefixMap("点").size());
     }
 
     public void testPrefixMapSizes2() {
@@ -383,8 +384,8 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         prefixMap.clear();
         assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
@@ -397,8 +398,8 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         prefixMap.clear();
         assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<String>(), trie.keySet());
         assertEquals(new ArrayList<Integer>(0), new ArrayList<>(trie.values()));
     }
@@ -420,12 +421,11 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         for (final String key : keys) {
             prefixMap.remove(key);
         }
-        assertTrue(prefixMap.keySet().isEmpty());
-        assertTrue(prefixMap.values().isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
-
 
     @Override
     public String getCompatibilityVersion() {
@@ -442,4 +442,5 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/PatriciaTrie.fullCollection.version4.obj");
 //    }
+
 }

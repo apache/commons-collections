@@ -105,7 +105,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeEmptyIterator();
 
         // hasNext() should return false
-        assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
+        assertFalse("hasNext() should return false for empty iterators", it.hasNext());
 
         // next() should throw a NoSuchElementException
         try {
@@ -129,7 +129,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeObject();
 
         // hasNext() must be true (ensure makeFullIterator is correct!)
-        assertEquals("hasNext() should return true for at least one element", true, it.hasNext());
+        assertTrue("hasNext() should return true for at least one element", it.hasNext());
 
         // next() must not throw exception (ensure makeFullIterator is correct!)
         try {

@@ -579,7 +579,7 @@ public class IteratorUtilsTest {
 
         final List<Integer> combinedList = new ArrayList<>(collectionOdd);
         combinedList.addAll(collectionEven);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
 
         assertEquals(combinedList, result);
 

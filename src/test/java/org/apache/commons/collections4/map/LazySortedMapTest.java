@@ -39,7 +39,7 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    private class ReverseStringComparator implements Comparator<String> {
+    private static class ReverseStringComparator implements Comparator<String> {
         @Override
         public int compare(final String arg0, final String arg1) {
             return arg1.compareTo(arg0);
@@ -80,7 +80,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
         map = lazySortedMap(new TreeMap<Integer, Number>(), FactoryUtils.<Number>nullFactory());
         final Number o = map.get(5);
-        assertEquals(null, o);
+        assertNull(o);
         assertEquals(1, map.size());
 
     }
@@ -100,8 +100,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap("A", "C").lastKey());
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == null);
+        assertNull("natural order, so comparator should be null", c);
     }
 
     public void testReverseSortOrder() {
@@ -119,8 +118,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             "B", map.subMap("C", "A").lastKey());
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == reverseStringComparator);
+        assertSame("natural order, so comparator should be null", c, reverseStringComparator);
     }
 
     public void testTransformerDecorate() {

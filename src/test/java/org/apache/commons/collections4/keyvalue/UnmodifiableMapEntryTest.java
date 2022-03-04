@@ -22,7 +22,9 @@ import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the UnmodifiableMapEntry class.
@@ -101,10 +103,8 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @Test
     public void testUnmodifiable() {
         final Map.Entry<K, V> entry = makeMapEntry();
-        try {
-            entry.setValue(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+
+        assertThrows(UnsupportedOperationException.class, () -> entry.setValue(null));
     }
 
 }

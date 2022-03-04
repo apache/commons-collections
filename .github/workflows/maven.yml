@@ -31,8 +31,8 @@ jobs:
 #            experimental: true
         
     steps:
-    - uses: actions/checkout@v2.3.4
-    - uses: actions/cache@v2.1.6
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v2.1.7
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -44,4 +44,5 @@ jobs:
         distribution: adopt
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      run: mvn -V package --file pom.xml --no-transfer-progress
+      # Use the default goal
+      run: mvn -V --file pom.xml --no-transfer-progress

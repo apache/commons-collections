@@ -311,12 +311,12 @@ public class CollectionUtilsTest extends MockTestCase {
     public void collect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);
         Collection<Number> collection = CollectionUtils.<Integer, Number>collect(iterableA, transformer);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertCollectResult(collection);
 
         ArrayList<Number> list;
         list = CollectionUtils.collect(collectionA, transformer, new ArrayList<Number>());
-        assertTrue(list.size() == collectionA.size());
+        assertEquals(list.size(), collectionA.size());
         assertCollectResult(list);
 
         Iterator<Integer> iterator = null;
@@ -324,12 +324,12 @@ public class CollectionUtilsTest extends MockTestCase {
 
         iterator = iterableA.iterator();
         list = CollectionUtils.collect(iterator, transformer, list);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertCollectResult(collection);
 
         iterator = collectionA.iterator();
         collection = CollectionUtils.<Integer, Number>collect(iterator, transformer);
-        assertTrue(collection.size() == collectionA.size());
+        assertEquals(collection.size(), collectionA.size());
         assertTrue(collection.contains(2L) && !collection.contains(1));
         collection = CollectionUtils.collect((Iterator<Integer>) null, (Transformer<Integer, Number>) null);
         assertTrue(collection.isEmpty());
@@ -1229,7 +1229,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         final List<Integer> combinedList = new ArrayList<>(collectionD);
         combinedList.addAll(collectionE);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
 
         assertEquals(combinedList, result2, "Merge two lists 2");
 
@@ -1258,7 +1258,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Set<Integer> combinedSet = new HashSet<>(collectionD);
         combinedSet.addAll(collectionE);
         final List<Integer> combinedList = new ArrayList<>(combinedSet);
-        Collections.sort(combinedList);
+        combinedList.sort(null);
 
         assertEquals(combinedList, result2, "Merge two lists 2 - ignore duplicates");
     }
@@ -2022,7 +2022,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSize_Array() {
-        final Object[] objectArray = new Object[0];
+        final Object[] objectArray = {};
         assertEquals(0, CollectionUtils.size(objectArray));
 
         final String[] stringArray = new String[3];
@@ -2083,7 +2083,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSize_PrimitiveArray() {
-        final int[] intArray = new int[0];
+        final int[] intArray = {};
         assertEquals(0, CollectionUtils.size(intArray));
 
         final double[] doubleArray = new double[3];
@@ -2096,7 +2096,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_Array() {
-        final Object[] objectArray = new Object[0];
+        final Object[] objectArray = {};
         assertTrue(CollectionUtils.sizeIsEmpty(objectArray));
 
         final String[] stringArray = new String[3];
@@ -2140,9 +2140,9 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void testSizeIsEmpty_Map() {
         final Map<String, String> map = new HashMap<>();
-        assertEquals(true, CollectionUtils.sizeIsEmpty(map));
+        assertTrue(CollectionUtils.sizeIsEmpty(map));
         map.put("1", "a");
-        assertEquals(false, CollectionUtils.sizeIsEmpty(map));
+        assertFalse(CollectionUtils.sizeIsEmpty(map));
     }
 
     // -----------------------------------------------------------------------
@@ -2162,7 +2162,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testSizeIsEmpty_PrimitiveArray() {
-        final int[] intArray = new int[0];
+        final int[] intArray = {};
         assertTrue(CollectionUtils.sizeIsEmpty(intArray));
 
         final double[] doubleArray = new double[3];

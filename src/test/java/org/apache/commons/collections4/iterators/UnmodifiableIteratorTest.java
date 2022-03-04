@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,7 +28,6 @@ import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * Tests the UnmodifiableIterator.
- *
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -71,12 +72,9 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         it = testList.iterator();
-        assertTrue(it != UnmodifiableIterator.unmodifiableIterator(it));
+        assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
-        try {
-            UnmodifiableIterator.unmodifiableIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
     }
 
 }

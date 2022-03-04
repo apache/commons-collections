@@ -23,7 +23,10 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests the LoopingIterator class.
@@ -51,7 +54,7 @@ public class LoopingIteratorTest {
     public void testLooping0() throws Exception {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
-        assertTrue(!loop.hasNext(), "hasNext should return false");
+        assertFalse(loop.hasNext(), "hasNext should return false");
 
         try {
             loop.next();

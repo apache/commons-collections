@@ -83,13 +83,13 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
-        assertEquals(null, map.get(null));
-        assertEquals(false, map.containsKey(null));
-        assertEquals(false, map.containsValue(null));
-        assertEquals(null, map.remove(null));
-        assertEquals(false, map.entrySet().contains(null));
-        assertEquals(false, map.keySet().contains(null));
-        assertEquals(false, map.values().contains(null));
+        assertNull(map.get(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertNull(map.remove(null));
+        assertFalse(map.entrySet().contains(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
         try {
             map.put(null, null);
             fail();

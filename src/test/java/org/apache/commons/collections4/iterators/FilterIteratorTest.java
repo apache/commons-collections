@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,6 @@ import org.apache.commons.collections4.functors.NotNullPredicate;
 
 /**
  * Test the filter iterator.
- *
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -121,11 +121,11 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter1);
         filterIterator.setPredicate(truePredicate());
         // this iterator has elements
-        assertEquals(true, filterIterator.hasNext());
+        assertTrue(filterIterator.hasNext());
 
         // this iterator has no elements
         filterIterator.setIterator(iter2);
-        assertEquals(false, filterIterator.hasNext());
+        assertFalse(filterIterator.hasNext());
     }
 
     /**
@@ -138,21 +138,16 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter);
         filterIterator.setPredicate(truePredicate());
         // this predicate matches
-        assertEquals(true, filterIterator.hasNext());
+        assertTrue(filterIterator.hasNext());
 
         // this predicate doesn't match
         filterIterator.setPredicate(NotNullPredicate.notNullPredicate());
-        assertEquals(false, filterIterator.hasNext());
+        assertFalse(filterIterator.hasNext());
     }
 
     private void verifyNoMoreElements() {
-        assertTrue(!iterator.hasNext());
-        try {
-            iterator.next();
-            fail("NoSuchElementException expected");
-        } catch (final NoSuchElementException e) {
-            // success
-        }
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
@@ -179,7 +174,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         if (iterator.hasNext()) {
             final Object last = iterator.next();
             iterator.remove();
-            assertTrue("Base of FilterIterator still contains removed element.", !list.contains(last));
+            assertFalse("Base of FilterIterator still contains removed element.", list.contains(last));
         }
     }
 
@@ -210,5 +205,5 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Predicate<E> pred = x -> false;
         return new FilterIterator<>(i, pred);
     }
-}
 
+}

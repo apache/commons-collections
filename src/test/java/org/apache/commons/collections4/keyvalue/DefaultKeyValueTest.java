@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the DefaultKeyValue class.
@@ -57,18 +62,17 @@ public class DefaultKeyValueTest<K, V> {
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
         kv.setKey((K) key);
-        assertTrue(kv.getKey() == key);
+        assertSame(key, kv.getKey());
 
         kv.setValue((V) value);
-        assertTrue(kv.getValue() == value);
+        assertSame(value, kv.getValue());
 
         // check that null doesn't do anything funny
         kv.setKey(null);
-        assertTrue(kv.getKey() == null);
+        assertNull(kv.getKey());
 
         kv.setValue(null);
-        assertTrue(kv.getValue() == null);
-
+        assertNull(kv.getValue());
     }
 
     @SuppressWarnings("unchecked")
@@ -80,25 +84,9 @@ public class DefaultKeyValueTest<K, V> {
 
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
-        try {
-            kv.setKey((K) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
-
-        try {
-            kv.setValue((V) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
+        assertThrows(IllegalArgumentException.class, () -> kv.setKey((K) kv));
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
     }
 
     /**
@@ -135,8 +123,7 @@ public class DefaultKeyValueTest<K, V> {
 
         // test that the KVP is independent of the Map.Entry
         entry.setValue(null);
-        assertTrue(kv.getValue() == value);
-
+        assertSame(value, kv.getValue());
     }
 
     @SuppressWarnings("unchecked")
@@ -146,28 +133,28 @@ public class DefaultKeyValueTest<K, V> {
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         DefaultKeyValue<K, V> kv2 = makeDefaultKeyValue((K) key, (V) value);
 
-        assertTrue(kv.equals(kv));
-        assertTrue(kv.equals(kv2));
-        assertTrue(kv.hashCode() == kv2.hashCode());
+        assertEquals(kv, kv);
+        assertEquals(kv, kv2);
+        assertEquals(kv.hashCode(), kv2.hashCode());
 
         // 2. test with nulls
         kv = makeDefaultKeyValue(null, null);
         kv2 = makeDefaultKeyValue(null, null);
 
-        assertTrue(kv.equals(kv));
-        assertTrue(kv.equals(kv2));
-        assertTrue(kv.hashCode() == kv2.hashCode());
+        assertEquals(kv, kv);
+        assertEquals(kv, kv2);
+        assertEquals(kv.hashCode(), kv2.hashCode());
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testToString() {
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
-        assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
+        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
 
         // test with nulls
         kv = makeDefaultKeyValue(null, null);
-        assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
+        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
     }
 
     @SuppressWarnings("unchecked")
@@ -179,8 +166,8 @@ public class DefaultKeyValueTest<K, V> {
         map.put(kv.getKey(), kv.getValue());
         final Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
-        assertTrue(entry.equals(kv.toMapEntry()));
-        assertTrue(entry.hashCode() == kv.hashCode());
+        assertEquals(entry, kv.toMapEntry());
+        assertEquals(entry.hashCode(), kv.hashCode());
     }
 
 }

@@ -851,7 +851,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetEmpty();
         final E[] elements = getFullElements();
         for (final E element : elements) {
-            assertTrue("Shouldn't remove nonexistent element", !getCollection().remove(element));
+            assertFalse("Shouldn't remove nonexistent element", getCollection().remove(element));
             verify();
         }
 
@@ -895,12 +895,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
 
         resetEmpty();
-        assertTrue("Empty collection removeAll should return false for empty input",
-                !getCollection().removeAll(Collections.EMPTY_SET));
+        assertFalse("Empty collection removeAll should return false for empty input", getCollection().removeAll(Collections.EMPTY_SET));
         verify();
 
-        assertTrue("Empty collection removeAll should return false for nonempty input",
-                   !getCollection().removeAll(new ArrayList<>(getCollection())));
+        assertFalse("Empty collection removeAll should return false for nonempty input", getCollection().removeAll(new ArrayList<>(getCollection())));
         verify();
 
         resetFull();
@@ -1095,7 +1093,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      */
     public void testCollectionToArray2() {
         resetEmpty();
-        Object[] a = new Object[] { new Object(), null, null };
+        Object[] a = { new Object(), null, null };
         Object[] array = getCollection().toArray(a);
         assertEquals("Given array shouldn't shrink", array, a);
         assertNull("Last element should be set to null", a[0]);

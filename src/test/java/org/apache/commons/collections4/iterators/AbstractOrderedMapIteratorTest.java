@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -65,11 +67,9 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         super.testEmptyMapIterator();
 
         final OrderedMapIterator<K, V> it = makeEmptyIterator();
-        assertEquals(false, it.hasPrevious());
-        try {
-            it.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        assertFalse(it.hasPrevious());
+
+        assertThrows(NoSuchElementException.class, () -> it.previous());
     }
 
     /**
@@ -86,8 +86,8 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         final OrderedMapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
 
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
         final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
@@ -103,7 +103,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
             }
             assertTrue("Value must be in map",  map.containsValue(value));
 
-            assertEquals(true, it.hasPrevious());
+            assertTrue(it.hasPrevious());
 
             verify();
         }
@@ -121,7 +121,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
             }
             assertTrue("Value must be in map",  map.containsValue(value));
 
-            assertEquals(true, it.hasNext());
+            assertTrue(it.hasNext());
 
             verify();
         }
@@ -141,8 +141,8 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         assertEquals("keySet() not consistent", new ArrayList<>(map.keySet()), new ArrayList<>(map.keySet()));
 
         final Iterator<K> it2 = map.keySet().iterator();
-        assertEquals(true, it.hasNext());
-        assertEquals(true, it2.hasNext());
+        assertTrue(it.hasNext());
+        assertTrue(it2.hasNext());
         final List<K> list = new ArrayList<>();
         while (it.hasNext()) {
             final K key = it.next();

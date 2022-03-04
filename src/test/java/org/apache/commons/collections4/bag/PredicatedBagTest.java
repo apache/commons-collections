@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Set;
 
 import junit.framework.Test;
@@ -85,12 +87,9 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
     public void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
         final Integer i = 3;
-        try {
-            bag.add((T) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> bag.add((T) i));
+
         assertFalse("Collection shouldn't contain illegal element", bag.contains(i));
     }
 
@@ -101,18 +100,10 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         elements.add("two");
         elements.add(3);
         elements.add("four");
-        try {
-            decorateBag((HashBag<T>) elements, stringPredicate());
-            fail("Bag contains an element that should fail the predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        try {
-            decorateBag(new HashBag<T>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> decorateBag((HashBag<T>) elements, stringPredicate()));
+
+        assertThrows(NullPointerException.class, () -> decorateBag(new HashBag<T>(), null));
     }
 
     @Override

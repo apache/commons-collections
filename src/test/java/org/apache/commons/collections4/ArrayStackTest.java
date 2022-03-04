@@ -16,13 +16,14 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.EmptyStackException;
 
 import junit.framework.Test;
 
 /**
  * Tests ArrayStack.
- *
  */
 @SuppressWarnings("deprecation") // we test a deprecated class
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
@@ -45,20 +46,9 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", 0, stack.size());
 
-        try {
-            stack.peek();
-            fail("peek() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
+        assertThrows(EmptyStackException.class, () -> stack.peek());
 
-        try {
-            stack.pop();
-            fail("pop() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
-
+        assertThrows(EmptyStackException.class, () -> stack.pop());
     }
 
     @SuppressWarnings("unchecked")
@@ -66,7 +56,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
-        assertTrue("Stack is not empty", !stack.empty());
+        assertFalse("Stack is not empty", stack.empty());
         assertEquals("Stack size is one", 1, stack.size());
         assertEquals("Top item is 'First Item'",
                      "First Item", (String) stack.peek());
@@ -87,7 +77,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertEquals("Popped item is 'First Item'",
                      "First Item", (String) stack.pop());
         assertEquals("Stack size is zero", 0, stack.size());
-
     }
 
     @Override
@@ -103,7 +92,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                      2, stack.search("First Item"));
         assertEquals("Cannot find 'Missing Item'",
                      -1, stack.search("Missing Item"));
-
     }
 
     @Override

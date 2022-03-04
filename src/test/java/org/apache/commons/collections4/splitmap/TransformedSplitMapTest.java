@@ -50,8 +50,8 @@ public class TransformedSplitMapTest extends BulkTest {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
 
-        final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
-        final Object[] v = new Object[] { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
+        final Integer[] k = { 0, 1, 2, 3, 4, 5, 6 };
+        final Object[] v = { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
             new Object[0] };
 
         assertEquals(0, map.size());
@@ -66,7 +66,7 @@ public class TransformedSplitMapTest extends BulkTest {
         }
 
         int sz = map.size();
-        assertEquals(null, map.remove(k[0]));
+        assertNull(map.remove(k[0]));
         assertEquals(sz, map.size());
         assertEquals(objectToClass.transform(v[0]), map.remove(intToString.transform(k[0])));
         assertEquals(--sz, map.size());

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.trie;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
@@ -68,7 +70,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
-
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -78,12 +79,8 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final Trie<String, V> trie = makeFullMap();
         assertSame(trie, UnmodifiableTrie.unmodifiableTrie(trie));
 
-        try {
-            UnmodifiableTrie.unmodifiableTrie(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableTrie.unmodifiableTrie(null));
     }
-
 
     /**
      * Override to prevent infinite recursion of tests.

@@ -72,11 +72,11 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         for (int i = 0; i < els.length; i++) {
             multiset.add(els[i]);
             assertEquals(i + 1, multiset.size());
-            assertEquals(true, multiset.contains(els[i]));
+            assertTrue(multiset.contains(els[i]));
         }
         Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
         assertTrue("Unique set contains the first element", set.contains(els[0]));
-        assertEquals(true, multiset.remove(els[0]));
+        assertTrue(multiset.remove(els[0]));
         set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
         assertTrue("Unique set does not contain anymore the first element",
             set.contains(els[0]));
@@ -92,8 +92,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         } catch (final IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element",
-                   !multiset.contains(i));
+        assertFalse("Collection shouldn't contain illegal element", multiset.contains(i));
     }
 
     @SuppressWarnings("unchecked")

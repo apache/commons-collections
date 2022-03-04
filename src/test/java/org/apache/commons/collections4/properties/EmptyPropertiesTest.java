@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -95,14 +96,14 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testEquals() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(PropertiesFactory.EMPTY_PROPERTIES));
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.equals(new Properties()));
-        assertTrue(new Properties().equals(PropertiesFactory.EMPTY_PROPERTIES));
-        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(null));
+        assertEquals(PropertiesFactory.EMPTY_PROPERTIES, PropertiesFactory.EMPTY_PROPERTIES);
+        assertEquals(PropertiesFactory.EMPTY_PROPERTIES, new Properties());
+        assertEquals(new Properties(), PropertiesFactory.EMPTY_PROPERTIES);
+        assertNotEquals(null, PropertiesFactory.EMPTY_PROPERTIES);
         final Properties p = new Properties();
         p.put("Key", "Value");
-        assertFalse(PropertiesFactory.EMPTY_PROPERTIES.equals(p));
-        assertFalse(p.equals(PropertiesFactory.EMPTY_PROPERTIES));
+        assertNotEquals(PropertiesFactory.EMPTY_PROPERTIES, p);
+        assertNotEquals(p, PropertiesFactory.EMPTY_PROPERTIES);
     }
 
     public void testForEach() {
@@ -149,7 +150,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testKeySet() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
@@ -359,6 +360,6 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testValues() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 }

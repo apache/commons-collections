@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Tests the ObjectArrayIterator.
- *
  */
 public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -73,25 +74,17 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse("Iterator should now be empty", iter.hasNext());
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
         }
     }
 
     public void testNullArray() {
-        try {
-            makeArrayIterator(null);
-
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> makeArrayIterator(null));
     }
 
     @SuppressWarnings("unchecked")

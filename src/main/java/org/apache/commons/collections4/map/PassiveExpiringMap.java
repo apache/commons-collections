@@ -218,7 +218,7 @@ public class PassiveExpiringMap<K, V>
      * @throws NullPointerException if expiringPolicy is null
      */
     public PassiveExpiringMap(final ExpirationPolicy<K, V> expiringPolicy) {
-        this(expiringPolicy, new HashMap<K, V>());
+        this(expiringPolicy, new HashMap<>());
     }
 
     /**
@@ -249,8 +249,8 @@ public class PassiveExpiringMap<K, V>
      *        ALWAYS expire.
      */
     public PassiveExpiringMap(final long timeToLiveMillis) {
-        this(new ConstantTimeToLiveExpirationPolicy<K, V>(timeToLiveMillis),
-             new HashMap<K, V>());
+        this(new ConstantTimeToLiveExpirationPolicy<>(timeToLiveMillis),
+                new HashMap<>());
     }
 
     /**
@@ -268,7 +268,7 @@ public class PassiveExpiringMap<K, V>
      * @throws NullPointerException if the map is null.
      */
     public PassiveExpiringMap(final long timeToLiveMillis, final Map<K, V> map) {
-        this(new ConstantTimeToLiveExpirationPolicy<K, V>(timeToLiveMillis),
+        this(new ConstantTimeToLiveExpirationPolicy<>(timeToLiveMillis),
              map);
     }
 

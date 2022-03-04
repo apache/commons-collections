@@ -149,7 +149,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
             final Object value = lom.get(key);
             assertEquals(value, lom.remove(i));
             list.remove(i);
-            assertEquals(false, lom.containsKey(key));
+            assertFalse(lom.containsKey(key));
         }
     }
 

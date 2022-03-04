@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import junit.framework.Test;
 
 import org.apache.commons.collections4.Bag;
@@ -25,7 +27,6 @@ import org.apache.commons.collections4.SortedBag;
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
  * implementation.
- *
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
@@ -36,7 +37,6 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     public static Test suite() {
         return BulkTest.makeSuite(TreeBagTest.class);
     }
-
 
     @Override
     public SortedBag<T> makeObject() {
@@ -55,33 +55,21 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
     public void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
-            bag.add(new Object());
-            fail("IllegalArgumentException expected");
-        } catch(final IllegalArgumentException iae) {
-            // expected;
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> bag.add(new Object()));
     }
 
     public void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
-            bag.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+
+        assertThrows(NullPointerException.class, () -> bag.add(null));
 
         final Bag<String> bag2 = new TreeBag<>(String::compareTo);
-        try {
-            // jdk bug: adding null to an empty TreeMap works
-            // thus ensure that the bag is not empty before adding null
-            bag2.add("a");
-            bag2.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+        // jdk bug: adding null to an empty TreeMap works
+        // thus ensure that the bag is not empty before adding null
+        bag2.add("a");
+
+        assertThrows(NullPointerException.class, () -> bag2.add(null));
     }
 
     public void testOrdering() {
@@ -104,4 +92,5 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 //        bag = makeFullCollection();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TreeBag.fullCollection.version4.obj");
 //    }
+
 }

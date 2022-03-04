@@ -29,7 +29,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the FilterListIterator class.
@@ -136,7 +138,7 @@ public class FilterListIteratorTest {
         assertEquals(Integer.valueOf(3), filtered.previous());
         assertEquals(Integer.valueOf(0), filtered.previous());
 
-        assertTrue(!filtered.hasPrevious());
+        assertFalse(filtered.hasPrevious());
 
         assertEquals(Integer.valueOf(0), filtered.next());
         assertEquals(Integer.valueOf(3), filtered.next());
@@ -146,7 +148,7 @@ public class FilterListIteratorTest {
         assertEquals(Integer.valueOf(15), filtered.next());
         assertEquals(Integer.valueOf(18), filtered.next());
 
-        assertTrue(!filtered.hasNext());
+        assertFalse(filtered.hasNext());
 
         assertEquals(Integer.valueOf(18), filtered.previous());
         assertEquals(Integer.valueOf(15), filtered.previous());
@@ -276,7 +278,7 @@ public class FilterListIteratorTest {
             filtered.next();
         }
         assertTrue(filtered.hasPrevious());
-        assertTrue(!filtered.hasNext());
+        assertFalse(filtered.hasNext());
         assertEquals(expected.previous(), filtered.previous());
     }
 

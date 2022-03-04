@@ -21,7 +21,8 @@ import java.util.Map;
 import org.apache.commons.collections4.KeyValue;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test the DefaultMapEntry class.
@@ -83,13 +84,8 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     public void testSelfReferenceHandling() {
         final Map.Entry<K, V> entry = makeMapEntry();
 
-        try {
-            entry.setValue((V) entry);
-            assertSame(entry, entry.getValue());
-
-        } catch (final Exception e) {
-            fail("This Map.Entry implementation supports value self-reference.");
-        }
+        assertThrows(Exception.class, () -> entry.setValue((V) entry));
+        assertSame(entry, entry.getValue());
     }
 
 }

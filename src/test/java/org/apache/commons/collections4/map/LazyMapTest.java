@@ -65,7 +65,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         map = lazyMap(new HashMap<Integer, Number>(), FactoryUtils.<Long>nullFactory());
         final Object o = map.get("Five");
-        assertEquals(null, o);
+        assertNull(o);
         assertEquals(1, map.size());
     }
 

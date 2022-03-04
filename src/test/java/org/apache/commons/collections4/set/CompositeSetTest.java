@@ -149,7 +149,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         set.addComposited(null, null, null);
         final CompositeSet<E> set2 = new CompositeSet<>(buildOne());
         set2.addComposited(buildTwo());
-        assertTrue(set.equals(set2));
+        assertEquals(set, set2);
         final HashSet<E> set3 = new HashSet<>();
         set3.add((E) "1");
         set3.add((E) "2");
@@ -158,7 +158,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         set4.add((E) "4");
         final CompositeSet<E> set5 = new CompositeSet<>(set3);
         set5.addComposited(set4);
-        assertTrue(set.equals(set5));
+        assertEquals(set, set5);
         try {
             set.addComposited(set3);
             fail("Expecting UnsupportedOperationException.");

@@ -116,16 +116,16 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         list.add((E) "C");
         final Queue<E> queue = new CircularFifoQueue<>(list);
 
-        assertEquals(true, queue.contains("A"));
-        assertEquals(true, queue.contains("B"));
-        assertEquals(true, queue.contains("C"));
+        assertTrue(queue.contains("A"));
+        assertTrue(queue.contains("B"));
+        assertTrue(queue.contains("C"));
 
         queue.add((E) "D");
 
-        assertEquals(false, queue.contains("A"));
-        assertEquals(true, queue.contains("B"));
-        assertEquals(true, queue.contains("C"));
-        assertEquals(true, queue.contains("D"));
+        assertFalse(queue.contains("A"));
+        assertTrue(queue.contains("B"));
+        assertTrue(queue.contains("C"));
+        assertTrue(queue.contains("D"));
 
         assertEquals("B", queue.peek());
         assertEquals("B", queue.remove());
@@ -369,7 +369,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
         b.add((E) "a");
         assertEquals(1, b.size());
-        assertEquals(true, b.contains("a"));
+        assertTrue(b.contains("a"));
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b);
@@ -378,11 +378,11 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(1, b2.size());
-        assertEquals(true, b2.contains("a"));
+        assertTrue(b2.contains("a"));
         b2.add((E) "b");
         assertEquals(2, b2.size());
-        assertEquals(true, b2.contains("a"));
-        assertEquals(true, b2.contains("b"));
+        assertTrue(b2.contains("a"));
+        assertTrue(b2.contains("b"));
 
         bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b2);
@@ -391,12 +391,12 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(2, b3.size());
-        assertEquals(true, b3.contains("a"));
-        assertEquals(true, b3.contains("b"));
+        assertTrue(b3.contains("a"));
+        assertTrue(b3.contains("b"));
         b3.add((E) "c");
         assertEquals(2, b3.size());
-        assertEquals(true, b3.contains("b"));
-        assertEquals(true, b3.contains("c"));
+        assertTrue(b3.contains("b"));
+        assertTrue(b3.contains("c"));
     }
 
     public void testGetIndex() {
