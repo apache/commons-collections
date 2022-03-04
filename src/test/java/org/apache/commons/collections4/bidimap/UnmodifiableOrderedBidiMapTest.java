@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,7 +29,6 @@ import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * JUnit tests.
- *
  */
 public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
@@ -89,7 +90,6 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return false;
     }
 
-
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -99,9 +99,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         final OrderedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(map));
 
-        try {
-            UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(null));
     }
+
 }

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,6 @@ import org.apache.commons.collections4.functors.NotNullPredicate;
 
 /**
  * Test the filter iterator.
- *
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -147,12 +147,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private void verifyNoMoreElements() {
         assertFalse(iterator.hasNext());
-        try {
-            iterator.next();
-            fail("NoSuchElementException expected");
-        } catch (final NoSuchElementException e) {
-            // success
-        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
@@ -210,5 +205,5 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Predicate<E> pred = x -> false;
         return new FilterIterator<>(i, pred);
     }
-}
 
+}
