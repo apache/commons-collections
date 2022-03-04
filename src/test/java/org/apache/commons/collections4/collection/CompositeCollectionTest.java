@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -426,12 +428,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @Override
     public void testUnsupportedRemove() {
         resetFull();
-        try {
-            getCollection().remove(null);
-            fail("remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove(null));
+
         verify();
     }
 

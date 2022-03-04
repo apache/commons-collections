@@ -23,9 +23,10 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Tests the ListIteratorWrapper to insure that it behaves as expected when wrapping a ListIterator.
- *
  */
 public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
@@ -109,11 +110,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be initially positioned first");
-        } catch (final IllegalStateException e) {
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(), "ListIteratorWrapper#remove() should fail; must be initially positioned first");
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());
@@ -134,11 +131,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be repositioned first");
-        } catch (final IllegalStateException e) {
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(), "ListIteratorWrapper#remove() should fail; must be repositioned first");
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());

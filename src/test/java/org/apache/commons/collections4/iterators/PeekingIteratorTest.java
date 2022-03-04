@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -105,12 +107,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
         assertNull(it.peek());
 
-        try {
-            it.element();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> it.element());
     }
 
     @Test
@@ -122,12 +119,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertTrue(it.hasNext());
         assertEquals("b", it.peek());
 
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     private void validate(final Iterator<E> iter, final E... items) {

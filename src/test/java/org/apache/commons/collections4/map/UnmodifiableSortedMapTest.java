@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -62,7 +64,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         return UnmodifiableSortedMap.unmodifiableSortedMap(m);
     }
 
-
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -72,12 +73,8 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         final SortedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedMap.unmodifiableSortedMap(map));
 
-        try {
-            UnmodifiableSortedMap.unmodifiableSortedMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedMap.unmodifiableSortedMap(null));
     }
-
 
     public void testHeadMap() {
         final SortedMap<K, V> map = makeFullMap();
@@ -91,7 +88,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(16, map.headMap((K) "we'll").size());
     }
 
-
     public void testTailMap() {
         final SortedMap<K, V> map = makeFullMap();
 
@@ -103,7 +99,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         // "again" is the first key of the map
         assertSame(18, map.tailMap((K) "again").size());
     }
-
 
     public void testSubMap() {
         final SortedMap<K, V> map = makeFullMap();
@@ -118,7 +113,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
 
         assertSame(map.headMap((K) "you").size(), map.subMap((K) "again", (K) "you").size());
     }
-
 
     @Override
     public String getCompatibilityVersion() {
