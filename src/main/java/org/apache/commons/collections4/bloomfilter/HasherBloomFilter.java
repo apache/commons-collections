@@ -37,7 +37,7 @@ import org.apache.commons.collections4.iterators.IteratorChain;
  */
 public class HasherBloomFilter extends AbstractBloomFilter {
     /** The bit representation for an empty Bloom filter. */
-    private static final long[] EMPTY = new long[0];
+    private static final long[] EMPTY = {};
 
     /**
      * The internal hasher representation.
