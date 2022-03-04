@@ -85,6 +85,9 @@
     <action type="fix" dev="ggregory" due-to="Arturo Bernal">
       Use Java 8 and method reference. #274.
     </action>
+    <action issue="COLLECTIONS-788" type="fix" dev="ggregory" due-to="Arturo Bernal">
+      Use Java 8 features #228.
+    </action>    
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
