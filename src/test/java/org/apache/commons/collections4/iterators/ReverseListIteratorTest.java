@@ -64,7 +64,6 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
                 // next() should throw a NoSuchElementException
                 () -> assertThrows(NoSuchElementException.class, () -> it.next(),
                         "NoSuchElementException must be thrown from empty ListIterator"),
-
                 // previous() should throw a NoSuchElementException
                 () -> assertThrows(NoSuchElementException.class, () -> it.previous(),
                         "NoSuchElementException must be thrown from empty ListIterator")
