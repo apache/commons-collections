@@ -152,11 +152,9 @@ public class MultiKeyTest {
                 dynamicTest("Integer[] null", () -> {
                     assertThrows(NullPointerException.class, () -> new MultiKey<>(keys));
                 }),
-
                 dynamicTest("Integer[] null + makeClone true", () -> {
                     assertThrows(NullPointerException.class, () -> new MultiKey<>(keys, true));
                 }),
-
                 dynamicTest("Integer[] null + makeClone false", () -> {
                     assertThrows(NullPointerException.class, () -> new MultiKey<>(keys, false));
                 })
@@ -229,15 +227,12 @@ public class MultiKeyTest {
                 dynamicTest("0", () -> {
                     assertSame(ONE, mk.getKey(0));
                 }),
-
                 dynamicTest("1", () -> {
                     assertSame(TWO, mk.getKey(1));
                 }),
-
                 dynamicTest("-1", () -> {
                     assertThrows(IndexOutOfBoundsException.class, () -> mk.getKey(-1));
                 }),
-
                 dynamicTest("2", () -> {
                     assertThrows(IndexOutOfBoundsException.class, () -> mk.getKey(2));
                 })

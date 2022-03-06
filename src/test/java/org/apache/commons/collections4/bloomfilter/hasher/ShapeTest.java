@@ -280,19 +280,15 @@ public class ShapeTest {
                 // probability should not be 0
                 () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0.0, 24, 1),
                         "Should have thrown IllegalArgumentException"),
-
                 // probability should not be = -1
                 () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, -1.0, 24, 1),
                         "Should have thrown IllegalArgumentException"),
-
                 // probability should not be < -1
                 () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, -1.5, 24, 1),
                         "Should have thrown IllegalArgumentException"),
-
                 // probability should not be = 1
                 () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 1.0, 24, 1),
                         "Should have thrown IllegalArgumentException"),
-
                 // probability should not be > 1
                 () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 2.0, 24, 1),
                         "Should have thrown IllegalArgumentException")
