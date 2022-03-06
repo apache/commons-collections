@@ -217,6 +217,9 @@
       Upgrade to JUnit v5.6.0 #136.
       Upgrade to JUnit v5.6.2.
     </action>
+    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick">
+      Fully migrate to JUnit 5.
+    </action>
     <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
       Upgrade Hamcrest to 2.2.
     </action>
