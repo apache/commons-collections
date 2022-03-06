@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +29,6 @@ import org.apache.commons.collections4.ResettableListIterator;
 
 /**
  * Tests the ReverseListIterator.
- *
  */
 public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
@@ -58,19 +60,15 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         assertFalse(it.hasPrevious());
         assertEquals(0, it.previousIndex());  // reversed index
 
-        // next() should throw a NoSuchElementException
-        try {
-            it.next();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        assertAll(
+                // next() should throw a NoSuchElementException
+                () -> assertThrows(NoSuchElementException.class, () -> it.next(),
+                        "NoSuchElementException must be thrown from empty ListIterator"),
 
-        // previous() should throw a NoSuchElementException
-        try {
-            it.previous();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+                // previous() should throw a NoSuchElementException
+                () -> assertThrows(NoSuchElementException.class, () -> it.previous(),
+                        "NoSuchElementException must be thrown from empty ListIterator")
+        );
     }
 
     @Override
@@ -106,11 +104,9 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         // check state at start
         assertTrue(it.hasNext());
         assertFalse(it.hasPrevious());
-        try {
-            it.previous();
-            fail("NoSuchElementException must be thrown from previous at start of ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
     public void testReverse() {

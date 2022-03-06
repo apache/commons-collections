@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -26,7 +28,6 @@ import org.apache.commons.collections4.ResettableListIterator;
 /**
  * Tests the ListIteratorWrapper to insure that it simulates
  * a ListIterator correctly.
- *
  */
 public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
@@ -110,11 +111,8 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be initially positioned first");
-        } catch (final IllegalStateException e) {
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "ListIteratorWrapper#remove() should fail; must be initially positioned first");
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());
@@ -135,11 +133,8 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper#remove() should fail; must be repositioned first");
-        } catch (final IllegalStateException e) {
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "ListIteratorWrapper#remove() should fail; must be repositioned first");
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());
@@ -170,11 +165,8 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper does not support the remove() method while dug into the cache via previous()");
-        } catch (final IllegalStateException e) {
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "ListIteratorWrapper does not support the remove() method while dug into the cache via previous()");
 
         //no change from invalid op:
         assertEquals(-1, iter.previousIndex());

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -33,7 +35,6 @@ import org.apache.commons.collections4.list.AbstractListTest;
  * If your {@link LinkedList} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
- *
  */
 public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
 
@@ -110,13 +111,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     public void testLinkedListGetFirst() {
         resetEmpty();
-        try {
-            getCollection().getFirst();
-            fail("getFirst() should throw a NoSuchElementException for an " +
-                    "empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().getFirst(),
+                "getFirst() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
@@ -132,13 +128,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     public void testLinkedListGetLast() {
         resetEmpty();
-        try {
-            getCollection().getLast();
-            fail("getLast() should throw a NoSuchElementException for an " +
-                    "empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().getLast(),
+                "getLast() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
@@ -158,13 +149,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         }
 
         resetEmpty();
-        try {
-            getCollection().removeFirst();
-            fail("removeFirst() should throw a NoSuchElementException for " +
-                    "an empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().removeFirst(),
+                "removeFirst() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
@@ -184,13 +170,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         }
 
         resetEmpty();
-        try {
-            getCollection().removeLast();
-            fail("removeLast() should throw a NoSuchElementException for " +
-                    "an empty list.");
-        } catch (final NoSuchElementException e) {
-            // This is correct
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().removeLast(),
+                "removeLast() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
@@ -216,4 +197,5 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     public Collection<T> makeConfirmedFullCollection() {
         return new LinkedList<>(Arrays.asList(getFullElements()));
     }
+
 }

@@ -17,6 +17,8 @@
 package org.apache.commons.collections4.map;
 
 import static org.apache.commons.collections4.map.LazySortedMap.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -40,10 +42,12 @@ import org.junit.Test;
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     private static class ReverseStringComparator implements Comparator<String> {
+
         @Override
         public int compare(final String arg0, final String arg1) {
             return arg1.compareTo(arg0);
         }
+
     }
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
@@ -125,18 +129,12 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
         assertTrue(map instanceof LazySortedMap);
-        try {
-            map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
-            fail("Expecting NullPointerException for null transformer");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            map = lazySortedMap((SortedMap<Integer, Number>) null, transformer);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null),
+                        "Expecting NullPointerException for null transformer"),
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap((SortedMap<Integer, Number>) null, transformer),
+                        "Expecting NullPointerException for null map")
+        );
     }
 
     @Override
@@ -154,4 +152,5 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/LazySortedMap.fullCollection.version4.obj");
 //    }
+
 }

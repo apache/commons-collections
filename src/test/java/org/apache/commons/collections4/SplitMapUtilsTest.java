@@ -19,8 +19,8 @@ package org.apache.commons.collections4;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest {
+
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
@@ -157,19 +158,13 @@ public class SplitMapUtilsTest {
     }
 
     private void attemptGetOperation(final Runnable r) {
-        attemptMapOperation("Put exposed as writable Map must not allow Get operations", r);
+        assertThrows(UnsupportedOperationException.class, () -> r.run(),
+                "Put exposed as writable Map must not allow Get operations");
     }
 
     private void attemptPutOperation(final Runnable r) {
-        attemptMapOperation("Get exposed as writable Map must not allow Put operations", r);
-    }
-
-    private void attemptMapOperation(final String s, final Runnable r) {
-        try {
-            r.run();
-            fail(s);
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> r.run(),
+                "Get exposed as writable Map must not allow Put operations");
     }
 
 }

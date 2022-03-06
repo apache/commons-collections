@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
@@ -267,7 +268,15 @@ public class EmptyPropertiesTest {
                 try (PrintStream out = new PrintStream(expected)) {
                     PropertiesFactory.INSTANCE.createProperties().save(out, comments);
                 }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> {
+                    String s = null;
+                    try {
+                        s = new String(expected.toByteArray(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        fail(e.getMessage(), e);
+                    }
+                    return String.format("Expected String '%s' with length '%s'", s, s.length());
+                });
                 expected.reset();
                 try (PrintStream out = new PrintStream(expected)) {
                     new Properties().save(out, comments);

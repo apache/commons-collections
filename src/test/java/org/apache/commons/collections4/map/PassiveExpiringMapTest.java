@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -102,29 +105,23 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     public void testConstructors() {
-        try {
-            final Map<String, String> map = null;
-            new PassiveExpiringMap<>(map);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
-
-        try {
-            final ExpirationPolicy<String, String> policy = null;
-            new PassiveExpiringMap<>(policy);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
-
-        try {
-            final TimeUnit unit = null;
-            new PassiveExpiringMap<String, String>(10L, unit);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final Map<String, String> map = null;
+                    new PassiveExpiringMap<>(map);
+                },
+                        "constructor - exception should have been thrown."),
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final ExpirationPolicy<String, String> policy = null;
+                    new PassiveExpiringMap<>(policy);
+                },
+                        "constructor - exception should have been thrown."),
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final TimeUnit unit = null;
+                    new PassiveExpiringMap<String, String>(10L, unit);
+                },
+                        "constructor - exception should have been thrown.")
+        );
     }
 
     public void testContainsKey() {
@@ -249,7 +246,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         assertNotNull(map.get("a"));
 
-        try {
+        try{
             Thread.sleep(2 * timeout);
         } catch (final InterruptedException e) {
             fail();

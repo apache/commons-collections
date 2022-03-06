@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,12 +68,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     public void testIllegalAdd() {
         final List<E> list = makeTestList();
         final Integer i = Integer.valueOf(3);
-        try {
-            list.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> list.add((E) i),
+                "Integer should fail string predicate.");
+
         assertFalse("Collection shouldn't contain illegal element", list.contains(i));
     }
 
@@ -83,12 +83,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            list.addAll(0, elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> list.addAll(0, elements),
+                "Integer should fail string predicate.");
+
         assertFalse("List shouldn't contain illegal element", list.contains("one"));
         assertFalse("List shouldn't contain illegal element", list.contains("two"));
         assertFalse("List shouldn't contain illegal element", list.contains(Integer.valueOf(3)));
@@ -98,12 +96,8 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalSet() {
         final List<E> list = makeTestList();
-        try {
-            list.set(0, (E) Integer.valueOf(3));
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> list.set(0, (E) Integer.valueOf(3)),
+                "Integer should fail string predicate.");
     }
 
     @SuppressWarnings("unchecked")

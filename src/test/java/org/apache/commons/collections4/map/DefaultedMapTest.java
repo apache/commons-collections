@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,41 +132,18 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
-
-        try {
-            DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE");
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
-
-        try {
-            DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
-
-        try {
-            DefaultedMap.defaultedMap(base, (Factory<V>) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
-
-        try {
-            DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
-
-        try {
-            DefaultedMap.defaultedMap(base, (Transformer<K, V>) null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException e) {
-            // Expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Factory<V>) null),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Transformer<K, V>) null),
+                        "Expecting NullPointerException")
+        );
     }
 
     @Override

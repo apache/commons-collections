@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
 
 import junit.framework.Test;
@@ -26,7 +28,6 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
 
 /**
  * JUnit tests.
- *
  */
 public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? extends K>, V> {
 
@@ -123,15 +124,12 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         assertFalse(map.entrySet().contains(null));
         assertFalse(map.containsKey(null));
         assertFalse(map.containsValue(null));
-        try {
-            map.put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+
+        assertThrows(NullPointerException.class, () -> map.put(null, null));
+
         assertNull(map.put(new MultiKey<K>(null, null), null));
-        try {
-            map.put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+
+        assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
 
     public void testMultiKeyGet() {

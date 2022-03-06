@@ -16,9 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
@@ -58,6 +59,7 @@ public class ShapeTest {
         public Signedness getSignedness() {
             return Signedness.SIGNED;
         }
+
     };
 
     /*
@@ -79,12 +81,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfBitsTest() {
-        try {
-            new Shape(testFunction, 5, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 5, 0),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -92,12 +90,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
-        try {
-            new Shape(testFunction, 16, 8);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 16, 8),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -105,12 +99,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_BadNumberOfItemsTest() {
-        try {
-            new Shape(testFunction, 0, 24);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0, 24),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -118,12 +108,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfBitsTest() {
-        try {
-            new Shape(testFunction, 5, 0, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 5, 0, 1),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -131,12 +117,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
-        try {
-            new Shape(testFunction, 5, 24, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 5, 24, 0),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -144,12 +126,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadNumberOfItemsTest() {
-        try {
-            new Shape(testFunction, 0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0, 24, 1),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -157,12 +135,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_bits_hash_BadProbabilityTest() {
-        try {
-            new Shape(testFunction, 4000, 8, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 4000, 8, 1),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -203,12 +177,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_BadNumberOfItemsTest() {
-        try {
-            new Shape(testFunction, 0, 1.0 / 10);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0, 1.0 / 10),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -216,24 +186,14 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_BadProbabilityTest() {
-        try {
-            new Shape(testFunction, 10, 0.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
-        try {
-            new Shape(testFunction, 10, 1.0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
-        try {
-            new Shape(testFunction, 10, Double.NaN);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 10, 0.0),
+                        "Should have thrown IllegalArgumentException"),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 10, 1.0),
+                        "Should have thrown IllegalArgumentException"),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 10, Double.NaN),
+                        "Should have thrown IllegalArgumentException")
+        );
     }
 
     /**
@@ -241,12 +201,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_items_probability_NumberOfBitsOverflowTest() {
-        try {
-            new Shape(testFunction, Integer.MAX_VALUE, 1.0 / 10);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, Integer.MAX_VALUE, 1.0 / 10),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -266,12 +222,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nm_noName() {
-        try {
-            new Shape(null, 5, 72);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        assertThrows(NullPointerException.class, () -> new Shape(null, 5, 72),
+                "Should throw NullPointerException");
     }
 
     /**
@@ -279,12 +231,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_nmk_noName() {
-        try {
-            new Shape(null, 5, 72, 17);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        assertThrows(NullPointerException.class, () -> new Shape(null, 5, 72, 17),
+                "Should throw NullPointerException");
     }
 
     /**
@@ -292,12 +240,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_np_noName() {
-        try {
-            new Shape(null, 5, 0.1);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        assertThrows(NullPointerException.class, () -> new Shape(null, 5, 0.1),
+                "Should throw NullPointerException");
     }
 
     /**
@@ -305,12 +249,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_pmk_noName() {
-        try {
-            new Shape(null, 0.1, 72, 17);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException expected) {
-            // do nothing
-        }
+        assertThrows(NullPointerException.class, () -> new Shape(null, 0.1, 72, 17),
+                "Should throw NullPointerException");
     }
 
     /**
@@ -318,12 +258,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_probability_bits_hash_BadNumberOfBitsTest() {
-        try {
-            new Shape(testFunction, 0.5, 0, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0.5, 0, 1),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -331,12 +267,8 @@ public class ShapeTest {
      */
     @Test
     public void constructor_probability_bits_hash_BadNumberOfHashFunctionsTest() {
-        try {
-            new Shape(testFunction, 0.5, 24, 0);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0.5, 24, 0),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -344,45 +276,27 @@ public class ShapeTest {
      */
     @Test
     public void constructor_probability_bits_hash_BadProbabilityTest() {
-        // probability should not be 0
-        try {
-            new Shape(testFunction, 0.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+        assertAll(
+                // probability should not be 0
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 0.0, 24, 1),
+                        "Should have thrown IllegalArgumentException"),
 
-        // probability should not be = -1
-        try {
-            new Shape(testFunction, -1.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+                // probability should not be = -1
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, -1.0, 24, 1),
+                        "Should have thrown IllegalArgumentException"),
 
-        // probability should not be < -1
-        try {
-            new Shape(testFunction, -1.5, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+                // probability should not be < -1
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, -1.5, 24, 1),
+                        "Should have thrown IllegalArgumentException"),
 
-        // probability should not be = 1
-        try {
-            new Shape(testFunction, 1.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+                // probability should not be = 1
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 1.0, 24, 1),
+                        "Should have thrown IllegalArgumentException"),
 
-        // probability should not be > 1
-        try {
-            new Shape(testFunction, 2.0, 24, 1);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // expected
-        }
+                // probability should not be > 1
+                () -> assertThrows(IllegalArgumentException.class, () -> new Shape(testFunction, 2.0, 24, 1),
+                        "Should have thrown IllegalArgumentException")
+        );
     }
 
     /**
@@ -451,6 +365,7 @@ public class ShapeTest {
             public Signedness getSignedness() {
                 return Signedness.SIGNED;
             }
+
         };
 
         assertNotEquals(shape, new Shape(testFunction2, 4, 1.0 / 10));
@@ -497,4 +412,5 @@ public class ShapeTest {
             }
         }
     }
+
 }

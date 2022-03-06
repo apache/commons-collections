@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +29,6 @@ import org.apache.commons.collections4.Predicate;
 
 /**
  * Tests the IteratorChain class.
- *
  */
 public class IteratorChainTest extends AbstractIteratorTest<String> {
 
@@ -116,12 +118,8 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemove() {
         final Iterator<String> iter = makeObject();
 
-        try {
-            iter.remove();
-            fail("Calling remove before the first call to next() should throw an exception");
-        } catch (final IllegalStateException e) {
-
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "Calling remove before the first call to next() should throw an exception");
 
         for (final String testValue : testArray) {
             final String iterValue = iter.next();
@@ -159,14 +157,10 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     public void testEmptyChain() {
         final IteratorChain<Object> chain = new IteratorChain<>();
         assertFalse(chain.hasNext());
-        try {
-            chain.next();
-            fail();
-        } catch (final NoSuchElementException ex) {}
-        try {
-            chain.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertAll(
+                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
+                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
+        );
     }
 
 }
