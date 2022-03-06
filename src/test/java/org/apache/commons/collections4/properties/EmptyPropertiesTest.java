@@ -41,6 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class EmptyPropertiesTest {
 
+
     @Test
     public void testClear() {
         PropertiesFactory.EMPTY_PROPERTIES.clear();
