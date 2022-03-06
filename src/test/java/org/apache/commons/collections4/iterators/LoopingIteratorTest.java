@@ -25,12 +25,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests the LoopingIterator class.
- *
  */
 public class LoopingIteratorTest {
 
@@ -38,37 +37,28 @@ public class LoopingIteratorTest {
      * Tests constructor exception.
      */
     @Test
-    public void testConstructorEx() throws Exception {
-        try {
-            new LoopingIterator<>(null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+    public void testConstructorEx() {
+        assertThrows(NullPointerException.class, () -> new LoopingIterator<>(null));
     }
 
     /**
      * Tests whether an empty looping iterator works as designed.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testLooping0() throws Exception {
+    public void testLooping0() {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
         assertFalse(loop.hasNext(), "hasNext should return false");
 
-        try {
-            loop.next();
-            fail("NoSuchElementException was not thrown during next() call.");
-        } catch (final NoSuchElementException ex) {
-        }
+        assertThrows(NoSuchElementException.class, () -> loop.next(),
+                "NoSuchElementException was not thrown during next() call.");
     }
 
     /**
      * Tests whether a populated looping iterator works as designed.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testLooping1() throws Exception {
+    public void testLooping1() {
         final List<String> list = Arrays.asList("a");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -80,15 +70,13 @@ public class LoopingIteratorTest {
 
         assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("a", loop.next());
-
     }
 
     /**
      * Tests whether a populated looping iterator works as designed.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testLooping2() throws Exception {
+    public void testLooping2() {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -100,15 +88,13 @@ public class LoopingIteratorTest {
 
         assertTrue(loop.hasNext(), "3rd hasNext should return true");
         assertEquals("a", loop.next());
-
     }
 
     /**
      * Tests whether a populated looping iterator works as designed.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testLooping3() throws Exception {
+    public void testLooping3() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -123,15 +109,13 @@ public class LoopingIteratorTest {
 
         assertTrue(loop.hasNext(), "4th hasNext should return true");
         assertEquals("a", loop.next());
-
     }
 
     /**
      * Tests the remove() method on a LoopingIterator wrapped ArrayList.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testRemoving1() throws Exception {
+    public void testRemoving1() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
         assertEquals(3, list.size(), "list should have 3 elements.");
@@ -152,19 +136,16 @@ public class LoopingIteratorTest {
         assertEquals(0, list.size(), "list should have 0 elements.");
 
         assertFalse(loop.hasNext(), "4th hasNext should return false");
-        try {
-            loop.next();
-            fail("Expected NoSuchElementException to be thrown.");
-        } catch (final NoSuchElementException ex) {
-        }
+
+        assertThrows(NoSuchElementException.class, () -> loop.next(),
+                "Expected NoSuchElementException to be thrown.");
     }
 
     /**
      * Tests the reset() method on a LoopingIterator wrapped ArrayList.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testReset() throws Exception {
+    public void testReset() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -184,10 +165,9 @@ public class LoopingIteratorTest {
 
     /**
      * Tests the size() method on a LoopingIterator wrapped ArrayList.
-     * @throws Exception  If something unexpected occurs.
      */
     @Test
-    public void testSize() throws Exception {
+    public void testSize() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 

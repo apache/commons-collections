@@ -53,12 +53,9 @@ public class IndexFilterTest {
         final Shape shape = this.shape;
         final ArrayList<Integer> actual = new ArrayList<>();
         final IntConsumer consumer = actual::add;
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(null, shape, consumer), "null hasher"),
-
                 () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, null, consumer), "null shape"),
-
                 () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, shape, null), "null consumer")
         );
 

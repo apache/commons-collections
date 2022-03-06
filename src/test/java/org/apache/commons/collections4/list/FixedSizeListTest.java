@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -94,10 +96,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     public void testAdd() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
-            fixedSizeList.add(2, "New Value");
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.add(2, "New Value"));
     }
 
 
@@ -108,19 +107,13 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         addList.add("item 3");
         addList.add("item 4");
 
-        try {
-            fixedSizeList.addAll(2, addList);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.addAll(2, addList));
     }
 
     public void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
-            fixedSizeList.remove(1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.remove(1));
     }
 
     public void testSubList() {

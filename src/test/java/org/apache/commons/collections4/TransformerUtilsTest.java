@@ -58,11 +58,8 @@ public class TransformerUtilsTest {
     public void testExceptionTransformer() {
         assertAll(
                 () -> assertNotNull(TransformerUtils.exceptionTransformer()),
-
                 () -> assertSame(TransformerUtils.exceptionTransformer(), TransformerUtils.exceptionTransformer()),
-
                 () -> assertThrows(FunctorException.class, () -> TransformerUtils.exceptionTransformer().transform(null)),
-
                 () -> assertThrows(FunctorException.class, () -> TransformerUtils.exceptionTransformer().transform(cString))
         );
     }
@@ -192,16 +189,11 @@ public class TransformerUtilsTest {
 
         assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer());
         assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer(Collections.<Transformer<Object, Object>>emptyList()));
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer(null, null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer((Transformer[]) null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer((Collection<Transformer<Object, Object>>) null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer(null, null)),
-
                 () -> assertThrows(NullPointerException.class, () -> {
                     final Collection<Transformer<Object, Object>> coll1 = new ArrayList<>();
                     coll1.add(null);
@@ -232,14 +224,10 @@ public class TransformerUtilsTest {
         final Predicate<String> equalsAPredicate = EqualPredicate.equalPredicate("A");
         assertEquals("C", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("A"));
         assertEquals("B", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("B"));
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(TruePredicate.truePredicate(), null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, ConstantTransformer.constantTransformer("A"))),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, null, null))
         );
     }
@@ -285,16 +273,11 @@ public class TransformerUtilsTest {
         map = new HashMap<>();
         map.put(null, null);
         assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(map));
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null, null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null, (Transformer[]) null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null)),
-
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(new Predicate[2], new Transformer[2])),
-
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.switchTransformer(
                         new Predicate[]{TruePredicate.truePredicate()},
                         new Transformer[]{a, b}))
@@ -337,10 +320,8 @@ public class TransformerUtilsTest {
         list.add(new Object());
         assertEquals(1, TransformerUtils.invokerTransformer("size").transform(list));
         assertNull(TransformerUtils.invokerTransformer("size").transform(null));
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.invokerTransformer(null)),
-
                 () -> assertThrows(FunctorException.class, () -> TransformerUtils.invokerTransformer("noSuchMethod").transform(new Object()))
         );
     }
@@ -358,17 +339,12 @@ public class TransformerUtilsTest {
                 new Class[] { Object.class }, new Object[] { cString }).transform(list));
         assertNull(TransformerUtils.invokerTransformer("contains",
                 new Class[]{Object.class}, new Object[]{cString}).transform(null));
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> TransformerUtils.invokerTransformer(null, null, null)),
-
                 () -> assertThrows(FunctorException.class, () -> TransformerUtils.invokerTransformer("noSuchMethod", new Class[]{Object.class},
                         new Object[]{cString}).transform(new Object())),
-
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", null, new Object[]{cString})),
-
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", new Class[]{Object.class}, null)),
-
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", new Class[]{}, new Object[]{cString}))
         );
     }
@@ -391,10 +367,8 @@ public class TransformerUtilsTest {
 
     @Test
     public void testInstantiateTransformerNull() {
-
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.instantiateTransformer(null, new Object[]{"str"})),
-
                 () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.instantiateTransformer(new Class[]{}, new Object[]{"str"}))
         );
 

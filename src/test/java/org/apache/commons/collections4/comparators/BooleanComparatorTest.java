@@ -131,16 +131,11 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
-
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> comp.compare(null, null), "Expected NullPointerException"),
-
                 () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.TRUE, null), "Expected NullPointerException"),
-
                 () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.FALSE, null), "Expected NullPointerException"),
-
                 () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.TRUE), "Expected NullPointerException"),
-
                 () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.FALSE), "Expected NullPointerException")
         );
     }
