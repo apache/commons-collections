@@ -20,12 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
@@ -41,7 +40,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedSortedBagTest.class);
     }
 
@@ -68,6 +67,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     //--------------------------------------------------------------------------
 
+    @Test
     public void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
@@ -77,6 +77,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertThrows(NullPointerException.class, () -> decorateBag(nullBag, stringPredicate()));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());

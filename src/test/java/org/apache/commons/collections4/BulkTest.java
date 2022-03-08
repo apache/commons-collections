@@ -52,11 +52,13 @@ import junit.framework.TestSuite;
  *          this.set = set;
  *      }
  *
+ *      @Test
  *      public void testContains() {
  *          boolean r = set.contains(set.iterator().next()));
  *          assertTrue("Set should contain first element, r);
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          set.clear();
  *          assertTrue("Set should be empty after clear", set.isEmpty());
@@ -73,6 +75,7 @@ import junit.framework.TestSuite;
  *          return result;
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          Map map = makeFullMap();
  *          map.clear();

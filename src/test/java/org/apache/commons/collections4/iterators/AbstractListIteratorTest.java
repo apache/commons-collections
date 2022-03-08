@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 /**
  * Abstract class for testing the ListIterator interface.
  * <p>
@@ -88,6 +90,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     public void testEmptyListIteratorIsIndeedEmpty() {
         if (!supportsEmptyIterator()) {
             return;
@@ -118,6 +121,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test navigation through the iterator.
      */
+    @Test
     public void testWalkForwardAndBack() {
         final ArrayList<E> list = new ArrayList<>();
         final ListIterator<E> it = makeObject();
@@ -156,6 +160,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test add behavior.
      */
+    @Test
     public void testAdd() {
         ListIterator<E> it = makeObject();
 
@@ -193,6 +198,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test set behavior.
      */
+    @Test
     public void testSet() {
         final ListIterator<E> it = makeObject();
 
@@ -220,6 +226,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
 
     }
 
+    @Test
     public void testRemoveThenSet() {
         final ListIterator<E> it = makeObject();
         if (supportsRemove() && supportsSet()) {
@@ -233,6 +240,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         }
     }
 
+    @Test
     public void testAddThenSet() {
         final ListIterator<E> it = makeObject();
         // add then set
@@ -250,6 +258,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test remove after add behavior.
      */
+    @Test
     public void testAddThenRemove() {
         final ListIterator<E> it = makeObject();
 

@@ -25,6 +25,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
@@ -61,6 +62,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         return new TreeMap<>();
     }
 
+    @Test
     public void testComparator() {
 //        SortedMap<K, V> sm = makeFullMap();
         // no tests I can think of
@@ -80,11 +82,13 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         return (SortedMap<K, V>) super.makeFullMap();
     }
 
+    @Test
     public void testFirstKey() {
         final SortedMap<K, V> sm = makeFullMap();
         assertSame(sm.keySet().iterator().next(), sm.firstKey());
     }
 
+    @Test
     public void testLastKey() {
         final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
@@ -230,6 +234,8 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
         }
+
+        @Test
         public void testHeadMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
@@ -285,6 +291,8 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
         }
+
+        @Test
         public void testTailMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
@@ -347,6 +355,8 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
         }
+
+        @Test
         public void testSubMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;

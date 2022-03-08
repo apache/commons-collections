@@ -21,9 +21,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
@@ -31,7 +30,7 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(CaseInsensitiveMapTest.class);
     }
 
@@ -49,6 +48,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         return new CaseInsensitiveMap<>();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testCaseInsensitive() {
         final Map<K, V> map = makeObject();
@@ -60,6 +60,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertEquals("Three", map.get("Two"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone() {
         final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
@@ -72,12 +73,14 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     /**
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
+    @Test
     public void testInitialCapacityZero() {
         final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
         assertEquals(1, map.data.length);
     }
 
     // COLLECTIONS-294
+    @Test
     public void testLocaleIndependence() {
         final Locale orig = Locale.getDefault();
 
@@ -112,6 +115,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.fullCollection.version4.obj");
 //    }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         final Map<K, V> map = makeObject();
@@ -128,6 +132,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertEquals(3, keys.size());
     }
 
+    @Test
     public void testPutAll() {
         final Map<Object, String> map = new HashMap<>();
         map.put("One", "One");

@@ -69,6 +69,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from LazyMapTest
+    @Test
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
@@ -89,6 +90,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     }
 
+    @Test
     public void testSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String, Number>(), oneFactory);
         map.put("A",  5);
@@ -107,6 +109,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertNull("natural order, so comparator should be null", c);
     }
 
+    @Test
     public void testReverseSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new ConcurrentSkipListMap<String, Number>(reverseStringComparator), oneFactory);
         map.put("A",  5);
@@ -125,6 +128,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertSame("natural order, so comparator should be null", c, reverseStringComparator);
     }
 
+    @Test
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);

@@ -37,6 +37,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -489,6 +490,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#add(Object)}.
      */
+    @Test
     public void testCollectionAdd() {
         if (!isAddSupported()) {
             return;
@@ -521,6 +523,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#addAll(Collection)}.
      */
+    @Test
     public void testCollectionAddAll() {
         if (!isAddSupported()) {
             return;
@@ -565,6 +568,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  If {@link #isAddSupported()} returns false, tests that add operations
      *  raise <code>UnsupportedOperationException.
      */
+    @Test
     public void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
@@ -616,6 +620,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Test {@link Collection#clear()}.
      */
+    @Test
     public void testCollectionClear() {
         if (!isRemoveSupported()) {
             return;
@@ -634,6 +639,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#contains(Object)}.
      */
+    @Test
     public void testCollectionContains() {
         Object[] elements;
 
@@ -671,6 +677,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#containsAll(Collection)}.
      */
+    @Test
     public void testCollectionContainsAll() {
         resetEmpty();
         Collection<E> col = new HashSet<>();
@@ -714,6 +721,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#isEmpty()}.
      */
+    @Test
     public void testCollectionIsEmpty() {
         resetEmpty();
         assertTrue("New Collection should be empty.", getCollection().isEmpty());
@@ -729,6 +737,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests the read-only functionality of {@link Collection#iterator()}.
      */
+    @Test
     public void testCollectionIterator() {
         resetEmpty();
         Iterator<E> it1 = getCollection().iterator();
@@ -772,6 +781,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests removals from {@link Collection#iterator()}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testCollectionIteratorRemove() {
         if (!isRemoveSupported()) {
@@ -843,6 +853,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#remove(Object)}.
      */
+    @Test
     public void testCollectionRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -889,6 +900,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#removeAll(Collection)}.
      */
+    @Test
     public void testCollectionRemoveAll() {
         if (!isRemoveSupported()) {
             return;
@@ -933,6 +945,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#removeIf(Predicate)}.
      * @since 4.4
      */
+    @Test
     public void testCollectionRemoveIf() {
         if (!isRemoveSupported()) {
             return;
@@ -976,6 +989,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#retainAll(Collection)}.
      */
+    @Test
     public void testCollectionRetainAll() {
         if (!isRemoveSupported()) {
             return;
@@ -1036,6 +1050,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#size()}.
      */
+    @Test
     public void testCollectionSize() {
         resetEmpty();
         assertEquals("Size of new Collection is 0.", 0, getCollection().size());
@@ -1047,6 +1062,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#toArray()}.
      */
+    @Test
     public void testCollectionToArray() {
         resetEmpty();
         assertEquals("Empty Collection should return empty array for toArray",
@@ -1091,6 +1107,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#toArray(Object[])}.
      */
+    @Test
     public void testCollectionToArray2() {
         resetEmpty();
         Object[] a = { new Object(), null, null };
@@ -1149,6 +1166,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@code toString} on a collection.
      */
+    @Test
     public void testCollectionToString() {
         resetEmpty();
         assertNotNull("toString shouldn't return null", getCollection().toString());
@@ -1161,6 +1179,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  If isRemoveSupported() returns false, tests to see that remove
      *  operations raise an UnsupportedOperationException.
      */
+    @Test
     public void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
@@ -1223,6 +1242,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests that the collection's iterator is fail-fast.
      */
+    @Test
     public void testCollectionIteratorFailFast() {
         if (!isFailFastSupported()) {
             return;
@@ -1313,6 +1333,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
     }
 
+    @Test
     @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();

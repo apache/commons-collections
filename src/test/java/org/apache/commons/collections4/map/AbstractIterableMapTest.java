@@ -24,6 +24,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
@@ -54,6 +55,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         return (IterableMap<K, V>) super.makeFullMap();
     }
 
+    @Test
     public void testFailFastEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -80,6 +82,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         } catch (final ConcurrentModificationException ex) {}
     }
 
+    @Test
     public void testFailFastKeySet() {
         if (!isRemoveSupported()) {
             return;
@@ -106,6 +109,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         } catch (final ConcurrentModificationException ex) {}
     }
 
+    @Test
     public void testFailFastValues() {
         if (!isRemoveSupported()) {
             return;

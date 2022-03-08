@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.junit.Test;
 
 /**
  * Abstract class for testing the Iterator interface.
@@ -97,6 +98,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test the empty iterator.
      */
+    @Test
     public void testEmptyIterator() {
         if (!supportsEmptyIterator()) {
             return;
@@ -121,6 +123,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test normal iteration behavior.
      */
+    @Test
     public void testFullIterator() {
         if (!supportsFullIterator()) {
             return;
@@ -157,6 +160,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test remove behavior.
      */
+    @Test
     public void testRemove() {
         final Iterator<E> it = makeObject();
 

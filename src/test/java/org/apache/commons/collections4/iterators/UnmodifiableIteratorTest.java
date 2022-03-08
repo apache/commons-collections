@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Tests the UnmodifiableIterator.
@@ -63,10 +64,12 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));

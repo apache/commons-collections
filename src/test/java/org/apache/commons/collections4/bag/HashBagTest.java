@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 
@@ -32,7 +30,7 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(HashBagTest.class);
     }
 

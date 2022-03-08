@@ -25,6 +25,7 @@ import java.util.Collection;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.list.FixedSizeList;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -79,12 +80,13 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         return "4";
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final BoundedCollection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));

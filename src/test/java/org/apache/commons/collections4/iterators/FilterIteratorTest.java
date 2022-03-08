@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
+import org.junit.Test;
 
 /**
  * Test the filter iterator.
@@ -84,12 +85,14 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         return makePassThroughFilter(list.iterator());
     }
 
+    @Test
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
             assertTrue(iterator.hasNext());
         }
     }
 
+    @Test
     @SuppressWarnings("unused")
     public void testRepeatedNext() {
         for (final String element : array) {
@@ -98,6 +101,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         verifyNoMoreElements();
     }
 
+    @Test
     public void testReturnValues() {
         verifyElementsInPredicate(new String[0]);
         verifyElementsInPredicate(new String[] { "a" });
@@ -113,6 +117,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test that when the iterator is changed, the hasNext method returns the
      * correct response for the new iterator.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetIterator() {
         final Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
@@ -132,6 +137,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test that when the predicate is changed, the hasNext method returns the
      * correct response for the new predicate.
      */
+    @Test
     public void testSetPredicate() {
         final Iterator<E> iter = Collections.singleton((E) null).iterator();
 

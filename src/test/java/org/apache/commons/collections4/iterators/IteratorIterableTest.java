@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * Tests for IteratorIterable.
@@ -30,7 +29,7 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class IteratorIterableTest extends BulkTest {
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(IteratorIterableTest.class);
     }
 
@@ -47,6 +46,7 @@ public class IteratorIterableTest extends BulkTest {
         return iter;
     }
 
+    @Test
     @SuppressWarnings("unused")
     public void testIterator() {
         final Iterator<Integer> iter = createIterator();
@@ -61,6 +61,7 @@ public class IteratorIterableTest extends BulkTest {
         }
     }
 
+    @Test
     public void testMultipleUserIterator() {
         final Iterator<Integer> iter = createIterator();
 

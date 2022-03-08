@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -54,6 +55,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return decorateMap(new HashMap<K, V>(), testPredicate, testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();
@@ -64,6 +66,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map = decorateMap(map, null, null);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();

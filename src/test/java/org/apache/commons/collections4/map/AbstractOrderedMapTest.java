@@ -30,6 +30,7 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.comparators.NullComparator;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
@@ -82,6 +83,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         return (K[]) list.toArray();
     }
 
+    @Test
     public void testFirstKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
@@ -96,6 +98,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         assertEquals(confirmedFirst, ordered.firstKey());
     }
 
+    @Test
     public void testLastKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
@@ -113,6 +116,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         assertEquals(confirmedLast, ordered.lastKey());
     }
 
+    @Test
     public void testNextKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
@@ -146,6 +150,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
+    @Test
     public void testPreviousKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();

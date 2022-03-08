@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -62,11 +63,13 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         return decorateSet(new HashSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
         assertNotNull("returned set should not be null", set.decorated());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
@@ -80,6 +83,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         assertFalse("Collection shouldn't contain illegal element", set.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Set<E> set = makeTestSet();

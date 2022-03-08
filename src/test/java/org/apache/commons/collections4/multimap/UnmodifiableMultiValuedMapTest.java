@@ -24,13 +24,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Tests for UnmodifiableMultiValuedMap
@@ -43,7 +42,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
 
@@ -82,16 +81,19 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     // -----------------------------------------------------------------------
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(map));
     }
 
+    @Test
     public void testDecoratorFactoryNullMap() {
         try {
             UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null);
@@ -101,6 +103,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddException() {
         final MultiValuedMap<K, V> map = makeObject();
@@ -111,6 +114,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     public void testRemoveException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         try {
@@ -123,6 +127,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testRemoveMappingException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         try {
@@ -135,6 +140,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testClearException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         try {
@@ -147,6 +153,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testPutAllException() {
         final MultiValuedMap<K, V> map = makeObject();
         final MultiValuedMap<K, V> original = new ArrayListValuedHashMap<>();
@@ -183,6 +190,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertEquals("{}", map.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableEntries() {
         resetFull();
@@ -208,6 +216,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableMapIterator() {
         resetFull();
@@ -225,6 +234,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeySet() {
         resetFull();
@@ -255,6 +265,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableValues() {
         resetFull();
@@ -285,6 +296,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableAsMap() {
         resetFull();
@@ -314,6 +326,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeys() {
         resetFull();

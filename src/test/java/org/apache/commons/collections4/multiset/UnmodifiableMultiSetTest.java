@@ -18,11 +18,10 @@ package org.apache.commons.collections4.multiset;
 
 import java.util.Arrays;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -36,7 +35,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableMultiSetTest.class);
     }
 
@@ -72,12 +71,13 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         return false;
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final MultiSet<E> multiset = makeFullCollection();
         assertSame(multiset, UnmodifiableMultiSet.unmodifiableMultiSet(multiset));
@@ -88,7 +88,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         } catch (final NullPointerException ex) {}
     }
 
-
+    @Test
     public void testAdd() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
@@ -98,6 +98,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         } catch (final UnsupportedOperationException ex) {}
     }
 
+    @Test
     public void testRemove() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
@@ -107,6 +108,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         } catch (final UnsupportedOperationException ex) {}
     }
 
+    @Test
     public void testSetCount() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
@@ -116,6 +118,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         } catch (final UnsupportedOperationException ex) {}
     }
 
+    @Test
     public void testEntrySet() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);

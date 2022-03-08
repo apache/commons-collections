@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.MapIterator;
+import org.junit.Test;
 
 /**
  * Abstract class for testing the MapIterator interface.
@@ -108,6 +109,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     public void testEmptyMapIterator() {
         if (!supportsEmptyIterator()) {
             return;
@@ -154,6 +156,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     /**
      * Test that the full list iterator contract is correct.
      */
+    @Test
     public void testFullMapIterator() {
         if (!supportsFullIterator()) {
             return;
@@ -183,6 +186,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
     }
 
+    @Test
     public void testMapIteratorSet() {
         if (!supportsFullIterator()) {
             return;
@@ -229,6 +233,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
+    @Test
     @Override
     public void testRemove() { // override
         final MapIterator<K, V> it = makeObject();
@@ -258,6 +263,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
+    @Test
     public void testMapIteratorSetRemoveSet() {
         if (!supportsSetValue() || !supportsRemove()) {
             return;
@@ -281,6 +287,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
+    @Test
     public void testMapIteratorRemoveGetKey() {
         if (!supportsRemove()) {
             return;
@@ -302,6 +309,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
+    @Test
     public void testMapIteratorRemoveGetValue() {
         if (!supportsRemove()) {
             return;

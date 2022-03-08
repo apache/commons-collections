@@ -22,11 +22,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
@@ -40,7 +39,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedSortedSetTest.class);
     }
 
@@ -64,11 +63,13 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedSortedSet<E> set = makeTestSet();
         assertNotNull("returned set should not be null", set.decorated());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final SortedSet<E> set = makeTestSet();
@@ -82,6 +83,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final SortedSet<E> set = makeTestSet();
@@ -102,6 +104,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertFalse("Set shouldn't contain illegal element", set.contains("Afour"));
     }
 
+    @Test
     public void testComparator() {
         final SortedSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();

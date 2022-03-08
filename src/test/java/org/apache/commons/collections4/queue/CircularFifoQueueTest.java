@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+import org.junit.Test;
+
 /**
  * Test cases for CircularFifoQueue.
  *
@@ -108,6 +110,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Tests that the removal operation actually removes the first element.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testCircularFifoQueueCircular() {
         final List<E> list = new ArrayList<>();
@@ -136,6 +139,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Tests that the removal operation actually removes the first element.
      */
+    @Test
     public void testCircularFifoQueueRemove() {
         resetFull();
         final int size = getConfirmed().size();
@@ -157,6 +161,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Tests that the constructor correctly throws an exception.
      */
+    @Test
     public void testConstructorException1() {
         try {
             new CircularFifoQueue<E>(0);
@@ -169,6 +174,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Tests that the constructor correctly throws an exception.
      */
+    @Test
     public void testConstructorException2() {
         try {
             new CircularFifoQueue<E>(-20);
@@ -181,6 +187,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Tests that the constructor correctly throws an exception.
      */
+    @Test
     public void testConstructorException3() {
         try {
             new CircularFifoQueue<E>(null);
@@ -190,6 +197,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fail();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError1() throws Exception {
         // based on bug 33071
@@ -209,6 +217,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[1, 2, 5]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError2() throws Exception {
         // based on bug 33071
@@ -230,6 +239,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[2, 5, 6]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError3() throws Exception {
         // based on bug 33071
@@ -253,6 +263,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[2, 5, 6, 7]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError4() throws Exception {
         // based on bug 33071
@@ -271,6 +282,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[3, 5, 6, 7]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError5() throws Exception {
         // based on bug 33071
@@ -289,6 +301,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[3, 4, 6, 7]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError6() throws Exception {
         // based on bug 33071
@@ -307,6 +320,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[3, 4, 5, 7]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError7() throws Exception {
         // based on bug 33071
@@ -325,6 +339,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[3, 4, 5, 6]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError8() throws Exception {
         // based on bug 33071
@@ -344,6 +359,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[4, 5, 6, 8]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveError9() throws Exception {
         // based on bug 33071
@@ -363,6 +379,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("[4, 5, 6, 7]", fifo.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRepeatedSerialization() throws Exception {
         // bug 31433
@@ -399,6 +416,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertTrue(b3.contains("c"));
     }
 
+    @Test
     public void testGetIndex() {
         resetFull();
 
@@ -417,6 +435,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         }
     }
 
+    @Test
     public void testAddNull() {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
         try {
@@ -428,6 +447,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fail();
     }
 
+    @Test
     public void testDefaultSizeAndGetError1() {
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
         assertEquals(32, fifo.maxSize());
@@ -445,6 +465,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fail();
     }
 
+    @Test
     public void testDefaultSizeAndGetError2() {
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
         assertEquals(32, fifo.maxSize());

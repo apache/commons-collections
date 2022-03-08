@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link Set} methods and contracts.
@@ -138,6 +139,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     /**
      * Tests {@link Set#equals(Object)}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetEquals() {
         resetEmpty();
@@ -160,6 +162,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     /**
      * Tests {@link Set#hashCode()}.
      */
+    @Test
     public void testSetHashCode() {
         resetEmpty();
         assertEquals("Empty sets have equal hashCodes",

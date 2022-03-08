@@ -20,12 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -39,7 +38,7 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableBagTest.class);
     }
 
@@ -75,11 +74,13 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         return false;
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Bag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableBag.unmodifiableBag(queue));

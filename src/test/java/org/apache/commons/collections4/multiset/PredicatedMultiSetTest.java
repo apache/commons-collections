@@ -18,12 +18,11 @@ package org.apache.commons.collections4.multiset;
 
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -37,7 +36,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedMultiSetTest.class);
     }
 
@@ -64,6 +63,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     //--------------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testLegalAddRemove() {
         final MultiSet<T> multiset = makeTestMultiSet();
@@ -82,6 +82,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
             set.contains(els[0]));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final MultiSet<T> multiset = makeTestMultiSet();
@@ -95,6 +96,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         assertFalse("Collection shouldn't contain illegal element", multiset.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
         final HashMultiSet<Object> elements = new HashMultiSet<>();

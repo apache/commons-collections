@@ -23,9 +23,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
@@ -41,7 +40,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableSortedSetTest.class);
     }
 
@@ -78,6 +77,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     /**
      * Verify that base set and subsets are not modifiable
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiable() {
         setupSet();
@@ -87,6 +87,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), (E) Integer.valueOf(3)));
     }
 
+    @Test
     public void testDecorateFactory() {
         final SortedSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSortedSet.unmodifiableSortedSet(set));
@@ -140,6 +141,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         }
     }
 
+    @Test
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();

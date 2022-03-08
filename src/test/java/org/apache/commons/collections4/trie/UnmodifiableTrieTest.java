@@ -18,12 +18,11 @@ package org.apache.commons.collections4.trie;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -37,7 +36,7 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableTrieTest.class);
     }
 
@@ -70,11 +69,13 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Trie<String, V> trie = makeFullMap();
         assertSame(trie, UnmodifiableTrie.unmodifiableTrie(trie));
