@@ -25,6 +25,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -79,17 +80,20 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         return false;
     }
 
+    @Test
     @Override
     public void testQueueRemove() {
         resetEmpty();
         assertThrows(UnsupportedOperationException.class, () -> getCollection().remove());
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
@@ -97,12 +101,14 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         assertThrows(NullPointerException.class, () -> UnmodifiableQueue.unmodifiableQueue(null));
     }
 
+    @Test
     public void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
         assertThrows(UnsupportedOperationException.class, () -> queue.offer(e));
     }
 
+    @Test
     public void testPoll() {
         final Queue<E> queue = makeFullCollection();
         assertThrows(UnsupportedOperationException.class, () -> queue.poll());

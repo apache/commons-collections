@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 /**
  * Tests the UniqueFilterIterator class.
  *
@@ -65,6 +67,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         return new UniqueFilterIterator<>(i);
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {

@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 
+import org.junit.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -111,6 +112,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         return false;
     }
 
+    @Test
     public void testNullConstructor() {
         assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
@@ -118,6 +120,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     /**
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
+    @Test
     public void testEmptyIteratorWithNodeConstructor(){
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
@@ -126,6 +129,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     /**
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
+    @Test
     public void testFullIteratorWithNodeConstructor(){
         createIteratorWithStandardConstr = false;
         testFullIterator();

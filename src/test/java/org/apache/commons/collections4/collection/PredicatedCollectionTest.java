@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -80,6 +81,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         return decorateCollection(new ArrayList<E>(), testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Collection<E> c = makeTestCollection();
@@ -90,6 +92,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse("Collection shouldn't contain illegal element", c.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Collection<E> c = makeTestCollection();

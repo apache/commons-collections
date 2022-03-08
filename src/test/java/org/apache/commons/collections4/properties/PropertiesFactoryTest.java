@@ -28,8 +28,8 @@ public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Propert
         super(PropertiesFactory.INSTANCE, fileExtension);
     }
 
-    @Override
     @Test
+    @Override
     public void testInstance() {
         Assertions.assertNotNull(PropertiesFactory.INSTANCE);
     }

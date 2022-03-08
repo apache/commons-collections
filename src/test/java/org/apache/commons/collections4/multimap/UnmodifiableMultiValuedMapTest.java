@@ -26,13 +26,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Tests for UnmodifiableMultiValuedMap
@@ -45,7 +44,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
 
@@ -84,27 +83,32 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     // -----------------------------------------------------------------------
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(map));
     }
 
+    @Test
     public void testDecoratorFactoryNullMap() {
         assertThrows(NullPointerException.class, () -> UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null),
                 "map must not be null");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddException() {
         final MultiValuedMap<K, V> map = makeObject();
         assertThrows(UnsupportedOperationException.class, () -> map.put((K) "one", (V) "uno"));
     }
 
+    @Test
     public void testRemoveException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.remove("one"),
@@ -112,6 +116,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testRemoveMappingException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.removeMapping("one", "uno"),
@@ -119,6 +124,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testClearException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.clear(),
@@ -126,6 +132,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         this.assertMapContainsAllValues(map);
     }
 
+    @Test
     public void testPutAllException() {
         final MultiValuedMap<K, V> map = makeObject();
         final MultiValuedMap<K, V> original = new ArrayListValuedHashMap<>();
@@ -147,6 +154,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertEquals("{}", map.toString());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableEntries() {
         resetFull();
@@ -160,6 +168,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> entry.setValue((V) "three"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableMapIterator() {
         resetFull();
@@ -169,6 +178,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> mapIt.setValue((V) "three"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeySet() {
         resetFull();
@@ -183,6 +193,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> it.remove());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableValues() {
         resetFull();
@@ -197,6 +208,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> it.remove());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableAsMap() {
         resetFull();
@@ -210,6 +222,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> mapCol.clear());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeys() {
         resetFull();

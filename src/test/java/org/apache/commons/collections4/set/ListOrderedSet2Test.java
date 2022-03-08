@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link ListOrderedSet}
  * implementation.
@@ -52,6 +54,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testOrdering() {
         final ListOrderedSet<E> set = setupSet();
@@ -85,6 +88,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddRemove() {
         final ListOrderedSet<E> set = makeObject();
@@ -115,6 +119,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         assertSame(TWO, view.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
         final ListOrderedSet<E> set = makeObject();

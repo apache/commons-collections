@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * Extension of {@link AbstractListTest} for exercising the
  * {@link UnmodifiableList} implementation.
@@ -75,12 +77,14 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     /**
      * Verify that base list and sublists are not modifiable
      */
+    @Test
     public void testUnmodifiable() {
         setupList();
         verifyUnmodifiable(list);
         verifyUnmodifiable(list.subList(0, 2));
     }
 
+    @Test
     public void testDecorateFactory() {
         final List<E> list = makeObject();
         assertSame(list, UnmodifiableList.unmodifiableList(list));
@@ -117,6 +121,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     /**
      * Verify that iterator is not modifiable
      */
+    @Test
     public void testUnmodifiableIterator() {
         setupList();
         final Iterator<E> iterator = list.iterator();

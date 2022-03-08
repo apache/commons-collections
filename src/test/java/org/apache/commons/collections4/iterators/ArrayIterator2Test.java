@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 /**
  * Tests the ArrayIterator with primitive type arrays.
  */
@@ -60,6 +62,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final int element : testArray) {
@@ -78,6 +81,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
     public void testIndexedArray() {
         Iterator<E> iter = makeArrayIterator(testArray, 2);
         int count = 0;

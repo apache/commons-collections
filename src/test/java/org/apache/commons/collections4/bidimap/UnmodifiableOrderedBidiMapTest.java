@@ -21,18 +21,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * JUnit tests.
  */
 public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableOrderedBidiMapTest.class);
     }
 
@@ -90,11 +89,13 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return false;
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final OrderedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(map));

@@ -16,12 +16,11 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link TransformedSortedBag}
@@ -35,7 +34,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedSortedBagTest.class);
     }
 
@@ -46,6 +45,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         return TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
@@ -61,6 +61,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     }
 
+    @Test
     public void testTransformedBag_decorateTransform() {
         final TreeBag<T> originalBag = new TreeBag<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};

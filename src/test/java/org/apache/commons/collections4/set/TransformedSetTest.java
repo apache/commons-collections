@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link TransformedSet}
@@ -61,6 +62,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
@@ -79,6 +81,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     }
 
+    @Test
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new HashSet<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};

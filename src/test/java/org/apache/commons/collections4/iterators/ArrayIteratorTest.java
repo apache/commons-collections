@@ -19,6 +19,8 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -49,6 +51,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
@@ -62,10 +65,12 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         assertThrows(NoSuchElementException.class, iter::next, "NoSuchElementException must be thrown");
     }
 
+    @Test
     public void testNullArray() {
         assertThrows(NullPointerException.class, () -> new ArrayIterator<>(null));
     }
 
+    @Test
     public void testReset() {
         final ArrayIterator<E> it = makeObject();
         it.next();
