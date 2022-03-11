@@ -754,6 +754,50 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(4, getMap().size());
     }
 
+    public void testAsMapValues() {
+        if (!isAddSupported() || isHashSetValue()) {
+            return;
+        }
+        final MultiValuedMap<K, V> multiMap = makeObject();
+        multiMap.put((K) "A", (V) "W");
+        multiMap.put((K) "A", (V) "X");
+        multiMap.put((K) "A", (V) "F");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "L");
+        assertEquals("{A=[W, X, F], B=[Q, Q, L]}", multiMap.toString());
+        for (Collection<V> list : multiMap.asMap().values()) {
+            for (Iterator<V> it = list.iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
+        }
+        assertEquals("{A=[], B=[]}", multiMap.toString());
+    }
+
+    public void testAsMapEntrySet() {
+        if (!isAddSupported() || isHashSetValue()) {
+            return;
+        }
+
+        final MultiValuedMap<K, V> multiMap = makeObject();
+        multiMap.put((K) "A", (V) "W");
+        multiMap.put((K) "A", (V) "X");
+        multiMap.put((K) "A", (V) "F");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "Q");
+        multiMap.put((K) "B", (V) "L");
+        assertEquals("{A=[W, X, F], B=[Q, Q, L]}", multiMap.toString());
+        Map<K, Collection<V>> asMap = multiMap.asMap();
+        for (Map.Entry<K, Collection<V>> entry : asMap.entrySet()) {
+            for (Iterator<V> it = entry.getValue().iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
+        }
+        assertEquals("{A=[], B=[]}", multiMap.toString());
+    }
+
     public void testMapIterator() {
         resetEmpty();
         MapIterator<K, V> mapIt  = getMap().mapIterator();
@@ -816,7 +860,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
 
         if (!isHashSetValue() && isAddSupported()) {
-            assertTrue(it.hasNext() );
+            assertTrue(it.hasNext());
             assertEquals("one", it.next());
             assertEquals("one", it.getKey());
             assertEquals("uno", it.getValue());
@@ -1204,7 +1248,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             final V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
             final Collection<V>[] colArr = new Collection[3];
             for (int i = 0; i < 3; i++) {
-                final Collection<V> coll = Arrays.asList(sampleValues[i*2], sampleValues[i*2 + 1]);
+                final Collection<V> coll = Arrays.asList(sampleValues[i * 2], sampleValues[i * 2 + 1]);
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }
             return colArr;
@@ -1216,7 +1260,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             // See comment in getSampleValues() to understand why we are calling makeObject() and not
             // getMap(). See COLLECTIONS-661 for more.
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
-            final Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen" };
+            final Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen"};
             final Collection<V>[] colArr = new Collection[3];
             for (int i = 0; i < 3; i++) {
                 final Collection<V> coll = Arrays.asList((V) sampleValues[i * 2], (V) sampleValues[i * 2 + 1]);
