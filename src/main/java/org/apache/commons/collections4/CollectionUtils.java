@@ -419,16 +419,14 @@ public class CollectionUtils {
      * cost of an additional space complexity O(n).
      * </p>
      *
-     * @param coll1  the first collection, must not be null
-     * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections has the same cardinality
      *   as the set of unique elements from the second collection
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @returns true if first and second collection is null
      * @since 4.0
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
-        Objects.requireNonNull(coll1, "coll1");
-        Objects.requireNonNull(coll2, "coll2");
+        if (coll1 == null && coll2 == null) return true;
+
         if (coll2.isEmpty()) {
             return true;
         }
@@ -464,16 +462,13 @@ public class CollectionUtils {
      * </p>
      *
      * @param <T> the type of object to lookup in {@code coll1}.
-     * @param coll1  the first collection, must not be null
-     * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections is non-empty
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @throws if coll1 or coll2 is null false returned
      * @since 4.2
      * @see #intersection
      */
     public static <T> boolean containsAny(final Collection<?> coll1, @SuppressWarnings("unchecked") final T... coll2) {
-        Objects.requireNonNull(coll1, "coll1");
-        Objects.requireNonNull(coll2, "coll2");
+        if (coll1 == null || coll2 == null) return false;
         if (coll1.size() < coll2.length) {
             for (final Object aColl1 : coll1) {
                 if (ArrayUtils.contains(coll2, aColl1)) {
@@ -497,16 +492,13 @@ public class CollectionUtils {
      * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
      * </p>
      *
-     * @param coll1  the first collection, must not be null
-     * @param coll2  the second collection, must not be null
      * @return {@code true} iff the intersection of the collections is non-empty
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @throws  if coll1 or coll2 is null false will be returned
      * @since 2.1
      * @see #intersection
      */
     public static boolean containsAny(final Collection<?> coll1, final Collection<?> coll2) {
-        Objects.requireNonNull(coll1, "coll1");
-        Objects.requireNonNull(coll2, "coll2");
+        if (coll1 == null || coll2 == null) return false;
         if (coll1.size() < coll2.size()) {
             for (final Object aColl1 : coll1) {
                 if (coll2.contains(aColl1)) {
@@ -565,8 +557,8 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "a");
-        Objects.requireNonNull(b, "b");
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
         final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
         for (final Object obj : a) {
             if (helper.freqA(obj) > helper.freqB(obj)) {
@@ -1642,10 +1634,10 @@ public class CollectionUtils {
      *
      * @param collection  the collection to check
      * @return true if the BoundedCollection is full
-     * @throws NullPointerException if the collection is null
+     * @return false if  the collection is null
      */
     public static boolean isFull(final Collection<? extends Object> collection) {
-        Objects.requireNonNull(collection, "collection");
+        if (collection == null) return false;
         if (collection instanceof BoundedCollection) {
             return ((BoundedCollection<?>) collection).isFull();
         }
