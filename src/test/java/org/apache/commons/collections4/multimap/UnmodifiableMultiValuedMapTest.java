@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Set;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -93,57 +95,34 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     public void testDecoratorFactoryNullMap() {
-        try {
-            UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null);
-            fail("map must not be null");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null),
+                "map must not be null");
     }
 
     @SuppressWarnings("unchecked")
     public void testAddException() {
         final MultiValuedMap<K, V> map = makeObject();
-        try {
-            map.put((K) "one", (V) "uno");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.put((K) "one", (V) "uno"));
     }
 
     public void testRemoveException() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        try {
-            map.remove("one");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected, not support remove() method
-            // UnmodifiableMultiValuedMap does not support change
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.remove("one"),
+                "not support remove() method UnmodifiableMultiValuedMap does not support change");
         this.assertMapContainsAllValues(map);
     }
 
     public void testRemoveMappingException() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        try {
-            map.removeMapping("one", "uno");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected, not support removeMapping() method
-            // UnmodifiableMultiValuedMap does not support change
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.removeMapping("one", "uno"),
+                "expected, not support removeMapping() method UnmodifiableMultiValuedMap does not support change");
         this.assertMapContainsAllValues(map);
     }
 
     public void testClearException() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        try {
-            map.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected, not support clear() method
-            // UnmodifiableMultiValuedMap does not support change
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.clear(),
+                "expected, not support clear() method UnmodifiableMultiValuedMap does not support change");
         this.assertMapContainsAllValues(map);
     }
 
@@ -157,29 +136,14 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         originalMap.put((K) "keyX", (V) "object1");
         originalMap.put((K) "keyY", (V) "object2");
 
-        try {
-            map.putAll(original);
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected, not support putAll() method
-            // UnmodifiableMultiValuedMap does not support change
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.putAll(original),
+                "expected, not support putAll() method UnmodifiableMultiValuedMap does not support change");
         assertEquals("{}", map.toString());
 
-        try {
-            map.putAll(originalMap);
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.putAll(originalMap));
         assertEquals("{}", map.toString());
 
-        try {
-            map.putAll((K) "A", coll);
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> map.putAll((K) "A", coll));
         assertEquals("{}", map.toString());
     }
 
@@ -187,161 +151,77 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     public void testUnmodifiableEntries() {
         resetFull();
         final Collection<Entry<K, V>> entries = getMap().entries();
-        try {
-            entries.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> entries.clear());
 
         final Iterator<Entry<K, V>> it = entries.iterator();
         final Entry<K, V> entry = it.next();
-        try {
-            it.remove();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> it.remove());
 
-        try {
-            entry.setValue((V) "three");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> entry.setValue((V) "three"));
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableMapIterator() {
         resetFull();
         final MapIterator<K, V> mapIt = getMap().mapIterator();
-        try {
-            mapIt.remove();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapIt.remove());
 
-        try {
-            mapIt.setValue((V) "three");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapIt.setValue((V) "three"));
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeySet() {
         resetFull();
         final Set<K> keySet = getMap().keySet();
-        try {
-            keySet.add((K) "four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keySet.add((K) "four"));
 
-        try {
-            keySet.remove("four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keySet.remove("four"));
 
-        try {
-            keySet.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keySet.clear());
 
         final Iterator<K> it = keySet.iterator();
-        try {
-            it.remove();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> it.remove());
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableValues() {
         resetFull();
         final Collection<V> values = getMap().values();
-        try {
-            values.add((V) "four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> values.add((V) "four"));
 
-        try {
-            values.remove("four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> values.remove("four"));
 
-        try {
-            values.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> values.clear());
 
         final Iterator<V> it = values.iterator();
-        try {
-            it.remove();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> it.remove());
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableAsMap() {
         resetFull();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
-        try {
-            mapCol.put((K) "four", (Collection<V>) Arrays.asList("four"));
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.put((K) "four", (Collection<V>) Arrays.asList("four")));
 
-        try {
-            mapCol.remove("four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.remove("four"));
 
-        try {
-            mapCol.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.clear());
 
-        try {
-            mapCol.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.clear());
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeys() {
         resetFull();
         final MultiSet<K> keys = getMap().keys();
-        try {
-            keys.add((K) "four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keys.add((K) "four"));
 
-        try {
-            keys.remove("four");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keys.remove("four"));
 
-        try {
-            keys.clear();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> keys.clear());
 
         final Iterator<K> it = keys.iterator();
-        try {
-            it.remove();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> it.remove());
     }
 
 //    public void testCreate() throws Exception {

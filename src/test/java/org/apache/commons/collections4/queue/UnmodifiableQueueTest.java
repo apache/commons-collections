@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -80,10 +82,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     public void testQueueRemove() {
         resetEmpty();
-        try {
-            getCollection().remove();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove());
     }
 
     public void testUnmodifiable() {
@@ -95,27 +94,18 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
 
-        try {
-            UnmodifiableQueue.unmodifiableQueue(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableQueue.unmodifiableQueue(null));
     }
 
     public void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
-        try {
-            queue.offer(e);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> queue.offer(e));
     }
 
     public void testPoll() {
         final Queue<E> queue = makeFullCollection();
-        try {
-            queue.poll();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
 
 

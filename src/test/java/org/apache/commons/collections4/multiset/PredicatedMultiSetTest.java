@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Set;
 
 import junit.framework.Test;
@@ -86,12 +88,8 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     public void testIllegalAdd() {
         final MultiSet<T> multiset = makeTestMultiSet();
         final Integer i = Integer.valueOf(3);
-        try {
-            multiset.add((T) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> multiset.add((T) i),
+                "Integer should fail string predicate.");
         assertFalse("Collection shouldn't contain illegal element", multiset.contains(i));
     }
 
@@ -102,18 +100,10 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         elements.add("two");
         elements.add(Integer.valueOf(3));
         elements.add("four");
-        try {
-            decorateMultiSet((HashMultiSet<T>) elements, stringPredicate());
-            fail("MultiSet contains an element that should fail the predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        try {
-            decorateMultiSet(new HashMultiSet<T>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> decorateMultiSet((HashMultiSet<T>) elements, stringPredicate()),
+                "MultiSet contains an element that should fail the predicate.");
+        assertThrows(NullPointerException.class, () -> decorateMultiSet(new HashMultiSet<T>(), null),
+                "Expecting NullPointerException for null predicate.");
     }
 
     @Override

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,12 +73,8 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
         final Integer i = Integer.valueOf(3);
-        try {
-            set.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.add((E) i),
+                "Integer should fail string predicate.");
         assertFalse("Collection shouldn't contain illegal element", set.contains(i));
     }
 
@@ -88,12 +86,8 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            set.addAll(elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
+                "Integer should fail string predicate.");
         assertFalse("Set shouldn't contain illegal element", set.contains("one"));
         assertFalse("Set shouldn't contain illegal element", set.contains("two"));
         assertFalse("Set shouldn't contain illegal element", set.contains(Integer.valueOf(3)));

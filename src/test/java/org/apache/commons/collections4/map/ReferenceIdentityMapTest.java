@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,7 +30,6 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
 
 /**
  * Tests for ReferenceIdentityMap.
- *
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -286,18 +287,9 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertFalse(getMap().entrySet().contains(null));
         assertFalse(getMap().keySet().contains(null));
         assertFalse(getMap().values().contains(null));
-        try {
-            getMap().put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            getMap().put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            getMap().put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> getMap().put(null, null));
+        assertThrows(NullPointerException.class, () -> getMap().put((K) new Object(), null));
+        assertThrows(NullPointerException.class, () -> getMap().put(null, (V) new Object()));
     }
 
     /** Tests whether purge values setting works */

@@ -16,10 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
@@ -261,12 +262,8 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         final Hasher hasher = new StaticHasher(lst.iterator(), anotherShape);
-        try {
-            createFilter(hasher, shape);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> createFilter(hasher, shape),
+                "Should throw IllegalArgumentException");
     }
 
     /**
@@ -297,12 +294,8 @@ public abstract class AbstractBloomFilterTest {
         final Shape anotherShape = new Shape(testFunctionX, 3, 72, 17);
         final Hasher hasher2 = new StaticHasher(lst.iterator(), anotherShape);
         final BloomFilter bf2 = createFilter(hasher2, anotherShape);
-        try {
-            bf.contains(bf2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> bf.contains(bf2),
+                "Should throw IllegalArgumentException");
     }
 
     /**
@@ -340,12 +333,8 @@ public abstract class AbstractBloomFilterTest {
 
         final List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
-        try {
-            bf.contains(hasher2);
-            fail("Should have thrown IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing
-        }
+        assertThrows(IllegalArgumentException.class, () -> bf.contains(hasher2),
+                "Should have thrown IllegalArgumentException");
     }
 
     /**
@@ -485,12 +474,8 @@ public abstract class AbstractBloomFilterTest {
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
         final BloomFilter bf2 = createFilter(hasher2, anotherShape);
 
-        try {
-            bf.merge(bf2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> bf.merge(bf2),
+                "Should throw IllegalArgumentException");
     }
 
     /**
@@ -524,12 +509,8 @@ public abstract class AbstractBloomFilterTest {
         final List<Integer> lst2 = Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
         final Hasher hasher2 = new StaticHasher(lst2.iterator(), anotherShape);
 
-        try {
-            bf.merge(hasher2);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException expected) {
-            // do nothing.
-        }
+        assertThrows(IllegalArgumentException.class, () -> bf.merge(hasher2),
+                "Should throw IllegalArgumentException");
     }
 
     /**
@@ -638,4 +619,5 @@ public abstract class AbstractBloomFilterTest {
         assertEquals(20, bf.xorCardinality(bf2));
         assertEquals(20, bf2.xorCardinality(bf));
     }
+
 }

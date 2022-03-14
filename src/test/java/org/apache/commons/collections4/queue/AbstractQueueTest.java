@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,12 +163,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     public void testQueueElement() {
         resetEmpty();
 
-        try {
-            getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.element should throw NoSuchElementException");
 
         resetFull();
 
@@ -192,12 +190,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             verify();
         }
 
-        try {
-            getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.element should throw NoSuchElementException");
     }
 
     /**
@@ -245,12 +239,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
         resetEmpty();
 
-        try {
-            getCollection().remove();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().remove(),
+                "Queue.remove should throw NoSuchElementException");
 
         resetFull();
 
@@ -262,12 +252,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             verify();
         }
 
-        try {
-            getCollection().element();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.remove should throw NoSuchElementException");
     }
 
     /**
