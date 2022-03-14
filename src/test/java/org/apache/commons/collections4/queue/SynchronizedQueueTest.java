@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.writeExternalFormToDisk;
+import static org.apache.commons.collections4.BulkTestConstants.TEST_DATA_PATH;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -55,10 +58,10 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
     public void testCreate() throws Exception {
         Queue<T> queue = makeObject();
         writeExternalFormToDisk((java.io.Serializable) queue,
-            BulkTest.TEST_DATA_PATH + "SynchronizedQueue.emptyCollection.version4.2.obj");
+            TEST_DATA_PATH + "SynchronizedQueue.emptyCollection.version4.2.obj");
         queue = makeFullCollection();
         writeExternalFormToDisk((java.io.Serializable) queue,
-            BulkTest.TEST_DATA_PATH + "SynchronizedQueue.fullCollection.version4.2.obj");
+            TEST_DATA_PATH + "SynchronizedQueue.fullCollection.version4.2.obj");
     }
 
 }

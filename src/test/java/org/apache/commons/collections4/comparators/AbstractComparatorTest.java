@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromDisk;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.writeExternalFormToDisk;
+import static org.apache.commons.collections4.BulkTestConstants.TEST_DATA_PATH;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;

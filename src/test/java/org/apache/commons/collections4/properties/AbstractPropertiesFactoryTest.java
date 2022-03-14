@@ -16,13 +16,14 @@
  */
 package org.apache.commons.collections4.properties;
 
+import static org.apache.commons.collections4.BulkTestConstants.TEST_PROPERTIES_PATH;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.Assume;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -46,7 +47,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
     protected AbstractPropertiesFactoryTest(final AbstractPropertiesFactory<T> factory, final String fileExtension) {
         this.factory = factory;
         this.fileExtension = fileExtension;
-        this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;
+        this.pathString = TEST_PROPERTIES_PATH + "test" + fileExtension;
     }
 
     private void assertContents(final T properties) {

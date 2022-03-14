@@ -16,26 +16,20 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IteratorIterable.
- *
  */
-public class IteratorIterableTest extends BulkTest {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(IteratorIterableTest.class);
-    }
-
-    public IteratorIterableTest(final String name) {
-        super(name);
-    }
+public class IteratorIterableTest {
 
     private Iterator<Integer> createIterator() {
         final List<Integer> list = new ArrayList<>();
@@ -82,5 +76,5 @@ public class IteratorIterableTest extends BulkTest {
         }
         assertTrue(expected > 0);
     }
-}
 
+}

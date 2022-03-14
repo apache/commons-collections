@@ -16,19 +16,17 @@
  */
 package org.apache.commons.collections4;
 
-import org.junit.Test;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalEmptyCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalFullCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromBytes;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.serializeDeserialize;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.writeExternalFormToBytes;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
+
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link java.lang.Object} methods and contracts.
@@ -40,7 +38,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  */
-public abstract class AbstractObjectTest extends BulkTest {
+public abstract class AbstractObjectTest extends BulkTest implements AbstractObjectTestInterface {
 
     /** Current major release for Collections */
     public static final int COLLECTIONS_MAJOR_VERSION = 4;
@@ -134,19 +132,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         }
     }
 
-    protected Object serializeDeserialize(final Object obj) throws Exception {
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(obj);
-        out.close();
-
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        final Object dest = in.readObject();
-        in.close();
-
-        return dest;
-    }
-
     @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Object obj = makeObject();
@@ -184,7 +169,7 @@ public abstract class AbstractObjectTest extends BulkTest {
         if (supportsEmptyCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();
             if (object instanceof Serializable) {
-                final String name = getCanonicalEmptyCollectionName(object);
+                final String name = getCanonicalEmptyCollectionName(object, this);
                 assertTrue(
                     "Canonical empty collection (" + name + ") is not in SCM",
                     new File(name).exists());
@@ -201,7 +186,7 @@ public abstract class AbstractObjectTest extends BulkTest {
         if (supportsFullCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();
             if (object instanceof Serializable) {
-                final String name = getCanonicalFullCollectionName(object);
+                final String name = getCanonicalFullCollectionName(object, this);
                 assertTrue(
                     "Canonical full collection (" + name + ") is not in SCM",
                     new File(name).exists());
@@ -225,109 +210,13 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @return The version, or {@code null} if this object shouldn't be
      * tested for compatibility with previous versions.
      */
+    @Override
     public String getCompatibilityVersion() {
         return "4";
     }
 
-    protected String getCanonicalEmptyCollectionName(final Object object) {
-        final StringBuilder retval = new StringBuilder();
-        retval.append(TEST_DATA_PATH);
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1);
-        retval.append(colName);
-        retval.append(".emptyCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
-    protected String getCanonicalFullCollectionName(final Object object) {
-        final StringBuilder retval = new StringBuilder();
-        retval.append(TEST_DATA_PATH);
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1);
-        retval.append(colName);
-        retval.append(".fullCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
-    /**
-     * Writes a Serializable or Externalizable object as
-     * a file at the given path.  NOT USEFUL as part
-     * of a unit test; this is just a utility method
-     * for creating disk-based objects in SCM that can become
-     * the basis for compatibility tests using
-     * readExternalFormFromDisk(String path)
-     *
-     * @param o Object to serialize
-     * @param path path to write the serialized Object
-     * @throws IOException
-     */
-    protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
-        try (FileOutputStream fileStream = new FileOutputStream(path)) {
-            writeExternalFormToStream(o, fileStream);
-        }
-    }
-
-    /**
-     * Converts a Serializable or Externalizable object to
-     * bytes.  Useful for in-memory tests of serialization
-     *
-     * @param o Object to convert to bytes
-     * @return serialized form of the Object
-     * @throws IOException
-     */
-    protected byte[] writeExternalFormToBytes(final Serializable o) throws IOException {
-        final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        writeExternalFormToStream(o, byteStream);
-        return byteStream.toByteArray();
-    }
-
-    /**
-     * Reads a Serialized or Externalized Object from disk.
-     * Useful for creating compatibility tests between
-     * different SCM versions of the same class
-     *
-     * @param path path to the serialized Object
-     * @return the Object at the given path
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
-        try (FileInputStream stream = new FileInputStream(path)) {
-            return readExternalFormFromStream(stream);
-        }
-    }
-
-    /**
-     * Read a Serialized or Externalized Object from bytes.
-     * Useful for verifying serialization in memory.
-     *
-     * @param b byte array containing a serialized Object
-     * @return Object contained in the bytes
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    protected Object readExternalFormFromBytes(final byte[] b) throws IOException, ClassNotFoundException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(b);
-        return readExternalFormFromStream(stream);
-    }
-
     protected boolean skipSerializedCanonicalTests() {
         return Boolean.getBoolean("org.apache.commons.collections:with-clover");
-    }
-
-    // private implementation
-    private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
-        final ObjectInputStream oStream = new ObjectInputStream(stream);
-        return oStream.readObject();
-    }
-
-    private void writeExternalFormToStream(final Serializable o, final OutputStream stream) throws IOException {
-        final ObjectOutputStream oStream = new ObjectOutputStream(stream);
-        oStream.writeObject(o);
     }
 
 }

@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalEmptyCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalFullCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromBytes;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromDisk;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.writeExternalFormToBytes;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -942,7 +947,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list = makeObject();
         if (list instanceof Serializable && !skipSerializedCanonicalTests()
                 && isTestSerialization()) {
-            final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
+            final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list, this));
             assertEquals("List is empty", 0, list2.size());
             assertEquals(list, list2);
         }
@@ -966,7 +971,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         // test to make sure the canonical form has been preserved
         final List<E> list = makeFullCollection();
         if (list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
+            final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(list, this));
             if (list2.size() == 4) {
                 // old serialized tests
                 return;

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalEmptyCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalFullCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromDisk;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
@@ -477,14 +480,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @Test
     public void testEmptyMapCompatibility() throws Exception {
         final Map<?, ?> map = makeEmptyMap();
-        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map, this));
         assertEquals("Map is empty", 0, map2.size());
     }
 
     @Test
     public void testFullMapCompatibility() throws Exception {
         final Map<?, ?> map = (Map<?, ?>) makeObject();
-        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+        final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map, this));
         assertEquals("Map is the right size", map.size(), map2.size());
         for (final Object key : map.keySet()) {
             assertEquals( "Map had inequal elements", map.get(key), map2.get(key) );
