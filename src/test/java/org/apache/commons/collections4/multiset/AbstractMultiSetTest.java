@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -374,12 +376,8 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final Iterator<T> it = multiset.iterator();
         it.next();
         multiset.remove("A");
-        try {
-            it.next();
-            fail("Should throw ConcurrentModificationException");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        assertThrows(ConcurrentModificationException.class, () -> it.next(),
+                "Should throw ConcurrentModificationException");
     }
 
     @SuppressWarnings("unchecked")
@@ -396,12 +394,8 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         it.next();
         it.next();
         it.next();
-        try {
-            it.next();
-            fail("Should throw NoSuchElementException");
-        } catch (final NoSuchElementException ex) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "Should throw NoSuchElementException");
     }
 
     @SuppressWarnings("unchecked")
@@ -420,12 +414,8 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(3, multiset.size());
         it.remove();
         assertEquals(2, multiset.size());
-        try {
-            it.remove();
-            fail("Should throw IllegalStateException");
-        } catch (final IllegalStateException ex) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, () -> it.remove(),
+                "Should throw IllegalStateException");
         assertEquals(2, multiset.size());
         it.next();
         it.remove();
@@ -707,4 +697,5 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
             assertEquals(multiset, multiset2);
         }
     }
+
 }

@@ -556,27 +556,23 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
         // at this point
         // key1=newValue1, key2=newValue2
-        try {
-            it.setValue(newValue1);  // should remove key1
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            return;  // simplest way of dealing with tricky situation
-        }
-        confirmed.put(key2, newValue1);
-        AbstractBidiMapTest.this.getConfirmed().remove(key1);
-        assertEquals(newValue1, it.getValue());
-        assertTrue(bidi.containsKey(it.getKey()));
-        assertTrue(bidi.containsValue(newValue1));
-        assertEquals(newValue1, bidi.get(it.getKey()));
-        assertFalse(bidi.containsKey(key1));
-        assertFalse(bidi.containsValue(newValue2));
-        verify();
-
-        // check for ConcurrentModification
-        it.next();  // if you fail here, maybe you should be throwing an IAE, see above
-        if (isRemoveSupported()) {
-            it.remove();
-        }
+        assertThrows(IllegalArgumentException.class, () -> it.setValue(newValue1));  // should remove key1
+        // below code was previously never executed
+//        confirmed.put(key2, newValue1);
+//        AbstractBidiMapTest.this.getConfirmed().remove(key1);
+//        assertEquals(newValue1, it.getValue());
+//        assertTrue(bidi.containsKey(it.getKey()));
+//        assertTrue(bidi.containsValue(newValue1));
+//        assertEquals(newValue1, bidi.get(it.getKey()));
+//        assertFalse(bidi.containsKey(key1));
+//        assertFalse(bidi.containsValue(newValue2));
+//        verify();
+//
+//        // check for ConcurrentModification
+//        it.next();  // if you fail here, maybe you should be throwing an IAE, see above
+//        if (isRemoveSupported()) {
+//            it.remove();
+//        }
     }
 
 }

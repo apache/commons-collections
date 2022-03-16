@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
@@ -73,12 +75,8 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     public void testIllegalAdd() {
         final SortedSet<E> set = makeTestSet();
         final String testString = "B";
-        try {
-            set.add((E) testString);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.add((E) testString),
+                "Should fail string predicate.");
         assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
     }
 
@@ -90,12 +88,8 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         elements.add((E) "Atwo");
         elements.add((E) "Bthree");
         elements.add((E) "Afour");
-        try {
-            set.addAll(elements);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
+                "Should fail string predicate.");
         assertFalse("Set shouldn't contain illegal element", set.contains("Aone"));
         assertFalse("Set shouldn't contain illegal element", set.contains("Atwo"));
         assertFalse("Set shouldn't contain illegal element", set.contains("Bthree"));

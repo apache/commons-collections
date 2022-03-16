@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,7 +39,6 @@ import junit.framework.Test;
 
 /**
  * Tests for ReferenceMap.
- *
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -90,18 +91,9 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map.entrySet().contains(null));
         assertFalse(map.containsKey(null));
         assertFalse(map.containsValue(null));
-        try {
-            map.put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            map.put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            map.put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> map.put(null, null));
+        assertThrows(NullPointerException.class, () -> map.put((K) new Object(), null));
+        assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
 
 /*
@@ -345,4 +337,5 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             }
         }
     }
+
 }

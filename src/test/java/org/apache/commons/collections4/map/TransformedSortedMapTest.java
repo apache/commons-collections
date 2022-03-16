@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -77,18 +79,15 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
             assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
-            try {
-                map.containsKey(els[i]);
-                fail();
-            } catch (final ClassCastException ex) {}
+            SortedMap<K, V> finalMap1 = map;
+            int finalI = i;
+            assertThrows(ClassCastException.class, () -> finalMap1.containsKey(els[finalI]));
             assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
-        try {
-            map.remove(els[0]);
-            fail();
-        } catch (final ClassCastException ex) {}
+        SortedMap<K, V> finalMap = map;
+        assertThrows(ClassCastException.class, () -> finalMap.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 
         map = TransformedSortedMap
