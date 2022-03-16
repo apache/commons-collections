@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,6 @@ import org.apache.commons.collections4.BulkTest;
 
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
- *
  */
 public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> {
 
@@ -235,10 +236,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
-                getMap().put(toKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            assertThrows(IllegalArgumentException.class, () -> getMap().put(toKey, subSortedValues.get(0)));
             verify();
         }
         @Override
@@ -290,10 +288,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
-                getMap().put(invalidKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            assertThrows(IllegalArgumentException.class, () -> getMap().put(invalidKey, subSortedValues.get(0)));
             verify();
         }
         @Override
@@ -352,10 +347,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
                 return;
             }
             resetEmpty();
-            try {
-                getMap().put(toKey, subSortedValues.get(0));
-                fail();
-            } catch (final IllegalArgumentException ex) {}
+            assertThrows(IllegalArgumentException.class, () -> getMap().put(toKey, subSortedValues.get(0)));
             verify();
         }
         @Override
@@ -390,4 +382,5 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
     public SortedMap<K, V> getConfirmed() {
         return (SortedMap<K, V>) super.getConfirmed();
     }
+
 }

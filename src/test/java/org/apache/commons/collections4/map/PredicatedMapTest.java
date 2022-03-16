@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,19 +69,11 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();
-        try {
-            map.put((K) "Hi", (V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)),
+                "Illegal value should raise IllegalArgument");
 
-        try {
-            map.put((K) Integer.valueOf(3), (V) "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) Integer.valueOf(3), (V) "Hi"),
+                "Illegal key should raise IllegalArgument");
 
         assertFalse(map.containsKey(Integer.valueOf(3)));
         assertFalse(map.containsValue(Integer.valueOf(3)));
@@ -90,28 +84,20 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map2.put((K) "C", (V) "c");
         map2.put((K) "c", (V) Integer.valueOf(3));
 
-        try {
-            map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.putAll(map2),
+                "Illegal value should raise IllegalArgument");
 
         map.put((K) "E", (V) "e");
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-        try {
-            final Map.Entry<K, V> entry = iterator.next();
-            entry.setValue((V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        Map.Entry<K, V> entry = iterator.next();
+        Map.Entry<K, V> finalEntry = entry;
+        assertThrows(IllegalArgumentException.class, () -> finalEntry.setValue((V) Integer.valueOf(3)),
+                "Illegal value should raise IllegalArgument");
 
         map.put((K) "F", (V) "f");
         iterator = map.entrySet().iterator();
-        final Map.Entry<K, V> entry = iterator.next();
+        entry = iterator.next();
         entry.setValue((V) "x");
-
     }
 
     @Override

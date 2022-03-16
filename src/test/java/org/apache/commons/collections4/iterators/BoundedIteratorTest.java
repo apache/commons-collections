@@ -118,7 +118,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
         assertFalse(iter.hasNext());
 
-        assertThrows(NoSuchElementException.class, ()->iter.next());
+        assertThrows(NoSuchElementException.class, () -> iter.next());
     }
 
     /**

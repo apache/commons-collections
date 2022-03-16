@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -146,48 +148,29 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             verify();
         }
 
-        try {
-            getCollection().remove();
-            fail("Empty queue should raise Underflow.");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().remove(),
+                "Empty queue should raise Underflow.");
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException1() {
-        try {
-            new CircularFifoQueue<E>(0);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        assertThrows(IllegalArgumentException.class, () -> new CircularFifoQueue<E>(0));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException2() {
-        try {
-            new CircularFifoQueue<E>(-20);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        assertThrows(IllegalArgumentException.class, () -> new CircularFifoQueue<E>(-20));
     }
 
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException3() {
-        try {
-            new CircularFifoQueue<E>(null);
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        assertThrows(NullPointerException.class, () -> new CircularFifoQueue<E>(null));
     }
 
     @SuppressWarnings("unchecked")
@@ -419,13 +402,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     public void testAddNull() {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
-        try {
-            b.add(null);
-            fail();
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
+        assertThrows(NullPointerException.class, () -> b.add(null));
     }
 
     public void testDefaultSizeAndGetError1() {
@@ -437,12 +414,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
-            fifo.get(5);
-        } catch (final NoSuchElementException ex) {
-            return;
-        }
-        fail();
+        assertThrows(NoSuchElementException.class, () -> fifo.get(5));
     }
 
     public void testDefaultSizeAndGetError2() {
@@ -454,12 +426,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         fifo.add((E) "4");
         fifo.add((E) "5");
         assertEquals(5, fifo.size());
-        try {
-            fifo.get(-2);
-        } catch (final NoSuchElementException ex) {
-            return;
-        }
-        fail();
+        assertThrows(NoSuchElementException.class, () -> fifo.get(-2));
     }
 
     @Override

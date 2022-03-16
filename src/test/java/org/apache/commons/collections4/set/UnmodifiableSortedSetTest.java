@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -91,10 +94,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         final SortedSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSortedSet.unmodifiableSortedSet(set));
 
-        try {
-            UnmodifiableSortedSet.unmodifiableSortedSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedSet.unmodifiableSortedSet(null));
     }
 
     /**
@@ -102,42 +102,20 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void verifyUnmodifiable(final Set<E> set) {
-        try {
-            set.add((E) "value");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.addAll(new TreeSet<E>());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.remove("x");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<E>()),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.clear(),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.remove("x"),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.removeAll(array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array),
+                        "Expecting UnsupportedOperationException.")
+        );
     }
 
     public void testComparator() {

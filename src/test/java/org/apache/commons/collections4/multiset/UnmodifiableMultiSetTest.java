@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 
 import junit.framework.Test;
@@ -82,38 +84,26 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         final MultiSet<E> multiset = makeFullCollection();
         assertSame(multiset, UnmodifiableMultiSet.unmodifiableMultiSet(multiset));
 
-        try {
-            UnmodifiableMultiSet.unmodifiableMultiSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableMultiSet.unmodifiableMultiSet(null));
     }
 
 
     public void testAdd() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
-            unmodifiableMultiSet.add((E) "One", 1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.add((E) "One", 1));
     }
 
     public void testRemove() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
-            unmodifiableMultiSet.remove("One", 1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.remove("One", 1));
     }
 
     public void testSetCount() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        try {
-            unmodifiableMultiSet.setCount((E) "One", 2);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.setCount((E) "One", 2));
     }
 
     public void testEntrySet() {

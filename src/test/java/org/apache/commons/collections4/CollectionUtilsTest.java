@@ -1280,7 +1280,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final Collection<String> list2 = null;
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.containsAny(list, list2));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(list, list2));
     }
 
     @Test
@@ -1288,7 +1288,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
         final String[] array = null;
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.containsAny(list, array));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.containsAny(list, array));
     }
 
     @Test
@@ -1311,19 +1311,19 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testDisjunctionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.disjunction(null, list));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.disjunction(null, list));
     }
 
     @Test
     public void testDisjunctionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.disjunction(list, null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.disjunction(list, null));
     }
 
     @Test
     public void testGetCardinalityMapNull() {
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.getCardinalityMap(null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.getCardinalityMap(null));
     }
 
     @Test
@@ -1369,21 +1369,21 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testHashCodeNullEquator() {
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.hashCode(collectionB, null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.hashCode(collectionB, null));
     }
 
     @Test
     public void testIntersectionNullColl1() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.intersection(null, list));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.intersection(null, list));
     }
 
     @Test
     public void testIntersectionNullColl2() {
         final Collection<String> list = new ArrayList<>(1);
         list.add("1");
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.intersection(list, null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.intersection(list, null));
     }
 
     // -----------------------------------------------------------------------
@@ -1482,7 +1482,7 @@ public class CollectionUtilsTest extends MockTestCase {
                 return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
             }
         };
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.isEqualCollection(null, list, e));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.isEqualCollection(null, list, e));
     }
 
     @Test
@@ -1504,12 +1504,12 @@ public class CollectionUtilsTest extends MockTestCase {
                 return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
             }
         };
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.isEqualCollection(list, null, e));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.isEqualCollection(list, null, e));
     }
 
     @Test
     public void testIsEqualCollectionNullEquator() {
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.isEqualCollection(collectionA, collectionA, null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.isEqualCollection(collectionA, collectionA, null));
     }
 
     @Test
@@ -1530,7 +1530,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testIsFullNullColl() {
-        assertThrows(NullPointerException.class, () ->  CollectionUtils.isFull(null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.isFull(null));
     }
 
     @Test

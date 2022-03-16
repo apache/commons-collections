@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -34,6 +36,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
@@ -45,7 +48,6 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractCollectionTest.
- *
  */
 public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
@@ -176,40 +178,23 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        List<E> list;
         final E element = getOtherElements()[0];
 
-        try {
-            list = makeObject();
-            list.add(Integer.MIN_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList0 = makeObject();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
+                "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list = makeObject();
-            list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList1 = makeObject();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
+                "List.add should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list = makeObject();
-            list.add(1, element);
-            fail("List.add should throw IndexOutOfBoundsException [1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList2 = makeObject();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(1, element),
+                "List.add should throw IndexOutOfBoundsException [1]");
 
-        try {
-            list = makeObject();
-            list.add(Integer.MAX_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList3 = makeObject();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
+                "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
 
     /**
@@ -221,40 +206,23 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        List<E> list;
         final E element = getOtherElements()[0];
 
-        try {
-            list = makeFullCollection();
-            list.add(Integer.MIN_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList0 = makeFullCollection();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
+                "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list = makeFullCollection();
-            list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList1 = makeFullCollection();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
+                "List.add should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list = makeFullCollection();
-            list.add(list.size() + 1, element);
-            fail("List.add should throw IndexOutOfBoundsException [size + 1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList2 = makeFullCollection();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(finalList2.size() + 1, element),
+                "List.add should throw IndexOutOfBoundsException [size + 1]");
 
-        try {
-            list = makeFullCollection();
-            list.add(Integer.MAX_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        List<E> finalList3 = makeFullCollection();
+        assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
+                "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
 
     /**
@@ -383,40 +351,20 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     public void testListGetByIndexBoundsChecking() {
         final List<E> list = makeObject();
 
-        try {
-            list.get(Integer.MIN_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(Integer.MIN_VALUE),
+                "List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.get(-1);
-            fail("List.get should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1),
+                "List.get should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.get(0);
-            fail("List.get should throw IndexOutOfBoundsException [0]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(0),
+                "List.get should throw IndexOutOfBoundsException [0]");
 
-        try {
-            list.get(1);
-            fail("List.get should throw IndexOutOfBoundsException [1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(1),
+                "List.get should throw IndexOutOfBoundsException [1]");
 
-        try {
-            list.get(Integer.MAX_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(Integer.MAX_VALUE),
+                "List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
 
     /**
@@ -426,33 +374,17 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     public void testListGetByIndexBoundsChecking2() {
         final List<E> list = makeFullCollection();
 
-        try {
-            list.get(Integer.MIN_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(Integer.MIN_VALUE),
+                "List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.get(-1);
-            fail("List.get should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1),
+                "List.get should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.get(getFullElements().length);
-            fail("List.get should throw IndexOutOfBoundsException [size]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(getFullElements().length),
+                "List.get should throw IndexOutOfBoundsException [size]");
 
-        try {
-            list.get(Integer.MAX_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(Integer.MAX_VALUE),
+                "List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
 
     /**
@@ -513,42 +445,21 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list = makeObject();
         final E element = getOtherElements()[0];
 
-        try {
-            list.set(Integer.MIN_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(Integer.MIN_VALUE, element),
+                "List.set should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, element),
+                "List.set should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.set(0, element);
-            fail("List.set should throw IndexOutOfBoundsException [0]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(0, element),
+                "List.set should throw IndexOutOfBoundsException [0]");
 
-        try {
-            list.set(1, element);
-            fail("List.set should throw IndexOutOfBoundsException [1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(1, element),
+                "List.set should throw IndexOutOfBoundsException [1]");
 
-        try {
-            list.set(Integer.MAX_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(Integer.MAX_VALUE, element),
+                "List.set should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
-
 
     /**
      *  Tests bounds checking for {@link List#set(int,Object)} on a
@@ -562,37 +473,18 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list = makeFullCollection();
         final E element = getOtherElements()[0];
 
-        try {
-            list.set(Integer.MIN_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException " +
-                "[Integer.MIN_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(Integer.MIN_VALUE, element),
+                "List.set should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, element),
+                "List.set should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.set(getFullElements().length, element);
-            fail("List.set should throw IndexOutOfBoundsException [size]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(getFullElements().length, element),
+                "List.set should throw IndexOutOfBoundsException [size]");
 
-        try {
-            list.set(Integer.MAX_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException " +
-                "[Integer.MAX_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(Integer.MAX_VALUE, element),
+                "List.set should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
-
 
     /**
      *  Test {@link List#set(int,Object)}.
@@ -625,12 +517,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
 
         resetFull();
-        try {
-            getCollection().set(0, getFullElements()[0]);
-            fail("Empty collection should not support set.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().set(0, getFullElements()[0]),
+                "Empty collection should not support set.");
         // make sure things didn't change even if the expected exception was
         // thrown.
         verify();
@@ -647,40 +535,20 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final List<E> list = makeObject();
 
-        try {
-            list.remove(Integer.MIN_VALUE);
-            fail("List.remove should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(Integer.MIN_VALUE),
+                "List.remove should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.remove(-1);
-            fail("List.remove should throw IndexOutOfBoundsException [-1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1),
+                "List.remove should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.remove(0);
-            fail("List.remove should throw IndexOutOfBoundsException [0]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0),
+                "List.remove should throw IndexOutOfBoundsException [0]");
 
-        try {
-            list.remove(1);
-            fail("List.remove should throw IndexOutOfBoundsException [1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(1),
+                "List.remove should throw IndexOutOfBoundsException [1]");
 
-        try {
-            list.remove(Integer.MAX_VALUE);
-            fail("List.remove should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(Integer.MAX_VALUE),
+                "List.remove should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
 
     /**
@@ -694,37 +562,18 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final List<E> list = makeFullCollection();
 
-        try {
-            list.remove(Integer.MIN_VALUE);
-            fail("List.remove should throw IndexOutOfBoundsException " +
-                "[Integer.MIN_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(Integer.MIN_VALUE),
+                "List.remove should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        try {
-            list.remove(-1);
-            fail("List.remove should throw IndexOutOfBoundsException [-1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1),
+                "List.remove should throw IndexOutOfBoundsException [-1]");
 
-        try {
-            list.remove(getFullElements().length);
-            fail("List.remove should throw IndexOutOfBoundsException [size]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(getFullElements().length),
+                "List.remove should throw IndexOutOfBoundsException [size]");
 
-        try {
-            list.remove(Integer.MAX_VALUE);
-            fail("List.remove should throw IndexOutOfBoundsException " +
-                "[Integer.MAX_VALUE]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(Integer.MAX_VALUE),
+                "List.remove should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
-
 
     /**
      *  Tests {@link List#remove(int)}.
@@ -922,12 +771,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         assertEquals("nextIndex should be size", max, iter.nextIndex());
         assertEquals("previousIndex should be size - 1", max - 1, iter.previousIndex());
 
-        try {
-            iter.next();
-            fail("Exhausted iterator should raise NoSuchElement");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> iter.next(),
+                "Exhausted iterator should raise NoSuchElement");
     }
 
     /**
@@ -958,13 +803,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final int prevIndex = iter.previousIndex();
         assertEquals("previousIndex should be -1", -1, prevIndex);
 
-        try {
-            iter.previous();
-            fail("Exhausted iterator should raise NoSuchElement");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
-
+        assertThrows(NoSuchElementException.class, () -> iter.previous(),
+                "Exhausted iterator should raise NoSuchElement");
     }
 
 
@@ -1315,19 +1155,10 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             }
         }
 
-        try {
-            m.invoke(list, params);
-            fail(m.getName() + " should raise ConcurrentModification");
-        } catch (final IllegalAccessException e) {
-            // impossible
-        } catch (final InvocationTargetException e) {
-            final Throwable t = e.getTargetException();
-            if (t instanceof ConcurrentModificationException) {
-                // expected
-                return;
-            }
-            fail(m.getName() + " raised unexpected " + e);
-        }
+        final InvocationTargetException thrown = assertThrows(InvocationTargetException.class, () -> m.invoke(list, params),
+                m.getName() + " should raise ConcurrentModification");
+        Assertions.assertTrue(thrown.getTargetException() instanceof ConcurrentModificationException,
+                m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 
     // -----------------------------------------------------------------------
@@ -1372,4 +1203,5 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             return AbstractListTest.this.getCollection().listIterator();
         }
     }
+
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -118,7 +120,6 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * fails and/or the methods that define the assumptions used by the test
  * cases.  For example, if your map does not allow duplicate values, override
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
- *
  */
 public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
@@ -588,11 +589,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapClear() {
         if (!isRemoveSupported()) {
-            try {
-                resetFull();
-                getMap().clear();
-                fail("Expected UnsupportedOperationException on clear");
-            } catch (final UnsupportedOperationException ex) {}
+            resetFull();
+            assertThrows(UnsupportedOperationException.class, () -> getMap().clear(),
+                    "Expected UnsupportedOperationException on clear");
             return;
         }
 
@@ -849,10 +848,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 }
             }
         } else {
-            try {
-                getMap().put(keys[0], values[0]);
-                fail("Expected UnsupportedOperationException on put (add)");
-            } catch (final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> getMap().put(keys[0], values[0]),
+                    "Expected UnsupportedOperationException on put (add)");
         }
     }
 
@@ -902,10 +899,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             if (!isPutChangeSupported()) {
                 final Map<K, V> temp = makeFullMap();
                 resetEmpty();
-                try {
-                    getMap().putAll(temp);
-                    fail("Expected UnsupportedOperationException on putAll");
-                } catch (final UnsupportedOperationException ex) {}
+                assertThrows(UnsupportedOperationException.class, () -> getMap().putAll(temp),
+                        "Expected UnsupportedOperationException on putAll");
             }
             return;
         }
@@ -960,11 +955,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public void testMapRemove() {
         if (!isRemoveSupported()) {
-            try {
-                resetFull();
-                getMap().remove(getMap().keySet().iterator().next());
-                fail("Expected UnsupportedOperationException on remove");
-            } catch (final UnsupportedOperationException ex) {}
+            resetFull();
+            assertThrows(UnsupportedOperationException.class, () -> getMap().remove(getMap().keySet().iterator().next()),
+                    "Expected UnsupportedOperationException on remove");
             return;
         }
 
@@ -2031,4 +2024,5 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     public Map<K, V> getConfirmed() {
         return confirmed;
     }
+
 }

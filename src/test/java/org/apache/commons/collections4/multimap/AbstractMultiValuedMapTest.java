@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -555,13 +557,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "key", (V) "object0");
         test.putAll(original);
 
-        try {
-            final MultiValuedMap<K, V> originalNull = null;
-            test.putAll(originalNull);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        final MultiValuedMap<K, V> originalNull = null;
+        assertThrows(NullPointerException.class, () -> test.putAll(originalNull),
+                "expecting NullPointerException");
 
         assertEquals(2, test.keySet().size());
         assertEquals(4, test.size());
@@ -587,13 +585,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "keyX", (V) "object0");
         test.putAll(original);
 
-        try {
-            final Map<K, V> originalNull = null;
-            test.putAll(originalNull);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        final Map<K, V> originalNull = null;
+        assertThrows(NullPointerException.class, () -> test.putAll(originalNull),
+                "expecting NullPointerException");
 
         assertEquals(3, test.keySet().size());
         assertEquals(4, test.size());
@@ -620,12 +614,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertTrue(map.containsMapping("A", "Y"));
         assertTrue(map.containsMapping("A", "Z"));
 
-        try {
-            map.putAll((K) "A", null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> map.putAll((K) "A", null),
+                "expecting NullPointerException");
 
         assertEquals(3, map.get((K) "A").size());
         assertTrue(map.containsMapping("A", "X"));
@@ -680,13 +670,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString())
         );
 
-        try {
-            final MultiValuedMap<K, V> originalNull = null;
-            map.putAll(originalNull);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
+        final MultiValuedMap<K, V> originalNull = null;
+        assertThrows(NullPointerException.class, () -> map.putAll(originalNull),
+                "expecting NullPointerException");
         assertTrue(
             "{A=[X, Y, Z], B=[U, V, W]}".equals(map.toString()) ||
             "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString())
@@ -786,33 +772,17 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         resetFull();
         final MapIterator<K, V> mapIt = getMap().mapIterator();
         mapIt.next();
-        try {
-            mapIt.setValue((V) "some value");
-            fail();
-        } catch (final UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> mapIt.setValue((V) "some value"));
     }
 
     public void testMultiValuedMapIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MapIterator<K, V> it = map.mapIterator();
 
-        try {
-            it.getKey();
-            fail();
-        } catch (final IllegalStateException ise) {
-        }
-        try {
-            it.getValue();
-            fail();
-        } catch (final IllegalStateException ise) {
-        }
+        assertThrows(IllegalStateException.class, () -> it.getKey());
+        assertThrows(IllegalStateException.class, () -> it.getValue());
         if (isAddSupported()) {
-            try {
-                it.setValue((V) "V");
-                fail();
-            } catch (final IllegalStateException ise) {
-            }
+            assertThrows(IllegalStateException.class, () -> it.setValue((V) "V"));
         }
 
         if (!isHashSetValue() && isAddSupported()) {
@@ -835,11 +805,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             assertEquals("three", it.next());
             assertEquals("three", it.getKey());
             assertEquals("trois", it.getValue());
-            try {
-                it.setValue((V) "threetrois");
-                fail();
-            } catch (final UnsupportedOperationException e) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
         }
     }
 
@@ -1259,4 +1225,5 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             return false;
         }
     }
+
 }

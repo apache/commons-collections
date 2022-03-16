@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 
 /**
  * Test case for {@link AbstractLinkedList}.
- *
  */
 public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
@@ -138,36 +139,20 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         final AbstractLinkedList<E> list = getCollection();
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
-        try {
-            list.getNode(0, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(0, false),
+                "Expecting IndexOutOfBoundsException.");
         list.addAll( Arrays.asList((E[]) new String[]{"value1", "value2"}));
         checkNodes();
         list.addFirst((E) "value0");
         checkNodes();
         list.removeNode(list.getNode(1, false));
         checkNodes();
-        try {
-            list.getNode(2, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
-        try {
-            list.getNode(-1, false);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
-        try {
-            list.getNode(3, true);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (final IndexOutOfBoundsException ex) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(2, false),
+                "Expecting IndexOutOfBoundsException.");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(-1, false),
+                "Expecting IndexOutOfBoundsException.");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(3, true),
+                "Expecting IndexOutOfBoundsException.");
     }
 
     protected void checkNodes() {
@@ -188,4 +173,5 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     public AbstractLinkedList<E> getCollection() {
         return (AbstractLinkedList<E>) super.getCollection();
     }
+
 }

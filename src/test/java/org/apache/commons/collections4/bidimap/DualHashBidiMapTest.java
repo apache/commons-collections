@@ -22,7 +22,6 @@ import org.apache.commons.collections4.BulkTest;
 
 /**
  * JUnit tests.
- *
  */
 public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
@@ -56,4 +55,5 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualHashBidiMap.fullCollection.version4.obj");
 //    }
+
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -117,22 +119,13 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         assertFalse(it.hasNext());
 
         // next() should throw a NoSuchElementException
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        assertThrows(NoSuchElementException.class, () -> it.next());
 
         // getKey() should throw an IllegalStateException
-        try {
-            it.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getKey());
 
         // getValue() should throw an IllegalStateException
-        try {
-            it.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getValue());
 
         if (!supportsSetValue()) {
             // setValue() should throw an UnsupportedOperationException/IllegalStateException
@@ -144,10 +137,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             }
         } else {
             // setValue() should throw an IllegalStateException
-            try {
-                it.setValue(addSetValues()[0]);
-                fail();
-            } catch (final IllegalStateException ex) {}
+            assertThrows(IllegalStateException.class, () -> it.setValue(addSetValues()[0]));
         }
     }
 
@@ -198,10 +188,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final V value = it.getValue();
 
         if (!supportsSetValue()) {
-            try {
-                it.setValue(newValue);
-                fail();
-            } catch (final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> it.setValue(newValue));
             return;
         }
         final V old = it.setValue(newValue);
@@ -238,11 +225,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final K key = it.next();
 
         if (!supportsRemove()) {
-            try {
-                it.remove();
-                fail();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> it.remove());
             return;
         }
 
@@ -274,10 +257,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         confirmed.remove(key);
         verify();
 
-        try {
-            it.setValue(newValue);
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.setValue(newValue));
         verify();
     }
 
@@ -295,10 +275,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         confirmed.remove(key);
         verify();
 
-        try {
-            it.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getKey());
         verify();
     }
 
@@ -316,10 +293,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         confirmed.remove(key);
         verify();
 
-        try {
-            it.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getValue());
         verify();
     }
 

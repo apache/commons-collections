@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -249,31 +252,13 @@ public class ListOrderedSetTest<E>
     }
 
     public void testDecorator() {
-        try {
-            ListOrderedSet.listOrderedSet((List<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet((Set<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<E>(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<E>()))
+        );
     }
 
     @Override
