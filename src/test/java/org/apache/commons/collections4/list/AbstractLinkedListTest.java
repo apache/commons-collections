@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * Test case for {@link AbstractLinkedList}.
  */
@@ -29,6 +31,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         super(testName);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveFirst() {
         resetEmpty();
@@ -53,6 +56,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         checkNodes();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveLast() {
         resetEmpty();
@@ -74,6 +78,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         assertEquals("value4", list.removeFirst());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddNodeAfter() {
         resetEmpty();
@@ -107,6 +112,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         assertEquals("value5", list.getLast());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveNode() {
         resetEmpty();
@@ -133,6 +139,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         checkNodes();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testGetNode() {
         resetEmpty();

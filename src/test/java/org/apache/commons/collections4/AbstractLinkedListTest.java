@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.Test;
 
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.
@@ -67,6 +68,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#addFirst(Object)}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testLinkedListAddFirst() {
         if (!isAddSupported()) {
@@ -88,6 +90,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#addLast(Object)}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testLinkedListAddLast() {
         if (!isAddSupported()) {
@@ -109,6 +112,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#getFirst()}.
      */
+    @Test
     public void testLinkedListGetFirst() {
         resetEmpty();
         assertThrows(NoSuchElementException.class, () -> getCollection().getFirst(),
@@ -126,6 +130,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#getLast()}.
      */
+    @Test
     public void testLinkedListGetLast() {
         resetEmpty();
         assertThrows(NoSuchElementException.class, () -> getCollection().getLast(),
@@ -143,6 +148,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#removeFirst()}.
      */
+    @Test
     public void testLinkedListRemoveFirst() {
         if (!isRemoveSupported()) {
             return;
@@ -164,6 +170,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     /**
      *  Tests {@link LinkedList#removeLast()}.
      */
+    @Test
     public void testLinkedListRemoveLast() {
         if (!isRemoveSupported()) {
             return;

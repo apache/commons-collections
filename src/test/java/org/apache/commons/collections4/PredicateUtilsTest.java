@@ -152,8 +152,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     // allPredicate
     //------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAllPredicate() {
         assertPredicateTrue(AllPredicate.allPredicate(), null);
         assertTrue(AllPredicate.allPredicate(truePredicate(), truePredicate(), truePredicate()).evaluate(null));
@@ -195,8 +195,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertThrows(NullPointerException.class, () -> AllPredicate.allPredicate((Predicate<Object>[]) null));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAllPredicateEx2() {
         assertThrows(NullPointerException.class, () -> AllPredicate.<Object>allPredicate(new Predicate[] { null }));
     }
@@ -243,8 +243,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     // anyPredicate
     //------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAnyPredicate() {
         assertPredicateFalse(PredicateUtils.anyPredicate(), null);
 
@@ -287,8 +287,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertThrows(NullPointerException.class, () -> PredicateUtils.anyPredicate((Predicate<Object>[]) null));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAnyPredicateEx2() {
         assertThrows(NullPointerException.class, () -> PredicateUtils.anyPredicate(new Predicate[] {null}));
     }
@@ -335,8 +335,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     // onePredicate
     //------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testOnePredicate() {
         assertPredicateFalse(PredicateUtils.onePredicate((Predicate<Object>[]) new Predicate[] {}), null);
         assertFalse(PredicateUtils.onePredicate(truePredicate(), truePredicate(), truePredicate()).evaluate(null));
@@ -380,8 +380,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertThrows(NullPointerException.class, () -> PredicateUtils.onePredicate((Predicate<Object>[]) null));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testOnePredicateEx2() {
         assertThrows(NullPointerException.class, () -> PredicateUtils.onePredicate(new Predicate[] {null}));
     }
@@ -396,8 +396,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertThrows(NullPointerException.class, () -> PredicateUtils.onePredicate((Collection<Predicate<Object>>) null));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testOnePredicateEx5() {
         PredicateUtils.onePredicate(Collections.EMPTY_LIST);
     }
@@ -426,8 +426,8 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     // nonePredicate
     //------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testNonePredicate() {
         assertPredicateTrue(PredicateUtils.nonePredicate(), null);
         assertFalse(PredicateUtils.nonePredicate(truePredicate(), truePredicate(), truePredicate()).evaluate(null));
@@ -469,14 +469,14 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertThrows(NullPointerException.class, () -> PredicateUtils.nonePredicate((Predicate<Object>[]) null));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testNonePredicateEx2() {
         assertThrows(NullPointerException.class, () -> PredicateUtils.nonePredicate(new Predicate[] {null}));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testNonePredicateEx3() {
         assertThrows(NullPointerException.class, () -> PredicateUtils.nonePredicate(null, null));
     }

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.set.CompositeSet.SetMutator;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -61,24 +62,28 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testContains() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertTrue(set.contains("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testContainsAll() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.containsAll(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveAll() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.removeAll(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveUnderlying() {
         final Set<E> one = buildOne();
@@ -91,6 +96,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         assertFalse(set.contains("3"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
         final Set<E> one = buildOne();
@@ -103,6 +109,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         assertFalse(one.contains("3"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFailedCollisionResolution() {
         final Set<E> one = buildOne();
@@ -136,6 +143,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
                 "IllegalArgumentException should have been thrown");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddComposited() {
         final Set<E> one = buildOne();
@@ -162,6 +170,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
                 "Expecting UnsupportedOperationException.");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddCompositedCollision() {
         final HashSet<E> set1 = new HashSet<>();

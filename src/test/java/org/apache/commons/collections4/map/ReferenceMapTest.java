@@ -34,8 +34,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
-
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * Tests for ReferenceMap.
@@ -46,7 +45,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ReferenceMapTest.class);
     }
 
@@ -81,6 +80,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            "src/test/resources/data/test/ReferenceMap.fullCollection.version4.obj");
 //    }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
@@ -99,6 +99,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 /*
     // Tests often fail because gc is uncontrollable
 
+    @Test
     public void testPurge() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -124,7 +125,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
-
+    @Test
     public void testGetAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         for (int i = 0; i < 10; i++) {
@@ -139,7 +140,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
-
+    @Test
     public void testEntrySetIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -161,6 +162,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     }
 
+    @Test
     public void testMapIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -183,6 +185,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     }
 
+    @Test
     public void testMapIteratorAfterGC2() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -227,6 +230,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     /** Tests whether purge values setting works */
+    @Test
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();
@@ -250,6 +254,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
+    @Test
     public void testCustomPurge() {
         final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
@@ -289,6 +294,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      *
      * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-599">COLLECTIONS-599: HashEntry array object naming data initialized with double the size during deserialization</a>
      */
+    @Test
     public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
 
         final ReferenceMap<String, String> serializeMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);

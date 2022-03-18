@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link PredicatedMapTest} for exercising the
@@ -84,6 +85,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from TestPredicatedMap
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
@@ -94,6 +96,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map = decorateMap(map, null, null);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();
@@ -129,6 +132,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedMap<K, V> map = makeTestMap();
@@ -152,6 +156,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertNull("natural order, so comparator should be null", c);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testReverseSortOrder() {
         final SortedMap<K, V> map = makeTestMapWithComparator();

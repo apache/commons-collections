@@ -29,8 +29,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
-
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * JUnit tests.
@@ -49,7 +48,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(Flat3MapTest.class);
     }
 
@@ -58,6 +57,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return new Flat3Map<>();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEquals1() {
         final Flat3Map<K, V> map1 = makeObject();
@@ -69,6 +69,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map1.equals(map2));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEquals2() {
         final Flat3Map<K, V> map1 = makeObject();
@@ -80,6 +81,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map1.equals(map2));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone2() {
         final Flat3Map<K, V> map = makeObject();
@@ -111,6 +113,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWENTY, cloned.get(TWO));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone4() {
         final Flat3Map<K, V> map = makeObject();
@@ -147,6 +150,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWO, cloned.get(TWENTY));
     }
 
+    @Test
     public void testSerialisation0() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -162,6 +166,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(0, ser.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSerialisation2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -185,6 +190,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(TWENTY, ser.get(TWO));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSerialisation4() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -214,6 +220,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(TWO, ser.get(TWENTY));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -233,6 +240,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(THIRTY, map.get(THREE));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -253,6 +261,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(THIRTY, map.get(THREE));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -274,6 +283,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NewValue", map.get(THREE));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -293,6 +303,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(THIRTY, map.get(THREE));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -313,6 +324,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(THIRTY, map.get(THREE));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -334,6 +346,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NewValue", map.get(THREE));
     }
 
+    @Test
     public void testEntrySet() {
         // Sanity check
         putAndRemove(new LinkedHashMap<>());
@@ -429,6 +442,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            "src/test/resources/data/test/Flat3Map.fullCollection.version4.obj");
 //    }
 
+    @Test
     public void testCollections261() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         m.put( Integer.valueOf(1), Integer.valueOf(1) );
@@ -444,6 +458,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
     }
 
+    @Test
     public void testToString() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final String string0 = m.toString();
@@ -465,6 +480,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNotSame(string2, string3);
     }
 
+    @Test
     public void testRemove1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -494,6 +510,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWO, obj);
     }
 
+    @Test
     public void testRemove2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -513,6 +530,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(THREE, obj);
     }
 
+    @Test
     public void testRemove3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -532,6 +550,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(THREE, obj);
     }
 
+    @Test
     public void testRemove4() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -551,6 +570,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove5() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -564,6 +584,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove6() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -580,6 +601,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove7() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -596,6 +618,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWO, obj);
     }
 
+    @Test
     public void testRemove8() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
@@ -615,6 +638,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove9() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -625,6 +649,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove10() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -636,6 +661,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove11() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -648,6 +674,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove12() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -660,6 +687,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testRemove13() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -671,6 +699,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
     }
 
+    @Test
     public void testNewInstance1() {
         final Map<Integer, Integer> orig = new HashMap<>();
         orig.put(ONE, ONE);
@@ -682,6 +711,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(2, m.size());
     }
 
+    @Test
     public void testGet1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -691,6 +721,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(ONE, obj);
     }
 
+    @Test
     public void testGet2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -701,6 +732,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWO, obj);
     }
 
+    @Test
     public void testGet3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
@@ -712,6 +744,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(THREE, obj);
     }
 
+    @Test
     public void testContainsKey1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -722,6 +755,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testContainsKey2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -731,6 +765,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testContainsKey3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -739,6 +774,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testContainsValue1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -749,6 +785,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testContainsValue2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -758,6 +795,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testContainsValue3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -766,6 +804,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(contains);
     }
 
+    @Test
     public void testPut1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -777,6 +816,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(ONE, m.get(null));
     }
 
+    @Test
     public void testPut2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -787,6 +827,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(ONE, m.get(null));
     }
 
+    @Test
     public void testPut3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -796,6 +837,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(m.get(ONE));
     }
 
+    @Test
     public void testPut4() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -807,6 +849,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(ONE, m.get(THREE));
     }
 
+    @Test
     public void testPut5() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
@@ -817,6 +860,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(ONE, m.get(TWO));
     }
 
+    @Test
     public void testPut6() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 

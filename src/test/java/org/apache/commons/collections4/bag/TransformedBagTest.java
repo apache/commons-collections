@@ -16,12 +16,11 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
@@ -35,7 +34,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedBagTest.class);
     }
 
@@ -47,6 +46,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
                 (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
@@ -65,6 +65,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag_decorateTransform() {
         final Bag<T> originalBag = new HashBag<>();

@@ -57,9 +57,9 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * Subclasses should override this method.
      *
      */
+    @Test
     @Override
     @SuppressWarnings("unchecked")
-    @Test
     public void testConstructors() {
         // 1. test key-value constructor
         Map.Entry<K, V> entry = new UnmodifiableMapEntry<>((K) key, (V) value);
@@ -80,6 +80,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertTrue(entry instanceof Unmodifiable);
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
@@ -94,8 +95,8 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(null, entry.getValue());
     }
 
-    @Override
     @Test
+    @Override
     public void testSelfReferenceHandling() {
         // block
     }

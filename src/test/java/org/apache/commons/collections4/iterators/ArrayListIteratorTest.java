@@ -19,6 +19,8 @@ package org.apache.commons.collections4.iterators;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -54,6 +56,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
      * Test the basic ListIterator functionality - going backwards using
      * {@code previous()}.
      */
+    @Test
     public void testListIterator() {
         final ListIterator<E> iter = makeObject();
 
@@ -85,6 +88,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     /**
      * Tests the {@link java.util.ListIterator#set} operation.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
         final String[] testData = { "a", "b", "c" };

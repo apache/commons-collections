@@ -18,11 +18,10 @@ package org.apache.commons.collections4.bag;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
@@ -34,7 +33,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TreeBagTest.class);
     }
 
@@ -53,12 +52,14 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         return bag;
     }
 
+    @Test
     public void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
 
         assertThrows(IllegalArgumentException.class, () -> bag.add(new Object()));
     }
 
+    @Test
     public void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
 
@@ -72,6 +73,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         assertThrows(NullPointerException.class, () -> bag2.add(null));
     }
 
+    @Test
     public void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);

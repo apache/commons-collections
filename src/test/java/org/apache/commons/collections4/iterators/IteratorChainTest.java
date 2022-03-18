@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
+import org.junit.Test;
 
 /**
  * Tests the IteratorChain class.
@@ -73,6 +74,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         return chain;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<String> iter = makeObject();
         for (final String testValue : testArray) {
@@ -90,6 +92,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         }
     }
 
+    @Test
     public void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
@@ -114,6 +117,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals(1, list2.size());
     }
 
+    @Test
     @Override
     public void testRemove() {
         final Iterator<String> iter = makeObject();
@@ -136,6 +140,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertTrue("List is empty", list3.isEmpty());
     }
 
+    @Test
     public void testFirstIteratorIsEmptyBug() {
         final List<String> empty = new ArrayList<>();
         final List<String> notEmpty = new ArrayList<>();
@@ -154,6 +159,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertFalse("should not have next", chain.hasNext());
     }
 
+    @Test
     public void testEmptyChain() {
         final IteratorChain<Object> chain = new IteratorChain<>();
         assertFalse(chain.hasNext());

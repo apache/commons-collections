@@ -27,6 +27,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.junit.Test;
 
 /**
  * Abstract class for testing the OrderedMapIterator interface.
@@ -58,6 +59,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     @Override
     public void testEmptyMapIterator() {
         if (!supportsEmptyIterator()) {
@@ -75,6 +77,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     /**
      * Test that the full list iterator contract is correct.
      */
+    @Test
     @Override
     public void testFullMapIterator() {
         if (!supportsFullIterator()) {
@@ -130,6 +133,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     /**
      * Test that the iterator order matches the keySet order.
      */
+    @Test
     public void testMapIteratorOrder() {
         if (!supportsFullIterator()) {
             return;

@@ -46,6 +46,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return lazyMap(new HashMap<K, V>(), FactoryUtils.<V>nullFactory());
     }
 
+    @Test
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.

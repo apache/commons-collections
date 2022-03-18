@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -68,12 +69,13 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         return false;
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Collection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));

@@ -18,13 +18,12 @@ package org.apache.commons.collections4.multimap;
 
 import java.util.Collection;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Tests for TransformedMultiValuedMap
@@ -37,7 +36,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedMultiValuedMapTest.class);
     }
 
@@ -49,6 +48,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     }
 
     // -----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
@@ -73,6 +73,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testValueTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
@@ -93,6 +94,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     }
 
     // -----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
@@ -113,6 +115,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();

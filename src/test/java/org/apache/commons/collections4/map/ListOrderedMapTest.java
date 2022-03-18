@@ -25,11 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
@@ -43,7 +42,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ListOrderedMapTest.class);
     }
 
@@ -60,6 +59,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
+    @Test
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -85,6 +85,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testGetValueByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -111,6 +112,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testIndexOf() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -127,6 +129,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetValueByIndex() {
         resetEmpty();
@@ -155,6 +158,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testRemoveByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -187,6 +191,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPut_intObjectObject() {
         resetEmpty();
@@ -303,6 +308,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("One", lom.getValue(2));
     }
 
+    @Test
     public void testPutAllWithIndex() {
         resetEmpty();
         @SuppressWarnings("unchecked")
@@ -330,6 +336,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("testInsert2v", lom.getValue(4));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPutAllWithIndexBug441() {
         // see COLLECTIONS-441
@@ -354,6 +361,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testValueList_getByIndex() {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
@@ -363,6 +371,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testValueList_setByIndex() {
         resetFull();
@@ -376,6 +385,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testValueList_removeByIndex() {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
@@ -385,6 +395,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testCOLLECTIONS_474_nullValues () {
         final Object key1 = new Object();
         final Object key2 = new Object();
@@ -399,6 +410,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         listMap.putAll(2, hmap);
     }
 
+    @Test
     public void testCOLLECTIONS_474_nonNullValues () {
         final Object key1 = new Object();
         final Object key2 = new Object();
