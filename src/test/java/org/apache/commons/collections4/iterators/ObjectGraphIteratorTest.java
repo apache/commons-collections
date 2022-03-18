@@ -25,6 +25,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Transformer;
+import org.junit.Test;
 
 /**
  * Testcase.
@@ -70,6 +71,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         return new ObjectGraphIterator<>(iteratorList.iterator());
     }
 
+    @Test
     public void testIteratorConstructor_null1() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
 
@@ -80,16 +82,19 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
+    @Test
     public void testIteratorConstructor_null_next() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteratorConstructor_null_remove() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null);
         assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
+    @Test
     public void testIteratorConstructorIteration_Empty() {
         final List<Iterator<Object>> iteratorList = new ArrayList<>();
         final Iterator<Object> it = new ObjectGraphIterator<>(iteratorList.iterator());
@@ -101,6 +106,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
+    @Test
     public void testIteratorConstructorIteration_Simple() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(list1.iterator());
@@ -117,6 +123,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteratorConstructorIteration_SimpleNoHasNext() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(list1.iterator());
@@ -131,6 +138,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteratorConstructorIteration_WithEmptyIterators() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(IteratorUtils.<String>emptyIterator());
@@ -151,6 +159,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteratorConstructorRemove() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(list1.iterator());
@@ -168,6 +177,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertEquals(0, list3.size());
     }
 
+    @Test
     public void testIteration_IteratorOfIterators() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(list1.iterator());
@@ -182,6 +192,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertFalse(it.hasNext());
     }
 
+    @Test
     public void testIteration_IteratorOfIteratorsWithEmptyIterators() {
         final List<Iterator<String>> iteratorList = new ArrayList<>();
         iteratorList.add(IteratorUtils.<String>emptyIterator());
@@ -200,6 +211,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertFalse(it.hasNext());
     }
 
+    @Test
     public void testIteration_RootNull() {
         final Iterator<Object> it = new ObjectGraphIterator<>(null, null);
 
@@ -210,6 +222,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
+    @Test
     public void testIteration_RootNoTransformer() {
         final Forest forest = new Forest();
         final Iterator<Object> it = new ObjectGraphIterator<>(forest, null);
@@ -221,6 +234,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteration_Transformed1() {
         final Forest forest = new Forest();
         final Leaf l1 = forest.addTree().addBranch().addLeaf();
@@ -233,6 +247,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteration_Transformed2() {
         final Forest forest = new Forest();
         forest.addTree();
@@ -266,6 +281,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testIteration_Transformed3() {
         final Forest forest = new Forest();
         forest.addTree();

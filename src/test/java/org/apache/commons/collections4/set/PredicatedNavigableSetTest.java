@@ -24,11 +24,10 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -42,7 +41,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedNavigableSetTest.class);
     }
 
@@ -69,11 +68,13 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedNavigableSet<E> set = makeTestSet();
         assertNotNull("returned set should not be null", set.decorated());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final NavigableSet<E> set = makeTestSet();
@@ -83,6 +84,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final NavigableSet<E> set = makeTestSet();
@@ -99,6 +101,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         assertFalse("Set shouldn't contain illegal element", set.contains("Afour"));
     }
 
+    @Test
     public void testComparator() {
         final NavigableSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();

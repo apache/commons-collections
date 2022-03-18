@@ -19,9 +19,8 @@ package org.apache.commons.collections4.list;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
@@ -33,7 +32,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(NodeCachingLinkedListTest.class);
     }
 
@@ -47,6 +46,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         return "4";
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testShrinkCache() {
         if (!isRemoveSupported() || !isAddSupported()) {

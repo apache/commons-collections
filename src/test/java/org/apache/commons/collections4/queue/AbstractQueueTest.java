@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link java.util.Queue} methods and contracts.
@@ -128,6 +129,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#offer(Object)}.
      */
+    @Test
     public void testQueueOffer() {
         if (!isAddSupported()) {
             return;
@@ -160,6 +162,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#element()}.
      */
+    @Test
     public void testQueueElement() {
         resetEmpty();
 
@@ -197,6 +200,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#peek()}.
      */
+    @Test
     public void testQueuePeek() {
         if (!isRemoveSupported()) {
             return;
@@ -232,6 +236,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#remove()}.
      */
+    @Test
     public void testQueueRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -259,6 +264,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#poll()}.
      */
+    @Test
     public void testQueuePoll() {
         if (!isRemoveSupported()) {
             return;
@@ -283,6 +289,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         assertNull(element);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();
@@ -297,6 +304,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         assertEquals("Both queues are empty", 0, queue2.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeFullCollection();
@@ -316,6 +324,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      * Compare the current serialized form of the Queue
      * against the canonical version in SCM.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
@@ -339,6 +348,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      * Compare the current serialized form of the Queue
      * against the canonical version in SCM.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
         /*

@@ -23,6 +23,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}
@@ -59,6 +60,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedList() {
         final List<E> list = TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
@@ -107,6 +109,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertEquals(Integer.valueOf(2), list.get(2));
     }
 
+    @Test
     public void testTransformedList_decorateTransform() {
         final List<Object> originalList = new ArrayList<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
@@ -124,6 +127,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertTrue(list.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     public void testSubList() {
         final List<E> list = makeObject();
         List<E> subList = list.subList(0, 0);

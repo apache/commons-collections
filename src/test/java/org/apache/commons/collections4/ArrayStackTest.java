@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.EmptyStackException;
 
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * Tests ArrayStack.
@@ -32,7 +32,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ArrayStackTest.class);
     }
 
@@ -41,6 +41,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         return new ArrayStack<>();
     }
 
+    @Test
     public void testNewStack() {
         final ArrayStack<E> stack = makeObject();
         assertTrue("New stack is empty", stack.empty());
@@ -51,6 +52,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertThrows(EmptyStackException.class, () -> stack.pop());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPushPeekPop() {
         final ArrayStack<E> stack = makeObject();
@@ -79,6 +81,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertEquals("Stack size is zero", 0, stack.size());
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testSearch() {

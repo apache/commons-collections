@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Test;
+
 /**
  * Tests the ObjectArrayIterator.
  */
@@ -66,6 +68,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
@@ -83,10 +86,12 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
     public void testNullArray() {
         assertThrows(NullPointerException.class, () -> makeArrayIterator(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testReset() {
         final ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);

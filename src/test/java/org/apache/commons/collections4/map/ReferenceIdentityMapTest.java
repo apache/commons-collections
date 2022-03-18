@@ -22,11 +22,10 @@ import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
+import org.junit.Test;
 
 /**
  * Tests for ReferenceIdentityMap.
@@ -49,7 +48,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ReferenceIdentityMapTest.class);
     }
 
@@ -115,6 +114,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 /*
     // Tests often fail because gc is uncontrollable
 
+    @Test
     public void testPurge() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -140,7 +140,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
-
+    @Test
     public void testGetAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         for (int i = 0; i < 10; i++) {
@@ -155,7 +155,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-
+    @Test
     public void testEntrySetIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -177,6 +177,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     }
 
+    @Test
     public void testMapIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -199,6 +200,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     }
 
+    @Test
     public void testMapIteratorAfterGC2() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -227,6 +229,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testBasics() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -260,6 +263,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue(map.containsValue(I2B));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testHashEntry() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -277,6 +281,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertFalse(entry1.equals(entry3));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
@@ -293,6 +298,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     /** Tests whether purge values setting works */
+    @Test
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();

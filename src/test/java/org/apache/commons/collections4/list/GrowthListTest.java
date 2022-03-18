@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.function.Executable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
@@ -50,6 +51,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         return GrowthList.growthList(list);
     }
 
+    @Test
     public void testGrowthList() {
         final Integer zero = Integer.valueOf(0);
         final Integer one = Integer.valueOf(1);
@@ -64,6 +66,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(3, grower.size());
     }
 
+    @Test
     public void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -74,6 +77,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(one, grower.get(1));
     }
 
+    @Test
     public void testGrowthAddAll() {
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
@@ -89,6 +93,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(two, grower.get(2));
     }
 
+    @Test
     public void testGrowthSet1() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -99,6 +104,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(one, grower.get(1));
     }
 
+    @Test
     public void testGrowthSet2() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -111,6 +117,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListAddByIndexBoundsChecking() {
         final E element = getOtherElements()[0];
@@ -125,6 +132,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListAddByIndexBoundsChecking2() {
         final E element = getOtherElements()[0];
@@ -136,6 +144,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListSetByIndexBoundsChecking() {
         final List<E> list = makeObject();
@@ -147,6 +156,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListSetByIndexBoundsChecking2() {
         final List<E> list = makeFullCollection();

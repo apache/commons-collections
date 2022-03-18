@@ -28,6 +28,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.functors.ConstantFactory;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -49,6 +50,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return DefaultedMap.defaultedMap(new HashMap<K, V>(), nullFactory);
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testMapGet() {
@@ -66,6 +68,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapGet2() {
         final HashMap<K, V> base = new HashMap<>();
@@ -85,6 +88,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapGet3() {
         final HashMap<K, V> base = new HashMap<>();
@@ -104,6 +108,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapGet4() {
         final HashMap<K, V> base = new HashMap<>();
@@ -130,6 +135,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }
 
+    @Test
     public void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
         assertAll(

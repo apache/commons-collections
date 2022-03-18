@@ -21,8 +21,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.BulkTest;
 import org.junit.Ignore;
-
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractQueueTest} for exercising the {@link SynchronizedQueue} implementation.
@@ -31,7 +30,7 @@ import junit.framework.Test;
  */
 public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(SynchronizedQueueTest.class);
     }
 
@@ -51,6 +50,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
         return SynchronizedQueue.synchronizedQueue(new LinkedList<T>());
     }
 
+    @Test
     @Ignore("Run once")
     public void testCreate() throws Exception {
         Queue<T> queue = makeObject();

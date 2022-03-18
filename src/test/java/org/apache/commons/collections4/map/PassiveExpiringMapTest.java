@@ -23,10 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
+import org.junit.Test;
 
 /**
  * JUnit tests.
@@ -55,7 +54,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         }
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PassiveExpiringMapTest.class);
     }
 
@@ -104,6 +103,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return m;
     }
 
+    @Test
     public void testConstructors() {
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> {
@@ -124,6 +124,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         );
     }
 
+    @Test
     public void testContainsKey() {
         final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsKey(Integer.valueOf(1)));
@@ -134,6 +135,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.containsKey(Integer.valueOf(6)));
     }
 
+    @Test
     public void testContainsValue() {
         final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsValue("one"));
@@ -144,6 +146,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.containsValue("six"));
     }
 
+    @Test
     public void testDecoratedMap() {
         // entries shouldn't expire
         final Map<Integer, String> m = makeDecoratedTestMap();
@@ -173,11 +176,13 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("two", m.get(Integer.valueOf(2)));
     }
 
+    @Test
     public void testEntrySet() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.entrySet().size());
     }
 
+    @Test
     public void testExpiration() {
         validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
         validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
@@ -187,6 +192,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
                 new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
     }
 
+    @Test
     public void testGet() {
         final Map<Integer, String> m = makeTestMap();
         assertNull(m.get(Integer.valueOf(1)));
@@ -197,6 +203,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("six", m.get(Integer.valueOf(6)));
     }
 
+    @Test
     public void testIsEmpty() {
         Map<Integer, String> m = makeTestMap();
         assertFalse(m.isEmpty());
@@ -209,11 +216,13 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.isEmpty());
     }
 
+    @Test
     public void testKeySet() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
     }
 
+    @Test
     public void testPut() {
         final Map<Integer, String> m = makeTestMap();
         assertNull(m.put(Integer.valueOf(1), "ONE"));
@@ -224,16 +233,19 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("six", m.put(Integer.valueOf(6), "SIX"));
     }
 
+    @Test
     public void testSize() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
     }
 
+    @Test
     public void testValues() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
     }
 
+    @Test
     public void testZeroTimeToLive() {
         // item should not be available
         final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<>(0L);

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -73,10 +74,12 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         return false;
     }
 
+    @Test
     public void testListIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         ListIterator<E> it = makeObject();
         assertSame(it, UnmodifiableListIterator.unmodifiableListIterator(it));

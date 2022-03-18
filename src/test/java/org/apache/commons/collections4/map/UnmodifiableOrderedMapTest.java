@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the
@@ -64,11 +65,13 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final OrderedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedMap.unmodifiableOrderedMap(map));

@@ -19,6 +19,7 @@ package org.apache.commons.collections4.list;
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,26 +38,31 @@ public class LazyListTest extends AbstractObjectTest {
         return new LazyList<>(new ArrayList<>(), dateFactory);
     }
 
+    @Test
     @Override
     public void testSimpleSerialization() {
         // Factory and Transformer are not serializable
     }
 
+    @Test
     @Override
     public void testSerializeDeserializeThenCompare() {
         // Factory and Transformer are not serializable
     }
 
+    @Test
     @Override
     public void testCanonicalEmptyCollectionExists() {
         // Factory and Transformer are not serializable
     }
 
+    @Test
     @Override
     public void testCanonicalFullCollectionExists() {
         // Factory and Transformer are not serializable
     }
 
+    @Test
     public void testElementCreationWithFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
@@ -68,6 +74,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertFalse(list.isEmpty());
     }
 
+    @Test
     public void testElementCreationWithTransformer() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
@@ -79,6 +86,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertFalse(list.isEmpty());
     }
 
+    @Test
     public void testCreateNullGapsWithFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
@@ -88,6 +96,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertNotNull(fourthElement);
     }
 
+    @Test
     public void testCreateNullGapsWithTransformer() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> dateFactory = input -> LocalDateTime.now().withHour(hours.get(input));
@@ -98,6 +107,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertNotNull(fourthElement);
     }
 
+    @Test
     public void testGetWithNull() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
@@ -111,6 +121,7 @@ public class LazyListTest extends AbstractObjectTest {
         assertNotNull(fourthElement);
     }
 
+    @Test
     public void testSubListWitheFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
@@ -120,6 +131,7 @@ public class LazyListTest extends AbstractObjectTest {
         testSubList(list);
     }
 
+    @Test
     public void testSubListWithTransformer() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));

@@ -26,6 +26,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
+import org.junit.Test;
 
 /**
  * Tests the ReverseListIterator.
@@ -51,6 +52,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     // overrides
+    @Test
     @Override
     public void testEmptyListIteratorIsIndeedEmpty() {
         final ListIterator<E> it = makeEmptyIterator();
@@ -70,6 +72,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         );
     }
 
+    @Test
     @Override
     public void testWalkForwardAndBack() {
         final ArrayList<E> list = new ArrayList<>();
@@ -108,6 +111,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
                 "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
+    @Test
     public void testReverse() {
         final ListIterator<E> it = makeObject();
         assertTrue(it.hasNext());
@@ -140,6 +144,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         assertEquals("Four", it.previous());
     }
 
+    @Test
     public void testReset() {
         final ResettableListIterator<E> it = makeObject();
         assertEquals("Four", it.next());

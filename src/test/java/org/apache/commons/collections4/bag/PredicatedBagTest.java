@@ -20,12 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
@@ -39,7 +38,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedBagTest.class);
     }
 
@@ -66,6 +65,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     //--------------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testlegalAddRemove() {
         final Bag<T> bag = makeTestBag();
@@ -83,6 +83,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         assertFalse("Unique set now does not contain the first element", set.contains(els[0]));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
@@ -93,6 +94,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         assertFalse("Collection shouldn't contain illegal element", bag.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
         final HashBag<Object> elements = new HashBag<>();

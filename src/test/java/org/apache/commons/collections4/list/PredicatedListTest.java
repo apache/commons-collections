@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the
@@ -64,6 +65,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         return decorateList(new ArrayList<E>(), testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final List<E> list = makeTestList();
@@ -75,6 +77,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertFalse("Collection shouldn't contain illegal element", list.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final List<E> list = makeTestList();
@@ -93,6 +96,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertFalse("List shouldn't contain illegal element", list.contains("four"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalSet() {
         final List<E> list = makeTestList();
@@ -100,6 +104,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
                 "Integer should fail string predicate.");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testLegalAddAll() {
         final List<E> list = makeTestList();
@@ -115,6 +120,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertTrue("List should contain legal element", list.contains("three"));
     }
 
+    @Test
     public void testSubList() {
         final List<E> list = makeTestList();
         list.add((E) "zero");

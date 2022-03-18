@@ -22,6 +22,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -63,6 +64,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         return new ListIteratorWrapper<>(list1.listIterator());
     }
 
+    @Test
     public void testIterator() {
         final ListIterator<E> iter = makeObject();
         for (final String testValue : testArray) {
@@ -102,6 +104,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
     }
 
+    @Test
     @Override
     public void testRemove() {
         final ListIterator<E> iter = makeObject();
@@ -171,6 +174,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         //further testing would be fairly meaningless:
     }
 
+    @Test
     public void testReset() {
         final ResettableListIterator<E> iter = makeObject();
         final E first = iter.next();

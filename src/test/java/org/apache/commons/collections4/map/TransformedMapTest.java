@@ -24,6 +24,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
@@ -44,6 +45,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
@@ -92,6 +94,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
@@ -112,6 +115,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final Map<K, V> base = new HashMap<>();

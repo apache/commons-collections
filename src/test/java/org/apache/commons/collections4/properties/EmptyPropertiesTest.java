@@ -107,6 +107,7 @@ public class EmptyPropertiesTest {
         assertNotEquals(p, PropertiesFactory.EMPTY_PROPERTIES);
     }
 
+    @Test
     public void testForEach() {
         PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }

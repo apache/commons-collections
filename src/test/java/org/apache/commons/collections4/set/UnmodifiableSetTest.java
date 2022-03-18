@@ -22,10 +22,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -39,7 +38,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableSetTest.class);
     }
 
@@ -65,11 +64,13 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return false;
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Set<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSet.unmodifiableSet(set));

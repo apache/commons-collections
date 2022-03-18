@@ -29,6 +29,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
@@ -42,6 +43,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     public AbstractOrderedBidiMapTest() {
     }
 
+    @Test
     public void testFirstKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
@@ -55,6 +57,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         assertEquals(confirmedFirst, bidi.firstKey());
     }
 
+    @Test
     public void testLastKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
@@ -71,6 +74,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         assertEquals(confirmedLast, bidi.lastKey());
     }
 
+    @Test
     public void testNextKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = (OrderedBidiMap<K, V>) map;
@@ -103,6 +107,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         }
     }
 
+    @Test
     public void testPreviousKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();

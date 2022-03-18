@@ -20,6 +20,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
+import org.junit.Test;
 
 /**
  * Tests the SingletonListIterator.
@@ -67,6 +68,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         return true;
     }
 
+    @Test
     public void testIterator() {
         final ListIterator<E> iter = makeObject();
         assertTrue( "Iterator should have next item", iter.hasNext() );
@@ -111,6 +113,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         }
     }
 
+    @Test
     public void testReset() {
         final ResettableListIterator<E> it = makeObject();
 

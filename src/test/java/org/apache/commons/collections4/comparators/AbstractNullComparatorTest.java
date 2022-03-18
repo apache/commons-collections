@@ -20,7 +20,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
@@ -33,7 +32,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         final TestSuite suite = new TestSuite(AbstractNullComparatorTest.class.getName());
         suite.addTest(new TestSuite(TestNullComparator1.class));
         suite.addTest(new TestSuite(TestNullComparator2.class));

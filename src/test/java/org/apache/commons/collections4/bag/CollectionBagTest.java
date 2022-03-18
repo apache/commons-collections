@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.Test;
 
 /**
  * Test class for {@link CollectionBag}.
@@ -89,6 +90,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
@@ -103,6 +105,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = (Bag<T>) makeFullCollection();

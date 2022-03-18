@@ -26,6 +26,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
+import org.junit.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -46,6 +47,7 @@ public class TransformedSplitMapTest extends BulkTest {
     }
 
     // -----------------------------------------------------------------------
+    @Test
     public void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
@@ -90,6 +92,7 @@ public class TransformedSplitMapTest extends BulkTest {
 
     // -----------------------------------------------------------------------
 
+    @Test
     public void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
@@ -106,6 +109,7 @@ public class TransformedSplitMapTest extends BulkTest {
         }
     }
 
+    @Test
     public void testEmptyMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, String>(),
@@ -122,6 +126,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
+    @Test
     public void testFullMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, String>(),

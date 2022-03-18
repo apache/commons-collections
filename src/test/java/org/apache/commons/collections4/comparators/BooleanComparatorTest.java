@@ -74,7 +74,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-
     public void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
         allTests(false, BooleanComparator.booleanComparator(false));

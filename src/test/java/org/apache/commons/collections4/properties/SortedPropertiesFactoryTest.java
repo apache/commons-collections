@@ -25,8 +25,8 @@ public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<S
         super(SortedPropertiesFactory.INSTANCE, fileExtension);
     }
 
-    @Override
     @Test
+    @Override
     public void testInstance() {
         Assertions.assertNotNull(SortedPropertiesFactory.INSTANCE);
     }

@@ -25,12 +25,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
+import org.junit.Test;
 
 /**
  * JUnit tests.
@@ -41,7 +40,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         super(testName);
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(LRUMapTest.class);
     }
 
@@ -71,6 +70,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (LRUMap<K, V>) super.getMap();
     }
 
+    @Test
     public void testCtors() {
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(0),
@@ -88,6 +88,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         );
     }
 
+    @Test
     public void testLRU() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -152,6 +153,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[3], vit.next());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testReset() {
         resetEmpty();
@@ -168,6 +170,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(list.get(0), it.next());
     }
 
+    @Test
     public void testAccessOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -242,6 +245,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[3], vit.next());
     }
 
+    @Test
     public void testAccessOrder2() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -291,6 +295,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[0], vit.next());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone() {
         final LRUMap<K, V> map = new LRUMap<>(10);
@@ -300,6 +305,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(map.get("1"), cloned.get("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveLRU() {
         final MockLRUMapSubclass<K, String> map = new MockLRUMapSubclass<>(2);
@@ -343,6 +349,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemove() {
         final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<>(2, false);
@@ -359,6 +366,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertTrue(map.containsKey("C"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemoveScan() {
         final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<>(2, true);
@@ -393,6 +401,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveLRUFirstBlocksRemove() {
         final MockLRUMapSubclassFirstBlocksRemove<K, V> map = new MockLRUMapSubclassFirstBlocksRemove<>(2);
@@ -452,6 +461,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testInternalState_Buckets() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
@@ -542,6 +552,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(three, map.data[hashIndex].next.next.key);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testInternalState_getEntry_int() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
@@ -565,6 +576,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         );
     }
 
+    @Test
     public void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
         final LRUMap<Object, Thread> map = new LRUMap<>(10000);
@@ -648,6 +660,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
 
+    @Test
     public void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);
@@ -726,6 +739,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
 
+    @Test
     public void testSynchronizedRemoveFromKeySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);
@@ -809,6 +823,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
 
+    @Test
     public void testSynchronizedRemoveFromValues() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);

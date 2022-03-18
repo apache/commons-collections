@@ -77,8 +77,8 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
      * doesn't adhere to the "soft" Comparator contract, and we've
      * already "canonized" the comparator returned by makeComparator.
      */
-    @Override
     @Test
+    @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<String>());
 

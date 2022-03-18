@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
+import org.junit.Test;
 
 /**
  * Test class for TransformingComparator.
@@ -60,6 +61,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         return list;
     }
 
+    @Test
     public void testEquals() {
         final Transformer<String, String> t1 = TransformerUtils.nopTransformer();
         final TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);

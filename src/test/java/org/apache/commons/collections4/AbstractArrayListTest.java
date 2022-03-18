@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.Test;
 
 /**
  * Abstract test class for ArrayList.
@@ -37,6 +38,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
     @Override
     public abstract ArrayList<E> makeObject();
 
+    @Test
     public void testNewArrayList() {
         final ArrayList<E> list = makeObject();
         assertTrue("New list is empty", list.isEmpty());
@@ -45,6 +47,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSearch() {
         final ArrayList<E> list = makeObject();

@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -65,11 +66,13 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Map<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMap.unmodifiableMap(map));

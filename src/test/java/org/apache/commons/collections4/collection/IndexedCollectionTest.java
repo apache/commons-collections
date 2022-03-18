@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Transformer;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -104,6 +105,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     //------------------------------------------------------------------------
 
+    @Test
     public void testAddedObjectsCanBeRetrievedByKey() throws Exception {
         final Collection<String> coll = makeTestCollection();
         coll.add("12");
@@ -121,6 +123,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("4", indexed.get(4));
     }
 
+    @Test
     public void testEnsureDuplicateObjectsCauseException() throws Exception {
         final Collection<String> coll = makeUniqueTestCollection();
 
@@ -129,6 +132,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertThrows(IllegalArgumentException.class, () -> coll.add("1"));
     }
 
+    @Test
     public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
         final Collection<String> original = makeFullCollection();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
@@ -138,6 +142,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("3", indexed.get(3));
     }
 
+    @Test
     public void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
         final Collection<String> original = new ArrayList<>();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);

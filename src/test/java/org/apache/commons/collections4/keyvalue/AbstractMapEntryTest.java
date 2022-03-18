@@ -74,8 +74,8 @@ public abstract class AbstractMapEntryTest<K, V> {
         return entry;
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
 
@@ -99,8 +99,8 @@ public abstract class AbstractMapEntryTest<K, V> {
      *
      */
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         // test that #setValue does not permit
         //  the MapEntry to contain itself (and thus cause infinite recursion
@@ -120,8 +120,8 @@ public abstract class AbstractMapEntryTest<K, V> {
      */
     public abstract void testConstructors();
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         // 1. test with object data
         Map.Entry<K, V> e1 = makeMapEntry((K) key, (V) value);
@@ -142,8 +142,8 @@ public abstract class AbstractMapEntryTest<K, V> {
         assertEquals(e1.hashCode(), e2.hashCode());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testToString() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
         assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());

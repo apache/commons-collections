@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.collections4.comparators.ComparableComparator;
+import org.junit.Test;
 
 /**
  * Unit test suite for {@link CollatingIterator}.
@@ -85,6 +86,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //------------------------------------------------------------------- Tests
 
+    @Test
     public void testGetSetComparator() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>();
         assertNull(iter.getComparator());
@@ -94,6 +96,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertNull(iter.getComparator());
     }
 
+    @Test
     public void testIterateEven() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
@@ -105,6 +108,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testIterateEvenOdd() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator, evens.iterator(), odds.iterator());
         for (int i = 0; i < 20; i++) {
@@ -115,6 +119,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testIterateOddEven() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator, odds.iterator(), evens.iterator());
         for (int i = 0; i < 20; i++) {
@@ -125,6 +130,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testIterateEvenEven() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
@@ -140,6 +146,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testIterateFibEvenOdd() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(fib.iterator());
@@ -206,6 +213,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testRemoveFromSingle() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
@@ -221,6 +229,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertEquals(expectedSize, evens.size());
     }
 
+    @Test
     public void testRemoveFromDouble() {
         final CollatingIterator<Integer> iter = new CollatingIterator<>(comparator);
         iter.addIterator(evens.iterator());
@@ -237,6 +246,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         assertEquals(expectedSize, evens.size() + odds.size());
     }
 
+    @Test
     public void testNullComparator() {
         final List<Integer> l1 = Arrays.asList(1, 3, 5);
         final List<Integer> l2 = Arrays.asList(2, 4, 6);

@@ -25,6 +25,7 @@ import java.util.Queue;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollectionTest;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
@@ -76,6 +77,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         return decorateCollection(new LinkedList<E>(), testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testGet() {
         final Queue<E> queue = makeTestQueue();
@@ -88,6 +90,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals("Queue get", "one", queue.peek());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemove() {
         final Queue<E> queue = makeTestQueue();

@@ -25,6 +25,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.junit.Test;
 
 /**
  * Tests the UnmodifiableMapIterator.
@@ -75,10 +76,12 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         return false;
     }
 
+    @Test
     public void testMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         MapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));

@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
@@ -69,6 +70,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.fullCollection.version4.obj");
 //    }
 
+    @Test
     public void testListAllowsMutationOfUnderlyingCollection() {
 
         final List<String> decoratedList = new ArrayList<>();
@@ -93,13 +95,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         return FixedSizeList.fixedSizeList(decoratedList);
     }
 
+    @Test
     public void testAdd() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.add(2, "New Value"));
     }
 
-
+    @Test
     public void testAddAll() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
@@ -110,12 +113,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.addAll(2, addList));
     }
 
+    @Test
     public void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.remove(1));
     }
 
+    @Test
     public void testSubList() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
@@ -124,12 +129,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         Assertions.assertEquals(0, subFixedSizeList.size());
     }
 
+    @Test
     public void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         Assertions.assertTrue(fixedSizeList.isFull());
     }
 
+    @Test
     public void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 

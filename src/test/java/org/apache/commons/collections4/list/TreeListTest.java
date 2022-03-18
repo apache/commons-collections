@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.Test;
 
 /**
  * JUnit tests
@@ -48,7 +47,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        benchmark(new NodeCachingLinkedList());
 //    }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TreeListTest.class);
     }
 
@@ -108,6 +107,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         return new TreeList<>();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddMultiple() {
         final List<E> l = makeObject();
@@ -125,6 +125,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("harald", l.get(5));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemove() {
         final List<E> l = makeObject();
@@ -164,6 +165,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("harald", l.get(i++));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testInsertBefore() {
         final List<E> l = makeObject();
@@ -173,6 +175,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("erna", l.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIndexOf() {
         final List<E> l = makeObject();
@@ -214,6 +217,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        l.add("A6");
 //    }
 
+    @Test
     public void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
 
@@ -244,6 +248,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertFalse(li.hasNext());
     }
 
+    @Test
     public void testBugCollections447() {
         final List<String> treeList = new TreeList<>();
         treeList.add("A");
@@ -264,6 +269,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("A", li.previous());
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrder() {
         // COLLECTIONS-433:
@@ -290,6 +296,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         }
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrderAfterAddAll() {
         // COLLECTIONS-433:
