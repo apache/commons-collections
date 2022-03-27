@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public PredicatedCollectionTest(final String name) {
-        super(name);
+    public PredicatedCollectionTest() {
+        super(PredicatedCollectionTest.class.getSimpleName());
     }
 
    //------------------------------------------------------------------------

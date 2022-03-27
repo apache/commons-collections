@@ -29,15 +29,16 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class.
  */
 public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
-    public CursorableLinkedListTest(final String testName) {
-        super(testName);
+    public CursorableLinkedListTest() {
+        super(CursorableLinkedListTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {
@@ -46,7 +47,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     private CursorableLinkedList<E> list;
 
-    @Override
+    @BeforeEach
     public void setUp() {
         list = new CursorableLinkedList<>();
     }

@@ -27,8 +27,8 @@ import org.apache.commons.collections4.MultiSet;
  */
 public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public SynchronizedMultiSetTest(final String testName) {
-        super(testName);
+    public SynchronizedMultiSetTest() {
+        super(SynchronizedMultiSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

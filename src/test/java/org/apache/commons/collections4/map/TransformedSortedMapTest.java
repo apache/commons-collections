@@ -27,7 +27,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link TransformedSortedMap}
@@ -37,8 +37,8 @@ import org.junit.Test;
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public TransformedSortedMapTest(final String testName) {
-        super(testName);
+    public TransformedSortedMapTest() {
+        super(TransformedSortedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

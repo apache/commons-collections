@@ -25,7 +25,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Testcase.
@@ -39,11 +40,11 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
     protected List<String> list3 = null;
     protected List<Iterator<String>> iteratorList = null;
 
-    public ObjectGraphIteratorTest(final String testName) {
-        super(testName);
+    public ObjectGraphIteratorTest() {
+        super(ObjectGraphIteratorTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();
         list1.add("One");

@@ -30,7 +30,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link LazyMapTest} for exercising the
@@ -54,8 +54,8 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected final Comparator<String> reverseStringComparator = new ReverseStringComparator();
 
-    public LazySortedMapTest(final String testName) {
-        super(testName);
+    public LazySortedMapTest() {
+        super(LazySortedMapTest.class.getSimpleName());
     }
 
     @Override

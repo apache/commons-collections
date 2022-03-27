@@ -22,7 +22,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -35,11 +36,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /** used as a flag in MapMutator tests */
     private boolean pass = false;
 
-    public CompositeMapTest(final String testName) {
-        super(testName);
+    public CompositeMapTest() {
+        super(CompositeMapTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         this.pass = false;

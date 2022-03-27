@@ -27,7 +27,7 @@ import java.util.TreeSet;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -37,8 +37,8 @@ import org.junit.Test;
  */
 public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
-    public PredicatedNavigableSetTest(final String testName) {
-        super(testName);
+    public PredicatedNavigableSetTest() {
+        super(PredicatedNavigableSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

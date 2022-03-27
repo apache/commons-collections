@@ -27,7 +27,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
@@ -39,8 +39,8 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableSortedSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableSortedSetTest() {
+        super(UnmodifiableSortedSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

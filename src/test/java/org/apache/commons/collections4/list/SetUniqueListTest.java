@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.list;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -43,8 +43,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     boolean extraVerify = true;
 
-    public SetUniqueListTest(final String testName) {
-        super(testName);
+    public SetUniqueListTest() {
+        super(SetUniqueListTest.class.getSimpleName());
     }
 
     @Override

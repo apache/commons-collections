@@ -21,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -40,14 +41,13 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     private boolean createIteratorWithStandardConstr = true;
 
     /**
-     * Constructor
-     * @param testName
+     * Junit Constructor
      */
-    public NodeListIteratorTest(final String testName) {
-        super(testName);
+    public NodeListIteratorTest() {
+        super(NodeListIteratorTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
 

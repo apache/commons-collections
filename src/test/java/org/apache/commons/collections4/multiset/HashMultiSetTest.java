@@ -27,8 +27,8 @@ import org.apache.commons.collections4.MultiSet;
  */
 public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public HashMultiSetTest(final String testName) {
-        super(testName);
+    public HashMultiSetTest() {
+        super(HashMultiSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

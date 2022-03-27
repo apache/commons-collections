@@ -20,7 +20,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link TransformedSortedBag}
@@ -30,8 +30,8 @@ import org.junit.Test;
  */
 public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TransformedSortedBagTest(final String testName) {
-        super(testName);
+    public TransformedSortedBagTest() {
+        super(TransformedSortedBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.list.AbstractListTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for ArrayList.

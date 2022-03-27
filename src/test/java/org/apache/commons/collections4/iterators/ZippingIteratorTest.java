@@ -19,7 +19,8 @@ package org.apache.commons.collections4.iterators;
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test suite for {@link ZippingIterator}.
@@ -30,8 +31,8 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //------------------------------------------------------------ Conventional
 
-    public ZippingIteratorTest(final String testName) {
-        super(testName);
+    public ZippingIteratorTest() {
+        super(ZippingIteratorTest.class.getSimpleName());
     }
 
     //--------------------------------------------------------------- Lifecycle
@@ -40,7 +41,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
-    @Override
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         evens = new ArrayList<>();

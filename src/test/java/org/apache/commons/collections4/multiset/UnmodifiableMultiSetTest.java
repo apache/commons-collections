@@ -23,7 +23,7 @@ import java.util.Arrays;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
-    public UnmodifiableMultiSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableMultiSetTest() {
+        super(UnmodifiableMultiSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

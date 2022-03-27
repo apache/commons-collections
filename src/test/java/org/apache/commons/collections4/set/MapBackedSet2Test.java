@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.collections4.map.LinkedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test.
@@ -29,8 +29,8 @@ import org.junit.Test;
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
-    public MapBackedSet2Test(final String testName) {
-        super(testName);
+    public MapBackedSet2Test() {
+        super(MapBackedSet2Test.class.getSimpleName());
     }
 
     @Override

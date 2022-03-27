@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ObjectArrayIterator.
@@ -30,8 +30,8 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ObjectArrayIteratorTest(final String testName) {
-        super(testName);
+    public ObjectArrayIteratorTest() {
+        super(ObjectArrayIteratorTest.class.getSimpleName());
     }
 
     @Override

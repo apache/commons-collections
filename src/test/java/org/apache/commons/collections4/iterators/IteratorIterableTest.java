@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IteratorIterable.
@@ -33,8 +33,8 @@ public class IteratorIterableTest extends BulkTest {
         return BulkTest.makeSuite(IteratorIterableTest.class);
     }
 
-    public IteratorIterableTest(final String name) {
-        super(name);
+    public IteratorIterableTest() {
+        super(IteratorIterableTest.class.getSimpleName());
     }
 
     private Iterator<Integer> createIterator() {

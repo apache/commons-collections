@@ -25,7 +25,7 @@ import java.util.Collection;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link CollectionSortedBag}.
@@ -39,11 +39,9 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * JUnit constructor.
-     *
-     * @param testName  the test class name
      */
-    public CollectionSortedBagTest(final String testName) {
-        super(testName);
+    public CollectionSortedBagTest() {
+        super(CollectionSortedBagTest.class.getSimpleName());
     }
 
 

@@ -28,8 +28,8 @@ public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return BulkTest.makeSuite(DualLinkedHashBidiMapTest.class);
     }
 
-    public DualLinkedHashBidiMapTest(final String testName) {
-        super(testName);
+    public DualLinkedHashBidiMapTest() {
+        super(DualLinkedHashBidiMapTest.class.getSimpleName());
     }
 
     /**

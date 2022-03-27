@@ -28,7 +28,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.functors.ConstantFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -41,8 +41,8 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
     protected final Transformer<K, V> nullTransformer = TransformerUtils.<K, V>nullTransformer();
 
-    public DefaultedMapTest(final String testName) {
-        super(testName);
+    public DefaultedMapTest() {
+        super(DefaultedMapTest.class.getSimpleName());
     }
 
     @Override

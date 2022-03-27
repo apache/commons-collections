@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ArrayListValuedHashMap
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedHashMapTest(final String testName) {
-        super(testName);
+    public ArrayListValuedHashMapTest() {
+        super(ArrayListValuedHashMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

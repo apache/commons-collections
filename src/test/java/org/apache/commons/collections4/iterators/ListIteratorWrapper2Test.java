@@ -22,7 +22,8 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -37,11 +38,11 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1 = null;
 
-    public ListIteratorWrapper2Test(final String testName) {
-        super(testName);
+    public ListIteratorWrapper2Test() {
+        super(ListIteratorWrapper2Test.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {
         list1 = new ArrayList<>();

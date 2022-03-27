@@ -16,13 +16,13 @@
  */
 package org.apache.commons.collections4.properties;
 
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
 
-    public SortedPropertiesFactoryTest(final String fileExtension) {
-        super(SortedPropertiesFactory.INSTANCE, fileExtension);
+    public SortedPropertiesFactoryTest() {
+        super(SortedPropertiesFactory.INSTANCE);
     }
 
     @Test

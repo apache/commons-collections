@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link ListOrderedSet}
@@ -35,8 +35,8 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
     private static final Integer TWO = Integer.valueOf(2);
     private static final Integer THREE = Integer.valueOf(3);
 
-    public ListOrderedSet2Test(final String testName) {
-        super(testName);
+    public ListOrderedSet2Test() {
+        super(ListOrderedSet2Test.class.getSimpleName());
     }
 
     @Override

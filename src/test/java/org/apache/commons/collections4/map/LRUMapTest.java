@@ -29,15 +29,15 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
  */
 public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public LRUMapTest(final String testName) {
-        super(testName);
+    public LRUMapTest() {
+        super(LRUMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

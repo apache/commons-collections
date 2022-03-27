@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -39,8 +39,8 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> testPredicate = o -> o instanceof String;
 
-    public PredicatedMapTest(final String testName) {
-        super(testName);
+    public PredicatedMapTest() {
+        super(PredicatedMapTest.class.getSimpleName());
     }
 
     protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,

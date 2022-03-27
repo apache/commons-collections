@@ -20,7 +20,7 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
@@ -30,8 +30,8 @@ import org.junit.Test;
  */
 public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
-    public TransformedBagTest(final String testName) {
-        super(testName);
+    public TransformedBagTest() {
+        super(TransformedBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

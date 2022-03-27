@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link TransformedSet}
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
-    public TransformedSetTest(final String testName) {
-        super(testName);
+    public TransformedSetTest() {
+        super(TransformedSetTest.class.getSimpleName());
     }
 
     @Override

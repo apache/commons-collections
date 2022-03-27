@@ -24,7 +24,7 @@ import java.util.Map;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -37,8 +37,8 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
-    public LazyMapTest(final String testName) {
-        super(testName);
+    public LazyMapTest() {
+        super(LazyMapTest.class.getSimpleName());
     }
 
     @Override

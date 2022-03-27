@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests
@@ -30,8 +30,8 @@ import org.junit.Test;
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
 
-    public TreeListTest(final String name) {
-        super(name);
+    public TreeListTest() {
+        super(TreeListTest.class.getSimpleName());
     }
 
 //    public static void main(String[] args) {

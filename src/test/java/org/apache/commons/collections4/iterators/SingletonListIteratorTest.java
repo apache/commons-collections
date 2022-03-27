@@ -20,7 +20,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
@@ -30,8 +30,8 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonListIteratorTest(final String testName) {
-        super(testName);
+    public SingletonListIteratorTest() {
+        super(SingletonListIteratorTest.class.getSimpleName());
     }
 
     /**

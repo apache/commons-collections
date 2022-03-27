@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
-    public UnmodifiableListTest(final String testName) {
-        super(testName);
+    public UnmodifiableListTest() {
+        super(UnmodifiableListTest.class.getSimpleName());
     }
 
     @Override

@@ -24,15 +24,15 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ComparatorChain.
  */
 public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
-    public ComparatorChainTest(final String testName) {
-        super(testName);
+    public ComparatorChainTest() {
+        super(ComparatorChainTest.class.getSimpleName());
     }
 
     @Override
