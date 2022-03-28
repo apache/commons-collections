@@ -261,31 +261,36 @@ public class EmptyPropertiesTest {
         final String comments = "Hello world!";
         // actual
         try (ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
-            try (PrintStream out = new PrintStream(actual)) {
-                PropertiesFactory.EMPTY_PROPERTIES.save(out, comments);
-            }
+            PropertiesFactory.EMPTY_PROPERTIES.save(actual, comments);
             // expected
             try (ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-                try (PrintStream out = new PrintStream(expected)) {
-                    PropertiesFactory.INSTANCE.createProperties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> {
-                    String s = null;
-                    try {
-                        s = new String(expected.toByteArray(), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        fail(e.getMessage(), e);
-                    }
-                    return String.format("Expected String '%s' with length '%s'", s, s.length());
-                });
+                PropertiesFactory.INSTANCE.createProperties().save(expected, comments);
+
+                // Properties.save stores the specified comment appended with current time stamp in the next line
+                String expectedComment = getFirstLine(expected.toString("UTF-8"));
+                String actualComment = getFirstLine(actual.toString("UTF-8"));
+                assertEquals(expectedComment, actualComment, () ->
+                        String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
                 expected.reset();
                 try (PrintStream out = new PrintStream(expected)) {
                     new Properties().save(out, comments);
                 }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
+                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), expected::toString);
+            } catch (UnsupportedEncodingException e) {
+                fail(e.getMessage(), e);
             }
         }
     }
+
+    /**
+     * Returns the first line from multi-lined string separated by a line separator character
+     * @param x the multi-lined String
+     * @return the first line from x
+     */
+    private String getFirstLine(final String x) {
+        return x.split("\\R", 2)[0];
+    }
+
 
     @Test
     public void testSetProperty() {
