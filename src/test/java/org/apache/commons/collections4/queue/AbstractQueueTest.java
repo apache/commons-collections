@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalEmptyCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalFullCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromBytes;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromDisk;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.writeExternalFormToBytes;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -339,7 +344,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final Queue<E> queue = makeObject();
         if (queue instanceof Serializable && !skipSerializedCanonicalTests()
                 && isTestSerialization()) {
-            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue));
+            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue, this));
             assertEquals("Queue is empty", 0, queue2.size());
         }
     }
@@ -362,7 +367,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         // test to make sure the canonical form has been preserved
         final Queue<E> queue = makeFullCollection();
         if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
+            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue, this));
             assertEquals("Queues are not the right size", queue.size(), queue2.size());
         }
     }

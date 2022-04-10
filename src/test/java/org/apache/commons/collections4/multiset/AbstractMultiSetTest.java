@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalEmptyCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.getCanonicalFullCollectionName;
+import static org.apache.commons.collections4.AbstractObjectTestUtils.readExternalFormFromDisk;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -699,7 +702,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset));
+            final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset, this));
             assertTrue("MultiSet is empty", multiset2.isEmpty());
             assertEquals(multiset, multiset2);
         }
@@ -714,7 +717,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeFullCollection();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(multiset));
+            final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(multiset, this));
             assertEquals("MultiSet is the right size", multiset.size(), multiset2.size());
             assertEquals(multiset, multiset2);
         }

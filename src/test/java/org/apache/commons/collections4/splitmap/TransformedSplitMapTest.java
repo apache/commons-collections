@@ -16,17 +16,22 @@
  */
 package org.apache.commons.collections4.splitmap;
 
+import static org.apache.commons.collections4.BulkTestConstants.TEST_DATA_PATH;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.math.BigInteger;
 import java.util.HashMap;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -34,7 +39,7 @@ import org.junit.Test;
  * @since 4.0
  */
 @SuppressWarnings("boxing")
-public class TransformedSplitMapTest extends BulkTest {
+public class TransformedSplitMapTest {
 
     private final Transformer<Integer, String> intToString = String::valueOf;
 
@@ -42,11 +47,8 @@ public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
-    public TransformedSplitMapTest(final String testName) {
-        super(testName);
-    }
-
     // -----------------------------------------------------------------------
+
     @Test
     public void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
@@ -117,12 +119,12 @@ public class TransformedSplitMapTest extends BulkTest {
                                                     NOPTransformer.<String>nopTransformer() );
 
         final ObjectInputStream in =
-                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedSplitMap.emptyCollection.version4.obj" ) );
+                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH + "/TransformedSplitMap.emptyCollection.version4.obj" ) );
         final Object readObject = in.readObject();
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertTrue( "Map should be empty", readMap.isEmpty() );
+        assertTrue( readMap.isEmpty(), "Map should be empty" );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
@@ -143,7 +145,7 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertFalse( "Map should not be empty", readMap.isEmpty() );
+        assertFalse( readMap.isEmpty(), "Map should not be empty");
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
@@ -166,4 +168,5 @@ public class TransformedSplitMapTest extends BulkTest {
 //                new FileOutputStream( "src/test/resources/data/test/TransformedSplitMap.fullCollection.version4.obj" ) );
 //        out.writeObject( map );
 //    }
+
 }
