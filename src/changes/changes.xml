@@ -87,7 +87,10 @@
     </action>
     <action issue="COLLECTIONS-788" type="fix" dev="ggregory" due-to="Arturo Bernal">
       Use Java 8 features #228.
-    </action>    
+    </action>
+    <action issue="COLLECTIONS-807" type="fix" dev="ggregory" due-to="Pradeesh Kumar">
+      Upgraded org.junit.Test to org.junit.jupiter.api.Test #295.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
