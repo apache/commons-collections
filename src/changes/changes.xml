@@ -199,7 +199,7 @@
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [build] Update Jacoco from 0.8.4 to 0.8.7.
+      Bump Jacoco from 0.8.4 to 0.8.8.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       [test] Update org.easymock:easymock 4.1 -> 4.2.
