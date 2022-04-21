@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableCollectionTest(final String testName) {
-        super(testName);
+    public UnmodifiableCollectionTest() {
+        super(UnmodifiableCollectionTest.class.getSimpleName());
     }
 
     @Override

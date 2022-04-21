@@ -25,15 +25,15 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableMapIterator.
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
-    public UnmodifiableMapIteratorTest(final String testName) {
-        super(testName);
+    public UnmodifiableMapIteratorTest() {
+        super(UnmodifiableMapIteratorTest.class.getSimpleName());
     }
 
     @Override

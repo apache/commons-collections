@@ -29,8 +29,8 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public FixedSizeSortedMapTest(final String testName) {
-        super(testName);
+    public FixedSizeSortedMapTest() {
+        super(FixedSizeSortedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

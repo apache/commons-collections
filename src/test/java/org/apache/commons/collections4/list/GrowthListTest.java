@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.function.Executable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
@@ -36,8 +36,8 @@ import org.junit.Test;
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 
-    public GrowthListTest(final String testName) {
-        super(testName);
+    public GrowthListTest() {
+        super(GrowthListTest.class.getSimpleName());
     }
 
     @Override

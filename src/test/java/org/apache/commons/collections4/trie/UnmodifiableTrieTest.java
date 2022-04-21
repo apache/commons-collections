@@ -22,7 +22,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
-    public UnmodifiableTrieTest(final String testName) {
-        super(testName);
+    public UnmodifiableTrieTest() {
+        super(UnmodifiableTrieTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.set.CompositeSet.SetMutator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
-    public CompositeSetTest(final String name) {
-        super(name);
+    public CompositeSetTest() {
+        super(CompositeSetTest.class.getSimpleName());
     }
 
     @Override

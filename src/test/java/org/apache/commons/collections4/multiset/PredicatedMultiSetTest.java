@@ -24,7 +24,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public PredicatedMultiSetTest(final String testName) {
-        super(testName);
+    public PredicatedMultiSetTest() {
+        super(PredicatedMultiSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

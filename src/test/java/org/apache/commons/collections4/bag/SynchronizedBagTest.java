@@ -27,8 +27,8 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
-    public SynchronizedBagTest(final String testName) {
-        super(testName);
+    public SynchronizedBagTest() {
+        super(SynchronizedBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

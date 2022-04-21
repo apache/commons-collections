@@ -29,7 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * A unit test to test the basic functions of {@link BoundedIterator}.
@@ -43,12 +44,12 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public BoundedIteratorTest(final String testName) {
-        super(testName);
+    public BoundedIteratorTest() {
+        super(BoundedIteratorTest.class.getSimpleName());
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     public void setUp()
         throws Exception {
         super.setUp();

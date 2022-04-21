@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,8 +38,8 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     protected UnmodifiableNavigableSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableNavigableSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableNavigableSetTest() {
+        super(UnmodifiableNavigableSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

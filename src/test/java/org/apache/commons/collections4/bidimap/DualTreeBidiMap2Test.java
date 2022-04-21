@@ -31,7 +31,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.comparators.ComparableComparator;
 import org.apache.commons.collections4.comparators.ReverseComparator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -44,8 +44,8 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         return BulkTest.makeSuite(DualTreeBidiMap2Test.class);
     }
 
-    public DualTreeBidiMap2Test(final String testName) {
-        super(testName);
+    public DualTreeBidiMap2Test() {
+        super(DualTreeBidiMap2Test.class.getSimpleName());
     }
 
     @Override

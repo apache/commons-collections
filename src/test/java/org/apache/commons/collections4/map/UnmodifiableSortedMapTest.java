@@ -22,7 +22,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public UnmodifiableSortedMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableSortedMapTest() {
+        super(UnmodifiableSortedMapTest.class.getSimpleName());
     }
 
     //-------------------------------------------------------------------

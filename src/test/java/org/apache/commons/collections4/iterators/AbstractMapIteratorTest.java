@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.MapIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the MapIterator interface.

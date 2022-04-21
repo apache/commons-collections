@@ -19,7 +19,7 @@ package org.apache.commons.collections4.list;
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ import java.util.List;
 
 public class LazyListTest extends AbstractObjectTest {
 
-    public LazyListTest(final String testName) {
-        super(testName);
+    public LazyListTest() {
+        super(LazyListTest.class.getSimpleName());
     }
 
     @Override

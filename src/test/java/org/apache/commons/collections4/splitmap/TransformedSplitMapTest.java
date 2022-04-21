@@ -26,7 +26,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -42,8 +42,8 @@ public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
-    public TransformedSplitMapTest(final String testName) {
-        super(testName);
+    public TransformedSplitMapTest() {
+        super(TransformedSplitMapTest.class.getSimpleName());
     }
 
     // -----------------------------------------------------------------------

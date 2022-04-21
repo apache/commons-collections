@@ -25,7 +25,7 @@ import java.util.Queue;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollectionTest;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
-    public PredicatedQueueTest(final String testName) {
-        super(testName);
+    public PredicatedQueueTest() {
+        super(PredicatedQueueTest.class.getSimpleName());
     }
 
     //---------------------------------------------------------------

@@ -24,7 +24,8 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ListIteratorWrapper to insure that it simulates
@@ -38,11 +39,11 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1 = null;
 
-    public ListIteratorWrapperTest(final String testName) {
-        super(testName);
+    public ListIteratorWrapperTest() {
+        super(ListIteratorWrapperTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {
         list1 = new ArrayList<>();

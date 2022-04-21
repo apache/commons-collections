@@ -25,7 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PeekingIterator.
@@ -36,15 +37,15 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public PeekingIteratorTest(final String testName) {
-        super(testName);
+    public PeekingIteratorTest() {
+        super(PeekingIteratorTest.class.getSimpleName());
     }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
         testList = new ArrayList<>(Arrays.asList((E[]) testArray));

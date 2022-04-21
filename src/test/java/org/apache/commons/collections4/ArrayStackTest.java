@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.EmptyStackException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests ArrayStack.
@@ -28,8 +28,8 @@ import org.junit.Test;
 @SuppressWarnings("deprecation") // we test a deprecated class
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
-    public ArrayStackTest(final String testName) {
-        super(testName);
+    public ArrayStackTest() {
+        super(ArrayStackTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

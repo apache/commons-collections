@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test cases for CircularFifoQueue.
@@ -38,8 +38,8 @@ import org.junit.Test;
  */
 public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
-    public CircularFifoQueueTest(final String testName) {
-        super(testName);
+    public CircularFifoQueueTest() {
+        super(CircularFifoQueueTest.class.getSimpleName());
     }
 
     /**

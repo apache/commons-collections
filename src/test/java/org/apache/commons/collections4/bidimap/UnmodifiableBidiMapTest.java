@@ -24,7 +24,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -35,8 +35,8 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return BulkTest.makeSuite(UnmodifiableBidiMapTest.class);
     }
 
-    public UnmodifiableBidiMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableBidiMapTest() {
+        super(UnmodifiableBidiMapTest.class.getSimpleName());
     }
 
     @Override

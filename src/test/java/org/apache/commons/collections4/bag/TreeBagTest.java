@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
@@ -29,8 +29,8 @@ import org.junit.Test;
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TreeBagTest(final String testName) {
-        super(testName);
+    public TreeBagTest() {
+        super(TreeBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

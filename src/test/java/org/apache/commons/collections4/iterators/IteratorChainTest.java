@@ -26,7 +26,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the IteratorChain class.
@@ -41,11 +42,11 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     protected List<String> list2 = null;
     protected List<String> list3 = null;
 
-    public IteratorChainTest(final String testName) {
-        super(testName);
+    public IteratorChainTest() {
+        super(IteratorChainTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();
         list1.add("One");

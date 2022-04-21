@@ -27,8 +27,8 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 
-    public PatriciaTrie2Test(final String testName) {
-        super(testName);
+    public PatriciaTrie2Test() {
+        super(PatriciaTrie2Test.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

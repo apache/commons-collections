@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -36,8 +36,8 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // conventional
     // ------------------------------------------------------------------------
 
-    public BooleanComparatorTest(final String testName) {
-        super(testName);
+    public BooleanComparatorTest() {
+        super(BooleanComparatorTest.class.getSimpleName());
     }
 
     // collections testing framework

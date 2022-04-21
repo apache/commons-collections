@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -58,8 +58,8 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return BulkTest.makeSuite(PassiveExpiringMapTest.class);
     }
 
-    public PassiveExpiringMapTest(final String testName) {
-        super(testName);
+    public PassiveExpiringMapTest() {
+        super(PassiveExpiringMapTest.class.getSimpleName());
     }
 
 //    public void testCreate() throws Exception {

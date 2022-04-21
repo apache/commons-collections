@@ -29,8 +29,8 @@ import org.apache.commons.collections4.IterableMap;
  */
 public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public FixedSizeMapTest(final String testName) {
-        super(testName);
+    public FixedSizeMapTest() {
+        super(FixedSizeMapTest.class.getSimpleName());
     }
 
     @Override

@@ -22,7 +22,7 @@ import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -34,8 +34,8 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     private static final Integer TWO = Integer.valueOf(2);
     private static final String TEN = "10";
 
-    public SingletonMapTest(final String testName) {
-        super(testName);
+    public SingletonMapTest() {
+        super(SingletonMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

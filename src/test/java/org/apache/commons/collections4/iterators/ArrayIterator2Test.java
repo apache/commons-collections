@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ArrayIterator with primitive type arrays.
@@ -31,8 +31,8 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
-    public ArrayIterator2Test(final String testName) {
-        super(testName);
+    public ArrayIterator2Test() {
+        super(ArrayIterator2Test.class.getSimpleName());
     }
 
     @Override

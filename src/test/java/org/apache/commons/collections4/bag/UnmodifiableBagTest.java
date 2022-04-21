@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
-    public UnmodifiableBagTest(final String testName) {
-        super(testName);
+    public UnmodifiableBagTest() {
+        super(UnmodifiableBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for PermutationIterator.
@@ -39,11 +40,11 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     protected Character[] testArray = { 'A', 'B', 'C' };
     protected List<Character> testList;
 
-    public PermutationIteratorTest(final String testName) {
-        super(testName);
+    public PermutationIteratorTest() {
+        super(PermutationIteratorTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() {
         testList = new ArrayList<>();
         testList.addAll(Arrays.asList(testArray));

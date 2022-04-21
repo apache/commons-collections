@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public UnmodifiableMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableMapTest() {
+        super(UnmodifiableMapTest.class.getSimpleName());
     }
 
     //-------------------------------------------------------------------
