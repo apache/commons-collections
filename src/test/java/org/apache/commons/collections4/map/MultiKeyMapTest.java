@@ -23,7 +23,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.keyvalue.MultiKey;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -39,8 +39,8 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     static final Integer I7 = Integer.valueOf(7);
     static final Integer I8 = Integer.valueOf(8);
 
-    public MultiKeyMapTest(final String testName) {
-        super(testName);
+    public MultiKeyMapTest() {
+        super(MultiKeyMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

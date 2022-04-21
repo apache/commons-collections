@@ -30,7 +30,7 @@ import java.util.TreeSet;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.

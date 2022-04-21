@@ -26,15 +26,15 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.ListOrderedMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableOrderedMapIterator.
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
-    public UnmodifiableOrderedMapIteratorTest(final String testName) {
-        super(testName);
+    public UnmodifiableOrderedMapIteratorTest() {
+        super(UnmodifiableOrderedMapIteratorTest.class.getSimpleName());
     }
 
     @Override

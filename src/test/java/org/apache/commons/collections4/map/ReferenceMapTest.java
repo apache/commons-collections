@@ -34,15 +34,15 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReferenceMap.
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public ReferenceMapTest(final String testName) {
-        super(testName);
+    public ReferenceMapTest() {
+        super(ReferenceMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

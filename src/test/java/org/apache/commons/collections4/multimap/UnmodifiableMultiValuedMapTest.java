@@ -31,7 +31,7 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for UnmodifiableMultiValuedMap
@@ -40,8 +40,8 @@ import org.junit.Test;
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public UnmodifiableMultiValuedMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableMultiValuedMapTest() {
+        super(UnmodifiableMultiValuedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

@@ -26,7 +26,7 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public LinkedMapTest(final String testName) {
-        super(testName);
+    public LinkedMapTest() {
+        super(LinkedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

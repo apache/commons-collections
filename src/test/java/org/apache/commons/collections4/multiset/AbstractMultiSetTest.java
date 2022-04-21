@@ -34,7 +34,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link org.apache.commons.collections4.MultiSet MultiSet}

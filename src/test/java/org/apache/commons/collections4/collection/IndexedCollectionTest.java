@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -36,8 +36,8 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
-    public IndexedCollectionTest(final String name) {
-        super(name);
+    public IndexedCollectionTest() {
+        super(IndexedCollectionTest.class.getSimpleName());
     }
 
    //------------------------------------------------------------------------

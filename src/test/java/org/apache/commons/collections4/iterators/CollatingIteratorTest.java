@@ -22,7 +22,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.collections4.comparators.ComparableComparator;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test suite for {@link CollatingIterator}.
@@ -33,8 +34,8 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //------------------------------------------------------------ Conventional
 
-    public CollatingIteratorTest(final String testName) {
-        super(testName);
+    public CollatingIteratorTest() {
+        super(CollatingIteratorTest.class.getSimpleName());
     }
 
     //--------------------------------------------------------------- Lifecycle
@@ -44,7 +45,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
-    @Override
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         comparator = new ComparableComparator<>();

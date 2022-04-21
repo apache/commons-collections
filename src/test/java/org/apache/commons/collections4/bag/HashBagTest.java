@@ -26,8 +26,8 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 
-    public HashBagTest(final String testName) {
-        super(testName);
+    public HashBagTest() {
+        super(HashBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

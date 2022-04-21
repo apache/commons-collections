@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link PredicatedMapTest} for exercising the
@@ -51,8 +51,8 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 
-    public PredicatedSortedMapTest(final String testName) {
-        super(testName);
+    public PredicatedSortedMapTest() {
+        super(PredicatedSortedMapTest.class.getSimpleName());
     }
 
     protected SortedMap<K, V> decorateMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,

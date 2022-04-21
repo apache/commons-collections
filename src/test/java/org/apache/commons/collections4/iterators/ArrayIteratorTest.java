@@ -19,7 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -32,8 +32,8 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ArrayIteratorTest(final String testName) {
-        super(testName);
+    public ArrayIteratorTest() {
+        super(ArrayIteratorTest.class.getSimpleName());
     }
 
     @Override

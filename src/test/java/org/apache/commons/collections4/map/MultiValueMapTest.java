@@ -35,7 +35,7 @@ import java.util.Map;
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MultiMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * TestMultiValueMap.
@@ -45,8 +45,8 @@ import org.junit.Test;
 @Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
-    public MultiValueMapTest(final String testName) {
-        super(testName);
+    public MultiValueMapTest() {
+        super(MultiValueMapTest.class.getSimpleName());
     }
 
     @Test

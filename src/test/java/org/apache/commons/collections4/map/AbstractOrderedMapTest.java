@@ -32,7 +32,7 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.comparators.NullComparator;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.

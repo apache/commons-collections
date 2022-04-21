@@ -24,7 +24,7 @@ import java.util.TreeMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -35,8 +35,8 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return BulkTest.makeSuite(UnmodifiableOrderedBidiMapTest.class);
     }
 
-    public UnmodifiableOrderedBidiMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableOrderedBidiMapTest() {
+        super(UnmodifiableOrderedBidiMapTest.class.getSimpleName());
     }
 
     @Override

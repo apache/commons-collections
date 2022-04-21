@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
-    public PredicatedSetTest(final String testName) {
-        super(testName);
+    public PredicatedSetTest() {
+        super(PredicatedSetTest.class.getSimpleName());
     }
 
  //-------------------------------------------------------------------

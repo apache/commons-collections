@@ -23,7 +23,7 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for TransformedMultiValuedMap
@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public TransformedMultiValuedMapTest(final String testName) {
-        super(testName);
+    public TransformedMultiValuedMapTest() {
+        super(TransformedMultiValuedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

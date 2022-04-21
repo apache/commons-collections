@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -43,8 +43,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     protected Collection<E> two;
 
-    public CompositeCollectionTest(final String name) {
-        super(name);
+    public CompositeCollectionTest() {
+        super(CompositeCollectionTest.class.getSimpleName());
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class PredicatedListTest<E> extends AbstractListTest<E> {
 
-    public PredicatedListTest(final String testName) {
-        super(testName);
+    public PredicatedListTest() {
+        super(PredicatedListTest.class.getSimpleName());
     }
 
  //-------------------------------------------------------------------

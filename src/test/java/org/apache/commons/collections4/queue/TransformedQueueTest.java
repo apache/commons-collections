@@ -24,7 +24,7 @@ import java.util.Queue;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
-    public TransformedQueueTest(final String testName) {
-        super(testName);
+    public TransformedQueueTest() {
+        super(TransformedQueueTest.class.getSimpleName());
     }
 
     @Override

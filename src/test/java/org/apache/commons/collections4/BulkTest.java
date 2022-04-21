@@ -414,16 +414,16 @@ class BulkTestSuiteMaker {
 
     private static <T> Constructor<T> getTestCaseConstructor(final Class<T> c) {
         try {
-            return c.getConstructor(String.class);
+            return c.getConstructor();
         } catch (final NoSuchMethodException e) {
-            throw new IllegalArgumentException(c + " must provide a (String) constructor");
+            throw new IllegalArgumentException(c + " must provide an empty constructor");
         }
     }
 
     private static <T extends BulkTest> BulkTest makeTestCase(final Class<T> c, final Method m) {
         final Constructor<T> con = getTestCaseConstructor(c);
         try {
-            return con.newInstance(m.getName());
+            return con.newInstance();
         } catch (final InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;

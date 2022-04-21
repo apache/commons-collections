@@ -24,7 +24,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public TransformedMapTest(final String testName) {
-        super(testName);
+    public TransformedMapTest() {
+        super(TransformedMapTest.class.getSimpleName());
     }
 
     @Override

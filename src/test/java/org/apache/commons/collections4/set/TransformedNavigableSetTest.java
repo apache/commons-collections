@@ -25,7 +25,7 @@ import java.util.Set;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
-    public TransformedNavigableSetTest(final String testName) {
-        super(testName);
+    public TransformedNavigableSetTest() {
+        super(TransformedNavigableSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

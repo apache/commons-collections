@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for TransformingComparator.
@@ -35,8 +35,8 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     // Initialization and busywork
     //
 
-    public TransformingComparatorTest(final String name) {
-        super(name);
+    public TransformingComparatorTest() {
+        super(TransformingComparatorTest.class.getSimpleName());
     }
 
     //

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.list.AbstractListTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.

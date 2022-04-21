@@ -27,8 +27,8 @@ import org.apache.commons.collections4.map.HashedMap;
  */
 public class MapBackedSetTest<E> extends AbstractSetTest<E> {
 
-    public MapBackedSetTest(final String testName) {
-        super(testName);
+    public MapBackedSetTest() {
+        super(MapBackedSetTest.class.getSimpleName());
     }
 
     @Override

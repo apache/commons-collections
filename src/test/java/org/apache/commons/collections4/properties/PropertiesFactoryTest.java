@@ -19,13 +19,13 @@ package org.apache.commons.collections4.properties;
 
 import java.util.Properties;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
 
-    public PropertiesFactoryTest(final String fileExtension) {
-        super(PropertiesFactory.INSTANCE, fileExtension);
+    public PropertiesFactoryTest() {
+        super(PropertiesFactory.INSTANCE);
     }
 
     @Test

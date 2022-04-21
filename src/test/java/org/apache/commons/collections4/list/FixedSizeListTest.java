@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
-    public FixedSizeListTest(final String testName) {
-        super(testName);
+    public FixedSizeListTest() {
+        super(FixedSizeListTest.class.getSimpleName());
     }
 
     @Override

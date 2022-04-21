@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.OrderedMapIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the OrderedMapIterator interface.

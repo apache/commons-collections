@@ -25,7 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * A unit test to test the basic functions of {@link SkippingIterator}.
@@ -39,12 +40,12 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public SkippingIteratorTest(final String testName) {
-        super(testName);
+    public SkippingIteratorTest() {
+        super(SkippingIteratorTest.class.getSimpleName());
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     public void setUp()
         throws Exception {
         super.setUp();

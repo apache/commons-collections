@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for FixedOrderComparator.
@@ -51,8 +51,8 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     // Initialization and busywork
     //
 
-    public FixedOrderComparatorTest(final String name) {
-        super(name);
+    public FixedOrderComparatorTest() {
+        super(FixedOrderComparatorTest.class.getSimpleName());
     }
 
     //

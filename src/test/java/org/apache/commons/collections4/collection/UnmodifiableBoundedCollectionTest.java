@@ -25,7 +25,7 @@ import java.util.Collection;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.list.FixedSizeList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableBoundedCollectionTest(final String testName) {
-        super(testName);
+    public UnmodifiableBoundedCollectionTest() {
+        super(UnmodifiableBoundedCollectionTest.class.getSimpleName());
     }
 
     @Override

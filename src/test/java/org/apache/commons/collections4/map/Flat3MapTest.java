@@ -29,7 +29,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -44,8 +44,8 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     private static final String TWENTY = "20";
     private static final String THIRTY = "30";
 
-    public Flat3MapTest(final String testName) {
-        super(testName);
+    public Flat3MapTest() {
+        super(Flat3MapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
@@ -34,8 +34,8 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         return BulkTest.makeSuite(CaseInsensitiveMapTest.class);
     }
 
-    public CaseInsensitiveMapTest(final String testName) {
-        super(testName);
+    public CaseInsensitiveMapTest() {
+        super(CaseInsensitiveMapTest.class.getSimpleName());
     }
 
     @Override

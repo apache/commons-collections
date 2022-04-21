@@ -23,7 +23,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class TransformedListTest<E> extends AbstractListTest<E> {
 
-    public TransformedListTest(final String testName) {
-        super(testName);
+    public TransformedListTest() {
+        super(TransformedListTest.class.getSimpleName());
     }
 
     @Override

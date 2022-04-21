@@ -24,7 +24,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
-    public UnmodifiableSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableSetTest() {
+        super(UnmodifiableSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

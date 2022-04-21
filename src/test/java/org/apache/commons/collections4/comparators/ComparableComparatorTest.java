@@ -28,8 +28,8 @@ import java.util.List;
 @SuppressWarnings("boxing")
 public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ComparableComparatorTest(final String testName) {
-        super(testName);
+    public ComparableComparatorTest() {
+        super(ComparableComparatorTest.class.getSimpleName());
     }
 
     @Override

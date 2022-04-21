@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the
@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public UnmodifiableOrderedMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableOrderedMapTest() {
+        super(UnmodifiableOrderedMapTest.class.getSimpleName());
     }
 
     //-------------------------------------------------------------------

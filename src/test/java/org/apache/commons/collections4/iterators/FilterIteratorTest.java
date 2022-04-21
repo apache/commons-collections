@@ -28,7 +28,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the filter iterator.
@@ -36,8 +37,8 @@ import org.junit.Test;
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /** Creates new TestFilterIterator */
-    public FilterIteratorTest(final String name) {
-        super(name);
+    public FilterIteratorTest() {
+        super(FilterIteratorTest.class.getSimpleName());
     }
 
     private String[] array;
@@ -47,7 +48,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * Set up instance variables required by this test case.
      */
-    @Override
+    @BeforeEach
     public void setUp() {
         array = new String[] { "a", "b", "c" };
         initIterator();

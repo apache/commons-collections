@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the {@link TransformedCollection}
@@ -52,8 +52,8 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
     public static final Transformer<Object, Object> TO_LOWER_CASE_TRANSFORMER = new ToLowerCase();
 
-    public TransformedCollectionTest(final String testName) {
-        super(testName);
+    public TransformedCollectionTest() {
+        super(TransformedCollectionTest.class.getSimpleName());
     }
 
     @Override

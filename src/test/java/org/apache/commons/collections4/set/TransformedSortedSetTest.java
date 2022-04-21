@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the {@link TransformedSortedSet}
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TransformedSortedSetTest(final String testName) {
-        super(testName);
+    public TransformedSortedSetTest() {
+        super(TransformedSortedSetTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

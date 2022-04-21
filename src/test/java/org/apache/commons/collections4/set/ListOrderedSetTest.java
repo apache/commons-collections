@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -46,8 +46,8 @@ public class ListOrderedSetTest<E>
 
     private static final Integer THREE = Integer.valueOf(3);
 
-    public ListOrderedSetTest(final String testName) {
-        super(testName);
+    public ListOrderedSetTest() {
+        super(ListOrderedSetTest.class.getSimpleName());
     }
 
     @Override

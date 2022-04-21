@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReferenceIdentityMap.
@@ -56,8 +56,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     WeakReference<V> valueReference;
 
-    public ReferenceIdentityMapTest(final String testName) {
-        super(testName);
+    public ReferenceIdentityMapTest() {
+        super(ReferenceIdentityMapTest.class.getSimpleName());
     }
 
     @SuppressWarnings("unchecked")

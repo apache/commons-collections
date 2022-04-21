@@ -30,7 +30,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests for the PatriciaTrie.
@@ -39,8 +39,8 @@ import org.junit.Test;
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
-    public PatriciaTrieTest(final String testName) {
-        super(testName);
+    public PatriciaTrieTest() {
+        super(PatriciaTrieTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

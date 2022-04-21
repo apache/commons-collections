@@ -25,7 +25,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -35,8 +35,8 @@ import org.junit.Test;
  */
 public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
-    public UnmodifiableQueueTest(final String testName) {
-        super(testName);
+    public UnmodifiableQueueTest() {
+        super(UnmodifiableQueueTest.class.getSimpleName());
     }
 
     @Override

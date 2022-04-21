@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -25,8 +25,8 @@ import org.junit.Test;
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public HashedMapTest(final String testName) {
-        super(testName);
+    public HashedMapTest() {
+        super(HashedMapTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

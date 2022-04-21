@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
@@ -34,8 +34,8 @@ import org.junit.Test;
  */
 public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
-    public PredicatedBagTest(final String testName) {
-        super(testName);
+    public PredicatedBagTest() {
+        super(PredicatedBagTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

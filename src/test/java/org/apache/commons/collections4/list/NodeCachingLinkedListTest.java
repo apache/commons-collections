@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
@@ -28,8 +28,8 @@ import org.junit.Test;
  */
 public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
-    public NodeCachingLinkedListTest(final String testName) {
-        super(testName);
+    public NodeCachingLinkedListTest() {
+        super(NodeCachingLinkedListTest.class.getSimpleName());
     }
 
     public static junit.framework.Test suite() {

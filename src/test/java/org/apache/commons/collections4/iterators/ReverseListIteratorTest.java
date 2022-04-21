@@ -26,7 +26,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ReverseListIterator.
@@ -35,8 +35,8 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
 
-    public ReverseListIteratorTest(final String testName) {
-        super(testName);
+    public ReverseListIteratorTest() {
+        super(ReverseListIteratorTest.class.getSimpleName());
     }
 
     @Override

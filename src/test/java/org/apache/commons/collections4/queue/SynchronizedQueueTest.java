@@ -21,7 +21,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.BulkTest;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractQueueTest} for exercising the {@link SynchronizedQueue} implementation.
@@ -34,8 +34,8 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
         return BulkTest.makeSuite(SynchronizedQueueTest.class);
     }
 
-    public SynchronizedQueueTest(final String testName) {
-        super(testName);
+    public SynchronizedQueueTest() {
+        super(SynchronizedQueueTest.class.getSimpleName());
     }
 
     // -----------------------------------------------------------------------
