@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -313,6 +314,24 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             assertEquals(serializeMap.data.length, deserializedMap.data.length);
         }
 
+    }
+
+    /**
+     * Test whether remove is not removing last entry after calling hasNext.
+     * <p>
+     * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-802">COLLECTIONS-802: ReferenceMap iterator remove violates contract</a>
+     */
+    @Test
+    public void testIteratorLastEntryCanBeRemovedAfterHasNext() {
+        ReferenceMap<Integer, Integer> map = new ReferenceMap<>();
+        map.put(1, 2);
+        Iterator<Map.Entry<Integer, Integer>> iter = map.entrySet().iterator();
+        assertTrue(iter.hasNext());
+        iter.next();
+        // below line should not affect remove
+        assertFalse(iter.hasNext());
+        iter.remove();
+        assertTrue("Expect empty but have entry: " + map, map.isEmpty());
     }
 
     @SuppressWarnings("unused")
