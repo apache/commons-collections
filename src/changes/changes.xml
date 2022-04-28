@@ -91,6 +91,9 @@
     <action issue="COLLECTIONS-807" type="fix" dev="ggregory" due-to="Pradeesh Kumar">
       Upgraded org.junit.Test to org.junit.jupiter.api.Test #295.
     </action>
+    <action issue="COLLECTIONS-802" type="fix" dev="kinow" due-to="samabcde, Ben Manes">
+      ReferenceMap iterator remove violates contract #300.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
