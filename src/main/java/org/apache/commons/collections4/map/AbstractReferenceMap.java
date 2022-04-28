@@ -772,8 +772,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         // These fields keep track of where we are in the table.
         int index;
-        ReferenceEntry<K, V> entry;
-        ReferenceEntry<K, V> previous;
+        ReferenceEntry<K, V> next;
+        ReferenceEntry<K, V> current;
 
         // These Object fields provide hard references to the
         // current and next entry; this assures that if hasNext()
@@ -794,23 +794,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public boolean hasNext() {
             checkMod();
             while (nextNull()) {
-                ReferenceEntry<K, V> e = entry;
+                ReferenceEntry<K, V> e = next;
                 int i = index;
                 while (e == null && i > 0) {
                     i--;
                     e = (ReferenceEntry<K, V>) parent.data[i];
                 }
-                entry = e;
+                next = e;
                 index = i;
                 if (e == null) {
-                    currentKey = null;
-                    currentValue = null;
                     return false;
                 }
                 nextKey = e.getKey();
                 nextValue = e.getValue();
                 if (nextNull()) {
-                    entry = entry.next();
+                    next = next.next();
                 }
             }
             return true;
@@ -831,27 +829,27 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             if (nextNull() && !hasNext()) {
                 throw new NoSuchElementException();
             }
-            previous = entry;
-            entry = entry.next();
+            current = next;
+            next = next.next();
             currentKey = nextKey;
             currentValue = nextValue;
             nextKey = null;
             nextValue = null;
-            return previous;
+            return current;
         }
 
         protected ReferenceEntry<K, V> currentEntry() {
             checkMod();
-            return previous;
+            return current;
         }
 
         public void remove() {
             checkMod();
-            if (previous == null) {
+            if (current == null) {
                 throw new IllegalStateException();
             }
             parent.remove(currentKey);
-            previous = null;
+            current = null;
             currentKey = null;
             currentValue = null;
             expectedModCount = parent.modCount;
