@@ -88,8 +88,8 @@
     <action issue="COLLECTIONS-788" type="fix" dev="ggregory" due-to="Arturo Bernal">
       Use Java 8 features #228.
     </action>
-    <action issue="COLLECTIONS-807" type="fix" dev="ggregory" due-to="Pradeesh Kumar">
-      Upgraded org.junit.Test to org.junit.jupiter.api.Test #295.
+    <action issue="COLLECTIONS-807" type="fix" dev="ggregory" due-to="Pradeesh Kumar, samabcde">
+      Upgraded org.junit.Test to org.junit.jupiter.api.Test #295, #304.
     </action>
     <action issue="COLLECTIONS-802" type="fix" dev="kinow" due-to="samabcde, Ben Manes">
       ReferenceMap iterator remove violates contract #300.
