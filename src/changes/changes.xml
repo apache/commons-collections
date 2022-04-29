@@ -266,7 +266,7 @@
       Bump commons.junit.version from 5.6.2 to 5.8.2 #181 #213 #236 #252 #254 #268.
     </action>
     <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
-      Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
+      Bump maven-antrun-plugin from 1.8 to 3.1.0 #170, #303.
     </action>
     <action issue="COLLECTIONS-773" type="update" dev="ggregory" due-to="Martin Monperrus">
       Add an assertion to validate ensureCapacity #198.
