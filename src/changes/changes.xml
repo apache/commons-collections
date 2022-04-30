@@ -94,6 +94,9 @@
     <action issue="COLLECTIONS-802" type="fix" dev="kinow" due-to="samabcde, Ben Manes">
       ReferenceMap iterator remove violates contract #300.
     </action>
+    <action issue="COLLECTIONS-812" type="fix" dev="kinow" due-to="Ng Tsz Sum">
+      Fix flaky EmptyPropertiesTest#testSave.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
