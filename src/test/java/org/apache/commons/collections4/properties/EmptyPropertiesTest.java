@@ -17,12 +17,20 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
@@ -30,15 +38,6 @@ import java.util.Properties;
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class EmptyPropertiesTest {
 
@@ -259,26 +258,29 @@ public class EmptyPropertiesTest {
     @Test
     public void testSave() throws IOException {
         final String comments = "Hello world!";
-        // actual
-        try (ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
-            PropertiesFactory.EMPTY_PROPERTIES.save(actual, comments);
+        try (ByteArrayOutputStream actual = new ByteArrayOutputStream(); ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
+            // actual
+            PropertiesFactory.EMPTY_PROPERTIES.store(actual, comments);
             // expected
-            try (ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-                PropertiesFactory.INSTANCE.createProperties().save(expected, comments);
+            PropertiesFactory.INSTANCE.createProperties().store(expected, comments);
 
-                // Properties.save stores the specified comment appended with current time stamp in the next line
-                String expectedComment = getFirstLine(expected.toString("UTF-8"));
-                String actualComment = getFirstLine(actual.toString("UTF-8"));
-                assertEquals(expectedComment, actualComment, () ->
-                        String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
-                expected.reset();
-                try (PrintStream out = new PrintStream(expected)) {
-                    new Properties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), expected::toString);
-            } catch (UnsupportedEncodingException e) {
-                fail(e.getMessage(), e);
+            // Properties.store stores the specified comment appended with current time stamp in the next line
+            String expectedComment = getFirstLine(expected.toString("UTF-8"));
+            String actualComment = getFirstLine(actual.toString("UTF-8"));
+            assertEquals(expectedComment, actualComment, () ->
+                    String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
+            expected.reset();
+            try (PrintStream out = new PrintStream(expected)) {
+                new Properties().store(out, comments);
             }
+            String[] expectedLines = expected.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            String[] actualLines = actual.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            assertEquals(expectedLines.length, actualLines.length);
+            // The assertion below checks that the comment is the same in both files
+            assertEquals(expectedLines[0], actualLines[0]);
+            // N.B.: We must not expect expectedLines[1] and actualLines[1] to have the same value as
+            //       it contains the timestamp of when the data was written to the stream, which makes
+            //       this test brittle, causing intermitent failures, see COLLECTIONS-812
         }
     }
 
