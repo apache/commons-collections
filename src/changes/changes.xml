@@ -143,7 +143,7 @@
     <action dev="ggregory" type="add">
       Add github/codeql-action.
     </action>
-    <action issue="COLLECTIONS-811" dev="kinow" type="add">
+    <action issue="COLLECTIONS-811" dev="kinow" type="add" due-to="Ben Manes">
       Integrate Guava testlib tests.
     </action>
     <!-- UPDATE -->
