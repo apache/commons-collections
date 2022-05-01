@@ -29,8 +29,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
@@ -183,12 +186,12 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testLoadFromXML() throws IOException {
+    public void testLoadFromXML() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
     @Test
-    public void testLoadInputStream() throws IOException {
+    public void testLoadInputStream() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
@@ -258,41 +261,19 @@ public class EmptyPropertiesTest {
     @Test
     public void testSave() throws IOException {
         final String comments = "Hello world!";
-        try (ByteArrayOutputStream actual = new ByteArrayOutputStream(); ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-            // actual
-            PropertiesFactory.EMPTY_PROPERTIES.store(actual, comments);
-            // expected
-            PropertiesFactory.INSTANCE.createProperties().store(expected, comments);
-
-            // Properties.store stores the specified comment appended with current time stamp in the next line
-            String expectedComment = getFirstLine(expected.toString("UTF-8"));
-            String actualComment = getFirstLine(actual.toString("UTF-8"));
-            assertEquals(expectedComment, actualComment, () ->
-                    String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
+        try (ByteArrayOutputStream actual = new ByteArrayOutputStream();
+             ByteArrayOutputStream expected = new ByteArrayOutputStream();
+             PrintStream out = new PrintStream(expected)) {
+            PropertiesFactory.EMPTY_PROPERTIES.save(actual, comments);
+            PropertiesFactory.INSTANCE.createProperties().save(expected, comments);
+            assertEqualsIgnoreTimestampComment(expected, actual);
             expected.reset();
-            try (PrintStream out = new PrintStream(expected)) {
-                new Properties().store(out, comments);
-            }
-            String[] expectedLines = expected.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
-            String[] actualLines = actual.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
-            assertEquals(expectedLines.length, actualLines.length);
-            // The assertion below checks that the comment is the same in both files
-            assertEquals(expectedLines[0], actualLines[0]);
-            // N.B.: We must not expect expectedLines[1] and actualLines[1] to have the same value as
-            //       it contains the timestamp of when the data was written to the stream, which makes
-            //       this test brittle, causing intermitent failures, see COLLECTIONS-812
+            new Properties().save(out, comments);
+            assertEqualsIgnoreTimestampComment(expected, actual);
+        } catch (UnsupportedEncodingException e) {
+            fail(e.getMessage(), e);
         }
     }
-
-    /**
-     * Returns the first line from multi-lined string separated by a line separator character
-     * @param x the multi-lined String
-     * @return the first line from x
-     */
-    private String getFirstLine(final String x) {
-        return x.split("\\R", 2)[0];
-    }
-
 
     @Test
     public void testSetProperty() {
@@ -313,10 +294,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().store(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertEqualsIgnoreTimestampComment(expected, actual);
         expected.reset();
         new Properties().store(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertEqualsIgnoreTimestampComment(expected, actual);
     }
 
     @Test
@@ -328,10 +309,10 @@ public class EmptyPropertiesTest {
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
         PropertiesFactory.INSTANCE.createProperties().store(new PrintWriter(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertEqualsIgnoreTimestampComment(expected, actual);
         expected.reset();
         new Properties().store(new PrintWriter(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        assertEqualsIgnoreTimestampComment(expected, actual);
     }
 
     @Test
@@ -378,5 +359,49 @@ public class EmptyPropertiesTest {
     @Test
     public void testValues() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
+    }
+
+    /**
+     *
+     * When calling {@link Properties#save(OutputStream, String)}, {@link Properties#store(OutputStream, String)}
+     * and {@link Properties#store(Writer, String)}, a comment line containing current timestamp is inserted after the comment given.
+     * This make the test flaky if we compare the content of actual and expected when they are not written in the same second.
+     * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-812">COLLECTIONS-812: ReferenceMap iterator remove violates contract</a>
+     *
+     * @param expected expected content
+     * @param actual actual content
+     */
+    private void assertEqualsIgnoreTimestampComment(ByteArrayOutputStream expected, ByteArrayOutputStream actual) {
+        try {
+            String expectedContent = removeLastCommentLine(expected.toString("UTF-8"));
+            String actualComment = removeLastCommentLine(actual.toString("UTF-8"));
+            assertEquals(expectedContent, actualComment);
+        } catch (UnsupportedEncodingException e) {
+            fail(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Remove the last comment line (line starting with #), from the given mutli-line String
+     *
+     * @param x the multi-lined String
+     * @return x with last comment line removed
+     */
+    private String removeLastCommentLine(final String x) {
+        String[] lines = x.split("\\R", -1);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            boolean isComment = lines[i].startsWith("#");
+            boolean isLastLine = i == lines.length - 1;
+            boolean isNextLineNotComment = !isLastLine && !lines[i + 1].startsWith("#");
+            if (isComment && (isLastLine || isNextLineNotComment)) {
+                continue;
+            }
+            sb.append(lines[i]);
+            if (!isLastLine) {
+                sb.append(System.lineSeparator());
+            }
+        }
+        return sb.toString();
     }
 }
