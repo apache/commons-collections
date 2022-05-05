@@ -22,6 +22,7 @@ import java.util.BitSet;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A ComparatorChain is a Comparator that wraps one or more Comparators in
@@ -338,9 +339,8 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             final ComparatorChain<?> chain = (ComparatorChain<?>) object;
-            return (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits)) &&
-                   (null == comparatorChain ? null == chain.comparatorChain :
-                                              comparatorChain.equals(chain.comparatorChain));
+            return (Objects.equals(orderingBits, chain.orderingBits)) &&
+                   (Objects.equals(comparatorChain, chain.comparatorChain));
         }
         return false;
     }
