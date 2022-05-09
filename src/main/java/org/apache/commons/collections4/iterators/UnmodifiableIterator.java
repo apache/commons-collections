@@ -41,9 +41,10 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * @return Optional holding the iterator if it is an IteratorChain.
      */
     Optional<IteratorChain<? extends E>> getIteratorChain() {
-      return Optional.ofNullable(iterator instanceof IteratorChain
-                                     ? (IteratorChain<? extends E>)iterator
-                                     : null);
+        final IteratorChain<? extends E> iteratorChain = iterator instanceof IteratorChain
+                                                       ? (IteratorChain<? extends E>) iterator
+                                                       : null;
+        return Optional.ofNullable(iteratorChain);
     }
 
     /**

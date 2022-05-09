@@ -35,10 +35,10 @@ import org.junit.jupiter.api.Test;
 public class IteratorChainTest extends AbstractIteratorTest<String> {
 
     protected String[] testArray = {
-            "One", "Two", "Three", "Four", "Five", "Six"
+        "One", "Two", "Three", "Four", "Five", "Six"
     };
     protected String[] testArray1234 = {
-            "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
+        "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
     };
 
     protected List<String> list1 = null;

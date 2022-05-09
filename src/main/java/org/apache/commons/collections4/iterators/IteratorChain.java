@@ -156,7 +156,7 @@ public class IteratorChain<E> implements Iterator<E> {
         checkLocked();
         Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof UnmodifiableIterator) {
-            Optional<IteratorChain<? extends E>> nestedIteratorChain = ((UnmodifiableIterator)iterator).getIteratorChain();
+            Optional<IteratorChain<? extends E>> nestedIteratorChain = ((UnmodifiableIterator) iterator).getIteratorChain();
             if (nestedIteratorChain.isPresent()) {
                 for (Iterator<? extends E> nestedIterator : nestedIteratorChain.get().iteratorChain) {
                     iteratorChain.add(IteratorUtils.unmodifiableIterator(nestedIterator));
@@ -165,7 +165,7 @@ public class IteratorChain<E> implements Iterator<E> {
                 iteratorChain.add(iterator);
             }
         } else if (iterator instanceof IteratorChain) {
-            iteratorChain.addAll(((IteratorChain)iterator).iteratorChain);
+            iteratorChain.addAll(((IteratorChain) iterator).iteratorChain);
         } else {
             iteratorChain.add(iterator);
         }
