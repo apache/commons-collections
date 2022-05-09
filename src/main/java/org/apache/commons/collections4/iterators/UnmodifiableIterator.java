@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -34,6 +35,16 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
 
     /** The iterator being decorated */
     private final Iterator<? extends E> iterator;
+
+    /**
+     * Obtain an Optional holding the nested IteratorChain, if it exists.
+     * @return Optional holding the iterator if it is an IteratorChain.
+     */
+    Optional<IteratorChain<? extends E>> getIteratorChain() {
+      return Optional.ofNullable(iterator instanceof IteratorChain
+                                     ? (IteratorChain<? extends E>)iterator
+                                     : null);
+    }
 
     /**
      * Decorates the specified iterator such that it cannot be modified.

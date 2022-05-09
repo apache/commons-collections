@@ -16,10 +16,13 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import org.apache.commons.collections4.IteratorUtils;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -49,7 +52,7 @@ import java.util.Queue;
  * @since 2.1
  */
 public class IteratorChain<E> implements Iterator<E> {
-
+    public static long hasNextCalledCount = 0;
     /** The chain of iterators */
     private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<>();
 
@@ -151,7 +154,21 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        iteratorChain.add(Objects.requireNonNull(iterator, "iterator"));
+        Objects.requireNonNull(iterator, "iterator");
+        if (iterator instanceof UnmodifiableIterator) {
+            Optional<IteratorChain<? extends E>> nestedIteratorChain = ((UnmodifiableIterator)iterator).getIteratorChain();
+            if (nestedIteratorChain.isPresent()) {
+                for (Iterator<? extends E> nestedIterator : nestedIteratorChain.get().iteratorChain) {
+                    iteratorChain.add(IteratorUtils.unmodifiableIterator(nestedIterator));
+                }
+            } else {
+                iteratorChain.add(iterator);
+            }
+        } else if (iterator instanceof IteratorChain) {
+            iteratorChain.addAll(((IteratorChain)iterator).iteratorChain);
+        } else {
+            iteratorChain.add(iterator);
+        }
     }
 
     /**
@@ -222,6 +239,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     @Override
     public boolean hasNext() {
+        hasNextCalledCount++;
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
