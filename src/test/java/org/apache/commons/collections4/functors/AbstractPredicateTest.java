@@ -17,11 +17,12 @@
 package org.apache.commons.collections4.functors;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractPredicateTest {
+
     protected Object cObject;
     protected String cString;
     protected Integer cInteger;
@@ -36,7 +37,7 @@ public abstract class AbstractPredicateTest {
     @Test
     public void predicateSanityTests() throws Exception {
         final Predicate<?> predicate = generatePredicate();
-        Assert.assertNotNull(predicate);
+        Assertions.assertNotNull(predicate);
     }
 
     /**
@@ -45,10 +46,11 @@ public abstract class AbstractPredicateTest {
     protected abstract Predicate<?> generatePredicate();
 
     protected <T> void assertPredicateFalse(final Predicate<T> predicate, final T testObject) {
-        Assert.assertFalse(predicate.evaluate(testObject));
+        Assertions.assertFalse(predicate.evaluate(testObject));
     }
 
     protected <T> void assertPredicateTrue(final Predicate<T> predicate, final T testObject) {
-        Assert.assertTrue(predicate.evaluate(testObject));
+        Assertions.assertTrue(predicate.evaluate(testObject));
     }
+
 }

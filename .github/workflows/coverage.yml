@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Java CI
+name: Coverage
 
 on: [push, pull_request]
 
@@ -21,18 +21,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        java: [ 8, 11, 17 ]
-        experimental: [false]
-#        include:
-#          - java: 18-ea
-#            experimental: true
-        
+        java: [ 8 ]
+
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/cache@v3.0.2
+    - uses: actions/cache@v3
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -44,5 +39,9 @@ jobs:
         distribution: adopt
         java-version: ${{ matrix.java }}
     - name: Build with Maven
-      # Use the default goal
-      run: mvn -V --file pom.xml --no-transfer-progress
+      run: mvn -V test jacoco:report --file pom.xml --no-transfer-progress
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./target/site/jacoco/jacoco.xml

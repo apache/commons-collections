@@ -22,7 +22,9 @@ import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the UnmodifiableMapEntry class.
@@ -55,9 +57,9 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * Subclasses should override this method.
      *
      */
+    @Test
     @Override
     @SuppressWarnings("unchecked")
-    @Test
     public void testConstructors() {
         // 1. test key-value constructor
         Map.Entry<K, V> entry = new UnmodifiableMapEntry<>((K) key, (V) value);
@@ -78,6 +80,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertTrue(entry instanceof Unmodifiable);
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
@@ -92,8 +95,8 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(null, entry.getValue());
     }
 
-    @Override
     @Test
+    @Override
     public void testSelfReferenceHandling() {
         // block
     }
@@ -101,10 +104,8 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @Test
     public void testUnmodifiable() {
         final Map.Entry<K, V> entry = makeMapEntry();
-        try {
-            entry.setValue(null);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+
+        assertThrows(UnsupportedOperationException.class, () -> entry.setValue(null));
     }
 
 }

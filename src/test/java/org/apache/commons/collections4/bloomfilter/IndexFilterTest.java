@@ -28,9 +28,10 @@ import java.util.Set;
 import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the {@link IndexFilters}.
@@ -52,27 +53,11 @@ public class IndexFilterTest {
         final Shape shape = this.shape;
         final ArrayList<Integer> actual = new ArrayList<>();
         final IntConsumer consumer = actual::add;
-
-        try {
-            IndexFilters.distinctIndexes(null, shape, consumer);
-            fail("null hasher");
-        } catch (final NullPointerException expected) {
-            // Ignore
-        }
-
-        try {
-            IndexFilters.distinctIndexes(hasher, null, consumer);
-            fail("null shape");
-        } catch (final NullPointerException expected) {
-            // Ignore
-        }
-
-        try {
-            IndexFilters.distinctIndexes(hasher, shape, null);
-            fail("null consumer");
-        } catch (final NullPointerException expected) {
-            // Ignore
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(null, shape, consumer), "null hasher"),
+                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, null, consumer), "null shape"),
+                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, shape, null), "null consumer")
+        );
 
         // All OK together
         IndexFilters.distinctIndexes(hasher, shape, consumer);

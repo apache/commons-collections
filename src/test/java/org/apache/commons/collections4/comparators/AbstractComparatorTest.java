@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for testing the Comparator interface.
@@ -175,8 +175,8 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Compare the current serialized form of the Comparator
      * against the canonical version in SCM.
      */
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;

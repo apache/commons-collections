@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections4.bag;
 
-import java.util.Comparator;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import junit.framework.Test;
+import java.util.Comparator;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
@@ -35,11 +36,11 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     private final SortedBag<T> nullBag = null;
 
-    public PredicatedSortedBagTest(final String testName) {
-        super(testName);
+    public PredicatedSortedBagTest() {
+        super(PredicatedSortedBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedSortedBagTest.class);
     }
 
@@ -66,19 +67,17 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     //--------------------------------------------------------------------------
 
+    @Test
     public void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
-        try {
-            decorateBag(new TreeBag<T>(), null);
-            fail("Expecting NullPointerException for null predicate");
-        } catch (final NullPointerException e) {}
-        try {
-            decorateBag(nullBag, stringPredicate());
-            fail("Expecting NullPointerException for null bag");
-        } catch (final NullPointerException e) {}
+
+        assertThrows(NullPointerException.class, () -> decorateBag(new TreeBag<T>(), null));
+
+        assertThrows(NullPointerException.class, () -> decorateBag(nullBag, stringPredicate()));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());

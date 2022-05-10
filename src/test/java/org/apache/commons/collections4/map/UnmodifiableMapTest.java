@@ -16,11 +16,14 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -30,8 +33,8 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public UnmodifiableMapTest(final String testName) {
-        super(testName);
+    public UnmodifiableMapTest() {
+        super(UnmodifiableMapTest.class.getSimpleName());
     }
 
     //-------------------------------------------------------------------
@@ -63,22 +66,19 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Map<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMap.unmodifiableMap(map));
 
-        try {
-            UnmodifiableMap.unmodifiableMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableMap.unmodifiableMap(null));
     }
-
 
     @Override
     public String getCompatibilityVersion() {

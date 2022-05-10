@@ -52,11 +52,13 @@ import junit.framework.TestSuite;
  *          this.set = set;
  *      }
  *
+ *      @Test
  *      public void testContains() {
  *          boolean r = set.contains(set.iterator().next()));
  *          assertTrue("Set should contain first element, r);
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          set.clear();
  *          assertTrue("Set should be empty after clear", set.isEmpty());
@@ -73,6 +75,7 @@ import junit.framework.TestSuite;
  *          return result;
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          Map map = makeFullMap();
  *          map.clear();
@@ -411,16 +414,16 @@ class BulkTestSuiteMaker {
 
     private static <T> Constructor<T> getTestCaseConstructor(final Class<T> c) {
         try {
-            return c.getConstructor(String.class);
+            return c.getConstructor();
         } catch (final NoSuchMethodException e) {
-            throw new IllegalArgumentException(c + " must provide a (String) constructor");
+            throw new IllegalArgumentException(c + " must provide an empty constructor");
         }
     }
 
     private static <T extends BulkTest> BulkTest makeTestCase(final Class<T> c, final Method m) {
         final Constructor<T> con = getTestCaseConstructor(c);
         try {
-            return con.newInstance(m.getName());
+            return con.newInstance();
         } catch (final InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;

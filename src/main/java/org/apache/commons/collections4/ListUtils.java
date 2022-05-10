@@ -185,7 +185,7 @@ public class ListUtils {
      * @see List#get(int)
      * @since 4.5
      */
-    public static <T> T getFirst(List<T> list) {
+    public static <T> T getFirst(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(0);
     }
 
@@ -200,7 +200,7 @@ public class ListUtils {
      * @see List#get(int)
      * @since 4.5
      */
-    public static <T> T getLast(List<T> list) {
+    public static <T> T getLast(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(list.size() - 1);
     }
 
@@ -596,7 +596,7 @@ public class ListUtils {
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.select(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**
@@ -616,7 +616,7 @@ public class ListUtils {
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**

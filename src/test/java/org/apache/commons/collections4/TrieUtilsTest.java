@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.collections4.trie.UnmodifiableTrie;
@@ -24,7 +26,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for TrieUtils factory methods.
- *
  */
 public class TrieUtilsTest {
 
@@ -34,12 +35,8 @@ public class TrieUtilsTest {
     public void testUnmodifiableTrie() {
         final Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());
         assertTrue(trie instanceof UnmodifiableTrie, "Returned object should be an UnmodifiableTrie.");
-        try {
-            TrieUtils.unmodifiableTrie(null);
-            fail("Expecting NullPointerException for null trie.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+
+        assertThrows(NullPointerException.class, () -> TrieUtils.unmodifiableTrie(null));
 
         assertSame(trie, TrieUtils.unmodifiableTrie(trie), "UnmodifiableTrie shall not be decorated");
     }

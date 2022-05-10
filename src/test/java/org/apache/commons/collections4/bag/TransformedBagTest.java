@@ -16,12 +16,11 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
@@ -31,11 +30,11 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
-    public TransformedBagTest(final String testName) {
-        super(testName);
+    public TransformedBagTest() {
+        super(TransformedBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedBagTest.class);
     }
 
@@ -47,13 +46,14 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
                 (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
         final Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertTrue(bag.isEmpty());
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
@@ -65,10 +65,11 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag_decorateTransform() {
         final Bag<T> originalBag = new HashBag<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {
             originalBag.add((T) el);
         }

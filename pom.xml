@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>52</version>
+    <version>53</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
@@ -489,6 +489,12 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${commons.junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
       <version>2.2</version>
@@ -577,7 +583,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.1.2</checkstyle.version>
-    <checkstyle.dep.version>9.2.1</checkstyle.dep.version>
+    <checkstyle.dep.version>9.3</checkstyle.dep.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
@@ -585,8 +591,11 @@
 
     <!-- Override clirr version to enable clirr on Java 8 -->
     <commons.clirr.version>2.8</commons.clirr.version>
-    <commons.jacoco.version>0.8.7</commons.jacoco.version>
+    <commons.jacoco.version>0.8.8</commons.jacoco.version>
     <commons.junit.version>5.8.2</commons.junit.version>
+
+    <!-- Override commons parent version to allow build on java 17 -->
+    <commons.japicmp.version>0.15.7</commons.japicmp.version>
 
     <!--Commons Release Plugin -->
     <commons.bc.version>4.4</commons.bc.version>
@@ -598,7 +607,7 @@
 
 
   <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check clirr:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -771,7 +780,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.15.0</version>
+        <version>3.16.0</version>
         <configuration>
           <targetJdk>${maven.compiler.target}</targetJdk>
         </configuration>
@@ -800,7 +809,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
             <executions>
               <execution>
                 <id>prepare-checkout</id>

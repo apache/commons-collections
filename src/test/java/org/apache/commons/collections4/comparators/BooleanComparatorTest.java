@@ -21,13 +21,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for {@link BooleanComparator}.
- *
  */
 @SuppressWarnings("boxing")
 public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
@@ -35,8 +36,8 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // conventional
     // ------------------------------------------------------------------------
 
-    public BooleanComparatorTest(final String testName) {
-        super(testName);
+    public BooleanComparatorTest() {
+        super(BooleanComparatorTest.class.getSimpleName());
     }
 
     // collections testing framework
@@ -73,7 +74,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-
     public void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
         allTests(false, BooleanComparator.booleanComparator(false));
@@ -130,35 +130,13 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
-        try {
-            comp.compare(null, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            comp.compare(Boolean.TRUE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            comp.compare(Boolean.FALSE, null);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            comp.compare(null, Boolean.TRUE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            comp.compare(null, Boolean.FALSE);
-            fail("Expected NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, null), "Expected NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.TRUE, null), "Expected NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.FALSE, null), "Expected NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.TRUE), "Expected NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.FALSE), "Expected NullPointerException")
+        );
     }
+
 }

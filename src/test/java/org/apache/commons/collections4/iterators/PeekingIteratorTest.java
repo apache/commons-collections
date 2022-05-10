@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PeekingIterator.
@@ -34,15 +37,15 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public PeekingIteratorTest(final String testName) {
-        super(testName);
+    public PeekingIteratorTest() {
+        super(PeekingIteratorTest.class.getSimpleName());
     }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
         testList = new ArrayList<>(Arrays.asList((E[]) testArray));
@@ -62,7 +65,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     public boolean supportsRemove() {
         return true;
     }
-
 
     @Test
     public void testEmpty() {
@@ -105,12 +107,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(it.hasNext());
         assertNull(it.peek());
 
-        try {
-            it.element();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> it.element());
     }
 
     @Test
@@ -122,12 +119,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertTrue(it.hasNext());
         assertEquals("b", it.peek());
 
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
     private void validate(final Iterator<E> iter, final E... items) {

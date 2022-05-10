@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.collections4.map.LinkedMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test.
@@ -28,8 +29,8 @@ import org.apache.commons.collections4.map.LinkedMap;
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
-    public MapBackedSet2Test(final String testName) {
-        super(testName);
+    public MapBackedSet2Test() {
+        super(MapBackedSet2Test.class.getSimpleName());
     }
 
     @Override
@@ -47,6 +48,7 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testOrdering() {
         final Set<E> set = setupSet();
@@ -80,10 +82,12 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
         }
     }
 
+    @Test
     @Override
     public void testCanonicalEmptyCollectionExists() {
     }
 
+    @Test
     @Override
     public void testCanonicalFullCollectionExists() {
     }

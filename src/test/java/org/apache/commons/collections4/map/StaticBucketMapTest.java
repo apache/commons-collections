@@ -16,9 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests.
@@ -27,11 +26,11 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public StaticBucketMapTest(final String name) {
-        super(name);
+    public StaticBucketMapTest() {
+        super(StaticBucketMapTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(StaticBucketMapTest.class);
     }
 
@@ -60,6 +59,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     // Bugzilla 37567
+    @Test
     @SuppressWarnings("unchecked")
     public void test_get_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
@@ -72,6 +72,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void test_containsKey_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
@@ -84,6 +85,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void test_containsValue_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);

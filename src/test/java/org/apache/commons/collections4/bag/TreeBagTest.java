@@ -16,27 +16,26 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
  * implementation.
- *
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TreeBagTest(final String testName) {
-        super(testName);
+    public TreeBagTest() {
+        super(TreeBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TreeBagTest.class);
     }
-
 
     @Override
     public SortedBag<T> makeObject() {
@@ -53,37 +52,28 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         return bag;
     }
 
+    @Test
     public void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
-            bag.add(new Object());
-            fail("IllegalArgumentException expected");
-        } catch(final IllegalArgumentException iae) {
-            // expected;
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> bag.add(new Object()));
     }
 
+    @Test
     public void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
-        try {
-            bag.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+
+        assertThrows(NullPointerException.class, () -> bag.add(null));
 
         final Bag<String> bag2 = new TreeBag<>(String::compareTo);
-        try {
-            // jdk bug: adding null to an empty TreeMap works
-            // thus ensure that the bag is not empty before adding null
-            bag2.add("a");
-            bag2.add(null);
-            fail("NullPointerException expected");
-        } catch(final NullPointerException npe) {
-            // expected;
-        }
+        // jdk bug: adding null to an empty TreeMap works
+        // thus ensure that the bag is not empty before adding null
+        bag2.add("a");
+
+        assertThrows(NullPointerException.class, () -> bag2.add(null));
     }
 
+    @Test
     public void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);
@@ -104,4 +94,5 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 //        bag = makeFullCollection();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TreeBag.fullCollection.version4.obj");
 //    }
+
 }

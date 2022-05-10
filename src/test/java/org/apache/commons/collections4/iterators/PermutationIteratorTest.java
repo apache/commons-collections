@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,6 +25,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for PermutationIterator.
@@ -35,11 +40,11 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     protected Character[] testArray = { 'A', 'B', 'C' };
     protected List<Character> testList;
 
-    public PermutationIteratorTest(final String testName) {
-        super(testName);
+    public PermutationIteratorTest() {
+        super(PermutationIteratorTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() {
         testList = new ArrayList<>();
         testList.addAll(Arrays.asList(testArray));
@@ -66,7 +71,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         return new PermutationIterator<>(testList);
     }
 
-
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationResultSize() {
         int factorial = 1;
@@ -88,6 +93,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     /**
      * test checking that all the permutations are returned
      */
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationExhaustivity() {
         final List<Character> perm1 = new ArrayList<>();
@@ -138,6 +144,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     /**
      * test checking that all the permutations are returned only once.
      */
+    @Test
     public void testPermutationUnicity() {
         final List<List<Character>> resultsList = new ArrayList<>();
         final Set<List<Character>> resultsSet = new HashSet<>();
@@ -153,6 +160,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         assertEquals(6, resultsSet.size());
     }
 
+    @Test
     public void testPermutationException() {
         final List<List<Character>> resultsList = new ArrayList<>();
 
@@ -162,14 +170,10 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
             resultsList.add(permutation);
         }
         //asking for another permutation should throw an exception
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
+    @Test
     public void testPermutatorHasMore() {
         final PermutationIterator<Character> it = makeObject();
         for (int i = 0; i < 6; i++) {
@@ -179,6 +183,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         assertFalse(it.hasNext());
     }
 
+    @Test
     public void testEmptyCollection() {
         final PermutationIterator<Character> it = makeEmptyIterator();
         // there is one permutation for an empty set: 0! = 1
@@ -189,4 +194,5 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
         assertFalse(it.hasNext());
     }
+
 }

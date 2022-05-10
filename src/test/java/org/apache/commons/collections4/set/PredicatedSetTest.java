@@ -16,11 +16,14 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -30,8 +33,8 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
-    public PredicatedSetTest(final String testName) {
-        super(testName);
+    public PredicatedSetTest() {
+        super(PredicatedSetTest.class.getSimpleName());
     }
 
  //-------------------------------------------------------------------
@@ -62,24 +65,23 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         return decorateSet(new HashSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
         assertNotNull("returned set should not be null", set.decorated());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
         final Integer i = Integer.valueOf(3);
-        try {
-            set.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.add((E) i),
+                "Integer should fail string predicate.");
         assertFalse("Collection shouldn't contain illegal element", set.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Set<E> set = makeTestSet();
@@ -88,12 +90,8 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            set.addAll(elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
+                "Integer should fail string predicate.");
         assertFalse("Set shouldn't contain illegal element", set.contains("one"));
         assertFalse("Set shouldn't contain illegal element", set.contains("two"));
         assertFalse("Set shouldn't contain illegal element", set.contains(Integer.valueOf(3)));

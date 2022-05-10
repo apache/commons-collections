@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,7 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -40,8 +43,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     protected Collection<E> two;
 
-    public CompositeCollectionTest(final String name) {
-        super(name);
+    public CompositeCollectionTest() {
+        super(CompositeCollectionTest.class.getSimpleName());
     }
 
     @Override
@@ -144,6 +147,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two = new HashSet<>();
     }
 
+    @Test
     @SuppressWarnings({ "unchecked", "serial" })
     public void testAddAllMutator() {
         setUpTest();
@@ -180,6 +184,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(one.contains("foo"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddAllToCollection() {
         setUpTest();
@@ -191,6 +196,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertEquals(c.size(), toCollection.size());
     }
 
+    @Test
     @SuppressWarnings({ "unchecked", "serial" })
     public void testAddMutator() {
         setUpTest();
@@ -226,7 +232,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(one.contains("foo"));
     }
 
-
+    @Test
     @SuppressWarnings("unchecked")
     public void testClear() {
         setUpTest();
@@ -239,6 +245,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(c.isEmpty());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testContainsAll() {
         setUpTest();
@@ -249,27 +256,31 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(c.containsAll(null));
     }
 
+    @Test
     public void testAddNullList() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
+    @Test
     public void testAddNullLists2Args() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
+    @Test
     public void testAddNullListsVarArgs() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
-        Assert.assertEquals(0, cc.size());
+        Assertions.assertEquals(0, cc.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIsEmpty() {
         setUpTest();
@@ -281,6 +292,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(c.isEmpty());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIterator() {
         setUpTest();
@@ -298,6 +310,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(two.contains(next));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testMultipleCollectionsSize() {
         setUpTest();
@@ -311,6 +324,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertEquals(set.size() + other.size(), c.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemove() {
         setUpMutatorTest();
@@ -324,6 +338,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(two.contains("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveAll() {
         setUpMutatorTest();
@@ -346,6 +361,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     /**
      * @since 4.4
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveIf() {
         setUpMutatorTest();
@@ -365,6 +381,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(two.contains("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
         setUpMutatorTest();
@@ -377,6 +394,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertEquals(2, c.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRetainAll() {
         setUpTest();
@@ -396,6 +414,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(one.contains("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSize() {
         setUpTest();
@@ -406,6 +425,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertEquals(set.size(), c.size());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testToCollection() {
         setUpTest();
@@ -423,15 +443,13 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      * Override testUnsupportedRemove, since the default impl expects removeAll,
      * retainAll and iterator().remove to throw
      */
+    @Test
     @Override
     public void testUnsupportedRemove() {
         resetFull();
-        try {
-            getCollection().remove(null);
-            fail("remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove(null));
+
         verify();
     }
 

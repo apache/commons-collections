@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,16 +25,16 @@ import java.util.Collection;
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.list.FixedSizeList;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBoundedCollection} implementation.
- *
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableBoundedCollectionTest(final String testName) {
-        super(testName);
+    public UnmodifiableBoundedCollectionTest() {
+        super(UnmodifiableBoundedCollectionTest.class.getSimpleName());
     }
 
     @Override
@@ -78,20 +80,18 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         return "4";
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final BoundedCollection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));
 
-        try {
-            UnmodifiableBoundedCollection.unmodifiableBoundedCollection(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableBoundedCollection.unmodifiableBoundedCollection(null));
     }
 
 }

@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -33,11 +34,11 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
-    public UnmodifiableSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableSetTest() {
+        super(UnmodifiableSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableSetTest.class);
     }
 
@@ -63,22 +64,19 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return false;
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Set<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSet.unmodifiableSet(set));
 
-        try {
-            UnmodifiableSet.unmodifiableSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSet.unmodifiableSet(null));
     }
-
 
     @Override
     public String getCompatibilityVersion() {

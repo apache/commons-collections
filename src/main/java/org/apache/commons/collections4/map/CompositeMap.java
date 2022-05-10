@@ -47,7 +47,7 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  */
 public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {
 
-    private static final Map[] EMPTY_MAP_ARRAY = new Map[0];
+    private static final Map[] EMPTY_MAP_ARRAY = {};
 
     /** Serialization version */
     private static final long serialVersionUID = -6096931280583808322L;

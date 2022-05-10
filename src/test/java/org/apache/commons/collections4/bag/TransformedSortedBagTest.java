@@ -16,12 +16,11 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link TransformedSortedBag}
@@ -31,11 +30,11 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TransformedSortedBagTest(final String testName) {
-        super(testName);
+    public TransformedSortedBagTest() {
+        super(TransformedSortedBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedSortedBagTest.class);
     }
 
@@ -46,11 +45,12 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         return TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
@@ -61,9 +61,10 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     }
 
+    @Test
     public void testTransformedBag_decorateTransform() {
         final TreeBag<T> originalBag = new TreeBag<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {
             originalBag.add((T) el);
         }

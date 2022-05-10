@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,7 +84,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     public void singleElementArrayToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(predicate);
-        Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
+        Assertions.assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(
                 Collections.<Predicate<T>>singleton(predicate));
-        Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
+        Assertions.assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
     }
 
     /**
@@ -143,4 +143,5 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
         coll.add(null);
         assertThrows(NullPointerException.class, () -> getPredicateInstance(coll));
     }
+
 }

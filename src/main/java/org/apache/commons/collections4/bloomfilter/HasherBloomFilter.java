@@ -37,7 +37,7 @@ import org.apache.commons.collections4.iterators.IteratorChain;
  */
 public class HasherBloomFilter extends AbstractBloomFilter {
     /** The bit representation for an empty Bloom filter. */
-    private static final long[] EMPTY = new long[0];
+    private static final long[] EMPTY = {};
 
     /**
      * The internal hasher representation.
@@ -80,9 +80,7 @@ public class HasherBloomFilter extends AbstractBloomFilter {
     public boolean contains(final Hasher hasher) {
         verifyHasher(hasher);
         final Set<Integer> set = new TreeSet<>();
-        hasher.iterator(getShape()).forEachRemaining((IntConsumer) idx -> {
-            set.add(idx);
-        });
+        hasher.iterator(getShape()).forEachRemaining((IntConsumer) set::add);
         final OfInt iter = this.hasher.iterator(getShape());
         while (iter.hasNext()) {
             final int idx = iter.nextInt();
