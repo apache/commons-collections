@@ -148,7 +148,7 @@
       Update actions/checkout from 1 to 3 #166 #173 #183 #193 #262 #264 #285.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.2 #214 #225 #239 #266 #294.
+      Bump actions/cache from 2 to 3.0.3 #214 #225 #239 #266 #294.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump codecov/codecov-action from 2 to 3 #297.
