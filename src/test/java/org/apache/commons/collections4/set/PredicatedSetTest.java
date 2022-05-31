@@ -37,8 +37,6 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         super(PredicatedSetTest.class.getSimpleName());
     }
 
- //-------------------------------------------------------------------
-
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected PredicatedSet<E> decorateSet(final Set<E> set, final Predicate<? super E> predicate) {
@@ -55,8 +53,6 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     public E[] getFullElements() {
         return (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
-
-//--------------------------------------------------------------------
 
     protected Predicate<E> testPredicate =
         o -> o instanceof String;

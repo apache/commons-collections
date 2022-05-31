@@ -50,7 +50,6 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
         return new SynchronizedQueue<>(queue);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -103,8 +102,6 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
             return decorated().equals(object);
         }
     }
-
-    // -----------------------------------------------------------------------
 
     @Override
     public int hashCode() {

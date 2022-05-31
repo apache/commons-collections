@@ -40,14 +40,12 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         return BulkTest.makeSuite(TransformedMultiValuedMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public MultiValuedMap<K, V> makeObject() {
         return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
                 TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
-    // -----------------------------------------------------------------------
     @Test
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {
@@ -93,7 +91,6 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
 
-    // -----------------------------------------------------------------------
     @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {

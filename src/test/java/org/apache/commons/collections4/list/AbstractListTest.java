@@ -1193,7 +1193,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 
-    // -----------------------------------------------------------------------
     public BulkTest bulkTestListIterator() {
         return new TestListIterator();
     }

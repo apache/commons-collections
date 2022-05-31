@@ -82,7 +82,6 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);

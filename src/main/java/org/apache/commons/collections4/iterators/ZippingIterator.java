@@ -47,9 +47,6 @@ public class ZippingIterator<E> implements Iterator<E> {
     /** The last iterator which was used for next(). */
     private Iterator<? extends E> lastReturned;
 
-    // Constructors
-    // ----------------------------------------------------------------------
-
     /**
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
@@ -95,9 +92,6 @@ public class ZippingIterator<E> implements Iterator<E> {
         }
         this.iterators = FluentIterable.of(list).loop().iterator();
     }
-
-    // Iterator Methods
-    // -------------------------------------------------------------------
 
     /**
      * Returns {@code true} if any child iterator has remaining elements.

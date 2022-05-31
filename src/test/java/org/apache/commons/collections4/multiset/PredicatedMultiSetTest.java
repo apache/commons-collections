@@ -42,8 +42,6 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return BulkTest.makeSuite(PredicatedMultiSetTest.class);
     }
 
-    //--------------------------------------------------------------------------
-
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
     }
@@ -62,8 +60,6 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     protected MultiSet<T> makeTestMultiSet() {
         return decorateMultiSet(new HashMultiSet<T>(), stringPredicate());
     }
-
-    //--------------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")

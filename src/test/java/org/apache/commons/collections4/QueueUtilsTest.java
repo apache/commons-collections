@@ -38,8 +38,6 @@ public class QueueUtilsTest {
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
-    // ----------------------------------------------------------------------
-
     @Test
     public void testSynchronizedQueue() {
         final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());

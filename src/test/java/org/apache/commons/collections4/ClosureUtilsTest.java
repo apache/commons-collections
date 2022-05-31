@@ -67,9 +67,6 @@ public class ClosureUtilsTest {
         }
     }
 
-    // exceptionClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testExceptionClosure() {
         assertNotNull(ClosureUtils.exceptionClosure());
@@ -80,9 +77,6 @@ public class ClosureUtilsTest {
         );
     }
 
-    // nopClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testNopClosure() {
         final StringBuilder buf = new StringBuilder("Hello");
@@ -91,9 +85,6 @@ public class ClosureUtilsTest {
         ClosureUtils.nopClosure().execute("Hello");
         assertEquals("Hello", buf.toString());
     }
-
-    // invokeClosure
-    //------------------------------------------------------------------
 
     @Test
     public void testInvokeClosure() {
@@ -104,9 +95,6 @@ public class ClosureUtilsTest {
         ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }
-
-    // forClosure
-    //------------------------------------------------------------------
 
     @Test
     public void testForClosure() {
@@ -119,9 +107,6 @@ public class ClosureUtilsTest {
         assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(3, null));
         assertSame(cmd, ClosureUtils.forClosure(1, cmd));
     }
-
-    // whileClosure
-    //------------------------------------------------------------------
 
     @Test
     public void testWhileClosure() {
@@ -139,9 +124,6 @@ public class ClosureUtilsTest {
         );
     }
 
-    // doWhileClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testDoWhileClosure() {
         MockClosure<Object> cmd = new MockClosure<>();
@@ -154,9 +136,6 @@ public class ClosureUtilsTest {
 
         assertThrows(NullPointerException.class, () -> ClosureUtils.doWhileClosure(null, null));
     }
-
-    // chainedClosure
-    //------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")
@@ -199,9 +178,6 @@ public class ClosureUtilsTest {
         );
     }
 
-    // ifClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testIfClosure() {
         MockClosure<Object> a = new MockClosure<>();
@@ -225,9 +201,6 @@ public class ClosureUtilsTest {
         assertEquals(0, a.count);
         assertEquals(1, b.count);
     }
-
-    // switchClosure
-    //------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")
@@ -304,9 +277,6 @@ public class ClosureUtilsTest {
         );
     }
 
-    // switchMapClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testSwitchMapClosure() {
         final MockClosure<String> a = new MockClosure<>();
@@ -344,9 +314,6 @@ public class ClosureUtilsTest {
         assertThrows(NullPointerException.class, () -> ClosureUtils.switchMapClosure(null));
     }
 
-    // asClosure
-    //------------------------------------------------------------------
-
     @Test
     public void testTransformerClosure() {
         final MockTransformer<Object> mock = new MockTransformer<>();
@@ -358,9 +325,6 @@ public class ClosureUtilsTest {
 
         assertEquals(ClosureUtils.nopClosure(), ClosureUtils.asClosure(null));
     }
-
-    // misc tests
-    //------------------------------------------------------------------
 
     /**
      * Test that all Closure singletons hold singleton pattern in

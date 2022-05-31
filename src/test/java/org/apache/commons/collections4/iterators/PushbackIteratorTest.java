@@ -64,8 +64,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
-    // -----------------------------------------------------------------------
-
     @Test
     public void testNormalIteration() {
         final PushbackIterator<E> iter = makeObject();

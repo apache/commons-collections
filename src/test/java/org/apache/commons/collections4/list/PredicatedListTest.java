@@ -37,8 +37,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         super(PredicatedListTest.class.getSimpleName());
     }
 
- //-------------------------------------------------------------------
-
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected List<E> decorateList(final List<E> list, final Predicate<E> predicate) {
@@ -55,8 +53,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     public E[] getFullElements() {
         return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
     }
-
-//--------------------------------------------------------------------
 
     protected Predicate<E> testPredicate =
         o -> o instanceof String;

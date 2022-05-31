@@ -46,7 +46,6 @@ public class TransformedSplitMapTest extends BulkTest {
         super(TransformedSplitMapTest.class.getSimpleName());
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
@@ -89,8 +88,6 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(Integer.valueOf(0), map2.remove("0"));
         assertEquals(--sz2, map2.size());
     }
-
-    // -----------------------------------------------------------------------
 
     @Test
     public void testMapIterator() {

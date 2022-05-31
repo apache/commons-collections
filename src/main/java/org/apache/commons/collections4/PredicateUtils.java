@@ -75,9 +75,6 @@ public class PredicateUtils {
      */
     private PredicateUtils() {}
 
-    // Simple predicates
-    //-----------------------------------------------------------------------------
-
     /**
      * Gets a Predicate that always throws an exception.
      * This could be useful during testing as a placeholder.
@@ -237,9 +234,6 @@ public class PredicateUtils {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
         return asPredicate(InvokerTransformer.<Object, Boolean>invokerTransformer(methodName, paramTypes, args));
     }
-
-    // Boolean combinations
-    //-----------------------------------------------------------------------------
 
     /**
      * Create a new Predicate that returns true only if both of the specified
@@ -451,9 +445,6 @@ public class PredicateUtils {
         return NotPredicate.notPredicate(predicate);
     }
 
-    // Adaptors
-    //-----------------------------------------------------------------------------
-
     /**
      * Create a new Predicate that wraps a Transformer. The Transformer must
      * return either Boolean.TRUE or Boolean.FALSE otherwise a PredicateException
@@ -468,9 +459,6 @@ public class PredicateUtils {
     public static <T> Predicate<T> asPredicate(final Transformer<? super T, Boolean> transformer) {
         return TransformerPredicate.transformerPredicate(transformer);
     }
-
-    // Null handlers
-    //-----------------------------------------------------------------------------
 
     /**
      * Gets a Predicate that throws an exception if the input object is null,

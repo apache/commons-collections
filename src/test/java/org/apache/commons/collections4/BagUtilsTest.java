@@ -42,8 +42,6 @@ public class BagUtilsTest {
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
-    //----------------------------------------------------------------------
-
     @Test
     public void testSynchronizedBag() {
         final Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<>());

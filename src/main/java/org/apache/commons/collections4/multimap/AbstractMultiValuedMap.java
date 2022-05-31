@@ -91,7 +91,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         this.map = (Map<K, Collection<V>>) Objects.requireNonNull(map, "map");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Gets the map being wrapped.
      *
@@ -115,7 +114,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     protected abstract Collection<V> createCollection();
 
-    // -----------------------------------------------------------------------
     @Override
     public boolean containsKey(final Object key) {
         return getMap().containsKey(key);
@@ -380,8 +378,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     public String toString() {
         return getMap().toString();
     }
-
-    // -----------------------------------------------------------------------
 
     /**
      * Wrapped collection to handle add and remove on the collection returned

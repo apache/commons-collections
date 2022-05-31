@@ -45,8 +45,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return BulkTest.makeSuite(PredicatedNavigableSetTest.class);
     }
 
-    //-------------------------------------------------------------------
-
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     @Override
@@ -60,7 +58,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return PredicatedNavigableSet.predicatedNavigableSet(set, truePredicate);
     }
 
-//--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         o -> o instanceof String && ((String) o).startsWith("A");
 

@@ -33,15 +33,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SuppressWarnings("boxing")
 public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
-    // conventional
-    // ------------------------------------------------------------------------
-
     public BooleanComparatorTest() {
         super(BooleanComparatorTest.class.getSimpleName());
     }
-
-    // collections testing framework
-    // ------------------------------------------------------------------------
 
     @Override
     public Comparator<Boolean> makeObject() {
@@ -62,9 +56,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/BooleanComparator.version4.obj");
 //    }
-
-    // tests
-    // ------------------------------------------------------------------------
 
     @Test
     public void testConstructors() {
@@ -95,9 +86,6 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         assertNotEquals(new BooleanComparator(), new BooleanComparator(true));
         assertNotEquals(new BooleanComparator(true), new BooleanComparator(false));
     }
-
-    // utilities
-    // ------------------------------------------------------------------------
 
     protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);

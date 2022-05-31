@@ -40,8 +40,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return BulkTest.makeSuite(UnmodifiableTrieTest.class);
     }
 
-    //-------------------------------------------------------------------
-
     @Override
     public Trie<String, V> makeObject() {
         return UnmodifiableTrie.unmodifiableTrie(new PatriciaTrie<V>());

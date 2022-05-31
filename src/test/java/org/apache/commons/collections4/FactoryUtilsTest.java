@@ -40,9 +40,6 @@ import org.junit.jupiter.api.Test;
  */
 public class FactoryUtilsTest {
 
-    // exceptionFactory
-    //------------------------------------------------------------------
-
     @Test
     public void testExceptionFactory() {
         assertNotNull(FactoryUtils.exceptionFactory());
@@ -51,9 +48,6 @@ public class FactoryUtilsTest {
         assertThrows(FunctorException.class, () -> FactoryUtils.exceptionFactory().create());
     }
 
-    // nullFactory
-    //------------------------------------------------------------------
-
     @Test
     public void testNullFactory() {
         final Factory<Object> factory = FactoryUtils.nullFactory();
@@ -61,9 +55,6 @@ public class FactoryUtilsTest {
         final Object created = factory.create();
         assertNull(created);
     }
-
-    // constantFactory
-    //------------------------------------------------------------------
 
     @Test
     public void testConstantFactoryNull() {
@@ -81,9 +72,6 @@ public class FactoryUtilsTest {
         final Integer created = factory.create();
         assertSame(constant, created);
     }
-
-    // prototypeFactory
-    //------------------------------------------------------------------
 
     @Test
     public void testPrototypeFactoryNull() {
@@ -190,9 +178,6 @@ public class FactoryUtilsTest {
         }
     }
 
-    // instantiateFactory
-    //------------------------------------------------------------------
-
     @Test
     public void instantiateFactoryNull() {
         assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
@@ -230,9 +215,6 @@ public class FactoryUtilsTest {
         // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
     }
-
-    // misc tests
-    //------------------------------------------------------------------
 
     /**
      * Test that all Factory singletons hold singleton pattern in

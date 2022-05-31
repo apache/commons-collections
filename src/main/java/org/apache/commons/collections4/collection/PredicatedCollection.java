@@ -212,7 +212,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         /** The buffer containing rejected elements. */
         private final List<E> rejected = new ArrayList<>();
 
-        // -----------------------------------------------------------------------
         /**
          * Constructs a PredicatedCollectionBuilder with the specified Predicate.
          *

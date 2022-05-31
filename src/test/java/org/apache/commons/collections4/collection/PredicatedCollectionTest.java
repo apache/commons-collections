@@ -39,7 +39,6 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         super(PredicatedCollectionTest.class.getSimpleName());
     }
 
-   //------------------------------------------------------------------------
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Collection<E> decorateCollection(

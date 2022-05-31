@@ -2015,7 +2015,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     && parentNode[dataElement.ordinal()].rightNode[dataElement.ordinal()] == this;
         }
 
-        //-------------------------------------------------------------------
         /**
          * Gets the key.
          *

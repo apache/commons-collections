@@ -449,7 +449,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(6, makeFullMap().size());
     }
 
-    // -----------------------------------------------------------------------
     @Test
     @SuppressWarnings("unchecked")
     public void testMapEquals() {
@@ -843,11 +842,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
-    // -----------------------------------------------------------------------
-    // Manual serialization testing as this class cannot easily
-    // extend the AbstractTestMap
-    // -----------------------------------------------------------------------
-
+    /**
+     * Manual serialization testing as this class cannot easily extend the AbstractTestMap
+     */
     @Test
     public void testEmptyMapCompatibility() throws Exception {
         final MultiValuedMap<?, ?> map = makeObject();

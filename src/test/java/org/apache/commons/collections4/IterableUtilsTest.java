@@ -97,7 +97,6 @@ public class IterableUtilsTest {
 
     private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
-    // -----------------------------------------------------------------------
     @Test
     public void forEach() {
         final List<Integer> listA = new ArrayList<>();

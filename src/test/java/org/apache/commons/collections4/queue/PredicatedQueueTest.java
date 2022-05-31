@@ -39,8 +39,6 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         super(PredicatedQueueTest.class.getSimpleName());
     }
 
-    //---------------------------------------------------------------
-
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Queue<E> decorateCollection(final Queue<E> queue, final Predicate<E> predicate) {
@@ -68,8 +66,6 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         final List<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
         return list;
     }
-
-    //------------------------------------------------------------
 
     protected Predicate<E> testPredicate = o -> o instanceof String;
 

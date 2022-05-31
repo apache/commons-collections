@@ -54,8 +54,6 @@ public class SplitMapUtilsTest {
         }
     }
 
-    // -----------------------------------------------------------------------
-
     @Test
     public void testReadableMap() {
         final IterableMap<String, Integer> map = SplitMapUtils.readableMap(transformedMap);
