@@ -128,8 +128,6 @@ public class MapPerformance {
         System.out.println(name + (endMillis - startMillis));
     }
 
-    // ----------------------------------------------------------------------
-
     private static class DummyMap<K, V> implements Map<K, V> {
         @Override
         public void clear() {

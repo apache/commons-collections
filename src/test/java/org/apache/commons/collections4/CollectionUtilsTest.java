@@ -63,7 +63,6 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class CollectionUtilsTest extends MockTestCase {
 
-    // -----------------------------------------------------------------------
     private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
     /**
@@ -179,7 +178,6 @@ public class CollectionUtilsTest extends MockTestCase {
         verify();
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void addIgnoreNull() {
         final Set<String> set = new HashSet<>();
@@ -1018,7 +1016,6 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.next()).andReturn(t);
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void predicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
@@ -1386,7 +1383,6 @@ public class CollectionUtilsTest extends MockTestCase {
         assertThrows(NullPointerException.class, () -> CollectionUtils.intersection(list, null));
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testIsEmptyWithEmptyCollection() {
         assertTrue(CollectionUtils.isEmpty(new ArrayList<>()));
@@ -1897,8 +1893,6 @@ public class CollectionUtilsTest extends MockTestCase {
         assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.removeRange(list, 0, 2));
     }
 
-    // -----------------------------------------------------------------------
-    //Up to here
     @Test
     public void testRetainAll() {
         final List<String> base = new ArrayList<>();
@@ -2024,7 +2018,6 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.size(list.iterator()));
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testSize_List() {
         List<String> list = null;
@@ -2116,7 +2109,6 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.sizeIsEmpty(map));
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testSizeIsEmpty_Null() {
         assertTrue(CollectionUtils.sizeIsEmpty(null));
@@ -2198,7 +2190,6 @@ public class CollectionUtilsTest extends MockTestCase {
                 "Expecting NullPointerException for null collection.");
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testTransformedCollection() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();

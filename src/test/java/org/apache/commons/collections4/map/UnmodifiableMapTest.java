@@ -37,8 +37,6 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(UnmodifiableMapTest.class.getSimpleName());
     }
 
-    //-------------------------------------------------------------------
-
     @Override
     public IterableMap<K, V> makeObject() {
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(new HashMap<K, V>());

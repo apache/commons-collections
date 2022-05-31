@@ -44,8 +44,6 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         return BulkTest.makeSuite(PredicatedSortedBagTest.class);
     }
 
-    //--------------------------------------------------------------------------
-
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
     }
@@ -64,8 +62,6 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     protected SortedBag<T> makeTestBag() {
         return decorateBag(new TreeBag<T>(), stringPredicate());
     }
-
-    //--------------------------------------------------------------------------
 
     @Test
     public void testDecorate() {

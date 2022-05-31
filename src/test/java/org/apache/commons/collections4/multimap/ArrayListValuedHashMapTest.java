@@ -43,13 +43,11 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         return BulkTest.makeSuite(ArrayListValuedHashMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public ListValuedMap<K, V> makeObject() {
         return new ArrayListValuedHashMap<>();
     }
 
-    // -----------------------------------------------------------------------
     @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapAdd() {

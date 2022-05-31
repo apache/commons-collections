@@ -30,8 +30,6 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  */
 public class UniqueFilterIterator<E> extends FilterIterator<E> {
 
-    //-------------------------------------------------------------------------
-
     /**
      *  Constructs a new {@code UniqueFilterIterator}.
      *

@@ -38,8 +38,6 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
         super(key, value);
     }
 
-    // Map.Entry interface
-    //-------------------------------------------------------------------------
     /**
      * Sets the value stored in this {@code Map.Entry}.
      * <p>

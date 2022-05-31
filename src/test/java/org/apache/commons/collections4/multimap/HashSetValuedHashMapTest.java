@@ -41,7 +41,6 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         return BulkTest.makeSuite(HashSetValuedHashMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public SetValuedMap<K, V> makeObject() {
         return new HashSetValuedHashMap<>();
@@ -57,7 +56,6 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         return true;
     }
 
-    // -----------------------------------------------------------------------
     @Test
     @SuppressWarnings("unchecked")
     public void testSetValuedMapAdd() {

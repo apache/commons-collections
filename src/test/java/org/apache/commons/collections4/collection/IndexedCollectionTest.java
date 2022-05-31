@@ -40,8 +40,6 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         super(IndexedCollectionTest.class.getSimpleName());
     }
 
-   //------------------------------------------------------------------------
-
     protected Collection<String> decorateCollection(final Collection<String> collection) {
         return IndexedCollection.nonUniqueIndexedCollection(collection, new IntegerTransformer());
     }
@@ -102,8 +100,6 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         // FIXME: support canonical tests
         return true;
     }
-
-    //------------------------------------------------------------------------
 
     @Test
     public void testAddedObjectsCanBeRetrievedByKey() throws Exception {

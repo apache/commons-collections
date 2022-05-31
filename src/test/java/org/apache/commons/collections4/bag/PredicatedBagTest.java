@@ -42,8 +42,6 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         return BulkTest.makeSuite(PredicatedBagTest.class);
     }
 
-    //--------------------------------------------------------------------------
-
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
     }
@@ -62,8 +60,6 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
     protected Bag<T> makeTestBag() {
         return decorateBag(new HashBag<T>(), stringPredicate());
     }
-
-    //--------------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")

@@ -85,7 +85,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return sl;
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
@@ -100,7 +99,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         this.set = Objects.requireNonNull(set, "set");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view as a Set.
      *
@@ -110,7 +108,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Adds an element to the list if it is not already present.
      * <p>
@@ -197,7 +194,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return super.addAll(index, temp);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Sets the value at the specified index avoiding duplicates.
      * <p>
@@ -356,7 +352,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return subSet;
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Inner class iterator.
      */

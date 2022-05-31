@@ -29,8 +29,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TrieUtilsTest {
 
-    //----------------------------------------------------------------------
-
     @Test
     public void testUnmodifiableTrie() {
         final Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());

@@ -38,8 +38,6 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
         super(SynchronizedQueueTest.class.getSimpleName());
     }
 
-    // -----------------------------------------------------------------------
-
     @Override
     public String getCompatibilityVersion() {
         return "4.2";

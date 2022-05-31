@@ -47,7 +47,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return BulkTest.makeSuite(UnmodifiableSortedSetTest.class);
     }
 
-    //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {
         return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<E>());
@@ -69,7 +68,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return false;
     }
 
-    //--------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();

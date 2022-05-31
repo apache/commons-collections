@@ -105,7 +105,6 @@ public class FluentIterableTest {
 
     private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
-    // -----------------------------------------------------------------------
     @Test
     public void factoryMethodOf() {
         FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);

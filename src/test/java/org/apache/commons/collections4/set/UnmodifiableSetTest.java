@@ -42,7 +42,6 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return BulkTest.makeSuite(UnmodifiableSetTest.class);
     }
 
-    //-------------------------------------------------------------------
     @Override
     public Set<E> makeObject() {
         return UnmodifiableSet.unmodifiableSet(new HashSet<E>());

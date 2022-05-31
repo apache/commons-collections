@@ -56,7 +56,6 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         super(map);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     protected Map<K, List<V>> getMap() {
@@ -70,7 +69,6 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     @Override
     protected abstract List<V> createCollection();
 
-    // -----------------------------------------------------------------------
     /**
      * Gets the list of values associated with the specified key. This would
      * return an empty list in case the mapping is not present
@@ -102,7 +100,6 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         return ListUtils.emptyIfNull(getMap().remove(key));
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Wrapped list to handle add and remove on the list returned by get(object)
      */

@@ -58,7 +58,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         return (E[]) new Object[] { "1", "2", "3", "4" };
     }
 
-    //-----------------------------------------------------------------------------
     /**
      * Run stock collection tests without Mutator, so turn off add, remove
      */
@@ -76,8 +75,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public Collection<E> makeConfirmedCollection() {
         return new HashSet<>();
     }
-
-    //--------------------------------------------------------------------------
 
     /**
      * Full collection should look like a collection with 4 elements

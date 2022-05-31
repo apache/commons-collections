@@ -46,7 +46,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         return BulkTest.makeSuite(UnmodifiableNavigableSetTest.class);
     }
 
-    //-------------------------------------------------------------------
     @Override
     public NavigableSet<E> makeObject() {
         return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<>());
@@ -68,7 +67,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         return false;
     }
 
-    //--------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();

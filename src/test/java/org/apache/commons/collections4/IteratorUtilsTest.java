@@ -511,7 +511,6 @@ public class IteratorUtilsTest {
         assertThrows(NullPointerException.class, () -> IteratorUtils.collatedIterator(null, arrayList.iterator(), arrayList.listIterator(), null));
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test empty iterator
      */
@@ -534,7 +533,6 @@ public class IteratorUtilsTest {
         );
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test empty list iterator
      */
@@ -562,7 +560,6 @@ public class IteratorUtilsTest {
         );
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test empty map iterator
      */
@@ -589,7 +586,6 @@ public class IteratorUtilsTest {
         );
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test empty map iterator
      */
@@ -614,7 +610,6 @@ public class IteratorUtilsTest {
         );
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test empty map iterator
      */
@@ -686,7 +681,6 @@ public class IteratorUtilsTest {
         assertEquals(1, (int) IteratorUtils.first(iterator));
     }
 
-    // -----------------------------------------------------------------------
     @Test
     public void testForEach() {
         final List<Integer> listA = new ArrayList<>();
@@ -994,7 +988,6 @@ public class IteratorUtilsTest {
                 "remove() should throw an UnsupportedOperationException");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Test next() and hasNext() for an immutable Iterator.
      */

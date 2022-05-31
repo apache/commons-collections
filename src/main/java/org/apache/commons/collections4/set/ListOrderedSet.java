@@ -125,7 +125,6 @@ public class ListOrderedSet<E>
         return new ListOrderedSet<>(set, list);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Constructs a new empty {@code ListOrderedSet} using a
      * {@code HashSet} and an {@code ArrayList} internally.
@@ -163,7 +162,6 @@ public class ListOrderedSet<E>
         setOrder = Objects.requireNonNull(list, "list");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view of the order of the Set.
      *
@@ -173,7 +171,6 @@ public class ListOrderedSet<E>
         return UnmodifiableList.unmodifiableList(setOrder);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public void clear() {
         decorated().clear();
@@ -268,10 +265,6 @@ public class ListOrderedSet<E>
     public <T> T[] toArray(final T a[]) {
         return setOrder.toArray(a);
     }
-
-    // -----------------------------------------------------------------------
-    // Additional methods that comply to the {@link List} interface
-    // -----------------------------------------------------------------------
 
     /**
      * Returns the element at the specified position in this ordered set.
@@ -371,7 +364,6 @@ public class ListOrderedSet<E>
         return setOrder.toString();
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Internal iterator handle remove.
      */

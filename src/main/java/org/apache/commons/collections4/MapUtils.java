@@ -274,8 +274,6 @@ public class MapUtils {
         return applyDefaultFunction(map, key, MapUtils::getBoolean, defaultFunction);
     }
 
-    // Type safe primitive getters
-    // -------------------------------------------------------------------------
     /**
      * Gets a boolean from a Map in a null-safe manner.
      * <p>
@@ -294,8 +292,6 @@ public class MapUtils {
         return Boolean.TRUE.equals(getBoolean(map, key));
     }
 
-    // Type safe primitive getters with default values
-    // -------------------------------------------------------------------------
     /**
      * Gets a boolean from a Map in a null-safe manner, using the default value if the conversion fails.
      * <p>
@@ -979,7 +975,6 @@ public class MapUtils {
         return applyDefaultValue(map, key, MapUtils::getNumber, defaultValue);
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Gets from a Map in a null-safe manner.
      *
@@ -996,7 +991,6 @@ public class MapUtils {
         return null;
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Looks up the given key in the given map, converting null into the given default value.
      *
@@ -1175,8 +1169,6 @@ public class MapUtils {
         return applyDefaultValue(map, key, MapUtils::getString, defaultValue);
     }
 
-    // Misc
-    // -----------------------------------------------------------------------
     /**
      * Inverts the supplied map returning a new HashMap such that the keys of the input are swapped with the values.
      * <p>
@@ -1297,8 +1289,6 @@ public class MapUtils {
     public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map, final Factory<? extends V> factory) {
         return LazyMap.lazyMap(map, factory);
     }
-
-    // -----------------------------------------------------------------------
 
     /**
      * Returns a "lazy" map whose values will be created on demand.
@@ -1623,7 +1613,6 @@ public class MapUtils {
         }
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Puts all the keys and values from the specified array into the map.
      * <p>
@@ -1745,7 +1734,6 @@ public class MapUtils {
         return map == null ? 0 : map.size();
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Returns a synchronized map backed by the given map.
      * <p>
@@ -1776,7 +1764,6 @@ public class MapUtils {
         return Collections.synchronizedMap(map);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted map backed by the given sorted map.
      * <p>
@@ -1829,7 +1816,6 @@ public class MapUtils {
         return map;
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Gets a new Properties object initialized with the values from a Map. A null input will return an empty properties
      * object.
@@ -1947,8 +1933,6 @@ public class MapUtils {
         return UnmodifiableSortedMap.unmodifiableSortedMap(map);
     }
 
-    // Printing methods
-    // -------------------------------------------------------------------------
     /**
      * Prints the given map with nice line breaks.
      * <p>

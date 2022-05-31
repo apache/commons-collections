@@ -59,8 +59,6 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     private int lastReturned = -1;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs a new {@code CollatingIterator}. A comparator must be
      * set by calling {@link #setComparator(Comparator)} before invoking
@@ -154,8 +152,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         }
     }
 
-    // Public Methods
-    // ----------------------------------------------------------------------
     /**
      * Adds the given {@link Iterator} to the iterators being collated.
      *
@@ -217,8 +213,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         comparator = comp;
     }
 
-    // Iterator Methods
-    // -------------------------------------------------------------------
     /**
      * Returns {@code true} if any child iterator has remaining elements.
      *
@@ -279,8 +273,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         return lastReturned;
     }
 
-    // Private Methods
-    // -------------------------------------------------------------------
     /**
      * Initializes the collating state if it hasn't been already.
      */
