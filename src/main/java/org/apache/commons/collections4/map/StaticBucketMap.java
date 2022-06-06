@@ -208,7 +208,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             Node<K, V> n = buckets[hash];
 
             while (n != null) {
-                if (n.key == key || (n.key != null && n.key.equals(key))) {
+                if (Objects.equals(n.key, key)) {
                     return n.value;
                 }
 
@@ -232,7 +232,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             Node<K, V> n = buckets[hash];
 
             while (n != null) {
-                if (n.key == key || (n.key != null && n.key.equals(key))) {
+                if (Objects.equals(n.key, key)) {
                     return true;
                 }
 
@@ -255,7 +255,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
                 Node<K, V> n = buckets[i];
 
                 while (n != null) {
-                    if (n.value == value || (n.value != null && n.value.equals(value))) {
+                    if (Objects.equals(n.value, value)) {
                         return true;
                     }
 
@@ -295,7 +295,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             for (Node<K, V> next = n; next != null; next = next.next) {
                 n = next;
 
-                if (n.key == key || (n.key != null && n.key.equals(key))) {
+                if (Objects.equals(n.key, key)) {
                     final V returnVal = n.value;
                     n.value = value;
                     return returnVal;
@@ -328,7 +328,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             Node<K, V> prev = null;
 
             while (n != null) {
-                if (n.key == key || (n.key != null && n.key.equals(key))) {
+                if (Objects.equals(n.key, key)) {
                     // Remove this node from the linked list of nodes.
                     if (null == prev) {
                         // This node was the head, set the next node to be the new head.
@@ -647,7 +647,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             synchronized (locks[hash]) {
                 for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
                     final Object k = n.getKey();
-                    if ((k == obj) || ((k != null) && k.equals(obj))) {
+                    if (Objects.equals(k, obj)) {
                         StaticBucketMap.this.remove(k);
                         return true;
                     }

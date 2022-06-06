@@ -443,7 +443,7 @@ public class CollectionUtils {
             while (it.hasNext()) {
                 final Object p = it.next();
                 elementsAlreadySeen.add(p);
-                if (nextElement == null ? p == null : nextElement.equals(p)) {
+                if (Objects.equals(nextElement, p)) {
                     foundCurrentElement = true;
                     break;
                 }

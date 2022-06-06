@@ -134,10 +134,10 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * Returns true if both values are either null or equal.
+     * Delegates to {@link Objects#equals(Object, Object)}.
      */
     static boolean compare(final Object a, final Object b) {
-        return a == null ? b == null : a.equals(b);
+        return Objects.equals(a, b);
     }
 
     /**
