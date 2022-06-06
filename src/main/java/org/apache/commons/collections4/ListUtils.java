@@ -323,14 +323,12 @@ public class ListUtils {
 
         final Iterator<?> it1 = list1.iterator();
         final Iterator<?> it2 = list2.iterator();
-        Object obj1 = null;
-        Object obj2 = null;
 
         while (it1.hasNext() && it2.hasNext()) {
-            obj1 = it1.next();
-            obj2 = it2.next();
+            final Object obj1 = it1.next();
+            final Object obj2 = it2.next();
 
-            if (!(obj1 == null ? obj2 == null : obj1.equals(obj2))) {
+            if (!(Objects.equals(obj1, obj2))) {
                 return false;
             }
         }
