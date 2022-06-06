@@ -143,6 +143,9 @@
     <action dev="ggregory" type="add">
       Add github/codeql-action.
     </action>
+    <action issue="COLLECTIONS-811" dev="kinow" type="add" due-to="Ben Manes">
+      Integrate Guava testlib tests.
+    </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
