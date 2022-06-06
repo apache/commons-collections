@@ -97,6 +97,9 @@
     <action issue="COLLECTIONS-812" type="fix" dev="kinow" due-to="Ng Tsz Sum">
       Fix flaky EmptyPropertiesTest#testSave.
     </action>
+    <action type="fix" dev="ggregory" due-to="Steve Bosman">
+      Use java.lang.Objects#equals; eliminate a couple of nulls #307
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
