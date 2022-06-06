@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -1187,7 +1188,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return false;
                 }
                 otherValue = other.get(key3);
-                if (value3 == null ? otherValue != null : !value3.equals(otherValue)) {
+                if (!Objects.equals(value3, otherValue)) {
                     return false;
                 }
             case 2:
@@ -1195,7 +1196,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return false;
                 }
                 otherValue = other.get(key2);
-                if (value2 == null ? otherValue != null : !value2.equals(otherValue)) {
+                if (!Objects.equals(value2, otherValue)) {
                     return false;
                 }
             case 1:
@@ -1203,7 +1204,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return false;
                 }
                 otherValue = other.get(key1);
-                if (value1 == null ? otherValue != null : !value1.equals(otherValue)) {
+                if (!Objects.equals(value1, otherValue)) {
                     return false;
                 }
             }

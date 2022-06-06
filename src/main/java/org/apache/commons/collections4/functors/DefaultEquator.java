@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Equator;
 
@@ -57,11 +58,11 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
     }
 
     /**
-     * {@inheritDoc} Delegates to {@link Object#equals(Object)}.
+     * {@inheritDoc} Delegates to {@link Objects#equals(Object, Object)}.
      */
     @Override
     public boolean equate(final T o1, final T o2) {
-        return o1 == o2 || o1 != null && o1.equals(o2);
+        return Objects.equals(o1, o2);
     }
 
     /**
