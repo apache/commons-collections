@@ -148,13 +148,13 @@
     </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
+      Bump actions/cache from 2 to 3.0.4 #214 #225 #239 #266 #294.
+    </action>
+    <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
       Update actions/checkout from 1 to 3 #166 #173 #183 #193 #262 #264 #285.
-    </action>
-    <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.3 #214 #225 #239 #266 #294.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump codecov/codecov-action from 2 to 3 #297.
