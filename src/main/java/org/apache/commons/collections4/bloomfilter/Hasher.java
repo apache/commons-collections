@@ -122,6 +122,9 @@ public interface Hasher {
          */
         @Override
         public boolean test(int number) {
+            if (number < 0) {
+                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
+            }
             if (number >= size) {
                 throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
             }
