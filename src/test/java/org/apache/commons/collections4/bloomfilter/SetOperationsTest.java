@@ -42,10 +42,7 @@ public class SetOperationsTest {
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
-        int dotProduct = /* [1..17] & [1..17] = [1..17] = */ 17;
-        int cardinalityA = 17;
-        int cardinalityB = 17;
-        double expected = /* 1 - (dotProduct/Sqrt( cardinalityA * cardinalityB )) = */ 0;
+        double expected =  0;
         assertEquals(expected, SetOperations.cosineDistance(filter1, filter2));
         assertEquals(expected, SetOperations.cosineDistance(filter2, filter1));
 
@@ -53,9 +50,9 @@ public class SetOperationsTest {
         filter1 = new SimpleBloomFilter(shape2, from1);
         filter2 = new SimpleBloomFilter(shape2, new SimpleHasher(2, 1));
 
-        dotProduct = /* [1,2] & [2,3] = [2] = */ 1;
-        cardinalityA = 2;
-        cardinalityB = 2;
+        int dotProduct = /* [1,2] & [2,3] = [2] = */ 1;
+        int cardinalityA = 2;
+        int cardinalityB = 2;
         expected = 1 - (dotProduct / Math.sqrt(cardinalityA * cardinalityB));
         assertEquals(expected, SetOperations.cosineDistance(filter1, filter2));
         assertEquals(expected, SetOperations.cosineDistance(filter2, filter1));
@@ -224,7 +221,13 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 64, 69 }));
         assertEquals(4, SetOperations.orCardinality(filter1, filter2));
         assertEquals(4, SetOperations.orCardinality(filter2, filter1));
-    }
+
+        Shape bigShape = Shape.fromKM(3, 192);
+        filter1 = new SparseBloomFilter(bigShape, IndexProducer.fromIndexArray(new int[] { 1, 63, 185}));
+        filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
+        assertEquals(5, SetOperations.orCardinality(filter1, filter2));
+        assertEquals(5, SetOperations.orCardinality(filter2, filter1));
+}
 
     @Test
     public final void testAndCardinality() {
@@ -243,6 +246,13 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 64, 69 }));
         assertEquals(1, SetOperations.andCardinality(filter1, filter2));
         assertEquals(1, SetOperations.andCardinality(filter2, filter1));
+
+        Shape bigShape = Shape.fromKM(3, 192);
+        filter1 = new SparseBloomFilter(bigShape, IndexProducer.fromIndexArray(new int[] { 1, 63, 185}));
+        filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
+        assertEquals(1, SetOperations.andCardinality(filter1, filter2));
+        assertEquals(1, SetOperations.andCardinality(filter2, filter1));
+
     }
 
     @Test
@@ -262,7 +272,15 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 64, 69 }));
         assertEquals(3, SetOperations.xorCardinality(filter1, filter2));
         assertEquals(3, SetOperations.xorCardinality(filter2, filter1));
+
+        Shape bigShape = Shape.fromKM(3, 192);
+        filter1 = new SparseBloomFilter(bigShape, IndexProducer.fromIndexArray(new int[] { 1, 63, 185}));
+        filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
+        assertEquals(4, SetOperations.xorCardinality(filter1, filter2));
+        assertEquals(4, SetOperations.xorCardinality(filter2, filter1));
+
     }
+
 
     @Test
     public final void testCommutativityOnMismatchedSizes() {
