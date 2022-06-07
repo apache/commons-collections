@@ -82,6 +82,24 @@
     <action issue="COLLECTIONS-799" type="fix" dev="kinow" due-to="Stefano Cordio">
       UnmodifiableNavigableSet can be modified by pollFirst() and pollLast().
     </action>
+    <action type="fix" dev="ggregory" due-to="Arturo Bernal">
+      Use Java 8 and method reference. #274.
+    </action>
+    <action issue="COLLECTIONS-788" type="fix" dev="ggregory" due-to="Arturo Bernal">
+      Use Java 8 features #228.
+    </action>
+    <action issue="COLLECTIONS-807" type="fix" dev="ggregory" due-to="Pradeesh Kumar, samabcde">
+      Upgraded org.junit.Test to org.junit.jupiter.api.Test #295, #304.
+    </action>
+    <action issue="COLLECTIONS-802" type="fix" dev="kinow" due-to="samabcde, Ben Manes">
+      ReferenceMap iterator remove violates contract #300.
+    </action>
+    <action issue="COLLECTIONS-812" type="fix" dev="kinow" due-to="Ng Tsz Sum">
+      Fix flaky EmptyPropertiesTest#testSave.
+    </action>
+    <action type="fix" dev="ggregory" due-to="Steve Bosman">
+      Use java.lang.Objects#equals; eliminate a couple of nulls #307
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
@@ -122,9 +140,24 @@
     <action dev="ggregory" type="add" due-to="Gary Gregory">
       Add singleton ObjectToStringComparator.INSTANCE.
     </action>
+    <action dev="ggregory" type="add">
+      Add github/codeql-action.
+    </action>
+    <action issue="COLLECTIONS-811" dev="kinow" type="add" due-to="Ben Manes">
+      Integrate Guava testlib tests.
+    </action>
     <!-- UPDATE -->
+    <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
+      Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
+    </action>
+    <action type="update" dev="ggregory" due-to="Dependabot">
+      Update actions/checkout from 1 to 3 #166 #173 #183 #193 #262 #264 #285.
+    </action>
+    <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
+      Bump actions/cache from 2 to 3.0.3 #214 #225 #239 #266 #294.
+    </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump actions/setup-java from v1.4.0 to v2 #174 #177 #186 #224.
+      Bump codecov/codecov-action from 2 to 3 #297.
     </action>
     <action issue="COLLECTIONS-737" dev="kinow" type="update" due-to="Prodigysov">
       Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests.
@@ -181,7 +214,7 @@
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [build] Update Jacoco from 0.8.4 to 0.8.7.
+      Bump Jacoco from 0.8.4 to 0.8.8.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       [test] Update org.easymock:easymock 4.1 -> 4.2.
@@ -211,6 +244,9 @@
       Upgrade to JUnit v5.6.0 #136.
       Upgrade to JUnit v5.6.2.
     </action>
+    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick">
+      Fully migrate to JUnit 5.
+    </action>
     <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
       Upgrade Hamcrest to 2.2.
     </action>
@@ -230,9 +266,6 @@
       Update tests from commons-io:commons-io 2.6 to 2.11.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update actions/checkout from v1 to v2.4.0 #166 #173 #183 #193 #262 #264.
-    </action>
-    <action type="update" dev="ggregory" due-to="Dependabot">
       Update maven-pmd-plugin from 3.12.0 to 3.15.0 #167 #196 #253.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
@@ -242,7 +275,7 @@
       Bump commons.junit.version from 5.6.2 to 5.8.2 #181 #213 #236 #252 #254 #268.
     </action>
     <action issue="COLLECTIONS-774" type="update" dev="ggregory" due-to="Dependabot">
-      Bump maven-antrun-plugin from 1.8 to 3.0.0 #170.
+      Bump maven-antrun-plugin from 1.8 to 3.1.0 #170, #303.
     </action>
     <action issue="COLLECTIONS-773" type="update" dev="ggregory" due-to="Martin Monperrus">
       Add an assertion to validate ensureCapacity #198.
@@ -265,9 +298,6 @@
     <action issue="COLLECTIONS-779" type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
       Migrate assert to Assertions #209.
     </action>
-    <action type="update" dev="kinow" due-to="Dependabot">
-      Bump actions/cache from v2 to v2.1.7 #214 #225 #239 #266.
-    </action>
     <action issue="COLLECTIONS-781" type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
     </action>
@@ -282,6 +312,15 @@
     </action>
     <action issue="COLLECTIONS-793" type="update" dev="kinow" due-to="Arturo Bernal">
       Simplify Assertion.
+    </action>
+    <action type="update" dev="ggregory" due-to="Dependabot">
+      Bump maven-pmd-plugin from 3.15.0 to 3.16.0 #286.
+    </action>
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump commons-parent from 52 to 53 #299.
+    </action>
+    <action type="update" dev="kinow" due-to="Dependabot">
+      Bump japicmp from 0.15.4 to 0.15.7.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

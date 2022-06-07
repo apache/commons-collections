@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReverseComparator.
@@ -33,8 +33,8 @@ import org.junit.Test;
  */
 public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ReverseComparatorTest(final String testName) {
-        super(testName);
+    public ReverseComparatorTest() {
+        super(ReverseComparatorTest.class.getSimpleName());
     }
 
     /**
@@ -77,8 +77,8 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
      * doesn't adhere to the "soft" Comparator contract, and we've
      * already "canonized" the comparator returned by makeComparator.
      */
-    @Override
     @Test
+    @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<String>());
 

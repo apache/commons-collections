@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link TransformedSet}
@@ -32,8 +33,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
-    public TransformedSetTest(final String testName) {
-        super(testName);
+    public TransformedSetTest() {
+        super(TransformedSetTest.class.getSimpleName());
     }
 
     @Override
@@ -61,6 +62,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
@@ -79,9 +81,10 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     }
 
+    @Test
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new HashSet<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());

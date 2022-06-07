@@ -95,9 +95,6 @@ public class MultiMapUtils {
         return map == null || map.isEmpty();
     }
 
-    // Null safe getters
-    // -------------------------------------------------------------------------
-
     /**
      * Gets a Collection from {@code MultiValuedMap} in a null-safe manner.
      *
@@ -177,9 +174,6 @@ public class MultiMapUtils {
         return null;
     }
 
-    // Factory Methods
-    // -----------------------------------------------------------------------
-
     /**
      * Creates a {@link ListValuedMap} with an {@link java.util.ArrayList ArrayList} as
      * collection class to store the values mapped to a key.
@@ -203,9 +197,6 @@ public class MultiMapUtils {
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
         return new HashSetValuedHashMap<>();
     }
-
-    // MultiValuedMap Decorators
-    // -----------------------------------------------------------------------
 
     /**
      * Returns an {@code UnmodifiableMultiValuedMap} backed by the given

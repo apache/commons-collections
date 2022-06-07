@@ -18,13 +18,12 @@ package org.apache.commons.collections4.multimap;
 
 import java.util.Collection;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for TransformedMultiValuedMap
@@ -33,25 +32,24 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public TransformedMultiValuedMapTest(final String testName) {
-        super(testName);
+    public TransformedMultiValuedMapTest() {
+        super(TransformedMultiValuedMapTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedMultiValuedMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public MultiValuedMap<K, V> makeObject() {
         return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
                 TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
-    // -----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(),
@@ -73,9 +71,10 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testValueTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(), null,
@@ -92,7 +91,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
 
-    // -----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
@@ -113,6 +112,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();

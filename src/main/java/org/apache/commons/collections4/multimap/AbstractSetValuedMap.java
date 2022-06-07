@@ -54,7 +54,6 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
         super(map);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     protected Map<K, Set<V>> getMap() {
@@ -68,7 +67,6 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
     @Override
     protected abstract Set<V> createCollection();
 
-    // -----------------------------------------------------------------------
     /**
      * Gets the set of values associated with the specified key. This would
      * return an empty set in case the mapping is not present
@@ -101,7 +99,6 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
         return SetUtils.emptyIfNull(getMap().remove(key));
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Wrapped set to handle add and remove on the collection returned by
      * {@code get(Object)}.

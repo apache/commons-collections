@@ -16,19 +16,22 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Tests the ObjectArrayIterator.
- *
  */
 public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ObjectArrayIteratorTest(final String testName) {
-        super(testName);
+    public ObjectArrayIteratorTest() {
+        super(ObjectArrayIteratorTest.class.getSimpleName());
     }
 
     @Override
@@ -65,6 +68,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
@@ -82,16 +86,12 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
     public void testNullArray() {
-        try {
-            makeArrayIterator(null);
-
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> makeArrayIterator(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testReset() {
         final ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);

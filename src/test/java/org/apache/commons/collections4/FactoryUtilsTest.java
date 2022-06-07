@@ -21,9 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -41,27 +40,13 @@ import org.junit.jupiter.api.Test;
  */
 public class FactoryUtilsTest {
 
-    // exceptionFactory
-    //------------------------------------------------------------------
-
     @Test
     public void testExceptionFactory() {
         assertNotNull(FactoryUtils.exceptionFactory());
         assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
-        try {
-            FactoryUtils.exceptionFactory().create();
-        } catch (final FunctorException ex) {
-            try {
-                FactoryUtils.exceptionFactory().create();
-            } catch (final FunctorException ex2) {
-                return;
-            }
-        }
-        fail();
-    }
 
-    // nullFactory
-    //------------------------------------------------------------------
+        assertThrows(FunctorException.class, () -> FactoryUtils.exceptionFactory().create());
+    }
 
     @Test
     public void testNullFactory() {
@@ -70,9 +55,6 @@ public class FactoryUtilsTest {
         final Object created = factory.create();
         assertNull(created);
     }
-
-    // constantFactory
-    //------------------------------------------------------------------
 
     @Test
     public void testConstantFactoryNull() {
@@ -90,9 +72,6 @@ public class FactoryUtilsTest {
         final Integer created = factory.create();
         assertSame(constant, created);
     }
-
-    // prototypeFactory
-    //------------------------------------------------------------------
 
     @Test
     public void testPrototypeFactoryNull() {
@@ -134,24 +113,15 @@ public class FactoryUtilsTest {
         final Mock2 proto = new Mock2(new Object());
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
-        try {
-            factory.create();
-        } catch (final FunctorException ex) {
-            assertTrue(ex.getCause() instanceof IOException);
-            return;
-        }
-        fail();
+
+        final FunctorException thrown = assertThrows(FunctorException.class, () -> factory.create());
+        assertTrue(thrown.getCause() instanceof IOException);
     }
 
     @Test
     public void testPrototypeFactoryPublicBad() {
         final Object proto = new Object();
-        try {
-            FactoryUtils.prototypeFactory(proto);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.prototypeFactory(proto));
     }
 
     public static class Mock1 {
@@ -208,9 +178,6 @@ public class FactoryUtilsTest {
         }
     }
 
-    // instantiateFactory
-    //------------------------------------------------------------------
-
     @Test
     public void instantiateFactoryNull() {
         assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
@@ -249,16 +216,13 @@ public class FactoryUtilsTest {
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
     }
 
-    // misc tests
-    //------------------------------------------------------------------
-
     /**
      * Test that all Factory singletons hold singleton pattern in
      * serialization/deserialization process.
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletons = new Object[] {
+        final Object[] singletons = {
             ExceptionFactory.INSTANCE,
         };
 

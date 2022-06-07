@@ -23,9 +23,8 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -39,15 +38,14 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     protected UnmodifiableNavigableSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableNavigableSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableNavigableSetTest() {
+        super(UnmodifiableNavigableSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableNavigableSetTest.class);
     }
 
-    //-------------------------------------------------------------------
     @Override
     public NavigableSet<E> makeObject() {
         return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<>());
@@ -69,7 +67,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         return false;
     }
 
-    //--------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
@@ -80,6 +77,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     /**
      * Verify that base set and subsets are not modifiable
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiable() {
         setupSet();
@@ -94,6 +92,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), true, (E) Integer.valueOf(3), true));
     }
 
+    @Test
     public void testDecorateFactory() {
         final NavigableSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
@@ -121,6 +120,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         }
     }
 
+    @Test
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();

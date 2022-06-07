@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +28,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link PredicatedMapTest} for exercising the
@@ -48,8 +51,8 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 
-    public PredicatedSortedMapTest(final String testName) {
-        super(testName);
+    public PredicatedSortedMapTest() {
+        super(PredicatedSortedMapTest.class.getSimpleName());
     }
 
     protected SortedMap<K, V> decorateMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,
@@ -82,6 +85,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from TestPredicatedMap
+    @Test
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
@@ -92,22 +96,15 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map = decorateMap(map, null, null);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPut() {
         final Map<K, V> map = makeTestMap();
-        try {
-            map.put((K) "Hi", (V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)),
+                "Illegal value should raise IllegalArgument");
 
-        try {
-            map.put((K) Integer.valueOf(3), (V) "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) Integer.valueOf(3), (V) "Hi"),
+                "Illegal key should raise IllegalArgument");
 
         assertFalse(map.containsKey(Integer.valueOf(3)));
         assertFalse(map.containsValue(Integer.valueOf(3)));
@@ -118,48 +115,34 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map2.put((K) "C", (V) "c");
         map2.put((K) "c", (V) Integer.valueOf(3));
 
-        try {
-            map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.putAll(map2),
+                "Illegal value should raise IllegalArgument");
 
         map.put((K) "E", (V) "e");
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
-        try {
-            final Map.Entry<K, V> entry = iterator.next();
-            entry.setValue((V) Integer.valueOf(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        Map.Entry<K, V> entry = iterator.next();
+        Map.Entry<K, V> finalEntry = entry;
+        assertThrows(IllegalArgumentException.class, () -> finalEntry.setValue((V) Integer.valueOf(3)),
+                "Illegal value should raise IllegalArgument");
 
         map.put((K) "F", (V) "f");
         iterator = map.entrySet().iterator();
-        final Map.Entry<K, V> entry = iterator.next();
+        entry = iterator.next();
         entry.setValue((V) "x");
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedMap<K, V> map = makeTestMap();
         map.put((K) "A",  (V) "a");
         map.put((K) "B", (V) "b");
-        try {
-            map.put(null, (V) "c");
-            fail("Null key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put(null, (V) "c"),
+                "Null key should raise IllegalArgument");
         map.put((K) "C", (V) "c");
-        try {
-            map.put((K) "D", null);
-            fail("Null value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
+                "Null value should raise IllegalArgument");
         assertEquals("First key should be A", "A", map.firstKey());
         assertEquals("Last key should be C", "C", map.lastKey());
         assertEquals("First key in tail map should be B",
@@ -173,24 +156,17 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertNull("natural order, so comparator should be null", c);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testReverseSortOrder() {
         final SortedMap<K, V> map = makeTestMapWithComparator();
         map.put((K) "A",  (V) "a");
         map.put((K) "B", (V) "b");
-        try {
-            map.put(null, (V) "c");
-            fail("Null key should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put(null, (V) "c"),
+                "Null key should raise IllegalArgument");
         map.put((K) "C", (V) "c");
-        try {
-            map.put((K) "D", null);
-            fail("Null value should raise IllegalArgument");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
+                "Null value should raise IllegalArgument");
         assertEquals("Last key should be A", "A", map.lastKey());
         assertEquals("First key should be C", "C", map.firstKey());
         assertEquals("First key in tail map should be B",

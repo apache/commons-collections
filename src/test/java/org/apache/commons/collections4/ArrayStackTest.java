@@ -16,22 +16,23 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.EmptyStackException;
 
-import junit.framework.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests ArrayStack.
- *
  */
 @SuppressWarnings("deprecation") // we test a deprecated class
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
-    public ArrayStackTest(final String testName) {
-        super(testName);
+    public ArrayStackTest() {
+        super(ArrayStackTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ArrayStackTest.class);
     }
 
@@ -40,27 +41,18 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         return new ArrayStack<>();
     }
 
+    @Test
     public void testNewStack() {
         final ArrayStack<E> stack = makeObject();
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", 0, stack.size());
 
-        try {
-            stack.peek();
-            fail("peek() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
+        assertThrows(EmptyStackException.class, () -> stack.peek());
 
-        try {
-            stack.pop();
-            fail("pop() should have thrown EmptyStackException");
-        } catch (final EmptyStackException e) {
-            // Expected result
-        }
-
+        assertThrows(EmptyStackException.class, () -> stack.pop());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPushPeekPop() {
         final ArrayStack<E> stack = makeObject();
@@ -87,9 +79,9 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         assertEquals("Popped item is 'First Item'",
                      "First Item", (String) stack.pop());
         assertEquals("Stack size is zero", 0, stack.size());
-
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testSearch() {
@@ -103,7 +95,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                      2, stack.search("First Item"));
         assertEquals("Cannot find 'Missing Item'",
                      -1, stack.search("Missing Item"));
-
     }
 
     @Override

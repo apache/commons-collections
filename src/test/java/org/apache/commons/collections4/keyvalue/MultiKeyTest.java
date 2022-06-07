@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,14 +26,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 /**
  * Unit tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
- *
  */
 public class MultiKeyTest {
 
@@ -79,12 +90,14 @@ public class MultiKeyTest {
             return this;
         }
     }
+
     Integer ONE = Integer.valueOf(1);
 
     Integer TWO = Integer.valueOf(2);
     Integer THREE = Integer.valueOf(3);
     Integer FOUR = Integer.valueOf(4);
     Integer FIVE = Integer.valueOf(5);
+
     @Test
     public void testConstructors() throws Exception {
         MultiKey<Integer> mk;
@@ -107,7 +120,7 @@ public class MultiKeyTest {
     @Test
     public void testConstructorsByArray() throws Exception {
         MultiKey<Integer> mk;
-        Integer[] keys = new Integer[] { THREE, FOUR, ONE, TWO };
+        Integer[] keys = { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<>(keys);
         assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         keys[3] = FIVE;  // no effect
@@ -132,21 +145,20 @@ public class MultiKeyTest {
         assertArrayEquals(new Object[]{THREE, FOUR, ONE, FIVE}, mk.getKeys());
     }
 
-    @Test
-    public void testConstructorsByArrayNull() throws Exception {
+    @TestFactory
+    public Collection<DynamicTest> testConstructorsByArrayNull() {
         final Integer[] keys = null;
-        try {
-            new MultiKey<>(keys);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            new MultiKey<>(keys, true);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            new MultiKey<>(keys, false);
-            fail();
-        } catch (final NullPointerException ex) {}
+        return Arrays.asList(
+                dynamicTest("Integer[] null", () -> {
+                    assertThrows(NullPointerException.class, () -> new MultiKey<>(keys));
+                }),
+                dynamicTest("Integer[] null + makeClone true", () -> {
+                    assertThrows(NullPointerException.class, () -> new MultiKey<>(keys, true));
+                }),
+                dynamicTest("Integer[] null + makeClone false", () -> {
+                    assertThrows(NullPointerException.class, () -> new MultiKey<>(keys, false));
+                })
+        );
     }
 
     @Test
@@ -208,24 +220,28 @@ public class MultiKeyTest {
         assertEquals(mk.hashCode(), mk2.hashCode());
     }
 
-    @Test
-    public void testGetIndexed() {
+    @TestFactory
+    public Collection<DynamicTest> testGetIndexed() {
         final MultiKey<Integer> mk = new MultiKey<>(ONE, TWO);
-        assertSame(ONE, mk.getKey(0));
-        assertSame(TWO, mk.getKey(1));
-        try {
-            mk.getKey(-1);
-            fail();
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            mk.getKey(2);
-            fail();
-        } catch (final IndexOutOfBoundsException ex) {}
+        return Arrays.asList(
+                dynamicTest("0", () -> {
+                    assertSame(ONE, mk.getKey(0));
+                }),
+                dynamicTest("1", () -> {
+                    assertSame(TWO, mk.getKey(1));
+                }),
+                dynamicTest("-1", () -> {
+                    assertThrows(IndexOutOfBoundsException.class, () -> mk.getKey(-1));
+                }),
+                dynamicTest("2", () -> {
+                    assertThrows(IndexOutOfBoundsException.class, () -> mk.getKey(2));
+                })
+        );
     }
 
     @Test
     public void testGetKeysArrayConstructorCloned() {
-        final Integer[] keys = new Integer[] { ONE, TWO };
+        final Integer[] keys = { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, true);
         final Object[] array = mk.getKeys();
         assertNotSame(array, keys);
@@ -237,7 +253,7 @@ public class MultiKeyTest {
 
     @Test
     public void testGetKeysArrayConstructorNonCloned() {
-        final Integer[] keys = new Integer[] { ONE, TWO };
+        final Integer[] keys = { ONE, TWO };
         final MultiKey<Integer> mk = new MultiKey<>(keys, false);
         final Object[] array = mk.getKeys();
         assertNotSame(array, keys);  // still not equal

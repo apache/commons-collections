@@ -22,7 +22,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PushbackIterator.
@@ -34,15 +35,15 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public PushbackIteratorTest(final String testName) {
-        super(testName);
+    public PushbackIteratorTest() {
+        super(PushbackIteratorTest.class.getSimpleName());
     }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
         testList = new ArrayList<>(Arrays.asList((E[]) testArray));
@@ -62,8 +63,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     public boolean supportsRemove() {
         return false;
     }
-
-    // -----------------------------------------------------------------------
 
     @Test
     public void testNormalIteration() {

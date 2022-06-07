@@ -16,10 +16,18 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
@@ -28,8 +36,8 @@ import java.util.List;
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 
-    public GrowthListTest(final String testName) {
-        super(testName);
+    public GrowthListTest() {
+        super(GrowthListTest.class.getSimpleName());
     }
 
     @Override
@@ -43,6 +51,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         return GrowthList.growthList(list);
     }
 
+    @Test
     public void testGrowthList() {
         final Integer zero = Integer.valueOf(0);
         final Integer one = Integer.valueOf(1);
@@ -57,6 +66,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(3, grower.size());
     }
 
+    @Test
     public void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -67,6 +77,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(one, grower.get(1));
     }
 
+    @Test
     public void testGrowthAddAll() {
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
@@ -82,6 +93,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(two, grower.get(2));
     }
 
+    @Test
     public void testGrowthSet1() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -92,6 +104,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertEquals(one, grower.get(1));
     }
 
+    @Test
     public void testGrowthSet2() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
@@ -104,63 +117,52 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListAddByIndexBoundsChecking() {
-        final List<E> list;
         final E element = getOtherElements()[0];
-        try {
-            list = makeObject();
-            list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        final List<E> list = makeObject();
+
+        final Executable testMethod = () -> list.add(-1, element);
+        final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod,
+                "List.add should throw IndexOutOfBoundsException [-1]");
+        assertThat(thrown.getMessage(), is(equalTo("Index: -1, Size: 0")));
     }
 
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListAddByIndexBoundsChecking2() {
-        final List<E> list;
         final E element = getOtherElements()[0];
-        try {
-            list = makeFullCollection();
-            list.add(-1, element);
-            fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        final List<E> list = makeFullCollection();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(-1, element),
+                "List.add should throw IndexOutOfBoundsException [-1]");
     }
 
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListSetByIndexBoundsChecking() {
         final List<E> list = makeObject();
         final E element = getOtherElements()[0];
-        try {
-            list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch (final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, element),
+                "List.set should throw IndexOutOfBoundsException [-1]");
     }
 
     /**
      * Override.
      */
+    @Test
     @Override
     public void testListSetByIndexBoundsChecking2() {
         final List<E> list = makeFullCollection();
         final E element = getOtherElements()[0];
-        try {
-            list.set(-1, element);
-            fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch(final IndexOutOfBoundsException e) {
-            // expected
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, element),
+                "List.set should throw IndexOutOfBoundsException [-1]");
     }
 
     @Override

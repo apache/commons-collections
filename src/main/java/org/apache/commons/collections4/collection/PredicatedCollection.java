@@ -212,7 +212,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         /** The buffer containing rejected elements. */
         private final List<E> rejected = new ArrayList<>();
 
-        // -----------------------------------------------------------------------
         /**
          * Constructs a PredicatedCollectionBuilder with the specified Predicate.
          *
@@ -268,7 +267,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated list.
          */
         public List<E> createPredicatedList() {
-            return createPredicatedList(new ArrayList<E>());
+            return createPredicatedList(new ArrayList<>());
         }
 
         /**
@@ -299,7 +298,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated set.
          */
         public Set<E> createPredicatedSet() {
-            return createPredicatedSet(new HashSet<E>());
+            return createPredicatedSet(new HashSet<>());
         }
 
         /**
@@ -330,7 +329,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated multiset.
          */
         public MultiSet<E> createPredicatedMultiSet() {
-            return createPredicatedMultiSet(new HashMultiSet<E>());
+            return createPredicatedMultiSet(new HashMultiSet<>());
         }
 
         /**
@@ -362,7 +361,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated bag.
          */
         public Bag<E> createPredicatedBag() {
-            return createPredicatedBag(new HashBag<E>());
+            return createPredicatedBag(new HashBag<>());
         }
 
         /**
@@ -393,7 +392,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated queue.
          */
         public Queue<E> createPredicatedQueue() {
-            return createPredicatedQueue(new LinkedList<E>());
+            return createPredicatedQueue(new LinkedList<>());
         }
 
         /**

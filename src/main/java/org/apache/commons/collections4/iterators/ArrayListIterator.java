@@ -50,8 +50,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     private int lastItemIndex = -1;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs an ArrayListIterator that will iterate over the values in the
      * specified array.

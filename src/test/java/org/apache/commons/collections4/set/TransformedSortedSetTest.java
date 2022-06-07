@@ -22,11 +22,10 @@ import java.util.TreeSet;
 import java.util.Set;
 import java.util.SortedSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the {@link TransformedSortedSet}
@@ -36,11 +35,11 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TransformedSortedSetTest(final String testName) {
-        super(testName);
+    public TransformedSortedSetTest() {
+        super(TransformedSortedSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(TransformedSortedSetTest.class);
     }
 
@@ -57,6 +56,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
@@ -72,9 +72,10 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new TreeSet<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());

@@ -23,11 +23,10 @@ import java.util.HashMap;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ArrayListValuedHashMap
@@ -36,21 +35,20 @@ import org.apache.commons.collections4.MultiValuedMap;
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedHashMapTest(final String testName) {
-        super(testName);
+    public ArrayListValuedHashMapTest() {
+        super(ArrayListValuedHashMapTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(ArrayListValuedHashMapTest.class);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public ListValuedMap<K, V> makeObject() {
         return new ArrayListValuedHashMap<>();
     }
 
-    // -----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
@@ -61,6 +59,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertTrue(listMap.containsKey("A"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapAddViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
@@ -75,6 +74,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertFalse(listIt.hasNext());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapRemove() {
         final ListValuedMap<K, V> listMap = makeObject();
@@ -92,6 +92,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertFalse(listMap.containsKey("A"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapRemoveViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
@@ -113,6 +114,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testEqualsHashCodeContract() {
         final MultiValuedMap map1 = makeObject();
         final MultiValuedMap map2 = makeObject();
@@ -130,6 +132,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testListValuedMapEqualsHashCodeContract() {
         final ListValuedMap map1 = makeObject();
         final ListValuedMap map2 = makeObject();
@@ -149,6 +152,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
+    @Test
     public void testArrayListValuedHashMap() {
         final ListValuedMap<K, V> listMap;
         final ListValuedMap<K, V> listMap1;
@@ -167,6 +171,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals("{}", listMap1.toString());
     }
 
+    @Test
     public void testTrimToSize(){
         final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
 
@@ -182,6 +187,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals(1, listMap.get((K) "B").size());
     }
 
+    @Test
     public void testWrappedListAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
@@ -193,6 +199,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals("{A=[W, Q, F]}", listMap.toString());
     }
 
+    @Test
     public void testWrappedListAddAll() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
@@ -224,6 +231,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals("Q", list3.get(2));
     }
 
+    @Test
     public void testValuesListIteratorMethods(){
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");

@@ -16,10 +16,15 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the
@@ -29,8 +34,8 @@ import java.util.List;
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
-    public UnmodifiableListTest(final String testName) {
-        super(testName);
+    public UnmodifiableListTest() {
+        super(UnmodifiableListTest.class.getSimpleName());
     }
 
     @Override
@@ -72,101 +77,59 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     /**
      * Verify that base list and sublists are not modifiable
      */
+    @Test
     public void testUnmodifiable() {
         setupList();
         verifyUnmodifiable(list);
         verifyUnmodifiable(list.subList(0, 2));
     }
 
+    @Test
     public void testDecorateFactory() {
         final List<E> list = makeObject();
         assertSame(list, UnmodifiableList.unmodifiableList(list));
 
-        try {
-            UnmodifiableList.unmodifiableList(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableList.unmodifiableList(null));
     }
 
     @SuppressWarnings("unchecked")
     protected void verifyUnmodifiable(final List<E> list) {
-        try {
-            list.add(0, (E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.add((E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.addAll(0, array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.addAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.remove(0);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.remove(Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            list.set(0, (E) Integer.valueOf(0));
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.add(0, (E) Integer.valueOf(0)),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.add((E) Integer.valueOf(0)),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.addAll(0, array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.addAll(array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.clear(),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.remove(0),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.remove(Integer.valueOf(0)),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.removeAll(array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.retainAll(array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> list.set(0, (E) Integer.valueOf(0)),
+                        "Expecting UnsupportedOperationException.")
+        );
     }
 
     /**
      * Verify that iterator is not modifiable
      */
+    @Test
     public void testUnmodifiableIterator() {
         setupList();
         final Iterator<E> iterator = list.iterator();
-        try {
-            iterator.next();
-            iterator.remove();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-    }
+        iterator.next();
 
+        assertThrows(UnsupportedOperationException.class, () -> iterator.remove(),
+                "Expecting UnsupportedOperationException.");
+    }
 
     @Override
     public String getCompatibilityVersion() {

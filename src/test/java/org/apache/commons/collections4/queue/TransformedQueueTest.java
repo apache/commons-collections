@@ -24,6 +24,7 @@ import java.util.Queue;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -33,8 +34,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
-    public TransformedQueueTest(final String testName) {
-        super(testName);
+    public TransformedQueueTest() {
+        super(TransformedQueueTest.class.getSimpleName());
     }
 
     @Override
@@ -61,11 +62,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     public void testTransformedQueue() {
         final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<>(),
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, queue.size());
-        final Object[] elements = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] elements = { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < elements.length; i++) {
             queue.add(elements[i]);
             assertEquals(i + 1, queue.size());
@@ -79,9 +81,10 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Test
     public void testTransformedQueue_decorateTransform() {
         final Queue originalQueue = new LinkedList();
-        final Object[] elements = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] elements = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalQueue, elements);
         final Queue<?> queue = TransformedQueue.transformedQueue(originalQueue,
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);

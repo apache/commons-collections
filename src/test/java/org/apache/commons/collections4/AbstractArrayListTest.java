@@ -16,13 +16,15 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for ArrayList.
- *
  */
 public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
@@ -36,19 +38,16 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
     @Override
     public abstract ArrayList<E> makeObject();
 
+    @Test
     public void testNewArrayList() {
         final ArrayList<E> list = makeObject();
         assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", 0, list.size());
 
-        try {
-            list.get(1);
-            fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } catch (final IndexOutOfBoundsException e) {
-            // Expected result
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSearch() {
         final ArrayList<E> list = makeObject();

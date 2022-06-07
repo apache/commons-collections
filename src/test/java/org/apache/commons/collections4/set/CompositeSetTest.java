@@ -16,12 +16,15 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.set.CompositeSet.SetMutator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -30,8 +33,9 @@ import org.apache.commons.collections4.set.CompositeSet.SetMutator;
  * @since 3.0
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
-    public CompositeSetTest(final String name) {
-        super(name);
+
+    public CompositeSetTest() {
+        super(CompositeSetTest.class.getSimpleName());
     }
 
     @Override
@@ -58,24 +62,28 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testContains() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertTrue(set.contains("1"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testContainsAll() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.containsAll(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveAll() {
         final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
         assertFalse(set.removeAll(null));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveUnderlying() {
         final Set<E> one = buildOne();
@@ -88,6 +96,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         assertFalse(set.contains("3"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
         final Set<E> one = buildOne();
@@ -100,6 +109,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         assertFalse(one.contains("3"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFailedCollisionResolution() {
         final Set<E> one = buildOne();
@@ -129,14 +139,11 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
         final HashSet<E> three = new HashSet<>();
         three.add((E) "1");
-        try {
-            set.addComposited(three);
-            fail("IllegalArgumentException should have been thrown");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.addComposited(three),
+                "IllegalArgumentException should have been thrown");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddComposited() {
         final Set<E> one = buildOne();
@@ -159,14 +166,11 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final CompositeSet<E> set5 = new CompositeSet<>(set3);
         set5.addComposited(set4);
         assertEquals(set, set5);
-        try {
-            set.addComposited(set3);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> set.addComposited(set3),
+                "Expecting UnsupportedOperationException.");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddCompositedCollision() {
         final HashSet<E> set1 = new HashSet<>();
@@ -176,18 +180,10 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final HashSet<E> set2 = new HashSet<>();
         set2.add((E) "4");
         final CompositeSet<E> set3 = new CompositeSet<>(set1);
-        try {
-            set3.addComposited(set1, buildOne());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
-        try {
-            set3.addComposited(set1, buildOne(), buildTwo());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException ex) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> set3.addComposited(set1, buildOne()),
+                "Expecting UnsupportedOperationException.");
+        assertThrows(UnsupportedOperationException.class, () -> set3.addComposited(set1, buildOne(), buildTwo()),
+                "Expecting UnsupportedOperationException.");
     }
 
     @Override

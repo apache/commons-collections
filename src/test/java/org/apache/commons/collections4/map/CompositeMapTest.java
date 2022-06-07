@@ -16,9 +16,14 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -27,14 +32,15 @@ import java.util.Collection;
  * @since 3.0
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
+
     /** used as a flag in MapMutator tests */
     private boolean pass = false;
 
-    public CompositeMapTest(final String testName) {
-        super(testName);
+    public CompositeMapTest() {
+        super(CompositeMapTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         this.pass = false;
@@ -64,12 +70,14 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return map;
     }
 
+    @Test
     public void testGet() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         assertEquals("one", map.get("1"));
         assertEquals("four", map.get("4"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
@@ -78,14 +86,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
-        try {
-            map.addComposited(three);
-            fail("Expecting IllegalArgumentException.");
-        } catch (final IllegalArgumentException ex) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> map.addComposited(three));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
@@ -103,6 +108,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveFromUnderlying() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
@@ -117,6 +123,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map.containsKey("5"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemoveFromComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
@@ -131,6 +138,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(three.containsKey("5"));
     }
 
+    @Test
     public void testResolveCollision() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
@@ -160,6 +168,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(pass);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testPut() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
@@ -190,6 +199,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(pass);
     }
 
+    @Test
     public void testPutAll() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {

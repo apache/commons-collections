@@ -113,13 +113,11 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
         super.putAll(map);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     protected ArrayList<V> createCollection() {
         return new ArrayList<>(initialListCapacity);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Trims the capacity of all value collections to their current size.
      */
@@ -130,7 +128,6 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
         }
     }
 
-    // -----------------------------------------------------------------------
     private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         doWriteObject(oos);

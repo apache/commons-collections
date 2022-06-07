@@ -21,11 +21,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the IteratorEnumeration.
- *
  */
 public class IteratorEnumerationTest {
 
@@ -42,11 +45,7 @@ public class IteratorEnumerationTest {
         assertEquals("c", enumeration.nextElement());
         assertFalse(enumeration.hasMoreElements());
 
-        try {
-            enumeration.nextElement();
-            fail("NoSuchElementException expected");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> enumeration.nextElement());
     }
+
 }

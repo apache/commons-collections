@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,27 +51,15 @@ public class TransformerUtilsTest {
     private static final Object cString = "Hello";
     private static final Object cInteger = Integer.valueOf(6);
 
-    // exceptionTransformer
-    //------------------------------------------------------------------
-
     @Test
     public void testExceptionTransformer() {
-        assertNotNull(TransformerUtils.exceptionTransformer());
-        assertSame(TransformerUtils.exceptionTransformer(), TransformerUtils.exceptionTransformer());
-        try {
-            TransformerUtils.exceptionTransformer().transform(null);
-        } catch (final FunctorException ex) {
-            try {
-                TransformerUtils.exceptionTransformer().transform(cString);
-            } catch (final FunctorException ex2) {
-                return;
-            }
-        }
-        fail();
+        assertAll(
+                () -> assertNotNull(TransformerUtils.exceptionTransformer()),
+                () -> assertSame(TransformerUtils.exceptionTransformer(), TransformerUtils.exceptionTransformer()),
+                () -> assertThrows(FunctorException.class, () -> TransformerUtils.exceptionTransformer().transform(null)),
+                () -> assertThrows(FunctorException.class, () -> TransformerUtils.exceptionTransformer().transform(cString))
+        );
     }
-
-    // nullTransformer
-    //------------------------------------------------------------------
 
     @Test
     public void testNullTransformer() {
@@ -82,9 +71,6 @@ public class TransformerUtilsTest {
         assertNull(TransformerUtils.nullTransformer().transform(cInteger));
     }
 
-    // nopTransformer
-    //------------------------------------------------------------------
-
     @Test
     public void testNopTransformer() {
         assertNotNull(TransformerUtils.nullTransformer());
@@ -95,9 +81,6 @@ public class TransformerUtilsTest {
         assertEquals(cInteger, TransformerUtils.nopTransformer().transform(cInteger));
     }
 
-    // constantTransformer
-    //------------------------------------------------------------------
-
     @Test
     public void testConstantTransformer() {
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(null));
@@ -107,24 +90,14 @@ public class TransformerUtilsTest {
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.constantTransformer(null));
     }
 
-    // cloneTransformer
-    //------------------------------------------------------------------
-
     @Test
     public void testCloneTransformer() {
         assertNull(TransformerUtils.cloneTransformer().transform(null));
         assertEquals(cString, TransformerUtils.cloneTransformer().transform(cString));
         assertEquals(cInteger, TransformerUtils.cloneTransformer().transform(cInteger));
-        try {
-            assertEquals(cObject, TransformerUtils.cloneTransformer().transform(cObject));
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
 
-    // mapTransformer
-    //------------------------------------------------------------------
+        assertThrows(IllegalArgumentException.class, () -> assertEquals(cObject, TransformerUtils.cloneTransformer().transform(cObject)));
+    }
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
@@ -140,25 +113,15 @@ public class TransformerUtilsTest {
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.mapTransformer(null));
     }
 
-    // commandTransformer
-    //------------------------------------------------------------------
-
     @Test
     public void testExecutorTransformer() {
         assertNull(TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(null));
         assertEquals(cObject, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cObject));
         assertEquals(cString, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cString));
         assertEquals(cInteger, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cInteger));
-        try {
-            TransformerUtils.asTransformer((Closure<Object>) null);
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
-    }
 
-    // predicateTransformer
-    //------------------------------------------------------------------
+        assertThrows(NullPointerException.class, () -> TransformerUtils.asTransformer((Closure<Object>) null));
+    }
 
     @Test
     public void testPredicateTransformer() {
@@ -166,16 +129,9 @@ public class TransformerUtilsTest {
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(cObject));
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(cString));
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(cInteger));
-        try {
-            TransformerUtils.asTransformer((Predicate<Object>) null);
-        } catch (final IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
 
-    // factoryTransformer
-    //------------------------------------------------------------------
+        assertThrows(IllegalArgumentException.class, () -> TransformerUtils.asTransformer((Predicate<Object>) null));
+    }
 
     @Test
     public void testFactoryTransformer() {
@@ -183,16 +139,9 @@ public class TransformerUtilsTest {
         assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cObject));
         assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cString));
         assertNull(TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cInteger));
-        try {
-            TransformerUtils.asTransformer((Factory<Object>) null);
-        } catch (final NullPointerException ex) {
-            return;
-        }
-        fail();
-    }
 
-    // chainedTransformer
-    //------------------------------------------------------------------
+        assertThrows(NullPointerException.class, () -> TransformerUtils.asTransformer((Factory<Object>) null));
+    }
 
     @Test
     @SuppressWarnings("unchecked")
@@ -203,41 +152,26 @@ public class TransformerUtilsTest {
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         assertEquals("B", TransformerUtils.chainedTransformer(a, b).transform(null));
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
-        Collection<Transformer<Object, Object>> coll = new ArrayList<>();
+        final Collection<Transformer<Object, Object>> coll = new ArrayList<>();
         coll.add(b);
         coll.add(a);
         assertEquals("A", TransformerUtils.chainedTransformer(coll).transform(null));
 
         assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer());
         assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer(Collections.<Transformer<Object, Object>>emptyList()));
-
-        try {
-            TransformerUtils.chainedTransformer(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.chainedTransformer((Transformer[]) null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.chainedTransformer((Collection<Transformer<Object, Object>>) null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.chainedTransformer(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            coll = new ArrayList<>();
-            coll.add(null);
-            coll.add(null);
-            TransformerUtils.chainedTransformer(coll);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer((Transformer[]) null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer((Collection<Transformer<Object, Object>>) null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.chainedTransformer(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final Collection<Transformer<Object, Object>> coll1 = new ArrayList<>();
+                    coll1.add(null);
+                    coll1.add(null);
+                    TransformerUtils.chainedTransformer(coll1);
+                })
+        );
     }
-
-    // ifTransformer
-    //------------------------------------------------------------------
 
     @Test
     public void testIfTransformer() {
@@ -257,27 +191,13 @@ public class TransformerUtilsTest {
         final Predicate<String> equalsAPredicate = EqualPredicate.equalPredicate("A");
         assertEquals("C", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("A"));
         assertEquals("B", TransformerUtils.ifTransformer(equalsAPredicate, c).transform("B"));
-
-        try {
-            TransformerUtils.ifTransformer(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.ifTransformer(TruePredicate.truePredicate(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.ifTransformer(null, ConstantTransformer.constantTransformer("A"));
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.ifTransformer(null, null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(TruePredicate.truePredicate(), null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, ConstantTransformer.constantTransformer("A"))),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.ifTransformer(null, null, null))
+        );
     }
-
-    // switchTransformer
-    //------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")
@@ -317,33 +237,16 @@ public class TransformerUtilsTest {
         map = new HashMap<>();
         map.put(null, null);
         assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(map));
-
-        try {
-            TransformerUtils.switchTransformer(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.switchTransformer(null, (Transformer[]) null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.switchTransformer(null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.switchTransformer(new Predicate[2], new Transformer[2]);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.switchTransformer(
-                    new Predicate[] { TruePredicate.truePredicate() },
-                    new Transformer[] { a, b });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null, (Transformer[]) null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(null)),
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.switchTransformer(new Predicate[2], new Transformer[2])),
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.switchTransformer(
+                        new Predicate[]{TruePredicate.truePredicate()},
+                        new Transformer[]{a, b}))
+        );
     }
-
-    // switchMapTransformer
-    //------------------------------------------------------------------
 
     @Test
     public void testSwitchMapTransformer() {
@@ -365,14 +268,8 @@ public class TransformerUtilsTest {
         map.put(null, null);
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchMapTransformer(map));
 
-        try {
-            TransformerUtils.switchMapTransformer(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> TransformerUtils.switchMapTransformer(null));
     }
-
-    // invokerTransformer
-    //------------------------------------------------------------------
 
     @Test
     public void testInvokerTransformer() {
@@ -381,19 +278,11 @@ public class TransformerUtilsTest {
         list.add(new Object());
         assertEquals(1, TransformerUtils.invokerTransformer("size").transform(list));
         assertNull(TransformerUtils.invokerTransformer("size").transform(null));
-
-        try {
-            TransformerUtils.invokerTransformer(null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.invokerTransformer("noSuchMethod").transform(new Object());
-            fail();
-        } catch (final FunctorException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.invokerTransformer(null)),
+                () -> assertThrows(FunctorException.class, () -> TransformerUtils.invokerTransformer("noSuchMethod").transform(new Object()))
+        );
     }
-
-    // invokerTransformer2
-    //------------------------------------------------------------------
 
     @Test
     public void testInvokerTransformer2() {
@@ -405,32 +294,15 @@ public class TransformerUtilsTest {
                 new Class[] { Object.class }, new Object[] { cString }).transform(list));
         assertNull(TransformerUtils.invokerTransformer("contains",
                 new Class[]{Object.class}, new Object[]{cString}).transform(null));
-
-        try {
-            TransformerUtils.invokerTransformer(null, null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            TransformerUtils.invokerTransformer("noSuchMethod", new Class[] { Object.class },
-                    new Object[] { cString }).transform(new Object());
-            fail();
-        } catch (final FunctorException ex) {}
-        try {
-            TransformerUtils.invokerTransformer("badArgs", null, new Object[] { cString });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
-        try {
-            TransformerUtils.invokerTransformer("badArgs", new Class[] { Object.class }, null);
-            fail();
-        } catch (final IllegalArgumentException ex) {}
-        try {
-            TransformerUtils.invokerTransformer("badArgs", new Class[] {}, new Object[] { cString });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> TransformerUtils.invokerTransformer(null, null, null)),
+                () -> assertThrows(FunctorException.class, () -> TransformerUtils.invokerTransformer("noSuchMethod", new Class[]{Object.class},
+                        new Object[]{cString}).transform(new Object())),
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", null, new Object[]{cString})),
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", new Class[]{Object.class}, null)),
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.invokerTransformer("badArgs", new Class[]{}, new Object[]{cString}))
+        );
     }
-
-    // stringValueTransformer
-    //------------------------------------------------------------------
 
     @Test
     public void testStringValueTransformer() {
@@ -442,25 +314,17 @@ public class TransformerUtilsTest {
             TransformerUtils.stringValueTransformer().transform(6), "StringValueTransformer should return toString value");
     }
 
-    // instantiateFactory
-    //------------------------------------------------------------------
-
     @Test
     public void testInstantiateTransformerNull() {
-        try {
-            TransformerUtils.instantiateTransformer(null, new Object[] { "str" });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
-        try {
-            TransformerUtils.instantiateTransformer(new Class[] {}, new Object[] { "str" });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.instantiateTransformer(null, new Object[]{"str"})),
+                () -> assertThrows(IllegalArgumentException.class, () -> TransformerUtils.instantiateTransformer(new Class[]{}, new Object[]{"str"}))
+        );
 
         Transformer<Class<?>, Object> trans = TransformerUtils.instantiateTransformer(new Class[] { Long.class }, new Object[] { null });
-        try {
-            trans.transform(String.class);
-            fail();
-        } catch (final FunctorException ex) {}
+
+        final Transformer<Class<?>, Object> finalTrans = trans;
+        assertThrows(FunctorException.class, () -> finalTrans.transform(String.class));
 
         trans = TransformerUtils.instantiateTransformer();
         assertEquals("", trans.transform(String.class));
@@ -469,16 +333,13 @@ public class TransformerUtilsTest {
         assertEquals(new Date(1000L), trans.transform(Date.class));
     }
 
-    // misc tests
-    //------------------------------------------------------------------
-
     /**
      * Test that all Transformer singletons hold singleton pattern in
      * serialization/deserialization process.
      */
     @Test
     public void testSingletonPatternInSerialization() {
-        final Object[] singletons = new Object[] {
+        final Object[] singletons = {
             ExceptionTransformer.INSTANCE,
             NOPTransformer.INSTANCE,
             StringValueTransformer.stringValueTransformer(),
@@ -488,4 +349,5 @@ public class TransformerUtilsTest {
             TestUtils.assertSameAfterSerialization("Singleton pattern broken for " + original.getClass(), original);
         }
     }
+
 }

@@ -46,8 +46,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /** The current iterator index */
     int index;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array.

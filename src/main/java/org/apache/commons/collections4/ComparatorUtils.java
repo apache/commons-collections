@@ -41,7 +41,7 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  */
 public class ComparatorUtils {
 
-    private static final Comparator[] EMPTY_COMPARATOR_ARRAY = new Comparator[0];
+    private static final Comparator[] EMPTY_COMPARATOR_ARRAY = {};
 
     /**
      * Don't allow instances.

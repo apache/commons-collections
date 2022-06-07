@@ -57,7 +57,7 @@ public class SequencesComparatorTest {
 
     @Test
     public void testMinimal() {
-        final String[] shadokAlph = new String[] {
+        final String[] shadokAlph = {
             "GA",
             "BU",
             "ZO",
@@ -109,7 +109,7 @@ public class SequencesComparatorTest {
     @Test
     public void testShadok() {
         final int lgMax = 5;
-        final String[] shadokAlph = new String[] {
+        final String[] shadokAlph = {
             "GA",
             "BU",
             "ZO",
@@ -154,7 +154,7 @@ public class SequencesComparatorTest {
         return list;
     }
 
-    private class ExecutionVisitor<T> implements CommandVisitor<T> {
+    private static class ExecutionVisitor<T> implements CommandVisitor<T> {
 
         private List<T> v;
         private int index;

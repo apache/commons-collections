@@ -17,6 +17,8 @@
 package org.apache.commons.collections4.map;
 
 import static org.apache.commons.collections4.map.LazySortedMap.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -28,7 +30,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link LazyMapTest} for exercising the
@@ -39,19 +41,21 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    private class ReverseStringComparator implements Comparator<String> {
+    private static class ReverseStringComparator implements Comparator<String> {
+
         @Override
         public int compare(final String arg0, final String arg1) {
             return arg1.compareTo(arg0);
         }
+
     }
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
     protected final Comparator<String> reverseStringComparator = new ReverseStringComparator();
 
-    public LazySortedMapTest(final String testName) {
-        super(testName);
+    public LazySortedMapTest() {
+        super(LazySortedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -65,6 +69,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from LazyMapTest
+    @Test
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
@@ -85,6 +90,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     }
 
+    @Test
     public void testSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String, Number>(), oneFactory);
         map.put("A",  5);
@@ -103,6 +109,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertNull("natural order, so comparator should be null", c);
     }
 
+    @Test
     public void testReverseSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new ConcurrentSkipListMap<String, Number>(reverseStringComparator), oneFactory);
         map.put("A",  5);
@@ -121,22 +128,17 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertSame("natural order, so comparator should be null", c, reverseStringComparator);
     }
 
+    @Test
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
         assertTrue(map instanceof LazySortedMap);
-        try {
-            map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
-            fail("Expecting NullPointerException for null transformer");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            map = lazySortedMap((SortedMap<Integer, Number>) null, transformer);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null),
+                        "Expecting NullPointerException for null transformer"),
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap((SortedMap<Integer, Number>) null, transformer),
+                        "Expecting NullPointerException for null map")
+        );
     }
 
     @Override
@@ -154,4 +156,5 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/LazySortedMap.fullCollection.version4.obj");
 //    }
+
 }

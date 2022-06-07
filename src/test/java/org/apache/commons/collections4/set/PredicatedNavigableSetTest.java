@@ -16,17 +16,18 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -36,15 +37,13 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
-    public PredicatedNavigableSetTest(final String testName) {
-        super(testName);
+    public PredicatedNavigableSetTest() {
+        super(PredicatedNavigableSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PredicatedNavigableSetTest.class);
     }
-
-    //-------------------------------------------------------------------
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
@@ -59,7 +58,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return PredicatedNavigableSet.predicatedNavigableSet(set, truePredicate);
     }
 
-//--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         o -> o instanceof String && ((String) o).startsWith("A");
 
@@ -67,24 +65,23 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedNavigableSet<E> set = makeTestSet();
         assertNotNull("returned set should not be null", set.decorated());
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final NavigableSet<E> set = makeTestSet();
         final String testString = "B";
-        try {
-            set.add((E) testString);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.add((E) testString),
+                "Should fail string predicate.");
         assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final NavigableSet<E> set = makeTestSet();
@@ -93,18 +90,15 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         elements.add((E) "Atwo");
         elements.add((E) "Bthree");
         elements.add((E) "Afour");
-        try {
-            set.addAll(elements);
-            fail("Should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
+                "Should fail string predicate.");
         assertFalse("Set shouldn't contain illegal element", set.contains("Aone"));
         assertFalse("Set shouldn't contain illegal element", set.contains("Atwo"));
         assertFalse("Set shouldn't contain illegal element", set.contains("Bthree"));
         assertFalse("Set shouldn't contain illegal element", set.contains("Afour"));
     }
 
+    @Test
     public void testComparator() {
         final NavigableSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();

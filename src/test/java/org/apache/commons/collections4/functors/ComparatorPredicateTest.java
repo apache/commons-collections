@@ -21,11 +21,11 @@ import static org.apache.commons.collections4.functors.ComparatorPredicate.*;
 import java.util.Comparator;
 
 import org.apache.commons.collections4.Predicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 public class ComparatorPredicateTest extends AbstractPredicateTest {
-    private class TestComparator<T extends Comparable<T>> implements Comparator<T> {
+    private static class TestComparator<T extends Comparable<T>> implements Comparator<T> {
         @Override
         public int compare(final T first, final T second) {
             return first.compareTo(second);

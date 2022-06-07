@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.collections4.properties;
 
 import java.io.BufferedReader;
@@ -22,109 +21,122 @@ import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
-    @Parameters(name = "{0}")
-    public static Object[][] getParameters() {
-        return new Object[][] { { ".properties" }, { ".xml" } };
-
+    public static Stream<Arguments> getParameters() {
+        return Stream.of(
+                arguments(".properties"),
+                arguments(".xml")
+        );
     }
 
     private final AbstractPropertiesFactory<T> factory;
-    private final String pathString;
-    private final String fileExtension;
 
-    protected AbstractPropertiesFactoryTest(final AbstractPropertiesFactory<T> factory, final String fileExtension) {
+    protected AbstractPropertiesFactoryTest(final AbstractPropertiesFactory<T> factory) {
         this.factory = factory;
-        this.fileExtension = fileExtension;
-        this.pathString = BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;
     }
 
     private void assertContents(final T properties) {
-        Assert.assertEquals("value1", properties.getProperty("key1"));
-        Assert.assertEquals("value2", properties.getProperty("key2"));
-        Assert.assertEquals("value3", properties.getProperty("key3"));
-        Assert.assertEquals("value4", properties.getProperty("key4"));
-        Assert.assertEquals("value5", properties.getProperty("key5"));
-        Assert.assertEquals("value6", properties.getProperty("key6"));
-        Assert.assertEquals("value7", properties.getProperty("key7"));
-        Assert.assertEquals("value8", properties.getProperty("key8"));
-        Assert.assertEquals("value9", properties.getProperty("key9"));
-        Assert.assertEquals("value10", properties.getProperty("key10"));
-        Assert.assertEquals("value11", properties.getProperty("key11"));
+        Assertions.assertEquals("value1", properties.getProperty("key1"));
+        Assertions.assertEquals("value2", properties.getProperty("key2"));
+        Assertions.assertEquals("value3", properties.getProperty("key3"));
+        Assertions.assertEquals("value4", properties.getProperty("key4"));
+        Assertions.assertEquals("value5", properties.getProperty("key5"));
+        Assertions.assertEquals("value6", properties.getProperty("key6"));
+        Assertions.assertEquals("value7", properties.getProperty("key7"));
+        Assertions.assertEquals("value8", properties.getProperty("key8"));
+        Assertions.assertEquals("value9", properties.getProperty("key9"));
+        Assertions.assertEquals("value10", properties.getProperty("key10"));
+        Assertions.assertEquals("value11", properties.getProperty("key11"));
     }
 
-    private boolean isXmlTest() {
+    private boolean isXmlTest(final String fileExtension) {
         return ".xml".equals(fileExtension);
+    }
+
+    private String getPathString(final String fileExtension) {
+        return BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;
     }
 
     @Test
     public void testInstance() {
-        Assert.assertNotNull(PropertiesFactory.INSTANCE);
+        Assertions.assertNotNull(PropertiesFactory.INSTANCE);
     }
 
-    @Test
-    public void testLoadClassLoaderMissingResource() throws Exception {
-        Assert.assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadClassLoaderMissingResource(final String fileExtension) throws Exception {
+        Assertions.assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
     }
 
-    @Test
-    public void testLoadClassLoaderResource() throws Exception {
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadClassLoaderResource(final String fileExtension) throws Exception {
         assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtension));
     }
 
-    @Test
-    public void testLoadFile() throws Exception {
-        assertContents(factory.load(Paths.get(pathString).toFile()));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadFile(final String fileExtension) throws Exception {
+        assertContents(factory.load(Paths.get(getPathString(fileExtension)).toFile()));
     }
 
-    @Test
-    public void testLoadFileName() throws Exception {
-        assertContents(factory.load(pathString));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadFileName(final String fileExtension) throws Exception {
+        assertContents(factory.load(getPathString(fileExtension)));
     }
 
-    @Test
-    public void testLoadInputStream() throws Exception {
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadInputStream(final String fileExtension) throws Exception {
         // Can't tell what we are reading
-        Assume.assumeFalse(isXmlTest());
+        Assumptions.assumeFalse(isXmlTest(fileExtension));
         //
-        try (FileInputStream inputStream = new FileInputStream(pathString)) {
+        try (FileInputStream inputStream = new FileInputStream(getPathString(fileExtension))) {
             assertContents(factory.load(inputStream));
         }
     }
 
-    @Test
-    public void testLoadPath() throws Exception {
-        assertContents(factory.load(Paths.get(pathString)));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadPath(final String fileExtension) throws Exception {
+        assertContents(factory.load(Paths.get(getPathString(fileExtension))));
     }
 
-    @Test
-    public void testLoadReader() throws Exception {
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadReader(final String fileExtension) throws Exception {
         // Can't tell what we are reading
-        Assume.assumeFalse(isXmlTest());
+        Assumptions.assumeFalse(isXmlTest(fileExtension));
         //
-        try (BufferedReader inputStream = Files.newBufferedReader(Paths.get(pathString))) {
+        try (BufferedReader inputStream = Files.newBufferedReader(Paths.get(getPathString(fileExtension)))) {
             assertContents(factory.load(inputStream));
         }
     }
 
-    @Test
-    public void testLoadUri() throws Exception {
-        assertContents(factory.load(Paths.get(pathString).toUri()));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadUri(final String fileExtension) throws Exception {
+        assertContents(factory.load(Paths.get(getPathString(fileExtension)).toUri()));
     }
 
-    @Test
-    public void testLoadUrl() throws Exception {
-        assertContents(factory.load(Paths.get(pathString).toUri().toURL()));
+    @ParameterizedTest
+    @MethodSource(value = "getParameters")
+    public void testLoadUrl(final String fileExtension) throws Exception {
+        assertContents(factory.load(Paths.get(getPathString(fileExtension)).toUri().toURL()));
     }
+
 }

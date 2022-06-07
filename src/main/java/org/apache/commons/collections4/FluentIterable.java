@@ -70,9 +70,6 @@ public class FluentIterable<E> implements Iterable<E> {
     /** A reference to the wrapped iterable. */
     private final Iterable<E> iterable;
 
-    // Static factory methods
-    // ----------------------------------------------------------------------
-
     /**
      * Creates a new empty FluentIterable.
      *
@@ -130,9 +127,6 @@ public class FluentIterable<E> implements Iterable<E> {
         return new FluentIterable<>(iterable);
     }
 
-    // Constructor
-    // ----------------------------------------------------------------------
-
     /**
      * Don't allow instances.
      */
@@ -147,9 +141,6 @@ public class FluentIterable<E> implements Iterable<E> {
     private FluentIterable(final Iterable<E> iterable) {
         this.iterable = iterable;
     }
-
-    // fluent construction methods
-    // ----------------------------------------------------------------------
 
     /**
      * Returns a new FluentIterable whose iterator will first traverse
@@ -356,9 +347,6 @@ public class FluentIterable<E> implements Iterable<E> {
     public FluentIterable<E> zip(final Iterable<? extends E>... others) {
         return of(IterableUtils.zippingIterable(iterable, others));
     }
-
-    // convenience methods
-    // ----------------------------------------------------------------------
 
     /** {@inheritDoc} */
     @Override

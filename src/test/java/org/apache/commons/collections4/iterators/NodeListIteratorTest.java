@@ -17,9 +17,12 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,14 +41,13 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     private boolean createIteratorWithStandardConstr = true;
 
     /**
-     * Constructor
-     * @param testName
+     * Junit Constructor
      */
-    public NodeListIteratorTest(final String testName) {
-        super(testName);
+    public NodeListIteratorTest() {
+        super(NodeListIteratorTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
         super.setUp();
 
@@ -110,18 +112,15 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         return false;
     }
 
-    public void testNullConstructor(){
-        try{
-            new NodeListIterator((Node) null);
-            fail("NullPointerException expected!");
-        }catch(final NullPointerException e){
-            // expected.
-        }
+    @Test
+    public void testNullConstructor() {
+        assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 
     /**
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
+    @Test
     public void testEmptyIteratorWithNodeConstructor(){
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
@@ -130,8 +129,10 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     /**
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
+    @Test
     public void testFullIteratorWithNodeConstructor(){
         createIteratorWithStandardConstr = false;
         testFullIterator();
     }
+
 }

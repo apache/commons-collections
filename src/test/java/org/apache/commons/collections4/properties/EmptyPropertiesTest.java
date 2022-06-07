@@ -17,6 +17,15 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,15 +38,6 @@ import java.util.Properties;
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class EmptyPropertiesTest {
 
@@ -106,6 +106,7 @@ public class EmptyPropertiesTest {
         assertNotEquals(p, PropertiesFactory.EMPTY_PROPERTIES);
     }
 
+    @Test
     public void testForEach() {
         PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }
@@ -150,7 +151,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testKeySet() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
@@ -257,25 +258,41 @@ public class EmptyPropertiesTest {
     @Test
     public void testSave() throws IOException {
         final String comments = "Hello world!";
-        // actual
-        try (ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
-            try (PrintStream out = new PrintStream(actual)) {
-                PropertiesFactory.EMPTY_PROPERTIES.save(out, comments);
-            }
+        try (ByteArrayOutputStream actual = new ByteArrayOutputStream(); ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
+            // actual
+            PropertiesFactory.EMPTY_PROPERTIES.store(actual, comments);
             // expected
-            try (ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-                try (PrintStream out = new PrintStream(expected)) {
-                    PropertiesFactory.INSTANCE.createProperties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
-                expected.reset();
-                try (PrintStream out = new PrintStream(expected)) {
-                    new Properties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
+            PropertiesFactory.INSTANCE.createProperties().store(expected, comments);
+
+            // Properties.store stores the specified comment appended with current time stamp in the next line
+            String expectedComment = getFirstLine(expected.toString("UTF-8"));
+            String actualComment = getFirstLine(actual.toString("UTF-8"));
+            assertEquals(expectedComment, actualComment, () ->
+                    String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
+            expected.reset();
+            try (PrintStream out = new PrintStream(expected)) {
+                new Properties().store(out, comments);
             }
+            String[] expectedLines = expected.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            String[] actualLines = actual.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            assertEquals(expectedLines.length, actualLines.length);
+            // The assertion below checks that the comment is the same in both files
+            assertEquals(expectedLines[0], actualLines[0]);
+            // N.B.: We must not expect expectedLines[1] and actualLines[1] to have the same value as
+            //       it contains the timestamp of when the data was written to the stream, which makes
+            //       this test brittle, causing intermitent failures, see COLLECTIONS-812
         }
     }
+
+    /**
+     * Returns the first line from multi-lined string separated by a line separator character
+     * @param x the multi-lined String
+     * @return the first line from x
+     */
+    private String getFirstLine(final String x) {
+        return x.split("\\R", 2)[0];
+    }
+
 
     @Test
     public void testSetProperty() {
@@ -360,6 +377,6 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testValues() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 }

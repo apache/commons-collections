@@ -16,14 +16,16 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
@@ -52,12 +54,12 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         }
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PassiveExpiringMapTest.class);
     }
 
-    public PassiveExpiringMapTest(final String testName) {
-        super(testName);
+    public PassiveExpiringMapTest() {
+        super(PassiveExpiringMapTest.class.getSimpleName());
     }
 
 //    public void testCreate() throws Exception {
@@ -101,32 +103,28 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return m;
     }
 
+    @Test
     public void testConstructors() {
-        try {
-            final Map<String, String> map = null;
-            new PassiveExpiringMap<>(map);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
-
-        try {
-            final ExpirationPolicy<String, String> policy = null;
-            new PassiveExpiringMap<>(policy);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
-
-        try {
-            final TimeUnit unit = null;
-            new PassiveExpiringMap<String, String>(10L, unit);
-            fail("constructor - exception should have been thrown.");
-        } catch (final NullPointerException ex) {
-            // success
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final Map<String, String> map = null;
+                    new PassiveExpiringMap<>(map);
+                },
+                        "constructor - exception should have been thrown."),
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final ExpirationPolicy<String, String> policy = null;
+                    new PassiveExpiringMap<>(policy);
+                },
+                        "constructor - exception should have been thrown."),
+                () -> assertThrows(NullPointerException.class, () -> {
+                    final TimeUnit unit = null;
+                    new PassiveExpiringMap<String, String>(10L, unit);
+                },
+                        "constructor - exception should have been thrown.")
+        );
     }
 
+    @Test
     public void testContainsKey() {
         final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsKey(Integer.valueOf(1)));
@@ -137,6 +135,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.containsKey(Integer.valueOf(6)));
     }
 
+    @Test
     public void testContainsValue() {
         final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsValue("one"));
@@ -147,6 +146,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.containsValue("six"));
     }
 
+    @Test
     public void testDecoratedMap() {
         // entries shouldn't expire
         final Map<Integer, String> m = makeDecoratedTestMap();
@@ -176,11 +176,13 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("two", m.get(Integer.valueOf(2)));
     }
 
+    @Test
     public void testEntrySet() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.entrySet().size());
     }
 
+    @Test
     public void testExpiration() {
         validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
         validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
@@ -190,6 +192,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
                 new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
     }
 
+    @Test
     public void testGet() {
         final Map<Integer, String> m = makeTestMap();
         assertNull(m.get(Integer.valueOf(1)));
@@ -200,6 +203,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("six", m.get(Integer.valueOf(6)));
     }
 
+    @Test
     public void testIsEmpty() {
         Map<Integer, String> m = makeTestMap();
         assertFalse(m.isEmpty());
@@ -212,11 +216,13 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertTrue(m.isEmpty());
     }
 
+    @Test
     public void testKeySet() {
         final Map<Integer, String> m = makeTestMap();
-        assertEquals(3, m.keySet().size());
+        assertEquals(3, m.size());
     }
 
+    @Test
     public void testPut() {
         final Map<Integer, String> m = makeTestMap();
         assertNull(m.put(Integer.valueOf(1), "ONE"));
@@ -227,16 +233,19 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("six", m.put(Integer.valueOf(6), "SIX"));
     }
 
+    @Test
     public void testSize() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
     }
 
+    @Test
     public void testValues() {
         final Map<Integer, String> m = makeTestMap();
-        assertEquals(3, m.values().size());
+        assertEquals(3, m.size());
     }
 
+    @Test
     public void testZeroTimeToLive() {
         // item should not be available
         final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<>(0L);
@@ -249,7 +258,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         assertNotNull(map.get("a"));
 
-        try {
+        try{
             Thread.sleep(2 * timeout);
         } catch (final InterruptedException e) {
             fail();

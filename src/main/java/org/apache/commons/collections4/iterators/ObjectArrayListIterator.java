@@ -47,7 +47,6 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     private int lastItemIndex = -1;
 
-    //-------------------------------------------------------------------------
     /**
      * Constructs an ObjectArrayListIterator that will iterate over the values in the
      * specified array.
@@ -86,9 +85,6 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     public ObjectArrayListIterator(final E[] array, final int start, final int end) {
         super(array, start, end);
     }
-
-    // ListIterator interface
-    //-------------------------------------------------------------------------
 
     /**
      * Returns true if there are previous elements to return from the array.

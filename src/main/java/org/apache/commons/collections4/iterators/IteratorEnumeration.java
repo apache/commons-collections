@@ -48,9 +48,6 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
         this.iterator = iterator;
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-
     /**
      * Returns true if the underlying iterator has more elements.
      *
@@ -72,9 +69,6 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     public E nextElement() {
         return iterator.next();
     }
-
-    // Properties
-    //-------------------------------------------------------------------------
 
     /**
      * Returns the underlying iterator.

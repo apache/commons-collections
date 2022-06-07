@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test the DefaultKeyValue class.
@@ -51,8 +56,8 @@ public class DefaultKeyValueTest<K, V> {
         return new DefaultKeyValue<>(key, value);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
@@ -68,11 +73,10 @@ public class DefaultKeyValueTest<K, V> {
 
         kv.setValue(null);
         assertNull(kv.getValue());
-
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         // test that #setKey and #setValue do not permit
         //  the KVP to contain itself (and thus cause infinite recursion
@@ -80,32 +84,16 @@ public class DefaultKeyValueTest<K, V> {
 
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
-        try {
-            kv.setKey((K) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
-
-        try {
-            kv.setValue((V) kv);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
-
-            // check that the KVP's state has not changed
-            assertTrue(kv.getKey() == null && kv.getValue() == null);
-        }
+        assertThrows(IllegalArgumentException.class, () -> kv.setKey((K) kv));
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
     }
 
     /**
      * Subclasses should override this method to test their own constructors.
      */
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test default constructor
         DefaultKeyValue<K, V> kv = new DefaultKeyValue<>();
@@ -136,11 +124,10 @@ public class DefaultKeyValueTest<K, V> {
         // test that the KVP is independent of the Map.Entry
         entry.setValue(null);
         assertSame(value, kv.getValue());
-
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         // 1. test with object data
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
@@ -159,8 +146,8 @@ public class DefaultKeyValueTest<K, V> {
         assertEquals(kv.hashCode(), kv2.hashCode());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testToString() {
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
@@ -170,8 +157,8 @@ public class DefaultKeyValueTest<K, V> {
         assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testToMapEntry() {
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
 

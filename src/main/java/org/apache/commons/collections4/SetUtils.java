@@ -277,7 +277,7 @@ public class SetUtils {
         Objects.requireNonNull(setA, "setA");
         Objects.requireNonNull(setB, "setB");
 
-        final Predicate<E> containedInB = object -> setB.contains(object);
+        final Predicate<E> containedInB = setB::contains;
 
         return new SetView<E>() {
             @Override
@@ -351,7 +351,7 @@ public class SetUtils {
      * @since 4.1
      */
     public static <E> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(new IdentityHashMap<E, Boolean>());
+        return Collections.newSetFromMap(new IdentityHashMap<>());
     }
 
     /**

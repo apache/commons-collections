@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.trie;
 
-import junit.framework.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -31,15 +32,13 @@ import org.apache.commons.collections4.map.AbstractSortedMapTest;
  */
 public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
-    public UnmodifiableTrieTest(final String testName) {
-        super(testName);
+    public UnmodifiableTrieTest() {
+        super(UnmodifiableTrieTest.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(UnmodifiableTrieTest.class);
     }
-
-    //-------------------------------------------------------------------
 
     @Override
     public Trie<String, V> makeObject() {
@@ -68,22 +67,19 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Trie<String, V> trie = makeFullMap();
         assertSame(trie, UnmodifiableTrie.unmodifiableTrie(trie));
 
-        try {
-            UnmodifiableTrie.unmodifiableTrie(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableTrie.unmodifiableTrie(null));
     }
-
 
     /**
      * Override to prevent infinite recursion of tests.

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.trie;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.map.AbstractOrderedMapTest;
@@ -29,11 +27,11 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 
-    public PatriciaTrie2Test(final String testName) {
-        super(testName);
+    public PatriciaTrie2Test() {
+        super(PatriciaTrie2Test.class.getSimpleName());
     }
 
-    public static Test suite() {
+    public static junit.framework.Test suite() {
         return BulkTest.makeSuite(PatriciaTrie2Test.class);
     }
 

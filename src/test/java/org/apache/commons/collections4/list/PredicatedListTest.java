@@ -16,11 +16,14 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the
@@ -30,11 +33,9 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedListTest<E> extends AbstractListTest<E> {
 
-    public PredicatedListTest(final String testName) {
-        super(testName);
+    public PredicatedListTest() {
+        super(PredicatedListTest.class.getSimpleName());
     }
-
- //-------------------------------------------------------------------
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
@@ -53,8 +54,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
     }
 
-//--------------------------------------------------------------------
-
     protected Predicate<E> testPredicate =
         o -> o instanceof String;
 
@@ -62,19 +61,19 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         return decorateList(new ArrayList<E>(), testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final List<E> list = makeTestList();
         final Integer i = Integer.valueOf(3);
-        try {
-            list.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> list.add((E) i),
+                "Integer should fail string predicate.");
+
         assertFalse("Collection shouldn't contain illegal element", list.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final List<E> list = makeTestList();
@@ -83,29 +82,25 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            list.addAll(0, elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> list.addAll(0, elements),
+                "Integer should fail string predicate.");
+
         assertFalse("List shouldn't contain illegal element", list.contains("one"));
         assertFalse("List shouldn't contain illegal element", list.contains("two"));
         assertFalse("List shouldn't contain illegal element", list.contains(Integer.valueOf(3)));
         assertFalse("List shouldn't contain illegal element", list.contains("four"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalSet() {
         final List<E> list = makeTestList();
-        try {
-            list.set(0, (E) Integer.valueOf(3));
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> list.set(0, (E) Integer.valueOf(3)),
+                "Integer should fail string predicate.");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testLegalAddAll() {
         final List<E> list = makeTestList();
@@ -121,6 +116,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertTrue("List should contain legal element", list.contains("three"));
     }
 
+    @Test
     public void testSubList() {
         final List<E> list = makeTestList();
         list.add((E) "zero");

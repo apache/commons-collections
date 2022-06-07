@@ -102,7 +102,6 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
         return decorated;
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
