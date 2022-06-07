@@ -61,7 +61,7 @@ public interface Hasher {
      *
      * <p><em>If the index is negative the behavior is not defined.</em></p>
      *
-     * <p>This is conceptually a unique filter implemented as a {@code Predicate<int>}.</p>
+     * <p>This is conceptually a unique filter implemented as a {@code IntPredicate}.</p>
      * @since 4.5
      */
     final class IndexFilter implements IntPredicate {
@@ -122,9 +122,6 @@ public interface Hasher {
          */
         @Override
         public boolean test(int number) {
-            if (number < 0) {
-                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
-            }
             if (number >= size) {
                 throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
             }
