@@ -215,10 +215,11 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public int cardinality() {
         // Lazy evaluation with caching
-        if (cardinality < 0) {
-            cardinality = SetOperations.cardinality(this);
+        int c = cardinality;
+        if (c < 0) {
+            cardinality = c = SetOperations.cardinality(this);
         }
-        return cardinality;
+        return c;
     }
 
     @Override

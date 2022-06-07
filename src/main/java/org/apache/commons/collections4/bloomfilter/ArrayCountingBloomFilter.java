@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -279,6 +280,6 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public int[] asIndexArray() {
-        return IntStream.range(0, counts.length).filter(i -> counts[i] > 0).toArray();
+        return Arrays.stream(counts).filter(x -> x != 0).toArray();
     }
 }
