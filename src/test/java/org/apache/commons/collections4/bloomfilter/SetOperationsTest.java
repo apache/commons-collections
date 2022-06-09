@@ -227,7 +227,7 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
         assertEquals(5, SetOperations.orCardinality(filter1, filter2));
         assertEquals(5, SetOperations.orCardinality(filter2, filter1));
-}
+    }
 
     @Test
     public final void testAndCardinality() {
