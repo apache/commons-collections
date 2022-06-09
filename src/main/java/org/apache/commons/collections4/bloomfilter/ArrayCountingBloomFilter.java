@@ -280,6 +280,6 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public int[] asIndexArray() {
-        return Arrays.stream(counts).filter(x -> x != 0).toArray();
+        return IntStream.range(0, counts.length).filter(i -> counts[i] > 0).toArray();
     }
 }
