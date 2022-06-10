@@ -266,7 +266,7 @@
       Update tests from commons-io:commons-io 2.6 to 2.11.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Update maven-pmd-plugin from 3.12.0 to 3.15.0 #167 #196 #253.
+      Update maven-pmd-plugin from 3.12.0 to 3.17.0 #167, #196, #253, #311.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
       Update optional commons-codec from 1.14 to 1.15.
