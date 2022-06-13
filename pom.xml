@@ -590,12 +590,16 @@
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.1.2</checkstyle.version>
     <checkstyle.dep.version>9.3</checkstyle.dep.version>
+    <commons.pmd.version>3.17.0</commons.pmd.version>
+    <commons.pmd-impl.version>6.46.0</commons.pmd-impl.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
-
-    <!-- Override clirr version to enable clirr on Java 8 -->
+    
+    <commons.rat.version>0.14</commons.rat.version>
+    <!-- Skip CLIRR in favor of JApiCmp -->
+    <clirr.skip>true</clirr.skip>
     <commons.clirr.version>2.8</commons.clirr.version>
     <commons.jacoco.version>0.8.8</commons.jacoco.version>
     <commons.junit.version>5.8.2</commons.junit.version>
@@ -614,6 +618,40 @@
 
   <build>
     <defaultGoal>clean verify apache-rat:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>${commons.pmd.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>net.sourceforge.pmd</groupId>
+              <artifactId>pmd-core</artifactId>
+              <version>${commons.pmd-impl.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>net.sourceforge.pmd</groupId>
+              <artifactId>pmd-java</artifactId>
+              <version>${commons.pmd-impl.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>net.sourceforge.pmd</groupId>
+              <artifactId>pmd-javascript</artifactId>
+              <version>${commons.pmd-impl.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>net.sourceforge.pmd</groupId>
+              <artifactId>pmd-jsp</artifactId>
+              <version>${commons.pmd-impl.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <targetJdk>${maven.compiler.target}</targetJdk>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -767,37 +805,16 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>clirr-maven-plugin</artifactId>
-        <version>${commons.clirr.version}</version>
-        <configuration>
-          <minSeverity>${minSeverity}</minSeverity>
-         </configuration>
+        <groupId>com.github.siom79.japicmp</groupId>
+        <artifactId>japicmp-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>${commons.findbugs.version}</version>
-        <configuration>
-          <threshold>Normal</threshold>
-          <effort>Default</effort>
-          <excludeFilterFile>${basedir}/src/conf/findbugs-exclude-filter.xml</excludeFilterFile>
-       </configuration>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
       </plugin>
-      <plugin>
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.17.0</version>
-        <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>pmd</report>
-              <report>cpd</report>
-            </reports>
-          </reportSet>
-        </reportSets>
       </plugin>
     </plugins>
   </reporting>
@@ -815,7 +832,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.1.0</version>
             <executions>
               <execution>
                 <id>prepare-checkout</id>
@@ -824,7 +840,7 @@
                   <goal>run</goal>
                 </goals>
                 <configuration>
-                  <tasks>
+                  <target>
                     <exec executable="svn">
                       <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
                     </exec>
@@ -839,7 +855,7 @@
                     <exec executable="svn">
                       <arg line="update --set-depth infinity ${dirs}" />
                     </exec>
-                  </tasks>
+                  </target>
                 </configuration>
               </execution>
             </executions>

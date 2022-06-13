@@ -22,20 +22,23 @@
         <href>/index.html</href>
     </bannerRight>
 
-    <menu name="Commons Collections">
-      <item name="Overview"        href="/index.html"/>
-      <item name="Download"        href="/download_collections.cgi"/>
-      <item name="User Guide"      href="/userguide.html"/>
-      <item name="Javadoc"         href="/apidocs/index.html"/>
-      <item name="Javadoc Archive" href="https://javadoc.io/doc/org.apache.commons/commons-collections4/latest/index.html"/>
-    </menu>
+    <body>
+        <menu name="Commons Collections">
+            <item name="Overview" href="/index.html" />
+            <item name="Download" href="/download_collections.cgi" />
+            <item name="User Guide" href="/userguide.html" />
+            <item name="Javadoc" href="/apidocs/index.html" />
+            <item name="Javadoc Archive"
+                href="https://javadoc.io/doc/org.apache.commons/commons-collections4/latest/index.html" />
+        </menu>
 
-    <menu name="Development">
-      <item name="History"         href="/changes-report.html"/>
-      <item name="Mailing Lists"   href="/mail-lists.html"/>
-      <item name="Issue Tracking"  href="/issue-tracking.html"/>
-      <item name="Team"            href="/team.html"/>
-      <item name="Source"          href="/scm.html"/>
-    </menu>
+        <menu name="Development">
+            <item name="History" href="/changes-report.html" />
+            <item name="Mailing Lists" href="/mail-lists.html" />
+            <item name="Issue Tracking" href="/issue-tracking.html" />
+            <item name="Team" href="/team.html" />
+            <item name="Source" href="/scm.html" />
+        </menu>
+    </body>
 
 </project>
