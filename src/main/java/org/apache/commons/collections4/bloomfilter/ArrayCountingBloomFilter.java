@@ -16,18 +16,13 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
-import java.util.NoSuchElementException;
-import java.util.PrimitiveIterator;
-import java.util.PrimitiveIterator.OfInt;
-import java.util.function.IntConsumer;
-
-import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
+import java.util.Objects;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.stream.IntStream;
 
 /**
- * A counting Bloom filter using an array to track counts for each enabled bit
+ * A counting Bloom filter using an int array to track counts for each enabled bit
  * index.
  *
  * <p>Any operation that results in negative counts or integer overflow of
@@ -35,13 +30,13 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * The operation is completed in full, no exception is raised and the state is
  * set to invalid. This allows the counts for the filter immediately prior to the
  * operation that created the invalid state to be recovered. See the documentation
- * in {@link #isValid()} for details.
+ * in {@link #isValid()} for details.</p>
  *
  * <p>All the operations in the filter assume the counts are currently valid,
- * for example cardinality or contains operations. Behaviour of an invalid
+ * for example {@code cardinality} or {@code contains} operations. Behavior of an invalid
  * filter is undefined. It will no longer function identically to a standard
  * Bloom filter that is the merge of all the Bloom filters that have been added
- * to and not later subtracted from the counting Bloom filter.
+ * to and not later subtracted from the counting Bloom filter.</p>
  *
  * <p>The maximum supported number of items that can be stored in the filter is
  * limited by the maximum array size combined with the {@link Shape}. For
@@ -53,7 +48,12 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * @see Shape
  * @since 4.5
  */
-public class ArrayCountingBloomFilter extends AbstractBloomFilter implements CountingBloomFilter {
+public final class ArrayCountingBloomFilter implements CountingBloomFilter {
+
+    /**
+     * The shape of this Bloom filter.
+     */
+    private final Shape shape;
 
     /**
      * The count of each bit index in the filter.
@@ -61,20 +61,20 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     private final int[] counts;
 
     /**
-     * The state flag. This is a bitwise OR of the entire history of all updated
+     * The state flag. This is a bitwise @{code OR} of the entire history of all updated
      * counts. If negative then a negative count or integer overflow has occurred on
      * one or more counts in the history of the filter and the state is invalid.
      *
      * <p>Maintenance of this state flag is branch-free for improved performance. It
      * eliminates a conditional check for a negative count during remove/subtract
      * operations and a conditional check for integer overflow during merge/add
-     * operations.
+     * operations.</p>
      *
      * <p>Note: Integer overflow is unlikely in realistic usage scenarios. A count
      * that overflows indicates that the number of items in the filter exceeds the
      * maximum possible size (number of bits) of any Bloom filter constrained by
      * integer indices. At this point the filter is most likely full (all bits are
-     * non-zero) and thus useless.
+     * non-zero) and thus useless.</p>
      *
      * <p>Negative counts are a concern if the filter is used incorrectly by
      * removing an item that was never added. It is expected that a user of a
@@ -82,174 +82,108 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      * Enabling an explicit recovery path for negative or overflow counts is a major
      * performance burden not deemed necessary for the unlikely scenarios when an
      * invalid state is created. Maintenance of the state flag is a concession to
-     * flag improper use that should not have a major performance impact.
+     * flag improper use that should not have a major performance impact.</p>
      */
     private int state;
-
-    /**
-     * An iterator of all indexes with non-zero counts.
-     *
-     * <p>In the event that the filter state is invalid any index with a negative count
-     * will also be produced by the iterator.
-     */
-    private class IndexIterator implements PrimitiveIterator.OfInt {
-        /** The next non-zero index (or counts.length). */
-        private int next;
-
-        /**
-         * Create an instance.
-         */
-        IndexIterator() {
-            advance();
-        }
-
-        /**
-         * Advance to the next non-zero index.
-         */
-        void advance() {
-            while (next < counts.length && counts[next] == 0) {
-                next++;
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            return next < counts.length;
-        }
-
-        @Override
-        public int nextInt() {
-            if (hasNext()) {
-                final int result = next++;
-                advance();
-                return result;
-            }
-            // Currently unreachable as the iterator is only used by
-            // the StaticHasher which iterates correctly.
-            throw new NoSuchElementException();
-        }
-    }
 
     /**
      * Constructs an empty counting Bloom filter with the specified shape.
      *
      * @param shape the shape of the filter
+     *
      */
     public ArrayCountingBloomFilter(final Shape shape) {
-        super(shape);
+        Objects.requireNonNull(shape, "shape");
+        this.shape = shape;
         counts = new int[shape.getNumberOfBits()];
     }
 
-    @Override
-    public int cardinality() {
-        int size = 0;
-        for (final int c : counts) {
-            if (c != 0) {
-                size++;
-            }
-        }
-        return size;
+    private ArrayCountingBloomFilter(ArrayCountingBloomFilter source) {
+        this.shape = source.shape;
+        this.state = source.state;
+        this.counts = source.counts.clone();
     }
 
     @Override
-    public boolean contains(final BloomFilter other) {
-        // The AbstractBloomFilter implementation converts both filters to long[] bits.
-        // This would involve checking all indexes in this filter against zero.
-        // Ideally we use an iterator of bit indexes to allow fail-fast on the
-        // first bit index that is zero.
-        if (other instanceof ArrayCountingBloomFilter) {
-            verifyShape(other);
-            return contains(((ArrayCountingBloomFilter) other).iterator());
-        }
-
-        // Note:
-        // This currently creates a StaticHasher which stores all the indexes.
-        // It would greatly benefit from direct generation of the index iterator
-        // avoiding the intermediate storage.
-        return contains(other.getHasher());
+    public ArrayCountingBloomFilter copy() {
+        return new ArrayCountingBloomFilter(this);
     }
 
     @Override
-    public boolean contains(final Hasher hasher) {
-        verifyHasher(hasher);
-        return contains(hasher.iterator(getShape()));
-    }
-
-    /**
-     * Return true if this filter is has non-zero counts for each index in the iterator.
-     *
-     * @param iter the iterator
-     * @return true if this filter contains all the indexes
-     */
-    private boolean contains(final OfInt iter) {
-        while (iter.hasNext()) {
-            if (counts[iter.nextInt()] == 0) {
-                return false;
-            }
-        }
+    public boolean isSparse() {
         return true;
     }
 
     @Override
-    public long[] getBits() {
-        final BitSet bs = new BitSet();
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0) {
-                bs.set(i);
-            }
+    public int cardinality() {
+        return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
+    }
+
+    @Override
+    public CountingBloomFilter merge(BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        CountingBloomFilter filter = copy();
+        filter.add(BitCountProducer.from(other));
+        return filter;
+    }
+
+    @Override
+    public CountingBloomFilter merge(Hasher hasher) {
+        Objects.requireNonNull(hasher, "hasher");
+        ArrayCountingBloomFilter filter = copy();
+        try {
+            filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
         }
-        return bs.toLongArray();
+        return filter;
     }
 
     @Override
-    public StaticHasher getHasher() {
-        return new StaticHasher(iterator(), getShape());
-    }
-
-    /**
-     * Returns an iterator over the enabled indexes in this filter.
-     * Any index with a non-zero count is considered enabled.
-     * The iterator returns indexes in their natural order.
-     *
-     * @return an iterator over the enabled indexes
-     */
-    private PrimitiveIterator.OfInt iterator() {
-        return new IndexIterator();
+    public boolean mergeInPlace(final BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        try {
+            return add(BitCountProducer.from(other));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException( e );
+        }
     }
 
     @Override
-    public boolean merge(final BloomFilter other) {
-        applyAsBloomFilter(other, this::increment);
-        return isValid();
-    }
-
-    @Override
-    public boolean merge(final Hasher hasher) {
-        applyAsHasher(hasher, this::increment);
-        return isValid();
+    public boolean mergeInPlace(final Hasher hasher) {
+        Objects.requireNonNull(hasher, "hasher");
+        try {
+            return add(BitCountProducer.from(hasher.uniqueIndices(shape)));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
+        }
     }
 
     @Override
     public boolean remove(final BloomFilter other) {
-        applyAsBloomFilter(other, this::decrement);
-        return isValid();
+        Objects.requireNonNull(other, "other");
+        return subtract(BitCountProducer.from(other));
     }
 
     @Override
     public boolean remove(final Hasher hasher) {
-        applyAsHasher(hasher, this::decrement);
+        Objects.requireNonNull(hasher, "hasher");
+        return subtract(BitCountProducer.from(hasher.uniqueIndices(shape)));
+    }
+
+    @Override
+    public boolean add(final BitCountProducer other) {
+        Objects.requireNonNull(other, "other");
+        other.forEachCount(this::add);
         return isValid();
     }
 
     @Override
-    public boolean add(final CountingBloomFilter other) {
-        applyAsCountingBloomFilter(other, this::add);
-        return isValid();
-    }
-
-    @Override
-    public boolean subtract(final CountingBloomFilter other) {
-        applyAsCountingBloomFilter(other, this::subtract);
+    public boolean subtract(final BitCountProducer other) {
+        Objects.requireNonNull(other, "other");
+        other.forEachCount(this::subtract);
         return isValid();
     }
 
@@ -258,14 +192,14 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      *
      * <p><em>Implementation note</em>
      *
-     * <p>The state transition to invalid is permanent.
+     * <p>The state transition to invalid is permanent.</p>
      *
      * <p>This implementation does not correct negative counts to zero or integer
      * overflow counts to {@link Integer#MAX_VALUE}. Thus the operation that
      * generated invalid counts can be reversed by using the complement of the
      * original operation with the same Bloom filter. This will restore the counts
      * to the state prior to the invalid operation. Counts can then be extracted
-     * using {@link #forEachCount(BitCountConsumer)}.
+     * using {@link #forEachCount(BitCountConsumer)}.</p>
      */
     @Override
     public boolean isValid() {
@@ -273,69 +207,31 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
     }
 
     @Override
-    public void forEachCount(final BitCountConsumer action) {
+    public boolean forEachCount(final BitCountProducer.BitCountConsumer consumer) {
+        Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0) {
-                action.accept(i, counts[i]);
+            if (counts[i] != 0 && !consumer.test(i, counts[i])) {
+                return false;
             }
         }
+        return true;
     }
 
-    /**
-     * Apply the action for each index in the Bloom filter.
-     */
-    private void applyAsBloomFilter(final BloomFilter other, final IntConsumer action) {
-        verifyShape(other);
-        if (other instanceof ArrayCountingBloomFilter) {
-            // Only use the presence of non-zero and not the counts
-            final int[] counts2 = ((ArrayCountingBloomFilter) other).counts;
-            for (int i = 0; i < counts2.length; i++) {
-                if (counts2[i] != 0) {
-                    action.accept(i);
-                }
+    @Override
+    public boolean forEachIndex(IntPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (int i = 0; i < counts.length; i++) {
+            if (counts[i] != 0 && !consumer.test(i)) {
+                return false;
             }
-        } else {
-            BitSet.valueOf(other.getBits()).stream().forEach(action);
         }
+        return true;
     }
 
-    /**
-     * Apply the action for each index in the hasher.
-     */
-    private void applyAsHasher(final Hasher hasher, final IntConsumer action) {
-        verifyHasher(hasher);
-        // We do not naturally handle duplicates so filter them.
-        IndexFilters.distinctIndexes(hasher, getShape(), action);
-    }
-
-    /**
-     * Apply the action for each index in the Bloom filter.
-     */
-    private void applyAsCountingBloomFilter(final CountingBloomFilter other, final BitCountConsumer action) {
-        verifyShape(other);
-        other.forEachCount(action);
-    }
-
-    /**
-     * Increment to the count for the bit index.
-     *
-     * @param idx the index
-     */
-    private void increment(final int idx) {
-        final int updated = counts[idx] + 1;
-        state |= updated;
-        counts[idx] = updated;
-    }
-
-    /**
-     * Decrement from the count for the bit index.
-     *
-     * @param idx the index
-     */
-    private void decrement(final int idx) {
-        final int updated = counts[idx] - 1;
-        state |= updated;
-        counts[idx] = updated;
+    @Override
+    public boolean forEachBitMap(LongPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
     }
 
     /**
@@ -343,11 +239,13 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      *
      * @param idx the index
      * @param addend the amount to add
+     * @return {@code true} always.
      */
-    private void add(final int idx, final int addend) {
+    private boolean add(final int idx, final int addend) {
         final int updated = counts[idx] + addend;
         state |= updated;
         counts[idx] = updated;
+        return true;
     }
 
     /**
@@ -355,10 +253,32 @@ public class ArrayCountingBloomFilter extends AbstractBloomFilter implements Cou
      *
      * @param idx the index
      * @param subtrahend the amount to subtract
+     * @return {@code true} always.
      */
-    private void subtract(final int idx, final int subtrahend) {
+    private boolean subtract(final int idx, final int subtrahend) {
         final int updated = counts[idx] - subtrahend;
         state |= updated;
         counts[idx] = updated;
+        return true;
+    }
+
+    @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        return indexProducer.forEachIndex(idx -> this.counts[idx] != 0);
+    }
+
+    @Override
+    public boolean contains(BitMapProducer bitMapProducer) {
+        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+    }
+
+    @Override
+    public int[] asIndexArray() {
+        return IntStream.range(0, counts.length).filter(i -> counts[i] > 0).toArray();
     }
 }

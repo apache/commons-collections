@@ -1015,7 +1015,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests that the {@link Map#values} collection is backed by
+     * Tests that the {@link Map#bitMaps} collection is backed by
      * the underlying map for clear().
      */
     @Test
@@ -1184,7 +1184,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests that the {@link Map#values} collection is backed by
+     * Tests that the {@link Map#bitMaps} collection is backed by
      * the underlying map by removing from the values collection
      * and testing if the value was removed from the map.
      * <p>

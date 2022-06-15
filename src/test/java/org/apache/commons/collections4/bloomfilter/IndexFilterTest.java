@@ -16,76 +16,123 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentityImpl;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.function.IntConsumer;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
+import java.util.SplittableRandom;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
+import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 /**
- * Tests for the {@link IndexFilters}.
+ * Tests the Filter class.
  */
 public class IndexFilterTest {
 
-    /**
-     * The shape of the dummy Bloom filter.
-     * This is used as an argument to a Hasher that just returns fixed indexes
-     * so the parameters do not matter.
-     */
-    private final Shape shape = new Shape(new HashFunctionIdentityImpl(
-        "Apache Commons Collections", "Dummy", Signedness.SIGNED, ProcessType.CYCLIC, 0L),
-        50, 3000, 4);
-
     @Test
-    public void testApplyThrowsWithNullArguments() {
-        final FixedIndexesTestHasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 3);
-        final Shape shape = this.shape;
-        final ArrayList<Integer> actual = new ArrayList<>();
-        final IntConsumer consumer = actual::add;
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(null, shape, consumer), "null hasher"),
-                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, null, consumer), "null shape"),
-                () -> assertThrows(NullPointerException.class, () -> IndexFilters.distinctIndexes(hasher, shape, null), "null consumer")
-        );
+    public void testFiltering() {
+        Shape shape = Shape.fromKM(3, 12);
+        List<Integer> consumer = new ArrayList<Integer>();
+        IndexFilter filter = IndexFilter.create(shape, consumer::add);
 
-        // All OK together
-        IndexFilters.distinctIndexes(hasher, shape, consumer);
-    }
-
-    @Test
-    public void testApply() {
-        assertFilter(1, 4, 6, 7, 9);
-    }
-
-    @Test
-    public void testApplyWithDuplicates() {
-        assertFilter(1, 4, 4, 6, 7, 7, 7, 7, 7, 9);
-    }
-
-    private void assertFilter(final int... indexes) {
-        final FixedIndexesTestHasher hasher = new FixedIndexesTestHasher(shape, indexes);
-        final Set<Integer> expected = Arrays.stream(indexes).boxed().collect(Collectors.toSet());
-        final ArrayList<Integer> actual = new ArrayList<>();
-
-        IndexFilters.distinctIndexes(hasher, shape, actual::add);
-
-        assertEquals(expected.size(), actual.size());
-        // Check the array has all the values.
-        // We do not currently check the order of indexes from the
-        // hasher.iterator() function.
-        for (final Integer index : actual) {
-            assertTrue(expected.contains(index));
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
         }
+        assertEquals(12, consumer.size());
+
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
+        }
+        assertEquals(12, consumer.size());
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "1, 64", "2, 64", "3, 64", "7, 357", "7, 17", })
+    void testFilter(int k, int m) {
+        Shape shape = Shape.fromKM(k, m);
+        BitSet used = new BitSet(m);
+        for (int n = 0; n < 10; n++) {
+            used.clear();
+            List<Integer> consumer = new ArrayList<>();
+            IndexFilter filter = IndexFilter.create(shape, consumer::add);
+
+            // Make random indices; these may be duplicates
+            long seed = ThreadLocalRandom.current().nextLong();
+            SplittableRandom rng = new SplittableRandom(seed);
+            for (int i = Math.min(k, m / 2); i-- > 0;) {
+                int bit = rng.nextInt(m);
+                // duplicates should not alter the list size
+                int newSize = consumer.size() + (used.get(bit) ? 0 : 1);
+                assertTrue(filter.test(bit));
+                assertEquals(newSize, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+                used.set(bit);
+            }
+
+            // The list should have unique entries
+            assertArrayEquals(used.stream().toArray(), consumer.stream().mapToInt(i -> (int) i).sorted().toArray());
+            final int size = consumer.size();
+
+            // Second observations do not change the list size
+            used.stream().forEach(bit -> {
+                assertTrue(filter.test(bit));
+                assertEquals(size, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+            });
+
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(m));
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
+        }
+    }
+
+    @Test
+    public void testConstructor()
+            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+        Field tracker = IndexFilter.class.getDeclaredField("tracker");
+        tracker.setAccessible(true);
+        List<Integer> consumer = new ArrayList<Integer>();
+
+        // test even split
+        int k = 2;
+        int m = Long.SIZE;
+        Shape shape = Shape.fromKM(k, m);
+        IndexFilter filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
+
+        // test k ints < longs for m
+        k = 1;
+        shape = Shape.fromKM(k, m);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
+
+        // test k ints > longs for m
+        k = 3;
+        shape = Shape.fromKM(k, m);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
+
+        /* test overflows */
+        shape = Shape.fromKM(2, Integer.MAX_VALUE);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
+
+        // overflow when computing the storage of the int array
+        shape = Shape.fromKM(Integer.MAX_VALUE, 123);
+        filter = IndexFilter.create(shape, consumer::add);
+        // *** fails ***
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
+
+        shape = Shape.fromKM(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
     }
 }
