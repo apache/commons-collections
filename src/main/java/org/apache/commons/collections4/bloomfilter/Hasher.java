@@ -87,26 +87,12 @@ public interface Hasher {
         private IndexFilter(Shape shape, IntPredicate consumer) {
             this.size = shape.getNumberOfBits();
             this.consumer = consumer;
-            if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < shape.getNumberOfHashFunctions()
+            if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
                     * Integer.BYTES) {
                 this.tracker = new BitMapTracker(shape);
             } else {
                 this.tracker = new ArrayTracker(shape);
             }
-        }
-
-        /**
-         * Creates an instance of Filter with the specified IndexTracker.
-         *
-         * @param shape The shape that is being generated.
-         * @param consumer The consumer to accept the values
-         * @param tracker An IntPredicate to filter out the duplicates.  Returns @{true} the first time
-         * a number is seen, {@code false } thereafter.
-         */
-        IndexFilter(Shape shape, IntPredicate consumer, IntPredicate tracker) {
-            this.size = shape.getNumberOfBits();
-            this.consumer = consumer;
-            this.tracker = tracker;
         }
 
         /**
@@ -122,9 +108,6 @@ public interface Hasher {
          */
         @Override
         public boolean test(int number) {
-            if (number < 0) {
-                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
-            }
             if (number >= size) {
                 throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
             }
@@ -150,6 +133,9 @@ public interface Hasher {
 
             @Override
             public boolean test(int number) {
+                if (number < 0) {
+                    throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
+                }
                 for (int i = 0; i < populated; i++) {
                     if (seen[i] == number) {
                         return false;

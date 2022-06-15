@@ -42,6 +42,7 @@ public class SetOperationsTest {
         BloomFilter filter1 = new SimpleBloomFilter(shape, from1);
         BloomFilter filter2 = new SimpleBloomFilter(shape, from1);
 
+        // identical filters should have no distance.
         double expected =  0;
         assertEquals(expected, SetOperations.cosineDistance(filter1, filter2));
         assertEquals(expected, SetOperations.cosineDistance(filter2, filter1));
@@ -252,7 +253,6 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
         assertEquals(1, SetOperations.andCardinality(filter1, filter2));
         assertEquals(1, SetOperations.andCardinality(filter2, filter1));
-
     }
 
     @Test
@@ -278,7 +278,6 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
         assertEquals(4, SetOperations.xorCardinality(filter1, filter2));
         assertEquals(4, SetOperations.xorCardinality(filter2, filter1));
-
     }
 
 

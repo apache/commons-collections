@@ -86,19 +86,6 @@ public class ShapeTest {
 
     @Test
     public void testIsSparse() {
-        // Shape shape = Shape.fromKM(17, 64);
-        // assertTrue(shape.isSparse(0));
-        // assertTrue(shape.isSparse(1));
-        // assertTrue(shape.isSparse(2));
-        // assertFalse(shape.isSparse(3));
-        //
-        // shape = Shape.fromKM(17, 64 * 3);
-        //
-        // for (int i = 0; i < 7; i++) {
-        // assertTrue(shape.isSparse(i));
-        // }
-        // assertFalse(shape.isSparse(7));
-
         int functions = 1; // Ignored
         for (int i = 1; i <= 3; i++) {
             int bits = i * Long.SIZE;

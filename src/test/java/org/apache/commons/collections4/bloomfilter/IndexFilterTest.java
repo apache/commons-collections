@@ -24,9 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -44,25 +42,19 @@ public class IndexFilterTest {
 
     @Test
     public void testFiltering() {
-        Set<Integer> tracker = new HashSet<Integer>();
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        IndexFilter filter = new IndexFilter(shape, consumer::add, tracker::add);
+        IndexFilter filter = IndexFilter.create(shape, consumer::add);
 
         for (int i = 0; i < 12; i++) {
             assertTrue(filter.test(i));
         }
-        assertEquals(12, tracker.size());
         assertEquals(12, consumer.size());
 
         for (int i = 0; i < 12; i++) {
             assertTrue(filter.test(i));
         }
-        assertEquals(12, tracker.size());
         assertEquals(12, consumer.size());
-
-        assertThrows(IndexOutOfBoundsException.class, () -> filter.test(12));
-        assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
     }
 
     @ParameterizedTest
@@ -96,6 +88,9 @@ public class IndexFilterTest {
                 assertTrue(filter.test(bit));
                 assertEquals(size, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
             });
+
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(m));
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
         }
     }
 
@@ -122,6 +117,21 @@ public class IndexFilterTest {
         // test k ints > longs for m
         k = 3;
         shape = Shape.fromKM(k, m);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
+
+        /* test overflows */
+        shape = Shape.fromKM(2, Integer.MAX_VALUE);
+        filter = IndexFilter.create(shape, consumer::add);
+        assertTrue(tracker.get(filter) instanceof ArrayTracker);
+
+        // overflow when computing the storage of the int array
+        shape = Shape.fromKM(Integer.MAX_VALUE, 123);
+        filter = IndexFilter.create(shape, consumer::add);
+        // *** fails ***
+        assertTrue(tracker.get(filter) instanceof BitMapTracker);
+
+        shape = Shape.fromKM(Integer.MAX_VALUE, Integer.MAX_VALUE);
         filter = IndexFilter.create(shape, consumer::add);
         assertTrue(tracker.get(filter) instanceof BitMapTracker);
     }

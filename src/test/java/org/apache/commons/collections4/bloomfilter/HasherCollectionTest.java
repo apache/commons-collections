@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -110,5 +111,26 @@ public class HasherCollectionTest extends AbstractHasherTest {
             return lst.remove(Integer.valueOf(i));
         }), "unable to remove value");
         assertEquals(0, lst.size());
+    }
+
+    @Test
+    void testHasherCollection() {
+        Hasher h1 = new SimpleHasher(13, 4678);
+        Hasher h2 = new SimpleHasher(42, 987);
+        Hasher h3 = new SimpleHasher(454, 2342);
+
+        HasherCollection hc1 = new HasherCollection(Arrays.asList(h1, h1));
+        HasherCollection hc2 = new HasherCollection(Arrays.asList(h2, h3));
+        HasherCollection hc3 = new HasherCollection(Arrays.asList(hc1, hc2));
+
+        ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(Shape.fromKM(5, 10000));
+
+        // Should add h1, h1, h2, h3
+        Assertions.assertTrue(bf.mergeInPlace(hc3));
+        Assertions.assertTrue(bf.remove(h1));
+        Assertions.assertTrue(bf.remove(h1));
+        Assertions.assertNotEquals(0, bf.cardinality());
+        Assertions.assertTrue(bf.remove(hc2));
+        Assertions.assertEquals(0, bf.cardinality());
     }
 }
