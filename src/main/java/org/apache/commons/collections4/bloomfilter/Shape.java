@@ -180,10 +180,8 @@ public final class Shape implements Comparable<Shape> {
      * @return An estimate of the number of items in the Bloom filter.
      */
     public double estimateN(int cardinality) {
-        double c = cardinality;
         double m = numberOfBits;
-        double k = numberOfHashFunctions;
-        return -(m / k) * Math.log1p(-c / m);
+        return -(m / (double) numberOfHashFunctions) * Math.log1p(-(double) cardinality / m);
     }
 
     /**
