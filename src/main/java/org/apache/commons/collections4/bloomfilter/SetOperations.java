@@ -16,25 +16,107 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
+import java.util.function.LongBinaryOperator;
 
 /**
- * Implementations of set operations on Bloom filters.
+ * Implementations of set operations on BitMapProducers.
  *
+ * @since 4.5
  */
 public final class SetOperations {
 
     /**
-     * Calculates the Cosine distance between two Bloom filters.
+     * Calculates the cardinality of the result of a LongBinaryOperator using the
+     * {@code BitMapProducer.makePredicate} method.
+     * @param first the first BitMapProducer
+     * @param second the second BitMapProducer
+     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
+     * @return the calculated cardinality.
+     */
+    private static int cardinality(BitMapProducer first, BitMapProducer second, LongBinaryOperator op) {
+        int[] cardinality = new int[1];
+
+        first.forEachBitMapPair(second, (x, y) -> {
+            cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
+            return true;
+        });
+        return cardinality[0];
+    }
+
+    /**
+     * Calculates the cardinality of a BitMapProducer.  By necessity this method will visit each bit map
+     * created by the producer.
+     * @param producer the Producer to calculate the cardinality for.
+     * @return the cardinality of the bit maps produced by the producer.
+     */
+    public static int cardinality(BitMapProducer producer) {
+        int[] cardinality = new int[1];
+        producer.forEachBitMap(l -> {
+            cardinality[0] += Long.bitCount(l);
+            return true;
+        });
+        return cardinality[0];
+    }
+
+    /**
+     * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer
+     * @return the cardinality of the {@code AND} of the filters.
+     */
+    public static int andCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x & y);
+    }
+
+    /**
+     * Calculates the cardinality of the logical {@code OR} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer
+     * @return the cardinality of the {@code OR} of the filters.
+     */
+    public static int orCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x | y);
+    }
+
+    /**
+     * Calculates the cardinality of the logical {@code XOR} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer
+     * @return the cardinality of the {@code XOR} of the filters.
+     */
+    public static int xorCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x ^ y);
+    }
+
+    /**
+     * Calculates the Cosine distance between two BitMapProducer.
      *
      * <p>Cosine distance is defined as {@code 1 - Cosine similarity}</p>
      *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer.
      * @return the jaccard distance.
      */
-    public static double cosineDistance(final BloomFilter first, final BloomFilter second) {
+    public static double cosineDistance(final BitMapProducer first, final BitMapProducer second) {
         return 1.0 - cosineSimilarity(first, second);
+    }
+
+    /**
+     * Calculates the Cosine similarity between two BitMapProducers.
+     * <p> Also known as Orchini similarity and the Tucker coefficient of congruence or
+     * Ochiai similarity.</p>
+     *
+     * <p>If either producer is empty the result is 0 (zero)</p>
+     *
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer.
+     * @return the Cosine similarity.
+     */
+    public static double cosineSimilarity(final BitMapProducer first, final BitMapProducer second) {
+        final int numerator = andCardinality(first, second);
+        // Given that the cardinality is an int then the product as a double will not
+        // overflow, we can use one sqrt:
+        return numerator == 0 ? 0 : numerator / Math.sqrt(cardinality(first) * cardinality(second));
     }
 
     /**
@@ -44,119 +126,66 @@ public final class SetOperations {
      *
      * <p>If either filter is empty (no enabled bits) the result is 0 (zero)</p>
      *
+     * <p>This is a version of cosineSimilarity optimized for Bloom filters.</p>
+     *
      * @param first the first Bloom filter.
      * @param second the second Bloom filter.
      * @return the Cosine similarity.
      */
     public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first, second);
-        final int numerator = first.andCardinality(second);
-        return numerator == 0 ? 0 : numerator / (Math.sqrt(first.cardinality()) * Math.sqrt(second.cardinality()));
+        final int numerator = andCardinality(first, second);
+        // Given that the cardinality is an int then the product as a double will not
+        // overflow, we can use one sqrt:
+        return numerator == 0 ? 0 : numerator / Math.sqrt(first.cardinality() * second.cardinality());
     }
 
     /**
-     * Estimates the number of items in the intersection of the sets represented by two
-     * Bloom filters.
+     * Calculates the Hamming distance between two BitMapProducers.
      *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
-     * @return an estimate of the size of the intersection between the two filters.
-     */
-    public static long estimateIntersectionSize(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first, second);
-        // do subtraction early to avoid Long overflow.
-        return estimateSize(first) - estimateUnionSize(first, second) + estimateSize(second);
-    }
-
-    /**
-     * Estimates the number of items in the Bloom filter based on the shape and the number
-     * of bits that are enabled.
-     *
-     * @param filter the Bloom filter to estimate size for.
-     * @return an estimate of the number of items that were placed in the Bloom filter.
-     */
-    public static long estimateSize(final BloomFilter filter) {
-        final Shape shape = filter.getShape();
-        final double estimate = -(shape.getNumberOfBits() *
-            Math.log(1.0 - filter.cardinality() * 1.0 / shape.getNumberOfBits())) /
-            shape.getNumberOfHashFunctions();
-        return Math.round(estimate);
-    }
-
-    /**
-     * Estimates the number of items in the union of the sets represented by two
-     * Bloom filters.
-     *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
-     * @return an estimate of the size of the union between the two filters.
-     */
-    public static long estimateUnionSize(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first, second);
-        final Shape shape = first.getShape();
-        final double estimate = -(shape.getNumberOfBits() *
-            Math.log(1.0 - first.orCardinality(second) * 1.0 / shape.getNumberOfBits())) /
-            shape.getNumberOfHashFunctions();
-        return Math.round(estimate);
-    }
-
-    /**
-     * Calculates the Hamming distance between two Bloom filters.
-     *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer.
      * @return the Hamming distance.
      */
-    public static int hammingDistance(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first, second);
-        return first.xorCardinality(second);
+    public static int hammingDistance(final BitMapProducer first, final BitMapProducer second) {
+        return xorCardinality(first, second);
     }
 
     /**
-     * Calculates the Jaccard distance between two Bloom filters.
+     * Calculates the Jaccard distance between two BitMapProducer.
      *
      * <p>Jaccard distance is defined as {@code 1 - Jaccard similarity}</p>
      *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer.
      * @return the Jaccard distance.
      */
-    public static double jaccardDistance(final BloomFilter first, final BloomFilter second) {
+    public static double jaccardDistance(final BitMapProducer first, final BitMapProducer second) {
         return 1.0 - jaccardSimilarity(first, second);
     }
 
     /**
-     * Calculates the Jaccard similarity between two Bloom filters.
+     * Calculates the Jaccard similarity between two BitMapProducer.
      *
      * <p>Also known as Jaccard index, Intersection over Union, and Jaccard similarity coefficient</p>
      *
-     * @param first the first Bloom filter.
-     * @param second the second Bloom filter.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer.
      * @return the Jaccard similarity.
      */
-    public static double jaccardSimilarity(final BloomFilter first, final BloomFilter second) {
-        verifyShape(first, second);
-        final int orCard = first.orCardinality(second);
-        // if the orCard is zero then the hamming distance will also be zero.
-        return orCard == 0 ? 0 : hammingDistance(first, second) / (double) orCard;
-    }
-
-    /**
-     * Verifies the Bloom filters have the same shape.
-     *
-     * @param first the first filter to check.
-     * @param second the second filter to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    private static void verifyShape(final BloomFilter first, final BloomFilter second) {
-        if (!first.getShape().equals(second.getShape())) {
-            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s",
-                first.getShape(), second.getShape()));
-        }
+    public static double jaccardSimilarity(final BitMapProducer first, final BitMapProducer second) {
+        int[] cardinality = new int[2];
+        first.forEachBitMapPair(second, (x, y) -> {
+            cardinality[0] += Long.bitCount(x & y);
+            cardinality[1] += Long.bitCount(x | y);
+            return true;
+        });
+        final int intersection = cardinality[0];
+        return intersection == 0 ? 0 : intersection / (double) cardinality[1];
     }
 
     /**
      * Do not instantiate.
      */
-    private SetOperations() {}
+    private SetOperations() {
+    }
 }

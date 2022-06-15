@@ -18,101 +18,78 @@
 /**
  * A collection of extensible Bloom filter classes and interfaces.
  *
- * <h2>
- *  Background:</h2>
- *  <p>
- *  A Bloom filter is conceptually a bit vector. It is used to
- * tell you where things are not. Basically, you create a Bloom filter by creating hashes
- * and converting those to enabled bits in a vector. You can merge the Bloom filters
- * together with logical "or" (call this filter "B"). You can then check to see if filter
- * "A" was "or"ed into "B" by testing A &amp; B == A. if the statement is false then "A" was
- * not merged into "B", otherwise it _might_ have. They are generally used where hash
- * tables would be too large or as a filter front end for longer processes. For example
+ * <h2>Background:</h2>
+ *
+ * <p>The Bloom filter is a probabilistic data structure that indicates where things are not.
+ * Conceptually it is a bit vector. You create a Bloom filter by creating hashes
+ * and converting those to enabled bits in the vector. Multiple Bloom filters may be merged
+ * together into one Bloom filter.  It is possible to test if a filter {@code B} has merged into
+ * another filter {@code A} by verifying that {@code (A & B) == B}.</p>
+ *
+ * <p>Bloom filters are generally used where hash
+ * tables would be too large, or as a filter front end for longer processes. For example
  * most browsers have a Bloom filter that is built from all known bad URLs (ones that
  * serve up malware). When you enter a URL the browser builds a Bloom filter and checks to
  * see if it is "in" the bad URL filter. If not the URL is good, if it matches, then the
  * expensive lookup on a remote system is made to see if it actually is in the list. There
  * are lots of other uses, and in most cases the reason is to perform a fast check as a
  * gateway for a longer operation. </p>
- *  <h3>
- *  BloomFilter</h3>
- *  <p>
- *  The bloom filter code is
- * an abstract class that requires implementation of 4 methods: <ul>
- *  <li>
- *  getBits() which
- * returns the set bits as a buffer encoded into an array of long.</li>
- *  <li>
- *  getHasher()
- * which returns a list of integers that are indexes of the bits that are enabled. These
- * are returned in a Hasher construct.</li>
- *  <li>
- *  merge( BloomFilter ) to merge another
- * Bloom filter into this one.</li>
- *  <li>
- *  merge( Hasher ) to merge the values in a hasher
- * into this Bloom filter.</li>
- *  </ul>
- *  There are 3 implementations of Bloom filter
- * provided: <ul>
- *  <li>
- *  BitSetBloomFilter - based on the Java BitSet class.</li>
- *  <li>
  *
- * CountingBloomFilter - uses a sparse array of integers (Map) to implement a counting
- * Bloom filter. This filter also implements remove() methods as that is the great
- * advantage of a counting Bloom filter.</li>
- *  <li>
- *  HasherBloomFilter - implements bloom
- * filter on a Hasher. A rather slow implementation but convenient in some
- * situations.</li>
- *  </ul>
+ * <h3>BloomFilter</h3>
  *
- *  <h3>
- *  Shape</h3>
- *  <p>
- *  Describes the Bloom filter using the
- * standard number of bits, number of hash functions and number of items along with a
- * description of the HashFunction. It is this description that has caused the most issues
- * of late. </p>
- *  <h3>
- *  Hasher</h3>
- *  <p>
- *  converts byte buffers into an iterator if int based
- * on a Shape. There are 2 implementations of Hasher provided <ul>
- *  <li>
- *  Dynamic - calls
- * the HashFunction for each value required in the Bloom filter.</li>
- *  <li>
- *  Static - based
- * on a pre-calculated list of Bloom filter index values. It is also limited to generating
- * values for a specific Shape.</li>
- *  </ul>
+ * <p>The Bloom filter architecture here is designed so that the implementation of the storage of bits is abstracted.
+ * Programs that utilize the Bloom filters may use the {@code BitMapProducer} or {@code IndexProducer} to retrieve a
+ * representation of the internal structure.  Additional methods are available in the {@code BitMap} to assist in
+ * manipulation of the representations.</p>
  *
- *  <h3>
- *  Hash Functions</h3>
- *  <p>
- *  Hash
- * functions generate individual index values for the filter from a byte buffer. There are
- * four implementations provided. </p>
- *  <h3>
- *  HashFunctionIdentity</h3>
- *  <p>
- *  The
- * HashFunctionIdentity is the base interface for the HashFunction. It tracks three (3)
- * properties: <ul>
- *  <li>
- *  The Hashing algorithm</li>
- *  <li>
- *  Whether the contents of the
- * resulting hash buffer are read as signed or unsigned values.</li>
- *  <li>
- *  Whether the hash
- * function uses an iterative or cyclic method. In traditional iterative methods this is
- * done by calling the selected hash function with a different seed for each hash
- * required. The second method described by Adam Kirsch and Micheal Mitzenmacher[1] has
- * become more common and is used in applications like Cassandra[2].</li>
- *  </ul>
+ * <p>The bloom filter code is an interface that requires implementation of 6 methods:</p>
+ * <ul>
+ * <li>{@code cardinality()}
+ * returns the number of bits enabled in the Bloom filter.</li>
+ *
+ * <li>{@code contains(BitMapProducer)} which
+ * returns true if the bits specified by the bit maps generated by the BitMapProducer are enabled in the Bloom filter.</li>
+ *
+ *  <li>{@code contains(IndexProducer)} which
+ * returns true if the bits specified by the indices generated by IndexProducer are enabled in the Bloom filter.</li>
+ *
+ * <li>{@code getShape()} which
+ * returns the shape the Bloom filter was created with.</li>
+
+ * <li>{@code isSparse()} which
+ * returns true if an the implementation tracks indices natively, false if bit maps are used.  In cases where
+ * neither are used the {@code isSparse} return value should reflect which is faster to produce.</li>
+ *
+ * <li>{@code mergeInPlace(BloomFilter)} which
+ * utilizes either the {@code BitMapProducer} or {@code IndexProducer} from the argument to enable extra bits
+ * in the internal representation of the Bloom filter.</li>
+ * </ul>
+ *
+ * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.
+ * </p>
+ *
+ * <h3>CountingBloomFilter</h3>
+ *
+ * <p>The counting bloom filter extends the Bloom filter by counting the number of times a specific bit has been
+ * enabled or disabled.  This allows the removal (opposite of merge) of Bloom filters at the expense of additional
+ * overhead.</p>
+ *
+ * <h3>Shape</h3>
+ *
+ * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions</p>
+ *
+ * <h3>Hasher</h3>
+ *
+ * <p>A Hasher converts bytes into a series of integers based on a Shape.  With the exception of the HasherCollecton,
+ *  each hasher represents one item being added to the Bloom filter.  The HasherCollection represents the
+ *  number of items as the sum of the number of items represented by the Hashers in the collection.</p>
+ *
+ *  <p>The SimpleHasher uses a combinatorial generation technique to create the integers. It is easily
+ *  initialized by using a standard {@code MessageDigest} or other Hash function to hash the item to insert and
+ *  then splitting the hash bytes in half and considering each as a long value.</p>
+ *
+ *  <p>Other implementations of the Hasher are easy to implement, and should make use of the {@code Hasher.Filter}
+ *  and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices.</p>
  *
  * <h2>References</h2>
  *
