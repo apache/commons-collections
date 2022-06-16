@@ -152,34 +152,4 @@ public interface BitMapProducer {
         });
         return fromBitMapArray(result);
     }
-
-    /**
-     * A long predicate that applies the test func to each member of the @{code ary} in sequence for each call to @{code test()}.
-     * if the @{code ary} is exhausted, the subsequent calls to to @{code test} are executed with a zero value.
-     * If the calls to @{code test} do not exhaust the @{code ary} the @{code forEachRemaining} method can be called to
-     * execute the @code{text} with a zero value for each remaining @{code idx} value.
-     *
-     */
-    class CountingLongPredicate implements LongPredicate {
-        int idx = 0;
-        final long[] ary;
-        final LongBiPredicate func;
-
-        CountingLongPredicate(long[] ary, LongBiPredicate func) {
-            this.ary = ary;
-            this.func = func;
-        }
-
-        @Override
-        public boolean test(long other) {
-            return func.test(idx == ary.length ? 0 : ary[idx++], other);
-        }
-
-        boolean forEachRemaining() {
-            while (idx != ary.length && func.test(ary[idx], 0)) {
-                idx++;
-            }
-            return idx == ary.length;
-        }
-    }
 }
