@@ -65,5 +65,4 @@ class CountingLongPredicate implements LongPredicate {
         }
         return i == limit;
     }
-
 }
