@@ -26,9 +26,9 @@ import java.util.function.LongPredicate;
  *
  */
 class CountingLongPredicate implements LongPredicate {
-    int idx = 0;
-    final long[] ary;
-    final LongBiPredicate func;
+    private int idx = 0;
+    private final long[] ary;
+    private final LongBiPredicate func;
 
     /**
      * Constructs an instance that will compare the elements in @{code ary} with the elements returned by @{code func}.
