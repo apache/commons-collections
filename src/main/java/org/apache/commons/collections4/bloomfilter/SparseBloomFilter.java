@@ -59,9 +59,9 @@ public final class SparseBloomFilter implements BloomFilter {
         this.shape = other.getShape();
         this.indices = new TreeSet<>();
         if (other.isSparse()) {
-            mergeInPlace((IndexProducer) other);
+            merge((IndexProducer) other);
         } else {
-            mergeInPlace(IndexProducer.fromBitMapProducer(other));
+            merge(IndexProducer.fromBitMapProducer(other));
         }
     }
 
@@ -108,7 +108,7 @@ public final class SparseBloomFilter implements BloomFilter {
     public SparseBloomFilter(Shape shape, BitMapProducer bitMaps) {
         this(shape);
         Objects.requireNonNull(bitMaps, "bitMaps");
-        mergeInPlace(IndexProducer.fromBitMapProducer(bitMaps));
+        merge(IndexProducer.fromBitMapProducer(bitMaps));
     }
 
     private SparseBloomFilter(SparseBloomFilter source) {
@@ -141,11 +141,11 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     /**
-     * Performs a merge in place using an IndexProducer.
+     * Performs a merge using an IndexProducer.
      * @param indexProducer the IndexProducer to merge from.
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-    private void mergeInPlace(IndexProducer indexProducer) {
+    private void merge(IndexProducer indexProducer) {
         indexProducer.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
@@ -160,17 +160,17 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean mergeInPlace(Hasher hasher) {
+    public boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        mergeInPlace(hasher.indices(shape));
+        merge(hasher.indices(shape));
         return true;
     }
 
     @Override
-    public boolean mergeInPlace(BloomFilter other) {
+    public boolean merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
         IndexProducer producer = other.isSparse() ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
-        mergeInPlace(producer);
+        merge(producer);
         return true;
     }
 
