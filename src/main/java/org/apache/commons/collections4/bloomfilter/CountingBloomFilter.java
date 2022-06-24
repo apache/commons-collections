@@ -144,38 +144,11 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     boolean subtract(BitCountProducer other);
 
-    /**
-     * Merges the specified Bloom filter into this Bloom filter to produce a new CountingBloomFilter.
-     *
-     * <p>Specifically the new Bloom filter will contain all the counts of this filter and in addition
-     * all bit indexes that are enabled in the {@code other} filter will be incremented
-     * by one in the new filter.</p>
-     *
-     * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
-     * should be called on the new filter.</p>
-     *
-     * @param other the other Bloom filter
-     * @return A new CountingBloomFilter instance.
-     */
-    @Override
-    CountingBloomFilter merge(BloomFilter other);
 
     /**
-     * Merges the specified hasher with this Bloom filter to create a new CountingBloomFilter.
-     *
-     * <p>Specifically the new Bloom filter will contain all the counts of this filter and in addition
-     * all bit indexes specified by the {@code hasher} will be incremented
-     * by one in the new filter.</p>
-     *
-     * <p>For HasherCollections each enclosed Hasher will be considered a single item and increment
-     * the counts separately.</p>
-     *
-     * <p>Note: the validity of the resulting filter is not guaranteed.  When in doubt {@code isValid()}
-     * should be called on the new filter.</p>
-     *
-     * @param hasher the hasher to provide the indexes
-     * @return A new CountingBloomFilter instance.
+     * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
+     * @return a copy of this CountingBloomFilter
      */
     @Override
-    CountingBloomFilter merge(Hasher hasher);
+    CountingBloomFilter copy();
 }

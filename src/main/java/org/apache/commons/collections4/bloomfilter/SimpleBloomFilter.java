@@ -66,9 +66,9 @@ public final class SimpleBloomFilter implements BloomFilter {
         this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
         this.cardinality = 0;
         if (other.isSparse()) {
-            mergeInPlace((IndexProducer) other);
+            merge((IndexProducer) other);
         } else {
-            mergeInPlace((BitMapProducer) other);
+            merge((BitMapProducer) other);
         }
     }
 
@@ -80,7 +80,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(final Shape shape, Hasher hasher) {
         this(shape);
         Objects.requireNonNull(hasher, "hasher");
-        mergeInPlace(hasher);
+        merge(hasher);
     }
 
     /**
@@ -92,7 +92,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(final Shape shape, IndexProducer indices) {
         this(shape);
         Objects.requireNonNull(indices, "indices");
-        mergeInPlace(indices);
+        merge(indices);
     }
 
     /**
@@ -104,7 +104,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(final Shape shape, BitMapProducer bitMaps) {
         this(shape);
         Objects.requireNonNull(bitMaps, "bitMaps");
-        mergeInPlace(bitMaps);
+        merge(bitMaps);
     }
 
     /**
@@ -134,11 +134,11 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     /**
-     * Performs a merge in place using an IndexProducer.
+     * Performs a merge using an IndexProducer.
      * @param indexProducer the IndexProducer to merge from.
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-    private void mergeInPlace(IndexProducer indexProducer) {
+    private void merge(IndexProducer indexProducer) {
         indexProducer.forEachIndex(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format(
@@ -151,11 +151,11 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     /**
-     * Performs a merge in place using an BitMapProducer.
+     * Performs a merge using an BitMapProducer.
      * @param bitMapProducer the BitMapProducer to merge from.
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-    private void mergeInPlace(BitMapProducer bitMapProducer) {
+    private void merge(BitMapProducer bitMapProducer) {
         try {
             int[] idx = new int[1];
             bitMapProducer.forEachBitMap(value -> {
@@ -185,19 +185,19 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean mergeInPlace(Hasher hasher) {
+    public boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        mergeInPlace(hasher.indices(shape));
+        merge(hasher.indices(shape));
         return true;
     }
 
     @Override
-    public boolean mergeInPlace(BloomFilter other) {
+    public boolean merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
         if (other.isSparse()) {
-            mergeInPlace((IndexProducer) other);
+            merge((IndexProducer) other);
         } else {
-            mergeInPlace((BitMapProducer) other);
+            merge((BitMapProducer) other);
         }
         return true;
     }
