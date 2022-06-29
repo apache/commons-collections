@@ -16,32 +16,28 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.function.IntPredicate;
 
-import org.junit.jupiter.api.Test;
-
 /**
- * Tests the Filter class.
+ * An IndexTracker implementation that uses an array of bit maps to track whether or not a
+ * number has been seen.
+ * @since 4.5
  */
-public class ArrayTrackerTest {
+public class BitMapTracker implements IntPredicate {
+    private long[] bits;
 
-    @Test
-    public void testSeen() {
-        Shape shape = Shape.fromKM(3, 12);
-        IntPredicate tracker = new ArrayTracker(shape);
+    /**
+     * Constructs a bit map based tracker for the specified shape.
+     * @param shape The shape that is being generated.
+     */
+    BitMapTracker(Shape shape) {
+        bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+    }
 
-        assertTrue(tracker.test(0));
-        assertFalse(tracker.test(0));
-        assertTrue(tracker.test(1));
-        assertFalse(tracker.test(1));
-        assertTrue(tracker.test(2));
-        assertFalse(tracker.test(2));
-
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(3));
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(-1));
+    @Override
+    public boolean test(int number) {
+        boolean retval = !BitMap.contains(bits, number);
+        BitMap.set(bits, number);
+        return retval;
     }
 }

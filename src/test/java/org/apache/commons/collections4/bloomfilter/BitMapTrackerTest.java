@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.IntPredicate;
 
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
 import org.junit.jupiter.api.Test;
 
 /**
