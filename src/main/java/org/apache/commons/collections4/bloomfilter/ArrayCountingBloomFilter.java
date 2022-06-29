@@ -234,7 +234,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         int blocksm1 = BitMap.numberOfBitMaps(shape.getNumberOfBits()) - 1;
         int i = 0;
         long value;
-        // must break final block separate as the the number of bits may not fall on the long boundary
+        // must break final block separate as the number of bits may not fall on the long boundary
         for (int j = 0; j < blocksm1; j++) {
             value = 0;
             for (int k = 0; k < Long.SIZE; k++) {
