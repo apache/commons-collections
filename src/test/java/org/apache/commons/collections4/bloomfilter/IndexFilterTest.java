@@ -29,8 +29,6 @@ import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

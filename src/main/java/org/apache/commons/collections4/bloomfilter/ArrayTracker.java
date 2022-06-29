@@ -16,32 +16,36 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.function.IntPredicate;
 
-import org.junit.jupiter.api.Test;
-
 /**
- * Tests the Filter class.
+ * An IndexTracker implementation that uses an array of integers to track whether or not a
+ * number has been seen.  Suitable for Shapes that have few hash functions.
+ * @since 4.5
  */
-public class ArrayTrackerTest {
+public class ArrayTracker implements IntPredicate {
+    private int[] seen;
+    private int populated;
 
-    @Test
-    public void testSeen() {
-        Shape shape = Shape.fromKM(3, 12);
-        IntPredicate tracker = new ArrayTracker(shape);
+    /**
+     * Constructs the tracker based on the shape.
+     * @param shape the shape to build the tracker for.
+     */
+    ArrayTracker(Shape shape) {
+        seen = new int[shape.getNumberOfHashFunctions()];
+    }
 
-        assertTrue(tracker.test(0));
-        assertFalse(tracker.test(0));
-        assertTrue(tracker.test(1));
-        assertFalse(tracker.test(1));
-        assertTrue(tracker.test(2));
-        assertFalse(tracker.test(2));
-
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(3));
-        assertThrows(IndexOutOfBoundsException.class, () -> tracker.test(-1));
+    @Override
+    public boolean test(int number) {
+        if (number < 0) {
+            throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
+        }
+        for (int i = 0; i < populated; i++) {
+            if (seen[i] == number) {
+                return false;
+            }
+        }
+        seen[populated++] = number;
+        return true;
     }
 }
