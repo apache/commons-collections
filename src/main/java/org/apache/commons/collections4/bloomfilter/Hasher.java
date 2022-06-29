@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.function.IntPredicate;
-
 /**
  * A Hasher creates IndexProducer based on the hash implementation and the
  * provided Shape.
