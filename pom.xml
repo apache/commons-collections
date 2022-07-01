@@ -591,7 +591,7 @@
     <checkstyle.version>3.1.2</checkstyle.version>
     <checkstyle.dep.version>9.3</checkstyle.dep.version>
     <commons.pmd.version>3.17.0</commons.pmd.version>
-    <commons.pmd-impl.version>6.46.0</commons.pmd-impl.version>
+    <commons.pmd-impl.version>6.47.0</commons.pmd-impl.version>
 
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>

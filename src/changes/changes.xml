@@ -322,6 +322,9 @@
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump japicmp from 0.15.4 to 0.15.7.
     </action>
+    <action type="update" dev="kinow" due-to="Dependabot">
+       Bump commons.pmd-impl.version from 6.46.0 to 6.47.0 #318.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
