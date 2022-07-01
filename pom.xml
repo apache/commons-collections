@@ -589,7 +589,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.1.2</checkstyle.version>
-    <checkstyle.dep.version>9.3</checkstyle.dep.version>
+    <checkstyle.dep.version>10.3.1</checkstyle.dep.version>
     <commons.pmd.version>3.17.0</commons.pmd.version>
     <commons.pmd-impl.version>6.46.0</commons.pmd-impl.version>
 
