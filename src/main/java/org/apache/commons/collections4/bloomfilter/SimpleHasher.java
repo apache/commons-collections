@@ -168,29 +168,25 @@ public class SimpleHasher implements Hasher {
 
     @Override
     public IndexProducer uniqueIndices(final Shape shape) {
-        return new IndexProducer() {
+        return consumer -> {
+            Objects.requireNonNull(consumer, "consumer");
+            final IndexFilter filter = IndexFilter.create(shape, consumer);
 
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                Objects.requireNonNull(consumer, "consumer");
-                IndexFilter filter = IndexFilter.create(shape, consumer);
+            final int bits = shape.getNumberOfBits();
 
-                int bits = shape.getNumberOfBits();
+            // Set up for the modulus. Use a long index to avoid overflow.
+            long index = mod(initial, bits);
+            final int inc = mod(increment, bits);
 
-                // Set up for the modulus. Use a long index to avoid overflow.
-                long index = mod(initial, bits);
-                int inc = mod(increment, bits);
+            for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
 
-                for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-
-                    if (!filter.test((int) index)) {
-                        return false;
-                    }
-                    index += inc;
-                    index = index >= bits ? index - bits : index;
+                if (!filter.test((int) index)) {
+                    return false;
                 }
-                return true;
+                index += inc;
+                index = index >= bits ? index - bits : index;
             }
+            return true;
         };
     }
 }
