@@ -173,7 +173,7 @@ public class SimpleHasher implements Hasher {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                IndexFilter filter = IndexFilter.create(shape, consumer);
+                IntPredicate filter = IndexFilter.create(shape, consumer);
 
                 int bits = shape.getNumberOfBits();
 
