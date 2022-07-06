@@ -21,16 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.SplittableRandom;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.IntPredicate;
 
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.ArrayTracker;
-import org.apache.commons.collections4.bloomfilter.Hasher.IndexFilter.BitMapTracker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -44,7 +41,7 @@ public class IndexFilterTest {
     public void testFiltering() {
         Shape shape = Shape.fromKM(3, 12);
         List<Integer> consumer = new ArrayList<Integer>();
-        IndexFilter filter = IndexFilter.create(shape, consumer::add);
+        IntPredicate filter = IndexFilter.create(shape, consumer::add);
 
         for (int i = 0; i < 12; i++) {
             assertTrue(filter.test(i));
@@ -65,7 +62,7 @@ public class IndexFilterTest {
         for (int n = 0; n < 10; n++) {
             used.clear();
             List<Integer> consumer = new ArrayList<>();
-            IndexFilter filter = IndexFilter.create(shape, consumer::add);
+            IntPredicate filter = IndexFilter.create(shape, consumer::add);
 
             // Make random indices; these may be duplicates
             long seed = ThreadLocalRandom.current().nextLong();
@@ -92,47 +89,5 @@ public class IndexFilterTest {
             assertThrows(IndexOutOfBoundsException.class, () -> filter.test(m));
             assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
         }
-    }
-
-    @Test
-    public void testConstructor()
-            throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
-        Field tracker = IndexFilter.class.getDeclaredField("tracker");
-        tracker.setAccessible(true);
-        List<Integer> consumer = new ArrayList<Integer>();
-
-        // test even split
-        int k = 2;
-        int m = Long.SIZE;
-        Shape shape = Shape.fromKM(k, m);
-        IndexFilter filter = IndexFilter.create(shape, consumer::add);
-        assertTrue(tracker.get(filter) instanceof ArrayTracker);
-
-        // test k ints < longs for m
-        k = 1;
-        shape = Shape.fromKM(k, m);
-        filter = IndexFilter.create(shape, consumer::add);
-        assertTrue(tracker.get(filter) instanceof ArrayTracker);
-
-        // test k ints > longs for m
-        k = 3;
-        shape = Shape.fromKM(k, m);
-        filter = IndexFilter.create(shape, consumer::add);
-        assertTrue(tracker.get(filter) instanceof BitMapTracker);
-
-        /* test overflows */
-        shape = Shape.fromKM(2, Integer.MAX_VALUE);
-        filter = IndexFilter.create(shape, consumer::add);
-        assertTrue(tracker.get(filter) instanceof ArrayTracker);
-
-        // overflow when computing the storage of the int array
-        shape = Shape.fromKM(Integer.MAX_VALUE, 123);
-        filter = IndexFilter.create(shape, consumer::add);
-        // *** fails ***
-        assertTrue(tracker.get(filter) instanceof BitMapTracker);
-
-        shape = Shape.fromKM(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        filter = IndexFilter.create(shape, consumer::add);
-        assertTrue(tracker.get(filter) instanceof BitMapTracker);
     }
 }
