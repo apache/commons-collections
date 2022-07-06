@@ -26,7 +26,7 @@ import java.util.function.IntPredicate;
  * <p>This is conceptually a unique filter implemented as a {@code IntPredicate}.</p>
  * @since 4.5
  */
-public final class IndexFilter implements IntPredicate {
+public final class IndexFilter {
     private final IntPredicate tracker;
     private final int size;
     private final IntPredicate consumer;
@@ -37,8 +37,8 @@ public final class IndexFilter implements IntPredicate {
      * @param consumer The consumer to accept the values.
      * @return an IndexFilter optimized for the specified shape.
      */
-    public static IndexFilter create(Shape shape, IntPredicate consumer) {
-        return new IndexFilter(shape, consumer);
+    public static IntPredicate create(Shape shape, IntPredicate consumer) {
+        return new IndexFilter(shape, consumer)::test;
     }
 
     /**
@@ -68,7 +68,6 @@ public final class IndexFilter implements IntPredicate {
      * @param number the number to check.
      * @return {@code true} if processing should continue, {@code false} otherwise.
      */
-    @Override
     public boolean test(int number) {
         if (number >= size) {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
