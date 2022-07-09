@@ -63,10 +63,8 @@ public class EnhancedDoubleHasher implements Hasher {
      * <p>The byte array is split in 2 and each half is interpreted as a long value.
      * Excess bytes are ignored.  This simplifies the conversion from a Digest or hasher algorithm output
      * to the two values used by the SimpleHasher.</p>
-     * <p><em>If the second long is zero the default increment is used instead.</em></p>
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
-     * @see #getDefaultIncrement()
      */
     public EnhancedDoubleHasher(byte[] buffer) {
         if (buffer.length == 0) {
@@ -79,10 +77,8 @@ public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * Constructs the EnhancedDoubleHasher from 2 longs.  The long values will be interpreted as unsigned values.
-     * <p><em>If the increment is zero the default increment is used instead.</em></p>
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
-     * @see #getDefaultIncrement()
      */
     public EnhancedDoubleHasher(long initial, long increment) {
         this.initial = initial;
