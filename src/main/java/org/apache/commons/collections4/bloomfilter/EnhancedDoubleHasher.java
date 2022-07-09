@@ -128,7 +128,7 @@ public class EnhancedDoubleHasher implements Hasher {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
                 // Enhanced double hashing:
-                //   hash[i] = ( h1(x) + i*h2(x) + (i*i*i - i)/6 ) mod bits
+                // hash[i] = ( h1(x) + i*h2(x) + (i*i*i - i)/6 ) mod bits
                 // See: https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing
                 //
                 // Essentially this is computing a wrapped modulus from a start point and an
@@ -138,24 +138,29 @@ public class EnhancedDoubleHasher implements Hasher {
                 // 0 <= index < bits
                 // 0 <= inc < bits
                 // The final hash is:
-                //   hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
+                // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
                 int index = mod(initial, bits);
                 int inc = mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                for (int i = 0; i < k; i++) {
-                    if (!consumer.test(index)) {
-                        return false;
-                    }
-                    // Update index and handle wrapping
-                    index -= inc;
-                    index = index < 0 ? index + bits : index;
+                for (int j = k; j > 0;) {
+                    // handle k > bits
+                    final int block = Math.min(j, bits);
+                    j -= block;
+                    for (int i = 0; i < block; i++) {
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
+                        // Update index and handle wrapping
+                        index -= inc;
+                        index = index < 0 ? index + bits : index;
 
-                    // Incorporate the counter into the increment to create a
-                    // tetrahedral number additional term, and handle wrapping.
-                    inc -= i;
-                    inc = inc < 0 ? inc + bits : inc;
+                        // Incorporate the counter into the increment to create a
+                        // tetrahedral number additional term, and handle wrapping.
+                        inc -= i;
+                        inc = inc < 0 ? inc + bits : inc;
+                    }
                 }
                 return true;
             }
