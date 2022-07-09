@@ -52,7 +52,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testDefaultBloomFilterSimpleSpecificMergeInPlace() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
-        Hasher hasher = new SimpleHasher(0, 1);
+        Hasher hasher = new IncrementingHasher(0, 1);
         assertTrue(filter.mergeInPlace(hasher));
         assertEquals(3, filter.cardinality());
     }
@@ -60,7 +60,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testDefaultBloomFilterSparseSpecificMergeInPlace() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
-        Hasher hasher = new SimpleHasher(0, 1);
+        Hasher hasher = new IncrementingHasher(0, 1);
         BloomFilter newFilter = filter.merge(hasher);
         assertEquals(3, newFilter.cardinality());
     }
@@ -69,14 +69,14 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(shape);
-        AbstractDefaultBloomFilter filter2 = new SparseDefaultBloomFilter(shape, new SimpleHasher(0, 1));
+        AbstractDefaultBloomFilter filter2 = new SparseDefaultBloomFilter(shape, new IncrementingHasher(0, 1));
         BloomFilter newFilter = filter.merge(filter2);
         assertEquals(3, newFilter.cardinality());
     }
 
     @Test
     public void testHasherBasedMergeInPlaceWithDifferingSparseness() {
-        Hasher hasher = new SimpleHasher(1, 1);
+        Hasher hasher = new IncrementingHasher(1, 1);
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.mergeInPlace(hasher);

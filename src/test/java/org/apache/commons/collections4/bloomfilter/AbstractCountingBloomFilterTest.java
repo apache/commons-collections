@@ -231,7 +231,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
         Shape shape = Shape.fromKM(12, 72);
-        SimpleHasher hasher = new SimpleHasher(5, 12);
+        Hasher hasher = new IncrementingHasher(5, 12);
 
         CountingBloomFilter bf1 = createFilter(shape, hasher);
         assertEquals(6, bf1.cardinality());
