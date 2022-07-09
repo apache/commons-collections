@@ -25,10 +25,9 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
@@ -1497,9 +1496,7 @@ public class MapUtils {
      */
     public static <K, V, E> void populateMap(final Map<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = elements.iterator();
-        while (iter.hasNext()) {
-            final E temp = iter.next();
+        for (final E temp : elements) {
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
         }
     }
@@ -1534,9 +1531,7 @@ public class MapUtils {
      */
     public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = elements.iterator();
-        while (iter.hasNext()) {
-            final E temp = iter.next();
+        for (final E temp : elements) {
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
         }
     }

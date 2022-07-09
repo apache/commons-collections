@@ -150,9 +150,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return {@code true} if the Bag contains all the collection
      */
     boolean containsAll(final Bag<?> other) {
-        final Iterator<?> it = other.uniqueSet().iterator();
-        while (it.hasNext()) {
-            final Object current = it.next();
+        for (Object current : other.uniqueSet()) {
             if (getCount(current) < other.getCount(current)) {
                 return false;
             }
@@ -278,9 +276,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
         boolean changed = false;
-        final Iterator<? extends E> i = coll.iterator();
-        while (i.hasNext()) {
-            final boolean added = add(i.next());
+        for (final E current : coll) {
+            final boolean added = add(current);
             changed = changed || added;
         }
         return changed;
@@ -352,9 +349,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
         if (coll != null) {
-            final Iterator<?> i = coll.iterator();
-            while (i.hasNext()) {
-                final boolean changed = remove(i.next(), 1);
+            for (final Object current : coll) {
+                final boolean changed = remove(current, 1);
                 result = result || changed;
             }
         }
@@ -387,9 +383,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     boolean retainAll(final Bag<?> other) {
         boolean result = false;
         final Bag<E> excess = new HashBag<>();
-        final Iterator<E> i = uniqueSet().iterator();
-        while (i.hasNext()) {
-            final E current = i.next();
+        for (final E current : uniqueSet()) {
             final int myCount = getCount(current);
             final int otherCount = other.getCount(current);
             if (1 <= otherCount && otherCount <= myCount) {
@@ -442,9 +436,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     public Object[] toArray() {
         final Object[] result = new Object[size()];
         int i = 0;
-        final Iterator<E> it = map.keySet().iterator();
-        while (it.hasNext()) {
-            final E current = it.next();
+        for (final E current : map.keySet()) {
             for (int index = getCount(current); index > 0; index--) {
                 result[i++] = current;
             }
@@ -474,9 +466,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
 
         int i = 0;
-        final Iterator<E> it = map.keySet().iterator();
-        while (it.hasNext()) {
-            final E current = it.next();
+        for (final E current : map.keySet()) {
             for (int index = getCount(current); index > 0; index--) {
                 // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
                 @SuppressWarnings("unchecked")

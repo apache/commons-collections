@@ -221,10 +221,8 @@ public class ListUtils {
             return 0;
         }
         int hashCode = 1;
-        final Iterator<?> it = list.iterator();
 
-        while (it.hasNext()) {
-            final Object obj = it.next();
+        for (final Object obj : list) {
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;

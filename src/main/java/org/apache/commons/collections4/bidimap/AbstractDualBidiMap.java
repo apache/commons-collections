@@ -389,9 +389,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 return false;
             }
             boolean modified = false;
-            final Iterator<?> it = coll.iterator();
-            while (it.hasNext()) {
-                modified |= remove(it.next());
+            for (final Object current : coll) {
+                modified |= remove(current);
             }
             return modified;
         }

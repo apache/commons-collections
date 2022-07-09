@@ -153,9 +153,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<>();
-        for (final Collection<E> item : all) {
-            chain.addIterator(item.iterator());
-        }
+        all.forEach(item -> chain.addIterator(item.iterator()));
         return chain;
     }
 
