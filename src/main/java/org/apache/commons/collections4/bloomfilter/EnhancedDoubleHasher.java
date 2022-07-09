@@ -21,14 +21,15 @@ import java.util.function.IntPredicate;
 
 /**
  * A Hasher that implements combinatorial hashing as as described by
- * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a>.
+ * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a> using the enhanced double hashing technique
+ * described in the wikipedia article  <a href="https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing">Double Hashing</a>.
  * <p>
  * Common use for this hasher is to generate a byte array as the output of a hashing
  * or MessageDigest algorithm.</p>
  *
  * @since 4.5
  */
-public class SimpleHasher implements Hasher {
+public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * The initial hash value.
@@ -67,14 +68,13 @@ public class SimpleHasher implements Hasher {
      * @throws IllegalArgumentException is buffer length is zero.
      * @see #getDefaultIncrement()
      */
-    public SimpleHasher(byte[] buffer) {
+    public EnhancedDoubleHasher(byte[] buffer) {
         if (buffer.length == 0) {
             throw new IllegalArgumentException("buffer length must be greater than 0");
         }
         int segment = buffer.length / 2;
         this.initial = toLong(buffer, 0, segment);
-        long possibleIncrement = toLong(buffer, segment, buffer.length - segment);
-        this.increment = possibleIncrement == 0 ? getDefaultIncrement() : possibleIncrement;
+        this.increment = toLong(buffer, segment, buffer.length - segment);
     }
 
     /**
@@ -84,24 +84,25 @@ public class SimpleHasher implements Hasher {
      * @param increment The value to increment the hash by on each iteration.
      * @see #getDefaultIncrement()
      */
-    public SimpleHasher(long initial, long increment) {
+    public EnhancedDoubleHasher(long initial, long increment) {
         this.initial = initial;
-        this.increment = increment == 0 ? getDefaultIncrement() : increment;
+        this.increment = increment;
     }
 
     /**
-     * Get the default increment used when the requested increment is zero.
-     * <p>
-     * By default this is the same
-     * default increment used in Java's SplittableRandom random number generator.  It is the
-     * fractional representation of the golden ratio (0.618...) with a base of 2^64.
-     * </p><p>
-     * Implementations may want to override this value to match defaults in legacy implementations.
-     * </p>
-     * @return The default increment to use when the requested increment is zero.
+     * Gets the initial value for the hash calculation.
+     * @return the initial value for the hash calculation.
      */
-    public long getDefaultIncrement() {
-        return 0x9e3779b97f4a7c15L;
+    long getInitial() {
+        return initial;
+    }
+
+    /**
+     * Gets the increment value for the hash calculation.
+     * @return the increment value for the hash calculation.
+     */
+    long getIncrement() {
+        return increment;
     }
 
     /**
@@ -129,23 +130,36 @@ public class SimpleHasher implements Hasher {
             @Override
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                int bits = shape.getNumberOfBits();
-                /*
-                 * Essentially this is computing a wrapped modulus from a start point and an
-                 * increment. So actually you only need two modulus operations before the loop.
-                 * This avoids any modulus operation inside the while loop. It uses a long index
-                 * to avoid overflow.
-                 */
-                long index = mod(initial, bits);
+                final int bits = shape.getNumberOfBits();
+                // Enhanced double hashing:
+                //   hash[i] = ( h1(x) + i*h2(x) + (i*i*i - i)/6 ) mod bits
+                // See: https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing
+                //
+                // Essentially this is computing a wrapped modulus from a start point and an
+                // increment and an additional term as a tetrahedral number.
+                // You only need two modulus operations before the loop. Within the loop
+                // the modulus is handled using the sign bit to detect wrapping to ensure:
+                // 0 <= index < bits
+                // 0 <= inc < bits
+                // The final hash is:
+                //   hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
+
+                int index = mod(initial, bits);
                 int inc = mod(increment, bits);
 
-                for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-
-                    if (!consumer.test((int) index)) {
+                final int k = shape.getNumberOfHashFunctions();
+                for (int i = 0; i < k; i++) {
+                    if (!consumer.test(index)) {
                         return false;
                     }
-                    index += inc;
-                    index = index >= bits ? index - bits : index;
+                    // Update index and handle wrapping
+                    index -= inc;
+                    index = index < 0 ? index + bits : index;
+
+                    // Incorporate the counter into the increment to create a
+                    // tetrahedral number additional term, and handle wrapping.
+                    inc -= i;
+                    inc = inc < 0 ? inc + bits : inc;
                 }
                 return true;
             }
