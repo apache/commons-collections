@@ -41,7 +41,7 @@ class IncrementingHasher implements Hasher {
      * @param increment The value to increment the hash by on each iteration.
      * @see #getDefaultIncrement()
      */
-    public IncrementingHasher(long initial, long increment) {
+    IncrementingHasher(long initial, long increment) {
         this.initial = initial;
         this.increment = increment;
     }
