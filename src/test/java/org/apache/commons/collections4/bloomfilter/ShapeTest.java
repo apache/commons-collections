@@ -191,6 +191,7 @@ public class ShapeTest {
     public void testFromKM() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 5));
+        assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(6, 5));
     }
 
     /**
