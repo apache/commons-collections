@@ -73,14 +73,11 @@ public final class Shape implements Comparable<Shape> {
      *
      * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
      * @param numberOfBits The number of bits in the filter
-     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1} or {@code numberOfBits < numberOfHashFunctions}
+     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
     private Shape(final int numberOfHashFunctions, final int numberOfBits) {
         this.numberOfHashFunctions = checkNumberOfHashFunctions(numberOfHashFunctions);
         this.numberOfBits = checkNumberOfBits(numberOfBits);
-        if (numberOfBits < numberOfHashFunctions) {
-            throw new IllegalArgumentException( "Number of bits must be greater than or equal to number of hash functions)");
-        }
     }
 
     @Override
