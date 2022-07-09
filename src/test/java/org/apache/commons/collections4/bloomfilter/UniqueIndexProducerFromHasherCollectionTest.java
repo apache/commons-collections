@@ -20,7 +20,7 @@ public class UniqueIndexProducerFromHasherCollectionTest extends AbstractIndexPr
 
     @Override
     protected IndexProducer createProducer() {
-        return new HasherCollection(new SimpleHasher(0, 1), new SimpleHasher(0, 2)).uniqueIndices(Shape.fromKM(17, 72));
+        return new HasherCollection(new IncrementingHasher(0, 1), new IncrementingHasher(0, 2)).uniqueIndices(Shape.fromKM(17, 72));
     }
 
     @Override

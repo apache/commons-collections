@@ -81,7 +81,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
         Shape shape = Shape.fromKM(12, 72);
-        Hasher hasher = new SimpleHasher(5, 12);
+        Hasher hasher = new IncrementingHasher(5, 12);
         Set<Integer> set = new HashSet<>();
         assertTrue(hasher.uniqueIndices(shape).forEachIndex(set::add), "Duplicate detected");
         assertEquals(6, set.size());
