@@ -105,13 +105,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
-        final Iterator<?> e = coll.iterator();
-        while (e.hasNext()) {
-            if (!contains(e.next())) {
-                return false;
-            }
-        }
-        return true;
+        return coll.stream().allMatch(this::contains);
     }
 
     /**
@@ -132,9 +126,8 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
         boolean changed = false;
-        final Iterator<? extends E> i = coll.iterator();
-        while (i.hasNext()) {
-            final boolean added = add(i.next(), 1);
+        for (final E current : coll) {
+            final boolean added = add(current, 1);
             changed = changed || added;
         }
         return changed;
@@ -168,9 +161,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     public boolean removeAll(final Collection<?> coll) {
         if (coll != null) {
             boolean result = false;
-            final Iterator<?> i = coll.iterator();
-            while (i.hasNext()) {
-                final Object obj = i.next();
+            for (final Object obj : coll) {
                 final boolean changed = remove(obj, getCount(obj));
                 result = result || changed;
             }

@@ -211,9 +211,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
-        final Iterator<?> i = coll.iterator();
-        while (i.hasNext()) {
-            final Object obj = i.next();
+        for (final Object obj : coll) {
             final boolean changed = remove(obj, getCount(obj)) != 0;
             result = result || changed;
         }

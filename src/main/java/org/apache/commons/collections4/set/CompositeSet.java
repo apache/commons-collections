@@ -152,9 +152,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<>();
-        for (final Set<E> item : all) {
-            chain.addIterator(item.iterator());
-        }
+        all.forEach(item -> chain.addIterator(item.iterator()));
         return chain;
     }
 
