@@ -23,13 +23,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link SimpleHasher}.
+ * Tests the {@link EnhancedDoubleHasher}.
  */
-public class SimpleHasherTest extends AbstractHasherTest {
+public class EnhancedDoubleHasherTest extends AbstractHasherTest {
 
     @Override
     protected Hasher createHasher() {
-        return new SimpleHasher(1, 1);
+        return new EnhancedDoubleHasher(1, 1);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SimpleHasherTest extends AbstractHasherTest {
     }
 
     private void assertConstructorBuffer(Shape shape, byte[] buffer, Integer[] expected) {
-        SimpleHasher hasher = new SimpleHasher(buffer);
+        EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(buffer);
         List<Integer> lst = new ArrayList<>();
         IndexProducer producer = hasher.indices(shape);
         producer.forEachIndex(lst::add);
@@ -53,55 +53,45 @@ public class SimpleHasherTest extends AbstractHasherTest {
         }
     }
 
-    private void assertIncrement(SimpleHasher hasher, long defaultIncrement) {
-        assertEquals(defaultIncrement, hasher.getDefaultIncrement());
-        int[] values = hasher.indices(Shape.fromKM(2, Integer.MAX_VALUE)).asIndexArray();
-        assertEquals(0, values[0]);
-        assertEquals(Long.remainderUnsigned(defaultIncrement, Integer.MAX_VALUE), values[1]);
-    }
-
     @Test
     public void testConstructor() {
-        Shape shape = Shape.fromKM(5, 10);
-        assertConstructorBuffer(shape, new byte[] { 1, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer(shape, new byte[] { 1 }, new Integer[] { 0, 1, 2, 3, 4 });
-        assertConstructorBuffer(shape, new byte[] { 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer(shape, new byte[] { 0, 1, 0, 1 }, new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-                new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
-                new Integer[] { 1, 2, 3, 4, 5 });
-        assertConstructorBuffer(shape, new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, 1, 5, 5 },
-                new Integer[] { 1, 2, 3, 4, 5 });
+        // single value become increment.
+        EnhancedDoubleHasher hasher = new EnhancedDoubleHasher( new byte[] { 1 } );
+        assertEquals( 0, hasher.getInitial() );
+        assertEquals( 1, hasher.getIncrement() );
+
+        // 2 bytes become initial and increment.
+        hasher = new EnhancedDoubleHasher( new byte[] { 1, 2 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 2, hasher.getIncrement() );
+
+        // odd values place extra byte in increment.
+        hasher = new EnhancedDoubleHasher( new byte[] { 1, 2, 3 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 0x203, hasher.getIncrement() );
+
+        // even short split
+        hasher = new EnhancedDoubleHasher( new byte[] {0, 1, 0, 2 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 2, hasher.getIncrement() );
+
+        // longs are parse correctly
+        hasher = new EnhancedDoubleHasher( new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 2, hasher.getIncrement() );
+
+        // excess bytes are ignored before mid point and at end
+        hasher = new EnhancedDoubleHasher( new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 2, 5, 5 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 2, hasher.getIncrement() );
+
+        // odd extra bytes are accounted for correctly
+        hasher = new EnhancedDoubleHasher( new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 1, 0, 0, 0, 0, 0, 0, 2, 5, 5 } );
+        assertEquals( 1, hasher.getInitial() );
+        assertEquals( 0x100000000000002L, hasher.getIncrement() );
 
         // test empty buffer
-        assertThrows(IllegalArgumentException.class, () -> new SimpleHasher(new byte[0]));
-
-        // test zero incrementer gets default
-        // default increment from SimpleHasher.
-        long defaultIncrement = 0x9e3779b97f4a7c15L;
-        SimpleHasher hasher = new SimpleHasher(0, 0);
-        assertIncrement(new SimpleHasher(0, 0), defaultIncrement);
-        assertIncrement(new SimpleHasher(new byte[2]), defaultIncrement);
-
-        // test that changing default increment works
-        defaultIncrement = 4;
-        defaultIncrement = 4L;
-        hasher = new SimpleHasher(0, 0) {
-            @Override
-            public long getDefaultIncrement() {
-                return 4L;
-            }
-        };
-        assertIncrement(hasher, defaultIncrement);
-        hasher = new SimpleHasher(new byte[2]) {
-            @Override
-            public long getDefaultIncrement() {
-                return 4L;
-            }
-        };
-
-        assertEquals(defaultIncrement, hasher.getDefaultIncrement());
+        assertThrows(IllegalArgumentException.class, () -> new EnhancedDoubleHasher(new byte[0]));
     }
 
     @Test
@@ -109,7 +99,7 @@ public class SimpleHasherTest extends AbstractHasherTest {
         for (long dividend : new long[] { -1, -2, -3, -6378683, -23567468136887892L, Long.MIN_VALUE, 345, 678686,
             67868768686878924L, Long.MAX_VALUE }) {
             for (int divisor : new int[] { 1, 2, 3, 5, 13, Integer.MAX_VALUE }) {
-                assertEquals((int) Long.remainderUnsigned(dividend, divisor), SimpleHasher.mod(dividend, divisor),
+                assertEquals((int) Long.remainderUnsigned(dividend, divisor), EnhancedDoubleHasher.mod(dividend, divisor),
                         () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
             }
         }
