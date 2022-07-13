@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.coderodde.util;
+package org.apache.commons.collections4.list;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -68,11 +68,7 @@ import java.util.function.UnaryOperator;
  * 
  * The rest is to <i>"rewind"</i> the closest finger to point to the target 
  * element (which requires \(\mathcal{O}(\sqrt{n})\) on evenly distributed 
- * finger lis). 
- * 
- * @author Rodion "rodde" Efremov
- * @version 1.61 (Sep 26, 2021)
- * @since 1.6 (Sep 1, 2021)
+ * finger lists).
  */
 public class IndexedLinkedList<E> implements Deque<E>, 
                                              List<E>, 
@@ -2996,13 +2992,15 @@ public class IndexedLinkedList<E> implements Deque<E>,
         
         @Override
         public boolean hasCharacteristics(int characteristics) {
-            return switch (characteristics) {
-                case Spliterator.ORDERED, 
-                     Spliterator.SIZED, 
-                     Spliterator.SUBSIZED -> true;
+            switch (characteristics) {
+                case Spliterator.ORDERED:
+                case Spliterator.SIZED:
+                case Spliterator.SUBSIZED:
+                    return true;
                     
-                default -> false;
-            };
+                default:
+                    return false;
+            }
         }
     }
     

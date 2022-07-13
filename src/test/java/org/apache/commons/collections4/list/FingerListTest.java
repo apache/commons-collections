@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.coderodde.util;
+package org.apache.commons.collections4.list;
 
 import com.github.coderodde.util.IndexedLinkedList.Finger;
 import com.github.coderodde.util.IndexedLinkedList.Node;
