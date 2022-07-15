@@ -148,7 +148,7 @@
     </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.4 #214 #225 #239 #266 #294.
+      Bump actions/cache from 2 to 3.0.5 #214 #225 #239 #266 #294.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
