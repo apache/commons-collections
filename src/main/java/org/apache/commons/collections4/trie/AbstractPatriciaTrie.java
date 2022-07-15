@@ -32,6 +32,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.Optional;
 
 import org.apache.commons.collections4.OrderedMapIterator;
 
@@ -118,6 +119,16 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
+     * A helper method to select increment.
+     */
+    private void increment(boolean variant){
+        if (variant) {
+            incrementSize();
+        } else {
+            incrementModCount();
+        }
+    }
+    /**
      * A helper method to increment the modification counter.
      */
     private void incrementModCount() {
@@ -133,21 +144,13 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         // The only place to store a key with a length
         // of zero bits is the root node
         if (lengthInBits == 0) {
-            if (root.isEmpty()) {
-                incrementSize();
-            } else {
-                incrementModCount();
-            }
+            increment(root.isEmpty());
             return root.setKeyValue(key, value);
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
         if (compareKeys(key, found.key)) {
-            if (found.isEmpty()) { // <- must be the root
-                incrementSize();
-            } else {
-                incrementModCount();
-            }
+            increment(found.isEmpty()); // <- must be the root
             return found.setKeyValue(key, value);
         }
 
@@ -165,11 +168,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 // store such a Key is the root Node!
 
                 /* NULL BIT KEY */
-                if (root.isEmpty()) {
-                    incrementSize();
-                } else {
-                    incrementModCount();
-                }
+                increment (root.isEmpty());
                 return root.setKeyValue(key, value);
 
             }
@@ -192,31 +191,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             if (current.bitIndex >= entry.bitIndex
                     || current.bitIndex <= path.bitIndex) {
                 entry.predecessor = entry;
-
-                if (!isBitSet(entry.key, entry.bitIndex, lengthInBits)) {
-                    entry.left = entry;
-                    entry.right = current;
-                } else {
-                    entry.left = current;
-                    entry.right = entry;
-                }
-
-                entry.parent = path;
-                if (current.bitIndex >= entry.bitIndex) {
-                    current.parent = entry;
-                }
-
-                // if we inserted an uplink, set the predecessor on it
-                if (current.bitIndex <= path.bitIndex) {
-                    current.predecessor = entry;
-                }
-
-                if (path == root || !isBitSet(entry.key, path.bitIndex, lengthInBits)) {
-                    path.left = entry;
-                } else {
-                    path.right = entry;
-                }
-
+                addEntrySort(entry, lengthInBits, current);
+                addEntryInsertEntry(entry, lengthInBits, current, path);
                 return entry;
             }
 
@@ -227,6 +203,34 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             } else {
                 current = current.right;
             }
+        }
+    }
+
+    private void addEntryInsertEntry(TrieEntry<K, V> entry, int lengthInBits, TrieEntry<K, V> current, TrieEntry<K, V> path) {
+        entry.parent = path;
+        if (current.bitIndex >= entry.bitIndex) {
+            current.parent = entry;
+        }
+
+        // if we inserted an uplink, set the predecessor on it
+        if (current.bitIndex <= path.bitIndex) {
+            current.predecessor = entry;
+        }
+
+        if (path == root || !isBitSet(entry.key, path.bitIndex, lengthInBits)) {
+            path.left = entry;
+        } else {
+            path.right = entry;
+        }
+    }
+
+    private void addEntrySort(TrieEntry<K, V> entry, int lengthInBits, TrieEntry<K, V> current) {
+        if (!isBitSet(entry.key, entry.bitIndex, lengthInBits)) {
+            entry.left = entry;
+            entry.right = current;
+        } else {
+            entry.left = current;
+            entry.right = entry;
         }
     }
 
@@ -532,50 +536,10 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         p.bitIndex = h.bitIndex;
 
         // Fix P's parent, predecessor and child Nodes
-        {
-            final TrieEntry<K, V> parent = p.parent;
-            final TrieEntry<K, V> child = p.left == h ? p.right : p.left;
-
-            // if it was looping to itself previously,
-            // it will now be pointed from it's parent
-            // (if we aren't removing it's parent --
-            //  in that case, it remains looping to itself).
-            // otherwise, it will continue to have the same
-            // predecessor.
-            if (p.predecessor == p && p.parent != h) {
-                p.predecessor = p.parent;
-            }
-
-            if (parent.left == p) {
-                parent.left = child;
-            } else {
-                parent.right = child;
-            }
-
-            if (child.bitIndex > parent.bitIndex) {
-                child.parent = parent;
-            }
-        }
-
+        fixPParentPredecessorChilds(h, p);
+        
         // Fix H's parent and child Nodes
-        {
-            // If H is a parent of its left and right child
-            // then change them to P
-            if (h.left.parent == h) {
-                h.left.parent = p;
-            }
-
-            if (h.right.parent == h) {
-                h.right.parent = p;
-            }
-
-            // Change H's parent
-            if (h.parent.left == h) {
-                h.parent.left = p;
-            } else {
-                h.parent.right = p;
-            }
-        }
+        fixHParentChilds(h, p);
 
         // Copy the remaining fields from H to P
         //p.bitIndex = h.bitIndex;
@@ -591,6 +555,50 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         if (isValidUplink(p.right, p)) {
             p.right.predecessor = p;
+        }
+    }
+
+    private void fixHParentChilds(TrieEntry<K, V> h, TrieEntry<K, V> p) {
+        // If H is a parent of its left and right child
+        // then change them to P
+        if (h.left.parent == h) {
+            h.left.parent = p;
+        }
+
+        if (h.right.parent == h) {
+            h.right.parent = p;
+        }
+
+        // Change H's parent
+        if (h.parent.left == h) {
+            h.parent.left = p;
+        } else {
+            h.parent.right = p;
+        }
+    }
+
+    private void fixPParentPredecessorChilds(TrieEntry<K, V> h, TrieEntry<K, V> p) {
+        final TrieEntry<K, V> parent = p.parent;
+        final TrieEntry<K, V> child = p.left == h ? p.right : p.left;
+
+        // if it was looping to itself previously,
+        // it will now be pointed from it's parent
+        // (if we aren't removing it's parent --
+        //  in that case, it remains looping to itself).
+        // otherwise, it will continue to have the same
+        // predecessor.
+        if (p.predecessor == p && p.parent != h) {
+            p.predecessor = p.parent;
+        }
+
+        if (parent.left == p) {
+            parent.left = child;
+        } else {
+            parent.right = child;
+        }
+
+        if (child.bitIndex > parent.bitIndex) {
+            child.parent = parent;
         }
     }
 
@@ -663,10 +671,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         }
 
         // If there's no data at all, exit.
-        if (current.isEmpty()) {
-            return null;
-        }
-
+        // or
         // If we've already returned the left,
         // and the immediate right is null,
         // there's only one entry in the Trie
@@ -676,34 +681,20 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         //  \_/  \
         //       null <-- 'current'
         //
-        if (current.right == null) {
+        if (current.isEmpty() || current.right == null) {
             return null;
         }
 
         // If nothing valid on the left, try the right.
-        if (previous != current.right) {
-            // See if it immediately is valid.
-            if (isValidUplink(current.right, current)) {
-                return current.right;
-            }
-
-            // Must search on the right's side if it wasn't initially valid.
-            return nextEntryImpl(current.right, previous, tree);
-        }
+        Optional<TrieEntry<K, V>> ret = moveRight(previous, tree, current);
+        if(ret.isPresent()) return ret.get();
 
         // Neither left nor right are valid, find the first parent
         // whose child did not come from the right & traverse it.
-        while (current == current.parent.right) {
-            // If we're going to traverse to above the subtree, stop.
-            if (current == tree) {
-                return null;
-            }
-
-            current = current.parent;
-        }
+        current = findFirstParent(tree, current);
 
         // If we're on the top of the subtree, we can't go any higher.
-        if (current == tree) {
+        if (current == null || current == tree) {
             return null;
         }
 
@@ -725,6 +716,31 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         // We need to traverse down the parent's right's path.
         return nextEntryImpl(current.parent.right, previous, tree);
+    }
+
+    private TrieEntry<K, V> findFirstParent(TrieEntry<K, V> tree, TrieEntry<K, V> current) {
+        while (current == current.parent.right) {
+            // If we're going to traverse to above the subtree, stop.
+            if (current == tree) {
+                return null;
+            }
+
+            current = current.parent;
+        }
+        return current;
+    }
+
+    private Optional<TrieEntry<K, V>> moveRight(TrieEntry<K, V> previous, TrieEntry<K, V> tree, TrieEntry<K, V> current) {
+        if (previous != current.right) {
+            // See if it immediately is valid.
+            if (isValidUplink(current.right, current)) {
+                return Optional.ofNullable(current.right);
+            }
+
+            // Must search on the right's side if it wasn't initially valid.
+            return Optional.ofNullable(nextEntryImpl(current.right, previous, tree));
+        }
+        return Optional.empty();
     }
 
     /**
@@ -1322,48 +1338,15 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         public String toString() {
             final StringBuilder buffer = new StringBuilder();
 
-            if (bitIndex == -1) {
-                buffer.append("RootEntry(");
-            } else {
-                buffer.append("Entry(");
-            }
+            buffer.append((bitIndex == -1) ? "RootEntry(" : "Entry(");
 
             buffer.append("key=").append(getKey()).append(" [").append(bitIndex).append("], ");
             buffer.append("value=").append(getValue()).append(", ");
             //buffer.append("bitIndex=").append(bitIndex).append(", ");
 
-            if (parent != null) {
-                if (parent.bitIndex == -1) {
-                    buffer.append("parent=").append("ROOT");
-                } else {
-                    buffer.append("parent=").append(parent.getKey()).append(" [").append(parent.bitIndex).append("]");
-                }
-            } else {
-                buffer.append("parent=").append("null");
-            }
-            buffer.append(", ");
-
-            if (left != null) {
-                if (left.bitIndex == -1) {
-                    buffer.append("left=").append("ROOT");
-                } else {
-                    buffer.append("left=").append(left.getKey()).append(" [").append(left.bitIndex).append("]");
-                }
-            } else {
-                buffer.append("left=").append("null");
-            }
-            buffer.append(", ");
-
-            if (right != null) {
-                if (right.bitIndex == -1) {
-                    buffer.append("right=").append("ROOT");
-                } else {
-                    buffer.append("right=").append(right.getKey()).append(" [").append(right.bitIndex).append("]");
-                }
-            } else {
-                buffer.append("right=").append("null");
-            }
-            buffer.append(", ");
+            appendPart(parent, buffer, "parent=");
+            appendPart(left, buffer, "left=");
+            appendPart(right, buffer, "right=");
 
             if (predecessor != null) {
                 if (predecessor.bitIndex == -1) {
@@ -1377,6 +1360,20 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             buffer.append(")");
             return buffer.toString();
         }
+
+        private void appendPart(TrieEntry<K, V> part, StringBuilder buffer, String str) {
+            if (part != null) {
+                if (part.bitIndex == -1) {
+                    buffer.append(str).append("ROOT");
+                } else {
+                    buffer.append(str).append(part.getKey()).append(" [").append(part.bitIndex).append("]");
+                }
+            } else {
+                buffer.append(str).append("null");
+            }
+            buffer.append(", ");
+        }
+
     }
 
 
@@ -2123,30 +2120,37 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                     size = 1;
                 }
 
-                fromKey = entry == null ? null : entry.getKey();
-                if (fromKey != null) {
-                    final TrieEntry<K, V> prior = previousEntry((TrieEntry<K, V>) entry);
-                    fromKey = prior == null ? null : prior.getKey();
-                }
-
-                toKey = fromKey;
-
-                while (it.hasNext()) {
-                    ++size;
-                    entry = it.next();
-                }
-
-                toKey = entry == null ? null : entry.getKey();
-
-                if (toKey != null) {
-                    entry = nextEntry((TrieEntry<K, V>) entry);
-                    toKey = entry == null ? null : entry.getKey();
-                }
+                fixupFromKey(entry);
+                fixupToKey(it, entry);
 
                 expectedModCount = AbstractPatriciaTrie.this.modCount;
             }
 
             return size;
+        }
+
+        private void fixupToKey(Iterator<Entry<K, V>> it, Entry<K, V> entry) {
+            toKey = fromKey;
+
+            while (it.hasNext()) {
+                ++size;
+                entry = it.next();
+            }
+
+            toKey = entry == null ? null : entry.getKey();
+
+            if (toKey != null) {
+                entry = nextEntry((TrieEntry<K, V>) entry);
+                toKey = entry == null ? null : entry.getKey();
+            }
+        }
+
+        private void fixupFromKey(Entry<K, V> entry) {
+            fromKey = entry == null ? null : entry.getKey();
+            if (fromKey != null) {
+                final TrieEntry<K, V> prior = previousEntry((TrieEntry<K, V>) entry);
+                fromKey = prior == null ? null : prior.getKey();
+            }
         }
 
         @Override

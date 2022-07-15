@@ -1382,39 +1382,37 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "5");
 
         final Object[] elts = list.toArray();
+        testToArayObject(elts);
+
+        final String[] elts2 = list.toArray(new String[0]);
+        testToArayString(elts2);
+
+        final String[] elts3 = new String[5];
+        assertSame(elts3, list.toArray(elts3));
+        testToArayString(elts3);
+
+        final String[] elts4 = new String[3];
+        final String[] elts4b = list.toArray(elts4);
+        assertNotSame(elts4, elts4b);
+        testToArayString(elts4b);
+    }
+
+    private void testToArayString(String[] elts) {
         assertEquals("1", elts[0]);
         assertEquals("2", elts[1]);
         assertEquals("3", elts[2]);
         assertEquals("4", elts[3]);
         assertEquals("5", elts[4]);
         assertEquals(5, elts.length);
+    }
 
-        final String[] elts2 = list.toArray(new String[0]);
-        assertEquals("1", elts2[0]);
-        assertEquals("2", elts2[1]);
-        assertEquals("3", elts2[2]);
-        assertEquals("4", elts2[3]);
-        assertEquals("5", elts2[4]);
-        assertEquals(5, elts2.length);
-
-        final String[] elts3 = new String[5];
-        assertSame(elts3, list.toArray(elts3));
-        assertEquals("1", elts3[0]);
-        assertEquals("2", elts3[1]);
-        assertEquals("3", elts3[2]);
-        assertEquals("4", elts3[3]);
-        assertEquals("5", elts3[4]);
-        assertEquals(5, elts3.length);
-
-        final String[] elts4 = new String[3];
-        final String[] elts4b = list.toArray(elts4);
-        assertNotSame(elts4, elts4b);
-        assertEquals("1", elts4b[0]);
-        assertEquals("2", elts4b[1]);
-        assertEquals("3", elts4b[2]);
-        assertEquals("4", elts4b[3]);
-        assertEquals("5", elts4b[4]);
-        assertEquals(5, elts4b.length);
+    private void testToArayObject(Object[] elts) {
+        assertEquals("1", elts[0]);
+        assertEquals("2", elts[1]);
+        assertEquals("3", elts[2]);
+        assertEquals("4", elts[3]);
+        assertEquals("5", elts[4]);
+        assertEquals(5, elts.length);
     }
 
     @Test

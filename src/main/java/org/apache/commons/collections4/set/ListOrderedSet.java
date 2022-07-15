@@ -262,7 +262,7 @@ public class ListOrderedSet<E>
     }
 
     @Override
-    public <T> T[] toArray(final T a[]) {
+    public <T> T[] toArray(final T[] a) {
         return setOrder.toArray(a);
     }
 

@@ -58,9 +58,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         final ListIterator<E> it = makeEmptyIterator();
 
         assertFalse(it.hasNext());
-        assertEquals(-1, it.nextIndex());  // reversed index
-        assertFalse(it.hasPrevious());
-        assertEquals(0, it.previousIndex());  // reversed index
+        testReverseSubTest(-1, it, 0);
 
         assertAll(
                 // next() should throw a NoSuchElementException
@@ -115,33 +113,38 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     public void testReverse() {
         final ListIterator<E> it = makeObject();
         assertTrue(it.hasNext());
-        assertEquals(3, it.nextIndex());
-        assertFalse(it.hasPrevious());
-        assertEquals(4, it.previousIndex());
+        testReverseSubTest(3, it, 4);
         assertEquals("Four", it.next());
-        assertEquals(2, it.nextIndex());
-        assertTrue(it.hasNext());
-        assertEquals(3, it.previousIndex());
+        testReverseSubTest(2, it, it.hasNext(), 3);
         assertTrue(it.hasPrevious());
-        assertEquals("Three", it.next());
-        assertTrue(it.hasNext());
-        assertEquals(1, it.nextIndex());
-        assertTrue(it.hasPrevious());
-        assertEquals(2, it.previousIndex());
-        assertEquals("Two", it.next());
-        assertTrue(it.hasNext());
-        assertEquals(0, it.nextIndex());
-        assertTrue(it.hasPrevious());
-        assertEquals(1, it.previousIndex());
+        testReverseSubTest("Three", it);
+        testReverseSubTest(1, it, it.hasPrevious(), 2);
+        testReverseSubTest("Two", it);
+        testReverseSubTest(0, it, it.hasPrevious(), 1);
         assertEquals("One", it.next());
         assertFalse(it.hasNext());
-        assertEquals(-1, it.nextIndex());
-        assertTrue(it.hasPrevious());
-        assertEquals(0, it.previousIndex());
+        testReverseSubTest(-1, it, it.hasPrevious(), 0);
         assertEquals("One", it.previous());
         assertEquals("Two", it.previous());
         assertEquals("Three", it.previous());
         assertEquals("Four", it.previous());
+    }
+
+    private void testReverseSubTest(String Three, ListIterator<E> it) {
+        assertEquals(Three, it.next());
+        assertTrue(it.hasNext());
+    }
+
+    private void testReverseSubTest(int expected, ListIterator<E> it, boolean it1, int expected1) {
+        assertEquals(expected, it.nextIndex());
+        assertTrue(it1);
+        assertEquals(expected1, it.previousIndex());
+    }
+
+    private void testReverseSubTest(int expected, ListIterator<E> it, int expected1) {
+        assertEquals(expected, it.nextIndex());
+        assertFalse(it.hasPrevious());
+        assertEquals(expected1, it.previousIndex());
     }
 
     @Test

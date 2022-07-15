@@ -1047,48 +1047,45 @@ public class IteratorUtilsTest {
     public void testUnmodifiableListIteratorIteration() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
+        testUnmodifiableListIteratorIterationA(listIterator);
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "b", listIterator.next());
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "c", listIterator.next());
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "d", listIterator.next());
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator);
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "c", listIterator.previous());
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "b", listIterator.previous());
+
+        testUnmodifiableListIteratorIterationSubtests(listIterator, "a", listIterator.previous());
+
         assertFalse(listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
+    }
 
-        assertEquals("a", listIterator.next());
-
-        assertTrue(listIterator.hasPrevious());
-        assertTrue(listIterator.hasNext());
-
-        assertEquals("b", listIterator.next());
-
-        assertTrue(listIterator.hasPrevious());
-        assertTrue(listIterator.hasNext());
-
-        assertEquals("c", listIterator.next());
-
-        assertTrue(listIterator.hasPrevious());
-        assertTrue(listIterator.hasNext());
-
-        assertEquals("d", listIterator.next());
-
+    private void testUnmodifiableListIteratorIterationSubtests(ListIterator<String> listIterator) {
         assertTrue(listIterator.hasPrevious());
         assertFalse(listIterator.hasNext());
 
         assertEquals("d", listIterator.previous());
+    }
 
+    private void testUnmodifiableListIteratorIterationSubtests(ListIterator<String> listIterator, String b, String listIterator1) {
         assertTrue(listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
 
-        assertEquals("c", listIterator.previous());
+        assertEquals(b, listIterator1);
+    }
 
-        assertTrue(listIterator.hasPrevious());
-        assertTrue(listIterator.hasNext());
-
-        assertEquals("b", listIterator.previous());
-
-        assertTrue(listIterator.hasPrevious());
-        assertTrue(listIterator.hasNext());
-
-        assertEquals("a", listIterator.previous());
-
+    private void testUnmodifiableListIteratorIterationA(ListIterator<String> listIterator) {
         assertFalse(listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
+
+        assertEquals("a", listIterator.next());
     }
 
     @Test

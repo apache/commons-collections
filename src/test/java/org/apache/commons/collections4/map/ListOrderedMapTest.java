@@ -206,23 +206,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         );
 
         // put where key doesn't exist
-        lom.put(0, (K) "testInsert1", (V) "testInsert1v");
-        assertEquals("testInsert1v", lom.getValue(0));
-
-        lom.put((K) "testInsertPut", (V) "testInsertPutv");
-        assertEquals("testInsert1v", lom.getValue(0));
-        assertEquals("testInsertPutv", lom.getValue(1));
-
-        lom.put(0, (K) "testInsert0", (V) "testInsert0v");
-        assertEquals("testInsert0v", lom.getValue(0));
-        assertEquals("testInsert1v", lom.getValue(1));
-        assertEquals("testInsertPutv", lom.getValue(2));
-
-        lom.put(3, (K) "testInsert3", (V) "testInsert3v");
-        assertEquals("testInsert0v", lom.getValue(0));
-        assertEquals("testInsert1v", lom.getValue(1));
-        assertEquals("testInsertPutv", lom.getValue(2));
-        assertEquals("testInsert3v", lom.getValue(3));
+        testPut_intObjectObjectPut(lom);
 
         // put in a full map
         resetFull();
@@ -256,56 +240,53 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetEmpty();
         lom = getMap();
-        lom.put((K) i1, (V) "1");
-        lom.put((K) i2, (V) "2");
-        lom.put((K) i3, (V) "3");
-        lom.put(0, (K) i1b, (V) "One");
-        assertEquals(3, lom.size());
-        assertEquals(3, lom.map.size());
-        assertEquals(3, lom.keyList().size());
-        assertEquals("One", lom.getValue(0));
-        assertEquals("2", lom.getValue(1));
-        assertEquals("3", lom.getValue(2));
+        testPut_intObjectObjectPut2(lom, (K) i1, (K) i2, (K) i3, 0, (K) i1b, "One", "2", "3");
         assertSame(i1b, lom.get(0));
 
         resetEmpty();
         lom = getMap();
-        lom.put((K) i1, (V) "1");
-        lom.put((K) i2, (V) "2");
-        lom.put((K) i3, (V) "3");
-        lom.put(1, (K) i1b, (V) "One");
-        assertEquals(3, lom.size());
-        assertEquals(3, lom.map.size());
-        assertEquals(3, lom.keyList().size());
-        assertEquals("One", lom.getValue(0));
-        assertEquals("2", lom.getValue(1));
-        assertEquals("3", lom.getValue(2));
+        testPut_intObjectObjectPut2(lom, (K) i1, (K) i2, (K) i3, 1, (K) i1b, "One", "2", "3");
 
         resetEmpty();
         lom = getMap();
-        lom.put((K) i1, (V) "1");
-        lom.put((K) i2, (V) "2");
-        lom.put((K) i3, (V) "3");
-        lom.put(2, (K) i1b, (V) "One");
-        assertEquals(3, lom.size());
-        assertEquals(3, lom.map.size());
-        assertEquals(3, lom.keyList().size());
-        assertEquals("2", lom.getValue(0));
-        assertEquals("One", lom.getValue(1));
-        assertEquals("3", lom.getValue(2));
+        testPut_intObjectObjectPut2(lom, (K) i1, (K) i2, (K) i3, 2, (K) i1b, "2", "One", "3");
 
         resetEmpty();
         lom = getMap();
-        lom.put((K) i1, (V) "1");
-        lom.put((K) i2, (V) "2");
-        lom.put((K) i3, (V) "3");
-        lom.put(3, (K) i1b, (V) "One");
+        testPut_intObjectObjectPut2(lom, (K) i1, (K) i2, (K) i3, 3, (K) i1b, "2", "3", "One");
+    }
+
+    private void testPut_intObjectObjectPut2(ListOrderedMap<K, V> lom, K i1, K i2, K i3, int index, K i1b, String One, String expected, String expected1) {
+        lom.put(i1, (V) "1");
+        lom.put(i2, (V) "2");
+        lom.put(i3, (V) "3");
+        lom.put(index, i1b, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
         assertEquals(3, lom.keyList().size());
-        assertEquals("2", lom.getValue(0));
-        assertEquals("3", lom.getValue(1));
-        assertEquals("One", lom.getValue(2));
+        assertEquals(One, lom.getValue(0));
+        assertEquals(expected, lom.getValue(1));
+        assertEquals(expected1, lom.getValue(2));
+    }
+
+    private void testPut_intObjectObjectPut(ListOrderedMap<K, V> lom) {
+        lom.put(0, (K) "testInsert1", (V) "testInsert1v");
+        assertEquals("testInsert1v", lom.getValue(0));
+
+        lom.put((K) "testInsertPut", (V) "testInsertPutv");
+        assertEquals("testInsert1v", lom.getValue(0));
+        assertEquals("testInsertPutv", lom.getValue(1));
+
+        lom.put(0, (K) "testInsert0", (V) "testInsert0v");
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("testInsert1v", lom.getValue(1));
+        assertEquals("testInsertPutv", lom.getValue(2));
+
+        lom.put(3, (K) "testInsert3", (V) "testInsert3v");
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("testInsert1v", lom.getValue(1));
+        assertEquals("testInsertPutv", lom.getValue(2));
+        assertEquals("testInsert3v", lom.getValue(3));
     }
 
     @Test

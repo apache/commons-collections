@@ -238,26 +238,16 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         final Iterator<Map.Entry<K, V>> it2 = set.iterator();
         final Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
         final Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
-        assertTrue(sm.containsKey(first));
-        assertTrue(sub.containsKey(first));
-        assertTrue(set.contains(firstEntry));
-        assertTrue(sm.containsKey(second));
-        assertTrue(sub.containsKey(second));
-        assertTrue(set.contains(secondEntry));
+        subTestClone(sm, first, second, sub, set, firstEntry, secondEntry);
 
         set.remove(firstEntry);
-        assertEquals(1, sub.size());
-        assertEquals(size - 1, sm.size());
-        assertEquals(size - 1, sm.inverseBidiMap().size());
-        assertFalse(sm.containsKey(firstEntry.getKey()));
-        assertFalse(sm.containsValue(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
-        assertFalse(sub.containsKey(firstEntry.getKey()));
-        assertFalse(sub.containsValue(firstEntry.getValue()));
-        assertFalse(set.contains(firstEntry));
+        subTestRemove(sm, size, sub, set, firstEntry);
 
         set.remove(secondEntry);
+        subTestRemove1(sm, size, sub, set, secondEntry);
+    }
+
+    private void subTestRemove1(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> secondEntry) {
         assertEquals(0, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -268,6 +258,28 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsKey(secondEntry.getKey()));
         assertFalse(sub.containsValue(secondEntry.getValue()));
         assertFalse(set.contains(secondEntry));
+    }
+
+    private void subTestRemove(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> firstEntry) {
+        assertEquals(1, sub.size());
+        assertEquals(size - 1, sm.size());
+        assertEquals(size - 1, sm.inverseBidiMap().size());
+        assertFalse(sm.containsKey(firstEntry.getKey()));
+        assertFalse(sm.containsValue(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
+        assertFalse(sub.containsKey(firstEntry.getKey()));
+        assertFalse(sub.containsValue(firstEntry.getValue()));
+        assertFalse(set.contains(firstEntry));
+    }
+
+    private void subTestClone(SortedBidiMap<K, V> sm, K first, K second, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> firstEntry, Map.Entry<K, V> secondEntry) {
+        assertTrue(sm.containsKey(first));
+        assertTrue(sub.containsKey(first));
+        assertTrue(set.contains(firstEntry));
+        assertTrue(sm.containsKey(second));
+        assertTrue(sub.containsKey(second));
+        assertTrue(set.contains(secondEntry));
     }
 
     @Test
@@ -422,18 +434,13 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertTrue(set.contains(secondEntry));
 
         set.remove(firstEntry);
-        assertEquals(size - 3, sub.size());
-        assertEquals(size - 1, sm.size());
-        assertEquals(size - 1, sm.inverseBidiMap().size());
-        assertFalse(sm.containsKey(firstEntry.getKey()));
-        assertFalse(sm.containsValue(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
-        assertFalse(sub.containsKey(firstEntry.getKey()));
-        assertFalse(sub.containsValue(firstEntry.getValue()));
-        assertFalse(set.contains(firstEntry));
+        subTestRemove2(sm, size, sub, set, firstEntry);
 
         set.remove(secondEntry);
+        subTestRemove3(sm, size, sub, set, secondEntry);
+    }
+
+    private void subTestRemove3(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> secondEntry) {
         assertEquals(size - 4, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -444,6 +451,19 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsKey(secondEntry.getKey()));
         assertFalse(sub.containsValue(secondEntry.getValue()));
         assertFalse(set.contains(secondEntry));
+    }
+
+    private void subTestRemove2(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> firstEntry) {
+        assertEquals(size - 3, sub.size());
+        assertEquals(size - 1, sm.size());
+        assertEquals(size - 1, sm.inverseBidiMap().size());
+        assertFalse(sm.containsKey(firstEntry.getKey()));
+        assertFalse(sm.containsValue(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
+        assertFalse(sub.containsKey(firstEntry.getKey()));
+        assertFalse(sub.containsValue(firstEntry.getValue()));
+        assertFalse(set.contains(firstEntry));
     }
 
     @Test
@@ -509,6 +529,10 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertEquals(size - 3, sm.size());
         assertEquals(size - 3, sm.inverseBidiMap().size());
 
+        subTestClear(sm, fromKey, first, second, toKey, fromKeyValue, firstValue, secondValue, toKeyValue, sub);
+    }
+
+    private void subTestClear(SortedBidiMap<K, V> sm, K fromKey, K first, K second, K toKey, V fromKeyValue, V firstValue, V secondValue, V toKeyValue, SortedMap<K, V> sub) {
         assertFalse(sm.containsKey(fromKey));
         assertFalse(sm.containsValue(fromKeyValue));
         assertFalse(sm.inverseBidiMap().containsKey(fromKeyValue));
@@ -616,18 +640,13 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertTrue(set.contains(secondEntry));
 
         set.remove(firstEntry);
-        assertEquals(2, sub.size());
-        assertEquals(size - 1, sm.size());
-        assertEquals(size - 1, sm.inverseBidiMap().size());
-        assertFalse(sm.containsKey(firstEntry.getKey()));
-        assertFalse(sm.containsValue(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
-        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
-        assertFalse(sub.containsKey(firstEntry.getKey()));
-        assertFalse(sub.containsValue(firstEntry.getValue()));
-        assertFalse(set.contains(firstEntry));
+        subTestRemove4(sm, size, sub, set, firstEntry);
 
         set.remove(secondEntry);
+        subTestRemove5(sm, size, sub, set, secondEntry);
+    }
+
+    private void subTestRemove5(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> secondEntry) {
         assertEquals(1, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -638,6 +657,19 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsKey(secondEntry.getKey()));
         assertFalse(sub.containsValue(secondEntry.getValue()));
         assertFalse(set.contains(secondEntry));
+    }
+
+    private void subTestRemove4(SortedBidiMap<K, V> sm, int size, SortedMap<K, V> sub, Set<Map.Entry<K, V>> set, Map.Entry<K, V> firstEntry) {
+        assertEquals(2, sub.size());
+        assertEquals(size - 1, sm.size());
+        assertEquals(size - 1, sm.inverseBidiMap().size());
+        assertFalse(sm.containsKey(firstEntry.getKey()));
+        assertFalse(sm.containsValue(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsKey(firstEntry.getValue()));
+        assertFalse(sm.inverseBidiMap().containsValue(firstEntry.getKey()));
+        assertFalse(sub.containsKey(firstEntry.getKey()));
+        assertFalse(sub.containsValue(firstEntry.getValue()));
+        assertFalse(set.contains(firstEntry));
     }
 
     public BulkTest bulkTestHeadMap() {

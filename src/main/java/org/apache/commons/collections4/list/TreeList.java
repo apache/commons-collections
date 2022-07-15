@@ -645,25 +645,29 @@ public class TreeList<E> extends AbstractList<E> {
                 }
             } else {
                 // more on the left or equal, so delete from the left
-                final AVLNode<E> leftMax = left.max();
-                value = leftMax.value;
-                if (rightIsNext) {
-                    right = leftMax.right;
-                }
-                final AVLNode<E> leftPrevious = left.left;
-                left = left.removeMax();
-                if (left == null) {
-                    // special case where left that was deleted was a double link
-                    // only occurs when height difference is equal
-                    left = leftPrevious;
-                    leftIsPrevious = true;
-                }
-                if (relativePosition > 0) {
-                    relativePosition--;
-                }
+                removeSelfClean();
             }
             recalcHeight();
             return this;
+        }
+
+        private void removeSelfClean() {
+            final AVLNode<E> leftMax = left.max();
+            value = leftMax.value;
+            if (rightIsNext) {
+                right = leftMax.right;
+            }
+            final AVLNode<E> leftPrevious = left.left;
+            left = left.removeMax();
+            if (left == null) {
+                // special case where left that was deleted was a double link
+                // only occurs when height difference is equal
+                left = leftPrevious;
+                leftIsPrevious = true;
+            }
+            if (relativePosition > 0) {
+                relativePosition--;
+            }
         }
 
         /**
@@ -841,26 +845,10 @@ public class TreeList<E> extends AbstractList<E> {
                 // STEP 3: Replace s with a newly constructed subtree whose root
                 // is maxNode, whose left subtree is leftSubTree, and whose right
                 // subtree is s.
-                maxNode.setLeft(leftSubTree, null);
-                maxNode.setRight(s, otherTreeMin);
-                if (leftSubTree != null) {
-                    leftSubTree.max().setRight(null, maxNode);
-                    leftSubTree.relativePosition -= currentSize - 1;
-                }
-                if (s != null) {
-                    s.min().setLeft(null, maxNode);
-                    s.relativePosition = sAbsolutePosition - currentSize + 1;
-                }
-                maxNode.relativePosition = currentSize - 1 - sParentAbsolutePosition;
-                otherTree.relativePosition += currentSize;
+                addAllReplaceWithSuntree(otherTree, currentSize, maxNode, otherTreeMin, leftSubTree, s, sAbsolutePosition, sParentAbsolutePosition);
 
                 // STEP 4: Re-balance the tree and recalculate the heights of s's ancestors.
-                s = maxNode;
-                while (!sAncestors.isEmpty()) {
-                    final AVLNode<E> sAncestor = sAncestors.pop();
-                    sAncestor.setLeft(s, null);
-                    s = sAncestor.balance();
-                }
+                s = addAllRebalanceTree(maxNode, sAncestors);
                 return s;
             }
             otherTree = otherTree.removeMin();
@@ -897,6 +885,32 @@ public class TreeList<E> extends AbstractList<E> {
                 s = sAncestor.balance();
             }
             return s;
+        }
+
+        private AVLNode<E> addAllRebalanceTree(AVLNode<E> maxNode, Deque<AVLNode<E>> sAncestors) {
+            AVLNode<E> s;
+            s = maxNode;
+            while (!sAncestors.isEmpty()) {
+                final AVLNode<E> sAncestor = sAncestors.pop();
+                sAncestor.setLeft(s, null);
+                s = sAncestor.balance();
+            }
+            return s;
+        }
+
+        private void addAllReplaceWithSuntree(AVLNode<E> otherTree, int currentSize, AVLNode<E> maxNode, AVLNode<E> otherTreeMin, AVLNode<E> leftSubTree, AVLNode<E> s, int sAbsolutePosition, int sParentAbsolutePosition) {
+            maxNode.setLeft(leftSubTree, null);
+            maxNode.setRight(s, otherTreeMin);
+            if (leftSubTree != null) {
+                leftSubTree.max().setRight(null, maxNode);
+                leftSubTree.relativePosition -= currentSize - 1;
+            }
+            if (s != null) {
+                s.min().setLeft(null, maxNode);
+                s.relativePosition = sAbsolutePosition - currentSize + 1;
+            }
+            maxNode.relativePosition = currentSize - 1 - sParentAbsolutePosition;
+            otherTree.relativePosition += currentSize;
         }
 
 //      private void checkFaedelung() {

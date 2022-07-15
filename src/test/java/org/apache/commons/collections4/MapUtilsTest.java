@@ -167,15 +167,44 @@ public class MapUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]))
         );
 
-        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), new String[0]);
-        assertEquals(0, test.size());
-
         // sub array
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[][] {
+        testPutAll_Map_arraySubTestInsert(MapUtils.putAll(new HashMap<String, String>(), new String[][] {
                 {"RED", "#FF0000"},
                 {"GREEN", "#00FF00"},
                 {"BLUE", "#0000FF"}
-        });
+        }));
+
+        // flat array
+        testPutAll_Map_arraySubTestFlatArray(MapUtils.putAll(new HashMap<String, String>(), new String[]{
+                "RED", "#FF0000",
+                "GREEN", "#00FF00",
+                "BLUE", "#0000FF"
+        }));
+
+        testPutAll_Map_arraySubTest(MapUtils.putAll(new HashMap<String, String>(), new String[]{
+                "RED", "#FF0000",
+                "GREEN", "#00FF00",
+                "BLUE", "#0000FF",
+                "PURPLE" // ignored
+        }));
+        assertEquals(0, MapUtils.putAll(new HashMap<String, String>(), null).size());
+
+        // map entry
+        testPutAll_Map_arraySubTestMapEntry(MapUtils.putAll(new HashMap<String, String>(), new Object[] {
+                new DefaultMapEntry<>("RED", "#FF0000"),
+                new DefaultMapEntry<>("GREEN", "#00FF00"),
+                new DefaultMapEntry<>("BLUE", "#0000FF")
+        }));
+
+        // key value
+        testPutAll_Map_arraySubTestKeyValue(MapUtils.putAll(new HashMap<String, String>(), new Object[]{
+                new DefaultKeyValue<>("RED", "#FF0000"),
+                new DefaultKeyValue<>("GREEN", "#00FF00"),
+                new DefaultKeyValue<>("BLUE", "#0000FF")
+        }));
+    }
+
+    private void testPutAll_Map_arraySubTestInsert(Map<String, String> test) {
         assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
         assertTrue(test.containsKey("GREEN"));
@@ -200,13 +229,9 @@ public class MapUtilsTest {
                         {"BLUE", "#0000FF"}
                 }))
         );
+    }
 
-        // flat array
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
-            "RED", "#FF0000",
-            "GREEN", "#00FF00",
-            "BLUE", "#0000FF"
-        });
+    private void testPutAll_Map_arraySubTestKeyValue(Map<String, String> test) {
         assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
         assertTrue(test.containsKey("GREEN"));
@@ -214,13 +239,9 @@ public class MapUtilsTest {
         assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
+    }
 
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
-            "RED", "#FF0000",
-            "GREEN", "#00FF00",
-            "BLUE", "#0000FF",
-            "PURPLE" // ignored
-        });
+    private void testPutAll_Map_arraySubTestMapEntry(Map<String, String> test) {
         assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
         assertTrue(test.containsKey("GREEN"));
@@ -228,16 +249,11 @@ public class MapUtilsTest {
         assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
+    }
 
-        test = MapUtils.putAll(new HashMap<String, String>(), null);
-        assertEquals(0, test.size());
 
-        // map entry
-        test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-            new DefaultMapEntry<>("RED", "#FF0000"),
-            new DefaultMapEntry<>("GREEN", "#00FF00"),
-            new DefaultMapEntry<>("BLUE", "#0000FF")
-        });
+    private void testPutAll_Map_arraySubTest(Map<String, String> test1) {
+        Map<String, String> test = test1;
         assertTrue(test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
         assertTrue(test.containsKey("GREEN"));
@@ -245,20 +261,16 @@ public class MapUtilsTest {
         assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
+    }
 
-        // key value
-        test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-            new DefaultKeyValue<>("RED", "#FF0000"),
-            new DefaultKeyValue<>("GREEN", "#00FF00"),
-            new DefaultKeyValue<>("BLUE", "#0000FF")
-        });
-        assertTrue(test.containsKey("RED"));
-        assertEquals("#FF0000", test.get("RED"));
-        assertTrue(test.containsKey("GREEN"));
-        assertEquals("#00FF00", test.get("GREEN"));
-        assertTrue(test.containsKey("BLUE"));
-        assertEquals("#0000FF", test.get("BLUE"));
-        assertEquals(3, test.size());
+    private void testPutAll_Map_arraySubTestFlatArray(Map<String, String> test1) {
+        assertTrue(test1.containsKey("RED"));
+        assertEquals("#FF0000", test1.get("RED"));
+        assertTrue(test1.containsKey("GREEN"));
+        assertEquals("#00FF00", test1.get("GREEN"));
+        assertTrue(test1.containsKey("BLUE"));
+        assertEquals("#0000FF", test1.get("BLUE"));
+        assertEquals(3, test1.size());
     }
 
     @Test

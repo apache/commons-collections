@@ -621,8 +621,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             threshold = calculateThreshold(newCapacity, loadFactor);
             data = new HashEntry[newCapacity];
         } else {
-            final HashEntry<K, V> oldEntries[] = data;
-            final HashEntry<K, V> newEntries[] = new HashEntry[newCapacity];
+            final HashEntry<K, V>[] oldEntries = data;
+            final HashEntry<K, V>[] newEntries = new HashEntry[newCapacity];
 
             modCount++;
             for (int i = oldCapacity - 1; i >= 0; i--) {

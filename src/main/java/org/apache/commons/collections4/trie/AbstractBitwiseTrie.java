@@ -201,11 +201,8 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
             }
 
             final Map.Entry<?, ?> other = (Map.Entry<?, ?>) o;
-            if (compare(key, other.getKey())
-                    && compare(value, other.getValue())) {
-                return true;
-            }
-            return false;
+            return compare(key, other.getKey())
+                    && compare(value, other.getValue());
         }
 
         @Override

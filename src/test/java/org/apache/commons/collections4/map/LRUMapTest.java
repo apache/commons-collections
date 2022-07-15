@@ -95,8 +95,8 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
-        Iterator<K> kit;
-        Iterator<V> vit;
+        Iterator<K> kit = null;
+        Iterator<V> vit = null;
 
         final LRUMap<K, V> map = new LRUMap<>(2);
         assertEquals(0, map.size());
@@ -108,50 +108,28 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertFalse(map.isFull());
         assertEquals(2, map.maxSize());
 
-        map.put(keys[1], values[1]);
-        assertEquals(2, map.size());
-        assertTrue(map.isFull());
-        assertEquals(2, map.maxSize());
-        kit = map.keySet().iterator();
-        assertSame(keys[0], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[0], vit.next());
-        assertSame(values[1], vit.next());
-
-        map.put(keys[2], values[2]);
-        assertEquals(2, map.size());
-        assertTrue(map.isFull());
-        assertEquals(2, map.maxSize());
-        kit = map.keySet().iterator();
-        assertSame(keys[1], kit.next());
-        assertSame(keys[2], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[1], vit.next());
-        assertSame(values[2], vit.next());
-
-        map.put(keys[2], values[0]);
-        assertEquals(2, map.size());
-        assertTrue(map.isFull());
-        assertEquals(2, map.maxSize());
-        kit = map.keySet().iterator();
-        assertSame(keys[1], kit.next());
-        assertSame(keys[2], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[1], vit.next());
-        assertSame(values[0], vit.next());
-
-        map.put(keys[1], values[3]);
-        assertEquals(2, map.size());
-        assertTrue(map.isFull());
-        assertEquals(2, map.maxSize());
-        kit = map.keySet().iterator();
-        assertSame(keys[2], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[0], vit.next());
-        assertSame(values[3], vit.next());
+        testLRUSubTest(keys, values, map, 1, 1, 0, 1, 0, 1);
+        testLRUSubTest(keys, values, map, 2, 2, 1, 2, 1, 2);
+        testLRUSubTest(keys, values, map, 2, 0, 1, 2, 1, 0);
+        testLRUSubTest(keys, values, map, 1, 3, 2, 1, 0, 3);
     }
+
+
+    private void testLRUSubTest(K[] keys, V[] values, LRUMap<K, V> map, int x, int y, int x1, int y1, int x2, int y2) {
+        Iterator<K> kit;
+        Iterator<V> vit;
+        map.put(keys[x], values[y]);
+        assertEquals(2, map.size());
+        assertTrue(map.isFull());
+        assertEquals(2, map.maxSize());
+        kit = map.keySet().iterator();
+        assertSame(keys[x1], kit.next());
+        assertSame(keys[y1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[x2], vit.next());
+        assertSame(values[y2], vit.next());
+    }
+
 
     @Test
     @SuppressWarnings("unchecked")
@@ -177,72 +155,56 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
-        Iterator<K> kit;
-        Iterator<V> vit;
+        Iterator<K> kit = null;
+        Iterator<V> vit = null;
 
         resetEmpty();
+        testAccessOrderSubTests(keys, values);
+
+        // no change to order
+        testAccessOrderSubTestsNoChangeOrder(keys, 1, values, kit, 0, vit);
+
+        // no change to order
+        testAccessOrderSubTestsNoChangeOrder(keys, 1, values, kit, 0, vit);
+
+        // change to order
+        testAccessOrderSubTestsNoChangeOrder(keys, 0, values, kit, 1, vit);
+
+        // change to order
+        testAccessOrderSubTestsChangeOrder(keys, 1, values, kit, 0, vit, 3, 2);
+
+        // change to order
+        testAccessOrderSubTestsChangeOrder(keys, 0, values, kit, 1, vit, 2, 3);
+
+        // no change to order
+        testAccessOrderSubTestsChangeOrder(keys, 0, values, kit, 1, vit, 2, 3);
+    }
+
+    private void testAccessOrderSubTestsChangeOrder(K[] keys, int x, V[] values, Iterator<K> kit, int x1, Iterator<V> vit, int x2, int x3) {
+        map.get(keys[x]);
+        kit = map.keySet().iterator();
+        assertSame(keys[x1], kit.next());
+        assertSame(keys[x], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[x2], vit.next());
+        assertSame(values[x3], vit.next());
+    }
+
+    private void testAccessOrderSubTestsNoChangeOrder(K[] keys, int x, V[] values, Iterator<K> kit, int x1, Iterator<V> vit) {
+        map.put(keys[x], values[x]);
+        kit = map.keySet().iterator();
+        assertSame(keys[x1], kit.next());
+        assertSame(keys[x], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[x1], vit.next());
+        assertSame(values[x], vit.next());
+    }
+
+    private void testAccessOrderSubTests(K[] keys, V[] values) {
+        Iterator<K> kit = null;
+        Iterator<V> vit = null;
         map.put(keys[0], values[0]);
-        map.put(keys[1], values[1]);
-        kit = map.keySet().iterator();
-        assertSame(keys[0], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[0], vit.next());
-        assertSame(values[1], vit.next());
-
-        // no change to order
-        map.put(keys[1], values[1]);
-        kit = map.keySet().iterator();
-        assertSame(keys[0], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[0], vit.next());
-        assertSame(values[1], vit.next());
-
-        // no change to order
-        map.put(keys[1], values[2]);
-        kit = map.keySet().iterator();
-        assertSame(keys[0], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[0], vit.next());
-        assertSame(values[2], vit.next());
-
-        // change to order
-        map.put(keys[0], values[3]);
-        kit = map.keySet().iterator();
-        assertSame(keys[1], kit.next());
-        assertSame(keys[0], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[2], vit.next());
-        assertSame(values[3], vit.next());
-
-        // change to order
-        map.get(keys[1]);
-        kit = map.keySet().iterator();
-        assertSame(keys[0], kit.next());
-        assertSame(keys[1], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[3], vit.next());
-        assertSame(values[2], vit.next());
-
-        // change to order
-        map.get(keys[0]);
-        kit = map.keySet().iterator();
-        assertSame(keys[1], kit.next());
-        assertSame(keys[0], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[2], vit.next());
-        assertSame(values[3], vit.next());
-
-        // no change to order
-        map.get(keys[0]);
-        kit = map.keySet().iterator();
-        assertSame(keys[1], kit.next());
-        assertSame(keys[0], kit.next());
-        vit = map.values().iterator();
-        assertSame(values[2], vit.next());
-        assertSame(values[3], vit.next());
+        testAccessOrderSubTestsNoChangeOrder(keys, 1, values, kit, 0, vit);
     }
 
     @Test
@@ -480,6 +442,31 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         map.put((K) two, (V) "B");
         map.put((K) three, (V) "C");
 
+        testInternalState_BucketsSubTests(one, two, three, map, hashIndex);
+
+        map.put((K) four, (V) "D");  // reuses last in next list
+
+        testInternalState_BucketsSubTests(two, three, four, map, hashIndex);
+
+        map.get(three);
+
+        testInternalState_BucketsSubTests(two, four, three, map, hashIndex);
+
+        map.put((K) five, (V) "E");  // reuses last in next list
+
+        testInternalState_BucketsSubTests(four, three, five, map, hashIndex);
+
+        map.get(three);
+        map.get(five);
+
+        testInternalState_BucketsSubTests(four, three, five, map, hashIndex);
+
+        map.put((K) six, (V) "F");  // reuses middle in next list
+
+        testInternalState_BucketsSubTests(three, five, six, map, hashIndex);
+    }
+
+    private void testInternalState_BucketsSubTests(SingleHashCode one, SingleHashCode two, SingleHashCode three, LRUMap<K, V> map, int hashIndex) {
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertNull(map.header.next);
@@ -489,67 +476,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(three, map.data[hashIndex].key);
         assertEquals(two, map.data[hashIndex].next.key);
         assertEquals(one, map.data[hashIndex].next.next.key);
-
-        map.put((K) four, (V) "D");  // reuses last in next list
-
-        assertEquals(4, map.data.length);
-        assertEquals(3, map.size);
-        assertNull(map.header.next);
-        assertEquals(two, map.header.after.key);  // LRU
-        assertEquals(three, map.header.after.after.key);
-        assertEquals(four, map.header.after.after.after.key);  // MRU
-        assertEquals(four, map.data[hashIndex].key);
-        assertEquals(three, map.data[hashIndex].next.key);
-        assertEquals(two, map.data[hashIndex].next.next.key);
-
-        map.get(three);
-
-        assertEquals(4, map.data.length);
-        assertEquals(3, map.size);
-        assertNull(map.header.next);
-        assertEquals(two, map.header.after.key);  // LRU
-        assertEquals(four, map.header.after.after.key);
-        assertEquals(three, map.header.after.after.after.key);  // MRU
-        assertEquals(four, map.data[hashIndex].key);
-        assertEquals(three, map.data[hashIndex].next.key);
-        assertEquals(two, map.data[hashIndex].next.next.key);
-
-        map.put((K) five, (V) "E");  // reuses last in next list
-
-        assertEquals(4, map.data.length);
-        assertEquals(3, map.size);
-        assertNull(map.header.next);
-        assertEquals(four, map.header.after.key);  // LRU
-        assertEquals(three, map.header.after.after.key);
-        assertEquals(five, map.header.after.after.after.key);  // MRU
-        assertEquals(five, map.data[hashIndex].key);
-        assertEquals(four, map.data[hashIndex].next.key);
-        assertEquals(three, map.data[hashIndex].next.next.key);
-
-        map.get(three);
-        map.get(five);
-
-        assertEquals(4, map.data.length);
-        assertEquals(3, map.size);
-        assertNull(map.header.next);
-        assertEquals(four, map.header.after.key);  // LRU
-        assertEquals(three, map.header.after.after.key);
-        assertEquals(five, map.header.after.after.after.key);  // MRU
-        assertEquals(five, map.data[hashIndex].key);
-        assertEquals(four, map.data[hashIndex].next.key);
-        assertEquals(three, map.data[hashIndex].next.next.key);
-
-        map.put((K) six, (V) "F");  // reuses middle in next list
-
-        assertEquals(4, map.data.length);
-        assertEquals(3, map.size);
-        assertNull(map.header.next);
-        assertEquals(three, map.header.after.key);  // LRU
-        assertEquals(five, map.header.after.after.key);
-        assertEquals(six, map.header.after.after.after.key);  // MRU
-        assertEquals(six, map.data[hashIndex].key);
-        assertEquals(five, map.data[hashIndex].next.key);
-        assertEquals(three, map.data[hashIndex].next.next.key);
     }
 
     @Test

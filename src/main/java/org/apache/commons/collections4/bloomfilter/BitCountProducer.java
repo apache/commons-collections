@@ -52,12 +52,7 @@ public interface BitCountProducer extends IndexProducer {
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */
     static BitCountProducer from(IndexProducer idx) {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(BitCountConsumer consumer) {
-                return idx.forEachIndex(i -> consumer.test(i, 1));
-            }
-        };
+        return consumer -> idx.forEachIndex(i -> consumer.test(i, 1));
     }
 
     /**

@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.util.Arrays;
 import java.util.function.LongPredicate;
 
@@ -86,7 +86,7 @@ public abstract class AbstractBitMapProducerTest {
         }
 
         array = createProducer().asBitMapArray();
-        assertFalse(array.length == 0);
+        assertNotEquals(0, array.length);
     }
 
     @Test

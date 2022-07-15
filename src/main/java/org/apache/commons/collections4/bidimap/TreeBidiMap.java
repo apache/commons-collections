@@ -512,40 +512,44 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         } else {
             // add new mapping
-            while (true) {
-                final int cmp = compare(key, node.getKey());
+            doPutAddNewMapping(key, value, node);
+        }
+    }
 
-                if (cmp == 0) {
-                    // shouldn't happen
-                    throw new IllegalArgumentException("Cannot store a duplicate key (\"" + key + "\") in this Map");
+    private void doPutAddNewMapping(K key, V value, Node<K, V> node) {
+        while (true) {
+            final int cmp = compare(key, node.getKey());
+
+            if (cmp == 0) {
+                // shouldn't happen
+                throw new IllegalArgumentException("Cannot store a duplicate key (\"" + key + "\") in this Map");
+            }
+            if (cmp < 0) {
+                if (node.getLeft(KEY) == null) {
+                    final Node<K, V> newNode = new Node<>(key, value);
+
+                    insertValue(newNode);
+                    node.setLeft(newNode, KEY);
+                    newNode.setParent(node, KEY);
+                    doRedBlackInsert(newNode, KEY);
+                    grow();
+
+                    break;
                 }
-                if (cmp < 0) {
-                    if (node.getLeft(KEY) == null) {
-                        final Node<K, V> newNode = new Node<>(key, value);
+                node = node.getLeft(KEY);
+            } else { // cmp > 0
+                if (node.getRight(KEY) == null) {
+                    final Node<K, V> newNode = new Node<>(key, value);
 
-                        insertValue(newNode);
-                        node.setLeft(newNode, KEY);
-                        newNode.setParent(node, KEY);
-                        doRedBlackInsert(newNode, KEY);
-                        grow();
+                    insertValue(newNode);
+                    node.setRight(newNode, KEY);
+                    newNode.setParent(node, KEY);
+                    doRedBlackInsert(newNode, KEY);
+                    grow();
 
-                        break;
-                    }
-                    node = node.getLeft(KEY);
-                } else { // cmp > 0
-                    if (node.getRight(KEY) == null) {
-                        final Node<K, V> newNode = new Node<>(key, value);
-
-                        insertValue(newNode);
-                        node.setRight(newNode, KEY);
-                        newNode.setParent(node, KEY);
-                        doRedBlackInsert(newNode, KEY);
-                        grow();
-
-                        break;
-                    }
-                    node = node.getRight(KEY);
+                    break;
                 }
+                node = node.getRight(KEY);
             }
         }
     }
@@ -913,59 +917,69 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             && currentNode != rootNode[dataElement.ordinal()]
             && isRed(currentNode.getParent(dataElement), dataElement)) {
             if (currentNode.isLeftChild(dataElement)) {
-                final Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
-
-                if (isRed(y, dataElement)) {
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeBlack(y, dataElement);
-                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
-
-                    currentNode = getGrandParent(currentNode, dataElement);
-                } else {
-                    //dead code?
-                    if (currentNode.isRightChild(dataElement)) {
-                        currentNode = getParent(currentNode, dataElement);
-
-                        rotateLeft(currentNode, dataElement);
-                    }
-
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
-
-                    if (getGrandParent(currentNode, dataElement) != null) {
-                        rotateRight(getGrandParent(currentNode, dataElement), dataElement);
-                    }
-                }
+                currentNode = doRedBlackInsertLeftChild(dataElement, currentNode);
             } else {
 
-                // just like clause above, except swap left for right
-                final Node<K, V> y = getLeftChild(getGrandParent(currentNode, dataElement), dataElement);
-
-                if (isRed(y, dataElement)) {
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeBlack(y, dataElement);
-                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
-
-                    currentNode = getGrandParent(currentNode, dataElement);
-                } else {
-                    //dead code?
-                    if (currentNode.isLeftChild(dataElement)) {
-                        currentNode = getParent(currentNode, dataElement);
-
-                        rotateRight(currentNode, dataElement);
-                    }
-
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
-
-                    if (getGrandParent(currentNode, dataElement) != null) {
-                        rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
-                    }
-                }
+                currentNode = doRedBlackInsertRightChild(dataElement, currentNode);
             }
         }
 
         makeBlack(rootNode[dataElement.ordinal()], dataElement);
+    }
+
+    private Node<K, V> doRedBlackInsertRightChild(DataElement dataElement, Node<K, V> currentNode) {
+        // just like clause above, except swap left for right
+        final Node<K, V> y = getLeftChild(getGrandParent(currentNode, dataElement), dataElement);
+
+        if (isRed(y, dataElement)) {
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeBlack(y, dataElement);
+            makeRed(getGrandParent(currentNode, dataElement), dataElement);
+
+            currentNode = getGrandParent(currentNode, dataElement);
+        } else {
+            //dead code?
+            if (currentNode.isLeftChild(dataElement)) {
+                currentNode = getParent(currentNode, dataElement);
+
+                rotateRight(currentNode, dataElement);
+            }
+
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeRed(getGrandParent(currentNode, dataElement), dataElement);
+
+            if (getGrandParent(currentNode, dataElement) != null) {
+                rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
+            }
+        }
+        return currentNode;
+    }
+
+    private Node<K, V> doRedBlackInsertLeftChild(DataElement dataElement, Node<K, V> currentNode) {
+        final Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
+
+        if (isRed(y, dataElement)) {
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeBlack(y, dataElement);
+            makeRed(getGrandParent(currentNode, dataElement), dataElement);
+
+            currentNode = getGrandParent(currentNode, dataElement);
+        } else {
+            //dead code?
+            if (currentNode.isRightChild(dataElement)) {
+                currentNode = getParent(currentNode, dataElement);
+
+                rotateLeft(currentNode, dataElement);
+            }
+
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeRed(getGrandParent(currentNode, dataElement), dataElement);
+
+            if (getGrandParent(currentNode, dataElement) != null) {
+                rotateRight(getGrandParent(currentNode, dataElement), dataElement);
+            }
+        }
+        return currentNode;
     }
 
     /**
@@ -1004,32 +1018,35 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     doRedBlackDeleteFixup(replacement, dataElement);
                 }
             } else {
-
-                // replacement is null
-                if (deletedNode.getParent(dataElement) == null) {
-
-                    // empty tree
-                    rootNode[dataElement.ordinal()] = null;
-                } else {
-
-                    // deleted node had no children
-                    if (isBlack(deletedNode, dataElement)) {
-                        doRedBlackDeleteFixup(deletedNode, dataElement);
-                    }
-
-                    if (deletedNode.getParent(dataElement) != null) {
-                        if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
-                            deletedNode.getParent(dataElement).setLeft(null, dataElement);
-                        } else {
-                            deletedNode.getParent(dataElement).setRight(null, dataElement);
-                        }
-
-                        deletedNode.setParent(null, dataElement);
-                    }
-                }
+                doRedBlackDeleteClean(deletedNode, dataElement);
             }
         }
         shrink();
+    }
+
+    private void doRedBlackDeleteClean(Node<K, V> deletedNode, DataElement dataElement) {
+        // replacement is null
+        if (deletedNode.getParent(dataElement) == null) {
+
+            // empty tree
+            rootNode[dataElement.ordinal()] = null;
+        } else {
+
+            // deleted node had no children
+            if (isBlack(deletedNode, dataElement)) {
+                doRedBlackDeleteFixup(deletedNode, dataElement);
+            }
+
+            if (deletedNode.getParent(dataElement) != null) {
+                if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
+                    deletedNode.getParent(dataElement).setLeft(null, dataElement);
+                } else {
+                    deletedNode.getParent(dataElement).setRight(null, dataElement);
+                }
+
+                deletedNode.setParent(null, dataElement);
+            }
+        }
     }
 
     /**
@@ -1046,73 +1063,83 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         while (currentNode != rootNode[dataElement.ordinal()] && isBlack(currentNode, dataElement)) {
             if (currentNode.isLeftChild(dataElement)) {
-                Node<K, V> siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
-
-                if (isRed(siblingNode, dataElement)) {
-                    makeBlack(siblingNode, dataElement);
-                    makeRed(getParent(currentNode, dataElement), dataElement);
-                    rotateLeft(getParent(currentNode, dataElement), dataElement);
-
-                    siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
-                }
-
-                if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)
-                    && isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
-                    makeRed(siblingNode, dataElement);
-
-                    currentNode = getParent(currentNode, dataElement);
-                } else {
-                    if (isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
-                        makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
-                        makeRed(siblingNode, dataElement);
-                        rotateRight(siblingNode, dataElement);
-
-                        siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
-                    }
-
-                    copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeBlack(getRightChild(siblingNode, dataElement), dataElement);
-                    rotateLeft(getParent(currentNode, dataElement), dataElement);
-
-                    currentNode = rootNode[dataElement.ordinal()];
-                }
+                currentNode = doRedBlackDeleteFixupLeftChild(dataElement, currentNode);
             } else {
-                Node<K, V> siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
-
-                if (isRed(siblingNode, dataElement)) {
-                    makeBlack(siblingNode, dataElement);
-                    makeRed(getParent(currentNode, dataElement), dataElement);
-                    rotateRight(getParent(currentNode, dataElement), dataElement);
-
-                    siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
-                }
-
-                if (isBlack(getRightChild(siblingNode, dataElement), dataElement)
-                    && isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
-                    makeRed(siblingNode, dataElement);
-
-                    currentNode = getParent(currentNode, dataElement);
-                } else {
-                    if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
-                        makeBlack(getRightChild(siblingNode, dataElement), dataElement);
-                        makeRed(siblingNode, dataElement);
-                        rotateLeft(siblingNode, dataElement);
-
-                        siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
-                    }
-
-                    copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
-                    makeBlack(getParent(currentNode, dataElement), dataElement);
-                    makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
-                    rotateRight(getParent(currentNode, dataElement), dataElement);
-
-                    currentNode = rootNode[dataElement.ordinal()];
-                }
+                currentNode = doRedBlackDeleteFixupRightChild(dataElement, currentNode);
             }
         }
 
         makeBlack(currentNode, dataElement);
+    }
+
+    private Node<K, V> doRedBlackDeleteFixupRightChild(DataElement dataElement, Node<K, V> currentNode) {
+        Node<K, V> siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
+
+        if (isRed(siblingNode, dataElement)) {
+            makeBlack(siblingNode, dataElement);
+            makeRed(getParent(currentNode, dataElement), dataElement);
+            rotateRight(getParent(currentNode, dataElement), dataElement);
+
+            siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
+        }
+
+        if (isBlack(getRightChild(siblingNode, dataElement), dataElement)
+            && isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
+            makeRed(siblingNode, dataElement);
+
+            currentNode = getParent(currentNode, dataElement);
+        } else {
+            if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
+                makeBlack(getRightChild(siblingNode, dataElement), dataElement);
+                makeRed(siblingNode, dataElement);
+                rotateLeft(siblingNode, dataElement);
+
+                siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
+            }
+
+            copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
+            rotateRight(getParent(currentNode, dataElement), dataElement);
+
+            currentNode = rootNode[dataElement.ordinal()];
+        }
+        return currentNode;
+    }
+
+    private Node<K, V> doRedBlackDeleteFixupLeftChild(DataElement dataElement, Node<K, V> currentNode) {
+        Node<K, V> siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
+
+        if (isRed(siblingNode, dataElement)) {
+            makeBlack(siblingNode, dataElement);
+            makeRed(getParent(currentNode, dataElement), dataElement);
+            rotateLeft(getParent(currentNode, dataElement), dataElement);
+
+            siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
+        }
+
+        if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)
+            && isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
+            makeRed(siblingNode, dataElement);
+
+            currentNode = getParent(currentNode, dataElement);
+        } else {
+            if (isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
+                makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
+                makeRed(siblingNode, dataElement);
+                rotateRight(siblingNode, dataElement);
+
+                siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
+            }
+
+            copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
+            makeBlack(getParent(currentNode, dataElement), dataElement);
+            makeBlack(getRightChild(siblingNode, dataElement), dataElement);
+            rotateLeft(getParent(currentNode, dataElement), dataElement);
+
+            currentNode = rootNode[dataElement.ordinal()];
+        }
+        return currentNode;
     }
 
     /**
@@ -1138,6 +1165,43 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 y.getParent(dataElement) != null && y == y.getParent(dataElement).getLeft(dataElement);
 
         // Swap, handling special cases of one being the other's parent.
+        // Swap for yFormerParent
+        swapPositionBasicSwap(x, y, dataElement, xFormerLeftChild, xFormerRightChild, yFormerParent, yWasLeftChild);
+        // Swap for xFormerParent
+        swapPositionBasicSwap(y, x, dataElement, yFormerLeftChild, yFormerRightChild, xFormerParent, xWasLeftChild);
+
+        // Fix children's parent pointers
+        swapPositionSetParents(x, y, dataElement);
+
+        x.swapColors(y, dataElement);
+
+        // Check if root changed
+        if (rootNode[dataElement.ordinal()] == x) {
+            rootNode[dataElement.ordinal()] = y;
+        } else if (rootNode[dataElement.ordinal()] == y) {
+            rootNode[dataElement.ordinal()] = x;
+        }
+    }
+
+    private void swapPositionSetParents(Node<K, V> x, Node<K, V> y, DataElement dataElement) {
+        if (x.getLeft(dataElement) != null) {
+            x.getLeft(dataElement).setParent(x, dataElement);
+        }
+
+        if (x.getRight(dataElement) != null) {
+            x.getRight(dataElement).setParent(x, dataElement);
+        }
+
+        if (y.getLeft(dataElement) != null) {
+            y.getLeft(dataElement).setParent(y, dataElement);
+        }
+
+        if (y.getRight(dataElement) != null) {
+            y.getRight(dataElement).setParent(y, dataElement);
+        }
+    }
+
+    private void swapPositionBasicSwap(Node<K, V> x, Node<K, V> y, DataElement dataElement, Node<K, V> xFormerLeftChild, Node<K, V> xFormerRightChild, Node<K, V> yFormerParent, boolean yWasLeftChild) {
         if (x == yFormerParent) { // x was y's parent
             x.setParent(y, dataElement);
 
@@ -1161,57 +1225,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
             y.setLeft(xFormerLeftChild, dataElement);
             y.setRight(xFormerRightChild, dataElement);
-        }
-
-        if (y == xFormerParent) { // y was x's parent
-            y.setParent(x, dataElement);
-
-            if (xWasLeftChild) {
-                x.setLeft(y, dataElement);
-                x.setRight(yFormerRightChild, dataElement);
-            } else {
-                x.setRight(y, dataElement);
-                x.setLeft(yFormerLeftChild, dataElement);
-            }
-        } else {
-            y.setParent(xFormerParent, dataElement);
-
-            if (xFormerParent != null) {
-                if (xWasLeftChild) {
-                    xFormerParent.setLeft(y, dataElement);
-                } else {
-                    xFormerParent.setRight(y, dataElement);
-                }
-            }
-
-            x.setLeft(yFormerLeftChild, dataElement);
-            x.setRight(yFormerRightChild, dataElement);
-        }
-
-        // Fix children's parent pointers
-        if (x.getLeft(dataElement) != null) {
-            x.getLeft(dataElement).setParent(x, dataElement);
-        }
-
-        if (x.getRight(dataElement) != null) {
-            x.getRight(dataElement).setParent(x, dataElement);
-        }
-
-        if (y.getLeft(dataElement) != null) {
-            y.getLeft(dataElement).setParent(y, dataElement);
-        }
-
-        if (y.getRight(dataElement) != null) {
-            y.getRight(dataElement).setParent(y, dataElement);
-        }
-
-        x.swapColors(y, dataElement);
-
-        // Check if root changed
-        if (rootNode[dataElement.ordinal()] == x) {
-            rootNode[dataElement.ordinal()] = y;
-        } else if (rootNode[dataElement.ordinal()] == y) {
-            rootNode[dataElement.ordinal()] = x;
         }
     }
 

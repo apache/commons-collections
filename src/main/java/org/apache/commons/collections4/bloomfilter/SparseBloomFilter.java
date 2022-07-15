@@ -113,7 +113,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     private SparseBloomFilter(SparseBloomFilter source) {
         shape = source.shape;
-        indices = new TreeSet<Integer>(source.indices);
+        indices = new TreeSet<>(source.indices);
     }
 
     @Override
