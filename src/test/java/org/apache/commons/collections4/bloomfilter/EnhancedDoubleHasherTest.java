@@ -18,8 +18,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,17 +38,6 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     @Override
     protected int getHasherSize(Hasher hasher) {
         return 1;
-    }
-
-    private void assertConstructorBuffer(Shape shape, byte[] buffer, Integer[] expected) {
-        EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(buffer);
-        List<Integer> lst = new ArrayList<>();
-        IndexProducer producer = hasher.indices(shape);
-        producer.forEachIndex(lst::add);
-        assertEquals(expected.length, lst.size());
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], lst.get(i));
-        }
     }
 
     @Test
