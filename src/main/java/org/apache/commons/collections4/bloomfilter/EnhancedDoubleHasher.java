@@ -144,11 +144,27 @@ public class EnhancedDoubleHasher implements Hasher {
                 int inc = mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                for (int j = k; j > 0;) {
-                    // handle k > bits
-                    final int block = Math.min(j, bits);
-                    j -= block;
-                    for (int i = 0; i < block; i++) {
+                if (k>bits) {
+                    for (int j = k; j > 0;) {
+                        // handle k > bits
+                        final int block = Math.min(j, bits);
+                        j -= block;
+                        for (int i = 0; i < block; i++) {
+                            if (!consumer.test(index)) {
+                                return false;
+                            }
+                            // Update index and handle wrapping
+                            index -= inc;
+                            index = index < 0 ? index + bits : index;
+
+                            // Incorporate the counter into the increment to create a
+                            // tetrahedral number additional term, and handle wrapping.
+                            inc -= i;
+                            inc = inc < 0 ? inc + bits : inc;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < k; i++) {
                         if (!consumer.test(index)) {
                             return false;
                         }
@@ -161,7 +177,9 @@ public class EnhancedDoubleHasher implements Hasher {
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
+                    
                 }
+                
                 return true;
             }
 
