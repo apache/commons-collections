@@ -19,8 +19,11 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -63,7 +66,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "17, 72", "3, 14", "5, 67868", })
+    @CsvSource({ "17, 72", "3, 14", "5, 67868", "75, 10"})
     public void testHashing(int k, int m) {
         int[] count = { 0 };
         Hasher hasher = createHasher();
@@ -78,12 +81,40 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
 
     @Test
     public void testUniqueIndex() {
-        // create a hasher that produces duplicates with the specified shape.
-        // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM(12, 72);
-        Hasher hasher = new IncrementingHasher(5, 12);
-        Set<Integer> set = new HashSet<>();
-        assertTrue(hasher.uniqueIndices(shape).forEachIndex(set::add), "Duplicate detected");
-        assertEquals(6, set.size());
+        // @formatter:off
+        /*
+         * The probability of a collision when
+         * selecting from a population i in a range of [1;m] is:
+         *
+         *                      i
+         *               ⎛m - 1⎞
+         *  q(i;m) = 1 - ⎜─────⎟
+         *               ⎝  m  ⎠
+         *
+         * The probability that the ith integer randomly chosen from [1,m] will repeat a previous choice equals
+         *
+         * q(i-1;m)
+         *
+         *  so the total expected collisions in kn selections for the is
+         *
+         *   kn
+         *   ___                             kn
+         *   ╲                        ⎛m - 1⎞
+         *   ╱    q(i-1;m) = kn - m + ⎜─────⎟
+         *   ‾‾‾                      ⎝  m  ⎠
+         *   i = 1
+         *
+         */
+         // @formatter:on
+        // the probability of collision with the shape below is 0.999630011514965
+        Shape shape = Shape.fromKM(75, 10);
+        Hasher hasher = createHasher();
+        IndexProducer producer = hasher.indices(shape);
+        List<Integer> full = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
+        producer = hasher.uniqueIndices(shape);
+        List<Integer> unique = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
+        assertTrue( full.size() > unique.size() );
+        Set<Integer> set = new HashSet<Integer>( unique );
+        assertEquals( set.size(), unique.size() );
     }
 }

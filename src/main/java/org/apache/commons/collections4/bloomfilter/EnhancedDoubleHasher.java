@@ -180,32 +180,4 @@ public class EnhancedDoubleHasher implements Hasher {
             }
         };
     }
-
-    @Override
-    public IndexProducer uniqueIndices(final Shape shape) {
-        return new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                Objects.requireNonNull(consumer, "consumer");
-                IntPredicate filter = IndexFilter.create(shape, consumer);
-
-                int bits = shape.getNumberOfBits();
-
-                // Set up for the modulus. Use a long index to avoid overflow.
-                long index = mod(initial, bits);
-                int inc = mod(increment, bits);
-
-                for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-
-                    if (!filter.test((int) index)) {
-                        return false;
-                    }
-                    index += inc;
-                    index = index >= bits ? index - bits : index;
-                }
-                return true;
-            }
-        };
-    }
 }
