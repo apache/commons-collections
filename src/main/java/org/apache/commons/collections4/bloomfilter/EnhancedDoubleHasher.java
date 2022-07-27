@@ -177,9 +177,9 @@ public class EnhancedDoubleHasher implements Hasher {
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
-                    
+
                 }
-                
+
                 return true;
             }
 
