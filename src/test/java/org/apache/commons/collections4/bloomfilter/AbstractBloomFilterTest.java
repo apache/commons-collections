@@ -228,11 +228,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // the data provided above do not generate an estimate that is equivalent to the
         // actual.
-        filter1.mergeInPlace(new SimpleHasher(4, 1));
+        filter1.merge(new SimpleHasher(4, 1));
 
         assertEquals(1, filter1.estimateN());
 
-        filter1.mergeInPlace(new SimpleHasher(17, 1));
+        filter1.merge(new SimpleHasher(17, 1));
 
         assertEquals(3, filter1.estimateN());
     }
@@ -275,41 +275,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testMerge() {
 
-        // test with BloomFilter
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
-
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
-
-        final BloomFilter bf3 = bf1.merge(bf2);
-        assertTrue(bf3.contains(bf1), "Should contain bf1");
-        assertTrue(bf3.contains(bf2), "Should contain bf2");
-
-        final BloomFilter bf4 = bf2.merge(bf1);
-        assertTrue(bf4.contains(bf1), "Should contain bf1");
-        assertTrue(bf4.contains(bf2), "Should contain bf2");
-        assertTrue(bf4.contains(bf3), "Should contain bf3");
-        assertTrue(bf3.contains(bf4), "Should contain bf4");
-
-        // test with Hasher
-
-        final BloomFilter bf5 = bf1.merge(from11);
-        assertTrue(bf5.contains(bf1), "Should contain bf1");
-        assertTrue(bf5.contains(bf2), "Should contain bf2");
-
-        // test with hasher returning numbers out of range
-        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
-        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
-    }
-
-    /**
-     * Tests that merging in place works as expected.
-     */
-    @Test
-    public final void testMergeInPlace() {
-
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
-        final BloomFilter bf3 = bf1.merge(bf2);
+        final BloomFilter bf3 = bf1.copy();
+        bf3.merge(bf2);
 
         // test with BloomFilter
 
@@ -318,7 +287,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         for (int i = 0; i < bf1Val.length; i++) {
             bf1Val[i] |= bf2Val[i];
         }
-        bf1.mergeInPlace(bf2);
+        bf1.merge(bf2);
 
         long[] bf1New = bf1.asBitMapArray();
         for (int i = 0; i < bf1Val.length; i++) {
@@ -331,26 +300,26 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test with hasher
 
         BloomFilter bf4 = createFilter(getTestShape(), from1);
-        bf4.mergeInPlace(from11);
+        bf4.merge(from11);
 
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
 
         // test with hasher returning numbers out of range
         assertThrows(IllegalArgumentException.class,
-                () -> bf1.mergeInPlace(new BadHasher(bf1.getShape().getNumberOfBits())));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(new BadHasher(-1)));
+                () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
 
         // test error when bloom filter returns values out of range
         final BloomFilter bf5 = new SimpleBloomFilter(
                 Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
                 new SimpleHasher(Long.SIZE * 2, 1));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf5));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf5));
 
         final BloomFilter bf6 = new SparseBloomFilter(
                 Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
                 new SimpleHasher(Long.SIZE * 2, 1));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf6));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf6));
     }
 
     private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {

@@ -126,7 +126,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
         ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(Shape.fromKM(5, 10000));
 
         // Should add h1, h1, h2, h3
-        Assertions.assertTrue(bf.mergeInPlace(hc3));
+        Assertions.assertTrue(bf.merge(hc3));
         Assertions.assertTrue(bf.remove(h1));
         Assertions.assertTrue(bf.remove(h1));
         Assertions.assertNotEquals(0, bf.cardinality());

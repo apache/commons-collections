@@ -113,38 +113,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // update operations
 
     /**
-     * Merges the specified Bloom filter with this Bloom filter creating a new Bloom filter.
-     *
-     * <p>Specifically all bit indexes that are enabled in the {@code other} and in @code this} filter will be
-     * enabled in the resulting filter.</p>
-     *
-     * @param other the other Bloom filter
-     * @return The new Bloom filter.
-     */
-    default BloomFilter merge(BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        BloomFilter result = copy();
-        result.mergeInPlace(other);
-        return result;
-    }
-
-    /**
-     * Merges the specified Hasher with this Bloom filter and returns a new Bloom filter.
-     *
-     * <p>Specifically all bit indexes that are identified by the {@code hasher} and in {@code this} Bloom filter
-     * be enabled in the resulting filter.</p>
-     *
-     * @param hasher the hasher to provide the indices
-     * @return the new Bloom filter.
-     */
-    default BloomFilter merge(Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        BloomFilter result = copy();
-        result.mergeInPlace(hasher);
-        return result;
-    }
-
-    /**
      * Merges the specified Bloom filter into this Bloom filter.
      *
      * <p>Specifically all
@@ -158,7 +126,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
      */
-    boolean mergeInPlace(BloomFilter other);
+    boolean merge(BloomFilter other);
 
     /**
      * Merges the specified hasher into this Bloom filter. Specifically all
@@ -172,12 +140,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param hasher The hasher to merge.
      * @return true if the merge was successful
      */
-    default boolean mergeInPlace(Hasher hasher) {
+    default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
         // create the bloomfilter that is most likely to merge quickly with this one
         BloomFilter result = isSparse() ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
-        return mergeInPlace(result);
+        return merge(result);
     }
 
     // Counting Operations
@@ -231,7 +199,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default int estimateUnion(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return this.merge(other).estimateN();
+        BloomFilter cpy = this.copy();
+        cpy.merge(other);
+        return cpy.estimateN();
     }
 
     /**

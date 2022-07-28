@@ -50,27 +50,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void testDefaultBloomFilterSimpleSpecificMergeInPlace() {
+    public void testDefaultBloomFilterSimpleSpecificMerge() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
         Hasher hasher = new SimpleHasher(0, 1);
-        assertTrue(filter.mergeInPlace(hasher));
+        assertTrue(filter.merge(hasher));
         assertEquals(3, filter.cardinality());
     }
 
-    @Test
-    public void testDefaultBloomFilterSparseSpecificMergeInPlace() {
-        AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
-        Hasher hasher = new SimpleHasher(0, 1);
-        BloomFilter newFilter = filter.merge(hasher);
-        assertEquals(3, newFilter.cardinality());
-    }
 
     @Test
     public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(shape);
         AbstractDefaultBloomFilter filter2 = new SparseDefaultBloomFilter(shape, new SimpleHasher(0, 1));
-        BloomFilter newFilter = filter.merge(filter2);
+        BloomFilter newFilter = filter.copy();
+        newFilter.merge(filter2);
         assertEquals(3, newFilter.cardinality());
     }
 
@@ -79,12 +73,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         Hasher hasher = new SimpleHasher(1, 1);
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace(hasher);
+        bf1.merge(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .forEachBitMapPair(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace(hasher);
+        bf1.merge(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .forEachBitMapPair(bf1, (x, y) -> x == y));
     }
@@ -149,7 +143,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean mergeInPlace(BloomFilter other) {
+        public boolean merge(BloomFilter other) {
             other.forEachIndex((i) -> {
                 indices.add(i);
                 return true;
