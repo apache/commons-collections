@@ -205,9 +205,6 @@
       BloomFilter contribution.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [test] Update JUnit from 4.12 to 4.13.
-    </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
       [build] Update Apache commons-parent from 48 to 51.
     </action>
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
@@ -241,11 +238,10 @@
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
     </action>
     <action issue="COLLECTIONS-754" type="update" dev="ggregory" due-to="John Patrick">
-      Upgrade to JUnit v5.6.0 #136.
-      Upgrade to JUnit v5.6.2.
+      Upgrade to JUnit v5.6.2 #136.
     </action>
-    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick">
-      Fully migrate to JUnit 5.
+    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick, Gary Gregory, Dependabot">
+      Fully migrate JUnit 4.12 to 5.9.0 #324.
     </action>
     <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
       Upgrade Hamcrest to 2.2.
