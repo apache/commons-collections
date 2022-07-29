@@ -602,7 +602,7 @@
     <clirr.skip>true</clirr.skip>
     <commons.clirr.version>2.8</commons.clirr.version>
     <commons.jacoco.version>0.8.8</commons.jacoco.version>
-    <commons.junit.version>5.8.2</commons.junit.version>
+    <commons.junit.version>5.9.0</commons.junit.version>
 
     <!-- Override commons parent version to allow build on java 17 -->
     <commons.japicmp.version>0.15.7</commons.japicmp.version>
