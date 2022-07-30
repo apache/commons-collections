@@ -53,7 +53,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         nestedTest.testEstimateUnion();
         nestedTest.testIsFull();
         nestedTest.testMerge();
-        nestedTest.testMergeInPlace();
     }
 
     @Test
@@ -144,7 +143,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     public void testBloomFilterBasedMergeInPlaceEdgeCases() {
         BloomFilter bf1 = createEmptyFilter(getTestShape());
         BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), from1);
-        bf1.mergeInPlace(bf2);
+        bf1.merge(bf2);
         assertTrue(bf2.forEachBitMapPair(bf1, (x, y) -> x == y));
     }
 }

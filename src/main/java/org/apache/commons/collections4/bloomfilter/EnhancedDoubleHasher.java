@@ -144,11 +144,27 @@ public class EnhancedDoubleHasher implements Hasher {
                 int inc = mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                for (int j = k; j > 0;) {
-                    // handle k > bits
-                    final int block = Math.min(j, bits);
-                    j -= block;
-                    for (int i = 0; i < block; i++) {
+                if (k>bits) {
+                    for (int j = k; j > 0;) {
+                        // handle k > bits
+                        final int block = Math.min(j, bits);
+                        j -= block;
+                        for (int i = 0; i < block; i++) {
+                            if (!consumer.test(index)) {
+                                return false;
+                            }
+                            // Update index and handle wrapping
+                            index -= inc;
+                            index = index < 0 ? index + bits : index;
+
+                            // Incorporate the counter into the increment to create a
+                            // tetrahedral number additional term, and handle wrapping.
+                            inc -= i;
+                            inc = inc < 0 ? inc + bits : inc;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < k; i++) {
                         if (!consumer.test(index)) {
                             return false;
                         }
@@ -161,7 +177,9 @@ public class EnhancedDoubleHasher implements Hasher {
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
+
                 }
+
                 return true;
             }
 
@@ -177,34 +195,6 @@ public class EnhancedDoubleHasher implements Hasher {
                     return true;
                 });
                 return result;
-            }
-        };
-    }
-
-    @Override
-    public IndexProducer uniqueIndices(final Shape shape) {
-        return new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                Objects.requireNonNull(consumer, "consumer");
-                IntPredicate filter = IndexFilter.create(shape, consumer);
-
-                int bits = shape.getNumberOfBits();
-
-                // Set up for the modulus. Use a long index to avoid overflow.
-                long index = mod(initial, bits);
-                int inc = mod(increment, bits);
-
-                for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-
-                    if (!filter.test((int) index)) {
-                        return false;
-                    }
-                    index += inc;
-                    index = index >= bits ? index - bits : index;
-                }
-                return true;
             }
         };
     }

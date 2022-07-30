@@ -120,28 +120,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public CountingBloomFilter merge(BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        CountingBloomFilter filter = copy();
-        filter.add(BitCountProducer.from(other));
-        return filter;
-    }
-
-    @Override
-    public CountingBloomFilter merge(Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        ArrayCountingBloomFilter filter = copy();
-        try {
-            filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-        }
-        return filter;
-    }
-
-    @Override
-    public boolean mergeInPlace(final BloomFilter other) {
+    public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         try {
             return add(BitCountProducer.from(other));
@@ -151,7 +130,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean mergeInPlace(final Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         try {
             return add(BitCountProducer.from(hasher.uniqueIndices(shape)));

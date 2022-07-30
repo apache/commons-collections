@@ -50,7 +50,6 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
         nestedTest.testEstimateUnion();
         nestedTest.testIsFull();
         nestedTest.testMerge();
-        nestedTest.testMergeInPlace();
     }
 
     @Test

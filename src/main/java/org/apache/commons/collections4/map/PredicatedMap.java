@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.Predicate;
@@ -99,12 +98,7 @@ public class PredicatedMap<K, V>
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
-
-        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<K, V> entry = it.next();
-            validate(entry.getKey(), entry.getValue());
-        }
+        map.forEach(this::validate);
     }
 
     /**

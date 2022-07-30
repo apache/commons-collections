@@ -114,11 +114,13 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), from11);
 
-        final BloomFilter bf3 = bf1.merge(bf2);
+        final BloomFilter bf3 = bf1.copy();
+        bf3.merge(bf2);
         assertTrue(bf3.contains(bf1), "Should contain");
         assertTrue(bf3.contains(bf2), "Should contain");
 
-        final BloomFilter bf4 = bf2.merge(bf1);
+        final BloomFilter bf4 = bf2.copy();
+        bf4.merge(bf1);
         assertTrue(bf4.contains(bf1), "Should contain");
         assertTrue(bf4.contains(bf2), "Should contain");
         assertTrue(bf4.contains(bf3), "Should contain");
@@ -130,7 +132,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf5.add(maximumValueProducer), "Should add to empty");
         assertTrue(bf5.isValid(), "Should be valid");
 
-        CountingBloomFilter bf6 = bf5.merge(new SimpleBloomFilter(getTestShape(), from1));
+        CountingBloomFilter bf6 = bf5.copy();
+        bf6.merge(new SimpleBloomFilter(getTestShape(), from1));
         assertFalse(bf6.isValid(), "Should not be valid");
     }
 
@@ -241,7 +244,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         });
 
         bf1 = createEmptyFilter(shape);
-        bf1.mergeInPlace(hasher);
+        bf1.merge(hasher);
         assertEquals(6, bf1.cardinality());
         bf1.forEachCount((x, y) -> {
             assertEquals(1, y, "Hasher in mergeInPlace results in value not equal to 1");
@@ -249,7 +252,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         });
 
         bf1 = createEmptyFilter(shape);
-        CountingBloomFilter bf2 = bf1.merge(hasher);
+        CountingBloomFilter bf2 = bf1.copy();
+        bf2.merge(hasher);
         assertEquals(6, bf2.cardinality());
         bf2.forEachCount((x, y) -> {
             assertEquals(1, y, "Hasher in merge results in value not equal to 1");

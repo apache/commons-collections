@@ -24,7 +24,8 @@ public class BitMapProducerFromArrayCountingBloomFilterTest extends AbstractBitM
     protected BitMapProducer createProducer() {
         ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         Hasher hasher = new IncrementingHasher(0, 1);
-        return filter.merge(hasher);
+        filter.merge(hasher);
+        return filter;
     }
 
     @Override
