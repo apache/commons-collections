@@ -20,7 +20,12 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 
 /**
- * To be used for testing only.
+ * A Hasher that implements simple combinatorial hashing as as described by
+ * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a>.
+ *
+ * <p>To be used for testing only.</p>
+ *
+ * @since 4.5
  */
 class IncrementingHasher implements Hasher {
 
@@ -36,7 +41,10 @@ class IncrementingHasher implements Hasher {
 
     /**
      * Constructs the IncrementingHasher from 2 longs.  The long values will be interpreted as unsigned values.
-     * <p><em>If the increment is zero the default increment is used instead.</em></p>
+     * <p>
+     * The initial hash value will be the modulus of the initial value.
+     * Subsequent values will be calculated by repeatedly adding the increment to the last value and taking the modulus.
+     * </p>
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      * @see #getDefaultIncrement()
@@ -44,22 +52,6 @@ class IncrementingHasher implements Hasher {
     IncrementingHasher(long initial, long increment) {
         this.initial = initial;
         this.increment = increment;
-    }
-
-    /**
-     * Performs a modulus calculation on an unsigned long and an integer divisor.
-     * @param dividend a unsigned long value to calculate the modulus of.
-     * @param divisor the divisor for the modulus calculation.
-     * @return the remainder or modulus value.
-     */
-    static int mod(long dividend, int divisor) {
-        // See Hacker's Delight (2nd ed), section 9.3.
-        // Assume divisor is positive.
-        // Divide half the unsigned number and then double the quotient result.
-        final long quotient = ((dividend >>> 1) / divisor) << 1;
-        final long remainder = dividend - quotient * divisor;
-        // remainder in [0, 2 * divisor)
-        return (int) (remainder >= divisor ? remainder - divisor : remainder);
     }
 
     @Override
@@ -78,8 +70,8 @@ class IncrementingHasher implements Hasher {
                  * This avoids any modulus operation inside the while loop. It uses a long index
                  * to avoid overflow.
                  */
-                long index = mod(initial, bits);
-                int inc = mod(increment, bits);
+                long index = EnhancedDoubleHasher.mod(initial, bits);
+                int inc = EnhancedDoubleHasher.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
 

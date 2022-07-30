@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Objects;
-import java.util.function.IntPredicate;
 
 /**
  * A Hasher creates IndexProducer based on the hash implementation and the
@@ -56,13 +55,9 @@ public interface Hasher {
      * @return the iterator of integers
      */
     default IndexProducer uniqueIndices(Shape shape) {
-        return new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                Objects.requireNonNull(consumer, "consumer");
-                return Hasher.this.indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
-            }
+        return consumer -> {
+            Objects.requireNonNull(consumer, "consumer");
+            return Hasher.this.indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
         };
     }
 }

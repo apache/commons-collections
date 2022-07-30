@@ -77,37 +77,21 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         });
         assertEquals(k * getHasherSize(hasher), count[0],
                 () -> String.format("Did not produce k=%d * m=%d indices", k, getHasherSize(hasher)));
+
+        // test early exit
+        count[0] = 0;
+        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+            assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
+            count[0]++;
+            return false;
+        });
+        assertEquals(1, count[0], "did not exit early" );
     }
 
     @Test
     public void testUniqueIndex() {
-        // @formatter:off
-        /*
-         * The probability of a collision when
-         * selecting from a population i in a range of [1;m] is:
-         *
-         *                      i
-         *               ⎛m - 1⎞
-         *  q(i;m) = 1 - ⎜─────⎟
-         *               ⎝  m  ⎠
-         *
-         * The probability that the ith integer randomly chosen from [1,m] will repeat a previous choice equals
-         *
-         * q(i-1;m)
-         *
-         *  so the total expected collisions in kn selections for the is
-         *
-         *   kn
-         *   ___                             kn
-         *   ╲                        ⎛m - 1⎞
-         *   ╱    q(i-1;m) = kn - m + ⎜─────⎟
-         *   ‾‾‾                      ⎝  m  ⎠
-         *   i = 1
-         *
-         */
-         // @formatter:on
-        // the probability of collision with the shape below is 0.999630011514965
-        Shape shape = Shape.fromKM(75, 10);
+        // generating 11 numbers in the ragne of [0,9] will yield at least on collision.
+        Shape shape = Shape.fromKM(11, 10);
         Hasher hasher = createHasher();
         IndexProducer producer = hasher.indices(shape);
         List<Integer> full = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());

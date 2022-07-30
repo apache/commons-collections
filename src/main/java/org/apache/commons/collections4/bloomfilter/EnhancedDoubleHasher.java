@@ -24,8 +24,23 @@ import java.util.function.IntPredicate;
  * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a> using the enhanced double hashing technique
  * described in the wikipedia article  <a href="https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing">Double Hashing</a>.
  * <p>
- * Common use for this hasher is to generate a byte array as the output of a hashing
+ * Common use for this hasher is to generate bit indices from a byte array output of a hashing
  * or MessageDigest algorithm.</p>
+ *
+ * <h2>Thoughts on the hasher input</h2>
+ *
+ *<p>Note that it is worse to create smaller numbers for the <code>initial</code> and <code>increment</code>. If the <code>initial</code> is smaller than
+ * the number of bits in a filter then hashing will start at the same point when the size increases; likewise the <code>increment</code> will be
+ * the same if it remains smaller than the number of bits in the filter and so the first few indices will be the same if the number of bits
+ * changes (but is still larger than the <code>increment</code>). In a worse case scenario with small <code>initial</code> and <code>increment</code> for
+ * all items, hashing may not create indices that fill the full region within a much larger filter. Imagine hashers created with <code>initial</code>
+ * and <code>increment</code> values less than 255 with a filter size of 30000 and number of hash functions as 5. Ignoring the
+ * tetrahedral addition (a maximum of 20 for k=5) the max index is 255 * 4 + 255 = 1275, this covers 4.25% of the filter. This also
+ * ignores the negative wrapping but the behaviour is the same, some bits cannot be reached.
+ * </p><p>
+ * So this needs to be avoided as the filter probability assumptions will be void. If the <code>initial</code> and <code>increment</code> are larger
+ * than the number of bits then the modulus will create a 'random' position and increment within the size.
+ * </p>
  *
  * @since 4.5
  */
@@ -42,7 +57,7 @@ public class EnhancedDoubleHasher implements Hasher {
     private final long increment;
 
     /**
-     * Convert bytes to long.
+     * Convert bytes to big-endian long filling with zero bytes as necessary..
      * @param byteArray the byte array to extract the values from.
      * @param offset the offset to start extraction from.
      * @param len the length of the extraction, may be longer than 8.
@@ -51,18 +66,28 @@ public class EnhancedDoubleHasher implements Hasher {
     private static long toLong(byte[] byteArray, int offset, int len) {
         long val = 0;
         len = Math.min(len, Long.BYTES);
+        int shift = Long.SIZE;
         for (int i = 0; i < len; i++) {
-            val <<= 8;
-            val |= (byteArray[offset + i] & 0x00FF);
+            shift -=  Byte.SIZE;
+            val |= ((long)(byteArray[offset + i] & 0x00FF) << shift);
         }
         return val;
     }
 
     /**
      * Constructs the EnhancedDoubleHasher from a byte array.
-     * <p>The byte array is split in 2 and each half is interpreted as a long value.
-     * Excess bytes are ignored.  This simplifies the conversion from a Digest or hasher algorithm output
-     * to the two values used by the SimpleHasher.</p>
+     * <p>
+     * This method simplifies the conversion from a Digest or hasher algorithm output
+     * to the two values used by the EnhancedDoubleHasher.</p>
+     * <p>The byte array is split in 2 and the first 8 bytes of each half are interpreted as a big-endian long value.
+     * Excess bytes are ignored.
+     * If there are fewer than 16 bytes the following conversions are made.
+     * <ol>
+     * <li>If there is an odd number of bytes the excess byte is assigned to the increment value</li>
+     * <li>The bytes alloted are read in big-endian order any byte not populated is set to zero.</li>
+     * </ol>
+     * This ensures that small arrays generate the largest possible increment and initial values.
+     * </p>
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
      */
@@ -70,6 +95,7 @@ public class EnhancedDoubleHasher implements Hasher {
         if (buffer.length == 0) {
             throw new IllegalArgumentException("buffer length must be greater than 0");
         }
+        // divide by 2
         int segment = buffer.length / 2;
         this.initial = toLong(buffer, 0, segment);
         this.increment = toLong(buffer, segment, buffer.length - segment);
@@ -144,7 +170,7 @@ public class EnhancedDoubleHasher implements Hasher {
                 int inc = mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                if (k>bits) {
+                if (k > bits) {
                     for (int j = k; j > 0;) {
                         // handle k > bits
                         final int block = Math.min(j, bits);
