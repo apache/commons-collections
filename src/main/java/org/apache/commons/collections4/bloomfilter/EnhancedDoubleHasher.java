@@ -69,7 +69,7 @@ public class EnhancedDoubleHasher implements Hasher {
         int shift = Long.SIZE;
         for (int i = 0; i < len; i++) {
             shift -=  Byte.SIZE;
-            val |= ((long)(byteArray[offset + i] & 0x00FF) << shift);
+            val |= ((long) (byteArray[offset + i] & 0x00FF) << shift);
         }
         return val;
     }
