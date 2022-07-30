@@ -222,12 +222,26 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 64, 69 }));
         assertEquals(4, SetOperations.orCardinality(filter1, filter2));
         assertEquals(4, SetOperations.orCardinality(filter2, filter1));
+    }
 
-        Shape bigShape = Shape.fromKM(3, 192);
-        filter1 = new SparseBloomFilter(bigShape, IndexProducer.fromIndexArray(new int[] { 1, 63, 185}));
-        filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
+    @Test
+    public final void testOrCardinalityWithDifferentLengthFilters() {
+        Shape shape = Shape.fromKM(3, 128);
+        Shape shape2 = Shape.fromKM(3, 192);
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63, 64 }));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
         assertEquals(5, SetOperations.orCardinality(filter1, filter2));
         assertEquals(5, SetOperations.orCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(5, SetOperations.orCardinality(filter1, filter2));
+        assertEquals(5, SetOperations.orCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(4, SetOperations.orCardinality(filter1, filter2));
+        assertEquals(4, SetOperations.orCardinality(filter2, filter1));
     }
 
     @Test
@@ -247,10 +261,24 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 64, 69 }));
         assertEquals(1, SetOperations.andCardinality(filter1, filter2));
         assertEquals(1, SetOperations.andCardinality(filter2, filter1));
+    }
 
-        Shape bigShape = Shape.fromKM(3, 192);
-        filter1 = new SparseBloomFilter(bigShape, IndexProducer.fromIndexArray(new int[] { 1, 63, 185}));
-        filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
+    @Test
+    public final void testAndCardinalityWithDifferentLengthFilters() {
+        Shape shape = Shape.fromKM(3, 128);
+        Shape shape2 = Shape.fromKM(3, 192);
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63, 64 }));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(1, SetOperations.andCardinality(filter1, filter2));
+        assertEquals(1, SetOperations.andCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(0, SetOperations.andCardinality(filter1, filter2));
+        assertEquals(0, SetOperations.andCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
         assertEquals(1, SetOperations.andCardinality(filter1, filter2));
         assertEquals(1, SetOperations.andCardinality(filter2, filter1));
     }
@@ -278,6 +306,27 @@ public class SetOperationsTest {
         filter2 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63, 69 }));
         assertEquals(4, SetOperations.xorCardinality(filter1, filter2));
         assertEquals(4, SetOperations.xorCardinality(filter2, filter1));
+    }
+
+    @Test
+    public final void testXorCardinalityWithDifferentLengthFilters() {
+        Shape shape = Shape.fromKM(3, 128);
+        Shape shape2 = Shape.fromKM(3, 192);
+
+        SparseBloomFilter filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63, 64 }));
+        SparseBloomFilter filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(4, SetOperations.xorCardinality(filter1, filter2));
+        assertEquals(4, SetOperations.xorCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 1, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(5, SetOperations.xorCardinality(filter1, filter2));
+        assertEquals(5, SetOperations.xorCardinality(filter2, filter1));
+
+        filter1 = new SparseBloomFilter(shape, IndexProducer.fromIndexArray(new int[] { 5, 63 }));
+        filter2 = new SparseBloomFilter(shape2, IndexProducer.fromIndexArray(new int[] { 5, 64, 169 }));
+        assertEquals(3, SetOperations.xorCardinality(filter1, filter2));
+        assertEquals(3, SetOperations.xorCardinality(filter2, filter1));
     }
 
 
