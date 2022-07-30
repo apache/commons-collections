@@ -82,10 +82,12 @@ public class EnhancedDoubleHasher implements Hasher {
      * <p>The byte array is split in 2 and the first 8 bytes of each half are interpreted as a big-endian long value.
      * Excess bytes are ignored.
      * If there are fewer than 16 bytes the following conversions are made.
+     *</p>
      * <ol>
      * <li>If there is an odd number of bytes the excess byte is assigned to the increment value</li>
      * <li>The bytes alloted are read in big-endian order any byte not populated is set to zero.</li>
      * </ol>
+     * <p>
      * This ensures that small arrays generate the largest possible increment and initial values.
      * </p>
      * @param buffer the buffer to extract the longs from.
