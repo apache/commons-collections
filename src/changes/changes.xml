@@ -148,7 +148,7 @@
     </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.5 #214 #225 #239 #266 #294.
+      Bump actions/cache from 2 to 3.0.6 #214 #225 #239 #266 #294.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
@@ -205,9 +205,6 @@
       BloomFilter contribution.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [test] Update JUnit from 4.12 to 4.13.
-    </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
       [build] Update Apache commons-parent from 48 to 51.
     </action>
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
@@ -241,11 +238,10 @@
       Better NPE messages in CollectionUtils with Objects.requireNonNull #117.
     </action>
     <action issue="COLLECTIONS-754" type="update" dev="ggregory" due-to="John Patrick">
-      Upgrade to JUnit v5.6.0 #136.
-      Upgrade to JUnit v5.6.2.
+      Upgrade to JUnit v5.6.2 #136.
     </action>
-    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick">
-      Fully migrate to JUnit 5.
+    <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick, Gary Gregory, Dependabot">
+      Fully migrate JUnit 4.12 to 5.9.0 #324.
     </action>
     <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
       Upgrade Hamcrest to 2.2.
@@ -323,7 +319,7 @@
       Bump japicmp from 0.15.4 to 0.15.7.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-       Bump commons.pmd-impl.version from 6.46.0 to 6.47.0 #318.
+       Bump commons.pmd-impl.version from 6.46.0 to 6.48.0 #318, #327.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
