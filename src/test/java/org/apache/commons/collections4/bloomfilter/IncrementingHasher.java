@@ -47,7 +47,6 @@ class IncrementingHasher implements Hasher {
      * </p>
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
-     * @see #getDefaultIncrement()
      */
     IncrementingHasher(long initial, long increment) {
         this.initial = initial;
@@ -64,17 +63,16 @@ class IncrementingHasher implements Hasher {
             public boolean forEachIndex(IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 int bits = shape.getNumberOfBits();
-                /*
-                 * Essentially this is computing a wrapped modulus from a start point and an
-                 * increment. So actually you only need two modulus operations before the loop.
-                 * This avoids any modulus operation inside the while loop. It uses a long index
-                 * to avoid overflow.
-                 */
+
+                // Essentially this is computing a wrapped modulus from a start point and an
+                // increment. So actually you only need two modulus operations before the loop.
+                // This avoids any modulus operation inside the while loop. It uses a long index
+                // to avoid overflow.
+
                 long index = EnhancedDoubleHasher.mod(initial, bits);
                 int inc = EnhancedDoubleHasher.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
-
                     if (!consumer.test((int) index)) {
                         return false;
                     }
@@ -88,9 +86,9 @@ class IncrementingHasher implements Hasher {
             public int[] asIndexArray() {
                 int[] result = new int[shape.getNumberOfHashFunctions()];
                 int[] idx = new int[1];
-                /*
-                 * This method needs to return duplicate indices
-                 */
+
+                // This method needs to return duplicate indices
+
                 forEachIndex(i -> {
                     result[idx[0]++] = i;
                     return true;

@@ -90,7 +90,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
 
     @Test
     public void testUniqueIndex() {
-        // generating 11 numbers in the ragne of [0,9] will yield at least on collision.
+        // generating 11 numbers in the range of [0,9] will yield at least on collision.
         Shape shape = Shape.fromKM(11, 10);
         Hasher hasher = createHasher();
         IndexProducer producer = hasher.indices(shape);

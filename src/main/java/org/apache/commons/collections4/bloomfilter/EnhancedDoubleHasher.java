@@ -29,16 +29,16 @@ import java.util.function.IntPredicate;
  *
  * <h2>Thoughts on the hasher input</h2>
  *
- *<p>Note that it is worse to create smaller numbers for the <code>initial</code> and <code>increment</code>. If the <code>initial</code> is smaller than
- * the number of bits in a filter then hashing will start at the same point when the size increases; likewise the <code>increment</code> will be
+ *<p>Note that it is worse to create smaller numbers for the {@code initial} and {@code increment}. If the {@code initial} is smaller than
+ * the number of bits in a filter then hashing will start at the same point when the size increases; likewise the {@code increment} will be
  * the same if it remains smaller than the number of bits in the filter and so the first few indices will be the same if the number of bits
- * changes (but is still larger than the <code>increment</code>). In a worse case scenario with small <code>initial</code> and <code>increment</code> for
- * all items, hashing may not create indices that fill the full region within a much larger filter. Imagine hashers created with <code>initial</code>
- * and <code>increment</code> values less than 255 with a filter size of 30000 and number of hash functions as 5. Ignoring the
+ * changes (but is still larger than the {@code increment}). In a worse case scenario with small {@code initial} and {@code increment} for
+ * all items, hashing may not create indices that fill the full region within a much larger filter. Imagine hashers created with {@code initial}
+ * and {@code increment} values less than 255 with a filter size of 30000 and number of hash functions as 5. Ignoring the
  * tetrahedral addition (a maximum of 20 for k=5) the max index is 255 * 4 + 255 = 1275, this covers 4.25% of the filter. This also
  * ignores the negative wrapping but the behaviour is the same, some bits cannot be reached.
  * </p><p>
- * So this needs to be avoided as the filter probability assumptions will be void. If the <code>initial</code> and <code>increment</code> are larger
+ * So this needs to be avoided as the filter probability assumptions will be void. If the {@code initial} and {@code increment} are larger
  * than the number of bits then the modulus will create a 'random' position and increment within the size.
  * </p>
  *
@@ -65,11 +65,11 @@ public class EnhancedDoubleHasher implements Hasher {
      */
     private static long toLong(byte[] byteArray, int offset, int len) {
         long val = 0;
-        len = Math.min(len, Long.BYTES);
         int shift = Long.SIZE;
-        for (int i = 0; i < len; i++) {
+        final int end = offset + Math.min(len, Long.BYTES);
+        for (int i = offset; i < end; i++) {
             shift -=  Byte.SIZE;
-            val |= ((long) (byteArray[offset + i] & 0x00FF) << shift);
+            val |= ((long) (byteArray[i] & 0xFF) << shift);
         }
         return val;
     }
@@ -205,9 +205,7 @@ public class EnhancedDoubleHasher implements Hasher {
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
-
                 }
-
                 return true;
             }
 
@@ -215,9 +213,9 @@ public class EnhancedDoubleHasher implements Hasher {
             public int[] asIndexArray() {
                 int[] result = new int[shape.getNumberOfHashFunctions()];
                 int[] idx = new int[1];
-                /*
-                 * This method needs to return duplicate indices
-                 */
+
+                // This method needs to return duplicate indices
+
                 forEachIndex(i -> {
                     result[idx[0]++] = i;
                     return true;
