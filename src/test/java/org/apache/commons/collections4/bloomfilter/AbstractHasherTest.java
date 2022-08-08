@@ -19,10 +19,13 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -63,7 +66,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "17, 72", "3, 14", "5, 67868", })
+    @CsvSource({ "17, 72", "3, 14", "5, 67868", "75, 10"})
     public void testHashing(int k, int m) {
         int[] count = { 0 };
         Hasher hasher = createHasher();
@@ -74,16 +77,28 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         });
         assertEquals(k * getHasherSize(hasher), count[0],
                 () -> String.format("Did not produce k=%d * m=%d indices", k, getHasherSize(hasher)));
+
+        // test early exit
+        count[0] = 0;
+        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+            assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
+            count[0]++;
+            return false;
+        });
+        assertEquals(1, count[0], "did not exit early" );
     }
 
     @Test
     public void testUniqueIndex() {
-        // create a hasher that produces duplicates with the specified shape.
-        // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM(12, 72);
-        Hasher hasher = new SimpleHasher(5, 12);
-        Set<Integer> set = new HashSet<>();
-        assertTrue(hasher.uniqueIndices(shape).forEachIndex(set::add), "Duplicate detected");
-        assertEquals(6, set.size());
+        // generating 11 numbers in the range of [0,9] will yield at least on collision.
+        Shape shape = Shape.fromKM(11, 10);
+        Hasher hasher = createHasher();
+        IndexProducer producer = hasher.indices(shape);
+        List<Integer> full = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
+        producer = hasher.uniqueIndices(shape);
+        List<Integer> unique = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
+        assertTrue( full.size() > unique.size() );
+        Set<Integer> set = new HashSet<Integer>( unique );
+        assertEquals( set.size(), unique.size() );
     }
 }

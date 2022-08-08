@@ -187,20 +187,6 @@ public final class Shape implements Comparable<Shape> {
     }
 
     /**
-     * The factory to assist in the creation of proper Shapes.
-     *
-     * In the methods of this factory the `from` names are appended with the standard variable
-     * names in the order expected:
-     *
-     * <dl>
-     * <dt>{@code N})</dt><dd>The number of items to be placed in the Bloom filter</dd>
-     * <dt>{@code M})</dt><dd>The number of bits in the Bloom filter</dd>
-     * <dt>{@code K})</dt><dd>The number of hash functions for each item placed in the Bloom filter</dd>
-     * <dt>{@code P})</dt><dd>The probability of a collision once N items have been placed in the Bloom filter</dd>
-     * </dl>
-     */
-
-    /**
      * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the
      * specified number of bits ({@code m}) and hash functions ({@code k}).
      *
