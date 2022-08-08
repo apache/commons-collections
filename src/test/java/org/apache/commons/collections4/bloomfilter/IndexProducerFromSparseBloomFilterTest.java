@@ -22,7 +22,7 @@ public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProduce
 
     @Override
     protected IndexProducer createProducer() {
-        Hasher hasher = new SimpleHasher(0, 1);
+        Hasher hasher = new IncrementingHasher(0, 1);
         return new SimpleBloomFilter(shape, hasher);
     }
 
