@@ -25,9 +25,9 @@ import org.junit.jupiter.api.Test;
  */
 public class SetOperationsTest {
 
-    protected final SimpleHasher from1 = new SimpleHasher(1, 1);
+    protected final Hasher from1 = new IncrementingHasher(1, 1);
     protected final long from1Value = 0x3FFFEL;
-    protected final SimpleHasher from11 = new SimpleHasher(11, 1);
+    protected final Hasher from11 = new IncrementingHasher(11, 1);
     protected final long from11Value = 0xFFFF800L;
     protected final HasherCollection bigHasher = new HasherCollection(from1, from11);
     protected final long bigHashValue = 0xFFFFFFEL;
@@ -49,7 +49,7 @@ public class SetOperationsTest {
 
         Shape shape2 = Shape.fromKM(2, 72);
         filter1 = new SimpleBloomFilter(shape2, from1);
-        filter2 = new SimpleBloomFilter(shape2, new SimpleHasher(2, 1));
+        filter2 = new SimpleBloomFilter(shape2, new IncrementingHasher(2, 1));
 
         int dotProduct = /* [1,2] & [2,3] = [2] = */ 1;
         int cardinalityA = 2;
