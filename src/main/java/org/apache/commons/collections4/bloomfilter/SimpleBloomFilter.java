@@ -65,7 +65,7 @@ public final class SimpleBloomFilter implements BloomFilter {
         this.shape = other.getShape();
         this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
         this.cardinality = 0;
-        if (other.isSparse()) {
+        if ((other.characteristics()&SPARSE)>0) {
             merge((IndexProducer) other);
         } else {
             merge((BitMapProducer) other);
@@ -194,7 +194,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        if (other.isSparse()) {
+        if ((other.characteristics()&SPARSE)>0) {
             merge((IndexProducer) other);
         } else {
             merge((BitMapProducer) other);
@@ -208,8 +208,8 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean isSparse() {
-        return false;
+    public int characteristics() {
+        return 0;
     }
 
     @Override

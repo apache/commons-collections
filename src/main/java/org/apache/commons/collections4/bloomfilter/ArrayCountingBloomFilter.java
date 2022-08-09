@@ -110,8 +110,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean isSparse() {
-        return true;
+    public int characteristics() {
+        return SPARSE;
     }
 
     @Override
