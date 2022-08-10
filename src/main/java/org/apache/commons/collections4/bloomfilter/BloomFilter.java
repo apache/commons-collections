@@ -36,7 +36,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
      * for the implementation to produce indexes of bit map blocks.</p>
      */
-    int SPARSE=0x1;
+    int SPARSE = 0x1;
 
     /**
      * Creates a new instance of the BloomFilter with the same properties as the current one.
@@ -47,10 +47,10 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // Query Operations
 
     /**
-     * Returns the bitmap of characteristics of the filter.
+     * Returns the characteristics of the filter.
      * <p>
-     * Characteristics are defined as bits witin the characteristics integer.
-     * @return the characterists for this bloom filter.
+     * Characteristics are defined as bits within the characteristics integer.
+     * @return the characteristics for this bloom filter.
      */
     int characteristics();
 
@@ -73,7 +73,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean contains(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return (characteristics()&SPARSE)>0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
     }
 
     /**
@@ -147,8 +147,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        // create the bloomfilter that is most likely to merge quickly with this one
-        BloomFilter result = (characteristics()&SPARSE)>0 ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
+        // create the Bloom filter that is most likely to merge quickly with this one
+        BloomFilter result = (characteristics() & SPARSE) != 0 ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
         return merge(result);
     }
 
