@@ -186,8 +186,8 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean isSparse() {
-            return true;
+        public int characteristics() {
+            return SPARSE;
         }
 
         @Override
@@ -217,8 +217,8 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean isSparse() {
-            return false;
+        public int characteristics() {
+            return 0;
         }
 
         @Override

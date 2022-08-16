@@ -58,7 +58,7 @@ public final class SparseBloomFilter implements BloomFilter {
         Objects.requireNonNull(other, "other");
         this.shape = other.getShape();
         this.indices = new TreeSet<>();
-        if (other.isSparse()) {
+        if ((other.characteristics() & SPARSE) != 0) {
             merge((IndexProducer) other);
         } else {
             merge(IndexProducer.fromBitMapProducer(other));
@@ -169,7 +169,7 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        IndexProducer producer = other.isSparse() ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
+        IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
         merge(producer);
         return true;
     }
@@ -180,8 +180,8 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean isSparse() {
-        return true;
+    public int characteristics() {
+        return SPARSE;
     }
 
     @Override

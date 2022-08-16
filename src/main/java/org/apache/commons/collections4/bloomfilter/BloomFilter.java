@@ -30,6 +30,15 @@ import java.util.Objects;
 public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
+     * The sparse characteristic used to determine the best method for matching.
+     * <p>For `sparse` implementations
+     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
+     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
+     * for the implementation to produce indexes of bit map blocks.</p>
+     */
+    int SPARSE = 0x1;
+
+    /**
      * Creates a new instance of the BloomFilter with the same properties as the current one.
      * @return a copy of this BloomFilter
      */
@@ -38,17 +47,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // Query Operations
 
     /**
-     * This method is used to determine the best method for matching.
-     *
-     * <p>For `sparse` implementations
-     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
-     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
-     * for the implementation to produce indexes of bit map blocks.</p>
-     *
-     * @return {@code true} if the implementation is sparse {@code false} otherwise.
-     * @see BitMap
+     * Returns the characteristics of the filter.
+     * <p>
+     * Characteristics are defined as bits within the characteristics integer.
+     * @return the characteristics for this bloom filter.
      */
-    boolean isSparse();
+    int characteristics();
 
     /**
      * Gets the shape that was used when the filter was built.
@@ -69,7 +73,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean contains(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return isSparse() ? contains((IndexProducer) other) : contains((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
     }
 
     /**
@@ -143,8 +147,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         Shape shape = getShape();
-        // create the bloomfilter that is most likely to merge quickly with this one
-        BloomFilter result = isSparse() ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
+        // create the Bloom filter that is most likely to merge quickly with this one
+        BloomFilter result = (characteristics() & SPARSE) != 0 ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
         return merge(result);
     }
 
