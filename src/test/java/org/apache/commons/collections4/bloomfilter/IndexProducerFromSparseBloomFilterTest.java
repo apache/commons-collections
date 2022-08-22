@@ -23,11 +23,14 @@ public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProduce
     @Override
     protected IndexProducer createProducer() {
         Hasher hasher = new IncrementingHasher(0, 1);
-        return new SimpleBloomFilter(shape, hasher);
+        BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge( hasher );
+        return bf;
+
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return new SimpleBloomFilter(shape);
+        return new SparseBloomFilter(shape);
     }
 }
