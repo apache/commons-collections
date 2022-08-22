@@ -183,7 +183,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         BloomFilter bf1 = createFilter(getTestShape(), from1);
         assertTrue( bf1.cardinality()>0 );
         bf1.clear();
-        assertTrue( bf1.cardinality()==0);
+        assertEquals( 0, bf1.cardinality());
     }
 
     /**
