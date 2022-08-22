@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -104,6 +105,11 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         this.counts = source.counts.clone();
     }
 
+    @Override
+    public void clear() {
+        Arrays.fill(counts, 0);
+    }
+    
     @Override
     public ArrayCountingBloomFilter copy() {
         return new ArrayCountingBloomFilter(this);
