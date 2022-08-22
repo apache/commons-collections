@@ -59,7 +59,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return The shape the filter was built with.
      */
     Shape getShape();
-    
+
     /**
      * Resets the filter to its initial, unpopulated state.
      */
