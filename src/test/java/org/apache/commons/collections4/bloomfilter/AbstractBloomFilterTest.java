@@ -186,14 +186,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue( bf1.cardinality()==0);
     }
 
-    @Test
-    public void testClear() {
-        BloomFilter bf1 = createFilter(getTestShape(), from1);
-        assertTrue( bf1.cardinality()>0 );
-        bf1.clear();
-        assertEquals( 0, bf1.cardinality());
-    }
-
     /**
      * Tests that the andCardinality calculations are correct.
      *
