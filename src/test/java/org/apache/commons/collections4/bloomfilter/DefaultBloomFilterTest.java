@@ -34,21 +34,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         return new SparseDefaultBloomFilter(shape);
     }
 
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return new SparseDefaultBloomFilter(shape, hasher);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
     @Test
     public void testDefaultBloomFilterSimpleSpecificMerge() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
@@ -142,12 +127,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 
-        @Override
-        public boolean merge(BloomFilter other) {
-            other.forEachIndex((i) -> {
-                indices.add(i);
-                return true;
-            });
+        private void checkIndicesRange() {
             if (!indices.isEmpty()) {
                 if (indices.last() >= shape.getNumberOfBits()) {
                     throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
@@ -158,9 +138,33 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                             String.format("Value in list %s is less than 0", indices.first()));
                 }
             }
+        }
+        
+        @Override
+        public boolean merge(BloomFilter other) {
+            other.forEachIndex((i) -> {
+                indices.add(i);
+                return true;
+            });
+            checkIndicesRange();
             return true;
         }
 
+
+        @Override
+        public boolean merge(IndexProducer indexProducer)
+        {
+            boolean result = indexProducer.forEachIndex( indices::add );
+            checkIndicesRange();
+            return result;
+        }
+
+        @Override
+        public boolean merge(BitMapProducer bitMapProducer)
+        {
+            return merge( IndexProducer.fromBitMapProducer(bitMapProducer));
+        }
+        
         @Override
         public int cardinality() {
             return indices.size();
@@ -196,6 +200,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             result.indices.addAll(indices);
             return result;
         }
+
     }
 
     static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
