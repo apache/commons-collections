@@ -177,7 +177,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
     }
-    
+
     @Test
     public void testClear() {
         BloomFilter bf1 = createFilter(getTestShape(), from1);

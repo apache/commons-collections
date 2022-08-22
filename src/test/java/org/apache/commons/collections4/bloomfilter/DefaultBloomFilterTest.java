@@ -116,7 +116,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         public void clear() {
             indices.clear();
         }
-        
+
         @Override
         public boolean forEachIndex(IntPredicate consumer) {
             for (Integer i : indices) {

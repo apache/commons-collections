@@ -109,7 +109,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     public void clear() {
         Arrays.fill(counts, 0);
     }
-    
+
     @Override
     public ArrayCountingBloomFilter copy() {
         return new ArrayCountingBloomFilter(this);
