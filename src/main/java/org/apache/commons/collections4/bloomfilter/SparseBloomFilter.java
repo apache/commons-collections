@@ -142,7 +142,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean merge(IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");        
+        Objects.requireNonNull(indexProducer, "indexProducer");
         indexProducer.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
@@ -156,10 +156,10 @@ public final class SparseBloomFilter implements BloomFilter {
         }
         return true;
     }
-    
+
     @Override
     public boolean merge(BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");        
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         return this.merge( IndexProducer.fromBitMapProducer(bitMapProducer) );
     }
 

@@ -144,7 +144,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                 }
             }
         }
-        
         @Override
         public boolean merge(BloomFilter other) {
             other.forEachIndex((i) -> {
@@ -155,21 +154,18 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             return true;
         }
 
-
         @Override
-        public boolean merge(IndexProducer indexProducer)
-        {
+        public boolean merge(IndexProducer indexProducer) {
             boolean result = indexProducer.forEachIndex( indices::add );
             checkIndicesRange();
             return result;
         }
 
         @Override
-        public boolean merge(BitMapProducer bitMapProducer)
-        {
+        public boolean merge(BitMapProducer bitMapProducer){
             return merge( IndexProducer.fromBitMapProducer(bitMapProducer));
         }
-        
+
         @Override
         public int cardinality() {
             return indices.size();

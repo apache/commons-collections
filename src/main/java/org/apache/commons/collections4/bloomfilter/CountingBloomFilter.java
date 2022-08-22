@@ -78,7 +78,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     boolean isValid();
 
     // Modification Operations
-    
+
     /**
      * Merges the specified Bloom filter into this Bloom filter.
      *
@@ -124,14 +124,14 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
         }
     }
-    
+
     /**
      * Merges the specified index producer into this Bloom filter.
      *
      * <p>Specifically: all counts for the indexes identified by the {@code indexProducer} will be incremented by 1,</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
-     * 
+     *
      * <p>Note: This method expects and index producer that does not return duplicates.</p>
      *
      * @param indexProducer the IndexProducer
@@ -155,7 +155,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * <p>Specifically: all counts for the indexes identified by the {@code bitMapProducer} will be incremented by 1,</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
-     * 
+     *
      * @param bitMapProducer the BitMapProducer
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
@@ -164,7 +164,6 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     default boolean merge(final BitMapProducer bitMapProducer) {
         return merge( IndexProducer.fromBitMapProducer(bitMapProducer)  );
     }
-    
 
     /**
      * Removes the specified Bloom filter from this Bloom filter.
@@ -206,7 +205,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
         Objects.requireNonNull(hasher, "hasher");
         return subtract(BitCountProducer.from(hasher.uniqueIndices(getShape())));
     }
-    
+
     /**
      * Removes the values from the specified IndexProducer from the Bloom filter from this Bloom filter.
      *
@@ -214,7 +213,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
-     * 
+     *
      * <p>Node: This method expects index producers that produce unique values.</p>
      *
      * @param indexProducer the IndexProducer to provide the indexes
@@ -223,7 +222,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #subtract(BitCountProducer)
      */
     default boolean remove(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");        
+        Objects.requireNonNull(indexProducer, "indexProducer");
         try {
             return subtract(BitCountProducer.from(indexProducer ));
         } catch (IndexOutOfBoundsException e) {
@@ -232,13 +231,12 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
         }
     }
 
-    
     /**
      * Removes the specified BitMapProducer from this Bloom filter.
      *
      * <p>Specifically all counts for the indices produced by the {@code bitMapProducer} will be
      * decremented by 1.</p>
-     * 
+     *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param bitMapProducer the BitMapProducer to provide the indexes
@@ -249,7 +247,6 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     default boolean remove(final BitMapProducer bitMapProducer) {
         return remove( IndexProducer.fromBitMapProducer(bitMapProducer));
     }
-    
 
     /**
      * Adds the specified BitCountProducer to this Bloom filter.
