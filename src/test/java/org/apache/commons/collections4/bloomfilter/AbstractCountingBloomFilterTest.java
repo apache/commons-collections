@@ -213,7 +213,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     public final void testRemove() {
         BloomFilter simple = new SimpleBloomFilter(getTestShape());
         simple.merge(from11);
-        
+
         final CountingBloomFilter bf1 = createEmptyFilter(getTestShape());
         bf1.merge(from1);
         bf1.add(BitCountProducer.from(from11.indices(getTestShape())));

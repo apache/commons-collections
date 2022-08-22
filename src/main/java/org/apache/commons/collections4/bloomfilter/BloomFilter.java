@@ -152,7 +152,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         result.merge( hasher );
         return merge(result);
     }
-    
+
     /**
      * Merges the specified IndexProducer into this Bloom filter. Specifically all
      * bit indexes that are identified by the {@code producer} will be enabled in this filter.
@@ -173,7 +173,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * bit indexes that are identified by the {@code producer} will be enabled in this filter.
      *
      * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
-     * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes 
+     * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes
      * enabled in the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
@@ -181,8 +181,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return true if the merge was successful
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-     boolean merge(BitMapProducer bitMapProducer);
-    
+    boolean merge(BitMapProducer bitMapProducer);
+
     // Counting Operations
 
     /**

@@ -48,7 +48,7 @@ public class SetOperationsTest {
         assertEquals(expected, operation.applyAsDouble(filter1, filter2), "op(filter1, filter2)");
         assertEquals(expected, operation.applyAsDouble(filter2, filter1), "op(filter2, filter1)");
     }
-    
+
     private BloomFilter forTest( Shape shape, Hasher hasher) {
         BloomFilter bf = new SimpleBloomFilter( shape );
         bf.merge( hasher );

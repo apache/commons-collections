@@ -121,7 +121,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // value to large
         final BloomFilter f1 = createEmptyFilter(getTestShape());
-        assertThrows(IllegalArgumentException.class, 
+        assertThrows(IllegalArgumentException.class,
                 () -> f1.merge(IndexProducer.fromIndexArray(new int[] { getTestShape().getNumberOfBits() })));
         // negative value
         final BloomFilter f2 = createEmptyFilter(getTestShape());
@@ -131,7 +131,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public final void testContains() {
-        
         BloomFilter bf1 = createEmptyFilter(getTestShape());
         bf1.merge(from1);
         final BloomFilter bf2 = createEmptyFilter(getTestShape());
@@ -162,7 +161,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         bf1.merge(from1);
         final BloomFilter bf3 = createEmptyFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1));
         bf3.merge(from1);
-        
+
         assertTrue(bf1.contains(bf3));
         assertTrue(bf3.contains(bf1));
 
