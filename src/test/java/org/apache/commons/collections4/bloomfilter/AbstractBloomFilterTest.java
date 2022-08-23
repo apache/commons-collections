@@ -67,21 +67,21 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // value too large
         final BloomFilter f = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
-                () -> f.merge( new BadHasher(getTestShape().getNumberOfBits())));
+                () -> f.merge(new BadHasher(getTestShape().getNumberOfBits())));
         // negative value
         BloomFilter f2 = createEmptyFilter(getTestShape());
-        assertThrows(IllegalArgumentException.class, () -> f2.merge( new BadHasher(-1)));
+        assertThrows(IllegalArgumentException.class, () -> f2.merge(new BadHasher(-1)));
     }
 
     @Test
     public void testMergeWithHasher() {
         // value too large
         final BloomFilter f = createEmptyFilter(getTestShape());
-        f.merge( from1 );
+        f.merge(from1);
         int[] idx = f.asIndexArray();
-        assertEquals(getTestShape().getNumberOfHashFunctions(), idx.length );
+        assertEquals(getTestShape().getNumberOfHashFunctions(), idx.length);
         for (int i=0; i<idx.length; i++) {
-            assertEquals( i+1, idx[i] );
+            assertEquals(i+1, idx[i]);
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void testMergeWitBitMapProducer() {
         long[] values = { from11Value, 0x9L };
         BloomFilter f = createEmptyFilter(getTestShape());
-        f.merge( BitMapProducer.fromBitMapArray(values));
+        f.merge(BitMapProducer.fromBitMapArray(values));
         List<Long> lst = new ArrayList<>();
         for (long l : values) {
             lst.add(l);
@@ -366,7 +366,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void testBitMapProducerSize() {
         int[] idx = new int[1];
         BloomFilter bf = createEmptyFilter(getTestShape());
-        bf.merge( from1 );
+        bf.merge(from1);
         bf.forEachBitMap(i -> {
             idx[0]++;
             return true;

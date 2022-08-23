@@ -149,7 +149,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         Shape shape = getShape();
         // create the Bloom filter that is most likely to merge quickly with this one
         BloomFilter result = (characteristics() & SPARSE) != 0 ? new SparseBloomFilter(shape) : new SimpleBloomFilter(shape);
-        result.merge( hasher );
+        result.merge(hasher);
         return merge(result);
     }
 

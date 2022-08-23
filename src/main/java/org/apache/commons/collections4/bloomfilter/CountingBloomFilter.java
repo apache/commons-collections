@@ -99,7 +99,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
         try {
             return add(BitCountProducer.from(other));
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException( e );
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -142,7 +142,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     default boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "producer");
         try {
-            return add(BitCountProducer.from(indexProducer ));
+            return add(BitCountProducer.from(indexProducer));
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
@@ -162,7 +162,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #add(BitCountProducer)
      */
     default boolean merge(final BitMapProducer bitMapProducer) {
-        return merge( IndexProducer.fromBitMapProducer(bitMapProducer)  );
+        return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     /**
@@ -224,7 +224,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     default boolean remove(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            return subtract(BitCountProducer.from(indexProducer ));
+            return subtract(BitCountProducer.from(indexProducer));
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
@@ -245,7 +245,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #subtract(BitCountProducer)
      */
     default boolean remove(final BitMapProducer bitMapProducer) {
-        return remove( IndexProducer.fromBitMapProducer(bitMapProducer));
+        return remove(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     /**

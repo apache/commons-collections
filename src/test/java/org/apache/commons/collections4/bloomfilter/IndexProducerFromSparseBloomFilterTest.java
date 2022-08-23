@@ -24,7 +24,7 @@ public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProduce
     protected IndexProducer createProducer() {
         Hasher hasher = new IncrementingHasher(0, 1);
         BloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge( hasher );
+        bf.merge(hasher);
         return bf;
 
     }

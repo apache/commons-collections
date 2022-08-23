@@ -55,58 +55,6 @@ public final class SimpleBloomFilter implements BloomFilter {
         this.cardinality = 0;
     }
 
-//    /**
-//     * Creates an instance that is equivalent to {@code other}.
-//     *
-//     * @param other The bloom filter to copy.
-//     */
-//    public SimpleBloomFilter(BloomFilter other) {
-//        Objects.requireNonNull(other, "other");
-//        this.shape = other.getShape();
-//        this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-//        this.cardinality = 0;
-//        if ((other.characteristics() & SPARSE) != 0) {
-//            merge((IndexProducer) other);
-//        } else {
-//            merge((BitMapProducer) other);
-//        }
-//    }
-//
-//    /**
-//     * Creates a populated instance.
-//     * @param shape The shape for the filter.
-//     * @param hasher the Hasher to initialize the filter with.
-//     */
-//    public SimpleBloomFilter(final Shape shape, Hasher hasher) {
-//        this(shape);
-//        Objects.requireNonNull(hasher, "hasher");
-//        merge(hasher);
-//    }
-//
-//    /**
-//     * Creates a populated instance.
-//     * @param shape The shape for the filter.
-//     * @param indices the IndexProducer to initialize the filter with.
-//     * @throws IllegalArgumentException if producer sends illegal value.
-//     */
-//    public SimpleBloomFilter(final Shape shape, IndexProducer indices) {
-//        this(shape);
-//        Objects.requireNonNull(indices, "indices");
-//        merge(indices);
-//    }
-//
-//    /**
-//     * Creates a populated instance.
-//     * @param shape The shape for the filter.
-//     * @param bitMaps the BitMapProducer to initialize the filter with.
-//     * @throws IllegalArgumentException if the producer returns too many or too few bit maps.
-//     */
-//    public SimpleBloomFilter(final Shape shape, BitMapProducer bitMaps) {
-//        this(shape);
-//        Objects.requireNonNull(bitMaps, "bitMaps");
-//        merge(bitMaps);
-//    }
-//
     /**
      * Copy constructor for {@code copy()} use.
      * @param source

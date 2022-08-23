@@ -117,7 +117,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.merge(from1);
 
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
-        bf2.merge( from11);
+        bf2.merge(from11);
 
         final BloomFilter bf3 = bf1.copy();
         bf3.merge(bf2);
@@ -139,7 +139,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         CountingBloomFilter bf6 = bf5.copy();
         BloomFilter bf7 = new SimpleBloomFilter(getTestShape());
-        bf7.merge( from1 );
+        bf7.merge(from1);
         bf6.merge(bf7);
         assertFalse(bf6.isValid(), "Should not be valid");
     }
@@ -153,7 +153,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         final CountingBloomFilter bf1 = createEmptyFilter(getTestShape());
         bf1.merge(from1);
         CountingBloomFilter bf2 = createEmptyFilter(getTestShape());
-        bf2.merge( from11 );
+        bf2.merge(from11);
         assertTrue(bf1.add(bf2), "Add should work");
         assertTrue(bf1.contains(from1), "Should contain");
         assertTrue(bf1.contains(from11), "Should contain");
@@ -166,7 +166,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf2.isValid(), "Should be valid");
 
         CountingBloomFilter bf3 = createEmptyFilter(getTestShape());
-        bf3.merge( from1 );
+        bf3.merge(from1);
         assertFalse(bf2.add(bf3), "Should not add");
         assertFalse(bf2.isValid(), "Should not be valid");
     }

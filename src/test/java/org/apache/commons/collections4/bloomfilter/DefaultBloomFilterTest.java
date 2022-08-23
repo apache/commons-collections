@@ -151,14 +151,14 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(IndexProducer indexProducer) {
-            boolean result = indexProducer.forEachIndex( indices::add );
+            boolean result = indexProducer.forEachIndex(indices::add);
             checkIndicesRange();
             return result;
         }
 
         @Override
         public boolean merge(BitMapProducer bitMapProducer){
-            return merge( IndexProducer.fromBitMapProducer(bitMapProducer));
+            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 
         @Override
