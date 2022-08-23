@@ -63,7 +63,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     /**
      * Determines if empty tests should be run.  Some producers do not implement an empty
      * version.  Tests for those classes should return false.
-     * @return
+     * @return true if the empty tests are supported
      */
     protected boolean supportsEmpty() {
         return true;
