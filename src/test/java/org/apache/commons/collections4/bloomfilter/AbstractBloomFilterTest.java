@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -181,9 +182,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testClear() {
         BloomFilter bf1 = createFilter(getTestShape(), from1);
-        assertTrue( bf1.cardinality()>0 );
+        assertNotEquals( 0, bf1.cardinality() );
         bf1.clear();
-        assertTrue( bf1.cardinality()==0);
+        assertEquals( 0, bf1.cardinality());
     }
 
     /**
