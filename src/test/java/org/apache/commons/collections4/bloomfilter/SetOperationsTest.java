@@ -49,15 +49,15 @@ public class SetOperationsTest {
         assertEquals(expected, operation.applyAsDouble(filter2, filter1), "op(filter2, filter1)");
     }
 
-    private BloomFilter forTest( Shape shape, Hasher hasher) {
-        BloomFilter bf = new SimpleBloomFilter( shape );
-        bf.merge( hasher );
+    private BloomFilter forTest(Shape shape, Hasher hasher) {
+        BloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(hasher);
         return bf;
     }
 
-    private BloomFilter forTest( Shape shape, IndexProducer producer) {
-        BloomFilter bf = new SparseBloomFilter( shape );
-        bf.merge( producer );
+    private BloomFilter forTest(Shape shape, IndexProducer producer) {
+        BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge(producer);
         return bf;
     }
 
@@ -99,13 +99,13 @@ public class SetOperationsTest {
         dotProduct = /* [1,2] & [] = [] = */ 0;
         cardinalityA = 2;
         cardinalityB = 0;
-        expected = /* 1 - (dotProduct/Math.sqrt( cardinalityA * cardinalityB )) = */ 1.0;
+        expected = /* 1 - (dotProduct/Math.sqrt(cardinalityA * cardinalityB)) = */ 1.0;
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
         dotProduct = /* [] & [] = [] = */ 0;
         cardinalityA = 0;
         cardinalityB = 0;
-        expected = /* 1 - (dotProduct/Math.sqrt( cardinalityA * cardinalityB )) = */ 1.0;
+        expected = /* 1 - (dotProduct/Math.sqrt(cardinalityA * cardinalityB)) = */ 1.0;
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
     }
 
@@ -120,7 +120,7 @@ public class SetOperationsTest {
         int dotProduct = /* [1..17] & [1..17] = [1..17] = */ 17;
         int cardinalityA = 17;
         int cardinalityB = 17;
-        double expected = /* dotProduct/Sqrt( cardinalityA * cardinalityB ) = */ 1.0;
+        double expected = /* dotProduct/Sqrt(cardinalityA * cardinalityB) = */ 1.0;
         assertSymmetricOperation(expected, SetOperations::cosineSimilarity, filter1, filter2);
 
         dotProduct = /* [1..17] & [11..27] = [11..17] = */ 7;

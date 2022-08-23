@@ -49,68 +49,6 @@ public final class SparseBloomFilter implements BloomFilter {
         this.indices = new TreeSet<>();
     }
 
-//    /**
-//     * Creates an instance that is equivalent to {@code other}.
-//     *
-//     * @param other The bloom filter to copy.
-//     */
-//    public SparseBloomFilter(BloomFilter other) {
-//        Objects.requireNonNull(other, "other");
-//        this.shape = other.getShape();
-//        this.indices = new TreeSet<>();
-//        if ((other.characteristics() & SPARSE) != 0) {
-//            merge((IndexProducer) other);
-//        } else {
-//            merge(IndexProducer.fromBitMapProducer(other));
-//        }
-//    }
-//
-//    private void checkIndices(Shape shape) {
-//        if (this.indices.floor(-1) != null || this.indices.ceiling(shape.getNumberOfBits()) != null) {
-//            throw new IllegalArgumentException(
-//                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-//        }
-//    }
-//
-//    /**
-//     * Constructs a populated Bloom filter.
-//     * @param shape the shape for the bloom filter.
-//     * @param hasher the hasher to provide the initial data.
-//     */
-//    public SparseBloomFilter(final Shape shape, Hasher hasher) {
-//        this(shape);
-//        Objects.requireNonNull(hasher, "hasher");
-//        hasher.indices(shape).forEachIndex(this::add);
-//        checkIndices(shape);
-//    }
-//
-//    /**
-//     * Constructs a populated Bloom filter.
-//     * @param shape the shape of the filter.
-//     * @param indices an index producer for the indices to to enable.
-//     * @throws IllegalArgumentException if indices contains a value greater than the number
-//     * of bits in the shape.
-//     */
-//    public SparseBloomFilter(Shape shape, IndexProducer indices) {
-//        this(shape);
-//        Objects.requireNonNull(indices, "indices");
-//        indices.forEachIndex(this::add);
-//        checkIndices(shape);
-//    }
-//
-//    /**
-//     * Constructs a populated Bloom filter.
-//     * @param shape the shape of the filter.
-//     * @param bitMaps a BitMapProducer for the bit maps to add.
-//     * @throws IllegalArgumentException if the bit maps contain a value greater than the number
-//     * of bits in the shape.
-//     */
-//    public SparseBloomFilter(Shape shape, BitMapProducer bitMaps) {
-//        this(shape);
-//        Objects.requireNonNull(bitMaps, "bitMaps");
-//        merge(IndexProducer.fromBitMapProducer(bitMaps));
-//    }
-//
     private SparseBloomFilter(SparseBloomFilter source) {
         shape = source.shape;
         indices = new TreeSet<>(source.indices);
@@ -160,7 +98,7 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return this.merge( IndexProducer.fromBitMapProducer(bitMapProducer) );
+        return this.merge(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     @Override

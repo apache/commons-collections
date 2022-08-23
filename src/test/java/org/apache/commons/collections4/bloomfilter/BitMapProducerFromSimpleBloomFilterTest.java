@@ -24,7 +24,7 @@ public class BitMapProducerFromSimpleBloomFilterTest extends AbstractBitMapProdu
     protected BitMapProducer createProducer() {
         Hasher hasher = new IncrementingHasher(0, 1);
         BloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge( hasher);
+        bf.merge(hasher);
         return bf;
     }
 
