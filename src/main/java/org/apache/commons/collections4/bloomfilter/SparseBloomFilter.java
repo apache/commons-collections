@@ -175,6 +175,11 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
+    public void clear() {
+        indices.clear();
+    }
+
+    @Override
     public Shape getShape() {
         return shape;
     }

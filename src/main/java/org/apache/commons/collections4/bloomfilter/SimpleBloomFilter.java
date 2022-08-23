@@ -118,6 +118,12 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
+    public void clear() {
+        Arrays.fill(bitMap, 0L);
+        cardinality = 0;
+    }
+
+    @Override
     public long[] asBitMapArray() {
         return Arrays.copyOf(bitMap, bitMap.length);
     }

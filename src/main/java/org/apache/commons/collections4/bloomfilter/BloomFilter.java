@@ -61,6 +61,11 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     Shape getShape();
 
     /**
+     * Resets the filter to its initial, unpopulated state.
+     */
+    void clear();
+
+    /**
      * Returns {@code true} if this filter contains the specified filter.
      *
      * <p>Specifically this
