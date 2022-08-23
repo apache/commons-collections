@@ -189,8 +189,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     /**
      * Tests that the andCardinality calculations are correct.
-     *
-     * @param filterFactory the factory function to create the filter
      */
     @Test
     public final void testEstimateIntersection() {
@@ -209,8 +207,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     /**
      * Tests that the andCardinality calculations are correct.
-     *
-     * @param filterFactory the factory function to create the filter
      */
     @Test
     public final void testEstimateUnion() {
@@ -331,7 +327,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf6));
     }
 
-    private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
+    private static void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
         IndexProducer indices = IndexProducer.fromIndexArray(values);
         SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
         List<Integer> lst = new ArrayList<>();
