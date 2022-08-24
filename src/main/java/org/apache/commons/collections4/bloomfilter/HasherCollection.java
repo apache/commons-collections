@@ -116,11 +116,15 @@ public class HasherCollection implements Hasher {
 
     /**
      * IndexProducer that will return duplicates from the collection.
-     *
      */
-    class HasherCollectionIndexProducer implements IndexProducer {
+    private class HasherCollectionIndexProducer implements IndexProducer {
         private final Shape shape;
 
+        /**
+         * Create an instance.
+         *
+         * @param shape The shape for the filter.
+         */
         HasherCollectionIndexProducer(Shape shape) {
             this.shape = shape;
         }
