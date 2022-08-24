@@ -155,7 +155,7 @@ public final class SparseBloomFilter implements BloomFilter {
          * because our indices are always in order we can shorten the time necessary to
          * create the longs for the consumer
          */
-        // the currenlty constructed bitMap
+        // the currently constructed bitMap
         long bitMap = 0;
         // the bitmap we are working on
         int idx = 0;
