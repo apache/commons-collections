@@ -63,7 +63,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * Different types of references can be specified for keys and values.
  * The keys can be configured to be weak but the values hard,
  * in which case this class will behave like a
- * <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
+ * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/WeakHashMap.html">
  * {@code WeakHashMap}</a>. However, you can also specify hard keys and
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.

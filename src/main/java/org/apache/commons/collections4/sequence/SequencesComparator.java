@@ -43,7 +43,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * <p>
  * This class implements the comparison algorithm, which is the very efficient
  * algorithm from Eugene W. Myers
- * <a href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
+ * <a href="https://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
  * An O(ND) Difference Algorithm and Its Variations</a>. This algorithm produces
  * the shortest possible
  * {@link EditScript edit script}
@@ -159,7 +159,7 @@ public class SequencesComparator<T> {
      * The snake is found using the MYERS Algorithm (this algorithms has
      * also been implemented in the GNU diff program). This algorithm is
      * explained in Eugene Myers article:
-     * <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
+     * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
      * An O(ND) Difference Algorithm and Its Variations</a>.
      *
      * @param start1  the begin of the first sequence to be compared

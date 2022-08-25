@@ -42,7 +42,7 @@
  * <p>
  * The package uses a very efficient comparison algorithm designed by
  * Eugene W. Myers and described in his paper: <a
- * href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An O(ND)
+ * href="https://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An O(ND)
  * Difference Algorithm and Its Variations</a>. This algorithm produces
  * the shortest possible
  * {@link org.apache.commons.collections4.sequence.EditScript edit script} containing
