@@ -1213,8 +1213,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * "removeValue" method.)
      * </p>
      * <p>
-     * See bug <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=9573">
-     * 9573</a>.
+     * See bug <a href="https://issues.apache.org/jira/browse/COLLECTIONS-92">
+     * COLLECTIONS-92</a>.
      * </p>
      */
     @Test
