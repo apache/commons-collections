@@ -24,7 +24,7 @@
 <!-- ================================================== -->
 <section name="Building Commons Collections">
 <p>
-  Commons Collections uses <a href="http://maven.apache.org">Maven 3</a> as its
+  Commons Collections uses <a href="https://maven.apache.org">Maven 3</a> as its
   primary build system.
 </p>
 </section>
