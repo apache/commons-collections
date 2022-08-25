@@ -174,7 +174,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testClear() {
-        BloomFilter bf1 = createFilter(getTestShape(), from1);
+        BloomFilter bf1 = createEmptyFilter(getTestShape());
+        bf1.merge(from1);
         assertNotEquals(0, bf1.cardinality());
         bf1.clear();
         assertEquals(0, bf1.cardinality());
