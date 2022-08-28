@@ -1062,7 +1062,7 @@ features, this release includes numerous bug fixes.
     </action>
     <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
       "CaseInsensitiveMap" will now convert input strings to lower-case in a
-      locale-independant manner.
+      locale-independent manner.
     </action>
     <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
       Added support for using custom "Equator" objects in "EqualPredicate".
