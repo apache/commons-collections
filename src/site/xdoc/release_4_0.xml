@@ -263,7 +263,7 @@ have changed.
 <li>"SetUniqueList#subList()#contains(Object)" will now correctly check the subList rather than the parent list. Thanks to Christian Semrau.</li>
 <li>"SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint. Thanks to Rafał Figas,Bjorn Townsend.</li>
 <li>Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries to modify the collection. Thanks to Emmanuel Bourg.</li>
-<li>"CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independant manner. Thanks to Benjamin Bentmann.</li>
+<li>"CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independent manner. Thanks to Benjamin Bentmann.</li>
 <li>Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects in the list are not transformed. Thanks to Paul Benedict.</li>
 <li>"MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible.</li>
 <li>Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap". Thanks to Lisen Mu.</li>
