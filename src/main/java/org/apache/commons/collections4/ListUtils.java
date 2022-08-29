@@ -284,7 +284,7 @@ public class ListUtils {
 
     /**
      * Tests two lists for value-equality as per the equality contract in
-     * {@link java.util.List#equals(java.lang.Object)}.
+     * {@link java.util.List#equals(Object)}.
      * <p>
      * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other

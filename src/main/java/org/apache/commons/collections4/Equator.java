@@ -20,7 +20,7 @@ package org.apache.commons.collections4;
  * An equation function, which determines equality between objects of type T.
  * <p>
  * It is the functional sibling of {@link java.util.Comparator}; {@link Equator} is to
- * {@link Object} as {@link java.util.Comparator} is to {@link java.lang.Comparable}.
+ * {@link Object} as {@link java.util.Comparator} is to {@link Comparable}.
  * </p>
  *
  * @param <T> the types of object this {@link Equator} can evaluate.
