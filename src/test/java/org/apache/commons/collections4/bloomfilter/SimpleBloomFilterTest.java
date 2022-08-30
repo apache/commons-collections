@@ -25,25 +25,4 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
         return new SimpleBloomFilter(shape);
     }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(hasher);
-        return bf;
-    }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(producer);
-        return bf;
-    }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(producer);
-        return bf;
-    }
 }

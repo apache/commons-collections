@@ -70,7 +70,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param hasher the hasher to use to create the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, Hasher hasher);
+    protected final T createFilter(Shape shape, Hasher hasher) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(hasher);
+        return bf;
+    }
 
     /**
      * Create the BloomFilter implementation we are testing.
@@ -79,7 +83,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param producer A BitMap producer to build the filter with.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, BitMapProducer producer);
+    protected final T createFilter(Shape shape, BitMapProducer producer) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(producer);
+        return bf;
+    }
 
     /**
      * Create the BloomFilter implementation we are testing.
@@ -88,7 +96,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param producer An Index producer to build the filter with.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, IndexProducer producer);
+    protected final T createFilter(Shape shape, IndexProducer producer) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(producer);
+        return bf;
+    }
 
     /**
      *

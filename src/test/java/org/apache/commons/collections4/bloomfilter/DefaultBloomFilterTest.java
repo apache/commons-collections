@@ -34,21 +34,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         return new SparseDefaultBloomFilter(shape);
     }
 
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return new SparseDefaultBloomFilter(shape, hasher);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
     @Test
     public void testDefaultBloomFilterSimpleSpecificMerge() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
@@ -62,7 +47,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(shape);
-        AbstractDefaultBloomFilter filter2 = new SparseDefaultBloomFilter(shape, new IncrementingHasher(0, 1));
+        AbstractDefaultBloomFilter filter2 = createFilter(shape, new IncrementingHasher(0, 1));
         BloomFilter newFilter = filter.copy();
         newFilter.merge(filter2);
         assertEquals(3, newFilter.cardinality());
@@ -90,26 +75,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         AbstractDefaultBloomFilter(Shape shape) {
             this.shape = shape;
             this.indices = new TreeSet<>();
-        }
-
-        AbstractDefaultBloomFilter(Shape shape, Hasher hasher) {
-            this(shape, hasher.indices(shape));
-        }
-
-        AbstractDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            this(shape, IndexProducer.fromBitMapProducer(producer));
-        }
-
-        AbstractDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            this(shape);
-            producer.forEachIndex((i) -> {
-                indices.add(i);
-                return true;
-            });
-            if (this.indices.floor(-1) != null || this.indices.ceiling(shape.getNumberOfBits()) != null) {
-                throw new IllegalArgumentException(
-                        String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-            }
         }
 
         @Override
@@ -171,7 +136,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(IndexProducer indexProducer) {
-            boolean result = indexProducer.forEachIndex(indices::add);
+            boolean result = indexProducer.forEachIndex((x) -> {indices.add(x); return true;});
             checkIndicesRange();
             return result;
         }
@@ -188,18 +153,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
-
-        SparseDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            super(shape, producer);
-        }
-
-        SparseDefaultBloomFilter(Shape shape, Hasher hasher) {
-            super(shape, hasher);
-        }
-
-        SparseDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            super(shape, producer);
-        }
 
         SparseDefaultBloomFilter(Shape shape) {
             super(shape);
@@ -219,18 +172,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
-
-        NonSparseDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            super(shape, producer);
-        }
-
-        NonSparseDefaultBloomFilter(Shape shape, Hasher hasher) {
-            super(shape, hasher);
-        }
-
-        NonSparseDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            super(shape, producer);
-        }
 
         NonSparseDefaultBloomFilter(Shape shape) {
             super(shape);

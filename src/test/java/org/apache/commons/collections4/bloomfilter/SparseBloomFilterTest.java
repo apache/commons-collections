@@ -31,28 +31,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         return new SparseBloomFilter(shape);
     }
 
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        SparseBloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(hasher);
-        return bf;
-    }
-
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        SparseBloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(producer);
-        return bf;
-    }
-
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        SparseBloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(producer);
-        return bf;
-    }
-
-
     @Test
     public void testBitMapProducerEdgeCases() {
         int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71 };
