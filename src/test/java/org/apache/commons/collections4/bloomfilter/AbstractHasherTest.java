@@ -98,7 +98,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         producer = hasher.uniqueIndices(shape);
         List<Integer> unique = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
         assertTrue(full.size() > unique.size());
-        Set<Integer> set = new HashSet<Integer>(unique);
+        Set<Integer> set = new HashSet<>(unique);
         assertEquals(set.size(), unique.size());
     }
 }

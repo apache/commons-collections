@@ -96,11 +96,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     default boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        try {
-            return add(BitCountProducer.from(other));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(e);
-        }
+        return merge((IndexProducer) other);
     }
 
     /**
@@ -121,7 +117,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
             return add(BitCountProducer.from(hasher.uniqueIndices(getShape())));
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
         }
     }
 
@@ -132,7 +128,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: This method expects and index producer that does not return duplicates.</p>
+     * <p>Note: Indices that are returned multiple times will be incremented multiple times.</p>
      *
      * @param indexProducer the IndexProducer
      * @return {@code true} if the removal was successful and the state is valid
@@ -145,7 +141,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
             return add(BitCountProducer.from(indexProducer));
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
         }
     }
 
@@ -162,6 +158,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #add(BitCountProducer)
      */
     default boolean merge(final BitMapProducer bitMapProducer) {
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
@@ -182,7 +179,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     default boolean remove(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return subtract(BitCountProducer.from(other));
+        return remove((IndexProducer) other);
     }
 
     /**
@@ -203,7 +200,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     default boolean remove(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return subtract(BitCountProducer.from(hasher.uniqueIndices(getShape())));
+        return remove(hasher.uniqueIndices(getShape()));
     }
 
     /**

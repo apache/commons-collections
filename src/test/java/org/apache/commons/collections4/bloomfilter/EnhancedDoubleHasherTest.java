@@ -50,12 +50,12 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
         // 2 bytes become initial and increment.
         hasher = new EnhancedDoubleHasher(new byte[] { 1, 2 });
         assertEquals(0x01_00_00_00_00_00_00_00L, hasher.getInitial());
-        assertEquals(0x200000000000000L, hasher.getIncrement());
+        assertEquals(0x02_00_00_00_00_00_00_00L, hasher.getIncrement());
 
         // odd values place extra byte in increment.
         hasher = new EnhancedDoubleHasher(new byte[] { 1, 2, 3 });
         assertEquals(0x01_00_00_00_00_00_00_00L, hasher.getInitial());
-        assertEquals(0x203000000000000L, hasher.getIncrement());
+        assertEquals(0x02_03_00_00_00_00_00_00L, hasher.getIncrement());
 
         // even short split
         hasher = new EnhancedDoubleHasher(new byte[] {0, 1, 0, 2 });

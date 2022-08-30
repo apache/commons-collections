@@ -34,6 +34,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         return new SparseDefaultBloomFilter(shape);
     }
 
+    @Override
+    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final Hasher hasher) {
+        return new SparseDefaultBloomFilter(shape, hasher);
+    }
+
+    @Override
+    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
+        return new SparseDefaultBloomFilter(shape, producer);
+    }
+
+    @Override
+    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
+        return new SparseDefaultBloomFilter(shape, producer);
+    }
+
     @Test
     public void testDefaultBloomFilterSimpleSpecificMerge() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
@@ -201,7 +216,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             result.indices.addAll(indices);
             return result;
         }
-
     }
 
     static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
