@@ -135,7 +135,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
      */
-    boolean merge(BloomFilter other);
+    default boolean merge(BloomFilter other) {
+        return (characteristics() & SPARSE) != 0 ? merge( (IndexProducer) other ) : merge( (BitMapProducer)other);
+    }
 
     /**
      * Merges the specified hasher into this Bloom filter. Specifically all
@@ -151,11 +153,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        Shape shape = getShape();
-        // create the Bloom filter that is most likely to merge quickly with this one
-        BloomFilter result = (characteristics() & SPARSE) != 0 ? new SparseBloomFilter(shape) : new SimpleBloomFilter(shape);
-        result.merge(hasher);
-        return merge(result);
+        return merge( hasher.indices(getShape()));
     }
 
     /**
