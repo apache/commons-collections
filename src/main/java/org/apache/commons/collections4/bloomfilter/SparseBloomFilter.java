@@ -85,7 +85,7 @@ public final class SparseBloomFilter implements BloomFilter {
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                        this.indices.last(), shape.getNumberOfBits()));
+                        this.indices.last(), shape.getNumberOfBits()-1));
             }
             if (this.indices.first() < 0) {
                 throw new IllegalArgumentException(
