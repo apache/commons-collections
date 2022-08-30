@@ -124,7 +124,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         int[] idx = f.asIndexArray();
         assertEquals(getTestShape().getNumberOfHashFunctions(), idx.length);
         for (int i=0; i<idx.length; i++) {
-            assertEquals(i+1, idx[i]);
+            assertEquals(i + 1, idx[i]);
         }
     }
 
@@ -356,7 +356,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf6));
     }
 
-    private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
+    private void assertIndexProducerMerge(Shape shape, int[] values, int[] expected) {
         IndexProducer indices = IndexProducer.fromIndexArray(values);
         BloomFilter filter = createFilter(shape, indices);
         List<Integer> lst = new ArrayList<>();
@@ -376,18 +376,18 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testIndexProducerConstructor() {
+    public void testIndexProducerMerge() {
         Shape shape = Shape.fromKM(5, 10);
 
-        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
+        assertIndexProducerMerge(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
         // test duplicate values
-        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
+        assertIndexProducerMerge(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
         // test negative values
         assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, -2, 8 });
         // test index too large
         assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, 12, 8 });
         // test no indices
-        assertIndexProducerConstructor(shape, new int[0], new int[0]);
+        assertIndexProducerMerge(shape, new int[0], new int[0]);
     }
 
     @Test

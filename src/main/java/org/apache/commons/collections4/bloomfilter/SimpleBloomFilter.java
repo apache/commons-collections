@@ -137,8 +137,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        merge(hasher.indices(shape));
-        return true;
+        return merge(hasher.indices(shape));
     }
 
     @Override

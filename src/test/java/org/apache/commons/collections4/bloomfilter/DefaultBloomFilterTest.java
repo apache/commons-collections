@@ -124,6 +124,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                 }
             }
         }
+
         @Override
         public boolean merge(BloomFilter other) {
             other.forEachIndex((i) -> {
