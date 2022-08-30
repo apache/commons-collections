@@ -20,46 +20,34 @@
  *
  * <h2>Background:</h2>
  *
- * <p>
- * The Bloom filter is a probabilistic data structure that indicates where things are not. Conceptually it is a bit
+ * <p>The Bloom filter is a probabilistic data structure that indicates where things are not. Conceptually it is a bit
  * vector. You create a Bloom filter by creating hashes and converting those to enabled bits in the vector. Multiple
  * Bloom filters may be merged together into one Bloom filter. It is possible to test if a filter {@code B} has merged
- * into another filter {@code A} by verifying that {@code (A & B) == B}.
- * </p>
+ * into another filter {@code A} by verifying that {@code (A & B) == B}.</p>
  *
- * <p>
- * Bloom filters are generally used where hash tables would be too large, or as a filter front end for longer processes.
+ * <p>Bloom filters are generally used where hash tables would be too large, or as a filter front end for longer processes.
  * For example most browsers have a Bloom filter that is built from all known bad URLs (ones that serve up malware).
  * When you enter a URL the browser builds a Bloom filter and checks to see if it is "in" the bad URL filter. If not the
  * URL is good, if it matches, then the expensive lookup on a remote system is made to see if it actually is in the
  * list. There are lots of other uses, and in most cases the reason is to perform a fast check as a gateway for a longer
- * operation.
- * </p>
+ * operation.</p>
  *
  * <h3>BloomFilter</h3>
  *
- * <p>
- * The Bloom filter architecture here is designed for speed of execution, so some methods like {@code merge}, {@code remove},
+ * <p>The Bloom filter architecture here is designed for speed of execution, so some methods like {@code merge}, {@code remove},
  * {@code add}, and {@code subtract} may throw exceptions.  One an exception is thrown the state of the Bloom filter is unknown.
- * The choice to use not use atomic transactions was made to achive maximum performance under correct usage.
- * </p>
+ * The choice to use not use atomic transactions was made to achive maximum performance under correct usage.</p>
  * 
- * <p>
- * In addition the architecture is designed so that the implementation of the storage of bits is abstracted.
+ * <p>In addition the architecture is designed so that the implementation of the storage of bits is abstracted.
  * Programs that utilize the Bloom filters may use the {@code BitMapProducer} or {@code IndexProducer} to retrieve a
  * representation of the internal structure. Additional methods are available in the {@code BitMap} to assist in
- * manipulation of the representations.
- * </p>
+ * manipulation of the representations.</p>
  *
- * <p>
- * The bloom filter code is an interface that requires implementation of 9 methods:
- * </p>
+ * <p>The bloom filter code is an interface that requires implementation of 9 methods:</p>
  * <ul>
  * <li>{@code cardinality()} returns the number of bits enabled in the Bloom filter.</li>
  *
- * <li>{@code characteristics()} which Returns a bitmap int of characteristics values.
- * 
- * </li>
+ * <li>{@code characteristics()} which Returns a bitmap int of characteristics values.</li>
  *
  * <li>{@code clear()} which resets the Bloomfilter to its initial empty state.</li>
  *
@@ -70,61 +58,47 @@
  *
  * <li>{@code getShape()} which returns the shape the Bloom filter was created with.</li>
  * 
- * <li>{@code characteristics()} which Returns a bitmap int of characteristics values.
+ * <li>{@code characteristics()} which an integer of characteristics flags.</li>
  * 
- * @see BloomFilter#SPARSE</li>
+ * <li>{@code merge(BitMapProducer)} which Merges the BitMaps from the BitMapProducer into the internal
+ * representation of the Bloom filter.</li>
+ * </ul>
  *
- *      <li>{@code merge(BitMapProducer)} which Merges the BitMaps from the BitMapProducer into the internal
- *      representation of the Bloom filter.</li>
- *      </ul>
- *
- *      <li>{@code merge(IndexProducer)} which Merges the indices from the IndexProducer into the internal
- *      representation of the Bloom filter.</li>
+ * <li>{@code merge(IndexProducer)} which Merges the indices from the IndexProducer into the internal
+ * representation of the Bloom filter.</li>
  * 
- *      <p>
- *      Other methods should be implemented where they can be done so more efficiently than the default implementations.
- *      </p>
+ * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.</p>
  *
- *      <h3>CountingBloomFilter</h3>
+ * <h3>CountingBloomFilter</h3>
  *
- *      <p>
- *      The counting bloom filter extends the Bloom filter by counting the number of times a specific bit has been
- *      enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
- *      overhead.
- *      </p>
+ * <p>The counting bloom filter extends the Bloom filter by counting the number of times a specific bit has been
+ * enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
+ * overhead.</p>
  *
- *      <h3>Shape</h3>
+ * <h3>Shape</h3>
  *
- *      <p>
- *      The Shape describes the Bloom filter using the number of bits and the number of hash functions
- *      </p>
+ * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions</p>
  *
- *      <h3>Hasher</h3>
+ * <h3>Hasher</h3>
  *
- *      <p>
- *      A Hasher converts bytes into a series of integers based on a Shape. With the exception of the HasherCollecton,
- *      each hasher represents one item being added to the Bloom filter. The HasherCollection represents the number of
- *      items as the sum of the number of items represented by the Hashers in the collection.
- *      </p>
+ * <p>A Hasher converts bytes into a series of integers based on a Shape. With the exception of the HasherCollecton,
+ * each hasher represents one item being added to the Bloom filter. The HasherCollection represents the number of
+ * items as the sum of the number of items represented by the Hashers in the collection.</p>
  *
- *      <p>
- *      The EnhancedDoubleHasher uses a combinatorial generation technique to create the integers. It is easily
- *      initialized by using a byte array returned by the standard {@code MessageDigest} or other Hash function to
- *      initialize the Hasher. Alternatively a pair of a long values may also be used.
- *      </p>
+ * <p>The EnhancedDoubleHasher uses a combinatorial generation technique to create the integers. It is easily
+ * initialized by using a byte array returned by the standard {@code MessageDigest} or other Hash function to
+ * initialize the Hasher. Alternatively a pair of a long values may also be used.</p>
  *
- *      <p>
- *      Other implementations of the Hasher are easy to implement, and should make use of the {@code Hasher.Filter}
- *      and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices when implementing
- *      {@code Hasher.uniqueIndices(Shape)}.
- *      </p>
+ * <p>Other implementations of the Hasher are easy to implement, and should make use of the {@code Hasher.Filter}
+ * and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices when implementing
+ * {@code Hasher.uniqueIndices(Shape)}.</p>
  *
- *      <h2>References</h2>
+ * <h2>References</h2>
  *
- *      <ol>
- *      <li>https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf</li>
- *      <li>https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60</li>
- *      </ol>
+ * <ol>
+ * <li>https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf</li>
+ * <li>https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60</li>
+ * </ol>
  *
  * @since 4.5
  */
