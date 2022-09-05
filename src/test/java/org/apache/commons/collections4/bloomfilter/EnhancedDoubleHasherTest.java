@@ -43,37 +43,37 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     @Test
     public void testByteConstructor() {
         // single value become increment.
-        EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(new byte[] { 1 });
+        EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(new byte[] {1});
         assertEquals(0, hasher.getInitial());
         assertEquals(0x01_00_00_00_00_00_00_00L, hasher.getIncrement());
 
         // 2 bytes become initial and increment.
-        hasher = new EnhancedDoubleHasher(new byte[] { 1, 2 });
+        hasher = new EnhancedDoubleHasher(new byte[] {1, 2});
         assertEquals(0x01_00_00_00_00_00_00_00L, hasher.getInitial());
         assertEquals(0x02_00_00_00_00_00_00_00L, hasher.getIncrement());
 
         // odd values place extra byte in increment.
-        hasher = new EnhancedDoubleHasher(new byte[] { 1, 2, 3 });
+        hasher = new EnhancedDoubleHasher(new byte[] {1, 2, 3});
         assertEquals(0x01_00_00_00_00_00_00_00L, hasher.getInitial());
         assertEquals(0x02_03_00_00_00_00_00_00L, hasher.getIncrement());
 
         // even short split
-        hasher = new EnhancedDoubleHasher(new byte[] {0, 1, 0, 2 });
+        hasher = new EnhancedDoubleHasher(new byte[] {0, 1, 0, 2});
         assertEquals(0x01_00_00_00_00_00_00L, hasher.getInitial());
         assertEquals(0x02_00_00_00_00_00_00L, hasher.getIncrement());
 
         // longs are parse correctly
-        hasher = new EnhancedDoubleHasher(new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2 });
+        hasher = new EnhancedDoubleHasher(new byte[] {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2});
         assertEquals(1, hasher.getInitial());
         assertEquals(2, hasher.getIncrement());
 
         // excess bytes are ignored before mid point and at end
-        hasher = new EnhancedDoubleHasher(new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 2, 5, 5 });
+        hasher = new EnhancedDoubleHasher(new byte[] {0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 0, 0, 0, 0, 0, 0, 0, 2, 5, 5});
         assertEquals(1, hasher.getInitial());
         assertEquals(2, hasher.getIncrement());
 
         // odd extra bytes are accounted for correctly
-        hasher = new EnhancedDoubleHasher(new byte[] { 0, 0, 0, 0, 0, 0, 0, 1, 5, 1, 0, 0, 0, 0, 0, 0, 2, 5, 5 });
+        hasher = new EnhancedDoubleHasher(new byte[] {0, 0, 0, 0, 0, 0, 0, 1, 5, 1, 0, 0, 0, 0, 0, 0, 2, 5, 5});
         assertEquals(1, hasher.getInitial());
         assertEquals(0x01_00_00_00_00_00_00_02L, hasher.getIncrement());
 
