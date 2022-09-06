@@ -34,31 +34,28 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         return new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate predicate)
-            {
+            public boolean forEachIndex(IntPredicate predicate) {
                 return true;
             }
         };
     }
-    
+
     @Test
     public void testFromBitMapProducer() {
         IndexProducer ip = IndexProducer.fromBitMapProducer(BitMapProducer.fromBitMapArray( 0x07ffL));
         int[] ary = ip.asIndexArray();
         assertEquals(11, ary.length);
-        for (int i=0;i<11;i++)
-        {
+        for (int i=0; i<11; i++) {
             assertEquals(i, ary[i]);
         }
     }
-    
+
     @Test
     public void testFromIndexArray() {
         IndexProducer ip = IndexProducer.fromIndexArray(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         int[] ary = ip.asIndexArray();
         assertEquals(11, ary.length);
-        for (int i=0;i<11;i++)
-        {
+        for (int i=0; i<11; i++) {
             assertEquals(i, ary[i]);
         }
     }

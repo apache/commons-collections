@@ -145,7 +145,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
         final BloomFilter bf = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class, () -> bf.merge(badProducer));
-        
+
         // test where merged bits exceed expected bits but both bitmaps are the same length.
         final BitMapProducer badProducer2 = BitMapProducer.fromBitMapArray(0x80_00_00_00_00_00_00_00L);
         final BloomFilter bf2 = createEmptyFilter(Shape.fromKM(3, 32));

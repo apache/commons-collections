@@ -223,7 +223,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf2, from1Counts);
 
         // test underflow
-
         final CountingBloomFilter bf3 = createFilter(getTestShape(), from1);
         assertFalse(bf3.remove(simple), "Subtract should not work");
         assertFalse(bf3.isValid(), "isValid should return false");
@@ -231,9 +230,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(simple), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
-        
+
         // with IndexProducer
-         
         IndexProducer ip = from11.indices(getTestShape());
 
         final CountingBloomFilter bf4 = createFilter(getTestShape(), from1);
@@ -257,7 +255,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf5, from1Counts);
 
         // test producer errors
-        IndexProducer ip2 = IndexProducer.fromIndexArray( 1,2,getTestShape().getNumberOfBits());
+        IndexProducer ip2 = IndexProducer.fromIndexArray(1, 2, getTestShape().getNumberOfBits());
         final CountingBloomFilter bf6 = createFilter(getTestShape(), from1);
         assertThrows( IllegalArgumentException.class, () -> bf6.remove(ip2));
 

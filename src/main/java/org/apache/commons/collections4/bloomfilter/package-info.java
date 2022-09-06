@@ -37,7 +37,7 @@
  * <p>The Bloom filter architecture here is designed for speed of execution, so some methods like {@code merge}, {@code remove},
  * {@code add}, and {@code subtract} may throw exceptions.  One an exception is thrown the state of the Bloom filter is unknown.
  * The choice to use not use atomic transactions was made to achive maximum performance under correct usage.</p>
- * 
+ *
  * <p>In addition the architecture is designed so that the implementation of the storage of bits is abstracted.
  * Programs that utilize the Bloom filters may use the {@code BitMapProducer} or {@code IndexProducer} to retrieve a
  * representation of the internal structure. Additional methods are available in the {@code BitMap} to assist in
@@ -57,16 +57,16 @@
  * <li>{@code copy()} which returns a fresh copy of the bitmap.</li>
  *
  * <li>{@code getShape()} which returns the shape the Bloom filter was created with.</li>
- * 
+ *
  * <li>{@code characteristics()} which an integer of characteristics flags.</li>
- * 
+ *
  * <li>{@code merge(BitMapProducer)} which Merges the BitMaps from the BitMapProducer into the internal
  * representation of the Bloom filter.</li>
  * </ul>
  *
  * <li>{@code merge(IndexProducer)} which Merges the indices from the IndexProducer into the internal
  * representation of the Bloom filter.</li>
- * 
+ *
  * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.</p>
  *
  * <h3>CountingBloomFilter</h3>
