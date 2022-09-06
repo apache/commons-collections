@@ -62,10 +62,10 @@
  *
  * <li>{@code merge(BitMapProducer)} which Merges the BitMaps from the BitMapProducer into the internal
  * representation of the Bloom filter.</li>
- * </ul>
  *
  * <li>{@code merge(IndexProducer)} which Merges the indices from the IndexProducer into the internal
  * representation of the Bloom filter.</li>
+ * </ul>
  *
  * <p>Other methods should be implemented where they can be done so more efficiently than the default implementations.</p>
  *
