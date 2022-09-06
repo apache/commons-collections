@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.function.LongPredicate;
+
+import org.junit.jupiter.api.Test;
 
 public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
@@ -51,5 +55,31 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
             }
             return true;
         }
+    }
+    
+    @Test
+    public void testDefaultExpansion() {
+        BitMapProducer bmp = BitMapProducer.fromBitMapArray(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L);
+        long[] ary = bmp.asBitMapArray();
+        assertEquals( 17,  ary.length);
+        for (int i=0;i<17;i++)
+        {
+            assertEquals((long)i, ary[i]);
+        }
+    }
+    
+    @Test
+    public void testFromIndexProducer() {
+        IndexProducer ip = IndexProducer.fromIndexArray(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        long[] ary = BitMapProducer.fromIndexProducer(ip, 16).asBitMapArray();
+        assertEquals(1, ary.length);
+        assertEquals(0x07ffL, ary[0]);
+    }
+    
+    @Test
+    public void testFromBitMapArray() {
+        long[] ary = BitMapProducer.fromBitMapArray(0x07ffL).asBitMapArray();
+        assertEquals(1, ary.length);
+        assertEquals(0x07ffL, ary[0]);
     }
 }

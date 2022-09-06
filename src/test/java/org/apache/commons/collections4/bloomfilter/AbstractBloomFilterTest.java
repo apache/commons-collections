@@ -129,7 +129,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testMergeWitBitMapProducer() {
+    public void testMergeWithBitMapProducer() {
         long[] values = { from11Value, 0x9L };
         BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
         List<Long> lst = new ArrayList<>();
@@ -141,10 +141,15 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         }));
         assertTrue(lst.isEmpty());
 
-        BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
         // values too large
+        final BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
         final BloomFilter bf = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class, () -> bf.merge(badProducer));
+        
+        // test where merged bits exceed expected bits but both bitmaps are the same length.
+        final BitMapProducer badProducer2 = BitMapProducer.fromBitMapArray(0x80_00_00_00_00_00_00_00L);
+        final BloomFilter bf2 = createEmptyFilter(Shape.fromKM(3, 32));
+        assertThrows(IllegalArgumentException.class, () -> bf2.merge(badProducer2));
     }
 
     @Test

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -224,13 +225,45 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         // test underflow
 
         final CountingBloomFilter bf3 = createFilter(getTestShape(), from1);
-
         assertFalse(bf3.remove(simple), "Subtract should not work");
         assertFalse(bf3.isValid(), "isValid should return false");
         assertFalse(bf3.contains(from1), "Should not contain");
         assertFalse(bf3.contains(simple), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+        
+        // with IndexProducer
+         
+        IndexProducer ip = from11.indices(getTestShape());
+
+        final CountingBloomFilter bf4 = createFilter(getTestShape(), from1);
+        bf4.add(BitCountProducer.from(from11.indices(getTestShape())));
+
+        assertTrue(bf4.remove(ip), "Remove should work");
+        assertFalse(bf4.contains(from11), "Should not contain");
+        assertTrue(bf4.contains(from1), "Should contain");
+
+        assertCounts(bf4, from1Counts);
+
+        // with BitMapProducer
+        final BitMapProducer bmp = BitMapProducer.fromIndexProducer(ip, getTestShape().getNumberOfBits());
+        final CountingBloomFilter bf5 = createFilter(getTestShape(), from1);
+        bf5.add(BitCountProducer.from(from11.indices(getTestShape())));
+
+        assertTrue(bf5.remove(bmp), "Remove should work");
+        assertFalse(bf5.contains(from11), "Should not contain");
+        assertTrue(bf5.contains(from1), "Should contain");
+
+        assertCounts(bf5, from1Counts);
+
+        // test producer errors
+        IndexProducer ip2 = IndexProducer.fromIndexArray( 1,2,getTestShape().getNumberOfBits());
+        final CountingBloomFilter bf6 = createFilter(getTestShape(), from1);
+        assertThrows( IllegalArgumentException.class, () -> bf6.remove(ip2));
+
+        final CountingBloomFilter bf7 = createFilter(getTestShape(), from1);
+        final BitMapProducer bmp2 = BitMapProducer.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
+        assertThrows( IllegalArgumentException.class, () -> bf7.remove(bmp2));
     }
 
     @Test
