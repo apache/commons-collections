@@ -54,7 +54,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void testHasherBasedMergeInPlaceWithDifferingSparseness() {
+    public void testHasherBasedMergeWithDifferingSparseness() {
         Hasher hasher = new IncrementingHasher(1, 1);
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
@@ -123,16 +123,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                             String.format("Value in list %s is less than 0", indices.first()));
                 }
             }
-        }
-
-        @Override
-        public boolean merge(BloomFilter other) {
-            other.forEachIndex((i) -> {
-                indices.add(i);
-                return true;
-            });
-            checkIndicesRange();
-            return true;
         }
 
         @Override
