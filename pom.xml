@@ -590,7 +590,7 @@
     <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>3.2.0</checkstyle.version>
     <checkstyle.dep.version>9.3</checkstyle.dep.version>
-    <commons.pmd.version>3.18.0</commons.pmd.version>
+    <commons.pmd.version>3.19.0</commons.pmd.version>
     <commons.pmd-impl.version>6.49.0</commons.pmd-impl.version>
 
     <commons.site.path>collections</commons.site.path>
