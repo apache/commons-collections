@@ -47,7 +47,7 @@
  * <ul>
  * <li>{@link BloomFilter#cardinality()} returns the number of bits enabled in the Bloom filter.</li>
  *
- * <li>{@link BloomFilter#characteristics()} which returns a integer of characteristics flags.</li>
+ * <li>{@link BloomFilter#characteristics()} which returns an integer of characteristics flags.</li>
  *
  * <li>{@link BloomFilter#clear()} which resets the Bloomfilter to its initial empty state.</li>
  *
