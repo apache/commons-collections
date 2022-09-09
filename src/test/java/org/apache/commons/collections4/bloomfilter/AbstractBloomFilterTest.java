@@ -24,8 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
-import java.util.SortedSet;
 
 import org.junit.jupiter.api.Test;
 
@@ -121,7 +121,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithHasher() {
-        for (int i=0; i<5000; i++) {
+        for (int i = 0; i < 5; i++) {
             final BloomFilter f = createEmptyFilter(getTestShape());
             int[] expected = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
             Hasher hasher = new ArrayHasher(expected);
@@ -133,7 +133,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithBitMapProducer() {
-        for (int i=0; i<5000; i++) {
+        for (int i = 0; i < 5; i++) {
             long[] values = new long[2];
             for (int idx :  DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits())) {
                 BitMap.set(values, idx);
@@ -161,12 +161,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithIndexProducer() {
-        for (int i=0; i<5000; i++) {
+        for (int i = 0; i < 5; i++) {
             int[] values = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
             BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
-            SortedSet<Integer> uniqueValues = DefaultIndexProducerTest.uniqueSet(values);
+            BitSet uniqueValues = DefaultIndexProducerTest.uniqueSet(values);
             assertTrue(f.forEachIndex(idx -> {
-                return uniqueValues.remove(Integer.valueOf(idx));
+                final boolean result = uniqueValues.get(idx);
+                uniqueValues.clear(idx);
+                return result;
             }));
             assertTrue(uniqueValues.isEmpty());
         }
