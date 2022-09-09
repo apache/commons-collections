@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -94,7 +95,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
     @Test
     public final void testCountingBloomFilterSpecificContains() {
-        final BloomFilter bf = new SimpleBloomFilter(getTestShape(), from1);
+        final BloomFilter bf = new SimpleBloomFilter(getTestShape());
+        bf.merge(from1);
         final CountingBloomFilter bf2 = createFilter(getTestShape(), bigHasher);
 
         assertTrue(bf.contains(bf), "BF Should contain itself");
@@ -112,7 +114,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     public final void testCountingSpecificMerge() {
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
 
-        final BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), from11);
+        final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
+        bf2.merge(from11);
 
         final BloomFilter bf3 = bf1.copy();
         bf3.merge(bf2);
@@ -133,7 +136,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf5.isValid(), "Should be valid");
 
         CountingBloomFilter bf6 = bf5.copy();
-        bf6.merge(new SimpleBloomFilter(getTestShape(), from1));
+        BloomFilter bf7 = new SimpleBloomFilter(getTestShape());
+        bf7.merge(from1);
+        bf6.merge(bf7);
         assertFalse(bf6.isValid(), "Should not be valid");
     }
 
@@ -195,10 +200,13 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
      */
     @Test
     public final void testRemove() {
+        BloomFilter simple = new SimpleBloomFilter(getTestShape());
+        simple.merge(from11);
+
         final CountingBloomFilter bf1 = createFilter(getTestShape(), from1);
         bf1.add(BitCountProducer.from(from11.indices(getTestShape())));
 
-        assertTrue(bf1.remove(new SimpleBloomFilter(getTestShape(), from11)), "Remove should work");
+        assertTrue(bf1.remove(simple), "Remove should work");
         assertFalse(bf1.contains(from11), "Should not contain");
         assertTrue(bf1.contains(from1), "Should contain");
 
@@ -215,17 +223,45 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf2, from1Counts);
 
         // test underflow
-
         final CountingBloomFilter bf3 = createFilter(getTestShape(), from1);
-
-        final BloomFilter bf4 = new SimpleBloomFilter(getTestShape(), from11);
-
-        assertFalse(bf3.remove(bf4), "Subtract should not work");
+        assertFalse(bf3.remove(simple), "Subtract should not work");
         assertFalse(bf3.isValid(), "isValid should return false");
         assertFalse(bf3.contains(from1), "Should not contain");
-        assertFalse(bf3.contains(bf4), "Should not contain");
+        assertFalse(bf3.contains(simple), "Should not contain");
 
         assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+
+        // with IndexProducer
+        IndexProducer ip = from11.indices(getTestShape());
+
+        final CountingBloomFilter bf4 = createFilter(getTestShape(), from1);
+        bf4.add(BitCountProducer.from(from11.indices(getTestShape())));
+
+        assertTrue(bf4.remove(ip), "Remove should work");
+        assertFalse(bf4.contains(from11), "Should not contain");
+        assertTrue(bf4.contains(from1), "Should contain");
+
+        assertCounts(bf4, from1Counts);
+
+        // with BitMapProducer
+        final BitMapProducer bmp = BitMapProducer.fromIndexProducer(ip, getTestShape().getNumberOfBits());
+        final CountingBloomFilter bf5 = createFilter(getTestShape(), from1);
+        bf5.add(BitCountProducer.from(from11.indices(getTestShape())));
+
+        assertTrue(bf5.remove(bmp), "Remove should work");
+        assertFalse(bf5.contains(from11), "Should not contain");
+        assertTrue(bf5.contains(from1), "Should contain");
+
+        assertCounts(bf5, from1Counts);
+
+        // test producer errors
+        IndexProducer ip2 = IndexProducer.fromIndexArray(1, 2, getTestShape().getNumberOfBits());
+        final CountingBloomFilter bf6 = createFilter(getTestShape(), from1);
+        assertThrows( IllegalArgumentException.class, () -> bf6.remove(ip2));
+
+        final CountingBloomFilter bf7 = createFilter(getTestShape(), from1);
+        final BitMapProducer bmp2 = BitMapProducer.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
+        assertThrows( IllegalArgumentException.class, () -> bf7.remove(bmp2));
     }
 
     @Test
@@ -247,20 +283,12 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.merge(hasher);
         assertEquals(6, bf1.cardinality());
         bf1.forEachCount((x, y) -> {
-            assertEquals(1, y, "Hasher in mergeInPlace results in value not equal to 1");
-            return true;
-        });
-
-        bf1 = createEmptyFilter(shape);
-        CountingBloomFilter bf2 = bf1.copy();
-        bf2.merge(hasher);
-        assertEquals(6, bf2.cardinality());
-        bf2.forEachCount((x, y) -> {
             assertEquals(1, y, "Hasher in merge results in value not equal to 1");
             return true;
         });
 
-        bf1 = createFilter(shape, hasher);
+        bf1 = createEmptyFilter(shape);
+        bf1.merge(hasher);
         bf1.remove(hasher);
         assertEquals(0, bf1.cardinality());
         assertTrue(bf1.forEachCount((x, y) -> (false)), "Hasher in removes results in value not equal to 0");

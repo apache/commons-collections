@@ -56,58 +56,6 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     /**
-     * Creates an instance that is equivalent to {@code other}.
-     *
-     * @param other The bloom filter to copy.
-     */
-    public SimpleBloomFilter(BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        this.shape = other.getShape();
-        this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        this.cardinality = 0;
-        if ((other.characteristics() & SPARSE) != 0) {
-            merge((IndexProducer) other);
-        } else {
-            merge((BitMapProducer) other);
-        }
-    }
-
-    /**
-     * Creates a populated instance.
-     * @param shape The shape for the filter.
-     * @param hasher the Hasher to initialize the filter with.
-     */
-    public SimpleBloomFilter(final Shape shape, Hasher hasher) {
-        this(shape);
-        Objects.requireNonNull(hasher, "hasher");
-        merge(hasher);
-    }
-
-    /**
-     * Creates a populated instance.
-     * @param shape The shape for the filter.
-     * @param indices the IndexProducer to initialize the filter with.
-     * @throws IllegalArgumentException if producer sends illegal value.
-     */
-    public SimpleBloomFilter(final Shape shape, IndexProducer indices) {
-        this(shape);
-        Objects.requireNonNull(indices, "indices");
-        merge(indices);
-    }
-
-    /**
-     * Creates a populated instance.
-     * @param shape The shape for the filter.
-     * @param bitMaps the BitMapProducer to initialize the filter with.
-     * @throws IllegalArgumentException if the producer returns too many or too few bit maps.
-     */
-    public SimpleBloomFilter(final Shape shape, BitMapProducer bitMaps) {
-        this(shape);
-        Objects.requireNonNull(bitMaps, "bitMaps");
-        merge(bitMaps);
-    }
-
-    /**
      * Copy constructor for {@code copy()} use.
      * @param source
      */
@@ -139,29 +87,24 @@ public final class SimpleBloomFilter implements BloomFilter {
         return new SimpleBloomFilter(this);
     }
 
-    /**
-     * Performs a merge using an IndexProducer.
-     * @param indexProducer the IndexProducer to merge from.
-     * @throws IllegalArgumentException if producer sends illegal value.
-     */
-    private void merge(IndexProducer indexProducer) {
+    @Override
+    public boolean merge(IndexProducer indexProducer) {
+        Objects.requireNonNull(indexProducer, "indexProducer");
         indexProducer.forEachIndex(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format(
-                        "IndexProducer should only send values in the range[0,%s]", shape.getNumberOfBits() - 1));
+                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
             BitMap.set(bitMap, idx);
             return true;
         });
         cardinality = -1;
+        return true;
     }
 
-    /**
-     * Performs a merge using an BitMapProducer.
-     * @param bitMapProducer the BitMapProducer to merge from.
-     * @throws IllegalArgumentException if producer sends illegal value.
-     */
-    private void merge(BitMapProducer bitMapProducer) {
+    @Override
+    public boolean merge(BitMapProducer bitMapProducer) {
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         try {
             int[] idx = new int[1];
             bitMapProducer.forEachBitMap(value -> {
@@ -173,7 +116,7 @@ public final class SimpleBloomFilter implements BloomFilter {
             int idxLimit = BitMap.getLongIndex(shape.getNumberOfBits());
             if (idxLimit < idx[0]) {
                 throw new IllegalArgumentException(String.format(
-                        "BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
+                        "BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits() - 1));
             }
             if (idxLimit == idx[0]) {
                 long excess = (bitMap[idxLimit] >> shape.getNumberOfBits());
@@ -188,13 +131,13 @@ public final class SimpleBloomFilter implements BloomFilter {
             throw new IllegalArgumentException(
                     String.format("BitMapProducer should send at most %s maps", bitMap.length), e);
         }
+        return true;
     }
 
     @Override
     public boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        merge(hasher.indices(shape));
-        return true;
+        return merge(hasher.indices(shape));
     }
 
     @Override

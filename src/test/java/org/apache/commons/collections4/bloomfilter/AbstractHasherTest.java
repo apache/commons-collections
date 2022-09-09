@@ -85,7 +85,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
             count[0]++;
             return false;
         });
-        assertEquals(1, count[0], "did not exit early" );
+        assertEquals(1, count[0], "did not exit early");
     }
 
     @Test
@@ -97,8 +97,8 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         List<Integer> full = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
         producer = hasher.uniqueIndices(shape);
         List<Integer> unique = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
-        assertTrue( full.size() > unique.size() );
-        Set<Integer> set = new HashSet<Integer>( unique );
-        assertEquals( set.size(), unique.size() );
+        assertTrue(full.size() > unique.size());
+        Set<Integer> set = new HashSet<>(unique);
+        assertEquals(set.size(), unique.size());
     }
 }

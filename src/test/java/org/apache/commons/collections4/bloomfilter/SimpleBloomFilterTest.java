@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link SimpleBloomFilter}.
@@ -25,64 +24,5 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Override
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
         return new SimpleBloomFilter(shape);
-    }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return new SimpleBloomFilter(shape, hasher);
-    }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        return new SimpleBloomFilter(shape, producer);
-    }
-
-    @Override
-    protected SimpleBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        return new SimpleBloomFilter(shape, producer);
-    }
-
-    private void executeNestedTest(SimpleBloomFilterTest nestedTest) {
-        nestedTest.testAsBitMapArray();
-        nestedTest.testContains();
-        nestedTest.testEstimateIntersection();
-        nestedTest.testEstimateN();
-        nestedTest.testEstimateUnion();
-        nestedTest.testIsFull();
-        nestedTest.testMerge();
-    }
-
-    @Test
-    public void testConstructors() {
-
-        // // copy of Sparse
-        SimpleBloomFilterTest nestedTest = new SimpleBloomFilterTest() {
-
-            @Override
-            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
-                return new SimpleBloomFilter(new SparseBloomFilter(shape));
-            }
-
-            @Override
-            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
-                return new SimpleBloomFilter(new SparseBloomFilter(shape, hasher));
-            }
-        };
-        executeNestedTest(nestedTest);
-
-        // copy of Simple
-        nestedTest = new SimpleBloomFilterTest() {
-
-            @Override
-            protected SimpleBloomFilter createEmptyFilter(Shape shape) {
-                return new SimpleBloomFilter(new SimpleBloomFilter(shape));
-            }
-
-            @Override
-            protected SimpleBloomFilter createFilter(Shape shape, Hasher hasher) {
-                return new SimpleBloomFilter(new SimpleBloomFilter(shape, hasher));
-            }
-        };
-        executeNestedTest(nestedTest);
     }
 }
