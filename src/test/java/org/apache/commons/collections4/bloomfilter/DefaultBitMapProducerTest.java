@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
@@ -66,13 +66,8 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
      * @param size the number of values to generate
      * @return the array of random values.
      */
-    public static long[] generateLongArray( int size ) {
-        Random rnd = new Random();
-        long[] expected = new long[size];
-        for (int i=0; i<size; i++) {
-            expected[i] = rnd.nextLong();
-        }
-        return expected;
+    public static long[] generateLongArray(int size) {
+        return ThreadLocalRandom.current().longs(size).toArray();
     }
 
     @Test

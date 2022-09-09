@@ -18,21 +18,20 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-import java.util.Random;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
 
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
-    private int[] values = generateIntArray( 10, 512 );
+    private int[] values = generateIntArray(10, 512);
 
     @Override
     protected IndexProducer createProducer() {
-        return IndexProducer.fromIndexArray( values );
+        return IndexProducer.fromIndexArray(values);
     }
 
     @Override
@@ -52,26 +51,19 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param bound the upper bound (exclusive) of the values in the array.
      * @return an array of int.
      */
-    public static int[] generateIntArray( int size, int bound ) {
-        Random rnd = new Random();
-        int[] expected = new int[size];
-        for (int i=0; i<size; i++) {
-            expected[i] = rnd.nextInt(bound);
-        }
-        return expected;
+    public static int[] generateIntArray(int size, int bound) {
+        return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
     }
 
     /**
-     * Creates a sorted set of Integers.
-     * @param ary the array to sort and make unique
-     * @return the sorted Set.
+     * Creates a BitSet of indices.
+     * @param ary the array
+     * @return the set.
      */
-    public static SortedSet<Integer> uniqueSet(int[] ary) {
-        SortedSet<Integer> uniq = new TreeSet<Integer>();
-        for (int idx : ary) {
-            uniq.add(idx);
-        }
-        return uniq;
+    public static BitSet uniqueSet(int[] ary) {
+        final BitSet bs = new BitSet();
+        Arrays.stream(ary).forEach(bs::set);
+        return bs;
     }
 
     /**
@@ -80,19 +72,13 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @return the sorted unique array.
      */
     public static int[] unique(int[] ary) {
-        Set<Integer> uniq = uniqueSet(ary);
-        int[] result = new int[uniq.size()];
-        int i=0;
-        for (int idx : uniq) {
-            result[i++] = idx;
-        }
-        return result;
+        return Arrays.stream(ary).distinct().sorted().toArray();
     }
 
     @Test
     public void testFromBitMapProducer() {
-        for (int i=0; i<5000; i++) {
-            int[] expected = generateIntArray( 7, 256 );
+        for (int i = 0; i < 5; i++) {
+            int[] expected = generateIntArray(7, 256);
             long[] bits = new long[BitMap.numberOfBitMaps(256)];
             for (int bitIndex : expected) {
                 BitMap.set(bits, bitIndex);
@@ -104,7 +90,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Test
     public void testFromIndexArray() {
-        for (int i=0; i<5000; i++) {
+        for (int i = 0; i < 5; i++) {
             int[] expected = generateIntArray(10, 256);
             IndexProducer ip = IndexProducer.fromIndexArray(expected);
             assertArrayEquals(unique(expected), ip.asIndexArray());
