@@ -127,7 +127,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(IndexProducer indexProducer) {
-            boolean result = indexProducer.forEachIndex((x) -> {
+            boolean result = indexProducer.forEachIndex(x -> {
                 indices.add(x);
                 return true;
             });

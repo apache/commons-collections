@@ -93,7 +93,7 @@ public final class SimpleBloomFilter implements BloomFilter {
         indexProducer.forEachIndex(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format(
-                        "IndexProducer should only send values in the range[0,%s]", shape.getNumberOfBits() - 1));
+                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
             BitMap.set(bitMap, idx);
             return true;

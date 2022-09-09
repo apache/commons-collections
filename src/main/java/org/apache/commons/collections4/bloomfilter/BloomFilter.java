@@ -136,7 +136,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return true if the merge was successful
      */
     default boolean merge(BloomFilter other) {
-        return (characteristics() & SPARSE) != 0 ? merge( (IndexProducer) other ) : merge( (BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other ) : merge((BitMapProducer) other);
     }
 
     /**
@@ -153,7 +153,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return merge( hasher.indices(getShape()));
+        return merge(hasher.indices(getShape()));
     }
 
     /**

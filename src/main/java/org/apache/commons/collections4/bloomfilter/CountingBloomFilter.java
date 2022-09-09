@@ -113,12 +113,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     default boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        try {
-            return add(BitCountProducer.from(hasher.uniqueIndices(getShape())));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
-        }
+        return merge(hasher.uniqueIndices(getShape()));
     }
 
     /**
@@ -136,7 +131,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #add(BitCountProducer)
      */
     default boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "producer");
+        Objects.requireNonNull(indexProducer, "indexProducer");
         try {
             return add(BitCountProducer.from(indexProducer));
         } catch (IndexOutOfBoundsException e) {
@@ -242,6 +237,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #subtract(BitCountProducer)
      */
     default boolean remove(final BitMapProducer bitMapProducer) {
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         return remove(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 

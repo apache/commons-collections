@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -118,29 +121,33 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithHasher() {
-        // value too large
-        final BloomFilter f = createEmptyFilter(getTestShape());
-        f.merge(from1);
-        int[] idx = f.asIndexArray();
-        assertEquals(getTestShape().getNumberOfHashFunctions(), idx.length);
-        for (int i=0; i<idx.length; i++) {
-            assertEquals(i + 1, idx[i]);
+        for (int i=0; i<5000; i++) {
+            final BloomFilter f = createEmptyFilter(getTestShape());
+            int[] expected = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
+            Hasher hasher = new ArrayHasher(expected);
+            f.merge(hasher);
+            // create sorted unique array of expected values
+            assertArrayEquals(DefaultIndexProducerTest.unique(expected), f.asIndexArray( ));
         }
     }
 
     @Test
     public void testMergeWithBitMapProducer() {
-        long[] values = { from11Value, 0x9L };
-        BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
-        List<Long> lst = new ArrayList<>();
-        for (long l : values) {
-            lst.add(l);
+        for (int i=0; i<5000; i++) {
+            long[] values = new long[2];
+            for (int idx :  DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits())) {
+                BitMap.set(values, idx);
+            }
+            BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
+            List<Long> lst = new ArrayList<>();
+            for (long l : values) {
+                lst.add(l);
+            }
+            assertTrue(f.forEachBitMap(l -> {
+                return lst.remove(Long.valueOf(l));
+            }));
+            assertTrue(lst.isEmpty());
         }
-        assertTrue(f.forEachBitMap(l -> {
-            return lst.remove(Long.valueOf(l));
-        }));
-        assertTrue(lst.isEmpty());
-
         // values too large
         final BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
         final BloomFilter bf = createEmptyFilter(getTestShape());
@@ -154,17 +161,15 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithIndexProducer() {
-        int[] values = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-        BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
-        List<Integer> lst = new ArrayList<>();
-        for (int i : values) {
-            lst.add(i);
+        for (int i=0; i<5000; i++) {
+            int[] values = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
+            BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
+            SortedSet<Integer> uniqueValues = DefaultIndexProducerTest.uniqueSet(values);
+            assertTrue(f.forEachIndex(idx -> {
+                return uniqueValues.remove(Integer.valueOf(idx));
+            }));
+            assertTrue(uniqueValues.isEmpty());
         }
-        assertTrue(f.forEachIndex(i -> {
-            return lst.remove(Integer.valueOf(i));
-        }));
-        assertTrue(lst.isEmpty());
-
         // value to large
         final BloomFilter f1 = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
