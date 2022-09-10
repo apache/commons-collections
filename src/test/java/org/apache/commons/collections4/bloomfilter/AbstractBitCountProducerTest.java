@@ -51,12 +51,10 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
 
     @Test
     public final void testForEachCountResults() {
-
         assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(createProducer().forEachCount(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
         assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
-
     }
 
     protected abstract int[][] getExpectedBitCount();

@@ -23,7 +23,7 @@ import java.util.function.IntPredicate;
  *
  * A BitCountProducer may return duplicate indices and may be unordered.
  *
- * The guaranteeS are:
+ * The guarantees are:
  * <ul>
  * <li>that for every unique value produced by the IndexProducer there will be at least one
  * index in the BitCountProducer.</li>
