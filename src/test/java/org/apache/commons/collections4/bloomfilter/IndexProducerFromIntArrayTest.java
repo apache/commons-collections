@@ -25,6 +25,12 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return IndexProducer.fromIndexArray(new int[] { 1, 2, 3, 4, 5 });
+        return IndexProducer.fromIndexArray(new int[] { 6, 8, 1, 2, 4, 4, 5 });
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // Delegates to the default asIndexArray which is distinct and ordered
+        return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 }

@@ -39,7 +39,7 @@ public interface IndexProducer {
      *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
-     * <p>Indices ordering is not guaranteed</p>
+     * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
      * @param predicate the action to be performed for each non-zero bit index.
      * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
@@ -103,6 +103,9 @@ public interface IndexProducer {
 
     /**
      * Return a copy of the IndexProducer data as an int array.
+     *
+     * <p>Indices ordering and uniqueness is not guaranteed.</p>
+     *
      * <p><em>
      * The default implementation of this method is slow.  It is recommended
      * that implementing classes reimplement this method.

@@ -32,4 +32,9 @@ public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndex
     protected IndexProducer createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
     }
+
+    @Override
+    protected int getBehaviour() {
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
 }
