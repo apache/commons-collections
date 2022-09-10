@@ -60,7 +60,7 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Creates a BitCountProducer from an IndexProducer.  The resulting
-     * producer will count each enabled bit once.
+     * producer will return every index from the IndexProducer with a count of 1.
      * @param idx An index producer.
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */

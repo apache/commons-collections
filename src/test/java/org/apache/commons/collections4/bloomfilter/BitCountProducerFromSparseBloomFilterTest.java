@@ -37,7 +37,7 @@ public class BitCountProducerFromSparseBloomFilterTest extends AbstractBitCountP
     @Override
     protected int getBehaviour() {
         // A sparse BloomFilter will be distinct but it may not be ordered.
-        // Currently the ordered behaviour is asserted as the implementation uses
+        // Currently the ordered behavior is asserted as the implementation uses
         // an ordered TreeSet. This may change in the future.
         return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
