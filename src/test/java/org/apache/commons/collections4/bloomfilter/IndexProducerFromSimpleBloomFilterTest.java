@@ -38,4 +38,9 @@ public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProduce
         // BloomFilter based on a bit map array will be distinct and ordered
         return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    }
 }

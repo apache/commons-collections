@@ -16,37 +16,37 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBitCountProducerTest {
+public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
     protected BitCountProducer createProducer() {
-        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        filter.merge(new IncrementingHasher(0, 1));
-        filter.merge(new IncrementingHasher(5, 1));
-        return filter;
+        Hasher hasher = new IncrementingHasher(0, 1);
+        BloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(hasher);
+        return BitCountProducer.from(bf);
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
+        return BitCountProducer.from(new SimpleBloomFilter(shape));
     }
 
     @Override
     protected int getBehaviour() {
-        // CountingBloomFilter based on an array will be distinct and ordered
+        // BloomFilter based on a bit map array will be distinct and ordered
         return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 
     @Override
     protected int[][] getExpectedBitCount() {
-        return new int[][]{{0,1},{1,1},{2,1},{3,1},{4,1},{5,2},{6,2},{7,2},{8,2},{9,2},{10,2},{11,2},
-            {12,2},{13,2},{14,2},{15,2},{16,2},{17,1},{18,1},{19,1},{20,1},{21,1}};
+        return new int[][]{{0,1},{1,1},{2,1},{3,1},{4,1},{5,1},{6,1},{7,1},{8,1},{9,1},{10,1},{11,1},
+            {12,1},{13,1},{14,1},{15,1},{16,1}};
     }
 
     @Override
     protected int[] getExpectedIndex() {
-        return new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
+        return new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
     }
 }

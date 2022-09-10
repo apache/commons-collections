@@ -20,14 +20,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class BitCountProducerFromIndexProducerTest extends AbstractBitCountProducerTest {
+public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCountProducerTest {
+
+    int[] data = {0, 63, 1, 1, 64, 127, 128};
+    int[] expected = {0, 1, 63, 64, 127, 128};
 
     @Override
     protected BitCountProducer createProducer() {
-        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[] { 0, 63, 1, 1, 64, 127, 128 }));
+        return BitCountProducer.from(IndexProducer.fromIndexArray(data));
     }
 
     @Override
@@ -41,24 +43,19 @@ public class BitCountProducerFromIndexProducerTest extends AbstractBitCountProdu
         return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 
-    @Test
-    @Disabled("Current behaviour will return the same index twice, each with a count of 1")
-    public final void testFromIndexProducer() {
-
-        BitCountProducer producer = createProducer();
-        Map<Integer, Integer> m = new HashMap<>();
-
-        producer.forEachCount((i, v) -> {
-            m.put(i, v);
-            return true;
-        });
-
-        assertEquals(6, m.size());
-        assertEquals(Integer.valueOf(1), m.get(0));
-        assertEquals(Integer.valueOf(2), m.get(1));
-        assertEquals(Integer.valueOf(1), m.get(63));
-        assertEquals(Integer.valueOf(1), m.get(64));
-        assertEquals(Integer.valueOf(1), m.get(127));
-        assertEquals(Integer.valueOf(1), m.get(128));
+    @Override
+    protected int[][] getExpectedBitCount() {
+        return new int[][]{{0,1},{63,1},{1,1},{1,1},{64,1},{127,1},{128,1}};
     }
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return expected;
+    }
+
+    @Override
+    protected int[] getExpectedForEach() {
+        return data;
+    }
+
 }

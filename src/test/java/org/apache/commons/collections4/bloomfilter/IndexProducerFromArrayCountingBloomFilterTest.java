@@ -23,8 +23,8 @@ public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndex
     @Override
     protected IndexProducer createProducer() {
         ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        Hasher hasher = new IncrementingHasher(0, 1);
-        filter.merge(hasher);
+        filter.merge(new IncrementingHasher(0, 1));
+        filter.merge(new IncrementingHasher(5, 1));
         return filter;
     }
 
@@ -36,5 +36,11 @@ public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndex
     @Override
     protected int getBehaviour() {
         return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
+
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
     }
 }

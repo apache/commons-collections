@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
  * Tests the {@link EnhancedDoubleHasher}.
  */
 public class EnhancedDoubleHasherTest extends AbstractHasherTest {
+    int[] expected = {1, 0, 71, 71, 1, 6, 15, 29, 49, 4, 39, 11, 65, 58, 63, 9, 41};
 
     @Override
     protected Hasher createHasher() {
@@ -33,6 +34,12 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     @Override
     protected Hasher createEmptyHasher() {
         return NullHasher.INSTANCE;
+    }
+
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return expected;
     }
 
     @Override

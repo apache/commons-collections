@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,28 +25,14 @@ import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountCons
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitCountProducerTest extends AbstractIndexProducerTest {
-
-    /**
-     * A testing BitCountConsumer that always returns false.
-     */
-    public static BitCountConsumer FALSE_CONSUMER = new BitCountConsumer() {
-
-        @Override
-        public boolean test(int index, int count) {
-            return false;
-        }
-    };
-
     /**
      * A testing BitCountConsumer that always returns true.
      */
-    public static BitCountConsumer TRUE_CONSUMER = new BitCountConsumer() {
-
-        @Override
-        public boolean test(int index, int count) {
-            return true;
-        }
-    };
+    private static final BitCountConsumer TRUE_CONSUMER = (i,j) -> true;
+    /**
+     * A testing BitCountConsumer that always returns false.
+     */
+    private static final BitCountConsumer FALSE_CONSUMER = (i,j) -> false;
 
     /**
      * Creates a producer with some data.
@@ -60,23 +48,36 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     @Override
     protected abstract BitCountProducer createEmptyProducer();
 
-    /**
-     * Determines if empty tests should be run.  Some producers do not implement an empty
-     * version.  Tests for those classes should return false.
-     * @return true if the empty tests are supported
-     */
-    protected boolean supportsEmpty() {
-        return true;
-    }
 
     @Test
-    public final void testForEachCount() {
+    public final void testForEachCountResults() {
 
         assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(createProducer().forEachCount(TRUE_CONSUMER), "non-empty should be true");
-        if (supportsEmpty()) {
-            assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
-            assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
-        }
+        assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
+        assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
+
+    }
+
+    protected abstract int[][] getExpectedBitCount();
+
+    @Test
+    public void testForEachCount() {
+        BitCountProducer bcp = createEmptyProducer();
+        int[] count = { 0 };
+        bcp.forEachCount( (i,j) -> {count[0]++; return true;});
+        assertEquals( 0, count[0] );
+
+        bcp = createProducer();
+        count[0] = 0;
+        int[][] expected = getExpectedBitCount();
+        int[][] result = new int[expected.length][2];
+        bcp.forEachCount((i,j) -> {
+            result[count[0]][0]=i;
+            result[count[0]++][1]= j;
+            return true;
+        });
+        assertEquals( expected.length, count[0]);
+        assertArrayEquals( expected, result );
     }
 }

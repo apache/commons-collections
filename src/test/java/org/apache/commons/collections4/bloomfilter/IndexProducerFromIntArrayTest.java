@@ -18,6 +18,9 @@ package org.apache.commons.collections4.bloomfilter;
 
 public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
 
+    int[] data = { 6, 8, 1, 2, 4, 4, 5 };
+    int[] expected = {1, 2, 4, 5, 6, 8};
+
     @Override
     protected IndexProducer createEmptyProducer() {
         return IndexProducer.fromIndexArray(new int[0]);
@@ -25,12 +28,22 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return IndexProducer.fromIndexArray(new int[] { 6, 8, 1, 2, 4, 4, 5 });
+        return IndexProducer.fromIndexArray(data);
     }
 
     @Override
     protected int getBehaviour() {
         // Delegates to the default asIndexArray which is distinct and ordered
         return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return expected;
+    }
+
+    @Override
+    protected int[] getExpectedForEach() {
+        return data;
     }
 }

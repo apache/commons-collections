@@ -19,7 +19,22 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.function.IntPredicate;
 
 /**
- * Produces bit counts for counting type Bloom filters.
+ * Defines a mapping of index to counts.
+ *
+ * A BitCountProducer may return duplicate indices and may be unordered.
+ *
+ * The guaranteeS are:
+ * <ul>
+ * <li>that for every unique value produced by the IndexProducer there will be at least one
+ * index in the BitCountProducer.</li>
+ * <li>that the total count of a specific value produced by the IndexProducer will equal the
+ * total of the counts in the BitCountProducer for that index.</li>
+ * </ul>
+ * Example:
+ *
+ * An IndexProducer that generates the values [1,2,3,1,5,6] can be represented by a BitCountProducer
+ * that generates [(1,2),(2,1),(3,1),(5,1)(6,1)] or [(1,1),(2,1),(3,1),(1,1),(5,1),(6,1)] where the
+ * entries may be in any order.
  *
  * @since 4.5
  */
@@ -32,11 +47,9 @@ public interface BitCountProducer extends IndexProducer {
      * index-count pair, if the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.
      *
-     * <p>Must only process each index once, and must process indexes in order.</p>
-     *
      * @param consumer the action to be performed for each non-zero bit count
      * @return {@code true} if all count pairs return true from consumer, {@code false} otherwise.
-     * @throws NullPointerException if the specified action is null
+     * @throws NullPointerException if the specified consumer is null
      */
     boolean forEachCount(BitCountConsumer consumer);
 
@@ -62,7 +75,7 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Represents an operation that accepts an {@code <index, count>} pair representing
-     * the count for a bit index in a Bit Count Producer Bloom filter and returns {@code true}
+     * the count for a bit index. Returns {@code true}
      * if processing should continue, {@code false} otherwise.
      *
      * <p>Note: This is a functional interface as a specialization of
@@ -71,7 +84,7 @@ public interface BitCountProducer extends IndexProducer {
     @FunctionalInterface
     interface BitCountConsumer {
         /**
-         * Performs this operation on the given {@code <index, count>} pair.
+         * Performs an operation on the given {@code <index, count>} pair.
          *
          * @param index the bit index.
          * @param count the count at the specified bit index.

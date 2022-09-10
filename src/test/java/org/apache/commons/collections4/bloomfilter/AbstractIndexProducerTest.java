@@ -43,7 +43,7 @@ public abstract class AbstractIndexProducerTest {
     /**
      * An expandable list of int values.
      */
-    private static class IntList {
+    protected static class IntList {
         private int size;
         private int[] data = {0};
 
@@ -93,6 +93,12 @@ public abstract class AbstractIndexProducerTest {
      */
     protected abstract int getBehaviour();
 
+    protected abstract int[] getExpectedIndex();
+
+    protected int[] getExpectedForEach() {
+        return getExpectedIndex();
+    }
+
     @Test
     public final void testForEachIndex() {
         IndexProducer populated = createProducer();
@@ -134,7 +140,6 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public final void testBehaviourAsIndexArray() {
         int flags = getBehaviour();
-        Assumptions.assumeTrue((flags & (AS_ARRAY_ORDERED | AS_ARRAY_DISTINCT)) != 0);
         int[] actual = createProducer().asIndexArray();
         if ((flags & AS_ARRAY_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -144,12 +149,13 @@ public abstract class AbstractIndexProducerTest {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         }
+        int[] expected = getExpectedIndex();
+        Assertions.assertArrayEquals( expected, actual);
     }
 
     @Test
     public final void testBehaviourForEach() {
         int flags = getBehaviour();
-        Assumptions.assumeTrue((flags & (FOR_EACH_ORDERED | FOR_EACH_DISTINCT)) != 0);
         IntList list = new IntList();
         createProducer().forEachIndex(list::add);
         int[] actual = list.toArray();
@@ -161,6 +167,8 @@ public abstract class AbstractIndexProducerTest {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         }
+        int[] expected = getExpectedForEach();
+        Assertions.assertArrayEquals( expected, actual);
     }
 
     @Test

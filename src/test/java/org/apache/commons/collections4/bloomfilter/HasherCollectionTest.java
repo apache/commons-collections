@@ -31,6 +31,10 @@ import org.junit.jupiter.api.Test;
  */
 public class HasherCollectionTest extends AbstractHasherTest {
 
+//    int[] expected = {0, 1, 63, 64, 127, 128};
+    int[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+        2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34};
+
     @Override
     protected HasherCollection createHasher() {
         return new HasherCollection(new IncrementingHasher(1, 1), new IncrementingHasher(2, 2));
@@ -39,6 +43,11 @@ public class HasherCollectionTest extends AbstractHasherTest {
     @Override
     protected HasherCollection createEmptyHasher() {
         return new HasherCollection();
+    }
+
+    @Override
+    protected int[] getExpectedIndex() {
+        return expected;
     }
 
     @Override
@@ -75,6 +84,13 @@ public class HasherCollectionTest extends AbstractHasherTest {
             protected HasherCollection createEmptyHasher() {
                 return new HasherCollection();
             }
+
+            @Override
+            protected int[] getExpectedIndex() {
+                return new int[] {3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33,
+                    35, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36};
+            }
+
         };
         nestedTest(nestedTest);
 
@@ -87,6 +103,12 @@ public class HasherCollectionTest extends AbstractHasherTest {
             @Override
             protected HasherCollection createEmptyHasher() {
                 return new HasherCollection();
+            }
+
+            @Override
+            protected int[] getExpectedIndex() {
+                return new int[] {3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33,
+                    35, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36};
             }
         };
         nestedTest(nestedTest);
