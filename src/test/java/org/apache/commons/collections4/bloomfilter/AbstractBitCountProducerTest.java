@@ -28,11 +28,11 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     /**
      * A testing BitCountConsumer that always returns true.
      */
-    private static final BitCountConsumer TRUE_CONSUMER = (i,j) -> true;
+    private static final BitCountConsumer TRUE_CONSUMER = (i, j) -> true;
     /**
      * A testing BitCountConsumer that always returns false.
      */
-    private static final BitCountConsumer FALSE_CONSUMER = (i,j) -> false;
+    private static final BitCountConsumer FALSE_CONSUMER = (i, j) -> false;
 
     /**
      * Creates a producer with some data.
@@ -65,16 +65,19 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     public void testForEachCount() {
         BitCountProducer bcp = createEmptyProducer();
         int[] count = { 0 };
-        bcp.forEachCount( (i,j) -> {count[0]++; return true;});
+        bcp.forEachCount( (i, j) -> {
+            count[0]++;
+            return true;
+        });
         assertEquals( 0, count[0] );
 
         bcp = createProducer();
         count[0] = 0;
         int[][] expected = getExpectedBitCount();
         int[][] result = new int[expected.length][2];
-        bcp.forEachCount((i,j) -> {
+        bcp.forEachCount((i, j) -> {
             result[count[0]][0]=i;
-            result[count[0]++][1]= j;
+            result[count[0]++][1]=j;
             return true;
         });
         assertEquals( expected.length, count[0]);

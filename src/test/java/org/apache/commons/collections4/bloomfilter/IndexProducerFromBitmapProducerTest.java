@@ -51,7 +51,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
 
     @Override
     protected int[] getExpectedIndex() {
-        return new int[]{0,65,128,129};
+        return new int[]{0, 65, 128, 129};
     }
 
     @Override

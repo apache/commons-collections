@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.function.IntPredicate;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractIndexProducerTest {
