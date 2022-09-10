@@ -42,13 +42,23 @@ public class HasherCollectionTest extends AbstractHasherTest {
     }
 
     @Override
+    protected int getBehaviour() {
+        // Allows duplicates and may be unordered
+        return 0;
+    }
+
+    @Override
     protected int getHasherSize(Hasher hasher) {
         return ((HasherCollection) hasher).getHashers().size();
     }
 
     protected void nestedTest(HasherCollectionTest nestedTest) {
-        nestedTest.testAsIndexArray();
         nestedTest.testForEachIndex();
+        nestedTest.testEmptyProducer();
+        nestedTest.testConsistency();
+        nestedTest.testBehaviourAsIndexArray();
+        nestedTest.testBehaviourForEach();
+        nestedTest.testForEachIndexEarlyExit();
         nestedTest.testAdd();
     }
 

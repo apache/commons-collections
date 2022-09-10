@@ -45,6 +45,12 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         };
     }
 
+    @Override
+    protected int getBehaviour() {
+        // The default method streams a BitSet so is distinct and ordered.
+        return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
+
     /**
      * Generates an array of integers.
      * @param size the size of the array

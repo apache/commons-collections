@@ -27,4 +27,10 @@ public class UniqueIndexProducerFromHasherTest extends AbstractIndexProducerTest
     protected IndexProducer createEmptyProducer() {
         return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
+
+    @Override
+    protected int getBehaviour() {
+        // Should be unique but may be unordered
+        return FOR_EACH_DISTINCT | AS_ARRAY_DISTINCT;
+    }
 }

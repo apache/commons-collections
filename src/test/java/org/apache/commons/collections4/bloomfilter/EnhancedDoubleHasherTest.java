@@ -36,6 +36,12 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Override
+    protected int getBehaviour() {
+        // Allows duplicates and may be unordered
+        return 0;
+    }
+
+    @Override
     protected int getHasherSize(Hasher hasher) {
         return 1;
     }

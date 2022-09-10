@@ -32,4 +32,10 @@ public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBi
     protected BitCountProducer createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
     }
+
+    @Override
+    protected int getBehaviour() {
+        // CountingBloomFilter based on an array will be distinct and ordered
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
 }
