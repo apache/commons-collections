@@ -16,13 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,15 +34,15 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
-    protected final SimpleHasher from1 = new SimpleHasher(1, 1);
+    protected final Hasher from1 = new IncrementingHasher(1, 1);
     protected final long from1Value = 0x3fffeL;
-    protected final SimpleHasher from11 = new SimpleHasher(11, 1);
+    protected final Hasher from11 = new IncrementingHasher(11, 1);
     protected final long from11Value = 0xffff800L;
     protected final HasherCollection bigHasher = new HasherCollection(from1, from11);
     protected final long bigHashValue = 0xffffffeL;
-    protected final HasherCollection fullHasher = new HasherCollection(new SimpleHasher(0, 1)/* 0-16 */,
-            new SimpleHasher(17, 1)/* 17-33 */, new SimpleHasher(33, 1)/* 33-49 */, new SimpleHasher(50, 1)/* 50-66 */,
-            new SimpleHasher(67, 1)/* 67-83 */
+    protected final HasherCollection fullHasher = new HasherCollection(new IncrementingHasher(0, 1)/* 0-16 */,
+            new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */, new IncrementingHasher(50, 1)/* 50-66 */,
+            new IncrementingHasher(67, 1)/* 67-83 */
     );
     protected final long[] fullHashValue = { 0xffffffffffffffffL, 0xfffffL };
 
@@ -69,7 +73,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param hasher the hasher to use to create the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, Hasher hasher);
+    protected final T createFilter(Shape shape, Hasher hasher) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(hasher);
+        return bf;
+    }
 
     /**
      * Create the BloomFilter implementation we are testing.
@@ -78,7 +86,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param producer A BitMap producer to build the filter with.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, BitMapProducer producer);
+    protected final T createFilter(Shape shape, BitMapProducer producer) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(producer);
+        return bf;
+    }
 
     /**
      * Create the BloomFilter implementation we are testing.
@@ -87,57 +99,87 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * @param producer An Index producer to build the filter with.
      * @return a BloomFilter implementation.
      */
-    protected abstract T createFilter(Shape shape, IndexProducer producer);
+    protected final T createFilter(Shape shape, IndexProducer producer) {
+        T bf = createEmptyFilter(shape);
+        bf.merge(producer);
+        return bf;
+    }
 
     /**
      *
      */
     @Test
-    public void testConstructWithBadHasher() {
+    public void testMergeWithBadHasher() {
         // value too large
+        final BloomFilter f = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
-                () -> createFilter(getTestShape(), new BadHasher(getTestShape().getNumberOfBits())));
+                () -> f.merge(new BadHasher(getTestShape().getNumberOfBits())));
         // negative value
-        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), new BadHasher(-1)));
+        BloomFilter f2 = createEmptyFilter(getTestShape());
+        assertThrows(IllegalArgumentException.class, () -> f2.merge(new BadHasher(-1)));
     }
 
     @Test
-    public void testConstructWitBitMapProducer() {
-        long[] values = { from11Value, 0x9L };
-        BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
-        List<Long> lst = new ArrayList<>();
-        for (long l : values) {
-            lst.add(l);
+    public void testMergeWithHasher() {
+        for (int i = 0; i < 5; i++) {
+            final BloomFilter f = createEmptyFilter(getTestShape());
+            int[] expected = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
+            Hasher hasher = new ArrayHasher(expected);
+            f.merge(hasher);
+            // create sorted unique array of expected values
+            assertArrayEquals(DefaultIndexProducerTest.unique(expected), f.asIndexArray( ));
         }
-        assertTrue(f.forEachBitMap(l -> {
-            return lst.remove(Long.valueOf(l));
-        }));
-        assertTrue(lst.isEmpty());
+    }
 
-        BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
+    @Test
+    public void testMergeWithBitMapProducer() {
+        for (int i = 0; i < 5; i++) {
+            long[] values = new long[2];
+            for (int idx :  DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits())) {
+                BitMap.set(values, idx);
+            }
+            BloomFilter f = createFilter(getTestShape(), BitMapProducer.fromBitMapArray(values));
+            List<Long> lst = new ArrayList<>();
+            for (long l : values) {
+                lst.add(l);
+            }
+            assertTrue(f.forEachBitMap(l -> {
+                return lst.remove(Long.valueOf(l));
+            }));
+            assertTrue(lst.isEmpty());
+        }
         // values too large
-        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(), badProducer));
+        final BitMapProducer badProducer = BitMapProducer.fromBitMapArray(0L, Long.MAX_VALUE);
+        final BloomFilter bf = createEmptyFilter(getTestShape());
+        assertThrows(IllegalArgumentException.class, () -> bf.merge(badProducer));
+
+        // test where merged bits exceed expected bits but both bitmaps are the same length.
+        final BitMapProducer badProducer2 = BitMapProducer.fromBitMapArray(0x80_00_00_00_00_00_00_00L);
+        final BloomFilter bf2 = createEmptyFilter(Shape.fromKM(3, 32));
+        assertThrows(IllegalArgumentException.class, () -> bf2.merge(badProducer2));
     }
 
     @Test
-    public void testConstructWithIndexProducer() {
-        int[] values = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-        BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
-        List<Integer> lst = new ArrayList<>();
-        for (int i : values) {
-            lst.add(i);
+    public void testMergeWithIndexProducer() {
+        for (int i = 0; i < 5; i++) {
+            int[] values = DefaultIndexProducerTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
+            BloomFilter f = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
+            BitSet uniqueValues = DefaultIndexProducerTest.uniqueSet(values);
+            assertTrue(f.forEachIndex(idx -> {
+                final boolean result = uniqueValues.get(idx);
+                uniqueValues.clear(idx);
+                return result;
+            }));
+            assertTrue(uniqueValues.isEmpty());
         }
-        assertTrue(f.forEachIndex(i -> {
-            return lst.remove(Integer.valueOf(i));
-        }));
-        assertTrue(lst.isEmpty());
-
         // value to large
-        assertThrows(IllegalArgumentException.class, () -> createFilter(getTestShape(),
-                IndexProducer.fromIndexArray(new int[] { getTestShape().getNumberOfBits() })));
-        // negative value
+        final BloomFilter f1 = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
-                () -> createFilter(getTestShape(), IndexProducer.fromIndexArray(new int[] { -1 })));
+                () -> f1.merge(IndexProducer.fromIndexArray(new int[] { getTestShape().getNumberOfBits() })));
+        // negative value
+        final BloomFilter f2 = createEmptyFilter(getTestShape());
+        assertThrows(IllegalArgumentException.class,
+                () -> f2.merge(IndexProducer.fromIndexArray(new int[] { -1 })));
     }
 
     @Test
@@ -150,18 +192,18 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertFalse(bf1.contains(bf2), "BF should not contain BF2");
         assertTrue(bf2.contains(bf1), "BF2 should contain BF");
 
-        assertTrue(bf2.contains(new SimpleHasher(1, 1)), "BF2 Should contain this hasher");
-        assertFalse(bf2.contains(new SimpleHasher(1, 3)), "BF2 Should not contain this hasher");
+        assertTrue(bf2.contains(new IncrementingHasher(1, 1)), "BF2 Should contain this hasher");
+        assertFalse(bf2.contains(new IncrementingHasher(1, 3)), "BF2 Should not contain this hasher");
 
-        IndexProducer indexProducer = new SimpleHasher(1, 1).indices(getTestShape());
+        IndexProducer indexProducer = new IncrementingHasher(1, 1).indices(getTestShape());
         assertTrue(bf2.contains(indexProducer), "BF2 Should contain this hasher");
-        indexProducer = new SimpleHasher(1, 3).indices(getTestShape());
+        indexProducer = new IncrementingHasher(1, 3).indices(getTestShape());
         assertFalse(bf2.contains(indexProducer), "BF2 Should not contain this hasher");
 
-        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 1).indices(getTestShape()),
+        BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new IncrementingHasher(1, 1).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
         assertTrue(bf2.contains(bitMapProducer), "BF2 Should contain this hasher");
-        bitMapProducer = BitMapProducer.fromIndexProducer(new SimpleHasher(1, 3).indices(getTestShape()),
+        bitMapProducer = BitMapProducer.fromIndexProducer(new IncrementingHasher(1, 3).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
         assertFalse(bf2.contains(bitMapProducer), "BF2 Should not contain this hasher");
 
@@ -178,10 +220,16 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertTrue(bf4.contains(bf1));
     }
 
+    @Test
+    public void testClear() {
+        BloomFilter bf1 = createFilter(getTestShape(), from1);
+        assertNotEquals(0, bf1.cardinality());
+        bf1.clear();
+        assertEquals(0, bf1.cardinality());
+    }
+
     /**
      * Tests that the andCardinality calculations are correct.
-     *
-     * @param filterFactory the factory function to create the filter
      */
     @Test
     public final void testEstimateIntersection() {
@@ -200,8 +248,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     /**
      * Tests that the andCardinality calculations are correct.
-     *
-     * @param filterFactory the factory function to create the filter
      */
     @Test
     public final void testEstimateUnion() {
@@ -223,16 +269,16 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testEstimateN() {
         // build a filter
-        BloomFilter filter1 = new SimpleBloomFilter(getTestShape(), from1);
+        BloomFilter filter1 = createFilter(getTestShape(), from1);
         assertEquals(1, filter1.estimateN());
 
         // the data provided above do not generate an estimate that is equivalent to the
         // actual.
-        filter1.mergeInPlace(new SimpleHasher(4, 1));
+        filter1.merge(new IncrementingHasher(4, 1));
 
         assertEquals(1, filter1.estimateN());
 
-        filter1.mergeInPlace(new SimpleHasher(17, 1));
+        filter1.merge(new IncrementingHasher(17, 1));
 
         assertEquals(3, filter1.estimateN());
     }
@@ -244,7 +290,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public final void testAsBitMapArray() {
 
         // test when multiple long values are returned.
-        final SimpleHasher hasher = new SimpleHasher(63, 1);
+        final IncrementingHasher hasher = new IncrementingHasher(63, 1);
         final BloomFilter bf = createFilter(Shape.fromKM(2, 72), hasher);
         final long[] lb = bf.asBitMapArray();
         assertEquals(2, lb.length);
@@ -265,7 +311,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         filter = createFilter(getTestShape(), fullHasher);
         assertTrue(filter.isFull(), "Should be full");
 
-        filter = createFilter(getTestShape(), new SimpleHasher(1, 3));
+        filter = createFilter(getTestShape(), new IncrementingHasher(1, 3));
         assertFalse(filter.isFull(), "Should not be full");
     }
 
@@ -275,41 +321,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testMerge() {
 
-        // test with BloomFilter
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
-
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
-
-        final BloomFilter bf3 = bf1.merge(bf2);
-        assertTrue(bf3.contains(bf1), "Should contain bf1");
-        assertTrue(bf3.contains(bf2), "Should contain bf2");
-
-        final BloomFilter bf4 = bf2.merge(bf1);
-        assertTrue(bf4.contains(bf1), "Should contain bf1");
-        assertTrue(bf4.contains(bf2), "Should contain bf2");
-        assertTrue(bf4.contains(bf3), "Should contain bf3");
-        assertTrue(bf3.contains(bf4), "Should contain bf4");
-
-        // test with Hasher
-
-        final BloomFilter bf5 = bf1.merge(from11);
-        assertTrue(bf5.contains(bf1), "Should contain bf1");
-        assertTrue(bf5.contains(bf2), "Should contain bf2");
-
-        // test with hasher returning numbers out of range
-        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
-        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
-    }
-
-    /**
-     * Tests that merging in place works as expected.
-     */
-    @Test
-    public final void testMergeInPlace() {
-
         final BloomFilter bf1 = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), from11);
-        final BloomFilter bf3 = bf1.merge(bf2);
+        final BloomFilter bf3 = bf1.copy();
+        bf3.merge(bf2);
 
         // test with BloomFilter
 
@@ -318,7 +333,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         for (int i = 0; i < bf1Val.length; i++) {
             bf1Val[i] |= bf2Val[i];
         }
-        bf1.mergeInPlace(bf2);
+        bf1.merge(bf2);
 
         long[] bf1New = bf1.asBitMapArray();
         for (int i = 0; i < bf1Val.length; i++) {
@@ -331,31 +346,31 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test with hasher
 
         BloomFilter bf4 = createFilter(getTestShape(), from1);
-        bf4.mergeInPlace(from11);
+        bf4.merge(from11);
 
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
 
         // test with hasher returning numbers out of range
         assertThrows(IllegalArgumentException.class,
-                () -> bf1.mergeInPlace(new BadHasher(bf1.getShape().getNumberOfBits())));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(new BadHasher(-1)));
+                () -> bf1.merge(new BadHasher(bf1.getShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(new BadHasher(-1)));
 
         // test error when bloom filter returns values out of range
-        final BloomFilter bf5 = new SimpleBloomFilter(
-                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
-                new SimpleHasher(Long.SIZE * 2, 1));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf5));
+        BloomFilter bf5 = new SimpleBloomFilter(
+                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE));
+        bf5.merge(new IncrementingHasher(Long.SIZE * 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf5));
 
-        final BloomFilter bf6 = new SparseBloomFilter(
-                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE),
-                new SimpleHasher(Long.SIZE * 2, 1));
-        assertThrows(IllegalArgumentException.class, () -> bf1.mergeInPlace(bf6));
+        BloomFilter bf6 = new SparseBloomFilter(
+                Shape.fromKM(getTestShape().getNumberOfHashFunctions(), 3 * Long.SIZE));
+        bf6.merge(new IncrementingHasher(Long.SIZE * 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> bf1.merge(bf6));
     }
 
-    private void assertIndexProducerConstructor(Shape shape, int[] values, int[] expected) {
+    private void assertIndexProducerMerge(Shape shape, int[] values, int[] expected) {
         IndexProducer indices = IndexProducer.fromIndexArray(values);
-        SparseBloomFilter filter = new SparseBloomFilter(shape, indices);
+        BloomFilter filter = createFilter(shape, indices);
         List<Integer> lst = new ArrayList<>();
         filter.forEachIndex(x -> {
             lst.add(x);
@@ -373,18 +388,18 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testIndexProducerConstructor() {
+    public void testIndexProducerMerge() {
         Shape shape = Shape.fromKM(5, 10);
 
-        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
+        assertIndexProducerMerge(shape, new int[] { 0, 2, 4, 6, 8 }, new int[] { 0, 2, 4, 6, 8 });
         // test duplicate values
-        assertIndexProducerConstructor(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
+        assertIndexProducerMerge(shape, new int[] { 0, 2, 4, 2, 8 }, new int[] { 0, 2, 4, 8 });
         // test negative values
         assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, -2, 8 });
         // test index too large
         assertFailedIndexProducerConstructor(shape, new int[] { 0, 2, 4, 12, 8 });
         // test no indices
-        assertIndexProducerConstructor(shape, new int[0], new int[0]);
+        assertIndexProducerMerge(shape, new int[0], new int[0]);
     }
 
     @Test

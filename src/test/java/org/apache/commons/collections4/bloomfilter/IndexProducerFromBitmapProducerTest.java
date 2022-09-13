@@ -49,6 +49,12 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         return IndexProducer.fromBitMapProducer(producer);
     }
 
+    @Override
+    protected int getBehaviour() {
+        // Bit maps will be distinct. Conversion to indices should be ordered.
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    }
+
     @Test
     public final void testFromBitMapProducerTest() {
         IndexProducer underTest = createProducer();

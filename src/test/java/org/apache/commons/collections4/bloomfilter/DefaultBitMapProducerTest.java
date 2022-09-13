@@ -16,13 +16,21 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.LongPredicate;
+
+import org.junit.jupiter.api.Test;
 
 public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
+    long[] values = generateLongArray( 5 );
+
     @Override
     protected BitMapProducer createProducer() {
-        return new DefaultBitMapProducer(new long[] { 1L, 2L });
+        return new DefaultBitMapProducer(values);
     }
 
     @Override
@@ -51,5 +59,32 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
             }
             return true;
         }
+    }
+
+    /**
+     * Generates an array of random long values.
+     * @param size the number of values to generate
+     * @return the array of random values.
+     */
+    public static long[] generateLongArray(int size) {
+        return ThreadLocalRandom.current().longs(size).toArray();
+    }
+
+    @Test
+    public void testFromIndexProducer() {
+        int[] expected = DefaultIndexProducerTest.generateIntArray(10, 256);
+        IndexProducer ip = IndexProducer.fromIndexArray(expected);
+        long[] ary = BitMapProducer.fromIndexProducer(ip, 256).asBitMapArray();
+        for (int idx : expected) {
+            assertTrue( BitMap.contains(ary, idx));
+        }
+    }
+
+    @Test
+    public void testFromBitMapArray() {
+        int nOfBitMaps = BitMap.numberOfBitMaps(256);
+        long[] expected = generateLongArray( nOfBitMaps );
+        long[] ary = BitMapProducer.fromBitMapArray(expected).asBitMapArray();
+        assertArrayEquals( expected, ary );
     }
 }

@@ -20,11 +20,17 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return new SimpleHasher(0, 1).indices(Shape.fromKM(17, 72));
+        return new IncrementingHasher(0, 1).indices(Shape.fromKM(17, 72));
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
         return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // Hasher allows duplicates and may be unordered
+        return 0;
     }
 }

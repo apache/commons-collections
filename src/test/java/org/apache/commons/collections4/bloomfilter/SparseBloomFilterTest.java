@@ -31,65 +31,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         return new SparseBloomFilter(shape);
     }
 
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return new SparseBloomFilter(shape, hasher);
-    }
-
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        return new SparseBloomFilter(shape, producer);
-    }
-
-    @Override
-    protected SparseBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        return new SparseBloomFilter(shape, producer);
-    }
-
-    private void executeNestedTest(SparseBloomFilterTest nestedTest) {
-        nestedTest.testContains();
-        nestedTest.testEstimateIntersection();
-        nestedTest.testEstimateN();
-        nestedTest.testEstimateUnion();
-        nestedTest.testIsFull();
-        nestedTest.testMerge();
-        nestedTest.testMergeInPlace();
-    }
-
-    @Test
-    public void testConstructors() {
-
-        // copy of Sparse
-        SparseBloomFilterTest nestedTest = new SparseBloomFilterTest() {
-
-            @Override
-            protected SparseBloomFilter createEmptyFilter(Shape shape) {
-                return new SparseBloomFilter(new SparseBloomFilter(shape));
-            }
-
-            @Override
-            protected SparseBloomFilter createFilter(Shape shape, Hasher hasher) {
-                return new SparseBloomFilter(new SparseBloomFilter(shape, hasher));
-            }
-        };
-        executeNestedTest(nestedTest);
-
-        // copy of Simple
-        nestedTest = new SparseBloomFilterTest() {
-
-            @Override
-            protected SparseBloomFilter createEmptyFilter(Shape shape) {
-                return new SparseBloomFilter(new SimpleBloomFilter(shape));
-            }
-
-            @Override
-            protected SparseBloomFilter createFilter(Shape shape, Hasher hasher) {
-                return new SparseBloomFilter(new SimpleBloomFilter(shape, hasher));
-            }
-        };
-        executeNestedTest(nestedTest);
-    }
-
     @Test
     public void testBitMapProducerEdgeCases() {
         int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71 };
@@ -141,10 +82,11 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     }
 
     @Test
-    public void testBloomFilterBasedMergeInPlaceEdgeCases() {
+    public void testBloomFilterBasedMergeEdgeCases() {
         BloomFilter bf1 = createEmptyFilter(getTestShape());
-        BloomFilter bf2 = new SimpleBloomFilter(getTestShape(), from1);
-        bf1.mergeInPlace(bf2);
+        BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
+        bf2.merge(from1);
+        bf1.merge(bf2);
         assertTrue(bf2.forEachBitMapPair(bf1, (x, y) -> x == y));
     }
 }

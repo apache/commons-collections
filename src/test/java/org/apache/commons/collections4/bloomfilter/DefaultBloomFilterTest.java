@@ -34,57 +34,36 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         return new SparseDefaultBloomFilter(shape);
     }
 
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final Hasher hasher) {
-        return new SparseDefaultBloomFilter(shape, hasher);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final BitMapProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
-    @Override
-    protected AbstractDefaultBloomFilter createFilter(final Shape shape, final IndexProducer producer) {
-        return new SparseDefaultBloomFilter(shape, producer);
-    }
-
     @Test
-    public void testDefaultBloomFilterSimpleSpecificMergeInPlace() {
+    public void testDefaultBloomFilterSimpleSpecificMerge() {
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
-        Hasher hasher = new SimpleHasher(0, 1);
-        assertTrue(filter.mergeInPlace(hasher));
+        Hasher hasher = new IncrementingHasher(0, 1);
+        assertTrue(filter.merge(hasher));
         assertEquals(3, filter.cardinality());
     }
 
-    @Test
-    public void testDefaultBloomFilterSparseSpecificMergeInPlace() {
-        AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(Shape.fromKM(3, 150));
-        Hasher hasher = new SimpleHasher(0, 1);
-        BloomFilter newFilter = filter.merge(hasher);
-        assertEquals(3, newFilter.cardinality());
-    }
 
     @Test
     public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
         AbstractDefaultBloomFilter filter = new SparseDefaultBloomFilter(shape);
-        AbstractDefaultBloomFilter filter2 = new SparseDefaultBloomFilter(shape, new SimpleHasher(0, 1));
-        BloomFilter newFilter = filter.merge(filter2);
+        AbstractDefaultBloomFilter filter2 = createFilter(shape, new IncrementingHasher(0, 1));
+        BloomFilter newFilter = filter.copy();
+        newFilter.merge(filter2);
         assertEquals(3, newFilter.cardinality());
     }
 
     @Test
-    public void testHasherBasedMergeInPlaceWithDifferingSparseness() {
-        Hasher hasher = new SimpleHasher(1, 1);
+    public void testHasherBasedMergeWithDifferingSparseness() {
+        Hasher hasher = new IncrementingHasher(1, 1);
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace(hasher);
+        bf1.merge(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .forEachBitMapPair(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
-        bf1.mergeInPlace(hasher);
+        bf1.merge(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .forEachBitMapPair(bf1, (x, y) -> x == y));
     }
@@ -98,24 +77,9 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             this.indices = new TreeSet<>();
         }
 
-        AbstractDefaultBloomFilter(Shape shape, Hasher hasher) {
-            this(shape, hasher.indices(shape));
-        }
-
-        AbstractDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            this(shape, IndexProducer.fromBitMapProducer(producer));
-        }
-
-        AbstractDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            this(shape);
-            producer.forEachIndex((i) -> {
-                indices.add(i);
-                return true;
-            });
-            if (this.indices.floor(-1) != null || this.indices.ceiling(shape.getNumberOfBits()) != null) {
-                throw new IllegalArgumentException(
-                        String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-            }
+        @Override
+        public void clear() {
+            indices.clear();
         }
 
         @Override
@@ -148,12 +112,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 
-        @Override
-        public boolean mergeInPlace(BloomFilter other) {
-            other.forEachIndex((i) -> {
-                indices.add(i);
-                return true;
-            });
+        private void checkIndicesRange() {
             if (!indices.isEmpty()) {
                 if (indices.last() >= shape.getNumberOfBits()) {
                     throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
@@ -164,7 +123,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                             String.format("Value in list %s is less than 0", indices.first()));
                 }
             }
-            return true;
+        }
+
+        @Override
+        public boolean merge(IndexProducer indexProducer) {
+            boolean result = indexProducer.forEachIndex(x -> {
+                indices.add(x);
+                return true;
+            });
+            checkIndicesRange();
+            return result;
+        }
+
+        @Override
+        public boolean merge(BitMapProducer bitMapProducer){
+            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 
         @Override
@@ -175,25 +148,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
 
-        SparseDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            super(shape, producer);
-        }
-
-        SparseDefaultBloomFilter(Shape shape, Hasher hasher) {
-            super(shape, hasher);
-        }
-
-        SparseDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            super(shape, producer);
-        }
-
         SparseDefaultBloomFilter(Shape shape) {
             super(shape);
         }
 
         @Override
-        public boolean isSparse() {
-            return true;
+        public int characteristics() {
+            return SPARSE;
         }
 
         @Override
@@ -206,25 +167,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
 
-        NonSparseDefaultBloomFilter(Shape shape, BitMapProducer producer) {
-            super(shape, producer);
-        }
-
-        NonSparseDefaultBloomFilter(Shape shape, Hasher hasher) {
-            super(shape, hasher);
-        }
-
-        NonSparseDefaultBloomFilter(Shape shape, IndexProducer producer) {
-            super(shape, producer);
-        }
-
         NonSparseDefaultBloomFilter(Shape shape) {
             super(shape);
         }
 
         @Override
-        public boolean isSparse() {
-            return false;
+        public int characteristics() {
+            return 0;
         }
 
         @Override

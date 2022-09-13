@@ -22,12 +22,20 @@ public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProduce
 
     @Override
     protected IndexProducer createProducer() {
-        Hasher hasher = new SimpleHasher(0, 1);
-        return new SparseBloomFilter(shape, hasher);
+        Hasher hasher = new IncrementingHasher(0, 1);
+        BloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(hasher);
+        return bf;
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return new SparseBloomFilter(shape);
+        return new SimpleBloomFilter(shape);
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // BloomFilter based on a bit map array will be distinct and ordered
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 }

@@ -149,8 +149,8 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * <li>{@code comparator.compare(object, input) &lt;= 0 &amp;&amp; criterion == LESS_OR_EQUAL}</li>
      * </ul>
      *
-     * @see org.apache.commons.collections4.Predicate#evaluate(java.lang.Object)
-     * @see java.util.Comparator#compare(java.lang.Object first, java.lang.Object second)
+     * @see org.apache.commons.collections4.Predicate#evaluate(Object)
+     * @see java.util.Comparator#compare(Object first, Object second)
      *
      * @param target  the target object to compare to
      * @return {@code true} if the comparison succeeds according to the selected criterion

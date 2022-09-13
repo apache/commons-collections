@@ -33,7 +33,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
     @Override
     protected HasherCollection createHasher() {
-        return new HasherCollection(new SimpleHasher(1, 1), new SimpleHasher(2, 2));
+        return new HasherCollection(new IncrementingHasher(1, 1), new IncrementingHasher(2, 2));
     }
 
     @Override
@@ -42,19 +42,29 @@ public class HasherCollectionTest extends AbstractHasherTest {
     }
 
     @Override
+    protected int getBehaviour() {
+        // Allows duplicates and may be unordered
+        return 0;
+    }
+
+    @Override
     protected int getHasherSize(Hasher hasher) {
         return ((HasherCollection) hasher).getHashers().size();
     }
 
     protected void nestedTest(HasherCollectionTest nestedTest) {
-        nestedTest.testAsIndexArray();
         nestedTest.testForEachIndex();
+        nestedTest.testEmptyProducer();
+        nestedTest.testConsistency();
+        nestedTest.testBehaviourAsIndexArray();
+        nestedTest.testBehaviourForEach();
+        nestedTest.testForEachIndexEarlyExit();
         nestedTest.testAdd();
     }
 
     @Test
     public void testCollectionConstructor() {
-        List<Hasher> lst = Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+        List<Hasher> lst = Arrays.asList(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2));
         HasherCollectionTest nestedTest = new HasherCollectionTest() {
             @Override
             protected HasherCollection createHasher() {
@@ -71,7 +81,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
         nestedTest = new HasherCollectionTest() {
             @Override
             protected HasherCollection createHasher() {
-                return new HasherCollection(new SimpleHasher(3, 2), new SimpleHasher(4, 2));
+                return new HasherCollection(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2));
             }
 
             @Override
@@ -85,10 +95,10 @@ public class HasherCollectionTest extends AbstractHasherTest {
     @Test
     public void testAdd() {
         HasherCollection hasher = createHasher();
-        hasher.add(new SimpleHasher(2, 2));
+        hasher.add(new IncrementingHasher(2, 2));
         assertEquals(3, hasher.getHashers().size());
 
-        hasher.add(Arrays.asList(new SimpleHasher(3, 2), new SimpleHasher(4, 2)));
+        hasher.add(Arrays.asList(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2)));
         assertEquals(5, hasher.getHashers().size());
     }
 
@@ -97,7 +107,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
         Shape shape = Shape.fromKM(12, 72);
-        Hasher h1 = new SimpleHasher(5, 12);
+        Hasher h1 = new IncrementingHasher(5, 12);
         HasherCollection hasher = createEmptyHasher();
         hasher.add(h1);
         hasher.add(h1);
@@ -115,9 +125,9 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
     @Test
     void testHasherCollection() {
-        Hasher h1 = new SimpleHasher(13, 4678);
-        Hasher h2 = new SimpleHasher(42, 987);
-        Hasher h3 = new SimpleHasher(454, 2342);
+        Hasher h1 = new IncrementingHasher(13, 4678);
+        Hasher h2 = new IncrementingHasher(42, 987);
+        Hasher h3 = new IncrementingHasher(454, 2342);
 
         HasherCollection hc1 = new HasherCollection(Arrays.asList(h1, h1));
         HasherCollection hc2 = new HasherCollection(Arrays.asList(h2, h3));
@@ -126,7 +136,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
         ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(Shape.fromKM(5, 10000));
 
         // Should add h1, h1, h2, h3
-        Assertions.assertTrue(bf.mergeInPlace(hc3));
+        Assertions.assertTrue(bf.merge(hc3));
         Assertions.assertTrue(bf.remove(h1));
         Assertions.assertTrue(bf.remove(h1));
         Assertions.assertNotEquals(0, bf.cardinality());

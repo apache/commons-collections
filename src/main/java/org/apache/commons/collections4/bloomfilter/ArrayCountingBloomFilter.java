@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -105,72 +106,23 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
+    public void clear() {
+        Arrays.fill(counts, 0);
+    }
+
+    @Override
     public ArrayCountingBloomFilter copy() {
         return new ArrayCountingBloomFilter(this);
     }
 
     @Override
-    public boolean isSparse() {
-        return true;
+    public int characteristics() {
+        return SPARSE;
     }
 
     @Override
     public int cardinality() {
         return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
-    }
-
-    @Override
-    public CountingBloomFilter merge(BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        CountingBloomFilter filter = copy();
-        filter.add(BitCountProducer.from(other));
-        return filter;
-    }
-
-    @Override
-    public CountingBloomFilter merge(Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        ArrayCountingBloomFilter filter = copy();
-        try {
-            filter.add(BitCountProducer.from(hasher.uniqueIndices(shape)));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-        }
-        return filter;
-    }
-
-    @Override
-    public boolean mergeInPlace(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        try {
-            return add(BitCountProducer.from(other));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException( e );
-        }
-    }
-
-    @Override
-    public boolean mergeInPlace(final Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        try {
-            return add(BitCountProducer.from(hasher.uniqueIndices(shape)));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", shape.getNumberOfBits()));
-        }
-    }
-
-    @Override
-    public boolean remove(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        return subtract(BitCountProducer.from(other));
-    }
-
-    @Override
-    public boolean remove(final Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        return subtract(BitCountProducer.from(hasher.uniqueIndices(shape)));
     }
 
     @Override

@@ -202,7 +202,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Sets the {@link Comparator} by which collation occurs. If you
      * would like to use the natural sort order (or, in other words,
      * if the elements in the iterators are implementing the
-     * {@link java.lang.Comparable} interface), then use the
+     * {@link Comparable} interface), then use the
      * {@link org.apache.commons.collections4.comparators.ComparableComparator}.
      *
      * @param comp the {@link Comparator} to set

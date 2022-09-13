@@ -30,6 +30,15 @@ import java.util.Objects;
 public interface BloomFilter extends IndexProducer, BitMapProducer {
 
     /**
+     * The sparse characteristic used to determine the best method for matching.
+     * <p>For `sparse` implementations
+     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
+     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
+     * for the implementation to produce indexes of bit map blocks.</p>
+     */
+    int SPARSE = 0x1;
+
+    /**
      * Creates a new instance of the BloomFilter with the same properties as the current one.
      * @return a copy of this BloomFilter
      */
@@ -38,23 +47,23 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // Query Operations
 
     /**
-     * This method is used to determine the best method for matching.
-     *
-     * <p>For `sparse` implementations
-     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
-     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
-     * for the implementation to produce indexes of bit map blocks.</p>
-     *
-     * @return {@code true} if the implementation is sparse {@code false} otherwise.
-     * @see BitMap
+     * Returns the characteristics of the filter.
+     * <p>
+     * Characteristics are defined as bits within the characteristics integer.
+     * @return the characteristics for this bloom filter.
      */
-    boolean isSparse();
+    int characteristics();
 
     /**
      * Gets the shape that was used when the filter was built.
      * @return The shape the filter was built with.
      */
     Shape getShape();
+
+    /**
+     * Resets the filter to its initial, unpopulated state.
+     */
+    void clear();
 
     /**
      * Returns {@code true} if this filter contains the specified filter.
@@ -69,7 +78,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean contains(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return isSparse() ? contains((IndexProducer) other) : contains((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
     }
 
     /**
@@ -113,38 +122,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     // update operations
 
     /**
-     * Merges the specified Bloom filter with this Bloom filter creating a new Bloom filter.
-     *
-     * <p>Specifically all bit indexes that are enabled in the {@code other} and in @code this} filter will be
-     * enabled in the resulting filter.</p>
-     *
-     * @param other the other Bloom filter
-     * @return The new Bloom filter.
-     */
-    default BloomFilter merge(BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        BloomFilter result = copy();
-        result.mergeInPlace(other);
-        return result;
-    }
-
-    /**
-     * Merges the specified Hasher with this Bloom filter and returns a new Bloom filter.
-     *
-     * <p>Specifically all bit indexes that are identified by the {@code hasher} and in {@code this} Bloom filter
-     * be enabled in the resulting filter.</p>
-     *
-     * @param hasher the hasher to provide the indices
-     * @return the new Bloom filter.
-     */
-    default BloomFilter merge(Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        BloomFilter result = copy();
-        result.mergeInPlace(hasher);
-        return result;
-    }
-
-    /**
      * Merges the specified Bloom filter into this Bloom filter.
      *
      * <p>Specifically all
@@ -158,7 +135,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
      */
-    boolean mergeInPlace(BloomFilter other);
+    default boolean merge(BloomFilter other) {
+        return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other ) : merge((BitMapProducer) other);
+    }
 
     /**
      * Merges the specified hasher into this Bloom filter. Specifically all
@@ -166,19 +145,46 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      *
      * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
      * enabled. A {@code false} result indicates that this filter may or may not contain
-     * the {@code other} Bloom filter.</em>  This state may occur in complex Bloom filter implementations like
+     * the {@code hasher} values.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
      * @param hasher The hasher to merge.
      * @return true if the merge was successful
      */
-    default boolean mergeInPlace(Hasher hasher) {
+    default boolean merge(Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        Shape shape = getShape();
-        // create the bloomfilter that is most likely to merge quickly with this one
-        BloomFilter result = isSparse() ? new SparseBloomFilter(shape, hasher) : new SimpleBloomFilter(shape, hasher);
-        return mergeInPlace(result);
+        return merge(hasher.indices(getShape()));
     }
+
+    /**
+     * Merges the specified IndexProducer into this Bloom filter. Specifically all
+     * bit indexes that are identified by the {@code producer} will be enabled in this filter.
+     *
+     * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes of
+     * the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
+     * counting Bloom filters.</p>
+     *
+     * @param indexProducer The IndexProducer to merge.
+     * @return true if the merge was successful
+     * @throws IllegalArgumentException if producer sends illegal value.
+     */
+    boolean merge(IndexProducer indexProducer);
+
+    /**
+     * Merges the specified hasher into this Bloom filter. Specifically all
+     * bit indexes that are identified by the {@code producer} will be enabled in this filter.
+     *
+     * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
+     * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes
+     * enabled in the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
+     * counting Bloom filters.</p>
+     *
+     * @param bitMapProducer The producer to merge.
+     * @return true if the merge was successful
+     * @throws IllegalArgumentException if producer sends illegal value.
+     */
+    boolean merge(BitMapProducer bitMapProducer);
 
     // Counting Operations
 
@@ -231,7 +237,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default int estimateUnion(BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return this.merge(other).estimateN();
+        BloomFilter cpy = this.copy();
+        cpy.merge(other);
+        return cpy.estimateN();
     }
 
     /**

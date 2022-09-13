@@ -22,12 +22,23 @@ public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProduce
 
     @Override
     protected IndexProducer createProducer() {
-        Hasher hasher = new SimpleHasher(0, 1);
-        return new SimpleBloomFilter(shape, hasher);
+        Hasher hasher = new IncrementingHasher(0, 1);
+        BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge(hasher);
+        return bf;
+
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return new SimpleBloomFilter(shape);
+        return new SparseBloomFilter(shape);
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // A sparse BloomFilter will be distinct but it may not be ordered.
+        // Currently the ordered behaviour is asserted as the implementation uses
+        // an ordered TreeSet. This may change in the future.
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 }

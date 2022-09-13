@@ -23,12 +23,19 @@ public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBi
     @Override
     protected BitCountProducer createProducer() {
         ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        Hasher hasher = new SimpleHasher(0, 1);
-        return filter.merge(hasher);
+        Hasher hasher = new IncrementingHasher(0, 1);
+        filter.merge(hasher);
+        return filter;
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // CountingBloomFilter based on an array will be distinct and ordered
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 }

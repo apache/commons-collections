@@ -20,11 +20,20 @@ public class UniqueIndexProducerFromHasherCollectionTest extends AbstractIndexPr
 
     @Override
     protected IndexProducer createProducer() {
-        return new HasherCollection(new SimpleHasher(0, 1), new SimpleHasher(0, 2)).uniqueIndices(Shape.fromKM(17, 72));
+        return new HasherCollection(new IncrementingHasher(0, 1), new IncrementingHasher(0, 2)).uniqueIndices(Shape.fromKM(17, 72));
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
         return new HasherCollection().uniqueIndices(Shape.fromKM(17, 72));
+    }
+
+    @Override
+    protected int getBehaviour() {
+        // Note:
+        // Do not return FOR_EACH_DISTINCT | AS_ARRAY_DISTINCT.
+        // Despite this being a unique index test, the HasherCollection will return a unique
+        // index from each hasher. The result is there may still be duplicates.
+        return 0;
     }
 }
