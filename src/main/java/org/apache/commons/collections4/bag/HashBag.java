@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Implements {@code Bag}, using a {@link HashMap} to provide the
@@ -46,7 +47,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
      * Constructs an empty {@link HashBag}.
      */
     public HashBag() {
-        super(new HashMap<>());
+        super(new LinkedHashMap<>());
     }
 
     /**
