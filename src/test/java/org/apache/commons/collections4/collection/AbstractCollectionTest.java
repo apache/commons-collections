@@ -70,6 +70,13 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #isFailFastSupported()}
  * </ul>
  * <p>
+ * <b>Indicate Collection Iteration behaviour</b>
+ * </p>
+ * Override these if your collection makes no ordering guarantees for the iterator
+ * <ul>
+ *  <li>{@link #getIterationBehaviour()}</li>
+ * </ul>
+ * <p>
  * <b>Fixture Methods</b>
  * <p>
  * Fixtures are used to verify that the operation results in correct state
@@ -136,6 +143,18 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     // These fields are used by reset() and verify(), and any test
     // method that tests a modification.
+    /**
+     * Flag to indicate the collection makes no ordering guarantees for the iterator. If this is not used
+     * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
+     * the toArray method.
+     */
+    protected static final int UNORDERED = 0x1;
+
+    /**
+     * Flag to indicate the collection makes ordering guarantees for the iterator. This is used by the default
+     * implementation of {@link #getIterationBehaviour()}
+     */
+    protected static final int ORDERED = 0x0;
 
     /**
      *  A collection instance that will be used for testing.
@@ -485,6 +504,16 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             "For", "then", "despite", /* of */"space", "I", "would", "be",
             "brought", "From", "limits", "far", "remote", "where", "thou", "dost", "stay"
         };
+    }
+
+    /**
+     * Return a flag specifying the iteration behaviour of the collection.
+     * This is used to change the assertions used by specific tests.
+     * Default implementation returns {@link #ORDERED} as iteration behaviour
+     * @return the iteration behaviour
+     */
+    protected int getIterationBehaviour(){
+        return ORDERED;
     }
 
     // Tests
@@ -1095,9 +1124,15 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         array = getCollection().toArray(new Object[0]);
         a = getCollection().toArray();
-        assertEquals("toArrays should be equal",
-                     Arrays.asList(array), Arrays.asList(a));
 
+        if((getIterationBehaviour() & UNORDERED) != 0) {
+            assertTrue("toArrays should contain the same elements",
+                       array.length == a.length &&
+                                (new HashSet<>(Arrays.asList(array)).equals(new HashSet<>(Arrays.asList(a)))));
+        } else {
+            assertEquals("toArrays should be equal",
+                                Arrays.asList(array), Arrays.asList(a));
+        }
         // Figure out if they're all the same class
         // TODO: It'd be nicer to detect a common superclass
         final HashSet<Class<?>> classes = new HashSet<>();
