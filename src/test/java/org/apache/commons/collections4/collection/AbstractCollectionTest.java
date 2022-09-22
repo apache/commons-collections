@@ -71,10 +71,10 @@ import org.junit.jupiter.api.Test;
  * </ul>
  * <p>
  * <b>Indicate Collection Iteration behaviour</b>
- * </p>
+ * <p>
  * Override these if your collection makes no ordering guarantees for the iterator
  * <ul>
- *  <li>{@link #getIterationBehaviour()}</li>
+ * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
  * <p>
  * <b>Fixture Methods</b>
@@ -149,12 +149,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * the toArray method.
      */
     protected static final int UNORDERED = 0x1;
-
-    /**
-     * Flag to indicate the collection makes ordering guarantees for the iterator. This is used by the default
-     * implementation of {@link #getIterationBehaviour()}
-     */
-    protected static final int ORDERED = 0x0;
 
     /**
      *  A collection instance that will be used for testing.
@@ -509,11 +503,11 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      * Return a flag specifying the iteration behaviour of the collection.
      * This is used to change the assertions used by specific tests.
-     * Default implementation returns {@link #ORDERED} as iteration behaviour
+     * Default implementation returns 0 as iteration behaviour which indicates ordered iteration
      * @return the iteration behaviour
      */
     protected int getIterationBehaviour(){
-        return ORDERED;
+        return 0;
     }
 
     // Tests
@@ -1151,9 +1145,16 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         array = getCollection().toArray(a);
         assertEquals("toArray(Object[]) should return correct array type",
                 a.getClass(), array.getClass());
-        assertEquals("type-specific toArrays should be equal",
-                Arrays.asList(array),
-                Arrays.asList(getCollection().toArray()));
+
+        if((getIterationBehaviour() & UNORDERED) != 0) {
+            assertTrue("type-specific toArrays should contain the same elements",
+                        a.length == array.length &&
+                        (new HashSet<>(Arrays.asList(array))).equals(new HashSet<>(Arrays.asList(getCollection().toArray()))));
+        } else {
+            assertEquals("type-specific toArrays should be equal",
+                    Arrays.asList(array),
+                    Arrays.asList(getCollection().toArray()));
+        }
         verify();
     }
 
