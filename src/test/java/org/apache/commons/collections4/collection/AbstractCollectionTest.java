@@ -1148,7 +1148,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         if((getIterationBehaviour() & UNORDERED) != 0) {
             assertTrue("type-specific toArrays should contain the same elements",
-                        a.length == array.length &&
+                        getCollection().toArray().length == array.length &&
                         (new HashSet<>(Arrays.asList(array))).equals(new HashSet<>(Arrays.asList(getCollection().toArray()))));
         } else {
             assertEquals("type-specific toArrays should be equal",
