@@ -204,8 +204,8 @@
     <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
       BloomFilter contribution.
     </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [build] Update Apache commons-parent from 48 to 51.
+    <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
+      [build] Update Apache commons-parent from 48 to 54, #339.
     </action>
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
