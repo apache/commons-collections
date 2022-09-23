@@ -39,6 +39,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1123,9 +1124,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         a = getCollection().toArray();
 
         if ((getIterationBehaviour() & UNORDERED) != 0) {
-            assertTrue("toArrays should contain the same elements",
-                    array.length == a.length &&
-                    (new HashSet<>(Arrays.asList(array)).equals(new HashSet<>(Arrays.asList(a)))));
+            assertUnorderedArrayEquals(array, a, "toArray(Object[]) and toArray()");
         } else {
             assertEquals("toArrays should be equal", Arrays.asList(array), Arrays.asList(a));
         }
@@ -1149,15 +1148,46 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                 a.getClass(), array.getClass());
 
         if ((getIterationBehaviour() & UNORDERED) != 0) {
-            assertTrue("type-specific toArrays should contain the same elements",
-                    array.length == getCollection().toArray().length &&
-                    (new HashSet<>(Arrays.asList(array))).equals(new HashSet<>(Arrays.asList(getCollection().toArray()))));
+            assertUnorderedArrayEquals(array, getCollection().toArray(), "type-specific toArray(T[]) and toArray()");
         } else {
             assertEquals("type-specific toArrays should be equal",
                     Arrays.asList(array),
                     Arrays.asList(getCollection().toArray()));
         }
         verify();
+    }
+
+    /**
+     * Assert the arrays contain the same elements, ignoring the order.
+     *
+     * <p>Note this does not test the arrays are deeply equal. Array elements are compared
+     * using {@link Object#equals(Object)}.
+     *
+     * @param a1 First array
+     * @param a2 Second array
+     * @param msg Failure message prefix
+     */
+    private static void assertUnorderedArrayEquals(Object[] a1, Object[] a2, String msg) {
+        Assertions.assertEquals(a1.length, a2.length, () -> msg + ": length");
+        final int size = a1.length;
+        // Track values that have been matched once (and only once)
+        final boolean[] matched = new boolean[size];
+        NEXT_OBJECT:
+        for (final Object o : a1) {
+            for (int i = 0; i < size; i++) {
+                if (matched[i]) {
+                    // skip values already matched
+                    continue;
+                }
+                if (Objects.equals(o, a2[i])) {
+                    // values matched
+                    matched[i] = true;
+                    // continue to the outer loop
+                    continue NEXT_OBJECT;
+                }
+            }
+            fail(msg + ": array 2 does not have object: " + o);
+        }
     }
 
     /**
