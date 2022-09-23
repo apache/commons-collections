@@ -1119,7 +1119,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         array = getCollection().toArray(new Object[0]);
         a = getCollection().toArray();
 
-        if((getIterationBehaviour() & UNORDERED) != 0) {
+        if ((getIterationBehaviour() & UNORDERED) != 0) {
             assertTrue("toArrays should contain the same elements",
                        array.length == a.length &&
                                 (new HashSet<>(Arrays.asList(array)).equals(new HashSet<>(Arrays.asList(a)))));
@@ -1146,7 +1146,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         assertEquals("toArray(Object[]) should return correct array type",
                 a.getClass(), array.getClass());
 
-        if((getIterationBehaviour() & UNORDERED) != 0) {
+        if ((getIterationBehaviour() & UNORDERED) != 0) {
             assertTrue("type-specific toArrays should contain the same elements",
                         getCollection().toArray().length == array.length &&
                         (new HashSet<>(Arrays.asList(array))).equals(new HashSet<>(Arrays.asList(getCollection().toArray()))));
