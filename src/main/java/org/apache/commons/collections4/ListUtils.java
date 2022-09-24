@@ -533,6 +533,8 @@ public class ListUtils {
      * @since 3.2
      */
     public static <E> List<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(remove, "remove");
         final List<E> list = new ArrayList<>();
         for (final E obj : collection) {
             if (!remove.contains(obj)) {
