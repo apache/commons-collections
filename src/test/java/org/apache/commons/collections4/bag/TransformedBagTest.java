@@ -46,6 +46,11 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
                 (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
