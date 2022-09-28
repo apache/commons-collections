@@ -46,6 +46,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
                 TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {

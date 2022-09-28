@@ -48,6 +48,11 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         return new ArrayListValuedHashMap<>();
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testListValuedMapAdd() {

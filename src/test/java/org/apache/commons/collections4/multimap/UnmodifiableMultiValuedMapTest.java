@@ -82,6 +82,11 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
