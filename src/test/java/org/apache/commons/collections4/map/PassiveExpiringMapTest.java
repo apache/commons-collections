@@ -91,6 +91,11 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return new PassiveExpiringMap<>();
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     private Map<Integer, String> makeTestMap() {
         final Map<Integer, String> m =
                 new PassiveExpiringMap<>(new TestExpirationPolicy());
