@@ -60,12 +60,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     /** MultiValuedHashMap created by reset(). */
     protected MultiValuedMap<K, V> confirmed;
 
-    /**
-     * Flag to indicate the map makes no ordering guarantees for the iterator. If this is not used
-     * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
-     * the toArray method.
-     */
-    protected static final int UNORDERED = 0x1;
 
     public AbstractMultiValuedMapTest(final String testName) {
         super(testName);
@@ -224,7 +218,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * The default implementation returns 0 which indicates ordered iteration behaviour.
      *
      * @return the iteration behaviour
-     * @see #UNORDERED
+     * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
         return 0;
