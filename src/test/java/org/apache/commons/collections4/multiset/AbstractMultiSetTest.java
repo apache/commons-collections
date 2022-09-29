@@ -692,7 +692,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         protected int getIterationBehaviour() {
             return AbstractMultiSetTest.this.getIterationBehaviour();
         }
-
     }
 
 

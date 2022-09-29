@@ -141,13 +141,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         JDK12 = str.startsWith("1.2");
     }
 
-    /**
-     * Flag to indicate the collection makes no ordering guarantees for the iterator. If this is not used
-     * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
-     * the toArray method.
-     */
-    protected static final int UNORDERED = 0x1;
-
     // These instance variables are initialized with the reset method.
     // Tests for map methods that alter the map (put, putAll, remove)
     // first call reset() to create the map and its views; then perform
@@ -544,7 +537,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * The default implementation returns 0 which indicates ordered iteration behaviour.
      *
      * @return the iteration behaviour
-     * @see #UNORDERED
+     * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour(){
         return 0;

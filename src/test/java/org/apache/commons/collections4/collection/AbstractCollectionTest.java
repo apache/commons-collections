@@ -147,7 +147,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
      * the toArray method.
      */
-    protected static final int UNORDERED = 0x1;
+    public static final int UNORDERED = 0x1;
 
     // These fields are used by reset() and verify(), and any test
     // method that tests a modification.
