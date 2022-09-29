@@ -45,7 +45,6 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
         return "4";
     }
 
-    
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
