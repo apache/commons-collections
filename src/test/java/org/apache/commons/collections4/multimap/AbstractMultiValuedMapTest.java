@@ -60,6 +60,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     /** MultiValuedHashMap created by reset(). */
     protected MultiValuedMap<K, V> confirmed;
 
+
     public AbstractMultiValuedMapTest(final String testName) {
         super(testName);
     }
@@ -209,6 +210,18 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         for (int i = 0; i < k.length; i++) {
             confirmed.put(k[i], v[i]);
         }
+    }
+
+    /**
+     * Return a flag specifying the iteration behaviour of the map.
+     * This is used to change the assertions used by specific tests.
+     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     *
+     * @return the iteration behaviour
+     * @see AbstractCollectionTest#UNORDERED
+     */
+    protected int getIterationBehaviour() {
+        return 0;
     }
 
     @Test
@@ -954,6 +967,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             return null;
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
+        }
+
     }
 
     /**
@@ -1009,6 +1027,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             return false;
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
+        }
     }
 
     /**
@@ -1090,6 +1112,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             return null;
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
+        }
     }
 
     /**
@@ -1160,6 +1186,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             TestMultiValuedMapKeys.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
+        }
     }
 
     public BulkTest bulkTestAsMap() {
@@ -1256,6 +1286,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         @Override
         public boolean isTestSerialization() {
             return false;
+        }
+
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
         }
     }
 

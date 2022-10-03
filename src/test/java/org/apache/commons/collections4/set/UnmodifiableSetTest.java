@@ -82,6 +82,11 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableSet.emptyCollection.version4.obj");

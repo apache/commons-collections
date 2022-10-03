@@ -24,6 +24,7 @@ import java.util.Set;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.SetValuedMap;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -54,6 +55,11 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     @Override
     public boolean isHashSetValue() {
         return true;
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     @Test

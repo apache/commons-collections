@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bidimap;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
  * JUnit tests.
@@ -45,6 +46,11 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     @Override
     public String[] ignoredTests() {
         return new String[] { "DualHashBidiMapTest.bulkTestInverseMap.bulkTestInverseMap" };
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
 //    public void testCreate() throws Exception {
