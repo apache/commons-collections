@@ -687,6 +687,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         public void verify() {
             super.verify();
         }
+
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiSetTest.this.getIterationBehaviour();
+        }
     }
 
 

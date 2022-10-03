@@ -464,6 +464,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             return main.isRemoveSupported();
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return main.getIterationBehaviour();
+        }
     }
 
     public BulkTest bulkTestBidiMapIterator() {

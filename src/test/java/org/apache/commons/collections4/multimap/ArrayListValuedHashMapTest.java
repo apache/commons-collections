@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,6 +47,11 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     @Override
     public ListValuedMap<K, V> makeObject() {
         return new ArrayListValuedHashMap<>();
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     @Test

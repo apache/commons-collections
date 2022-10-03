@@ -61,6 +61,11 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         return decorateBag(new HashBag<T>(), stringPredicate());
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testlegalAddRemove() {
