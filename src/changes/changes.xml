@@ -319,7 +319,7 @@
       Bump japicmp from 0.15.4 to 0.16.0.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump commons.pmd-impl.version from 6.46.0 to 6.49.0 #318, #327, #333.
+      Bump commons.pmd-impl.version from 6.46.0 to 6.50.0 #318, #327, #333, #347.
     </action>
     <action type="update" dev="aherbert" due-to="Partha Protim Paul">
       Correct test of Collection toArray(Object[]) vs toArray() to optionally ignore array order.
