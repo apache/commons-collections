@@ -74,7 +74,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
         Objects.requireNonNull(methodName, "methodName");
         if (((paramTypes == null) && (args != null))
             || ((paramTypes != null) && (args == null))
-            || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
+            || ((paramTypes != null) && (paramTypes.length != args.length))) {
             throw new IllegalArgumentException("The parameter types must match the arguments");
         }
         if (paramTypes == null || paramTypes.length == 0) {

@@ -238,11 +238,9 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     @SuppressWarnings("unchecked")
     public boolean containsValue(final Object value) {
         final Set<Map.Entry<K, Object>> pairs = decorated().entrySet();
-        if (pairs != null) {
-            for (final Map.Entry<K, Object> entry : pairs) {
-                if (((Collection<V>) entry.getValue()).contains(value)) {
-                    return true;
-                }
+        for (final Entry<K, Object> entry : pairs) {
+            if (((Collection<V>) entry.getValue()).contains(value)) {
+                return true;
             }
         }
         return false;
