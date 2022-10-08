@@ -34,8 +34,8 @@ jobs:
 #            experimental: true
         
     steps:
-    - uses: actions/checkout@v3.0.2
-    - uses: actions/cache@v3.0.9
+    - uses: actions/checkout@v3.1.0
+    - uses: actions/cache@v3.0.10
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
