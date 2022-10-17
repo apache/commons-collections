@@ -38,12 +38,12 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
     }
 
     @Override
-    protected int[] getExpectedIndex() {
+    protected int[] getExpectedIndices() {
         return expected;
     }
 
-    @Override
-    protected int[] getExpectedForEach() {
-        return data;
-    }
+//    @Override
+//    protected int[] getExpectedForEach() {
+//        return data;
+//    }
 }

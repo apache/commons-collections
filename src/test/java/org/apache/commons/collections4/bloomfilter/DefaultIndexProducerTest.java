@@ -30,23 +30,8 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     private int[] values = generateIntArray(10, 512);
 
     @Override
-    protected int[] getExpectedIndex() {
-        int last = -1;
-        IntList lst = new IntList();
-        for (int idx : values) {
-            if (idx != last) {
-                lst.add(idx);
-                last = idx;
-            }
-        }
-        int[] result = lst.toArray();
-        Arrays.sort(result);
-        return result;
-    }
-
-    @Override
-    protected int[] getExpectedForEach() {
-        return values;
+    protected int[] getExpectedIndices() {
+        return uniqueSet(values).stream().toArray();
     }
 
     @Override

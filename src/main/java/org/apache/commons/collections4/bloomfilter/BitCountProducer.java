@@ -47,6 +47,9 @@ public interface BitCountProducer extends IndexProducer {
      * index-count pair, if the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.
      *
+     * Duplicate indices are not required to be aggregated. Duplicates may be output by the producer as
+     * noted in the class javadoc.
+     *
      * @param consumer the action to be performed for each non-zero bit count
      * @return {@code true} if all count pairs return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null

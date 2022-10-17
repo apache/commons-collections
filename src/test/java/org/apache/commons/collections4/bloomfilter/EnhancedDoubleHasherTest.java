@@ -38,7 +38,7 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
 
 
     @Override
-    protected int[] getExpectedIndex() {
+    protected int[] getExpectedIndices() {
         return expected;
     }
 

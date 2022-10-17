@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCountProducerTest {
 
     int[] data = {0, 63, 1, 1, 64, 127, 128};
-    int[] expected = {0, 1, 63, 64, 127, 128};
 
     @Override
     protected BitCountProducer createProducer() {
@@ -43,13 +42,7 @@ public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCou
     }
 
     @Override
-    protected int[] getExpectedIndex() {
-        return expected;
-    }
-
-    @Override
-    protected int[] getExpectedForEach() {
+    protected int[] getExpectedIndices() {
         return data;
     }
-
 }

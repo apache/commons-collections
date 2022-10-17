@@ -35,6 +35,12 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     private static final BitCountConsumer FALSE_CONSUMER = (i, j) -> false;
 
     /**
+     * Creates an array of integer pairs comprising the index and the expected count for the index.
+     * @return an array of integer pairs comprising the index and the expected count for the index.
+     */
+    protected abstract int[][] getExpectedBitCount();
+
+    /**
      * Creates a producer with some data.
      * @return a producer with some data
      */
@@ -48,7 +54,6 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     @Override
     protected abstract BitCountProducer createEmptyProducer();
 
-
     @Test
     public final void testForEachCountResults() {
         assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
@@ -56,8 +61,6 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
         assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
     }
-
-    protected abstract int[][] getExpectedBitCount();
 
     @Test
     public void testForEachCount() {

@@ -19,12 +19,18 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.List;
 import java.util.function.IntPredicate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test for IndexProducer.
+ *
+ */
 public abstract class AbstractIndexProducerTest {
 
     private static final IntPredicate TRUE_PREDICATE = i -> true;
@@ -92,14 +98,36 @@ public abstract class AbstractIndexProducerTest {
      */
     protected abstract int getBehaviour();
 
-    protected abstract int[] getExpectedIndex();
+    /**
+     * Creates an array of expected indices.
+     * @return an array of expected indices.
+     */
+    protected abstract int[] getExpectedIndices();
 
-    protected int[] getExpectedForEach() {
-        return getExpectedIndex();
+    @Test
+    public final void testAsIndexArrayValues() {
+        List<Integer> lst = new ArrayList<>();
+        Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
+        for (int i : getExpectedIndices()) {
+            assertTrue( lst.contains(i), "Missing "+i );
+        }
     }
 
     @Test
     public final void testForEachIndex() {
+        //IndexProducer producer = createProducer();
+        BitSet bs1 = new BitSet();
+        BitSet bs2 = new BitSet();
+        Arrays.stream(getExpectedIndices()).forEach(bs1::set);
+        createProducer().forEachIndex(i -> {
+            bs2.set(i);
+            return true;
+        });
+        Assertions.assertEquals(bs1, bs2);
+    }
+
+    @Test
+    public final void testForEachIndexPredicates() {
         IndexProducer populated = createProducer();
         IndexProducer empty = createEmptyProducer();
 
@@ -148,8 +176,6 @@ public abstract class AbstractIndexProducerTest {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         }
-        int[] expected = getExpectedIndex();
-        Assertions.assertArrayEquals( expected, actual);
     }
 
     @Test
@@ -166,8 +192,6 @@ public abstract class AbstractIndexProducerTest {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         }
-        int[] expected = getExpectedForEach();
-        Assertions.assertArrayEquals( expected, actual);
     }
 
     @Test
