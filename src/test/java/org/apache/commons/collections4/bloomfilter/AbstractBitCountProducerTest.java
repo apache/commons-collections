@@ -60,7 +60,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
      * By default this is the same as the {@code getExpectedIndices()} result.  However some implementations of
      * BitCountProducer may call the {@code IntPredicate} in the {@code forEachIndex} method with duplicates values.
      * This method accounts for that difference.
-     * @return the array of index values. 
+     * @return the array of index values.
      */
     protected int[] getExpectedForEach() {
         return getExpectedIndices();
