@@ -49,6 +49,4 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
     protected int[] getExpectedForEach() {
         return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
     }
-
-    
 }

@@ -114,7 +114,7 @@ public abstract class AbstractIndexProducerTest {
         for (int i : getExpectedIndices()) {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
-        
+
         List<Integer> lst = new ArrayList<>();
         Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
         for (int i : getExpectedIndices()) {

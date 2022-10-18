@@ -51,7 +51,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     protected int[][] getExpectedBitCount() {
         return Arrays.stream(getExpectedIndices()).mapToObj(x -> new int[] {x, 1}).toArray(int[][]::new);
     }
-    
+
     protected int[] getExpectedForEach() {
         return getExpectedIndices();
     }
@@ -81,7 +81,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         assertTrue(populated.forEachCount(TRUE_CONSUMER), "non-empty should be true");
         assertTrue(empty.forEachCount(TRUE_CONSUMER), "empty should be true");
     }
-    
+
     @Test
     public final void testEmptyBitCountProducer() {
         BitCountProducer empty = createEmptyProducer();
@@ -115,7 +115,11 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         Arrays.stream(getExpectedBitCount()).forEach(c -> expected.add(c[0], c[1]));
         final TreeBag<Integer> actual = new TreeBag<>();
         // can not return actual.add as it returns false on duplicate 'i'
-        createProducer().forEachCount((i, j) -> {actual.add(i, j); return true;});
+        createProducer().forEachCount((i, j) -> {
+            actual.add(i, j);
+            return true;
+            }
+        );
         assertEquals(expected, actual);
     }
 
