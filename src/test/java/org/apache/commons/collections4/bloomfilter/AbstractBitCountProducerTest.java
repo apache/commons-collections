@@ -46,12 +46,22 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
 
     /**
      * Creates an array of integer pairs comprising the index and the expected count for the index.
+     * The order and count for each index is dependent upon the producer created by the {@code createProducer()}
+     * method.
+     * By default returns the each {@code getExpectedIndices()} value paired with 1 (one).
      * @return an array of integer pairs comprising the index and the expected count for the index.
      */
     protected int[][] getExpectedBitCount() {
         return Arrays.stream(getExpectedIndices()).mapToObj(x -> new int[] {x, 1}).toArray(int[][]::new);
     }
 
+    /**
+     * Creates a list of expected {@code forEachIndex()} values.
+     * By default this is the same as the {@code getExpectedIndices()} result.  However some implementations of
+     * BitCountProducer may call the {@code IntPredicate} in the {@code forEachIndex} method with duplicates values.
+     * This method accounts for that difference.
+     * @return the array of index values. 
+     */
     protected int[] getExpectedForEach() {
         return getExpectedIndices();
     }

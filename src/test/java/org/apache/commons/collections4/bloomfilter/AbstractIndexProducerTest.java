@@ -100,6 +100,7 @@ public abstract class AbstractIndexProducerTest {
 
     /**
      * Creates an array of expected indices.
+     * The expected indices are dependent upon the producer created in the {@code createProducer()} method.
      * @return an array of expected indices.
      */
     protected abstract int[] getExpectedIndices();
