@@ -22,7 +22,7 @@ public class BitCountProducerFromSparseBloomFilterTest extends AbstractBitCountP
 
     @Override
     protected BitCountProducer createProducer() {
-        Hasher hasher = new IncrementingHasher(0, 1);
+        Hasher hasher = new IncrementingHasher(4, 7);
         BloomFilter bf = new SparseBloomFilter(shape);
         bf.merge(hasher);
         return BitCountProducer.from(bf);
@@ -38,17 +38,12 @@ public class BitCountProducerFromSparseBloomFilterTest extends AbstractBitCountP
         // A sparse BloomFilter will be distinct but it may not be ordered.
         // Currently the ordered behavior is asserted as the implementation uses
         // an ordered TreeSet. This may change in the future.
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
-    }
-
-    @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1},
-            {9, 1}, {10, 1}, {11, 1}, {12, 1}, {13, 1}, {14, 1}, {15, 1}, {16, 1}};
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED | 
+                FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT ;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+        return new int[]{2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
     }
 }

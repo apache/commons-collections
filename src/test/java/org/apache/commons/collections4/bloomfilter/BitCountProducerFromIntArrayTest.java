@@ -20,7 +20,6 @@ public class BitCountProducerFromIntArrayTest extends AbstractBitCountProducerTe
 
     int[] data = {6, 8, 1, 2, 4, 4, 5};
 
-
     @Override
     protected BitCountProducer createEmptyProducer() {
         return BitCountProducer.from(IndexProducer.fromIndexArray(new int[0]));
@@ -35,11 +34,6 @@ public class BitCountProducerFromIntArrayTest extends AbstractBitCountProducerTe
     protected int getBehaviour() {
         // Delegates to the default asIndexArray which is distinct and ordered
         return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
-    }
-
-    @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{6, 1}, {8, 1}, {1, 1}, {2, 1}, {4, 1}, {4, 1}, {5, 1}};
     }
 
     @Override

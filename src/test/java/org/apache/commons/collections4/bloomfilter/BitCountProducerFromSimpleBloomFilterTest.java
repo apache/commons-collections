@@ -22,7 +22,7 @@ public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountP
 
     @Override
     protected BitCountProducer createProducer() {
-        Hasher hasher = new IncrementingHasher(0, 1);
+        Hasher hasher = new IncrementingHasher(3, 2);
         BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);
         return BitCountProducer.from(bf);
@@ -36,17 +36,12 @@ public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountP
     @Override
     protected int getBehaviour() {
         // BloomFilter based on a bit map array will be distinct and ordered
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
-    }
-
-    @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {8, 1},
-            {9, 1}, {10, 1}, {11, 1}, {12, 1}, {13, 1}, {14, 1}, {15, 1}, {16, 1}};
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED | 
+                FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT ;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+        return new int[]{3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35};
     }
 }

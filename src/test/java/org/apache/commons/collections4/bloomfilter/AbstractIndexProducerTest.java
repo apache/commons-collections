@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test for IndexProducer.
- *
  */
 public abstract class AbstractIndexProducerTest {
 
@@ -104,8 +104,17 @@ public abstract class AbstractIndexProducerTest {
      */
     protected abstract int[] getExpectedIndices();
 
+    /**
+     * Test to ensure that all expected values are generated.
+     */
     @Test
     public final void testAsIndexArrayValues() {
+        BitSet bs = new BitSet();
+        Arrays.stream(createProducer().asIndexArray()).forEach(bs::set);
+        for (int i : getExpectedIndices()) {
+            assertTrue(bs.get(i), () -> "Missing " + i);
+        }
+        
         List<Integer> lst = new ArrayList<>();
         Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
         for (int i : getExpectedIndices()) {
@@ -115,7 +124,6 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public final void testForEachIndex() {
-        //IndexProducer producer = createProducer();
         BitSet bs1 = new BitSet();
         BitSet bs2 = new BitSet();
         Arrays.stream(getExpectedIndices()).forEach(bs1::set);
@@ -168,6 +176,7 @@ public abstract class AbstractIndexProducerTest {
     public final void testBehaviourAsIndexArray() {
         int flags = getBehaviour();
         int[] actual = createProducer().asIndexArray();
+        assumeTrue((flags & (AS_ARRAY_ORDERED | AS_ARRAY_DISTINCT)) != 0);
         if ((flags & AS_ARRAY_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);

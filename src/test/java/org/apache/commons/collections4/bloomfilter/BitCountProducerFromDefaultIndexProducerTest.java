@@ -37,11 +37,6 @@ public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCou
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 1}, {63, 1}, {1, 1}, {1, 1}, {64, 1}, {127, 1}, {128, 1}};
-    }
-
-    @Override
     protected int[] getExpectedIndices() {
         return data;
     }

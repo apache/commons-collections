@@ -20,7 +20,8 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
 
     @Override
     protected BitCountProducer createProducer() {
-        return BitCountProducer.from(new IncrementingHasher(3, 2).indices(Shape.fromKM(17, 72)));
+        // hasher has collisions and wraps
+        return BitCountProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
     }
 
     @Override
@@ -35,14 +36,19 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{
-            {3, 1}, {5, 1}, {7, 1}, {9, 1}, {11, 1}, {13, 1}, {15, 1}, {17, 1}, {19, 1},
-                {21, 1}, {23, 1}, {25, 1}, {27, 1}, {29, 1}, {31, 1}, {33, 1}, {35, 1}};
+    protected int[] getExpectedIndices() {
+        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68};
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return new int[]{3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35};
+    protected int[][] getExpectedBitCount() {
+        return new int[][]{{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
     }
+
+    @Override
+    protected int[] getExpectedForEach() {
+        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+    }
+
+    
 }

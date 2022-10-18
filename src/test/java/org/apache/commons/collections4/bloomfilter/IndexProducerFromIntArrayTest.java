@@ -41,9 +41,4 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
     protected int[] getExpectedIndices() {
         return expected;
     }
-
-//    @Override
-//    protected int[] getExpectedForEach() {
-//        return data;
-//    }
 }

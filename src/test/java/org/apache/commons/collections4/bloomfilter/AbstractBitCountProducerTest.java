@@ -16,15 +16,25 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+import java.util.BitSet;
+
+import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitCountProducerTest extends AbstractIndexProducerTest {
+
+    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is ordered. */
+    protected static final int FOR_EACH_COUNT_ORDERED = 0x10;
+    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is distinct. */
+    protected static final int FOR_EACH_COUNT_DISTINCT = 0x20;
+
     /**
      * A testing BitCountConsumer that always returns true.
      */
@@ -38,7 +48,13 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
      * Creates an array of integer pairs comprising the index and the expected count for the index.
      * @return an array of integer pairs comprising the index and the expected count for the index.
      */
-    protected abstract int[][] getExpectedBitCount();
+    protected int[][] getExpectedBitCount() {
+        return Arrays.stream(getExpectedIndices()).mapToObj(x -> new int[] {x, 1}).toArray(int[][]::new);
+    }
+    
+    protected int[] getExpectedForEach() {
+        return getExpectedIndices();
+    }
 
     /**
      * Creates a producer with some data.
@@ -55,33 +71,85 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     protected abstract BitCountProducer createEmptyProducer();
 
     @Test
-    public final void testForEachCountResults() {
-        assertFalse(createProducer().forEachCount(FALSE_CONSUMER), "non-empty should be false");
-        assertTrue(createProducer().forEachCount(TRUE_CONSUMER), "non-empty should be true");
-        assertTrue(createEmptyProducer().forEachCount(FALSE_CONSUMER), "empty should be true");
-        assertTrue(createEmptyProducer().forEachCount(TRUE_CONSUMER), "empty should be true");
+    public final void testForEachCountPredicates() {
+        BitCountProducer populated = createProducer();
+        BitCountProducer empty = createEmptyProducer();
+
+        assertFalse(populated.forEachCount(FALSE_CONSUMER), "non-empty should be false");
+        assertTrue(empty.forEachCount(FALSE_CONSUMER), "empty should be true");
+
+        assertTrue(populated.forEachCount(TRUE_CONSUMER), "non-empty should be true");
+        assertTrue(empty.forEachCount(TRUE_CONSUMER), "empty should be true");
+    }
+    
+    @Test
+    public final void testEmptyBitCountProducer() {
+        BitCountProducer empty = createEmptyProducer();
+        int ary[] = empty.asIndexArray();
+        assertEquals(0, ary.length);
+        assertTrue(empty.forEachCount((i, j) -> {
+            throw new AssertionError("forEachCount consumer should not be called");
+        }));
+    }
+
+    @Test
+    public final void testIndexConsistency() {
+        BitCountProducer producer = createProducer();
+        BitSet bs1 = new BitSet();
+        BitSet bs2 = new BitSet();
+        producer.forEachIndex(i -> {
+            bs1.set(i);
+            return true;
+        });
+        producer.forEachCount((i, j) -> {
+            bs2.set(i);
+            return true;
+        });
+        Assertions.assertEquals(bs1, bs2);
     }
 
     @Test
     public void testForEachCount() {
-        BitCountProducer bcp = createEmptyProducer();
-        int[] count = { 0 };
-        bcp.forEachCount( (i, j) -> {
-            count[0]++;
-            return true;
-        });
-        assertEquals( 0, count[0] );
+        // Assumes the collections bag works. Could be replaced with Map<Integer,Integer> with more work.
+        final TreeBag<Integer> expected = new TreeBag<>();
+        Arrays.stream(getExpectedBitCount()).forEach(c -> expected.add(c[0], c[1]));
+        final TreeBag<Integer> actual = new TreeBag<>();
+        // can not return actual.add as it returns false on duplicate 'i'
+        createProducer().forEachCount((i, j) -> {actual.add(i, j); return true;});
+        assertEquals(expected, actual);
+    }
 
-        bcp = createProducer();
-        count[0] = 0;
-        int[][] expected = getExpectedBitCount();
-        int[][] result = new int[expected.length][2];
-        bcp.forEachCount((i, j) -> {
-            result[count[0]][0]=i;
-            result[count[0]++][1]=j;
-            return true;
-        });
-        assertEquals( expected.length, count[0]);
-        assertArrayEquals( expected, result );
+    @Test
+    public final void testBehaviourForEachCount() {
+        int flags = getBehaviour();
+        IntList list = new IntList();
+        createProducer().forEachCount((i, j) -> list.add(i));
+        int[] actual = list.toArray();
+        if ((flags & FOR_EACH_COUNT_ORDERED) != 0) {
+            int[] expected = Arrays.stream(actual).sorted().toArray();
+            Assertions.assertArrayEquals(expected, actual);
+        }
+        if ((flags & FOR_EACH_COUNT_DISTINCT) != 0) {
+            long count = Arrays.stream(actual).distinct().count();
+            Assertions.assertEquals(count, actual.length);
+        }
+        int[] expected = getExpectedForEach();
+        Assertions.assertArrayEquals( expected, actual);
+    }
+
+    @Test
+    public void testForEachCountEarlyExit() {
+        int[] passes = new int[1];
+        assertTrue(createEmptyProducer().forEachCount((i, j) -> {
+            passes[0]++;
+            return false;
+        }));
+        Assertions.assertEquals(0, passes[0]);
+
+        assertFalse(createProducer().forEachCount((i, j) -> {
+            passes[0]++;
+            return false;
+        }));
+        Assertions.assertEquals(1, passes[0]);
     }
 }
