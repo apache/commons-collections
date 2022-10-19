@@ -98,7 +98,10 @@
       Fix flaky EmptyPropertiesTest#testSave.
     </action>
     <action type="fix" dev="ggregory" due-to="Steve Bosman">
-      Use java.lang.Objects#equals; eliminate a couple of nulls #307
+      Use java.lang.Objects#equals; eliminate a couple of nulls #307.
+    </action>
+    <action issue="COLLECTIONS-814" type="fix" dev="kinow" due-to="angusdev">
+      CollectionUtils.removeAll() not throwing NPE #340.
     </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
