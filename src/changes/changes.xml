@@ -325,6 +325,9 @@
       Correct test of Collection toArray(Object[]) vs toArray() to optionally ignore array order.
       Ordering is not specified for some collections such as Bags.
     </action>
+    <action issue="COLLECTIONS-835" type="update" dev="kinow" due-to="Marc Wrobel">
+      Fix links in javadoc and documentations #325.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
