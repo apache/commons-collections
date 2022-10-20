@@ -202,7 +202,7 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the smaller of the given objects according to the given
+     * Returns the smallest of the given objects according to the given
      * comparator, returning the second object if the comparator
      * returns equal.
      *
@@ -222,7 +222,7 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the larger of the given objects according to the given
+     * Returns the largest of the given objects according to the given
      * comparator, returning the second object if the comparator
      * returns equal.
      *

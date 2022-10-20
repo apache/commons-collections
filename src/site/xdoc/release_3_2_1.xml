@@ -34,7 +34,7 @@ This project is Java 1.2 compatible, and does not use Java 5 generics.
 </p>
 <p>
 This 3.2.1 release is simply a re-packaging of the 3.2 release, with appropriate
-OSGi meta data added to the jar's manifest file.
+OSGi metadata added to the jar's manifest file.
 </p>
 <hr />
 

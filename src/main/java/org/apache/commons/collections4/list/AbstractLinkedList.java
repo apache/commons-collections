@@ -59,7 +59,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     /**
      * A {@link Node} which indicates the start and end of the list and does not
      * hold a value. The value of {@code next} is the first item in the
-     * list. The value of of {@code previous} is the last item in the list.
+     * list. The value of {@code previous} is the last item in the list.
      */
     transient Node<E> header;
 
@@ -70,7 +70,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     transient int modCount;
 
     /**
-     * Constructor that does nothing intended for deserialization.
+     * Constructor that does nothing (intended for deserialization).
      * <p>
      * If this constructor is used by a serializable subclass then the init()
      * method must be called.

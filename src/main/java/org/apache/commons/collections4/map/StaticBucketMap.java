@@ -30,7 +30,7 @@ import org.apache.commons.collections4.KeyValue;
 
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
- * {@code java.util.Map} that performs well in in a highly
+ * {@code java.util.Map} that performs well in a highly
  * thread-contentious environment.  The map supports very efficient
  * {@link #get(Object) get}, {@link #put(Object,Object) put},
  * {@link #remove(Object) remove} and {@link #containsKey(Object) containsKey}

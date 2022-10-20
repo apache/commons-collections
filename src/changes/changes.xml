@@ -806,7 +806,7 @@ features, this release includes numerous bug fixes.
       Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
     </action>
     <action issue="COLLECTIONS-445" dev="tn" type="fix">
-      Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0)
+      Adapt and/or ignore several unit tests when run on an IBM J9 VM (specification version 1.6.0)
       due to a faulty "java.util.TreeMap" implementation.
     </action>
     <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
@@ -1023,7 +1023,7 @@ features, this release includes numerous bug fixes.
     </action>
     <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
       Added NodeListIterator and convenience methods in IteratorUtils to iterate over
-      a org.w3c.dom.NodeList.
+      an org.w3c.dom.NodeList.
     </action>
     <action issue="COLLECTIONS-320" dev="bayard" type="fix" due-to="sebb">
       Improved performance of "StaticBucketMap#putAll(Map)" by iterating over the entry set.
@@ -1060,7 +1060,7 @@ features, this release includes numerous bug fixes.
       "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
     </action>
     <action issue="COLLECTIONS-303" dev="bayard" type="fix" due-to="Emmanuel Bourg">
-      Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries
+      Improved javadoc for "Unmodifiable*" classes wrt behavior when the user tries
       to modify the collection.
     </action>
     <action issue="COLLECTIONS-298" dev="bayard" type="update" due-to="Benjamin Bentmann">

@@ -90,7 +90,7 @@ o COLLECTIONS-660:  Uncomment test in AbstractMapTest regarding LRUMap equals.
 o COLLECTIONS-656:  Fix site build on Java 8. 
 o COLLECTIONS-653:  Update Javadoc to Build on Java 1.8. 
 o COLLECTIONS-606:  Build status, Coverage status and Maven central weren't in README.md Thanks to Vamsi Kavuri. 
-o COLLECTIONS-594:  Web site spelling error: MultiValuedMapeList. Thanks to Javen O'Neal. 
+o COLLECTIONS-594:  Website spelling error: MultiValuedMapList. Thanks to Javen O'Neal.
 o COLLECTIONS-597:  Correction of Javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure. Thanks to Enrique. 
 o COLLECTIONS-678:  The verification of unsupported iterator methods is not complete. Thanks to Oscar Luis Vera Pérez. 
 o COLLECTIONS-673:  ListUtils.partition potential integer overflow. Thanks to John Mark, Stephan Fuhrmann. 
@@ -128,7 +128,7 @@ mechanism. Serialization support for unsafe classes in the functor package has b
 completely removed (classes do not implement the Serializable interface anymore).
 For more details, please refer to COLLECTIONS-580.
 
-All users are strongly encouraged to updated to this release.
+All users are strongly encouraged to update to this release.
 
 
 Compatibility
@@ -295,7 +295,7 @@ By default, serialization support for unsafe classes in the functor package is
 disabled and will result in an exception when either trying to serialize or de-serialize
 an instance of these classes. For more details, please refer to COLLECTIONS-580.
 
-All users are strongly encouraged to updated to this release.
+All users are strongly encouraged to update to this release.
 
 
 Changes in this version include:

@@ -166,7 +166,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     /**
-     * Removes a specific key/value mapping from the multi-valued map.
+     * Removes a specific key/value mapping from the multivalued map.
      * <p>
      * The value is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
@@ -205,7 +205,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * {@inheritDoc}
      * <p>
      * This implementation does <b>not</b> cache the total size
-     * of the multi-valued map, but rather calculates it by iterating
+     * of the multivalued map, but rather calculates it by iterating
      * over the entries of the underlying map.
      */
     @Override

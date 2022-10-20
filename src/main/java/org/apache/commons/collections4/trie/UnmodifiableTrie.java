@@ -45,7 +45,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     private final Trie<K, V> delegate;
 
     /**
-     * Factory method to create a unmodifiable trie.
+     * Factory method to create an unmodifiable trie.
      *
      * @param <K>  the key type
      * @param <V>  the value type

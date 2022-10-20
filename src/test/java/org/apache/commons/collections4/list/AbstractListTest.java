@@ -285,7 +285,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         list2 = Arrays.asList(getFullElements());
         if (list2.size() < 2 && isAddSupported()) {
-            // main list is only size 1, so lets add other elements to get a better list
+            // main list is only size 1, so let's add other elements to get a better list
             list.addAll(Arrays.asList(getOtherElements()));
             getConfirmed().addAll(Arrays.asList(getOtherElements()));
             list2 = new ArrayList<>(list2);

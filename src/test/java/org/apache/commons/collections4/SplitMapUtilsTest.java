@@ -135,7 +135,7 @@ public class SplitMapUtilsTest {
         map.put("new", "66");
         assertEquals(++sz, backingMap.size());
 
-        // putall
+        // putAll
         final Map<String, String> more = new HashMap<>();
         more.put("foo", "77");
         more.put("bar", "88");

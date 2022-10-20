@@ -105,7 +105,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is is a {@link Comparator Comparator}
+     * Returns {@code true} iff <i>that</i> Object is a {@link Comparator Comparator}
      * whose ordering is known to be equivalent to mine.
      * <p>
      * This implementation returns {@code true} iff

@@ -160,7 +160,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 
     /**
      * Override to validate the objects being added to ensure they match
-     * the predicate. If any one fails, no update is made to the underlying
+     * the predicate. If anyone fails, no update is made to the underlying
      * collection.
      *
      * @param coll  the collection being added

@@ -1432,8 +1432,8 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         out.flush();
         out.close();
 
-        final java.io.ByteArrayInputStream bufin = new java.io.ByteArrayInputStream(buf.toByteArray());
-        final java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
+        final java.io.ByteArrayInputStream bufIn = new java.io.ByteArrayInputStream(buf.toByteArray());
+        final java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufIn);
         final Object list2 = in.readObject();
 
         assertNotSame(list, list2);

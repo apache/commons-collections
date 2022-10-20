@@ -41,7 +41,7 @@ import java.util.Properties;
 public abstract class AbstractPropertiesFactory<T extends Properties> {
 
     /**
-     * Enumerat5es property formats.
+     * Enumerates property formats.
      *
      * @since 4.5
      */

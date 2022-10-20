@@ -73,7 +73,7 @@ public abstract class EditCommand<T> {
     /**
      * Accept a visitor.
      * <p>
-     * This method is invoked for each commands belonging to
+     * This method is invoked for each command belonging to
      * an {@link EditScript EditScript}, in order to implement the visitor design pattern
      *
      * @param visitor  the visitor to be accepted

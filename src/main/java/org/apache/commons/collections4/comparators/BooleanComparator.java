@@ -155,7 +155,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
 
     /**
      * Returns {@code true} iff <i>that</i> Object is
-     * is a {@link Comparator} whose ordering is known to be
+     * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
