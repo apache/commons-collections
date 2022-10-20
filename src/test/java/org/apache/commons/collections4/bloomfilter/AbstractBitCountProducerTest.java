@@ -16,9 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -53,17 +55,6 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
      */
     protected int[][] getExpectedBitCount() {
         return Arrays.stream(getExpectedIndices()).mapToObj(x -> new int[] {x, 1}).toArray(int[][]::new);
-    }
-
-    /**
-     * Creates a list of expected {@code forEachIndex()} values.
-     * By default this is the same as the {@code getExpectedIndices()} result.  However some implementations of
-     * BitCountProducer may call the {@code IntPredicate} in the {@code forEachIndex} method with duplicates values.
-     * This method accounts for that difference.
-     * @return the array of index values.
-     */
-    protected int[] getExpectedForEach() {
-        return getExpectedIndices();
     }
 
     /**
@@ -119,7 +110,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     }
 
     @Test
-    public void testForEachCount() {
+    public void testForEachCountValues() {
         // Assumes the collections bag works. Could be replaced with Map<Integer,Integer> with more work.
         final TreeBag<Integer> expected = new TreeBag<>();
         Arrays.stream(getExpectedBitCount()).forEach(c -> expected.add(c[0], c[1]));
@@ -139,16 +130,15 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         IntList list = new IntList();
         createProducer().forEachCount((i, j) -> list.add(i));
         int[] actual = list.toArray();
+        assumeTrue((flags & (FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT)) != 0);
         if ((flags & FOR_EACH_COUNT_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
-            Assertions.assertArrayEquals(expected, actual);
+            assertArrayEquals(expected, actual);
         }
         if ((flags & FOR_EACH_COUNT_DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
-            Assertions.assertEquals(count, actual.length);
+            assertEquals(count, actual.length);
         }
-        int[] expected = getExpectedForEach();
-        Assertions.assertArrayEquals( expected, actual);
     }
 
     @Test
@@ -158,12 +148,12 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
             passes[0]++;
             return false;
         }));
-        Assertions.assertEquals(0, passes[0]);
+        assertEquals(0, passes[0]);
 
         assertFalse(createProducer().forEachCount((i, j) -> {
             passes[0]++;
             return false;
         }));
-        Assertions.assertEquals(1, passes[0]);
+        assertEquals(1, passes[0]);
     }
 }

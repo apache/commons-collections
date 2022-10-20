@@ -176,8 +176,8 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public final void testBehaviourAsIndexArray() {
         int flags = getBehaviour();
-        int[] actual = createProducer().asIndexArray();
         assumeTrue((flags & (AS_ARRAY_ORDERED | AS_ARRAY_DISTINCT)) != 0);
+        int[] actual = createProducer().asIndexArray();
         if ((flags & AS_ARRAY_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);
@@ -191,6 +191,7 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public final void testBehaviourForEach() {
         int flags = getBehaviour();
+        assumeTrue((flags & (FOR_EACH_ORDERED | FOR_EACH_DISTINCT)) != 0);
         IntList list = new IntList();
         createProducer().forEachIndex(list::add);
         int[] actual = list.toArray();
