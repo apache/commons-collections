@@ -18,23 +18,32 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.IntPredicate;
 
-/**
+/*
  * Defines a mapping of index to counts.
  *
- * A BitCountProducer may return duplicate indices and may be unordered.
+ * <p>Note that a BitCountProducer may return duplicate indices and may be unordered.
  *
- * The guarantees are:
+ * <p>Implementations must guarantee that:
+ *
  * <ul>
- * <li>that for every unique value produced by the IndexProducer there will be at least one
- * index in the BitCountProducer.</li>
- * <li>that the total count of a specific value produced by the IndexProducer will equal the
- * total of the counts in the BitCountProducer for that index.</li>
+ * <li>The mapping of index to counts is the combined sum of counts at each index.
+ * <li>For every unique value produced by the IndexProducer there will be at least one matching
+ * index and count produced by the BitCountProducer.
+ * <li>The BitCountProducer will not generate indices that are not output by the IndexProducer.
  * </ul>
- * Example:
  *
- * An IndexProducer that generates the values [1,2,3,1,5,6] can be represented by a BitCountProducer
- * that generates [(1,2),(2,1),(3,1),(5,1)(6,1)] or [(1,1),(2,1),(3,1),(1,1),(5,1),(6,1)] where the
- * entries may be in any order.
+ * <p>Note that implementations that do not output duplicate indices for BitCountProducer and
+ * do for IndexProducer, or vice versa, are consistent if the distinct indices from each are
+ * the same.
+ *
+ * <p>For example the mapping [(1,2),(2,3),(3,1)] can be output with many combinations including:
+ * <pre>
+ * [(1,2),(2,3),(3,1)]
+ * [(1,1),(1,1),(2,1),(2,1),(2,1),(3,1)]
+ * [(1,1),(3,1),(1,1),(2,1),(2,1),(2,1)]
+ * [(3,1),(1,1),(2,2),(1,1),(2,1)]
+ * ...
+ * </pre>
  *
  * @since 4.5
  */
