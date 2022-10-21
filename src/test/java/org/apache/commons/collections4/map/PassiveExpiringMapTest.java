@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
 import org.junit.jupiter.api.Test;
 
@@ -89,6 +90,11 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     @Override
     public Map<K, V> makeObject() {
         return new PassiveExpiringMap<>();
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     private Map<Integer, String> makeTestMap() {

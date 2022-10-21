@@ -674,6 +674,10 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
             super.verify();
         }
 
+        @Override
+        protected int getIterationBehaviour(){
+            return AbstractBagTest.this.getIterationBehaviour();
+        }
     }
 
     /**

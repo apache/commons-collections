@@ -61,6 +61,11 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return decorateMultiSet(new HashMultiSet<T>(), stringPredicate());
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testLegalAddRemove() {

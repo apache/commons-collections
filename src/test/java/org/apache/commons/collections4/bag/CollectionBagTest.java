@@ -76,6 +76,11 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
