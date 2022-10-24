@@ -73,6 +73,12 @@ public interface BitCountProducer extends IndexProducer {
     /**
      * Creates a BitCountProducer from an IndexProducer.  The resulting
      * producer will return every index from the IndexProducer with a count of 1.
+     *
+     * <p>Note that the BitCountProducer does not remove duplicates. Any use of the
+     * BitCountProducer to create an aggregate mapping of index to counts, such as a
+     * CountingBloomFilter, should use the same BitCountProducer in both add and
+     * subtract operations to maintain consistency.
+     * </p>
      * @param idx An index producer.
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */
@@ -81,6 +87,16 @@ public interface BitCountProducer extends IndexProducer {
             @Override
             public boolean forEachCount(BitCountConsumer consumer) {
                 return idx.forEachIndex(i -> consumer.test(i, 1));
+            }
+
+            @Override
+            public int[] asIndexArray() {
+                return idx.asIndexArray();
+            }
+
+            @Override
+            public boolean forEachIndex(IntPredicate predicate) {
+                return idx.forEachIndex(predicate);
             }
         };
     }

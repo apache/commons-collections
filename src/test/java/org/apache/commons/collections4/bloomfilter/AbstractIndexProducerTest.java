@@ -116,10 +116,18 @@ public abstract class AbstractIndexProducerTest {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
 
+        boolean notDistinct = (getBehaviour() & AS_ARRAY_DISTINCT) == 0;
         List<Integer> lst = new ArrayList<>();
         Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
         for (int i : getExpectedIndices()) {
             assertTrue( lst.contains(i), "Missing "+i );
+            if (notDistinct) {
+                lst.remove( Integer.valueOf(i));
+            }
+        }
+        if (notDistinct)
+        {
+            assertTrue(lst.isEmpty());
         }
     }
 

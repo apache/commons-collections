@@ -16,32 +16,30 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest {
+public class IndexProducerFromUniqueHasherCollectionTest extends AbstractIndexProducerTest {
+
+    // selecting 11 items from the range [0,9] will cause a collision
+    private Shape shape = Shape.fromKM(11, 10);
 
     @Override
-    protected BitCountProducer createProducer() {
-        // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
+    protected IndexProducer createProducer() {
+        return new HasherCollection(new IncrementingHasher(1, 1), new IncrementingHasher(2, 2)).uniqueIndices(shape);
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
-    }
-
-    @Override
-    protected int getBehaviour() {
-        // Hasher allows duplicates and may be unordered
-        return 0;
+    protected IndexProducer createEmptyProducer() {
+        return new HasherCollection().uniqueIndices(shape);
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+        return new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
+            2, 4, 6, 8, 0};
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
+    protected int getBehaviour() {
+        // HasherCollection allows duplicates and may be unordered
+        return 0;
     }
 }

@@ -16,17 +16,20 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest {
+
+public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitCountProducerTest {
 
     @Override
     protected BitCountProducer createProducer() {
         // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
+        return BitCountProducer.from(new HasherCollection(
+                new IncrementingHasher(1, 1), 
+                new IncrementingHasher(2, 2)).uniqueIndices(Shape.fromKM(11, 10)));
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
+        return BitCountProducer.from(NullHasher.INSTANCE.uniqueIndices(Shape.fromKM(11, 10)));
     }
 
     @Override
@@ -37,11 +40,13 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+        return new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
+            2, 4, 6, 8, 0};
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
-    }
+     protected int[][] getExpectedBitCount() {
+         return new int[][]{{0, 2}, {1, 1}, {2, 2}, {3, 1}, {4, 2}, {5, 1}, {6, 2}, {7, 1}, {8, 2},
+             {9, 1}};
+     }
 }
