@@ -36,8 +36,7 @@ public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBi
     @Override
     protected int getBehaviour() {
         // CountingBloomFilter based on an array will be distinct and ordered
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED |
-                FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT;
+        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
     }
 
     @Override

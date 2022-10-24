@@ -32,10 +32,16 @@ import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitCountProducerTest extends AbstractIndexProducerTest {
 
-    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is ordered. */
-    protected static final int FOR_EACH_COUNT_ORDERED = 0x10;
-    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is distinct. */
-    protected static final int FOR_EACH_COUNT_DISTINCT = 0x20;
+    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is ordered.
+     * This flag currently reuses the value from IndexProducer. At present no implementations
+     * exhibit different behaviour for the two interfaces. This may change in the future and
+     * an explicit flag value will be required. */
+    private static final int FOR_EACH_COUNT_ORDERED = FOR_EACH_ORDERED;
+    /** Flag to indicate the {@link BitCountProducer#forEachCount(BitCountConsumer)} is distinct.
+     * This flag currently reuses the value from IndexProducer. At present no implementations
+     * exhibit different behaviour for the two interfaces. This may change in the future and
+     * an explicit flag value will be required. */
+    private static final int FOR_EACH_COUNT_DISTINCT = FOR_EACH_DISTINCT;
 
     /**
      * A testing BitCountConsumer that always returns true.
@@ -124,13 +130,18 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         assertEquals(expected, actual);
     }
 
+    /**
+     * Test the behaviour of {@link BitCountProducer#forEachCount(BitCountConsumer)} with respect
+     * to ordered and distinct indices. Currently the behaviour is assumed to be the same as
+     * {@link IndexProducer#forEachIndex(java.util.function.IntPredicate)}.
+     */
     @Test
     public final void testBehaviourForEachCount() {
         int flags = getBehaviour();
+        assumeTrue((flags & (FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT)) != 0);
         IntList list = new IntList();
         createProducer().forEachCount((i, j) -> list.add(i));
         int[] actual = list.toArray();
-        assumeTrue((flags & (FOR_EACH_COUNT_ORDERED | FOR_EACH_COUNT_DISTINCT)) != 0);
         if ((flags & FOR_EACH_COUNT_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             assertArrayEquals(expected, actual);
