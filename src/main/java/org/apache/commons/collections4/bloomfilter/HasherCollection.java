@@ -94,7 +94,7 @@ public class HasherCollection implements Hasher {
      * Creates an IndexProducer of comprising the unique indices from each of the contained
      * hashers.
      *
-     * <p>This method may return duplicates if the collection of unique values from each of the contained 
+     * <p>This method may return duplicates if the collection of unique values from each of the contained
      * hashers contain duplicates.  This is equivalent to creating Bloom filters for each contained hasher
      * and returning concatenated IndexProducer from each.</p>
      *
@@ -119,14 +119,13 @@ public class HasherCollection implements Hasher {
             }
         };
     }
-    
+
     /**
      * Creates an IndexProducer of comprising the unique indices across all the contained
      * hashers.
-     * 
+     *
      * <p>This is equivalent to an IndexProducer created from a Bloom filter that comprises all
      * the contained hashers.</p>
-     * </pre>
      *
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers

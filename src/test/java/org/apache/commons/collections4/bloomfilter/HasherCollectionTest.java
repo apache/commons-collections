@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
  */
 
 public class HasherCollectionTest extends AbstractHasherTest {
-    
     @Override
     protected HasherCollection createHasher() {
         return new HasherCollection(new IncrementingHasher(1, 1),

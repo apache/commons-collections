@@ -125,8 +125,7 @@ public abstract class AbstractIndexProducerTest {
                 lst.remove( Integer.valueOf(i));
             }
         }
-        if (notDistinct)
-        {
+        if (notDistinct) {
             assertTrue(lst.isEmpty());
         }
     }

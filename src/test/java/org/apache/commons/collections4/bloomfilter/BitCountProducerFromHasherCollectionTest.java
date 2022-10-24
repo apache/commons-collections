@@ -22,7 +22,7 @@ public class BitCountProducerFromHasherCollectionTest extends AbstractBitCountPr
     protected BitCountProducer createProducer() {
         // hasher has collisions and wraps
         return BitCountProducer.from(new HasherCollection(
-                new IncrementingHasher(0, 1), 
+                new IncrementingHasher(0, 1),
                 new IncrementingHasher(0, 2)).indices(Shape.fromKM(17, 72)));
     }
 
@@ -44,9 +44,9 @@ public class BitCountProducerFromHasherCollectionTest extends AbstractBitCountPr
     }
 
     @Override
-     protected int[][] getExpectedBitCount() {
-         return new int[][]{{0, 2}, {1, 1}, {2, 2}, {3, 1}, {4, 2}, {5, 1}, {6, 2}, {7, 1}, {8, 2},
-             {9, 1}, {10, 2}, {11, 1}, {12, 2}, {13, 1}, {14, 2}, {15, 1}, {16, 2}, {18, 1}, {20, 1},
-             {22, 1}, {24, 1}, {26, 1}, {28, 1}, {30, 1}, {32, 1}};
-     }
+    protected int[][] getExpectedBitCount() {
+        return new int[][]{{0, 2}, {1, 1}, {2, 2}, {3, 1}, {4, 2}, {5, 1}, {6, 2}, {7, 1}, {8, 2},
+            {9, 1}, {10, 2}, {11, 1}, {12, 2}, {13, 1}, {14, 2}, {15, 1}, {16, 2}, {18, 1}, {20, 1},
+            {22, 1}, {24, 1}, {26, 1}, {28, 1}, {30, 1}, {32, 1}};
+    }
 }
