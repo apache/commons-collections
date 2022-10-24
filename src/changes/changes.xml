@@ -98,7 +98,10 @@
       Fix flaky EmptyPropertiesTest#testSave.
     </action>
     <action type="fix" dev="ggregory" due-to="Steve Bosman">
-      Use java.lang.Objects#equals; eliminate a couple of nulls #307
+      Use java.lang.Objects#equals; eliminate a couple of nulls #307.
+    </action>
+    <action issue="COLLECTIONS-814" type="fix" dev="kinow" due-to="angusdev">
+      CollectionUtils.removeAll() not throwing NPE #340.
     </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
@@ -148,13 +151,13 @@
     </action>
     <!-- UPDATE -->
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.8 #214 #225 #239 #266 #294.
+      Bump actions/cache from 2 to 3.0.10 #214 #225 #239 #266 #294, #342, #345.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/setup-java from 1.4.0 to 3 #174 #177 #186 #224 #298.
+      Bump actions/setup-java from 1.4.0 to 3.5.1 #174 #177 #186 #224 #298.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
-      Bump actions/checkout from 1 to 3.0.2 #166 #173 #183 #193 #262 #264 #285.
+      Bump actions/checkout from 1 to 3.1.0 #166, #173, #183, #193, #262, #264, #285, #346.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump codecov/codecov-action from 2 to 3 #297.
@@ -189,8 +192,8 @@
     <action dev="ggregory" type="update" due-to="dota17">
       Remove the parentheses in the error message in CircularFifoQueue #107.
     </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [test] Bump org.easymock:easymock from 4.0.2 to 4.1.
+    <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
+      [test] Bump org.easymock:easymock from 4.0.2 to 5.0.0 #352.
     </action>
     <action issue="COLLECTIONS-734" dev="ggregory" type="fix" due-to="Chen">
       Encountered an IllegalStateException while traversing with Flat3Map.entrySet(). #115.
@@ -204,17 +207,14 @@
     <action issue="COLLECTIONS-728" dev="ggregory" type="add" due-to="Claude Warren">
       BloomFilter contribution.
     </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [build] Update Apache commons-parent from 48 to 51.
+    <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
+      [build] Update Apache commons-parent from 48 to 54, #339.
     </action>
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.
-    </action>
-    <action dev="ggregory" type="update" due-to="Gary Gregory">
-      [test] Bump org.easymock:easymock from 4.1 to 4.2.
     </action>
     <action issue="COLLECTIONS-747" dev="ggregory" type="fix" due-to="Gary Gregory, Walter Laan">
       MultiKey.getKeys class cast exception.
@@ -241,7 +241,7 @@
       Upgrade to JUnit v5.6.2 #136.
     </action>
     <action issue="COLLECTIONS-777" type="update" dev="ggregory" due-to="John Patrick, Gary Gregory, Dependabot">
-      Fully migrate JUnit 4.12 to 5.9.0 #324.
+      Fully migrate JUnit 4.12 to 5.9.1 #324, #338.
     </action>
     <action issue="COLLECTIONS-753" type="update" dev="ggregory" due-to="John Patrick">
       Upgrade Hamcrest to 2.2.
@@ -313,13 +313,20 @@
       Bump maven-pmd-plugin from 3.15.0 to 3.16.0 #286.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump commons-parent from 52 to 53 #299.
+      Bump commons-parent from 52 to 54 #299.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump japicmp from 0.15.4 to 0.15.7.
+      Bump japicmp from 0.15.4 to 0.16.0.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-       Bump commons.pmd-impl.version from 6.46.0 to 6.49.0 #318, #327, #333.
+      Bump commons.pmd-impl.version from 6.46.0 to 6.50.0 #318, #327, #333, #347.
+    </action>
+    <action type="update" dev="aherbert" due-to="Partha Protim Paul">
+      Correct test of Collection toArray(Object[]) vs toArray() to optionally ignore array order.
+      Ordering is not specified for some collections such as Bags.
+    </action>
+    <action issue="COLLECTIONS-835" type="update" dev="kinow" due-to="Marc Wrobel">
+      Fix links in javadoc and documentations #325.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

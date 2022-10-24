@@ -46,6 +46,11 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return "4.1";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        MultiSet<T> multiset = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/SynchronizedMultiSet.emptyCollection.version4.1.obj");

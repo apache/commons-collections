@@ -63,6 +63,13 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #getOtherValues()}
  * </ul>
  *
+ * <b>Indicate Map Behaviour</b>
+ * <p>
+ * Override these if your map makes specific behaviour guarantees:
+ * <ul>
+ * <li>{@link #getIterationBehaviour()}</li>
+ * </ul>
+ *
  * <b>Supported Operation Methods</b>
  * <p>
  * Override these methods if your map doesn't support certain operations:
@@ -522,6 +529,18 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     values[i] != newValues[i]
                             && (values[i] == null || !values[i].equals(newValues[i])));
         }
+    }
+
+    /**
+     * Return a flag specifying the iteration behaviour of the collection.
+     * This is used to change the assertions used by specific tests.
+     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     *
+     * @return the iteration behaviour
+     * @see AbstractCollectionTest#UNORDERED
+     */
+    protected int getIterationBehaviour(){
+        return 0;
     }
 
     // tests begin here.  Each test adds a little bit of tested functionality.
@@ -1194,8 +1213,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * "removeValue" method.)
      * </p>
      * <p>
-     * See bug <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=9573">
-     * 9573</a>.
+     * See bug <a href="https://issues.apache.org/jira/browse/COLLECTIONS-92">
+     * COLLECTIONS-92</a>.
      * </p>
      */
     @Test
@@ -1619,6 +1638,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             TestMapEntrySet.this.setConfirmed(AbstractMapTest.this.getConfirmed().entrySet());
         }
 
+        @Override
+        protected int getIterationBehaviour(){
+            return AbstractMapTest.this.getIterationBehaviour();
+        }
+
         @Test
         public void testMapEntrySetIteratorEntry() {
             resetFull();
@@ -1801,6 +1825,12 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             super.verify();
             AbstractMapTest.this.verify();
         }
+
+        @Override
+        protected int getIterationBehaviour(){
+            return AbstractMapTest.this.getIterationBehaviour();
+        }
+
     }
 
     /**
@@ -1898,6 +1928,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         public void verify() {
             super.verify();
             AbstractMapTest.this.verify();
+        }
+
+        @Override
+        protected int getIterationBehaviour(){
+            return AbstractMapTest.this.getIterationBehaviour();
         }
 
         // TODO: should test that a remove on the values collection view

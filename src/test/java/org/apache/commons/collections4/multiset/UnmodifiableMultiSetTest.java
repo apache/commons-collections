@@ -73,6 +73,11 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         return false;
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
     @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);

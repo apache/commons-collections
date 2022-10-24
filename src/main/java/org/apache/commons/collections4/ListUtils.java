@@ -473,7 +473,7 @@ public class ListUtils {
      * produced on demand using {@link List#subList(int, int)}, and are subject
      * to all the usual caveats about modification as explained in that API.
      * <p>
-     * Adapted from http://code.google.com/p/guava-libraries/
+     * Adapted from https://github.com/google/guava
      *
      * @param <T> the element type
      * @param list  the list to return consecutive sublists of
@@ -533,6 +533,8 @@ public class ListUtils {
      * @since 3.2
      */
     public static <E> List<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(remove, "remove");
         final List<E> list = new ArrayList<>();
         for (final E obj : collection) {
             if (!remove.contains(obj)) {

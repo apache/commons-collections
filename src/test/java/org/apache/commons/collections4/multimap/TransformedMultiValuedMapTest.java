@@ -22,6 +22,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     public MultiValuedMap<K, V> makeObject() {
         return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
                 TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     @Test

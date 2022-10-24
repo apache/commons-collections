@@ -31,6 +31,7 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -80,6 +81,11 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         addSampleMappings(map);
         return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     @Test
