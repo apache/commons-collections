@@ -461,10 +461,7 @@ class BulkTestSuiteMaker {
         if (Modifier.isStatic(mods)) {
             return false;
         }
-        if (Modifier.isAbstract(mods)) {
-            return false;
-        }
-        return true;
+        return !Modifier.isAbstract(mods);
     }
 
     /**
@@ -484,10 +481,7 @@ class BulkTestSuiteMaker {
         if (Modifier.isStatic(mods)) {
             return false;
         }
-        if (Modifier.isAbstract(mods)) {
-            return false;
-        }
-        return true;
+        return !Modifier.isAbstract(mods);
     }
 
 }
