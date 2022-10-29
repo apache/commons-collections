@@ -31,7 +31,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Override
     protected int[] getExpectedIndices() {
-        return uniqueSet(values).stream().toArray();
+        return values;
     }
 
     @Override
@@ -52,8 +52,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Override
     protected int getBehaviour() {
-        // The default method streams a BitSet so is distinct and ordered.
-        return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return 0;
     }
 
     /**
@@ -104,7 +103,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         for (int i = 0; i < 5; i++) {
             int[] expected = generateIntArray(10, 256);
             IndexProducer ip = IndexProducer.fromIndexArray(expected);
-            assertArrayEquals(unique(expected), ip.asIndexArray());
+            assertArrayEquals(expected, ip.asIndexArray());
         }
     }
 }

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromAbsoluteUniqueHasherCollectionTest2 extends AbstractIndexProducerTest {
+public class IndexProducerFromAbsoluteUniqueHasherCollectionTest extends AbstractIndexProducerTest {
 
     // selecting 11 items from the range [0,9] will cause a collision
     private Shape shape = Shape.fromKM(11, 10);
@@ -38,7 +38,7 @@ public class IndexProducerFromAbsoluteUniqueHasherCollectionTest2 extends Abstra
 
     @Override
     protected int getBehaviour() {
-        // HasherCollection allows duplicates and may be unordered
-        return AS_ARRAY_DISTINCT;
+        // HasherCollection may be unordered
+        return AS_ARRAY_DISTINCT | FOR_EACH_DISTINCT;
     }
 }

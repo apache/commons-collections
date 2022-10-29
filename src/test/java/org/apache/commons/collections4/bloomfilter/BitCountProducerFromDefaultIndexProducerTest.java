@@ -32,8 +32,7 @@ public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCou
 
     @Override
     protected int getBehaviour() {
-        // The default method streams a BitSet so is distinct and ordered.
-        return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return 0;
     }
 
     @Override

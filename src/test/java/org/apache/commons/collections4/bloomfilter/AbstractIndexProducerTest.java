@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,7 +105,7 @@ public abstract class AbstractIndexProducerTest {
     protected abstract int[] getExpectedIndices();
 
     /**
-     * Test to ensure that all expected values are generated.
+     * Test to ensure that all expected values are generated at least once.
      */
     @Test
     public final void testAsIndexArrayValues() {
@@ -115,21 +114,11 @@ public abstract class AbstractIndexProducerTest {
         for (int i : getExpectedIndices()) {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
-
-        boolean notDistinct = (getBehaviour() & AS_ARRAY_DISTINCT) == 0;
-        List<Integer> lst = new ArrayList<>();
-        Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
-        for (int i : getExpectedIndices()) {
-            assertTrue( lst.contains(i), "Missing "+i );
-            if (notDistinct) {
-                lst.remove( Integer.valueOf(i));
-            }
-        }
-        if (notDistinct) {
-            assertTrue(lst.isEmpty());
-        }
     }
 
+    /**
+     * Test to ensure that for each index returns each expected index at least once.
+     */
     @Test
     public final void testForEachIndex() {
         BitSet bs1 = new BitSet();
@@ -183,7 +172,6 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public final void testBehaviourAsIndexArray() {
         int flags = getBehaviour();
-        assumeTrue((flags & (AS_ARRAY_ORDERED | AS_ARRAY_DISTINCT)) != 0);
         int[] actual = createProducer().asIndexArray();
         if ((flags & AS_ARRAY_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -192,13 +180,21 @@ public abstract class AbstractIndexProducerTest {
         if ((flags & AS_ARRAY_DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
+        } else {
+            // if the array is not distinct all expected elements must be generated
+            List<Integer> lst = new ArrayList<>();
+            Arrays.stream(createProducer().asIndexArray()).boxed().forEach( lst::add );
+            for (int i : getExpectedIndices()) {
+                assertTrue( lst.contains(i), "Missing "+i );
+                lst.remove( Integer.valueOf(i));
+            }
+            assertTrue(lst.isEmpty());
         }
     }
 
     @Test
-    public final void testBehaviourForEach() {
+    public final void testBehaviourForEachIndex() {
         int flags = getBehaviour();
-        assumeTrue((flags & (FOR_EACH_ORDERED | FOR_EACH_DISTINCT)) != 0);
         IntList list = new IntList();
         createProducer().forEachIndex(list::add);
         int[] actual = list.toArray();
@@ -209,6 +205,15 @@ public abstract class AbstractIndexProducerTest {
         if ((flags & FOR_EACH_DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
+        } else {
+         // if forEach is not distinct all expected elements must be generated
+            List<Integer> lst = new ArrayList<>();
+            Arrays.stream(actual).boxed().forEach( lst::add );
+            for (int i : getExpectedIndices()) {
+                assertTrue( lst.contains(i), "Missing "+i );
+                lst.remove( Integer.valueOf(i));
+            }
+            assertTrue(lst.isEmpty());
         }
     }
 

@@ -91,15 +91,15 @@ public class HasherCollection implements Hasher {
     }
 
     /**
-     * Creates an IndexProducer of comprising the unique indices from each of the contained
+     * Creates an IndexProducer comprising the unique indices from each of the contained
      * hashers.
      *
      * <p>This method may return duplicates if the collection of unique values from each of the contained
      * hashers contain duplicates.  This is equivalent to creating Bloom filters for each contained hasher
-     * and returning concatenated IndexProducer from each.</p>
+     * and returning an IndexProducer with the concatenated output indices from each filter.</p>
      *
      * <p>A BitCountProducer generated from this IndexProducer is equivalent to a BitCountProducer from a
-     * counting Bloom filter that was constructed from the contained hashers.<p>
+     * counting Bloom filter that was constructed from the contained hashers unique indices.<p>
      *
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
@@ -131,9 +131,13 @@ public class HasherCollection implements Hasher {
      * @return the iterator of integers
      */
     public IndexProducer absoluteUniqueIndices(final Shape shape) {
+        int kCount = hashers.size() > 0 ? hashers.size() : 1;
         return consumer -> {
             Objects.requireNonNull(consumer, "consumer");
-            return uniqueIndices(shape).forEachIndex(IndexFilter.create(shape, consumer));
+            // shape must handle maximum unique indices
+            return uniqueIndices(shape).forEachIndex(IndexFilter.create(
+                    Shape.fromKM(shape.getNumberOfHashFunctions() * kCount,
+                                 shape.getNumberOfBits()), consumer));
         };
     }
 
@@ -172,7 +176,7 @@ public class HasherCollection implements Hasher {
 
         @Override
         public int[] asIndexArray() {
-            int[] result = new int[shape.getNumberOfHashFunctions()*hashers.size()];
+            int[] result = new int[shape.getNumberOfHashFunctions() * hashers.size()];
             int[] idx = new int[1];
 
             // This method needs to return duplicate indices

@@ -38,7 +38,10 @@ public class IndexProducerFromUniqueHasherCollectionTest extends AbstractIndexPr
 
     @Override
     protected int getBehaviour() {
-        // HasherCollection allows duplicates and may be unordered
+        // Note:
+        // Do not return FOR_EACH_DISTINCT | AS_ARRAY_DISTINCT.
+        // Despite this being a unique index test, the HasherCollection will return a unique
+        // index from each hasher. The result is there may still be duplicates.
         return 0;
     }
 }

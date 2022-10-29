@@ -36,7 +36,6 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
         return NullHasher.INSTANCE;
     }
 
-
     @Override
     protected int[] getExpectedIndices() {
         return expected;

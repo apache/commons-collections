@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -85,5 +86,18 @@ public class HasherCollectionTest extends AbstractHasherTest {
         Assertions.assertNotEquals(0, bf.cardinality());
         Assertions.assertTrue(bf.remove(hc2));
         Assertions.assertEquals(0, bf.cardinality());
+    }
+
+    @Test
+    public void testAbsoluteUniqueIndices() {
+        int[] actual = new HasherCollection(
+            new IncrementingHasher(1, 1),
+            new IncrementingHasher(10, 1)
+        ).absoluteUniqueIndices(Shape.fromKM(5, 1000)).asIndexArray();
+        int[] expected = IntStream.concat(
+                IntStream.range(1, 1 + 5),
+                IntStream.range(10, 10 + 5)
+            ).toArray();
+        Assertions.assertArrayEquals(expected, actual);
     }
 }

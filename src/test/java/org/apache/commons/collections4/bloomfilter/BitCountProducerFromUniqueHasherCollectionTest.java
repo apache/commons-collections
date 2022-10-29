@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
 public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitCountProducerTest {
 
     @Override
@@ -24,27 +23,27 @@ public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitC
         // hasher has collisions and wraps
         return BitCountProducer.from(new HasherCollection(
                 new IncrementingHasher(1, 1),
-                new IncrementingHasher(2, 2)).uniqueIndices(Shape.fromKM(11, 10)));
+                new IncrementingHasher(7, 12)).uniqueIndices(Shape.fromKM(5, 10)));
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.uniqueIndices(Shape.fromKM(11, 10)));
+        return BitCountProducer.from(NullHasher.INSTANCE.uniqueIndices(Shape.fromKM(5, 10)));
     }
 
     @Override
     protected int getBehaviour() {
-        // Hasher allows duplicates and may be unordered
+        // HasherCollection uniqueIndices() allows duplicates and may be unordered
         return 0;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 2, 4, 6, 8, 0};
+        return new int[]{1, 2, 3, 4, 5, 7, 9, 1, 3, 5};
     }
 
     @Override
     protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 2}, {1, 1}, {2, 2}, {3, 1}, {4, 2}, {5, 1}, {6, 2}, {7, 1}, {8, 2}, {9, 1}};
+        return new int[][]{{1, 2}, {2, 1}, {3, 2}, {4, 1}, {5, 2}, {7, 1}, {9, 1}};
     }
 }

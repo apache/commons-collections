@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class UniqueIndexProducerFromHasherTest extends AbstractIndexProducerTest {
+public class IndexProducerFromUniqueHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
