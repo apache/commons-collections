@@ -57,7 +57,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
     @Override
     protected int getBehaviour() {
         // Bit maps will be distinct. Conversion to indices should be ordered.
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return INDICES_DISTINCT | INDICES_ORDERED | INDICES_DISTINCT | INDICES_ORDERED;
     }
 
     @Test

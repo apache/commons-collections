@@ -36,13 +36,9 @@ public abstract class AbstractIndexProducerTest {
     private static final IntPredicate FALSE_PREDICATE = i -> false;
 
     /** Flag to indicate the {@link IndexProducer#forEachIndex(IntPredicate)} is ordered. */
-    protected static final int FOR_EACH_ORDERED = 0x1;
+    protected static final int INDICES_ORDERED = 0x1;
     /** Flag to indicate the {@link IndexProducer#forEachIndex(IntPredicate)} is distinct. */
-    protected static final int FOR_EACH_DISTINCT = 0x2;
-    /** Flag to indicate the {@link IndexProducer#asIndexArray()} is ordered. */
-    protected static final int AS_ARRAY_ORDERED = 0x4;
-    /** Flag to indicate the {@link IndexProducer#asIndexArray()} is distinct. */
-    protected static final int AS_ARRAY_DISTINCT = 0x8;
+    protected static final int INDICES_DISTINCT = 0x2;
 
     /**
      * An expandable list of int values.
@@ -169,15 +165,22 @@ public abstract class AbstractIndexProducerTest {
         Assertions.assertEquals(bs1, bs2);
     }
 
+    /**
+     * Tests the behaviour of {@code IndexProducer.asIndexArray()}.
+     * The expected behaviour is defined by the {@code getBehaviour()} method.
+     * the index array may be Ordered, Distinct or both.
+     * If the index array is not distinct then all elements returned by the {@code getExpectedIndices()}
+     * method, including duplicates, are expected to be returned by the {@code asIndexArray()} method.
+     */
     @Test
     public final void testBehaviourAsIndexArray() {
         int flags = getBehaviour();
         int[] actual = createProducer().asIndexArray();
-        if ((flags & AS_ARRAY_ORDERED) != 0) {
+        if ((flags & INDICES_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);
         }
-        if ((flags & AS_ARRAY_DISTINCT) != 0) {
+        if ((flags & INDICES_DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         } else {
@@ -192,17 +195,22 @@ public abstract class AbstractIndexProducerTest {
         }
     }
 
+    /**
+     * Tests the behaviour of {@code IndexProducer.forEachIndex()}.
+     * The expected behaviour is defined by the {@code getBehaviour()} method.
+     * The order is assumed to follow the order produced by {@code IndexProducer.asIndexArray()}.
+     */
     @Test
     public final void testBehaviourForEachIndex() {
         int flags = getBehaviour();
         IntList list = new IntList();
         createProducer().forEachIndex(list::add);
         int[] actual = list.toArray();
-        if ((flags & FOR_EACH_ORDERED) != 0) {
+        if ((flags & INDICES_ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);
         }
-        if ((flags & FOR_EACH_DISTINCT) != 0) {
+        if ((flags & INDICES_DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         } else {

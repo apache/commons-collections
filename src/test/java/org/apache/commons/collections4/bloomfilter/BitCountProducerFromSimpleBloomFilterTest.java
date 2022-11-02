@@ -36,7 +36,7 @@ public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountP
     @Override
     protected int getBehaviour() {
         // BloomFilter based on a bit map array will be distinct and ordered
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return INDICES_DISTINCT | INDICES_ORDERED | INDICES_DISTINCT | INDICES_ORDERED;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class BitCountProducerFromUniqueHasherTest extends AbstractBitCountProduc
     @Override
     protected int getBehaviour() {
         // Hasher may be unordered
-        return AS_ARRAY_DISTINCT;
+        return INDICES_DISTINCT;
     }
 
     @Override
