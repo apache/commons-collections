@@ -31,7 +31,7 @@ public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCou
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         return 0;
     }
 

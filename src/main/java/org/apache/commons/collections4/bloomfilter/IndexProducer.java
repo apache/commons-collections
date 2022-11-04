@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.IntPredicate;
@@ -68,7 +67,7 @@ public interface IndexProducer {
 
             @Override
             public int[] asIndexArray() {
-                return Arrays.copyOf( values, values.length );
+                return values.clone();
             }
         };
     }

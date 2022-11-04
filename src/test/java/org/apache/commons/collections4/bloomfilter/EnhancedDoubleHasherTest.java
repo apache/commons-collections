@@ -42,7 +42,7 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         // Allows duplicates and may be unordered
         return 0;
     }

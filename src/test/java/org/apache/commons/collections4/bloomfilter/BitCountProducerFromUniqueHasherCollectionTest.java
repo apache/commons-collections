@@ -32,7 +32,7 @@ public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitC
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         // HasherCollection uniqueIndices() allows duplicates and may be unordered
         return 0;
     }

@@ -30,7 +30,7 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         // Hasher allows duplicates and may be unordered
         return 0;
     }

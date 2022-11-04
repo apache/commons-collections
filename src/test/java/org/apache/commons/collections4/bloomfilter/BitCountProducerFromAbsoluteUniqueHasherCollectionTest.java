@@ -33,8 +33,8 @@ public class BitCountProducerFromAbsoluteUniqueHasherCollectionTest extends Abst
     }
 
     @Override
-    protected int getBehaviour() {
-        return INDICES_DISTINCT |  INDICES_DISTINCT;
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT;
     }
 
     @Override

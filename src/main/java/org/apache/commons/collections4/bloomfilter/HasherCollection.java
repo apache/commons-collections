@@ -121,7 +121,7 @@ public class HasherCollection implements Hasher {
     }
 
     /**
-     * Creates an IndexProducer of comprising the unique indices across all the contained
+     * Creates an IndexProducer comprising the unique indices across all the contained
      * hashers.
      *
      * <p>This is equivalent to an IndexProducer created from a Bloom filter that comprises all

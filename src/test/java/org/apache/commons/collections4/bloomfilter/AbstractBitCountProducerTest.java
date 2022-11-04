@@ -60,11 +60,20 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     protected abstract BitCountProducer createProducer();
 
     /**
-     * Creates an producer without data.
+     * Creates a producer without data.
      * @return a producer that has no data.
      */
     @Override
     protected abstract BitCountProducer createEmptyProducer();
+
+    /**
+     * Gets the behaviour of the {@link BitCountProducer#forEachCount(BitCountConsumer)} method.
+     * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
+     * @return the behaviour.
+     */
+    protected int getForEachCountBehaviour() {
+        return getAsIndexArrayBehaviour();
+    }
 
     @Test
     public final void testForEachCountPredicates() {
@@ -84,7 +93,8 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         int ary[] = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachCount((i, j) -> {
-            throw new AssertionError("forEachCount consumer should not be called");
+            Assertions.fail("forEachCount consumer should not be called");
+            return false;
         }));
     }
 
@@ -114,8 +124,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         createProducer().forEachCount((i, j) -> {
             actual.add(i, j);
             return true;
-            }
-        );
+        });
         assertEquals(expected, actual);
     }
 
@@ -126,16 +135,16 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
      */
     @Test
     public final void testBehaviourForEachCount() {
-        int flags = getBehaviour();
-        assumeTrue((flags & (INDICES_ORDERED | INDICES_DISTINCT)) != 0);
+        int flags = getForEachCountBehaviour();
+        assumeTrue((flags & (ORDERED | DISTINCT)) != 0);
         IntList list = new IntList();
         createProducer().forEachCount((i, j) -> list.add(i));
         int[] actual = list.toArray();
-        if ((flags & INDICES_ORDERED) != 0) {
+        if ((flags & ORDERED) != 0) {
             int[] expected = Arrays.stream(actual).sorted().toArray();
             assertArrayEquals(expected, actual);
         }
-        if ((flags & INDICES_DISTINCT) != 0) {
+        if ((flags & DISTINCT) != 0) {
             long count = Arrays.stream(actual).distinct().count();
             assertEquals(count, actual.length);
         }

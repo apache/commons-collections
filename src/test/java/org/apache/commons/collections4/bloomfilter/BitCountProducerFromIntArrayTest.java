@@ -31,8 +31,7 @@ public class BitCountProducerFromIntArrayTest extends AbstractBitCountProducerTe
     }
 
     @Override
-    protected int getBehaviour() {
-        // Delegates to the default asIndexArray which is distinct and ordered
+    protected int getAsIndexArrayBehaviour() {
         return 0;
     }
 
