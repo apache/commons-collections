@@ -22,23 +22,30 @@ import java.util.function.IntPredicate;
 /**
  * A Hasher that returns no values.
  *
- * @since 4.5
+ * <p>To be used for testing only.</p>
  */
-public final class NullHasher implements Hasher {
+final class NullHasher implements Hasher {
 
     /**
      * The instance of the Null Hasher.
      */
-    public static final NullHasher INSTANCE = new NullHasher();
+    static final NullHasher INSTANCE = new NullHasher();
 
     private static final IndexProducer PRODUCER = new IndexProducer() {
         @Override
         public boolean forEachIndex(IntPredicate consumer) {
+            Objects.requireNonNull(consumer, "consumer");
             return true;
+        }
+
+        @Override
+        public int[] asIndexArray() {
+            return new int[0];
         }
     };
 
     private NullHasher() {
+        // No instances
     }
 
     @Override
@@ -49,6 +56,7 @@ public final class NullHasher implements Hasher {
 
     @Override
     public IndexProducer uniqueIndices(Shape shape) {
+        Objects.requireNonNull(shape, "shape");
         return PRODUCER;
     }
 }

@@ -24,10 +24,8 @@ import java.util.function.IntPredicate;
  * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a>.
  *
  * <p>To be used for testing only.</p>
- *
- * @since 4.5
  */
-class IncrementingHasher implements Hasher {
+final class IncrementingHasher implements Hasher {
 
     /**
      * The initial hash value.

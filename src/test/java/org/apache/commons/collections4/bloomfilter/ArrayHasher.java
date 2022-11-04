@@ -22,10 +22,10 @@ import java.util.function.IntPredicate;
 /**
  * A Testing Hasher that returns the array values % shape.getNumberOfBits().
  *
- * @since 4.5
+ * <p>To be used for testing only.</p>
  */
-public final class ArrayHasher implements Hasher {
-    final int[] values;
+final class ArrayHasher implements Hasher {
+    private final int[] values;
 
     ArrayHasher(final int... values) {
         this.values = values;
@@ -39,6 +39,7 @@ public final class ArrayHasher implements Hasher {
 
     @Override
     public IndexProducer uniqueIndices(Shape shape) {
+        Objects.requireNonNull(shape, "shape");
         return new Producer(shape);
     }
 
@@ -51,8 +52,10 @@ public final class ArrayHasher implements Hasher {
 
         @Override
         public boolean forEachIndex(IntPredicate consumer) {
+            Objects.requireNonNull(consumer, "consumer");
+
             int pos = 0;
-            for (int i=0; i<shape.getNumberOfHashFunctions(); i++) {
+            for (int i = 0; i < shape.getNumberOfHashFunctions(); i++) {
                 int result = values[pos++] % shape.getNumberOfBits();
                 pos = pos % values.length;
                 if (!consumer.test(result)) {
