@@ -27,8 +27,10 @@ import java.util.Set;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -265,6 +267,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     @Test
     public void testBidiKeySetValuesOrder() {
+        // Skip if collection is unordered
+        Assumptions.assumeFalse((getIterationBehaviour() & AbstractCollectionTest.UNORDERED) != 0);
         resetFull();
         final Iterator<K> keys = map.keySet().iterator();
         final Iterator<V> values = map.values().iterator();
