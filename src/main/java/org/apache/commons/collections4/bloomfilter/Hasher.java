@@ -49,7 +49,8 @@ public interface Hasher {
      * Creates an IndexProducer of unique indices for this hasher based on the Shape.
      *
      * <p>This is like the `indices(Shape)` method except that it adds the guarantee that no
-     * duplicate values will be returned</p>
+     * duplicate values will be returned.  The indices produced are equivalent to those returned
+     * from by a Bloom filter created from this hasher.</p>
      *
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers

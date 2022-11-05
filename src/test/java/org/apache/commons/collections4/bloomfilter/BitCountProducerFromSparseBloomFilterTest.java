@@ -16,25 +16,33 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndexProducerTest {
+public class BitCountProducerFromSparseBloomFilterTest extends AbstractBitCountProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected IndexProducer createProducer() {
-        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        Hasher hasher = new IncrementingHasher(0, 1);
-        filter.merge(hasher);
-        return filter;
+    protected BitCountProducer createProducer() {
+        Hasher hasher = new IncrementingHasher(4, 7);
+        BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge(hasher);
+        return BitCountProducer.from(bf);
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
+    protected BitCountProducer createEmptyProducer() {
+        return BitCountProducer.from(new SparseBloomFilter(shape));
     }
 
     @Override
-    protected int getBehaviour() {
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+    protected int getAsIndexArrayBehaviour() {
+        // A sparse BloomFilter will be distinct but it may not be ordered.
+        // Currently the ordered behavior is asserted as the implementation uses
+        // an ordered TreeSet. This may change in the future.
+        return DISTINCT | ORDERED;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[]{2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
     }
 }

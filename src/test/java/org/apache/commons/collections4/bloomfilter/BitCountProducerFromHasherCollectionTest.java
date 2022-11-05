@@ -16,38 +16,36 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBitCountProducerTest {
-
-    protected Shape shape = Shape.fromKM(17, 72);
+public class BitCountProducerFromHasherCollectionTest extends AbstractBitCountProducerTest {
 
     @Override
     protected BitCountProducer createProducer() {
-        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        filter.merge(new IncrementingHasher(0, 1));
-        filter.merge(new IncrementingHasher(5, 1));
-        return filter;
+        // hasher has collisions and wraps
+        return BitCountProducer.from(new HasherCollection(
+                new IncrementingHasher(0, 1),
+                new IncrementingHasher(2, 7)).indices(Shape.fromKM(17, 72)));
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
+        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // CountingBloomFilter based on an array will be distinct and ordered
-        return DISTINCT | ORDERED;
-    }
-
-    @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 2},
-            {8, 2}, {9, 2}, {10, 2}, {11, 2}, {12, 2}, {13, 2}, {14, 2}, {15, 2}, {16, 2},
-            {17, 1}, {18, 1}, {19, 1}, {20, 1}, {21, 1}};
+        return 0;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+            2, 9, 16, 23, 30, 37, 44, 51, 58, 65, 0, 7, 14, 21, 28, 35, 42};
+    }
+
+    @Override
+    protected int[][] getExpectedBitCount() {
+        return new int[][]{{0, 2}, {1, 1}, {2, 2}, {3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 2}, {8, 1},
+            {9, 2}, {10, 1}, {11, 1}, {12, 1}, {13, 1}, {14, 2}, {15, 1}, {16, 2}, {21, 1}, {23, 1},
+            {28, 1}, {30, 1}, {35, 1}, {37, 1}, {42, 1}, {44, 1}, {51, 1}, {58, 1}, {65, 1} };
     }
 }

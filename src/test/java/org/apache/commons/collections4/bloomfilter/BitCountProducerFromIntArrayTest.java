@@ -16,21 +16,27 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class UniqueIndexProducerFromHasherTest extends AbstractIndexProducerTest {
+public class BitCountProducerFromIntArrayTest extends AbstractBitCountProducerTest {
+
+    int[] data = {6, 8, 1, 2, 4, 4, 5};
 
     @Override
-    protected IndexProducer createProducer() {
-        return new IncrementingHasher(0, 1).uniqueIndices(Shape.fromKM(17, 72));
+    protected BitCountProducer createEmptyProducer() {
+        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[0]));
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    protected BitCountProducer createProducer() {
+        return BitCountProducer.from(IndexProducer.fromIndexArray(data));
     }
 
     @Override
-    protected int getBehaviour() {
-        // Should be unique but may be unordered
-        return FOR_EACH_DISTINCT | AS_ARRAY_DISTINCT;
+    protected int getAsIndexArrayBehaviour() {
+        return 0;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return data;
     }
 }

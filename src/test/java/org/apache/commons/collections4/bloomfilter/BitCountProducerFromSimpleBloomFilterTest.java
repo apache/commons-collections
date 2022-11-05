@@ -16,26 +16,31 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProducerTest {
+public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected IndexProducer createProducer() {
-        Hasher hasher = new IncrementingHasher(0, 1);
+    protected BitCountProducer createProducer() {
+        Hasher hasher = new IncrementingHasher(3, 2);
         BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);
-        return bf;
+        return BitCountProducer.from(bf);
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new SimpleBloomFilter(shape);
+    protected BitCountProducer createEmptyProducer() {
+        return BitCountProducer.from(new SimpleBloomFilter(shape));
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         // BloomFilter based on a bit map array will be distinct and ordered
-        return FOR_EACH_DISTINCT | FOR_EACH_ORDERED | AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return DISTINCT | ORDERED;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[]{3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35};
     }
 }
