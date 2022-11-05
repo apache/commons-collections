@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-
 /**
  * The definition of a Bloom filter shape.
  *
@@ -43,7 +41,7 @@ import java.util.Objects;
  * [Wikipedia]</a>
  * @since 4.5
  */
-public final class Shape implements Comparable<Shape> {
+public final class Shape {
 
     /**
      * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
@@ -81,19 +79,20 @@ public final class Shape implements Comparable<Shape> {
     }
 
     @Override
-    public int compareTo(Shape other) {
-        int i = Integer.compare(numberOfBits, other.numberOfBits);
-        return i == 0 ? Integer.compare(numberOfHashFunctions, other.numberOfHashFunctions) : i;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        return (o instanceof Shape) ? compareTo((Shape) o) == 0 : false;
+    public boolean equals(Object obj) {
+        // Shape is final so no check for the same class as inheritance is not possible
+        if (obj instanceof Shape) {
+            Shape other = (Shape) obj;
+            return numberOfBits == other.numberOfBits &&
+                   numberOfHashFunctions == other.numberOfHashFunctions;
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberOfBits, numberOfHashFunctions);
+        // Match Arrays.hashCode(new int[] {numberOfBits, numberOfHashFunctions})
+        return (31 + numberOfBits) * 31 + numberOfHashFunctions;
     }
 
     /**
