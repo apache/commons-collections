@@ -19,13 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -86,19 +79,5 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
             return false;
         });
         assertEquals(1, count[0], "did not exit early");
-    }
-
-    @Test
-    public void testUniqueIndex() {
-        // generating 11 numbers in the range of [0,9] will yield at least on collision.
-        Shape shape = Shape.fromKM(11, 10);
-        Hasher hasher = createHasher();
-        IndexProducer producer = hasher.indices(shape);
-        List<Integer> full = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
-        producer = hasher.uniqueIndices(shape);
-        List<Integer> unique = Arrays.stream(producer.asIndexArray()).boxed().collect(Collectors.toList());
-        assertTrue(full.size() > unique.size());
-        Set<Integer> set = new HashSet<>(unique);
-        assertEquals(set.size(), unique.size());
     }
 }

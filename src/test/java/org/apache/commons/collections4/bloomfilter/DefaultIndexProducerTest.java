@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntPredicate;
 
@@ -27,28 +28,51 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
-    private int[] values = generateIntArray(10, 512);
+    /** Make forEachIndex unordered and contain duplicates. */
+    private int[] values = {10, 1, 10, 1};
 
     @Override
-    protected IndexProducer createProducer() {
-        return IndexProducer.fromIndexArray(values);
+    protected int[] getExpectedIndices() {
+        return values;
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexProducer createProducer() {
         return new IndexProducer() {
-
             @Override
             public boolean forEachIndex(IntPredicate predicate) {
+                Objects.requireNonNull(predicate);
+                for (int i : values) {
+                    if (!predicate.test(i)) {
+                        return false;
+                    }
+                }
                 return true;
             }
         };
     }
 
     @Override
-    protected int getBehaviour() {
+    protected IndexProducer createEmptyProducer() {
+        return new IndexProducer() {
+            @Override
+            public boolean forEachIndex(IntPredicate predicate) {
+                Objects.requireNonNull(predicate);
+                return true;
+            }
+        };
+    }
+
+    @Override
+    protected int getAsIndexArrayBehaviour() {
         // The default method streams a BitSet so is distinct and ordered.
-        return AS_ARRAY_DISTINCT | AS_ARRAY_ORDERED;
+        return DISTINCT | ORDERED;
+    }
+
+    @Override
+    protected int getForEachIndexBehaviour() {
+        // the forEachIndex implementation returns unordered duplicates.
+        return 0;
     }
 
     /**
@@ -99,7 +123,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         for (int i = 0; i < 5; i++) {
             int[] expected = generateIntArray(10, 256);
             IndexProducer ip = IndexProducer.fromIndexArray(expected);
-            assertArrayEquals(unique(expected), ip.asIndexArray());
+            assertArrayEquals(expected, ip.asIndexArray());
         }
     }
 }

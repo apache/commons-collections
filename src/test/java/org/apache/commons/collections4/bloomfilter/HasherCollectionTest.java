@@ -17,11 +17,9 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,11 +27,18 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the {@link HasherCollection}.
  */
-public class HasherCollectionTest extends AbstractHasherTest {
 
+public class HasherCollectionTest extends AbstractHasherTest {
     @Override
     protected HasherCollection createHasher() {
-        return new HasherCollection(new IncrementingHasher(1, 1), new IncrementingHasher(2, 2));
+        return new HasherCollection(new IncrementingHasher(1, 1),
+                new IncrementingHasher(2, 2));
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 2, 4, 6, 8, 10, 12, 14, 16, 18,
+            20, 22, 24, 26, 28, 30, 32, 34 };
     }
 
     @Override
@@ -42,7 +47,7 @@ public class HasherCollectionTest extends AbstractHasherTest {
     }
 
     @Override
-    protected int getBehaviour() {
+    protected int getAsIndexArrayBehaviour() {
         // Allows duplicates and may be unordered
         return 0;
     }
@@ -50,46 +55,6 @@ public class HasherCollectionTest extends AbstractHasherTest {
     @Override
     protected int getHasherSize(Hasher hasher) {
         return ((HasherCollection) hasher).getHashers().size();
-    }
-
-    protected void nestedTest(HasherCollectionTest nestedTest) {
-        nestedTest.testForEachIndex();
-        nestedTest.testEmptyProducer();
-        nestedTest.testConsistency();
-        nestedTest.testBehaviourAsIndexArray();
-        nestedTest.testBehaviourForEach();
-        nestedTest.testForEachIndexEarlyExit();
-        nestedTest.testAdd();
-    }
-
-    @Test
-    public void testCollectionConstructor() {
-        List<Hasher> lst = Arrays.asList(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2));
-        HasherCollectionTest nestedTest = new HasherCollectionTest() {
-            @Override
-            protected HasherCollection createHasher() {
-                return new HasherCollection(lst);
-            }
-
-            @Override
-            protected HasherCollection createEmptyHasher() {
-                return new HasherCollection();
-            }
-        };
-        nestedTest(nestedTest);
-
-        nestedTest = new HasherCollectionTest() {
-            @Override
-            protected HasherCollection createHasher() {
-                return new HasherCollection(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2));
-            }
-
-            @Override
-            protected HasherCollection createEmptyHasher() {
-                return new HasherCollection();
-            }
-        };
-        nestedTest(nestedTest);
     }
 
     @Test
@@ -100,27 +65,6 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
         hasher.add(Arrays.asList(new IncrementingHasher(3, 2), new IncrementingHasher(4, 2)));
         assertEquals(5, hasher.getHashers().size());
-    }
-
-    @Override
-    public void testUniqueIndex() {
-        // create a hasher that produces duplicates with the specified shape.
-        // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM(12, 72);
-        Hasher h1 = new IncrementingHasher(5, 12);
-        HasherCollection hasher = createEmptyHasher();
-        hasher.add(h1);
-        hasher.add(h1);
-        List<Integer> lst = new ArrayList<>();
-        for (int i : new int[] { 5, 17, 29, 41, 53, 65 }) {
-            lst.add(i);
-            lst.add(i);
-        }
-
-        assertTrue(hasher.uniqueIndices(shape).forEachIndex(i -> {
-            return lst.remove(Integer.valueOf(i));
-        }), "unable to remove value");
-        assertEquals(0, lst.size());
     }
 
     @Test
@@ -142,5 +86,18 @@ public class HasherCollectionTest extends AbstractHasherTest {
         Assertions.assertNotEquals(0, bf.cardinality());
         Assertions.assertTrue(bf.remove(hc2));
         Assertions.assertEquals(0, bf.cardinality());
+    }
+
+    @Test
+    public void testAbsoluteUniqueIndices() {
+        int[] actual = new HasherCollection(
+            new IncrementingHasher(1, 1),
+            new IncrementingHasher(10, 1)
+        ).absoluteUniqueIndices(Shape.fromKM(5, 1000)).asIndexArray();
+        int[] expected = IntStream.concat(
+                IntStream.range(1, 1 + 5),
+                IntStream.range(10, 10 + 5)
+            ).toArray();
+        Assertions.assertArrayEquals(expected, actual);
     }
 }

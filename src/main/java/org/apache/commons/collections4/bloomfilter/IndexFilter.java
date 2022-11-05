@@ -23,7 +23,7 @@ import java.util.function.IntPredicate;
  *
  * <p><em>If the index is negative the behavior is not defined.</em></p>
  *
- * <p>This is conceptually a unique filter implemented as a {@code IntPredicate}.</p>
+ * <p>This is conceptually a unique filter implemented as an {@code IntPredicate}.</p>
  * @since 4.5
  */
 public final class IndexFilter {

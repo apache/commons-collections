@@ -16,24 +16,34 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class UniqueIndexProducerFromHasherCollectionTest extends AbstractIndexProducerTest {
+public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitCountProducerTest {
 
     @Override
-    protected IndexProducer createProducer() {
-        return new HasherCollection(new IncrementingHasher(0, 1), new IncrementingHasher(0, 2)).uniqueIndices(Shape.fromKM(17, 72));
+    protected BitCountProducer createProducer() {
+        // hasher has collisions and wraps
+        return BitCountProducer.from(new HasherCollection(
+                new IncrementingHasher(1, 1),
+                new IncrementingHasher(7, 12)).uniqueIndices(Shape.fromKM(5, 10)));
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new HasherCollection().uniqueIndices(Shape.fromKM(17, 72));
+    protected BitCountProducer createEmptyProducer() {
+        return BitCountProducer.from(NullHasher.INSTANCE.uniqueIndices(Shape.fromKM(5, 10)));
     }
 
     @Override
-    protected int getBehaviour() {
-        // Note:
-        // Do not return FOR_EACH_DISTINCT | AS_ARRAY_DISTINCT.
-        // Despite this being a unique index test, the HasherCollection will return a unique
-        // index from each hasher. The result is there may still be duplicates.
+    protected int getAsIndexArrayBehaviour() {
+        // HasherCollection uniqueIndices() allows duplicates and may be unordered
         return 0;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[]{1, 2, 3, 4, 5, 7, 9, 1, 3, 5};
+    }
+
+    @Override
+    protected int[][] getExpectedBitCount() {
+        return new int[][]{{1, 2}, {2, 1}, {3, 2}, {4, 1}, {5, 2}, {7, 1}, {9, 1}};
     }
 }
