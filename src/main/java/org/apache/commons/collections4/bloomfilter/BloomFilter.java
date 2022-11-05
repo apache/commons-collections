@@ -32,8 +32,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     /**
      * The sparse characteristic used to determine the best method for matching.
      * <p>For `sparse` implementations
-     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient.  For non `sparse` implementations
-     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient.  Implementers should determine if it is easier
+     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations
+     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier
      * for the implementation to produce indexes of bit map blocks.</p>
      */
     int SPARSE = 0x1;
@@ -136,7 +136,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return true if the merge was successful
      */
     default boolean merge(BloomFilter other) {
-        return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other ) : merge((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other) : merge((BitMapProducer) other);
     }
 
     /**

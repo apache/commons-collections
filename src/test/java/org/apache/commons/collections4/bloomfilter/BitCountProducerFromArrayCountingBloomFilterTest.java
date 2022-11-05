@@ -41,13 +41,13 @@ public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBi
 
     @Override
     protected int[][] getExpectedBitCount() {
-        return new int[][]{{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 2},
+        return new int[][] {{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 2},
             {8, 2}, {9, 2}, {10, 2}, {11, 2}, {12, 2}, {13, 2}, {14, 2}, {15, 2}, {16, 2},
             {17, 1}, {18, 1}, {19, 1}, {20, 1}, {21, 1}};
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+        return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
     }
 }

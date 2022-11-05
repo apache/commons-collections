@@ -29,7 +29,7 @@ import java.util.function.LongPredicate;
 public final class SimpleBloomFilter implements BloomFilter {
 
     /**
-     * The array of bit map longs that defines this Bloom filter.  Will be null if the filter is empty.
+     * The array of bit map longs that defines this Bloom filter. Will be null if the filter is empty.
      */
     private final long[] bitMap;
 

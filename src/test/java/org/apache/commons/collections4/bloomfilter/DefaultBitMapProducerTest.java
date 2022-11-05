@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
-    long[] values = generateLongArray( 5 );
+    long[] values = generateLongArray(5);
 
     @Override
     protected BitMapProducer createProducer() {
@@ -76,15 +76,15 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
         IndexProducer ip = IndexProducer.fromIndexArray(expected);
         long[] ary = BitMapProducer.fromIndexProducer(ip, 256).asBitMapArray();
         for (int idx : expected) {
-            assertTrue( BitMap.contains(ary, idx));
+            assertTrue(BitMap.contains(ary, idx));
         }
     }
 
     @Test
     public void testFromBitMapArray() {
         int nOfBitMaps = BitMap.numberOfBitMaps(256);
-        long[] expected = generateLongArray( nOfBitMaps );
+        long[] expected = generateLongArray(nOfBitMaps);
         long[] ary = BitMapProducer.fromBitMapArray(expected).asBitMapArray();
-        assertArrayEquals( expected, ary );
+        assertArrayEquals(expected, ary);
     }
 }

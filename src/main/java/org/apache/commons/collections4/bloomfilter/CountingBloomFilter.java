@@ -82,7 +82,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified Bloom filter into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be incremented by 1,</p>
+     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be incremented by 1.</p>
      *
      * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored and it is treated as an
      * IndexProducer.</p>
@@ -102,7 +102,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified Hasher into this Bloom filter.
      *
-     * <p>Specifically: all counts for the unique indexes identified by the {@code hasher} will be incremented by 1,</p>
+     * <p>Specifically: all counts for the unique indexes identified by the {@code hasher} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
@@ -119,7 +119,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified index producer into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code indexProducer} will be incremented by 1,</p>
+     * <p>Specifically: all counts for the indexes identified by the {@code indexProducer} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
@@ -143,7 +143,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified BitMap producer into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code bitMapProducer} will be incremented by 1,</p>
+     * <p>Specifically: all counts for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
@@ -160,7 +160,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the specified Bloom filter from this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be decremented by 1,</p>
+     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be decremented by 1.</p>
      *
      * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored and it is treated as an
      * IndexProducer.</p>

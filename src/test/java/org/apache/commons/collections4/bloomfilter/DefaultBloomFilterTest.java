@@ -42,7 +42,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         assertEquals(3, filter.cardinality());
     }
 
-
     @Test
     public void testDefaultBloomFilterSparseSpecificMerge() {
         Shape shape = Shape.fromKM(3, 150);
@@ -115,12 +114,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         private void checkIndicesRange() {
             if (!indices.isEmpty()) {
                 if (indices.last() >= shape.getNumberOfBits()) {
-                    throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                            indices.last(), shape.getNumberOfBits()));
+                    throw new IllegalArgumentException(
+                        String.format("Value in list %s is greater than maximum value (%s)", indices.last(),
+                            shape.getNumberOfBits()));
                 }
                 if (indices.first() < 0) {
                     throw new IllegalArgumentException(
-                            String.format("Value in list %s is less than 0", indices.first()));
+                        String.format("Value in list %s is less than 0", indices.first()));
                 }
             }
         }
@@ -136,7 +136,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean merge(BitMapProducer bitMapProducer){
+        public boolean merge(BitMapProducer bitMapProducer) {
             return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
         }
 

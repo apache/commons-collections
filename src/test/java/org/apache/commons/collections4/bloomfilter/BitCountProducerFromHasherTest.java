@@ -37,11 +37,11 @@ public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
     }
 
     @Override
     protected int[][] getExpectedBitCount() {
-        return new int[][]{{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
+        return new int[][] {{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
     }
 }

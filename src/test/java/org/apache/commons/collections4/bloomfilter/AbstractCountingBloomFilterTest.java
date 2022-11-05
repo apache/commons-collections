@@ -31,11 +31,11 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFilter>
         extends AbstractBloomFilterTest<T> {
-    protected int[] from1Counts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 };
-    protected int[] from11Counts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        0 };
-    protected int[] bigHashCounts = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 0 };
+    protected int[] from1Counts = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+    protected int[] from11Counts = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        0};
+    protected int[] bigHashCounts = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0};
 
     protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
 
@@ -191,7 +191,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(from1), "Should not contain");
         assertFalse(bf3.contains(bf4), "Should not contain");
 
-        assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 });
+        assertCounts(bf3, new int[] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0});
     }
 
     /**
@@ -229,7 +229,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(from1), "Should not contain");
         assertFalse(bf3.contains(simple), "Should not contain");
 
-        assertCounts(bf3, new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+        assertCounts(bf3, new int[] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
 
         // with IndexProducer
         IndexProducer ip = from11.indices(getTestShape());
@@ -257,11 +257,11 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         // test producer errors
         IndexProducer ip2 = IndexProducer.fromIndexArray(1, 2, getTestShape().getNumberOfBits());
         final CountingBloomFilter bf6 = createFilter(getTestShape(), from1);
-        assertThrows( IllegalArgumentException.class, () -> bf6.remove(ip2));
+        assertThrows(IllegalArgumentException.class, () -> bf6.remove(ip2));
 
         final CountingBloomFilter bf7 = createFilter(getTestShape(), from1);
         final BitMapProducer bmp2 = BitMapProducer.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
-        assertThrows( IllegalArgumentException.class, () -> bf7.remove(bmp2));
+        assertThrows(IllegalArgumentException.class, () -> bf7.remove(bmp2));
     }
 
     @Test

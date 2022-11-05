@@ -44,7 +44,7 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of a BitMapProducer.  By necessity this method will visit each bit map
+     * Calculates the cardinality of a BitMapProducer. By necessity this method will visit each bit map
      * created by the producer.
      * @param producer the Producer to calculate the cardinality for.
      * @return the cardinality of the bit maps produced by the producer.

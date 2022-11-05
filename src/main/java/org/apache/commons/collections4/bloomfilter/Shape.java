@@ -149,7 +149,7 @@ public final class Shape {
 
     /**
      * Determines if a cardinality is sparse based on the shape.
-     * <p>This method assumes that bit maps are 64bits and indexes are 32bits.  If the memory
+     * <p>This method assumes that bit maps are 64bits and indexes are 32bits. If the memory
      * necessary to store the cardinality as indexes is less than the estimated memory for bit maps,
      * the cardinality is determined to be {@code sparse}.</p>
      * @param cardinality the cardinality to check.

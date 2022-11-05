@@ -55,7 +55,13 @@ public class IndexFilterTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "1, 64", "2, 64", "3, 64", "7, 357", "7, 17", })
+    @CsvSource({
+        "1, 64",
+        "2, 64",
+        "3, 64",
+        "7, 357",
+        "7, 17",
+    })
     void testFilter(int k, int m) {
         Shape shape = Shape.fromKM(k, m);
         BitSet used = new BitSet(m);

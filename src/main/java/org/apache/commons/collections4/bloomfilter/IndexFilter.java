@@ -77,7 +77,7 @@ public final class IndexFilter {
 
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
-     * number has been seen.  Suitable for Shapes that have few hash functions.
+     * number has been seen. Suitable for Shapes that have few hash functions.
      * @since 4.5
      */
     static class ArrayTracker implements IntPredicate {

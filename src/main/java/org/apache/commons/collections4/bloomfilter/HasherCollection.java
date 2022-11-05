@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 
 /**
- * A collection of Hashers.  Useful when the generation of a Bloom filter depends upon
+ * A collection of Hashers. Useful when the generation of a Bloom filter depends upon
  * multiple items.
  * <p>
  * Hashers for each item are added to the HasherCollection and then
@@ -95,7 +95,7 @@ public class HasherCollection implements Hasher {
      * hashers.
      *
      * <p>This method may return duplicates if the collection of unique values from each of the contained
-     * hashers contain duplicates.  This is equivalent to creating Bloom filters for each contained hasher
+     * hashers contain duplicates. This is equivalent to creating Bloom filters for each contained hasher
      * and returning an IndexProducer with the concatenated output indices from each filter.</p>
      *
      * <p>A BitCountProducer generated from this IndexProducer is equivalent to a BitCountProducer from a

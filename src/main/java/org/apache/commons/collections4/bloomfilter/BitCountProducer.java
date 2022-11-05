@@ -52,7 +52,7 @@ public interface BitCountProducer extends IndexProducer {
 
     /**
      * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
-     * Any exceptions thrown by the action are relayed to the caller.  The consumer is applied to each
+     * Any exceptions thrown by the action are relayed to the caller. The consumer is applied to each
      * index-count pair, if the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.
      *
@@ -74,7 +74,7 @@ public interface BitCountProducer extends IndexProducer {
     }
 
     /**
-     * Creates a BitCountProducer from an IndexProducer.  The resulting
+     * Creates a BitCountProducer from an IndexProducer. The resulting
      * producer will return every index from the IndexProducer with a count of 1.
      *
      * <p>Note that the BitCountProducer does not remove duplicates. Any use of the
@@ -119,7 +119,7 @@ public interface BitCountProducer extends IndexProducer {
          *
          * @param index the bit index.
          * @param count the count at the specified bit index.
-         * @return {@code true} if processing should continue, {@code false} it processing should stop.
+         * @return {@code true} if processing should continue, {@code false} if processing should stop.
          */
         boolean test(int index, int count);
     }

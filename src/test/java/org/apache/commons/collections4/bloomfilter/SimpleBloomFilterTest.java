@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
 /**
  * Tests for the {@link SimpleBloomFilter}.
  */
