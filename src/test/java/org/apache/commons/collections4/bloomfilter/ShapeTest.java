@@ -17,11 +17,16 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * Tests the {@link Shape} class.
@@ -45,18 +50,29 @@ public class ShapeTest {
     /**
      * Test equality of shape.
      */
-    @Test
-    public void testEquals() {
+    @ParameterizedTest
+    @CsvSource({
+        "3, 24",
+        "1, 24",
+        "1, 1",
+        "13, 124",
+        "13, 224",
+    })
+    public void testEqualsAndHashCode(int k, int m) {
+        Shape shape1 = Shape.fromKM(k, m);
+        assertEquals(shape1, shape1);
+        assertEquals(Arrays.hashCode(new int[] {m, k}), shape1.hashCode(),
+            "Doesn't match Arrays.hashCode(new int[] {m, k})");
+        assertNotEquals(shape1, null);
+        assertNotEquals(shape1, "text");
+        assertNotEquals(shape1, Integer.valueOf(3));
+        assertNotEquals(shape1, Shape.fromKM(k, m + 1));
+        assertNotEquals(shape1, Shape.fromKM(k + 1, m));
 
-        assertEquals(shape, shape);
-        assertEquals(3, shape.getNumberOfHashFunctions());
-        assertEquals(24, shape.getNumberOfBits());
-        assertEquals(shape.hashCode(), Shape.fromKM(3, 24).hashCode());
-        assertNotEquals(shape, null);
-        assertNotEquals(shape, Shape.fromKM(3, 25));
-        assertNotEquals(shape, Shape.fromKM(4, 24));
-        assertNotEquals(shape, "text");
-        assertNotEquals(shape, Integer.valueOf(3));
+        // Test this is reproducible
+        Shape shape2 = Shape.fromKM(k, m);
+        assertEquals(shape1, shape2);
+        assertEquals(shape1.hashCode(), shape2.hashCode());
     }
 
     @Test
