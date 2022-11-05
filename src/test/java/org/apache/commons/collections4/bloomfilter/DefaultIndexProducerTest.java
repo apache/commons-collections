@@ -66,13 +66,12 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     @Override
     protected int getAsIndexArrayBehaviour() {
         // The default method streams a BitSet so is distinct and ordered.
-        // However the forEachIndex may not be distinct and ordered and
-        // the test cannot distinguish the two cases.
         return DISTINCT | ORDERED;
     }
 
     @Override
     protected int getForEachIndexBehaviour() {
+        // the forEachIndex implementation returns unordered duplicates.
         return 0;
     }
 

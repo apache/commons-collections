@@ -65,6 +65,9 @@ public interface BitCountProducer extends IndexProducer {
      */
     boolean forEachCount(BitCountConsumer consumer);
 
+    /**
+     * The default implementation returns indices with ordering and uniqueness of {@code forEachCount()}.
+     */
     @Override
     default boolean forEachIndex(IntPredicate predicate) {
         return forEachCount((i, v) -> predicate.test(i));

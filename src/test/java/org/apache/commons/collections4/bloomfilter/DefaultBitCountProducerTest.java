@@ -16,11 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.IntPredicate;
-
 public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     /** Make forEachIndex unordered and contain duplicates. */
@@ -35,21 +30,8 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
     protected BitCountProducer createProducer() {
         return new BitCountProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
-                Objects.requireNonNull(predicate);
-                for (int i : values) {
-                    if (!predicate.test(i)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            @Override
             public boolean forEachCount(BitCountConsumer consumer) {
-                int[] vals = values.clone();
-                Arrays.sort(vals);
-                for (int i : vals) {
+                for (int i : values) {
                     if (!consumer.test(i, 1)) {
                         return false;
                     }
@@ -63,11 +45,6 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
     protected BitCountProducer createEmptyProducer() {
         return new BitCountProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
-                Objects.requireNonNull(predicate);
-                return true;
-            }
-            @Override
             public boolean forEachCount(BitCountConsumer consumer) {
                 return true;
             }
@@ -77,18 +54,18 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
     @Override
     protected int getAsIndexArrayBehaviour() {
         // The default method streams a BitSet so is distinct and ordered.
-        // However the forEachIndex may not be distinct and ordered and
-        // the test cannot distinguish the two cases.
-        return DISTINCT | ORDERED;
+        return ORDERED | DISTINCT;
     }
 
     @Override
     protected int getForEachIndexBehaviour() {
+        // the default method has the same behaviour as the forEachCount() method.
         return 0;
     }
 
     @Override
     protected int getForEachCountBehaviour() {
-        return ORDERED;
+     // the implemented mehtod returns unordered duplicates.
+        return 0;
     }
 }

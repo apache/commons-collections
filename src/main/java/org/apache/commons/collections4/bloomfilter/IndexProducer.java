@@ -115,6 +115,10 @@ public interface IndexProducer {
      * The default implementation of this method is slow.  It is recommended
      * that implementing classes reimplement this method.
      * </em></p>
+     *
+     * <p><em>
+     * The default implementation of this method returns unique values in order.
+     * </em></p>
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
