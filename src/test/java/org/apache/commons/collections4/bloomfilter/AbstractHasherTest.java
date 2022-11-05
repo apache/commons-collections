@@ -29,7 +29,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     protected abstract Hasher createEmptyHasher();
 
     /**
-     * A method to get the number of items in a hasher.  Mostly applies to
+     * A method to get the number of items in a hasher. Mostly applies to
      * Collections of hashers.
      * @param hasher the hasher to check.
      * @return the number of hashers in the hasher
@@ -59,9 +59,14 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "17, 72", "3, 14", "5, 67868", "75, 10"})
+    @CsvSource({
+        "17, 72",
+        "3, 14",
+        "5, 67868",
+        "75, 10"
+    })
     public void testHashing(int k, int m) {
-        int[] count = { 0 };
+        int[] count = {0};
         Hasher hasher = createHasher();
         hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);

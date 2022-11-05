@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
 /**
  * An object that produces indices of a Bloom filter.
  * <p><em>
- * The default implementation of {@code asIndexArray} is slow.  Implementers should reimplement the
+ * The default implementation of {@code asIndexArray} is slow. Implementers should reimplement the
  * method where possible.</em></p>
  *
  * @since 4.5
@@ -33,7 +33,7 @@ import java.util.function.LongPredicate;
 public interface IndexProducer {
 
     /**
-     * Each index is passed to the predicate.  The predicate is applied to each
+     * Each index is passed to the predicate. The predicate is applied to each
      * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further indices are processed.
      *
@@ -112,7 +112,7 @@ public interface IndexProducer {
      * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
      * <p><em>
-     * The default implementation of this method is slow.  It is recommended
+     * The default implementation of this method is slow. It is recommended
      * that implementing classes reimplement this method.
      * </em></p>
      *

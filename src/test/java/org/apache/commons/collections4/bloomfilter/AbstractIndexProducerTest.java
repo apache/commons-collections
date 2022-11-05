@@ -33,9 +33,9 @@ public abstract class AbstractIndexProducerTest {
     private static final IntPredicate TRUE_PREDICATE = i -> true;
     private static final IntPredicate FALSE_PREDICATE = i -> false;
 
-    /** Flag to indicate the {@link IndexProducer#forEachIndex(IntPredicate)} is ordered. */
+    /** Flag to indicate the indices are ordered, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
     protected static final int ORDERED = 0x1;
-    /** Flag to indicate the {@link IndexProducer#forEachIndex(IntPredicate)} is distinct. */
+    /** Flag to indicate the indices are distinct, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
     protected static final int DISTINCT = 0x2;
 
     /**
@@ -84,6 +84,8 @@ public abstract class AbstractIndexProducerTest {
     /**
      * Gets the behaviour of the {@link IndexProducer#asIndexArray()} method.
      * @return the behaviour.
+     * @see #ORDERED
+     * @see #DISTINCT
      */
     protected abstract int getAsIndexArrayBehaviour();
 
@@ -91,6 +93,8 @@ public abstract class AbstractIndexProducerTest {
      * Gets the behaviour of the {@link IndexProducer#forEachIndex(IntPredicate)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
      * @return the behaviour.
+     * @see #ORDERED
+     * @see #DISTINCT
      */
     protected int getForEachIndexBehaviour() {
         return getAsIndexArrayBehaviour();

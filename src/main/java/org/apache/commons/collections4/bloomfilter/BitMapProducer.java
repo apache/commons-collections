@@ -39,7 +39,7 @@ import java.util.function.LongPredicate;
 public interface BitMapProducer {
 
     /**
-     * Each bit map is passed to the predicate in order.  The predicate is applied to each
+     * Each bit map is passed to the predicate in order. The predicate is applied to each
      * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further bit maps are processed.
      *
@@ -54,11 +54,11 @@ public interface BitMapProducer {
     boolean forEachBitMap(LongPredicate predicate);
 
     /**
-     * Applies the {@code func} to each bit map pair in order.  Will apply all of the bit maps from the other
-     * BitMapProducer to this producer.  If this producer does not have as many bit maps it will provide 0 (zero)
+     * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
+     * BitMapProducer to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
      * for all excess calls to the LongBiPredicate.
      * <p>
-     * <em>The default implementation of this method uses {@code asBitMapArray()}  It is recommended that implementations
+     * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
      * of BitMapProducer that have local arrays reimplement this method.</em></p>
      *
      * @param other The other BitMapProducer that provides the y values in the (x,y) pair.
@@ -73,7 +73,7 @@ public interface BitMapProducer {
     /**
      * Return a copy of the BitMapProducer data as a bit map array.
      * <p>
-     * The default implementation of this method is slow.  It is recommended
+     * The default implementation of this method is slow. It is recommended
      * that implementing classes reimplement this method.
      * </p>
      * @return An array of bit map data.

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-
 public class BitCountProducerFromAbsoluteUniqueHasherCollectionTest extends AbstractBitCountProducerTest {
 
     @Override
@@ -39,6 +38,6 @@ public class BitCountProducerFromAbsoluteUniqueHasherCollectionTest extends Abst
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{1, 2, 3, 4, 5, 7, 9};
+        return new int[] {1, 2, 3, 4, 5, 7, 9};
     }
 }

@@ -45,13 +45,13 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
          3L => ...0011
          @formatter:on
          */
-        TestingBitMapProducer producer = new TestingBitMapProducer(new long[] { 1L, 2L, 3L });
+        TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
         return IndexProducer.fromBitMapProducer(producer);
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{0, 65, 128, 129};
+        return new int[] {0, 65, 128, 129};
     }
 
     @Override
@@ -72,7 +72,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        BitMapProducer producer = new TestingBitMapProducer(new long[] { 0xFFFFFFFFFFFFFFFFL });
+        BitMapProducer producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
         underTest = IndexProducer.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 

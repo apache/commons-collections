@@ -37,6 +37,6 @@ public class BitCountProducerFromUniqueHasherTest extends AbstractBitCountProduc
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{4, 12, 20, 28, 36, 44, 52, 60, 68};
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
     }
 }

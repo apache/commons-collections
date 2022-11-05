@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * Contains functions to convert {@code int} indices into Bloom filter bit positions and visa versa.
  *
- * <p>The functions view an array of longs as a collection of bit maps each containing 64 bits.  The bits are arranged
- * in memory as a little-endian long value.  This matches the requirements of the BitMapProducer interface.</p>
+ * <p>The functions view an array of longs as a collection of bit maps each containing 64 bits. The bits are arranged
+ * in memory as a little-endian long value. This matches the requirements of the BitMapProducer interface.</p>
  *
  * @since 4.5
  */

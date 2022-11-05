@@ -68,7 +68,7 @@ public class EnhancedDoubleHasher implements Hasher {
         int shift = Long.SIZE;
         final int end = offset + Math.min(len, Long.BYTES);
         for (int i = offset; i < end; i++) {
-            shift -=  Byte.SIZE;
+            shift -= Byte.SIZE;
             val |= ((long) (byteArray[i] & 0xFF) << shift);
         }
         return val;
@@ -104,7 +104,7 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     /**
-     * Constructs the EnhancedDoubleHasher from 2 longs.  The long values will be interpreted as unsigned values.
+     * Constructs the EnhancedDoubleHasher from 2 longs. The long values will be interpreted as unsigned values.
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */

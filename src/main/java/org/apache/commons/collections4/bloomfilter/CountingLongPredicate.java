@@ -32,7 +32,7 @@ class CountingLongPredicate implements LongPredicate {
 
     /**
      * Constructs an instance that will compare the elements in @{code ary} with the elements returned by @{code func}.
-     * function is called as @{code func.test( idxValue, otherValue )}.  if there are more @{code otherValue} values than
+     * function is called as @{code func.test( idxValue, otherValue )}. If there are more @{code otherValue} values than
      * @{code idxValues} then @{code func} is called as @{code func.test( 0, otherValue )}.
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.

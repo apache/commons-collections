@@ -39,11 +39,11 @@ public class BitCountProducerFromUniqueHasherCollectionTest extends AbstractBitC
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[]{1, 2, 3, 4, 5, 7, 9, 1, 3, 5};
+        return new int[] {1, 2, 3, 4, 5, 7, 9, 1, 3, 5};
     }
 
     @Override
     protected int[][] getExpectedBitCount() {
-        return new int[][]{{1, 2}, {2, 1}, {3, 2}, {4, 1}, {5, 2}, {7, 1}, {9, 1}};
+        return new int[][] {{1, 2}, {2, 1}, {3, 2}, {4, 1}, {5, 2}, {7, 1}, {9, 1}};
     }
 }
