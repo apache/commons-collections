@@ -87,7 +87,7 @@ public class BitMap {
         // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is
         // positive.
         // We do not explicitly check for a negative here. Instead we use a
-        // a signed shift. Any negative index will produce a negative value
+        // signed shift. Any negative index will produce a negative value
         // by sign-extension and if used as an index into an array it will throw an
         // exception.
         return bitIndex >> DIVIDE_BY_64;
