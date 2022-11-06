@@ -87,10 +87,8 @@ public interface IndexProducer {
                 public boolean test(long word) {
                     int i = wordIdx;
                     while (word != 0) {
-                        if ((word & 1) == 1) {
-                            if (!consumer.test(i)) {
-                                return false;
-                            }
+                        if ((word & 1) == 1 && !consumer.test(i)) {
+                            return false;
                         }
                         word >>>= 1;
                         i++;
