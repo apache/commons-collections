@@ -487,7 +487,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an key set iterator.
+     * Creates a key set iterator.
      *
      * @return the keySet iterator
      */
@@ -497,7 +497,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an values iterator.
+     * Creates a values iterator.
      *
      * @return the values iterator
      */
@@ -948,7 +948,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     // These two classes store the hashCode of the key of
-    // of the mapping, so that after they're dequeued a quick
+    // the mapping, so that after they're dequeued a quick
     // lookup of the bucket in the table can occur.
 
     /**

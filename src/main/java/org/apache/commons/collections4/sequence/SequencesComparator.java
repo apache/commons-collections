@@ -156,7 +156,7 @@ public class SequencesComparator<T> {
      * Get the middle snake corresponding to two subsequences of the
      * main sequences.
      * <p>
-     * The snake is found using the MYERS Algorithm (this algorithms has
+     * The snake is found using the MYERS Algorithm (this algorithm has
      * also been implemented in the GNU diff program). This algorithm is
      * explained in Eugene Myers article:
      * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">

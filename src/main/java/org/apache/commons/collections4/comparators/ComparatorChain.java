@@ -315,7 +315,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Returns {@code true} iff <i>that</i> Object is
-     * is a {@link Comparator} whose ordering is known to be
+     * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}

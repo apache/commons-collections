@@ -27,7 +27,7 @@ import java.util.Iterator;
  * in sequence until all Iterators are exhausted.
  * <p>
  * The Iterators are provided by {@link #nextIterator(int)} which has to be overridden by
- * sub-classes and allows to lazily create the Iterators as they are accessed:
+ * subclasses and allows to lazily create the Iterators as they are accessed:
  * <pre>
  * return new LazyIteratorChain&lt;String&gt;() {
  *     protected Iterator&lt;String&gt; nextIterator(int count) {

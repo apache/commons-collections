@@ -199,7 +199,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map (optional).
      * @throws NullPointerException if the key is {@code null} and this map
-     *            does not not permit {@code null} keys (optional).
+     *            does not permit {@code null} keys (optional).
      */
     @Override
     public boolean containsKey(final Object key) {
@@ -225,7 +225,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the value is of an inappropriate type for
      *         this map (optional).
      * @throws NullPointerException if the value is {@code null} and this map
-     *            does not not permit {@code null} values (optional).
+     *            does not permit {@code null} values (optional).
      */
     @Override
     public boolean containsValue(final Object value) {
@@ -282,7 +282,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map (optional).
-     * @throws NullPointerException key is {@code null} and this map does not
+     * @throws NullPointerException key is {@code null} and this map does
      *         not permit {@code null} keys (optional).
      *
      * @see #containsKey(Object)
@@ -420,7 +420,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the key is of an inappropriate type for
      *         the composited map (optional).
      * @throws NullPointerException if the key is {@code null} and the composited map
-     *            does not not permit {@code null} keys (optional).
+     *            does not permit {@code null} keys (optional).
      * @throws UnsupportedOperationException if the {@code remove} method is
      *         not supported by the composited map containing the key
      */

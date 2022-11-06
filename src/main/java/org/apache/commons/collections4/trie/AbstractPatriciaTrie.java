@@ -537,8 +537,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             final TrieEntry<K, V> child = p.left == h ? p.right : p.left;
 
             // if it was looping to itself previously,
-            // it will now be pointed from it's parent
-            // (if we aren't removing it's parent --
+            // it will now be pointed from its parent
+            // (if we aren't removing its parent --
             //  in that case, it remains looping to itself).
             // otherwise, it will continue to have the same
             // predecessor.
@@ -1381,7 +1381,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
 
     /**
-     * This is a entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
+     * This is an entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
      */
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 

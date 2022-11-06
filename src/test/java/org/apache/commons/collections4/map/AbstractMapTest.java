@@ -342,7 +342,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * {@link #getOtherKeys()} or {@link #getOtherValues}.
      *
      * <p>Override getOtherElements to return the results of this method if your
-     * collection does not support heterogenous elements or the null element.
+     * collection does not support heterogeneous elements or the null element.
      * </p>
      */
     public Object[] getOtherNonNullStringElements() {
@@ -374,7 +374,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Returns a the set of values that can be used to replace the values
+     * Returns a set of values that can be used to replace the values
      * returned from {@link #getSampleValues()}.  This method must return an
      * array with the same length as {@link #getSampleValues()}.  The values
      * returned from this method should not be the same as those returned from
@@ -604,7 +604,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()}
+     * Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()
      * can add and remove elements}, then {@link Map#size()} and
      * {@link Map#isEmpty()} are used to ensure that map has no elements after
      * a call to clear.  If the map does not support adding and removing

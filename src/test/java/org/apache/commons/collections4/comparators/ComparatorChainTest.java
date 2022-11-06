@@ -95,7 +95,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testComparatorChainOnMinvaluedCompatator() {
+    public void testComparatorChainOnMinValuedComparator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly
         final ComparatorChain<Integer> chain = new ComparatorChain<>();

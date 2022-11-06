@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Tests the ListIteratorWrapper to insure that it behaves as expected when wrapping a ListIterator.
+ * Tests the ListIteratorWrapper to ensure that it behaves as expected when wrapping a ListIterator.
  */
 public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
@@ -190,7 +190,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         assertEquals("First element should be the same", first, iter.next());
         assertEquals("Second element should be the same", second, iter.next());
 
-        // after passing the point, where we resetted, continuation should work as expected
+        // after passing the point, where we reset, continuation should work as expected
         for (int i = 2; i < testArray.length; i++) {
             final Object testValue = testArray[i];
             final E iterValue = iter.next();
