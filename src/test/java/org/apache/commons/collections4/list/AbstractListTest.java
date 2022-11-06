@@ -91,12 +91,10 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         int i = 0;
         final Iterator<E> iterator1 = list1.iterator();
-        final Iterator<E> iterator2 = list2.iterator();
         final E[] array = (E[]) list1.toArray();
-        while (iterator2.hasNext()) {
+        for (Object o2 : list2) {
             assertTrue("List iterator should have next", iterator1.hasNext());
             final Object o1 = iterator1.next();
-            Object o2 = iterator2.next();
             assertEquals("Iterator elements should be equal", o1, o2);
             o2 = list1.get(i);
             assertEquals("get should return correct element", o1, o2);
@@ -428,9 +426,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
 
-        final Iterator<E> iterator = list2.iterator();
-        while (iterator.hasNext()) {
-            final E element = iterator.next();
+        for (final E element : list2) {
             assertEquals("lastIndexOf should return correct result",
                 list1.lastIndexOf(element), list2.lastIndexOf(element));
             verify();

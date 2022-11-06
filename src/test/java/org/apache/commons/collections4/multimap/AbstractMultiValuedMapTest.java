@@ -428,9 +428,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testEntriesCollectionIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<V> values = new ArrayList<>(map.values());
-        final Iterator<Map.Entry<K, V>> iterator = map.entries().iterator();
-        while (iterator.hasNext()) {
-            final Map.Entry<K, V> entry = iterator.next();
+        for (final Entry<K, V> entry : map.entries()) {
             assertTrue(map.containsMapping(entry.getKey(), entry.getValue()));
             assertTrue(values.contains(entry.getValue()));
             if (isRemoveSupported()) {
