@@ -432,7 +432,6 @@ public class CollectionUtils {
         if (coll2.isEmpty()) {
             return true;
         }
-        final Iterator<?> it = coll1.iterator();
         final Set<Object> elementsAlreadySeen = new HashSet<>();
         for (final Object nextElement : coll2) {
             if (elementsAlreadySeen.contains(nextElement)) {
@@ -440,8 +439,7 @@ public class CollectionUtils {
             }
 
             boolean foundCurrentElement = false;
-            while (it.hasNext()) {
-                final Object p = it.next();
+            for (final Object p : coll1) {
                 elementsAlreadySeen.add(p);
                 if (Objects.equals(nextElement, p)) {
                     foundCurrentElement = true;

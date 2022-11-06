@@ -1646,10 +1646,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         @Test
         public void testMapEntrySetIteratorEntry() {
             resetFull();
-            final Iterator<Map.Entry<K, V>> it = getCollection().iterator();
             int count = 0;
-            while (it.hasNext()) {
-                final Map.Entry<K, V> entry = it.next();
+            for (final Entry<K, V> entry : getCollection()) {
                 assertTrue(AbstractMapTest.this.getMap().containsKey(entry.getKey()));
                 assertTrue(AbstractMapTest.this.getMap().containsValue(entry.getValue()));
                 if (!isGetStructuralModify()) {
