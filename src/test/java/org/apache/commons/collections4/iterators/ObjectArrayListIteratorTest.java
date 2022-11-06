@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
     public ObjectArrayListIteratorTest() {
-        super();
     }
 
     @Override
