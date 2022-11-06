@@ -289,7 +289,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // the data provided above do not generate an estimate that is equivalent to the
         // actual.
         filter1.merge(new IncrementingHasher(4, 1));
-
         assertEquals(1, filter1.estimateN());
 
         filter1.merge(new IncrementingHasher(17, 1));
