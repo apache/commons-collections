@@ -72,7 +72,7 @@ public final class IndexFilter {
         if (number >= size) {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
         }
-        return tracker.test(number) ? consumer.test(number) : true;
+        return !tracker.test(number) || consumer.test(number);
     }
 
     /**
