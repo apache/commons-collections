@@ -48,7 +48,7 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Override
-    protected int getHasherSize(Hasher hasher) {
+    protected int getHasherSize(final Hasher hasher) {
         return 1;
     }
 
@@ -95,9 +95,9 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
 
     @Test
     void testModEdgeCases() {
-        for (long dividend : new long[] {-1, -2, -3, -6378683, -23567468136887892L, Long.MIN_VALUE, 345, 678686,
+        for (final long dividend : new long[] {-1, -2, -3, -6378683, -23567468136887892L, Long.MIN_VALUE, 345, 678686,
             67868768686878924L, Long.MAX_VALUE}) {
-            for (int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE}) {
+            for (final int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE}) {
                 assertEquals((int) Long.remainderUnsigned(dividend, divisor), EnhancedDoubleHasher.mod(dividend, divisor),
                         () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
             }

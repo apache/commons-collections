@@ -37,13 +37,13 @@ class CountingLongPredicate implements LongPredicate {
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.
      */
-    CountingLongPredicate(long[] ary, LongBiPredicate func) {
+    CountingLongPredicate(final long[] ary, final LongBiPredicate func) {
         this.ary = ary;
         this.func = func;
     }
 
     @Override
-    public boolean test(long other) {
+    public boolean test(final long other) {
         return func.test(idx == ary.length ? 0 : ary[idx++], other);
     }
 

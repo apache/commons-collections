@@ -43,21 +43,21 @@ public final class SparseBloomFilter implements BloomFilter {
      *
      * @param shape The shape of the filter.
      */
-    public SparseBloomFilter(Shape shape) {
+    public SparseBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
         this.indices = new TreeSet<>();
     }
 
-    private SparseBloomFilter(SparseBloomFilter source) {
+    private SparseBloomFilter(final SparseBloomFilter source) {
         shape = source.shape;
         indices = new TreeSet<>(source.indices);
     }
 
     @Override
     public long[] asBitMapArray() {
-        long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        for (int i : indices) {
+        final long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        for (final int i : indices) {
             BitMap.set(result, i);
         }
         return result;
@@ -73,13 +73,13 @@ public final class SparseBloomFilter implements BloomFilter {
      * @param idx the index to add.
      * @return {@code true} always
      */
-    private boolean add(int idx) {
+    private boolean add(final int idx) {
         indices.add(idx);
         return true;
     }
 
     @Override
-    public boolean merge(IndexProducer indexProducer) {
+    public boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         indexProducer.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
@@ -96,22 +96,22 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(BitMapProducer bitMapProducer) {
+    public boolean merge(final BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         return this.merge(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     @Override
-    public boolean merge(Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         merge(hasher.indices(shape));
         return true;
     }
 
     @Override
-    public boolean merge(BloomFilter other) {
+    public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
+        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
         merge(producer);
         return true;
     }
@@ -137,9 +137,9 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(IntPredicate consumer) {
+    public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (int value : indices) {
+        for (final int value : indices) {
             if (!consumer.test(value)) {
                 return false;
             }
@@ -148,9 +148,9 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachBitMap(LongPredicate consumer) {
+    public boolean forEachBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits());
+        final int limit = BitMap.numberOfBitMaps(shape.getNumberOfBits());
         /*
          * because our indices are always in order we can shorten the time necessary to
          * create the longs for the consumer
@@ -159,7 +159,7 @@ public final class SparseBloomFilter implements BloomFilter {
         long bitMap = 0;
         // the bitmap we are working on
         int idx = 0;
-        for (int i : indices) {
+        for (final int i : indices) {
             while (BitMap.getLongIndex(i) != idx) {
                 if (!consumer.test(bitMap)) {
                     return false;
@@ -186,12 +186,12 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(IndexProducer indexProducer) {
+    public boolean contains(final IndexProducer indexProducer) {
         return indexProducer.forEachIndex(indices::contains);
     }
 
     @Override
-    public boolean contains(BitMapProducer bitMapProducer) {
+    public boolean contains(final BitMapProducer bitMapProducer) {
         return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 }

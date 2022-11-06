@@ -63,7 +63,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * @param len the length of the extraction, may be longer than 8.
      * @return
      */
-    private static long toLong(byte[] byteArray, int offset, int len) {
+    private static long toLong(final byte[] byteArray, final int offset, final int len) {
         long val = 0;
         int shift = Long.SIZE;
         final int end = offset + Math.min(len, Long.BYTES);
@@ -93,12 +93,12 @@ public class EnhancedDoubleHasher implements Hasher {
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
      */
-    public EnhancedDoubleHasher(byte[] buffer) {
+    public EnhancedDoubleHasher(final byte[] buffer) {
         if (buffer.length == 0) {
             throw new IllegalArgumentException("buffer length must be greater than 0");
         }
         // divide by 2
-        int segment = buffer.length / 2;
+        final int segment = buffer.length / 2;
         this.initial = toLong(buffer, 0, segment);
         this.increment = toLong(buffer, segment, buffer.length - segment);
     }
@@ -108,7 +108,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
-    public EnhancedDoubleHasher(long initial, long increment) {
+    public EnhancedDoubleHasher(final long initial, final long increment) {
         this.initial = initial;
         this.increment = increment;
     }
@@ -135,7 +135,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * @param divisor the divisor for the modulus calculation.
      * @return the remainder or modulus value.
      */
-    static int mod(long dividend, int divisor) {
+    static int mod(final long dividend, final int divisor) {
         // See Hacker's Delight (2nd ed), section 9.3.
         // Assume divisor is positive.
         // Divide half the unsigned number and then double the quotient result.
@@ -152,7 +152,7 @@ public class EnhancedDoubleHasher implements Hasher {
         return new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
+            public boolean forEachIndex(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
                 // Enhanced double hashing:
@@ -211,8 +211,8 @@ public class EnhancedDoubleHasher implements Hasher {
 
             @Override
             public int[] asIndexArray() {
-                int[] result = new int[shape.getNumberOfHashFunctions()];
-                int[] idx = new int[1];
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
 
                 // This method needs to return duplicate indices
 

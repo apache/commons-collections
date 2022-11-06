@@ -42,6 +42,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * {@inheritDoc}
      */
+    @Override
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {

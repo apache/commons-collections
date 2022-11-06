@@ -22,8 +22,8 @@ public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountP
 
     @Override
     protected BitCountProducer createProducer() {
-        Hasher hasher = new IncrementingHasher(3, 2);
-        BloomFilter bf = new SimpleBloomFilter(shape);
+        final Hasher hasher = new IncrementingHasher(3, 2);
+        final BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);
         return BitCountProducer.from(bf);
     }

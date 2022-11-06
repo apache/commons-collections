@@ -53,13 +53,13 @@ public class HasherCollectionTest extends AbstractHasherTest {
     }
 
     @Override
-    protected int getHasherSize(Hasher hasher) {
+    protected int getHasherSize(final Hasher hasher) {
         return ((HasherCollection) hasher).getHashers().size();
     }
 
     @Test
     public void testAdd() {
-        HasherCollection hasher = createHasher();
+        final HasherCollection hasher = createHasher();
         hasher.add(new IncrementingHasher(2, 2));
         assertEquals(3, hasher.getHashers().size());
 
@@ -69,15 +69,15 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
     @Test
     void testHasherCollection() {
-        Hasher h1 = new IncrementingHasher(13, 4678);
-        Hasher h2 = new IncrementingHasher(42, 987);
-        Hasher h3 = new IncrementingHasher(454, 2342);
+        final Hasher h1 = new IncrementingHasher(13, 4678);
+        final Hasher h2 = new IncrementingHasher(42, 987);
+        final Hasher h3 = new IncrementingHasher(454, 2342);
 
-        HasherCollection hc1 = new HasherCollection(Arrays.asList(h1, h1));
-        HasherCollection hc2 = new HasherCollection(Arrays.asList(h2, h3));
-        HasherCollection hc3 = new HasherCollection(Arrays.asList(hc1, hc2));
+        final HasherCollection hc1 = new HasherCollection(Arrays.asList(h1, h1));
+        final HasherCollection hc2 = new HasherCollection(Arrays.asList(h2, h3));
+        final HasherCollection hc3 = new HasherCollection(Arrays.asList(hc1, hc2));
 
-        ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(Shape.fromKM(5, 10000));
+        final ArrayCountingBloomFilter bf = new ArrayCountingBloomFilter(Shape.fromKM(5, 10000));
 
         // Should add h1, h1, h2, h3
         Assertions.assertTrue(bf.merge(hc3));
@@ -90,11 +90,11 @@ public class HasherCollectionTest extends AbstractHasherTest {
 
     @Test
     public void testAbsoluteUniqueIndices() {
-        int[] actual = new HasherCollection(
+        final int[] actual = new HasherCollection(
             new IncrementingHasher(1, 1),
             new IncrementingHasher(10, 1)
         ).absoluteUniqueIndices(Shape.fromKM(5, 1000)).asIndexArray();
-        int[] expected = IntStream.concat(
+        final int[] expected = IntStream.concat(
                 IntStream.range(1, 1 + 5),
                 IntStream.range(10, 10 + 5)
             ).toArray();

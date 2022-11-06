@@ -46,6 +46,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         super(LazyIteratorChainTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();

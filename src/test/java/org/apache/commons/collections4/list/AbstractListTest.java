@@ -182,19 +182,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final E element = getOtherElements()[0];
 
-        List<E> finalList0 = makeObject();
+        final List<E> finalList0 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        List<E> finalList1 = makeObject();
+        final List<E> finalList1 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
                 "List.add should throw IndexOutOfBoundsException [-1]");
 
-        List<E> finalList2 = makeObject();
+        final List<E> finalList2 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(1, element),
                 "List.add should throw IndexOutOfBoundsException [1]");
 
-        List<E> finalList3 = makeObject();
+        final List<E> finalList3 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
@@ -211,19 +211,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final E element = getOtherElements()[0];
 
-        List<E> finalList0 = makeFullCollection();
+        final List<E> finalList0 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        List<E> finalList1 = makeFullCollection();
+        final List<E> finalList1 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
                 "List.add should throw IndexOutOfBoundsException [-1]");
 
-        List<E> finalList2 = makeFullCollection();
+        final List<E> finalList2 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(finalList2.size() + 1, element),
                 "List.add should throw IndexOutOfBoundsException [size + 1]");
 
-        List<E> finalList3 = makeFullCollection();
+        final List<E> finalList3 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }

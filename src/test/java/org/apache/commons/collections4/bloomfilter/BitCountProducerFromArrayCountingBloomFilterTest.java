@@ -22,7 +22,7 @@ public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBi
 
     @Override
     protected BitCountProducer createProducer() {
-        ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
+        final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
         filter.merge(new IncrementingHasher(5, 1));
         return filter;

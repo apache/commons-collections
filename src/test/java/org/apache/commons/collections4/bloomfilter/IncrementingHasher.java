@@ -46,7 +46,7 @@ final class IncrementingHasher implements Hasher {
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
-    IncrementingHasher(long initial, long increment) {
+    IncrementingHasher(final long initial, final long increment) {
         this.initial = initial;
         this.increment = increment;
     }
@@ -58,9 +58,9 @@ final class IncrementingHasher implements Hasher {
         return new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
+            public boolean forEachIndex(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
-                int bits = shape.getNumberOfBits();
+                final int bits = shape.getNumberOfBits();
 
                 // Essentially this is computing a wrapped modulus from a start point and an
                 // increment. So actually you only need two modulus operations before the loop.
@@ -68,7 +68,7 @@ final class IncrementingHasher implements Hasher {
                 // to avoid overflow.
 
                 long index = EnhancedDoubleHasher.mod(initial, bits);
-                int inc = EnhancedDoubleHasher.mod(increment, bits);
+                final int inc = EnhancedDoubleHasher.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     if (!consumer.test((int) index)) {
@@ -82,8 +82,8 @@ final class IncrementingHasher implements Hasher {
 
             @Override
             public int[] asIndexArray() {
-                int[] result = new int[shape.getNumberOfHashFunctions()];
-                int[] idx = new int[1];
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
 
                 // This method needs to return duplicate indices
 

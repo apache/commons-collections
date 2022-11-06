@@ -154,7 +154,7 @@ public class ClosureUtilsTest {
 
         a = new MockClosure<>();
         b = new MockClosure<>();
-        Collection<Closure<Object>> coll = new ArrayList<>();
+        final Collection<Closure<Object>> coll = new ArrayList<>();
         coll.add(b);
         coll.add(a);
         coll.add(b);
@@ -170,7 +170,7 @@ public class ClosureUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null)),
                 () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure(null, null)),
                 () -> {
-                    Collection<Closure<Object>> finalColl = new ArrayList<>();
+                    final Collection<Closure<Object>> finalColl = new ArrayList<>();
                     finalColl.add(null);
                     finalColl.add(null);
                     assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(finalColl));

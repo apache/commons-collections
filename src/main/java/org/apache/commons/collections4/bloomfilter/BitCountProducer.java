@@ -69,7 +69,7 @@ public interface BitCountProducer extends IndexProducer {
      * The default implementation returns indices with ordering and uniqueness of {@code forEachCount()}.
      */
     @Override
-    default boolean forEachIndex(IntPredicate predicate) {
+    default boolean forEachIndex(final IntPredicate predicate) {
         return forEachCount((i, v) -> predicate.test(i));
     }
 
@@ -85,10 +85,10 @@ public interface BitCountProducer extends IndexProducer {
      * @param idx An index producer.
      * @return A BitCountProducer with the same indices as the IndexProducer.
      */
-    static BitCountProducer from(IndexProducer idx) {
+    static BitCountProducer from(final IndexProducer idx) {
         return new BitCountProducer() {
             @Override
-            public boolean forEachCount(BitCountConsumer consumer) {
+            public boolean forEachCount(final BitCountConsumer consumer) {
                 return idx.forEachIndex(i -> consumer.test(i, 1));
             }
 
@@ -98,7 +98,7 @@ public interface BitCountProducer extends IndexProducer {
             }
 
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
+            public boolean forEachIndex(final IntPredicate predicate) {
                 return idx.forEachIndex(predicate);
             }
         };

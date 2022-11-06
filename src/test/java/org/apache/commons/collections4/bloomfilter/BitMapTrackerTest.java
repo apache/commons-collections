@@ -30,8 +30,8 @@ public class BitMapTrackerTest {
 
     @Test
     public void testSeen() {
-        Shape shape = Shape.fromKM(3, 12);
-        IntPredicate tracker = new IndexFilter.BitMapTracker(shape);
+        final Shape shape = Shape.fromKM(3, 12);
+        final IntPredicate tracker = new IndexFilter.BitMapTracker(shape);
 
         assertTrue(tracker.test(0));
         assertFalse(tracker.test(0));

@@ -94,6 +94,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #isValid()
      * @see #add(BitCountProducer)
      */
+    @Override
     default boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         return merge((IndexProducer) other);
@@ -111,6 +112,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #isValid()
      * @see #add(BitCountProducer)
      */
+    @Override
     default boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         return merge(hasher.uniqueIndices(getShape()));
@@ -130,11 +132,12 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #isValid()
      * @see #add(BitCountProducer)
      */
+    @Override
     default boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
             return add(BitCountProducer.from(indexProducer));
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
         }
@@ -152,6 +155,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @see #isValid()
      * @see #add(BitCountProducer)
      */
+    @Override
     default boolean merge(final BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
         return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
@@ -217,7 +221,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
             return subtract(BitCountProducer.from(indexProducer));
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
         }

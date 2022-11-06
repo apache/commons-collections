@@ -45,6 +45,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
+    @Override
     @BeforeEach
     public void setUp() throws Exception {
         super.setUp();

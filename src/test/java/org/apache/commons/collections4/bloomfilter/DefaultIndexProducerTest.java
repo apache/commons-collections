@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     /** Make forEachIndex unordered and contain duplicates. */
-    private int[] values = {10, 1, 10, 1};
+    private final int[] values = {10, 1, 10, 1};
 
     @Override
     protected int[] getExpectedIndices() {
@@ -40,9 +40,9 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     protected IndexProducer createProducer() {
         return new IndexProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
+            public boolean forEachIndex(final IntPredicate predicate) {
                 Objects.requireNonNull(predicate);
-                for (int i : values) {
+                for (final int i : values) {
                     if (!predicate.test(i)) {
                         return false;
                     }
@@ -56,7 +56,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     protected IndexProducer createEmptyProducer() {
         return new IndexProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
+            public boolean forEachIndex(final IntPredicate predicate) {
                 Objects.requireNonNull(predicate);
                 return true;
             }
@@ -81,7 +81,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param bound the upper bound (exclusive) of the values in the array.
      * @return an array of int.
      */
-    public static int[] generateIntArray(int size, int bound) {
+    public static int[] generateIntArray(final int size, final int bound) {
         return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
     }
 
@@ -90,7 +90,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param ary the array
      * @return the set.
      */
-    public static BitSet uniqueSet(int[] ary) {
+    public static BitSet uniqueSet(final int[] ary) {
         final BitSet bs = new BitSet();
         Arrays.stream(ary).forEach(bs::set);
         return bs;
@@ -101,19 +101,19 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param ary the array to sort and make unique
      * @return the sorted unique array.
      */
-    public static int[] unique(int[] ary) {
+    public static int[] unique(final int[] ary) {
         return Arrays.stream(ary).distinct().sorted().toArray();
     }
 
     @Test
     public void testFromBitMapProducer() {
         for (int i = 0; i < 5; i++) {
-            int[] expected = generateIntArray(7, 256);
-            long[] bits = new long[BitMap.numberOfBitMaps(256)];
-            for (int bitIndex : expected) {
+            final int[] expected = generateIntArray(7, 256);
+            final long[] bits = new long[BitMap.numberOfBitMaps(256)];
+            for (final int bitIndex : expected) {
                 BitMap.set(bits, bitIndex);
             }
-            IndexProducer ip = IndexProducer.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
+            final IndexProducer ip = IndexProducer.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
             assertArrayEquals(unique(expected), ip.asIndexArray());
         }
     }
@@ -121,8 +121,8 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     @Test
     public void testFromIndexArray() {
         for (int i = 0; i < 5; i++) {
-            int[] expected = generateIntArray(10, 256);
-            IndexProducer ip = IndexProducer.fromIndexArray(expected);
+            final int[] expected = generateIntArray(10, 256);
+            final IndexProducer ip = IndexProducer.fromIndexArray(expected);
             assertArrayEquals(expected, ip.asIndexArray());
         }
     }

@@ -40,7 +40,7 @@ public class BitMap {
      * @param numberOfBits the number of bits to store in the array of bit maps.
      * @return the number of bit maps necessary.
      */
-    public static int numberOfBitMaps(int numberOfBits) {
+    public static int numberOfBitMaps(final int numberOfBits) {
         return ((numberOfBits - 1) >> DIVIDE_BY_64) + 1;
     }
 
@@ -54,7 +54,7 @@ public class BitMap {
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
      * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
-    public static boolean contains(long[] bitMaps, int bitIndex) {
+    public static boolean contains(final long[] bitMaps, final int bitIndex) {
         return (bitMaps[getLongIndex(bitIndex)] & getLongBit(bitIndex)) != 0;
     }
 
@@ -66,7 +66,7 @@ public class BitMap {
      * @param bitIndex the index of the bit to set.
      * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
-    public static void set(long[] bitMaps, int bitIndex) {
+    public static void set(final long[] bitMaps, final int bitIndex) {
         bitMaps[getLongIndex(bitIndex)] |= getLongBit(bitIndex);
     }
 

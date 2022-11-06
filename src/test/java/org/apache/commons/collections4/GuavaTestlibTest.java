@@ -17,6 +17,7 @@
 
 package org.apache.commons.collections4;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -53,7 +54,7 @@ import junit.framework.TestSuite;
 public final class GuavaTestlibTest extends TestCase {
 
     public static Test suite() {
-        TestSuite test = new TestSuite();
+        final TestSuite test = new TestSuite();
         // Map
         test.addTest(suiteMap("HashedMap", HashedMap::new));
         test.addTest(suiteMap("LinkedMap", LinkedMap::new));
@@ -75,12 +76,12 @@ public final class GuavaTestlibTest extends TestCase {
      * @param factory factory to create new Maps
      * @return a JUnit 3, 4 Test Suite
      */
-    private static Test suiteMap(String name, Supplier<Map<String, String>> factory) {
+    private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory) {
         return MapTestSuiteBuilder.using(new TestStringMapGenerator() {
             @Override
-            protected Map<String, String> create(Map.Entry<String, String>[] entries) {
-                Map<String, String> map = factory.get();
-                for (Map.Entry<String, String> entry : entries) {
+            protected Map<String, String> create(final Map.Entry<String, String>[] entries) {
+                final Map<String, String> map = factory.get();
+                for (final Map.Entry<String, String> entry : entries) {
                     map.put(entry.getKey(), entry.getValue());
                 }
                 return map;
@@ -100,14 +101,12 @@ public final class GuavaTestlibTest extends TestCase {
      * @param features test features used in the tests
      * @return a JUnit 3, 4 Test Suite
      */
-    private static Test suiteList(String name, Supplier<List<String>> factory, Feature<?>... features) {
+    private static Test suiteList(final String name, final Supplier<List<String>> factory, final Feature<?>... features) {
         final ListTestSuiteBuilder<String> suite = ListTestSuiteBuilder.using(new TestStringListGenerator() {
             @Override
-            protected List<String> create(String[] elements) {
-                List<String> list = factory.get();
-                for (String element : elements) {
-                    list.add(element);
-                }
+            protected List<String> create(final String[] elements) {
+                final List<String> list = factory.get();
+                Collections.addAll(list, elements);
                 return list;
             }
         })

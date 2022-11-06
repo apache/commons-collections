@@ -88,7 +88,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     public void testFirstKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
-        OrderedMap<K, V> finalOrdered = ordered;
+        final OrderedMap<K, V> finalOrdered = ordered;
         assertThrows(NoSuchElementException.class, () -> finalOrdered.firstKey());
 
         resetFull();
@@ -101,7 +101,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     public void testLastKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
-        OrderedMap<K, V> finalOrdered = ordered;
+        final OrderedMap<K, V> finalOrdered = ordered;
         assertThrows(NoSuchElementException.class, () -> finalOrdered.lastKey());
 
         resetFull();
@@ -138,7 +138,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         assertNull(ordered.nextKey(confirmedLast));
 
         if (!isAllowNullKey()) {
-            OrderedMap<K, V> finalOrdered = ordered;
+            final OrderedMap<K, V> finalOrdered = ordered;
             assertThrows(NullPointerException.class, () -> finalOrdered.nextKey(null));
         } else {
             assertNull(ordered.nextKey(null));
@@ -172,7 +172,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         assertNull(ordered.previousKey(confirmedLast));
 
         if (!isAllowNullKey()) {
-            OrderedMap<K, V> finalOrdered = ordered;
+            final OrderedMap<K, V> finalOrdered = ordered;
             assertThrows(NullPointerException.class, () -> finalOrdered.previousKey(null));
         } else {
             if (!isAllowNullKey()) {

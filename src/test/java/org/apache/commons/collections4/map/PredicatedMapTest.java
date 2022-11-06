@@ -93,7 +93,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.put((K) "E", (V) "e");
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
         Map.Entry<K, V> entry = iterator.next();
-        Map.Entry<K, V> finalEntry = entry;
+        final Map.Entry<K, V> finalEntry = entry;
         assertThrows(IllegalArgumentException.class, () -> finalEntry.setValue((V) Integer.valueOf(3)),
                 "Illegal value should raise IllegalArgument");
 

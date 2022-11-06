@@ -754,7 +754,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetEmpty();
         Iterator<E> it1 = getCollection().iterator();
         assertFalse("Iterator for empty Collection shouldn't have next.", it1.hasNext());
-        Iterator<E> finalIt1 = it1;
+        final Iterator<E> finalIt1 = it1;
         assertThrows(NoSuchElementException.class, () -> finalIt1.next(),
                 "Iterator at end of Collection should throw NoSuchElementException when next is called.");
         // make sure nothing has changed after non-modification
@@ -776,7 +776,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                     getCollection().contains(next));
             list.add(next);
         }
-        Iterator<E> finalIt2 = it1;
+        final Iterator<E> finalIt2 = it1;
         assertThrows(NoSuchElementException.class, () -> finalIt2.next(),
                 "iterator.next() should raise NoSuchElementException after it finishes");
         // make sure nothing has changed after non-modification
@@ -839,7 +839,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         iter = getCollection().iterator();
         iter.next();
         iter.remove();
-        Iterator<E> finalIter = iter;
+        final Iterator<E> finalIter = iter;
         assertThrows(IllegalStateException.class, () -> finalIter.remove(),
                 "Second iter.remove should raise IllegalState");
     }
@@ -1167,7 +1167,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * @param a2 Second array
      * @param msg Failure message prefix
      */
-    private static void assertUnorderedArrayEquals(Object[] a1, Object[] a2, String msg) {
+    private static void assertUnorderedArrayEquals(final Object[] a1, final Object[] a2, final String msg) {
         Assertions.assertEquals(a1.length, a2.length, () -> msg + ": length");
         final int size = a1.length;
         // Track values that have been matched once (and only once)

@@ -22,7 +22,7 @@ package org.apache.commons.collections4.bloomfilter;
 public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest<ArrayCountingBloomFilter> {
 
     @Override
-    protected ArrayCountingBloomFilter createEmptyFilter(Shape shape) {
+    protected ArrayCountingBloomFilter createEmptyFilter(final Shape shape) {
         return new ArrayCountingBloomFilter(shape);
     }
 }

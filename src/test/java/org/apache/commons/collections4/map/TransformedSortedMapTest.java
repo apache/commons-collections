@@ -79,14 +79,14 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
             assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
-            SortedMap<K, V> finalMap1 = map;
-            int finalI = i;
+            final SortedMap<K, V> finalMap1 = map;
+            final int finalI = i;
             assertThrows(ClassCastException.class, () -> finalMap1.containsKey(els[finalI]));
             assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
-        SortedMap<K, V> finalMap = map;
+        final SortedMap<K, V> finalMap = map;
         assertThrows(ClassCastException.class, () -> finalMap.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 

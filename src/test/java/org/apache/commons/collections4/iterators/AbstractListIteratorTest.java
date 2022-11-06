@@ -157,7 +157,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         final E addValue = addSetValue();
         if (!supportsAdd()) {
             // check for UnsupportedOperationException if not supported
-            ListIterator<E> finalIt0 = it;
+            final ListIterator<E> finalIt0 = it;
             assertThrows(UnsupportedOperationException.class, () -> finalIt0.add(addValue),
                     "UnsupportedOperationException must be thrown from add of " + it.getClass().getSimpleName());
             return;

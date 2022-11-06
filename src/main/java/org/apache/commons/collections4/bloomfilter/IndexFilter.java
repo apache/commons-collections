@@ -37,7 +37,7 @@ public final class IndexFilter {
      * @param consumer The consumer to accept the values.
      * @return an IndexFilter optimized for the specified shape.
      */
-    public static IntPredicate create(Shape shape, IntPredicate consumer) {
+    public static IntPredicate create(final Shape shape, final IntPredicate consumer) {
         return new IndexFilter(shape, consumer)::test;
     }
 
@@ -46,7 +46,7 @@ public final class IndexFilter {
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      */
-    private IndexFilter(Shape shape, IntPredicate consumer) {
+    private IndexFilter(final Shape shape, final IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
         if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
@@ -68,7 +68,7 @@ public final class IndexFilter {
      * @param number the number to check.
      * @return {@code true} if processing should continue, {@code false} otherwise.
      */
-    public boolean test(int number) {
+    public boolean test(final int number) {
         if (number >= size) {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
         }
@@ -81,19 +81,19 @@ public final class IndexFilter {
      * @since 4.5
      */
     static class ArrayTracker implements IntPredicate {
-        private int[] seen;
+        private final int[] seen;
         private int populated;
 
         /**
          * Constructs the tracker based on the shape.
          * @param shape the shape to build the tracker for.
          */
-        ArrayTracker(Shape shape) {
+        ArrayTracker(final Shape shape) {
             seen = new int[shape.getNumberOfHashFunctions()];
         }
 
         @Override
-        public boolean test(int number) {
+        public boolean test(final int number) {
             if (number < 0) {
                 throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
             }
@@ -113,19 +113,19 @@ public final class IndexFilter {
      * @since 4.5
      */
     static class BitMapTracker implements IntPredicate {
-        private long[] bits;
+        private final long[] bits;
 
         /**
          * Constructs a bit map based tracker for the specified shape.
          * @param shape The shape that is being generated.
          */
-        BitMapTracker(Shape shape) {
+        BitMapTracker(final Shape shape) {
             bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
         }
 
         @Override
-        public boolean test(int number) {
-            boolean retval = !BitMap.contains(bits, number);
+        public boolean test(final int number) {
+            final boolean retval = !BitMap.contains(bits, number);
             BitMap.set(bits, number);
             return retval;
         }

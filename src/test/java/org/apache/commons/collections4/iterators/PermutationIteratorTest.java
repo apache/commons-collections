@@ -44,6 +44,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         super(PermutationIteratorTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     public void setUp() {
         testList = new ArrayList<>();

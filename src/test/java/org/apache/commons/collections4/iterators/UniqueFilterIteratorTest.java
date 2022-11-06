@@ -40,6 +40,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         super(UniqueFilterIteratorTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {

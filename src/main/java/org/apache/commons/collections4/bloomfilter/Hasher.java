@@ -55,7 +55,7 @@ public interface Hasher {
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
      */
-    default IndexProducer uniqueIndices(Shape shape) {
+    default IndexProducer uniqueIndices(final Shape shape) {
         return consumer -> {
             Objects.requireNonNull(consumer, "consumer");
             return Hasher.this.indices(shape).forEachIndex(IndexFilter.create(shape, consumer));

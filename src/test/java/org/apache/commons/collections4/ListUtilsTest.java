@@ -370,10 +370,10 @@ public class ListUtilsTest {
         assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, null),
                 "expecting NullPointerException");
 
-        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, new ArrayList<Object>()),
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, new ArrayList<>()),
                 "expecting NullPointerException");
 
-        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(new ArrayList<Object>(), null),
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(new ArrayList<>(), null),
                 "expecting NullPointerException");
     }
 

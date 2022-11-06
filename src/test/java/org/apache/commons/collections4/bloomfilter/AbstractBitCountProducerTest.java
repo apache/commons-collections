@@ -77,8 +77,8 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
 
     @Test
     public final void testForEachCountPredicates() {
-        BitCountProducer populated = createProducer();
-        BitCountProducer empty = createEmptyProducer();
+        final BitCountProducer populated = createProducer();
+        final BitCountProducer empty = createEmptyProducer();
 
         assertFalse(populated.forEachCount(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(empty.forEachCount(FALSE_CONSUMER), "empty should be true");
@@ -89,8 +89,8 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
 
     @Test
     public final void testEmptyBitCountProducer() {
-        BitCountProducer empty = createEmptyProducer();
-        int ary[] = empty.asIndexArray();
+        final BitCountProducer empty = createEmptyProducer();
+        final int ary[] = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachCount((i, j) -> {
             Assertions.fail("forEachCount consumer should not be called");
@@ -100,9 +100,9 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
 
     @Test
     public final void testIndexConsistency() {
-        BitCountProducer producer = createProducer();
-        BitSet bs1 = new BitSet();
-        BitSet bs2 = new BitSet();
+        final BitCountProducer producer = createProducer();
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
         producer.forEachIndex(i -> {
             bs1.set(i);
             return true;
@@ -135,24 +135,24 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
      */
     @Test
     public final void testBehaviourForEachCount() {
-        int flags = getForEachCountBehaviour();
+        final int flags = getForEachCountBehaviour();
         assumeTrue((flags & (ORDERED | DISTINCT)) != 0);
-        IntList list = new IntList();
+        final IntList list = new IntList();
         createProducer().forEachCount((i, j) -> list.add(i));
-        int[] actual = list.toArray();
+        final int[] actual = list.toArray();
         if ((flags & ORDERED) != 0) {
-            int[] expected = Arrays.stream(actual).sorted().toArray();
+            final int[] expected = Arrays.stream(actual).sorted().toArray();
             assertArrayEquals(expected, actual);
         }
         if ((flags & DISTINCT) != 0) {
-            long count = Arrays.stream(actual).distinct().count();
+            final long count = Arrays.stream(actual).distinct().count();
             assertEquals(count, actual.length);
         }
     }
 
     @Test
     public void testForEachCountEarlyExit() {
-        int[] passes = new int[1];
+        final int[] passes = new int[1];
         assertTrue(createEmptyProducer().forEachCount((i, j) -> {
             passes[0]++;
             return false;

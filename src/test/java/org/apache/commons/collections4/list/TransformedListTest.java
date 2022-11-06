@@ -18,6 +18,7 @@ package org.apache.commons.collections4.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -113,9 +114,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     public void testTransformedList_decorateTransform() {
         final List<Object> originalList = new ArrayList<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
-        for (final Object el : els) {
-            originalList.add(el);
-        }
+        Collections.addAll(originalList, els);
         final List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
         for (final Object el : els) {
