@@ -1092,8 +1092,7 @@ public class IteratorUtils {
                     return it;
                 }
             }
-        } catch (final RuntimeException | NoSuchMethodException | IllegalAccessException |
-            InvocationTargetException e) { // NOPMD
+        } catch (final RuntimeException | ReflectiveOperationException ignore) { // NOPMD
             // ignore
         }
         return singletonIterator(obj);
