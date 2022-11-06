@@ -978,7 +978,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            SoftRef<?> other = (SoftRef<?>) obj;
+            final SoftRef<?> other = (SoftRef<?>) obj;
             return hash == other.hash;
         }
     }
@@ -998,6 +998,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public int hashCode() {
             return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final WeakRef<?> other = (WeakRef<?>) obj;
+            return hash == other.hash;
         }
     }
 
