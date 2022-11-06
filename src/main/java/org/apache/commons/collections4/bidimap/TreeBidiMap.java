@@ -2220,17 +2220,17 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         @Override
         public boolean equals(final Object obj) {
-            return TreeBidiMap.this.doEquals(obj, DataElement.VALUE);
+            return TreeBidiMap.this.doEquals(obj, VALUE);
         }
 
         @Override
         public int hashCode() {
-            return TreeBidiMap.this.doHashCode(DataElement.VALUE);
+            return TreeBidiMap.this.doHashCode(VALUE);
         }
 
         @Override
         public String toString() {
-            return TreeBidiMap.this.doToString(DataElement.VALUE);
+            return TreeBidiMap.this.doToString(VALUE);
         }
     }
 
