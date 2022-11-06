@@ -585,7 +585,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * <p>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
+     * </p>
      *
+     * @param <K> the type of the keys
+     * @param <V> the type of the values
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
