@@ -971,7 +971,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -1004,7 +1004,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
             }

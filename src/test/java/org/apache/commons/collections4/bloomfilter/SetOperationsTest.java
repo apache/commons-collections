@@ -80,7 +80,7 @@ public class SetOperationsTest {
         int dotProduct = /* [1,2] & [2,3] = [2] = */ 1;
         int cardinalityA = 2;
         int cardinalityB = 2;
-        expected = 1 - (dotProduct / Math.sqrt(cardinalityA * cardinalityB));
+        expected = 1 - dotProduct / Math.sqrt(cardinalityA * cardinalityB);
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
         filter1 = createFilter(shape, from1);
@@ -88,7 +88,7 @@ public class SetOperationsTest {
         dotProduct = /* [1..17] & [11..27] = [] = */ 7;
         cardinalityA = 17;
         cardinalityB = 17;
-        expected = 1 - (dotProduct / Math.sqrt(cardinalityA * cardinalityB));
+        expected = 1 - dotProduct / Math.sqrt(cardinalityA * cardinalityB);
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
         // test with no values
@@ -168,7 +168,7 @@ public class SetOperationsTest {
         filter2 = createFilter(shape, from11);
         final double intersection = /* [1..17] & [11..27] = [11..17] = */ 7.0;
         final int union = /* [1..17] | [11..27] = [1..27] = */ 27;
-        final double expected = 1 - (intersection / union);
+        final double expected = 1 - intersection / union;
         assertSymmetricOperation(expected, SetOperations::jaccardDistance, filter1, filter2);
 
         // test no values

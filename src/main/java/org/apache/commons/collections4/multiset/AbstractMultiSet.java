@@ -403,7 +403,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
                 final Object otherElement = other.getElement();
 
                 return this.getCount() == other.getCount() &&
-                       (Objects.equals(element, otherElement));
+                       Objects.equals(element, otherElement);
             }
             return false;
         }
@@ -411,7 +411,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         @Override
         public int hashCode() {
             final E element = getElement();
-            return ((element == null) ? 0 : element.hashCode()) ^ getCount();
+            return (element == null ? 0 : element.hashCode()) ^ getCount();
         }
 
         @Override

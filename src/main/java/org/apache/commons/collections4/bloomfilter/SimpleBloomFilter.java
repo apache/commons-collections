@@ -119,7 +119,7 @@ public final class SimpleBloomFilter implements BloomFilter {
                         "BitMapProducer set a bit higher than the limit for the shape: %s", shape.getNumberOfBits() - 1));
             }
             if (idxLimit == idx[0]) {
-                final long excess = (bitMap[idxLimit] >> shape.getNumberOfBits());
+                final long excess = bitMap[idxLimit] >> shape.getNumberOfBits();
                 if (excess != 0) {
                     throw new IllegalArgumentException(
                             String.format("BitMapProducer set a bit higher than the limit for the shape: %s",

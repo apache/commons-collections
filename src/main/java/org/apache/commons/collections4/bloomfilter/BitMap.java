@@ -41,7 +41,7 @@ public class BitMap {
      * @return the number of bit maps necessary.
      */
     public static int numberOfBitMaps(final int numberOfBits) {
-        return ((numberOfBits - 1) >> DIVIDE_BY_64) + 1;
+        return (numberOfBits - 1 >> DIVIDE_BY_64) + 1;
     }
 
     /**

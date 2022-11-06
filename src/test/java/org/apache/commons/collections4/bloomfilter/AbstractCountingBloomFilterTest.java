@@ -287,6 +287,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.merge(hasher);
         bf1.remove(hasher);
         assertEquals(0, bf1.cardinality());
-        assertTrue(bf1.forEachCount((x, y) -> (false)), "Hasher in removes results in value not equal to 0");
+        assertTrue(bf1.forEachCount((x, y) -> false), "Hasher in removes results in value not equal to 0");
     }
 }

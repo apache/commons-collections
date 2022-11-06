@@ -157,13 +157,13 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
         int hash = key.hashCode();
         hash += ~(hash << 15);
-        hash ^= (hash >>> 10);
-        hash += (hash << 3);
-        hash ^= (hash >>> 6);
+        hash ^= hash >>> 10;
+        hash += hash << 3;
+        hash ^= hash >>> 6;
         hash += ~(hash << 11);
-        hash ^= (hash >>> 16);
+        hash ^= hash >>> 16;
         hash %= buckets.length;
-        return (hash < 0) ? hash * -1 : hash;
+        return hash < 0 ? hash * -1 : hash;
     }
 
     /**
@@ -465,8 +465,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
         @Override
         public int hashCode() {
-            return ((key == null ? 0 : key.hashCode()) ^
-                    (value == null ? 0 : value.hashCode()));
+            return (key == null ? 0 : key.hashCode()) ^
+                    (value == null ? 0 : value.hashCode());
         }
 
         @Override
@@ -479,9 +479,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             }
 
             final Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
-            return (
-                (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
-                (value == null ? e2.getValue() == null : value.equals(e2.getValue())));
+            return (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
+                (value == null ? e2.getValue() == null : value.equals(e2.getValue()));
         }
 
         @Override

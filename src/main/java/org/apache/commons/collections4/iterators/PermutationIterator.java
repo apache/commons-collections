@@ -112,8 +112,8 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         int indexOfLargestMobileInteger = -1;
         int largestKey = -1;
         for (int i = 0; i < keys.length; i++) {
-            if ((direction[i] && i < keys.length - 1 && keys[i] > keys[i + 1]) ||
-                (!direction[i] && i > 0 && keys[i] > keys[i - 1])) {
+            if (direction[i] && i < keys.length - 1 && keys[i] > keys[i + 1] ||
+                !direction[i] && i > 0 && keys[i] > keys[i - 1]) {
                 if (keys[i] > largestKey) { // NOPMD
                     largestKey = keys[i];
                     indexOfLargestMobileInteger = i;
