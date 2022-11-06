@@ -415,7 +415,7 @@ public final class Shape {
     }
 
     /**
-     * Calculates the number of hash functions given numberOfItems and numberofBits.
+     * Calculates the number of hash functions given numberOfItems and numberOfBits.
      * This is a method so that the calculation is consistent across all constructors.
      *
      * @param numberOfItems the number of items in the filter.
@@ -431,9 +431,9 @@ public final class Shape {
             throw new IllegalArgumentException(
                     String.format("Filter too small: Calculated number of hash functions (%s) was less than 1", k));
         }
-        // Normally we would check that numberofHashFunctions <= Integer.MAX_VALUE but
+        // Normally we would check that numberOfHashFunctions <= Integer.MAX_VALUE but
         // since numberOfBits is at most Integer.MAX_VALUE the numerator of
-        // numberofHashFunctions is ln(2) * Integer.MAX_VALUE = 646456992.9449 the
+        // numberOfHashFunctions is ln(2) * Integer.MAX_VALUE = 646456992.9449 the
         // value of k can not be above Integer.MAX_VALUE.
         return (int) k;
     }
