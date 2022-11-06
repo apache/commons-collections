@@ -599,7 +599,7 @@
 
 
   <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
