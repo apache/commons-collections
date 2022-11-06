@@ -229,21 +229,35 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Tests that the andCardinality calculations are correct.
+     * Tests that the estimated intersection calculations are correct.
      */
     @Test
     public final void testEstimateIntersection() {
 
         final BloomFilter bf = createFilter(getTestShape(), from1);
         final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
+        final BloomFilter bf3 = createFilter(getTestShape(), fullHasher);
 
         assertEquals(1, bf.estimateIntersection(bf2));
         assertEquals(1, bf2.estimateIntersection(bf));
+        assertEquals(1, bf.estimateIntersection(bf3));
+        assertEquals(1, bf2.estimateIntersection(bf));
+        assertEquals(2, bf3.estimateIntersection(bf2));
 
-        final BloomFilter bf3 = createEmptyFilter(getTestShape());
+        final BloomFilter bf4 = createEmptyFilter(getTestShape());
 
-        assertEquals(0, bf.estimateIntersection(bf3));
-        assertEquals(0, bf3.estimateIntersection(bf));
+        assertEquals(0, bf.estimateIntersection(bf4));
+        assertEquals(0, bf4.estimateIntersection(bf));
+
+        // test split to union
+        HasherCollection firstHalf = new HasherCollection(new IncrementingHasher(0, 1)/* 0-16 */,
+                new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */);
+                // test split to union
+        HasherCollection secondHalf = new HasherCollection(new IncrementingHasher(50, 1)/* 50-66 */,
+                        new IncrementingHasher(67, 1)/* 67-83 */);
+        BloomFilter bf5 = createFilter( getTestShape(), firstHalf);
+        BloomFilter bf6 = createFilter( getTestShape(), secondHalf);
+        assertThrows(IllegalArgumentException.class, () -> bf5.estimateIntersection(bf6));
     }
 
     /**
@@ -281,6 +295,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         filter1.merge(new IncrementingHasher(17, 1));
 
         assertEquals(3, filter1.estimateN());
+
+        filter1 = createFilter(getTestShape(), fullHasher);
+        assertEquals(Integer.MAX_VALUE, filter1.estimateN());
     }
 
     /**
