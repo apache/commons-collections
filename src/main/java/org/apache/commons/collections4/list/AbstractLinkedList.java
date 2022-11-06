@@ -994,7 +994,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             parent.add(index + offset, obj);
             expectedModCount = parent.modCount;
             size++;
-            LinkedSubList.this.modCount++;
+            modCount++;
         }
 
         @Override
@@ -1004,7 +1004,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             final E result = parent.remove(index + offset);
             expectedModCount = parent.modCount;
             size--;
-            LinkedSubList.this.modCount++;
+            modCount++;
             return result;
         }
 
@@ -1025,7 +1025,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             parent.addAll(offset + index, coll);
             expectedModCount = parent.modCount;
             size += cSize;
-            LinkedSubList.this.modCount++;
+            modCount++;
             return true;
         }
 

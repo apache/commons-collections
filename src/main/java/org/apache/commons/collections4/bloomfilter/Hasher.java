@@ -58,7 +58,7 @@ public interface Hasher {
     default IndexProducer uniqueIndices(final Shape shape) {
         return consumer -> {
             Objects.requireNonNull(consumer, "consumer");
-            return Hasher.this.indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
+            return indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
         };
     }
 }
