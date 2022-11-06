@@ -528,14 +528,14 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Gets the left node, returning null if its a faedelung.
+         * Gets the left node, returning null if it's a faedelung.
          */
         private AVLNode<E> getLeftSubTree() {
             return leftIsPrevious ? null : left;
         }
 
         /**
-         * Gets the right node, returning null if its a faedelung.
+         * Gets the right node, returning null if it's a faedelung.
          */
         private AVLNode<E> getRightSubTree() {
             return rightIsNext ? null : right;

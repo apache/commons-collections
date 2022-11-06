@@ -71,7 +71,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new {@code CollatingIterator} that will used the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
      *
@@ -83,7 +83,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new {@code CollatingIterator} that will used the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator for ordering and have the specified initial
      * capacity. Child iterators will have to be manually added using the
      * {@link #addIterator(Iterator)} method.

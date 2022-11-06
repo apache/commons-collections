@@ -22,7 +22,7 @@ import java.util.EmptyStackException;
 /**
  * An implementation of the {@link java.util.Stack} API that is based on an
  * {@code ArrayList} instead of a {@code Vector}, so it is not
- * synchronized to protect against multi-threaded access.  The implementation
+ * synchronized to protect against multithreaded access.  The implementation
  * is therefore operates faster in environments where you do not need to
  * worry about multiple thread contention.
  * <p>

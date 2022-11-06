@@ -68,7 +68,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testlegalAddRemove() {
+    public void testLegalAddRemove() {
         final Bag<T> bag = makeTestBag();
         assertEquals(0, bag.size());
         final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };

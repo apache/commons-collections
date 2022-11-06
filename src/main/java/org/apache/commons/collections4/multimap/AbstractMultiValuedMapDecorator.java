@@ -60,7 +60,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
     }
 
     /**
-     * The decorated multi-valued map.
+     * The decorated multivalued map.
      *
      * @return the map to decorate
      */

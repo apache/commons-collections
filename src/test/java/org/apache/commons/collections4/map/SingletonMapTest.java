@@ -44,7 +44,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Override
     public OrderedMap<K, V> makeObject() {
-        // need an empty singleton map, but thats not possible
+        // need an empty singleton map, but that's not possible
         // use a ridiculous fake instead to make the tests pass
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<K, V>()));
     }
@@ -52,7 +52,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     public String[] ignoredTests() {
         // the ridiculous map above still doesn't pass these tests
-        // but its not relevant, so we ignore them
+        // but it's not relevant, so we ignore them
         return new String[] {
             "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
             "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",

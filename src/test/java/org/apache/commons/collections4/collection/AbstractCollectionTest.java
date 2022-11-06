@@ -395,7 +395,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of objects that are contained in a collection
      *  produced by {@link #makeFullCollection()}.  Every element in the
      *  returned array <I>must</I> be an element in a full collection.<P>
-     *  The default implementation returns a heterogenous array of
+     *  The default implementation returns a heterogeneous array of
      *  objects with some duplicates. null is added if allowed.
      *  Override if you require specific testing elements.  Note that if you
      *  override {@link #makeFullCollection()}, you <I>must</I> override
@@ -415,7 +415,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of elements that are <I>not</I> contained in a
      *  full collection.  Every element in the returned array must
      *  not exist in a collection returned by {@link #makeFullCollection()}.
-     *  The default implementation returns a heterogenous array of elements
+     *  The default implementation returns a heterogeneous array of elements
      *  without null.  Note that some of the tests add these elements
      *  to an empty or full collection, so if your collection restricts
      *  certain kinds of elements, you should override this method.
@@ -480,7 +480,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getFullElements()}.  Override getFullElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getFullNonNullStringElements() {
         return new Object[] {
@@ -493,7 +493,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getOtherElements()}.  Override getOtherElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {

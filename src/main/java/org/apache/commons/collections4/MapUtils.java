@@ -648,7 +648,7 @@ public class MapUtils {
     }
 
     /**
-     * Gets a Integer from a Map in a null-safe manner.
+     * Gets an Integer from a Map in a null-safe manner.
      * <p>
      * The Integer is obtained from the results of {@link #getNumber(Map,Object)}.
      * </p>
@@ -656,7 +656,7 @@ public class MapUtils {
      * @param <K> the key type
      * @param map the map to use
      * @param key the key to look up
-     * @return the value in the Map as a Integer, {@code null} if null map input
+     * @return the value in the Map as an Integer, {@code null} if null map input
      */
     public static <K> Integer getInteger(final Map<? super K, ?> map, final K key) {
         final Number answer = getNumber(map, key);
@@ -1409,7 +1409,7 @@ public class MapUtils {
     }
 
     /**
-     * Creates a mult-value map backed by the given map which returns collections of type ArrayList.
+     * Creates a multi-value map backed by the given map which returns collections of type ArrayList.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1953,7 +1953,7 @@ public class MapUtils {
      * Implementation providing functionality for {@link #debugPrint} and for {@link #verbosePrint}. This prints the
      * given map with nice line breaks. If the debug flag is true, it additionally prints the type of the object value.
      * If the contents of a map include the map itself, then the text <em>(this Map)</em> is printed out. If the
-     * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where i actually
+     * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where it actually
      * indicates the number of levels which must be traversed in the sequential list of ancestors (e.g. father,
      * grandfather, great-grandfather, etc).
      *

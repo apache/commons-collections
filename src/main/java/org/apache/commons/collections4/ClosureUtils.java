@@ -278,7 +278,7 @@ public class ClosureUtils {
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
      * @return the {@code switch} closure
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
      */
@@ -303,7 +303,7 @@ public class ClosureUtils {
      * @param closures  an array of closures to call, not null
      * @param defaultClosure  the default to call if no predicate matches
      * @return the {@code switch} closure
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */

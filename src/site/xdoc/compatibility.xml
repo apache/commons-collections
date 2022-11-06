@@ -68,7 +68,7 @@ changes were deliberate and have not caused any known issues.)
 
 <p>
 It is not possible to make v2.1 and v3.0 compatible without further binary incompatibility.
-The chosen solution is to provide a work around by releasing v2.1.1 and v3.1.
+The chosen solution is to provide a workaround by releasing v2.1.1 and v3.1.
 The following deprecations must be resolved in v2.1.1 to allow compatibility with v3.1.
 </p>
 <ul>

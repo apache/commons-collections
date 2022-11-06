@@ -38,7 +38,7 @@ disabled and will result in an exception when either trying to serialize or de-s
 an instance of these classes. For more details, please refer to COLLECTIONS-580.
 </p>
 <p>
-All users are strongly encouraged to updated to this release.
+All users are strongly encouraged to update to this release.
 </p>
 
 <h3>Compatibility</h3>

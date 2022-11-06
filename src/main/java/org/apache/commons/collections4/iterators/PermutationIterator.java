@@ -44,7 +44,7 @@ import java.util.Objects;
 public class PermutationIterator<E> implements Iterator<List<E>> {
 
     /**
-     * Permutation is done on theses keys to handle equal objects.
+     * Permutation is done on these keys to handle equal objects.
      */
     private final int[] keys;
 

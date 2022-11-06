@@ -430,7 +430,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
             if (current == null && currentRemovedByAnother) { // NOPMD
                 // quietly ignore, as the last returned node was removed
                 // by the list or some other iterator
-                // by ignoring it, we keep this iterator independent from
+                // by ignoring it, we keep this iterator independent of
                 // other changes as much as possible
             } else {
                 checkModCount();
