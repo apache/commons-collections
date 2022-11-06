@@ -51,7 +51,7 @@ public abstract class AbstractIndexProducerTest {
          * @param value the value
          * @return true if the list was modified
          */
-        boolean add(int value) {
+        boolean add(final int value) {
             if (size == data.length) {
                 data = Arrays.copyOf(data, size << 1);
             }
@@ -112,9 +112,9 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testAsIndexArrayValues() {
-        BitSet bs = new BitSet();
+        final BitSet bs = new BitSet();
         Arrays.stream(createProducer().asIndexArray()).forEach(bs::set);
-        for (int i : getExpectedIndices()) {
+        for (final int i : getExpectedIndices()) {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
     }
@@ -124,8 +124,8 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testForEachIndex() {
-        BitSet bs1 = new BitSet();
-        BitSet bs2 = new BitSet();
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
         Arrays.stream(getExpectedIndices()).forEach(bs1::set);
         createProducer().forEachIndex(i -> {
             bs2.set(i);
@@ -136,8 +136,8 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public final void testForEachIndexPredicates() {
-        IndexProducer populated = createProducer();
-        IndexProducer empty = createEmptyProducer();
+        final IndexProducer populated = createProducer();
+        final IndexProducer empty = createEmptyProducer();
 
         assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
         assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
@@ -148,8 +148,8 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public final void testEmptyProducer() {
-        IndexProducer empty = createEmptyProducer();
-        int ary[] = empty.asIndexArray();
+        final IndexProducer empty = createEmptyProducer();
+        final int ary[] = empty.asIndexArray();
         Assertions.assertEquals(0, ary.length);
         assertTrue(empty.forEachIndex(i -> {
             throw new AssertionError("forEach predictate should not be called");
@@ -161,9 +161,9 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testConsistency() {
-        IndexProducer producer = createProducer();
-        BitSet bs1 = new BitSet();
-        BitSet bs2 = new BitSet();
+        final IndexProducer producer = createProducer();
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
         Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
         producer.forEachIndex(i -> {
             bs2.set(i);
@@ -181,19 +181,19 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testBehaviourAsIndexArray() {
-        int flags = getAsIndexArrayBehaviour();
-        int[] actual = createProducer().asIndexArray();
+        final int flags = getAsIndexArrayBehaviour();
+        final int[] actual = createProducer().asIndexArray();
         if ((flags & ORDERED) != 0) {
-            int[] expected = Arrays.stream(actual).sorted().toArray();
+            final int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);
         }
         if ((flags & DISTINCT) != 0) {
-            long count = Arrays.stream(actual).distinct().count();
+            final long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         } else {
             // if the array is not distinct all expected elements must be generated
             // This is modified so use a copy
-            int[] expected = getExpectedIndices().clone();
+            final int[] expected = getExpectedIndices().clone();
             Arrays.sort(expected);
             Arrays.sort(actual);
             Assertions.assertArrayEquals(expected, actual);
@@ -207,20 +207,20 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testBehaviourForEachIndex() {
-        int flags = getForEachIndexBehaviour();
-        IntList list = new IntList();
+        final int flags = getForEachIndexBehaviour();
+        final IntList list = new IntList();
         createProducer().forEachIndex(list::add);
-        int[] actual = list.toArray();
+        final int[] actual = list.toArray();
         if ((flags & ORDERED) != 0) {
-            int[] expected = Arrays.stream(actual).sorted().toArray();
+            final int[] expected = Arrays.stream(actual).sorted().toArray();
             Assertions.assertArrayEquals(expected, actual);
         }
         if ((flags & DISTINCT) != 0) {
-            long count = Arrays.stream(actual).distinct().count();
+            final long count = Arrays.stream(actual).distinct().count();
             Assertions.assertEquals(count, actual.length);
         } else {
             // if forEach is not distinct all expected elements must be generated
-            int[] expected = getExpectedIndices().clone();
+            final int[] expected = getExpectedIndices().clone();
             Arrays.sort(expected);
             Arrays.sort(actual);
             Assertions.assertArrayEquals(expected, actual);
@@ -229,7 +229,7 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public void testForEachIndexEarlyExit() {
-        int[] passes = new int[1];
+        final int[] passes = new int[1];
         assertFalse(createProducer().forEachIndex(i -> {
             passes[0]++;
             return false;

@@ -323,9 +323,9 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      */
     @Test
     public void testIteratorLastEntryCanBeRemovedAfterHasNext() {
-        ReferenceMap<Integer, Integer> map = new ReferenceMap<>();
+        final ReferenceMap<Integer, Integer> map = new ReferenceMap<>();
         map.put(1, 2);
-        Iterator<Map.Entry<Integer, Integer>> iter = map.entrySet().iterator();
+        final Iterator<Map.Entry<Integer, Integer>> iter = map.entrySet().iterator();
         assertTrue(iter.hasNext());
         iter.next();
         // below line should not affect remove

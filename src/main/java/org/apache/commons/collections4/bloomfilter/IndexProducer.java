@@ -56,8 +56,8 @@ public interface IndexProducer {
         return new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
-                for (int value : values) {
+            public boolean forEachIndex(final IntPredicate predicate) {
+                for (final int value : values) {
                     if (!predicate.test(value)) {
                         return false;
                     }
@@ -77,12 +77,12 @@ public interface IndexProducer {
      * @param producer the {@code BitMapProducer}
      * @return a new {@code IndexProducer}.
      */
-    static IndexProducer fromBitMapProducer(BitMapProducer producer) {
+    static IndexProducer fromBitMapProducer(final BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");
         return new IndexProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                LongPredicate longPredicate = new LongPredicate() {
+            public boolean forEachIndex(final IntPredicate consumer) {
+                final LongPredicate longPredicate = new LongPredicate() {
                     int wordIdx = 0;
 
                     @Override
@@ -122,7 +122,7 @@ public interface IndexProducer {
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        BitSet result = new BitSet();
+        final BitSet result = new BitSet();
         forEachIndex(i -> {
             result.set(i);
             return true;

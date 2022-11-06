@@ -79,10 +79,10 @@ public final class Shape {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         // Shape is final so no check for the same class as inheritance is not possible
         if (obj instanceof Shape) {
-            Shape other = (Shape) obj;
+            final Shape other = (Shape) obj;
             return numberOfBits == other.numberOfBits &&
                    numberOfHashFunctions == other.numberOfHashFunctions;
         }
@@ -131,7 +131,7 @@ public final class Shape {
      * @param numberOfItems the number of items hashed into the Bloom filter.
      * @return the probability of false positives.
      */
-    public double getProbability(int numberOfItems) {
+    public double getProbability(final int numberOfItems) {
         if (numberOfItems < 0) {
             throw new IllegalArgumentException("Number of items must be greater than or equal to 0: " + numberOfItems);
         }
@@ -155,7 +155,7 @@ public final class Shape {
      * @param cardinality the cardinality to check.
      * @return true if the cardinality is sparse within the shape.
      */
-    public boolean isSparse(int cardinality) {
+    public boolean isSparse(final int cardinality) {
         /*
          * Since the size of a bit map is a long and the size of an index is an int,
          * there can be 2 indexes for each bit map. In Bloom filters indexes are evenly
@@ -178,10 +178,10 @@ public final class Shape {
      * @param cardinality the number of enabled  bits also known as the hamming value.
      * @return An estimate of the number of items in the Bloom filter.
      */
-    public double estimateN(int cardinality) {
-        double c = cardinality;
-        double m = numberOfBits;
-        double k = numberOfHashFunctions;
+    public double estimateN(final int cardinality) {
+        final double c = cardinality;
+        final double m = numberOfBits;
+        final double k = numberOfHashFunctions;
         return -(m / k) * Math.log1p(-c / m);
     }
 
@@ -226,7 +226,7 @@ public final class Shape {
         // similarly we can not produce a number greater than numberOfBits so we
         // do not have to check for Integer.MAX_VALUE either.
 
-        Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
+        final Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
         // check that probability is within range
         checkCalculatedProbability(shape.getProbability((int) n));
         return shape;
@@ -262,10 +262,10 @@ public final class Shape {
         if (m > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Resulting filter has more than " + Integer.MAX_VALUE + " bits: " + m);
         }
-        int numberOfBits = (int) m;
+        final int numberOfBits = (int) m;
 
-        int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-        Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
+        final int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
+        final Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
         // check that probability is within range
         checkCalculatedProbability(shape.getProbability(numberOfItems));
         return shape;
@@ -304,8 +304,8 @@ public final class Shape {
     public static Shape fromNM(final int numberOfItems, final int numberOfBits) {
         checkNumberOfItems(numberOfItems);
         checkNumberOfBits(numberOfBits);
-        int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
-        Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
+        final int numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
+        final Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
         // check that probability is within range
         checkCalculatedProbability(shape.getProbability(numberOfItems));
         return shape;
@@ -331,7 +331,7 @@ public final class Shape {
         checkNumberOfBits(numberOfBits);
         checkNumberOfHashFunctions(numberOfHashFunctions);
         // check that probability is within range
-        Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
+        final Shape shape = new Shape(numberOfHashFunctions, numberOfBits);
         // check that probability is within range
         checkCalculatedProbability(shape.getProbability(numberOfItems));
         return shape;

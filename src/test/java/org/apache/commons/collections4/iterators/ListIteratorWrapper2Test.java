@@ -42,6 +42,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         super(ListIteratorWrapper2Test.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {

@@ -65,9 +65,9 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         "5, 67868",
         "75, 10"
     })
-    public void testHashing(int k, int m) {
-        int[] count = {0};
-        Hasher hasher = createHasher();
+    public void testHashing(final int k, final int m) {
+        final int[] count = {0};
+        final Hasher hasher = createHasher();
         hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;

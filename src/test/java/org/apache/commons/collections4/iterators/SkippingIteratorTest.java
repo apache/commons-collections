@@ -44,6 +44,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
         super(SkippingIteratorTest.class.getSimpleName());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @BeforeEach
     public void setUp()

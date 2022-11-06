@@ -58,8 +58,8 @@ public class ShapeTest {
         "13, 124",
         "13, 224",
     })
-    public void testEqualsAndHashCode(int k, int m) {
-        Shape shape1 = Shape.fromKM(k, m);
+    public void testEqualsAndHashCode(final int k, final int m) {
+        final Shape shape1 = Shape.fromKM(k, m);
         assertEquals(shape1, shape1);
         assertEquals(Arrays.hashCode(new int[] {m, k}), shape1.hashCode(),
             "Doesn't match Arrays.hashCode(new int[] {m, k})");
@@ -70,7 +70,7 @@ public class ShapeTest {
         assertNotEquals(shape1, Shape.fromKM(k + 1, m));
 
         // Test this is reproducible
-        Shape shape2 = Shape.fromKM(k, m);
+        final Shape shape2 = Shape.fromKM(k, m);
         assertEquals(shape1, shape2);
         assertEquals(shape1.hashCode(), shape2.hashCode());
     }
@@ -78,8 +78,8 @@ public class ShapeTest {
     @Test
     public void testEstimateN() {
         for (int i = 0; i < 24; i++) {
-            double c = i;
-            double expected = -(24.0 / 3.0) * Math.log1p(-c / 24.0);
+            final double c = i;
+            final double expected = -(24.0 / 3.0) * Math.log1p(-c / 24.0);
             assertEquals(expected, shape.estimateN(i), "Error on " + i);
         }
 
@@ -91,7 +91,7 @@ public class ShapeTest {
     @Test
     public void testGetProbability() {
         for (int i = 0; i <= 24; i++) {
-            double expected = Math.pow(-Math.expm1(-3.0 * i / 24), 3);
+            final double expected = Math.pow(-Math.expm1(-3.0 * i / 24), 3);
             assertEquals(expected, shape.getProbability(i), "error at " + i);
         }
 
@@ -102,10 +102,10 @@ public class ShapeTest {
 
     @Test
     public void testIsSparse() {
-        int functions = 1; // Ignored
+        final int functions = 1; // Ignored
         for (int i = 1; i <= 3; i++) {
-            int bits = i * Long.SIZE;
-            Shape shape = Shape.fromKM(functions, bits);
+            final int bits = i * Long.SIZE;
+            final Shape shape = Shape.fromKM(functions, bits);
             for (int n = 0; n <= bits; n++) {
                 final int c = n;
                 // is sparse when number of bits stored as integers is less than 2 times the
@@ -187,7 +187,7 @@ public class ShapeTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
          */
-        Shape shape = Shape.fromNMK(5, 24, 4);
+        final Shape shape = Shape.fromNMK(5, 24, 4);
 
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(4, shape.getNumberOfHashFunctions());
@@ -217,7 +217,7 @@ public class ShapeTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24
          */
-        Shape shape = Shape.fromNM(5, 24);
+        final Shape shape = Shape.fromNM(5, 24);
 
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(3, shape.getNumberOfHashFunctions());
@@ -232,7 +232,7 @@ public class ShapeTest {
      */
     @Test
     public void testProbability() {
-        Shape shape = Shape.fromNMK(5, 24, 3);
+        final Shape shape = Shape.fromNMK(5, 24, 3);
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(3, shape.getNumberOfHashFunctions());
         assertEquals(0.100375138, shape.getProbability(5), 0.000001);
@@ -273,7 +273,7 @@ public class ShapeTest {
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
         final double probability = 1.0 / 2000000;
-        Shape shape = Shape.fromNP(10, probability);
+        final Shape shape = Shape.fromNP(10, probability);
 
         assertEquals(302, shape.getNumberOfBits());
         assertEquals(21, shape.getNumberOfHashFunctions());

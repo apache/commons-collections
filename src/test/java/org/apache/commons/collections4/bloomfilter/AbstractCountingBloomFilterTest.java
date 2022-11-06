@@ -40,7 +40,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
 
         @Override
-        public boolean forEachCount(BitCountProducer.BitCountConsumer consumer) {
+        public boolean forEachCount(final BitCountProducer.BitCountConsumer consumer) {
             for (int i = 1; i < 18; i++) {
                 if (!consumer.test(i, Integer.MAX_VALUE)) {
                     return false;
@@ -103,7 +103,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
         assertFalse(bf.contains(bf2), "BF should not contain BF2");
         assertTrue(bf2.contains(bf), "BF2 should contain BF");
-        BitMapProducer producer = bf2;
+        final BitMapProducer producer = bf2;
         assertTrue(bf2.contains(producer), "BF2 should contain BF bitMapProducer");
     }
 
@@ -135,8 +135,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf5.add(maximumValueProducer), "Should add to empty");
         assertTrue(bf5.isValid(), "Should be valid");
 
-        CountingBloomFilter bf6 = bf5.copy();
-        BloomFilter bf7 = new SimpleBloomFilter(getTestShape());
+        final CountingBloomFilter bf6 = bf5.copy();
+        final BloomFilter bf7 = new SimpleBloomFilter(getTestShape());
         bf7.merge(from1);
         bf6.merge(bf7);
         assertFalse(bf6.isValid(), "Should not be valid");
@@ -200,7 +200,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
      */
     @Test
     public final void testRemove() {
-        BloomFilter simple = new SimpleBloomFilter(getTestShape());
+        final BloomFilter simple = new SimpleBloomFilter(getTestShape());
         simple.merge(from11);
 
         final CountingBloomFilter bf1 = createFilter(getTestShape(), from1);
@@ -232,7 +232,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf3, new int[] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
 
         // with IndexProducer
-        IndexProducer ip = from11.indices(getTestShape());
+        final IndexProducer ip = from11.indices(getTestShape());
 
         final CountingBloomFilter bf4 = createFilter(getTestShape(), from1);
         bf4.add(BitCountProducer.from(from11.indices(getTestShape())));
@@ -255,7 +255,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertCounts(bf5, from1Counts);
 
         // test producer errors
-        IndexProducer ip2 = IndexProducer.fromIndexArray(1, 2, getTestShape().getNumberOfBits());
+        final IndexProducer ip2 = IndexProducer.fromIndexArray(1, 2, getTestShape().getNumberOfBits());
         final CountingBloomFilter bf6 = createFilter(getTestShape(), from1);
         assertThrows(IllegalArgumentException.class, () -> bf6.remove(ip2));
 
@@ -269,8 +269,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         // create a hasher that produces duplicates with the specified shape.
         // this setup produces 5, 17, 29, 41, 53, 65 two times
-        Shape shape = Shape.fromKM(12, 72);
-        Hasher hasher = new IncrementingHasher(5, 12);
+        final Shape shape = Shape.fromKM(12, 72);
+        final Hasher hasher = new IncrementingHasher(5, 12);
 
         CountingBloomFilter bf1 = createFilter(shape, hasher);
         assertEquals(6, bf1.cardinality());

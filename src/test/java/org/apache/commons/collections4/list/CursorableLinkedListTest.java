@@ -47,6 +47,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     private CursorableLinkedList<E> list;
 
+    @Override
     @BeforeEach
     public void setUp() {
         list = new CursorableLinkedList<>();

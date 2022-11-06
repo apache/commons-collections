@@ -38,7 +38,7 @@ final class ArrayHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer uniqueIndices(Shape shape) {
+    public IndexProducer uniqueIndices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         return new Producer(shape);
     }
@@ -46,17 +46,17 @@ final class ArrayHasher implements Hasher {
     private class Producer implements IndexProducer {
         Shape shape;
 
-        Producer(Shape shape) {
+        Producer(final Shape shape) {
             this.shape = shape;
         }
 
         @Override
-        public boolean forEachIndex(IntPredicate consumer) {
+        public boolean forEachIndex(final IntPredicate consumer) {
             Objects.requireNonNull(consumer, "consumer");
 
             int pos = 0;
             for (int i = 0; i < shape.getNumberOfHashFunctions(); i++) {
-                int result = values[pos++] % shape.getNumberOfBits();
+                final int result = values[pos++] % shape.getNumberOfBits();
                 pos = pos % values.length;
                 if (!consumer.test(result)) {
                     return false;

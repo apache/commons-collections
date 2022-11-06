@@ -37,7 +37,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         BloomFilter bf = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
 
         // verify exit early before bitmap boundary
-        int[] passes = new int[1];
+        final int[] passes = new int[1];
         assertFalse(bf.forEachBitMap(l -> {
             passes[0]++;
             return false;
@@ -48,7 +48,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         bf = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
         passes[0] = 0;
         assertFalse(bf.forEachBitMap(l -> {
-            boolean result = passes[0] == 0;
+            final boolean result = passes[0] == 0;
             if (result) {
                 passes[0]++;
             }
@@ -72,7 +72,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         bf = createFilter(getTestShape(), IndexProducer.fromIndexArray(values));
         passes[0] = 0;
         assertFalse(bf.forEachBitMap(l -> {
-            boolean result = passes[0] == 0;
+            final boolean result = passes[0] == 0;
             if (result) {
                 passes[0]++;
             }
@@ -83,8 +83,8 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
 
     @Test
     public void testBloomFilterBasedMergeEdgeCases() {
-        BloomFilter bf1 = createEmptyFilter(getTestShape());
-        BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
+        final BloomFilter bf1 = createEmptyFilter(getTestShape());
+        final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
         bf2.merge(from1);
         bf1.merge(bf2);
         assertTrue(bf2.forEachBitMapPair(bf1, (x, y) -> x == y));

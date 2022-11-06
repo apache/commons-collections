@@ -46,6 +46,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         super(IteratorChainTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();

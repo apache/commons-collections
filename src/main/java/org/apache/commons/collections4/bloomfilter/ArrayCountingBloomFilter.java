@@ -99,7 +99,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         counts = new int[shape.getNumberOfBits()];
     }
 
-    private ArrayCountingBloomFilter(ArrayCountingBloomFilter source) {
+    private ArrayCountingBloomFilter(final ArrayCountingBloomFilter source) {
         this.shape = source.shape;
         this.state = source.state;
         this.counts = source.counts.clone();
@@ -170,7 +170,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(IntPredicate consumer) {
+    public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < counts.length; i++) {
             if (counts[i] != 0 && !consumer.test(i)) {
@@ -181,7 +181,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean forEachBitMap(LongPredicate consumer) {
+    public boolean forEachBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int blocksm1 = BitMap.numberOfBitMaps(counts.length) - 1;
         int i = 0;
@@ -242,12 +242,12 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean contains(IndexProducer indexProducer) {
+    public boolean contains(final IndexProducer indexProducer) {
         return indexProducer.forEachIndex(idx -> this.counts[idx] != 0);
     }
 
     @Override
-    public boolean contains(BitMapProducer bitMapProducer) {
+    public boolean contains(final BitMapProducer bitMapProducer) {
         return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 

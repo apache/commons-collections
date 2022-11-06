@@ -76,7 +76,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other the other Bloom filter
      * @return true if all enabled bits in the other filter are enabled in this filter.
      */
-    default boolean contains(BloomFilter other) {
+    default boolean contains(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         return (characteristics() & SPARSE) != 0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
     }
@@ -91,9 +91,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param hasher the hasher to provide the indexes
      * @return true if this filter is enabled for all bits specified by the hasher
      */
-    default boolean contains(Hasher hasher) {
+    default boolean contains(final Hasher hasher) {
         Objects.requireNonNull(hasher, "Hasher");
-        Shape shape = getShape();
+        final Shape shape = getShape();
         return contains(hasher.indices(shape));
     }
 
@@ -115,7 +115,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param bitMapProducer the the {@code BitMapProducer} to provide the bit maps.
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
-    default boolean contains(BitMapProducer bitMapProducer) {
+    default boolean contains(final BitMapProducer bitMapProducer) {
         return forEachBitMapPair(bitMapProducer, (x, y) -> (x & y) == y);
     }
 
@@ -135,7 +135,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
      */
-    default boolean merge(BloomFilter other) {
+    default boolean merge(final BloomFilter other) {
         return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other) : merge((BitMapProducer) other);
     }
 
@@ -151,7 +151,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param hasher The hasher to merge.
      * @return true if the merge was successful
      */
-    default boolean merge(Hasher hasher) {
+    default boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         return merge(hasher.indices(getShape()));
     }
@@ -235,9 +235,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return an estimate of the number of items in the union.
      * @see #estimateN()
      */
-    default int estimateUnion(BloomFilter other) {
+    default int estimateUnion(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        BloomFilter cpy = this.copy();
+        final BloomFilter cpy = this.copy();
         cpy.merge(other);
         return cpy.estimateN();
     }
@@ -253,7 +253,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @param other The other Bloom filter
      * @return an estimate of the number of items in the intersection.
      */
-    default int estimateIntersection(BloomFilter other) {
+    default int estimateIntersection(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         return estimateN() + other.estimateN() - estimateUnion(other);
     }

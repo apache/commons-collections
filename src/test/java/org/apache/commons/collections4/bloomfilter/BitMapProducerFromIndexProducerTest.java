@@ -28,10 +28,10 @@ public class BitMapProducerFromIndexProducerTest extends AbstractBitMapProducerT
 
     @Override
     protected BitMapProducer createProducer() {
-        IndexProducer iProducer = new IndexProducer() {
+        final IndexProducer iProducer = new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
+            public boolean forEachIndex(final IntPredicate consumer) {
                 return consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
                         && consumer.test(127) && consumer.test(128);
             }
@@ -41,10 +41,10 @@ public class BitMapProducerFromIndexProducerTest extends AbstractBitMapProducerT
 
     @Override
     protected BitMapProducer createEmptyProducer() {
-        IndexProducer iProducer = new IndexProducer() {
+        final IndexProducer iProducer = new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
+            public boolean forEachIndex(final IntPredicate consumer) {
                 return true;
             }
         };
@@ -53,9 +53,9 @@ public class BitMapProducerFromIndexProducerTest extends AbstractBitMapProducerT
 
     @Test
     public final void testFromIndexProducer() {
-        List<Long> lst = new ArrayList<>();
+        final List<Long> lst = new ArrayList<>();
         createProducer().forEachBitMap(lst::add);
-        long[] buckets = lst.stream().mapToLong(l -> l.longValue()).toArray();
+        final long[] buckets = lst.stream().mapToLong(l -> l.longValue()).toArray();
         assertTrue(BitMap.contains(buckets, 0));
         assertTrue(BitMap.contains(buckets, 1));
         assertTrue(BitMap.contains(buckets, 63));
