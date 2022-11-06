@@ -143,9 +143,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             for (final long l : values) {
                 lst.add(l);
             }
-            assertTrue(f.forEachBitMap(l -> {
-                return lst.remove(Long.valueOf(l));
-            }));
+            assertTrue(f.forEachBitMap(l -> lst.remove(Long.valueOf(l))));
             assertTrue(lst.isEmpty());
         }
         // values too large
