@@ -376,7 +376,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         final ListIterator<?> it1 = listIterator();
         final ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
-            if (!(Objects.equals(it1.next(), it2.next()))) {
+            if (!Objects.equals(it1.next(), it2.next())) {
                 return false;
             }
         }

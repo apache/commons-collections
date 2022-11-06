@@ -69,7 +69,7 @@ public class EnhancedDoubleHasher implements Hasher {
         final int end = offset + Math.min(len, Long.BYTES);
         for (int i = offset; i < end; i++) {
             shift -= Byte.SIZE;
-            val |= ((long) (byteArray[i] & 0xFF) << shift);
+            val |= (long) (byteArray[i] & 0xFF) << shift;
         }
         return val;
     }
@@ -139,7 +139,7 @@ public class EnhancedDoubleHasher implements Hasher {
         // See Hacker's Delight (2nd ed), section 9.3.
         // Assume divisor is positive.
         // Divide half the unsigned number and then double the quotient result.
-        final long quotient = ((dividend >>> 1) / divisor) << 1;
+        final long quotient = (dividend >>> 1) / divisor << 1;
         final long remainder = dividend - quotient * divisor;
         // remainder in [0, 2 * divisor)
         return (int) (remainder >= divisor ? remainder - divisor : remainder);

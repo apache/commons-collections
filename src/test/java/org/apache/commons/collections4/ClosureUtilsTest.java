@@ -88,10 +88,10 @@ public class ClosureUtilsTest {
 
     @Test
     public void testInvokeClosure() {
-        StringBuffer buf = new StringBuffer("Hello"); // Only StringBuffer has setLength() method
+        StringBuilder buf = new StringBuilder("Hello"); // Only StringBuffer has setLength() method
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
-        buf = new StringBuffer("Hello");
+        buf = new StringBuilder("Hello");
         ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }

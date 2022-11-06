@@ -103,7 +103,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      *  stack to satisfy this request
      */
     public E peek(final int n) throws EmptyStackException {
-        final int m = (size() - n) - 1;
+        final int m = size() - n - 1;
         if (m < 0) {
             throw new EmptyStackException();
         }
@@ -152,8 +152,8 @@ public class ArrayStack<E> extends ArrayList<E> {
         int n = 1;                 // Current distance
         while (i >= 0) {
             final Object current = get(i);
-            if ((object == null && current == null) ||
-                (object != null && object.equals(current))) {
+            if (object == null && current == null ||
+                object != null && object.equals(current)) {
                 return n;
             }
             i--;

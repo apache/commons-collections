@@ -339,8 +339,8 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             final ComparatorChain<?> chain = (ComparatorChain<?>) object;
-            return (Objects.equals(orderingBits, chain.orderingBits)) &&
-                   (Objects.equals(comparatorChain, chain.comparatorChain));
+            return Objects.equals(orderingBits, chain.orderingBits) &&
+                   Objects.equals(comparatorChain, chain.comparatorChain);
         }
         return false;
     }

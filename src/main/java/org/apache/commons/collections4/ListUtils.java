@@ -326,7 +326,7 @@ public class ListUtils {
             final Object obj1 = it1.next();
             final Object obj2 = it2.next();
 
-            if (!(Objects.equals(obj1, obj2))) {
+            if (!Objects.equals(obj1, obj2)) {
                 return false;
             }
         }

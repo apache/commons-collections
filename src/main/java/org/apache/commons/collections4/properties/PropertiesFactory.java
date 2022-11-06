@@ -100,7 +100,7 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
 
         @Override
         public synchronized boolean equals(final Object o) {
-            return (o instanceof Properties) && ((Properties) o).isEmpty();
+            return o instanceof Properties && ((Properties) o).isEmpty();
         }
 
         @Override

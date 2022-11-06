@@ -93,7 +93,7 @@ public class BitMapTest {
         assertTrue(BitMap.contains(ary, 0));
 
         assertFalse(BitMap.contains(ary, 63));
-        ary[0] = (1L << 63);
+        ary[0] = 1L << 63;
         assertTrue(BitMap.contains(ary, 63));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> BitMap.contains(aryT, 64));
 

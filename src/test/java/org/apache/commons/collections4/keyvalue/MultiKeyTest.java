@@ -282,7 +282,7 @@ public class MultiKeyTest {
         assertEquals(mk1.hashCode(), mk2.hashCode());
         assertTrue(mk1.hashCode() != mk3.hashCode());
 
-        final int total = (0 ^ ONE.hashCode()) ^ TWO.hashCode();
+        final int total = 0 ^ ONE.hashCode() ^ TWO.hashCode();
         assertEquals(total, mk1.hashCode());
     }
 
