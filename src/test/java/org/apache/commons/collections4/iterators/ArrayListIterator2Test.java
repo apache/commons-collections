@@ -23,7 +23,6 @@ package org.apache.commons.collections4.iterators;
 public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
     public ArrayListIterator2Test() {
-        super();
     }
 
     @Override
