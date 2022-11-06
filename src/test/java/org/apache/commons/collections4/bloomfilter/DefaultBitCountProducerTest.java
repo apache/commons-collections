@@ -28,27 +28,19 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     @Override
     protected BitCountProducer createProducer() {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(final BitCountConsumer consumer) {
-                for (final int i : values) {
-                    if (!consumer.test(i, 1)) {
-                        return false;
-                    }
+        return consumer -> {
+            for (final int i : values) {
+                if (!consumer.test(i, 1)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(final BitCountConsumer consumer) {
-                return true;
-            }
-        };
+        return consumer -> true;
     }
 
     @Override

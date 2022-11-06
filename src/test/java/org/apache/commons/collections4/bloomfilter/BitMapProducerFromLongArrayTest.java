@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -56,17 +55,13 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
     @Test
     public void testFromIndexProducer() {
         final int limit = Integer.SIZE + Long.SIZE;
-        final IndexProducer iProducer = new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
-                for (int i = 0; i < limit; i++) {
-                    if (!consumer.test(i)) {
-                        return false;
-                    }
+        final IndexProducer iProducer = consumer -> {
+            for (int i = 0; i < limit; i++) {
+                if (!consumer.test(i)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
         final BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
         final List<Long> lst = new ArrayList<>();

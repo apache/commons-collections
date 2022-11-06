@@ -79,30 +79,27 @@ public interface IndexProducer {
      */
     static IndexProducer fromBitMapProducer(final BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");
-        return new IndexProducer() {
-            @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
-                final LongPredicate longPredicate = new LongPredicate() {
-                    int wordIdx = 0;
+        return consumer -> {
+            final LongPredicate longPredicate = new LongPredicate() {
+                int wordIdx = 0;
 
-                    @Override
-                    public boolean test(long word) {
-                        int i = wordIdx;
-                        while (word != 0) {
-                            if ((word & 1) == 1) {
-                                if (!consumer.test(i)) {
-                                    return false;
-                                }
+                @Override
+                public boolean test(long word) {
+                    int i = wordIdx;
+                    while (word != 0) {
+                        if ((word & 1) == 1) {
+                            if (!consumer.test(i)) {
+                                return false;
                             }
-                            word >>>= 1;
-                            i++;
                         }
-                        wordIdx += 64;
-                        return true;
+                        word >>>= 1;
+                        i++;
                     }
-                };
-                return producer.forEachBitMap(longPredicate::test);
-            }
+                    wordIdx += 64;
+                    return true;
+                }
+            };
+            return producer.forEachBitMap(longPredicate::test);
         };
     }
 
