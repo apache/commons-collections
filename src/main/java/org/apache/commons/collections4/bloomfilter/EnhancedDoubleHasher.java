@@ -113,6 +113,12 @@ public class EnhancedDoubleHasher implements Hasher {
         this.increment = increment;
     }
 
+    @Override
+    public boolean isEmpty() {
+        // this hasher can never be empty
+        return false;
+    }
+
     /**
      * Gets the initial value for the hash calculation.
      * @return the initial value for the hash calculation.

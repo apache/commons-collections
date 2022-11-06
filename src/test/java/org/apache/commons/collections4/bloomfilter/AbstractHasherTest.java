@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -85,4 +86,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
         });
         assertEquals(1, count[0], "did not exit early");
     }
+
+    @Test
+    public abstract void testIsEmpty();
 }

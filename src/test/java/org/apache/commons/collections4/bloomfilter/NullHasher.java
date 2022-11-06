@@ -49,6 +49,11 @@ final class NullHasher implements Hasher {
     }
 
     @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         return PRODUCER;

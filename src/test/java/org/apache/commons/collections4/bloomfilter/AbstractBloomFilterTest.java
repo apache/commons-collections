@@ -439,5 +439,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         public IndexProducer uniqueIndices(Shape shape) {
             return producer;
         }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
     }
 }

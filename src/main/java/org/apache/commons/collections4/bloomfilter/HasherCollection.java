@@ -66,6 +66,16 @@ public class HasherCollection implements Hasher {
         this(Arrays.asList(hashers));
     }
 
+    @Override
+    public boolean isEmpty() {
+        for (Hasher h : hashers) {
+            if (!h.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Adds a hasher to the collection.
      * @param hasher The hasher to add.

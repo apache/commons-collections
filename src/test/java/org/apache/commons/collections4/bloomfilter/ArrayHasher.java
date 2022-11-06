@@ -32,6 +32,11 @@ final class ArrayHasher implements Hasher {
     }
 
     @Override
+    public boolean isEmpty() {
+        return values.length == 0;
+    }
+
+    @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         return new Producer(shape);

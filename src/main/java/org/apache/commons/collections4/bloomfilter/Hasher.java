@@ -61,4 +61,10 @@ public interface Hasher {
             return Hasher.this.indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
         };
     }
+
+    /**
+     * Returns {@code true} if the hasher is empty and will return no values.
+     * @return {@code true} if the hasher is empty and will return no values.
+     */
+    boolean isEmpty();
 }
