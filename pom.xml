@@ -597,7 +597,6 @@
 
   </properties>
 
-
   <build>
     <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
     <pluginManagement>
