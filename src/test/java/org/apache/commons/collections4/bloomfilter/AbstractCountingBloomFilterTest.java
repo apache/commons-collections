@@ -37,17 +37,13 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     protected int[] bigHashCounts = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 0};
 
-    protected final BitCountProducer maximumValueProducer = new BitCountProducer() {
-
-        @Override
-        public boolean forEachCount(final BitCountProducer.BitCountConsumer consumer) {
-            for (int i = 1; i < 18; i++) {
-                if (!consumer.test(i, Integer.MAX_VALUE)) {
-                    return false;
-                }
+    protected final BitCountProducer maximumValueProducer = consumer -> {
+        for (int i = 1; i < 18; i++) {
+            if (!consumer.test(i, Integer.MAX_VALUE)) {
+                return false;
             }
-            return true;
         }
+        return true;
     };
 
     /**

@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -38,28 +37,22 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createProducer() {
-        return new IndexProducer() {
-            @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
-                Objects.requireNonNull(predicate);
-                for (final int i : values) {
-                    if (!predicate.test(i)) {
-                        return false;
-                    }
+        return predicate -> {
+            Objects.requireNonNull(predicate);
+            for (final int i : values) {
+                if (!predicate.test(i)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
     }
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return new IndexProducer() {
-            @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
-                Objects.requireNonNull(predicate);
-                return true;
-            }
+        return predicate -> {
+            Objects.requireNonNull(predicate);
+            return true;
         };
     }
 
