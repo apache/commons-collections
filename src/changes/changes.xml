@@ -106,6 +106,9 @@
     <action type="fix" dev="ggregory" due-to="Marc Wrobel">
       Fix minor typos #323
     </action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">
+      AbstractReferenceMap.SoftRef implements hashCode() but not equals().
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
