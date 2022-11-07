@@ -67,9 +67,9 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     protected abstract BitCountProducer createEmptyProducer();
 
     /**
-     * Gets the behaviour of the {@link BitCountProducer#forEachCount(BitCountConsumer)} method.
+     * Gets the behavior of the {@link BitCountProducer#forEachCount(BitCountConsumer)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
-     * @return the behaviour.
+     * @return the behavior.
      */
     protected int getForEachCountBehaviour() {
         return getAsIndexArrayBehaviour();
@@ -129,8 +129,8 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
     }
 
     /**
-     * Test the behaviour of {@link BitCountProducer#forEachCount(BitCountConsumer)} with respect
-     * to ordered and distinct indices. Currently the behaviour is assumed to be the same as
+     * Test the behavior of {@link BitCountProducer#forEachCount(BitCountConsumer)} with respect
+     * to ordered and distinct indices. Currently the behavior is assumed to be the same as
      * {@link IndexProducer#forEachIndex(java.util.function.IntPredicate)}.
      */
     @Test

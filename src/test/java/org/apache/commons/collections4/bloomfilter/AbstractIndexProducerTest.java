@@ -82,17 +82,17 @@ public abstract class AbstractIndexProducerTest {
     protected abstract IndexProducer createEmptyProducer();
 
     /**
-     * Gets the behaviour of the {@link IndexProducer#asIndexArray()} method.
-     * @return the behaviour.
+     * Gets the behavior of the {@link IndexProducer#asIndexArray()} method.
+     * @return the behavior.
      * @see #ORDERED
      * @see #DISTINCT
      */
     protected abstract int getAsIndexArrayBehaviour();
 
     /**
-     * Gets the behaviour of the {@link IndexProducer#forEachIndex(IntPredicate)} method.
+     * Gets the behavior of the {@link IndexProducer#forEachIndex(IntPredicate)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
-     * @return the behaviour.
+     * @return the behavior.
      * @see #ORDERED
      * @see #DISTINCT
      */
@@ -173,8 +173,8 @@ public abstract class AbstractIndexProducerTest {
     }
 
     /**
-     * Tests the behaviour of {@code IndexProducer.asIndexArray()}.
-     * The expected behaviour is defined by the {@code getBehaviour()} method.
+     * Tests the behavior of {@code IndexProducer.asIndexArray()}.
+     * The expected behavior is defined by the {@code getBehaviour()} method.
      * The index array may be Ordered, Distinct or both.
      * If the index array is not distinct then all elements returned by the {@code getExpectedIndices()}
      * method, including duplicates, are expected to be returned by the {@code asIndexArray()} method.
@@ -201,8 +201,8 @@ public abstract class AbstractIndexProducerTest {
     }
 
     /**
-     * Tests the behaviour of {@code IndexProducer.forEachIndex()}.
-     * The expected behaviour is defined by the {@code getBehaviour()} method.
+     * Tests the behavior of {@code IndexProducer.forEachIndex()}.
+     * The expected behavior is defined by the {@code getBehaviour()} method.
      * The order is assumed to follow the order produced by {@code IndexProducer.asIndexArray()}.
      */
     @Test

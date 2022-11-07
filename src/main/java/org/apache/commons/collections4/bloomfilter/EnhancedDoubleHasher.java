@@ -36,7 +36,7 @@ import java.util.function.IntPredicate;
  * all items, hashing may not create indices that fill the full region within a much larger filter. Imagine hashers created with {@code initial}
  * and {@code increment} values less than 255 with a filter size of 30000 and number of hash functions as 5. Ignoring the
  * tetrahedral addition (a maximum of 20 for k=5) the max index is 255 * 4 + 255 = 1275, this covers 4.25% of the filter. This also
- * ignores the negative wrapping but the behaviour is the same, some bits cannot be reached.
+ * ignores the negative wrapping but the behavior is the same, some bits cannot be reached.
  * </p><p>
  * So this needs to be avoided as the filter probability assumptions will be void. If the {@code initial} and {@code increment} are larger
  * than the number of bits then the modulus will create a 'random' position and increment within the size.

@@ -51,7 +51,7 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     @Override
     protected int getForEachIndexBehaviour() {
-        // The default method has the same behaviour as the forEachCount() method.
+        // The default method has the same behavior as the forEachCount() method.
         return 0;
     }
 

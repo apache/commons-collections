@@ -213,11 +213,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the map.
+     * Return a flag specifying the iteration behavior of the map.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
