@@ -53,11 +53,6 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
         return 1;
     }
 
-    @Override
-    public void testIsEmpty() {
-        assertFalse( createHasher().isEmpty() );
-    }
-
     @Test
     public void testByteConstructor() {
         // single value become increment.

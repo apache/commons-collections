@@ -52,11 +52,6 @@ final class IncrementingHasher implements Hasher {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 

@@ -72,6 +72,8 @@ public class HasherCollectionTest extends AbstractHasherTest {
     @Override
     @Test
     public void testIsEmpty() {
+        super.testIsEmpty();
+        // test mixed hashers
         HasherCollection h = new HasherCollection();
         assertTrue(h.isEmpty());
         h.add(NullHasher.INSTANCE);

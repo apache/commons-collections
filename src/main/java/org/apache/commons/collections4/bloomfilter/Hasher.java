@@ -64,7 +64,12 @@ public interface Hasher {
 
     /**
      * Returns {@code true} if the hasher is empty and will return no values.
+     *
+     * By default this method returns {@code false}.
+     *
      * @return {@code true} if the hasher is empty and will return no values.
      */
-    boolean isEmpty();
+    default boolean isEmpty() {
+        return false;
+    }
 }

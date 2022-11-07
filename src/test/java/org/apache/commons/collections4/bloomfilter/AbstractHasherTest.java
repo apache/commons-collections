@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -88,5 +89,8 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     }
 
     @Test
-    public abstract void testIsEmpty();
+    public void testIsEmpty() {
+        assertTrue(createEmptyHasher().isEmpty());
+        assertFalse(createHasher().isEmpty());
+    }
 }
