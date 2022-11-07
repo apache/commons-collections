@@ -268,8 +268,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     /**
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
      *
-     * <p></p>
-     *
      * <p>This method produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
      * of the filters by rounding the value from the calculation described in the {@code Shape} class javadoc.</p>
      *
