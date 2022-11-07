@@ -65,7 +65,7 @@ import org.junit.jupiter.api.Test;
  *
  * <b>Indicate Map Behaviour</b>
  * <p>
- * Override these if your map makes specific behaviour guarantees:
+ * Override these if your map makes specific behavior guarantees:
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
@@ -532,11 +532,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the collection.
+     * Return a flag specifying the iteration behavior of the collection.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour(){

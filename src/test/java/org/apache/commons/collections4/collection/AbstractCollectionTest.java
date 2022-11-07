@@ -73,7 +73,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <b>Indicate Collection Behaviour</b>
  * <p>
- * Override these if your collection makes specific behaviour guarantees:
+ * Override these if your collection makes specific behavior guarantees:
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
@@ -144,7 +144,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      * Flag to indicate the collection makes no ordering guarantees for the iterator. If this is not used
-     * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
+     * then the behavior is assumed to be ordered and the output order of the iterator is matched by
      * the toArray method.
      */
     public static final int UNORDERED = 0x1;
@@ -503,11 +503,11 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the collection.
+     * Return a flag specifying the iteration behavior of the collection.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see #UNORDERED
      */
     protected int getIterationBehaviour(){
