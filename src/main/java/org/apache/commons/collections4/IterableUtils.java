@@ -338,7 +338,7 @@ public class IterableUtils {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                final List<E> list = (iterable instanceof List<?>) ?
+                final List<E> list = iterable instanceof List<?> ?
                         (List<E>) iterable :
                         IteratorUtils.toList(iterable.iterator());
                 return new ReverseListIterator<>(list);

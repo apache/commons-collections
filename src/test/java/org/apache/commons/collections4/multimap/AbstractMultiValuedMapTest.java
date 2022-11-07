@@ -213,11 +213,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the map.
+     * Return a flag specifying the iteration behavior of the map.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
@@ -428,9 +428,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testEntriesCollectionIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<V> values = new ArrayList<>(map.values());
-        final Iterator<Map.Entry<K, V>> iterator = map.entries().iterator();
-        while (iterator.hasNext()) {
-            final Map.Entry<K, V> entry = iterator.next();
+        for (final Entry<K, V> entry : map.entries()) {
             assertTrue(map.containsMapping(entry.getKey(), entry.getValue()));
             assertTrue(values.contains(entry.getValue()));
             if (isRemoveSupported()) {

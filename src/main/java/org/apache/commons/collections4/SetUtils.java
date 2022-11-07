@@ -108,7 +108,7 @@ public class SetUtils {
             UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
 
     /**
-     * Returns a unmodifiable <b>view</b> containing the difference of the given
+     * Returns an unmodifiable <b>view</b> containing the difference of the given
      * {@link Set}s, denoted by {@code a \ b} (or {@code a - b}).
      * <p>
      * The returned view contains all elements of {@code a} that are not a member
@@ -118,7 +118,7 @@ public class SetUtils {
      *   in both input sets.
      * @param setA  the set to subtract from, must not be null
      * @param setB  the set to subtract, must not be null
-     * @return a view of the relative complement of  of the two sets
+     * @return a view of the relative complement of the two sets
      * @since 4.1
      */
     public static <E> SetView<E> difference(final Set<? extends E> setA, final Set<? extends E> setB) {
@@ -141,7 +141,7 @@ public class SetUtils {
     }
 
     /**
-     * Returns a unmodifiable <b>view</b> of the symmetric difference of the given
+     * Returns an unmodifiable <b>view</b> of the symmetric difference of the given
      * {@link Set}s.
      * <p>
      * The returned view contains all elements of {@code a} and {@code b} that are
@@ -261,7 +261,7 @@ public class SetUtils {
     }
 
     /**
-     * Returns a unmodifiable <b>view</b> of the intersection of the given {@link Set}s.
+     * Returns an unmodifiable <b>view</b> of the intersection of the given {@link Set}s.
      * <p>
      * The returned view contains all elements that are members of both input sets
      * ({@code a} and {@code b}).
@@ -550,7 +550,7 @@ public class SetUtils {
     // Set operations
 
     /**
-     * Returns a unmodifiable <b>view</b> of the union of the given {@link Set}s.
+     * Returns an unmodifiable <b>view</b> of the union of the given {@link Set}s.
      * <p>
      * The returned view contains all elements of {@code a} and {@code b}.
      *

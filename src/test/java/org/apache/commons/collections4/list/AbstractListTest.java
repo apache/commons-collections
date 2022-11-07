@@ -91,12 +91,10 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         int i = 0;
         final Iterator<E> iterator1 = list1.iterator();
-        final Iterator<E> iterator2 = list2.iterator();
         final E[] array = (E[]) list1.toArray();
-        while (iterator2.hasNext()) {
+        for (Object o2 : list2) {
             assertTrue("List iterator should have next", iterator1.hasNext());
             final Object o1 = iterator1.next();
-            Object o2 = iterator2.next();
             assertEquals("Iterator elements should be equal", o1, o2);
             o2 = list1.get(i);
             assertEquals("get should return correct element", o1, o2);
@@ -182,19 +180,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final E element = getOtherElements()[0];
 
-        List<E> finalList0 = makeObject();
+        final List<E> finalList0 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        List<E> finalList1 = makeObject();
+        final List<E> finalList1 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
                 "List.add should throw IndexOutOfBoundsException [-1]");
 
-        List<E> finalList2 = makeObject();
+        final List<E> finalList2 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(1, element),
                 "List.add should throw IndexOutOfBoundsException [1]");
 
-        List<E> finalList3 = makeObject();
+        final List<E> finalList3 = makeObject();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
@@ -211,19 +209,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final E element = getOtherElements()[0];
 
-        List<E> finalList0 = makeFullCollection();
+        final List<E> finalList0 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList0.add(Integer.MIN_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
 
-        List<E> finalList1 = makeFullCollection();
+        final List<E> finalList1 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList1.add(-1, element),
                 "List.add should throw IndexOutOfBoundsException [-1]");
 
-        List<E> finalList2 = makeFullCollection();
+        final List<E> finalList2 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList2.add(finalList2.size() + 1, element),
                 "List.add should throw IndexOutOfBoundsException [size + 1]");
 
-        List<E> finalList3 = makeFullCollection();
+        final List<E> finalList3 = makeFullCollection();
         assertThrows(IndexOutOfBoundsException.class, () -> finalList3.add(Integer.MAX_VALUE, element),
                 "List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
     }
@@ -285,7 +283,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         list2 = Arrays.asList(getFullElements());
         if (list2.size() < 2 && isAddSupported()) {
-            // main list is only size 1, so lets add other elements to get a better list
+            // main list is only size 1, so let's add other elements to get a better list
             list.addAll(Arrays.asList(getOtherElements()));
             getConfirmed().addAll(Arrays.asList(getOtherElements()));
             list2 = new ArrayList<>(list2);
@@ -428,9 +426,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
 
-        final Iterator<E> iterator = list2.iterator();
-        while (iterator.hasNext()) {
-            final E element = iterator.next();
+        for (final E element : list2) {
             assertEquals("lastIndexOf should return correct result",
                 list1.lastIndexOf(element), list2.lastIndexOf(element));
             verify();

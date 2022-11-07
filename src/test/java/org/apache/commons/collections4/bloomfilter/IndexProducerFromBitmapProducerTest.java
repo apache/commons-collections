@@ -28,7 +28,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        TestingBitMapProducer producer = new TestingBitMapProducer(new long[0]);
+        final TestingBitMapProducer producer = new TestingBitMapProducer(new long[0]);
         return IndexProducer.fromBitMapProducer(producer);
     }
 
@@ -45,7 +45,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
          3L => ...0011
          @formatter:on
          */
-        TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
+        final TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
         return IndexProducer.fromBitMapProducer(producer);
     }
 
@@ -72,7 +72,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        BitMapProducer producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
+        final BitMapProducer producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
         underTest = IndexProducer.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 
@@ -84,16 +84,16 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         }
     }
 
-    private class TestingBitMapProducer implements BitMapProducer {
+    private static class TestingBitMapProducer implements BitMapProducer {
         long[] values;
 
-        TestingBitMapProducer(long[] values) {
+        TestingBitMapProducer(final long[] values) {
             this.values = values;
         }
 
         @Override
-        public boolean forEachBitMap(LongPredicate consumer) {
-            for (long l : values) {
+        public boolean forEachBitMap(final LongPredicate consumer) {
+            for (final long l : values) {
                 if (!consumer.test(l)) {
                     return false;
                 }

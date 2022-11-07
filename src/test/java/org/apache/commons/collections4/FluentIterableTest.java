@@ -445,7 +445,7 @@ public class FluentIterableTest {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
     public void toArray() {
-        final Long[] arr = new Long[] {1L, 2L, 3L, 4L, 5L};
+        final Long[] arr = {1L, 2L, 3L, 4L, 5L};
         final Long[] result = FluentIterable.of(arr).toArray(Long.class);
         assertNotNull(result);
         assertArrayEquals(arr, result);

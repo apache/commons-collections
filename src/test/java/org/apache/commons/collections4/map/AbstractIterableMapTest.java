@@ -68,14 +68,14 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
         final Map.Entry<K, V> val = it.next();
         getMap().remove(val.getKey());
-        Iterator<Map.Entry<K, V>> finalIt0 = it;
+        final Iterator<Map.Entry<K, V>> finalIt0 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().entrySet().iterator();
         it.next();
         getMap().clear();
-        Iterator<Map.Entry<K, V>> finalIt1 = it;
+        final Iterator<Map.Entry<K, V>> finalIt1 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
@@ -91,14 +91,14 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<K> it = getMap().keySet().iterator();
         final K val = it.next();
         getMap().remove(val);
-        Iterator<K> finalIt0 = it;
+        final Iterator<K> finalIt0 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().keySet().iterator();
         it.next();
         getMap().clear();
-        Iterator<K> finalIt1 = it;
+        final Iterator<K> finalIt1 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
@@ -114,14 +114,14 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<V> it = getMap().values().iterator();
         it.next();
         getMap().remove(getMap().keySet().iterator().next());
-        Iterator<V> finalIt0 = it;
+        final Iterator<V> finalIt0 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().values().iterator();
         it.next();
         getMap().clear();
-        Iterator<V> finalIt1 = it;
+        final Iterator<V> finalIt1 = it;
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 

@@ -86,7 +86,7 @@ public class SplitMapUtils {
 
         @Override
         public int hashCode() {
-            return ("WrappedGet".hashCode() << 4) | get.hashCode();
+            return "WrappedGet".hashCode() << 4 | get.hashCode();
         }
 
         @Override
@@ -178,7 +178,7 @@ public class SplitMapUtils {
 
         @Override
         public int hashCode() {
-            return ("WrappedPut".hashCode() << 4) | put.hashCode();
+            return "WrappedPut".hashCode() << 4 | put.hashCode();
         }
 
         @Override
@@ -235,7 +235,7 @@ public class SplitMapUtils {
         Objects.requireNonNull(get, "get");
         if (get instanceof Map) {
             return get instanceof IterableMap ?
-                    ((IterableMap<K, V>) get) :
+                    (IterableMap<K, V>) get :
                     MapUtils.iterableMap((Map<K, V>) get);
         }
         return new WrappedGet<>(get);

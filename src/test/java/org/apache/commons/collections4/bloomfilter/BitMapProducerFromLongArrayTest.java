@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntPredicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
 
     @Override
     protected BitMapProducer createProducer() {
-        long[] ary = new long[] {1L, 2L, 3L, 4L, 5L};
+        final long[] ary = {1L, 2L, 3L, 4L, 5L};
         return BitMapProducer.fromBitMapArray(ary);
     }
 
@@ -44,7 +43,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
 
     @Test
     public void constructorTest() {
-        List<Long> lst = new ArrayList<>();
+        final List<Long> lst = new ArrayList<>();
         createProducer().forEachBitMap(lst::add);
         assertEquals(Long.valueOf(1), lst.get(0));
         assertEquals(Long.valueOf(2), lst.get(1));
@@ -55,21 +54,17 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
 
     @Test
     public void testFromIndexProducer() {
-        int limit = Integer.SIZE + Long.SIZE;
-        IndexProducer iProducer = new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                for (int i = 0; i < limit; i++) {
-                    if (!consumer.test(i)) {
-                        return false;
-                    }
+        final int limit = Integer.SIZE + Long.SIZE;
+        final IndexProducer iProducer = consumer -> {
+            for (int i = 0; i < limit; i++) {
+                if (!consumer.test(i)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
-        BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
-        List<Long> lst = new ArrayList<>();
+        final BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
+        final List<Long> lst = new ArrayList<>();
         producer.forEachBitMap(lst::add);
         long expected = ~0L;
         assertEquals(expected, lst.get(0).longValue());

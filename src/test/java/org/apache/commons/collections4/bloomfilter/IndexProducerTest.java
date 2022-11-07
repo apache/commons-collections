@@ -51,16 +51,16 @@ public class IndexProducerTest {
         }
     }
 
-    private class TestingBitMapProducer implements BitMapProducer {
+    private static class TestingBitMapProducer implements BitMapProducer {
         long[] values;
 
-        TestingBitMapProducer(long[] values) {
+        TestingBitMapProducer(final long[] values) {
             this.values = values;
         }
 
         @Override
-        public boolean forEachBitMap(LongPredicate consumer) {
-            for (long l : values) {
+        public boolean forEachBitMap(final LongPredicate consumer) {
+            for (final long l : values) {
                 if (!consumer.test(l)) {
                     return false;
                 }

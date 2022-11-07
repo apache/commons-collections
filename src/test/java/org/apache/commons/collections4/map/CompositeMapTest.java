@@ -40,6 +40,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(CompositeMapTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     public void setUp() throws Exception {
         super.setUp();

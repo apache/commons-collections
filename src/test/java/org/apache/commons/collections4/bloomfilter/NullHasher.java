@@ -33,7 +33,7 @@ final class NullHasher implements Hasher {
 
     private static final IndexProducer PRODUCER = new IndexProducer() {
         @Override
-        public boolean forEachIndex(IntPredicate consumer) {
+        public boolean forEachIndex(final IntPredicate consumer) {
             Objects.requireNonNull(consumer, "consumer");
             return true;
         }
@@ -55,7 +55,7 @@ final class NullHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer uniqueIndices(Shape shape) {
+    public IndexProducer uniqueIndices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         return PRODUCER;
     }

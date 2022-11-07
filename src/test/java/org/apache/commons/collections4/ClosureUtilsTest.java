@@ -88,10 +88,10 @@ public class ClosureUtilsTest {
 
     @Test
     public void testInvokeClosure() {
-        StringBuffer buf = new StringBuffer("Hello"); // Only StringBuffer has setLength() method
+        StringBuilder buf = new StringBuilder("Hello"); // Only StringBuffer has setLength() method
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
-        buf = new StringBuffer("Hello");
+        buf = new StringBuilder("Hello");
         ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }
@@ -154,7 +154,7 @@ public class ClosureUtilsTest {
 
         a = new MockClosure<>();
         b = new MockClosure<>();
-        Collection<Closure<Object>> coll = new ArrayList<>();
+        final Collection<Closure<Object>> coll = new ArrayList<>();
         coll.add(b);
         coll.add(a);
         coll.add(b);
@@ -170,7 +170,7 @@ public class ClosureUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null)),
                 () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure(null, null)),
                 () -> {
-                    Collection<Closure<Object>> finalColl = new ArrayList<>();
+                    final Collection<Closure<Object>> finalColl = new ArrayList<>();
                     finalColl.add(null);
                     finalColl.add(null);
                     assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(finalColl));

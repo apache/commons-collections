@@ -65,8 +65,8 @@ public interface BitMapProducer {
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
-    default boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
-        CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
+    default boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+        final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
         return other.forEachBitMap(p) && p.forEachRemaining();
     }
 
@@ -83,7 +83,7 @@ public interface BitMapProducer {
             private long[] data = new long[16];
             private int size;
 
-            boolean add(long bits) {
+            boolean add(final long bits) {
                 if (size == data.length) {
                     // This will throw an out-of-memory error if there are too many bits.
                     // Since bits are addressed using 32-bit signed integer indices
@@ -100,7 +100,7 @@ public interface BitMapProducer {
                 return size == data.length ? data : Arrays.copyOf(data, size);
             }
         }
-        Bits bits = new Bits();
+        final Bits bits = new Bits();
         forEachBitMap(bits::add);
         return bits.toArray();
     }
@@ -110,11 +110,11 @@ public interface BitMapProducer {
      * @param bitMaps the bit maps to return.
      * @return a BitMapProducer.
      */
-    static BitMapProducer fromBitMapArray(long... bitMaps) {
+    static BitMapProducer fromBitMapArray(final long... bitMaps) {
         return new BitMapProducer() {
             @Override
-            public boolean forEachBitMap(LongPredicate predicate) {
-                for (long word : bitMaps) {
+            public boolean forEachBitMap(final LongPredicate predicate) {
+                for (final long word : bitMaps) {
                     if (!predicate.test(word)) {
                         return false;
                     }
@@ -128,8 +128,8 @@ public interface BitMapProducer {
             }
 
             @Override
-            public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
-                CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
+            public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+                final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
                 return other.forEachBitMap(p) && p.forEachRemaining();
             }
         };
@@ -141,11 +141,11 @@ public interface BitMapProducer {
      * @param numberOfBits the number of bits in the Bloom filter.
      * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
      */
-    static BitMapProducer fromIndexProducer(IndexProducer producer, int numberOfBits) {
+    static BitMapProducer fromIndexProducer(final IndexProducer producer, final int numberOfBits) {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
-        long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
+        final long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
         producer.forEachIndex(i -> {
             BitMap.set(result, i);
             return true;

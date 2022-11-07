@@ -101,7 +101,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
 
     /**
      * Returns {@code true} iff <i>that</i> Object is
-     * is a {@link Comparator} whose ordering is known to be
+     * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
@@ -121,8 +121,8 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
         }
         if (object.getClass().equals(this.getClass())) {
             final TransformingComparator<?, ?> comp = (TransformingComparator<?, ?>) object;
-            return (Objects.equals(decorated, comp.decorated)) &&
-                   (Objects.equals(transformer, comp.transformer));
+            return Objects.equals(decorated, comp.decorated) &&
+                   Objects.equals(transformer, comp.transformer);
         }
         return false;
     }

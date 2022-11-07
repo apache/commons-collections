@@ -137,9 +137,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
         final Iterator<K> mapIter = sm.keySet().iterator();
-        final Iterator<K> expectedIter = newSortedKeys.iterator();
-        while (expectedIter.hasNext()) {
-            final K expectedKey = expectedIter.next();
+        for (final K expectedKey : newSortedKeys) {
             final K mapKey = mapIter.next();
             assertNotNull("key in sorted list may not be null", expectedKey);
             assertNotNull("key in map may not be null", mapKey);

@@ -56,8 +56,8 @@ public interface IndexProducer {
         return new IndexProducer() {
 
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
-                for (int value : values) {
+            public boolean forEachIndex(final IntPredicate predicate) {
+                for (final int value : values) {
                     if (!predicate.test(value)) {
                         return false;
                     }
@@ -77,32 +77,27 @@ public interface IndexProducer {
      * @param producer the {@code BitMapProducer}
      * @return a new {@code IndexProducer}.
      */
-    static IndexProducer fromBitMapProducer(BitMapProducer producer) {
+    static IndexProducer fromBitMapProducer(final BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");
-        return new IndexProducer() {
-            @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                LongPredicate longPredicate = new LongPredicate() {
-                    int wordIdx = 0;
+        return consumer -> {
+            final LongPredicate longPredicate = new LongPredicate() {
+                int wordIdx = 0;
 
-                    @Override
-                    public boolean test(long word) {
-                        int i = wordIdx;
-                        while (word != 0) {
-                            if ((word & 1) == 1) {
-                                if (!consumer.test(i)) {
-                                    return false;
-                                }
-                            }
-                            word >>>= 1;
-                            i++;
+                @Override
+                public boolean test(long word) {
+                    int i = wordIdx;
+                    while (word != 0) {
+                        if ((word & 1) == 1 && !consumer.test(i)) {
+                            return false;
                         }
-                        wordIdx += 64;
-                        return true;
+                        word >>>= 1;
+                        i++;
                     }
-                };
-                return producer.forEachBitMap(longPredicate::test);
-            }
+                    wordIdx += 64;
+                    return true;
+                }
+            };
+            return producer.forEachBitMap(longPredicate::test);
         };
     }
 
@@ -122,7 +117,7 @@ public interface IndexProducer {
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        BitSet result = new BitSet();
+        final BitSet result = new BitSet();
         forEachIndex(i -> {
             result.set(i);
             return true;

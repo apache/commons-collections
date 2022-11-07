@@ -57,7 +57,7 @@ public class BitMapTest {
 
     @Test
     public final void testSet() {
-        long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
+        final long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
         for (int i = 0; i < 129; i++) {
             BitMap.set(bitMaps, i);
             assertTrue(BitMap.contains(bitMaps, i), String.format("Failed at index: %d", i));
@@ -69,7 +69,7 @@ public class BitMapTest {
 
     @Test
     public final void testContains() {
-        long[] bitMaps = new long[1];
+        final long[] bitMaps = new long[1];
 
         for (int i = 0; i < 64; i++) {
             bitMaps[0] = 0L;
@@ -93,7 +93,7 @@ public class BitMapTest {
         assertTrue(BitMap.contains(ary, 0));
 
         assertFalse(BitMap.contains(ary, 63));
-        ary[0] = (1L << 63);
+        ary[0] = 1L << 63;
         assertTrue(BitMap.contains(ary, 63));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> BitMap.contains(aryT, 64));
 

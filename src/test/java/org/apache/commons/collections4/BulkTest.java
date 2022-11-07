@@ -31,8 +31,8 @@ import junit.framework.TestSuite;
  * A {@link TestCase} that can define both simple and bulk test methods.
  * <p>
  * A <I>simple test method</I> is the type of test traditionally
- * supplied by by {@link TestCase}.  To define a simple test, create a public
- * no-argument method whose name starts with "test".  You can specify the
+ * supplied by {@link TestCase}.  To define a simple test, create a public
+ * no-argument method whose name starts with "test".  You can specify
  * the name of simple test in the constructor of {@code BulkTest};
  * a subsequent call to {@link TestCase#run} will run that simple test.
  * <p>

@@ -131,7 +131,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @Test
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
-        SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
+        final SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
         assertTrue(map instanceof LazySortedMap);
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null),

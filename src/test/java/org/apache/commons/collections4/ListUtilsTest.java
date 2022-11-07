@@ -123,7 +123,7 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests the {@code indexOf} method in {@code ListUtils} class..
+     * Tests the {@code indexOf} method in {@code ListUtils} class.
      */
     @Test
     public void testIndexOf() {
@@ -165,7 +165,7 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests intersecting a non-empty list with an subset of itself.
+     * Tests intersecting a non-empty list with a subset of itself.
      */
     @Test
     public void testIntersectListWithNoOverlapAndDifferentTypes() {
@@ -183,7 +183,7 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests intersecting a non-empty list with an subset of itself.
+     * Tests intersecting a non-empty list with a subset of itself.
      */
     @Test
     public void testIntersectNonEmptySubset() {
@@ -370,10 +370,10 @@ public class ListUtilsTest {
         assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, null),
                 "expecting NullPointerException");
 
-        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, new ArrayList<Object>()),
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, new ArrayList<>()),
                 "expecting NullPointerException");
 
-        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(new ArrayList<Object>(), null),
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(new ArrayList<>(), null),
                 "expecting NullPointerException");
     }
 

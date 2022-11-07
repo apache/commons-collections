@@ -294,9 +294,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public void clear() {
         super.clear();
-        // drain the queue
-        while (queue.poll() != null) {
-            // empty
+        // Drain the queue
+        while (queue.poll() != null) { // NOPMD
         }
     }
 
@@ -487,7 +486,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an key set iterator.
+     * Creates a key set iterator.
      *
      * @return the keySet iterator
      */
@@ -497,7 +496,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an values iterator.
+     * Creates a values iterator.
      *
      * @return the values iterator
      */
@@ -586,7 +585,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * <p>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
+     * </p>
      *
+     * @param <K> the type of the keys
+     * @param <V> the type of the values
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
@@ -948,7 +950,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     // These two classes store the hashCode of the key of
-    // of the mapping, so that after they're dequeued a quick
+    // the mapping, so that after they're dequeued a quick
     // lookup of the bucket in the table can occur.
 
     /**
@@ -967,6 +969,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public int hashCode() {
             return hash;
         }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final SoftRef<?> other = (SoftRef<?>) obj;
+            return hash == other.hash;
+        }
     }
 
     /**
@@ -984,6 +1001,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public int hashCode() {
             return hash;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final WeakRef<?> other = (WeakRef<?>) obj;
+            return hash == other.hash;
         }
     }
 

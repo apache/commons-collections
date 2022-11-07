@@ -290,8 +290,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertFalse(getMap().containsValue(null));
         assertNull(getMap().remove(null));
         assertFalse(getMap().entrySet().contains(null));
-        assertFalse(getMap().keySet().contains(null));
-        assertFalse(getMap().values().contains(null));
+        assertFalse(getMap().containsKey(null));
+        assertFalse(getMap().containsValue(null));
         assertThrows(NullPointerException.class, () -> getMap().put(null, null));
         assertThrows(NullPointerException.class, () -> getMap().put((K) new Object(), null));
         assertThrows(NullPointerException.class, () -> getMap().put(null, (V) new Object()));

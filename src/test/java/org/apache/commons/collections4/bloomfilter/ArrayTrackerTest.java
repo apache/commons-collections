@@ -31,8 +31,8 @@ public class ArrayTrackerTest {
 
     @Test
     public void testSeen() {
-        Shape shape = Shape.fromKM(3, 12);
-        IntPredicate tracker = new IndexFilter.ArrayTracker(shape);
+        final Shape shape = Shape.fromKM(3, 12);
+        final IntPredicate tracker = new IndexFilter.ArrayTracker(shape);
 
         assertTrue(tracker.test(0));
         assertFalse(tracker.test(0));

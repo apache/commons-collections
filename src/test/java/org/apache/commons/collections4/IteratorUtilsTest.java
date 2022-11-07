@@ -261,7 +261,7 @@ public class IteratorUtilsTest {
         iterator = IteratorUtils.arrayListIterator(objArray, 3);
         assertTrue(iterator.hasNext());
 
-        ResettableListIterator<Object> finalIterator = iterator;
+        final ResettableListIterator<Object> finalIterator = iterator;
         assertAll(
                 () -> assertThrows(NoSuchElementException.class, () -> finalIterator.previous(),
                         "Expecting NoSuchElementException."),
@@ -743,7 +743,7 @@ public class IteratorUtilsTest {
         assertEquals(2, (int) IteratorUtils.get(iterator, 1));
 
         // Iterator, non-existent entry
-        Iterator<Integer> finalIterator = iterator;
+        final Iterator<Integer> finalIterator = iterator;
         assertThrows(IndexOutOfBoundsException.class, () -> IteratorUtils.get(finalIterator, 10),
                 "Expecting IndexOutOfBoundsException.");
 

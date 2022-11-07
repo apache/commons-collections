@@ -156,7 +156,7 @@ public class SequencesComparator<T> {
      * Get the middle snake corresponding to two subsequences of the
      * main sequences.
      * <p>
-     * The snake is found using the MYERS Algorithm (this algorithms has
+     * The snake is found using the MYERS Algorithm (this algorithm has
      * also been implemented in the GNU diff program). This algorithm is
      * explained in Eugene Myers article:
      * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
@@ -203,7 +203,7 @@ public class SequencesComparator<T> {
                     ++y;
                 }
                 // Second step
-                if ((delta % 2 != 0 && delta - d <= k && k <= delta + d) && (vUp[i-delta] <= vDown[i])) { // NOPMD
+                if (delta % 2 != 0 && delta - d <= k && k <= delta + d && vUp[i-delta] <= vDown[i]) { // NOPMD
                     return buildSnake(vUp[i-delta], k + start1 - start2, end1, end2);
                 }
             }
@@ -227,7 +227,7 @@ public class SequencesComparator<T> {
                     y--;
                 }
                 // Second step
-                if ((delta % 2 == 0 && -d <= k && k <= d) && (vUp[i] <= vDown[i + delta])) { // NOPMD
+                if (delta % 2 == 0 && -d <= k && k <= d && vUp[i] <= vDown[i + delta]) { // NOPMD
                     return buildSnake(vUp[i], k + start1 - start2, end1, end2);
                 }
             }

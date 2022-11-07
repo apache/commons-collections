@@ -23,7 +23,7 @@ import org.apache.commons.collections4.SortedBag;
 
 /**
  * Decorates another {@link SortedBag} to synchronize its behavior
- * for a multi-threaded environment.
+ * for a multithreaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
  * Iterators must be separately synchronized around the loop.

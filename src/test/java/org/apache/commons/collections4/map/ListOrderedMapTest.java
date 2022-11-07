@@ -197,7 +197,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
 
-        ListOrderedMap<K, V> finalLom = lom;
+        final ListOrderedMap<K, V> finalLom = lom;
         assertAll(
                 () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(1, (K) "testInsert1", (V) "testInsert1v"),
                         "should not be able to insert at pos 1 in empty Map"),

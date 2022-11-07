@@ -48,6 +48,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     @BeforeEach
     public void setUp() {
         array = new String[] { "a", "b", "c" };
@@ -63,7 +64,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Returns an full iterator wrapped in a
+     * Returns a full iterator wrapped in a
      * FilterIterator that blocks all the elements
      *
      * @return "empty" FilterIterator

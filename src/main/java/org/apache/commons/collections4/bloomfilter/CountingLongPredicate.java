@@ -20,7 +20,7 @@ import java.util.function.LongPredicate;
 
 /**
  * A long predicate that applies the test func to each member of the @{code ary} in sequence for each call to @{code test()}.
- * if the @{code ary} is exhausted, the subsequent calls to to @{code test} are executed with a zero value.
+ * if the @{code ary} is exhausted, the subsequent calls to @{code test} are executed with a zero value.
  * If the calls to @{code test} do not exhaust the @{code ary} the @{code forEachRemaining} method can be called to
  * execute the @code{text} with a zero value for each remaining @{code idx} value.
  *
@@ -37,13 +37,13 @@ class CountingLongPredicate implements LongPredicate {
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.
      */
-    CountingLongPredicate(long[] ary, LongBiPredicate func) {
+    CountingLongPredicate(final long[] ary, final LongBiPredicate func) {
         this.ary = ary;
         this.func = func;
     }
 
     @Override
-    public boolean test(long other) {
+    public boolean test(final long other) {
         return func.test(idx == ary.length ? 0 : ary[idx++], other);
     }
 

@@ -41,6 +41,7 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  */
 public class ComparatorUtils {
 
+    @SuppressWarnings("rawtypes")
     private static final Comparator[] EMPTY_COMPARATOR_ARRAY = {};
 
     /**
@@ -99,9 +100,7 @@ public class ComparatorUtils {
      */
     @SuppressWarnings("unchecked")
     public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
-        return chainedComparator(
-                comparators.toArray(EMPTY_COMPARATOR_ARRAY)
-        );
+        return chainedComparator(comparators.toArray(EMPTY_COMPARATOR_ARRAY));
     }
 
     /**
@@ -202,7 +201,7 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the smaller of the given objects according to the given
+     * Returns the smallest of the given objects according to the given
      * comparator, returning the second object if the comparator
      * returns equal.
      *
@@ -222,7 +221,7 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the larger of the given objects according to the given
+     * Returns the largest of the given objects according to the given
      * comparator, returning the second object if the comparator
      * returns equal.
      *

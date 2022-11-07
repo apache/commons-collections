@@ -192,7 +192,7 @@ public class FluentIterable<E> implements Iterable<E> {
     /**
      * Returns a new FluentIterable whose iterator will traverse the
      * elements of the current and provided iterable according to the
-     * ordering defined by an comparator.
+     * ordering defined by a comparator.
      * <p>
      * Example: descending order
      * <ul>

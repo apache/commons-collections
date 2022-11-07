@@ -33,8 +33,8 @@ public final class SetOperations {
      * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
      * @return the calculated cardinality.
      */
-    private static int cardinality(BitMapProducer first, BitMapProducer second, LongBinaryOperator op) {
-        int[] cardinality = new int[1];
+    private static int cardinality(final BitMapProducer first, final BitMapProducer second, final LongBinaryOperator op) {
+        final int[] cardinality = new int[1];
 
         first.forEachBitMapPair(second, (x, y) -> {
             cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
@@ -49,8 +49,8 @@ public final class SetOperations {
      * @param producer the Producer to calculate the cardinality for.
      * @return the cardinality of the bit maps produced by the producer.
      */
-    public static int cardinality(BitMapProducer producer) {
-        int[] cardinality = new int[1];
+    public static int cardinality(final BitMapProducer producer) {
+        final int[] cardinality = new int[1];
         producer.forEachBitMap(l -> {
             cardinality[0] += Long.bitCount(l);
             return true;
@@ -173,7 +173,7 @@ public final class SetOperations {
      * @return the Jaccard similarity.
      */
     public static double jaccardSimilarity(final BitMapProducer first, final BitMapProducer second) {
-        int[] cardinality = new int[2];
+        final int[] cardinality = new int[2];
         first.forEachBitMapPair(second, (x, y) -> {
             cardinality[0] += Long.bitCount(x & y);
             cardinality[1] += Long.bitCount(x | y);

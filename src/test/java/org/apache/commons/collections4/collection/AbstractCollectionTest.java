@@ -73,7 +73,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * <b>Indicate Collection Behaviour</b>
  * <p>
- * Override these if your collection makes specific behaviour guarantees:
+ * Override these if your collection makes specific behavior guarantees:
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
@@ -144,7 +144,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      * Flag to indicate the collection makes no ordering guarantees for the iterator. If this is not used
-     * then the behaviour is assumed to be ordered and the output order of the iterator is matched by
+     * then the behavior is assumed to be ordered and the output order of the iterator is matched by
      * the toArray method.
      */
     public static final int UNORDERED = 0x1;
@@ -395,7 +395,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of objects that are contained in a collection
      *  produced by {@link #makeFullCollection()}.  Every element in the
      *  returned array <I>must</I> be an element in a full collection.<P>
-     *  The default implementation returns a heterogenous array of
+     *  The default implementation returns a heterogeneous array of
      *  objects with some duplicates. null is added if allowed.
      *  Override if you require specific testing elements.  Note that if you
      *  override {@link #makeFullCollection()}, you <I>must</I> override
@@ -415,7 +415,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of elements that are <I>not</I> contained in a
      *  full collection.  Every element in the returned array must
      *  not exist in a collection returned by {@link #makeFullCollection()}.
-     *  The default implementation returns a heterogenous array of elements
+     *  The default implementation returns a heterogeneous array of elements
      *  without null.  Note that some of the tests add these elements
      *  to an empty or full collection, so if your collection restricts
      *  certain kinds of elements, you should override this method.
@@ -480,7 +480,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getFullElements()}.  Override getFullElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getFullNonNullStringElements() {
         return new Object[] {
@@ -493,7 +493,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getOtherElements()}.  Override getOtherElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {
@@ -503,11 +503,11 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the collection.
+     * Return a flag specifying the iteration behavior of the collection.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see #UNORDERED
      */
     protected int getIterationBehaviour(){
@@ -754,7 +754,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetEmpty();
         Iterator<E> it1 = getCollection().iterator();
         assertFalse("Iterator for empty Collection shouldn't have next.", it1.hasNext());
-        Iterator<E> finalIt1 = it1;
+        final Iterator<E> finalIt1 = it1;
         assertThrows(NoSuchElementException.class, () -> finalIt1.next(),
                 "Iterator at end of Collection should throw NoSuchElementException when next is called.");
         // make sure nothing has changed after non-modification
@@ -776,7 +776,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                     getCollection().contains(next));
             list.add(next);
         }
-        Iterator<E> finalIt2 = it1;
+        final Iterator<E> finalIt2 = it1;
         assertThrows(NoSuchElementException.class, () -> finalIt2.next(),
                 "iterator.next() should raise NoSuchElementException after it finishes");
         // make sure nothing has changed after non-modification
@@ -839,7 +839,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         iter = getCollection().iterator();
         iter.next();
         iter.remove();
-        Iterator<E> finalIter = iter;
+        final Iterator<E> finalIter = iter;
         assertThrows(IllegalStateException.class, () -> finalIter.remove(),
                 "Second iter.remove should raise IllegalState");
     }
@@ -1167,7 +1167,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * @param a2 Second array
      * @param msg Failure message prefix
      */
-    private static void assertUnorderedArrayEquals(Object[] a1, Object[] a2, String msg) {
+    private static void assertUnorderedArrayEquals(final Object[] a1, final Object[] a2, final String msg) {
         Assertions.assertEquals(a1.length, a2.length, () -> msg + ": length");
         final int size = a1.length;
         // Track values that have been matched once (and only once)

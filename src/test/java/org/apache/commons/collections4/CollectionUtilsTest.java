@@ -499,12 +499,12 @@ public class CollectionUtilsTest extends MockTestCase {
     public void extractSingleton() {
         assertAll(
                 () -> {
-                    ArrayList<String> collNull = null;
+                    final ArrayList<String> collNull = null;
                     assertThrows(NullPointerException.class, () -> CollectionUtils.extractSingleton(collNull),
                             "expected NullPointerException from extractSingleton(null)");
                 },
                 () -> {
-                    ArrayList<String> collEmpty = new ArrayList<>();
+                    final ArrayList<String> collEmpty = new ArrayList<>();
                     assertThrows(IllegalArgumentException.class, () -> CollectionUtils.extractSingleton(collEmpty),
                             "expected IllegalArgumentException from extractSingleton(empty)");
                 },
@@ -735,7 +735,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("one", CollectionUtils.get(en, 1));
 
         // Enumerator, non-existent entry
-        Enumeration<String> finalEn = en;
+        final Enumeration<String> finalEn = en;
         assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(finalEn, 3),
                 "Expecting IndexOutOfBoundsException.");
 
@@ -785,7 +785,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, (int) CollectionUtils.get(iterator, 1));
 
         // Iterator, non-existent entry
-        Iterator<Integer> finalIterator = iterator;
+        final Iterator<Integer> finalIterator = iterator;
         assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(finalIterator, 10),
                 "Expecting IndexOutOfBoundsException.");
 

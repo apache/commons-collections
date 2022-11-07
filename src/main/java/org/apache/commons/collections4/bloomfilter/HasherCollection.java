@@ -62,7 +62,7 @@ public class HasherCollection implements Hasher {
      *
      * @param hashers A list of Hashers to initialize the collection with.
      */
-    public HasherCollection(Hasher... hashers) {
+    public HasherCollection(final Hasher... hashers) {
         this(Arrays.asList(hashers));
     }
 
@@ -70,7 +70,7 @@ public class HasherCollection implements Hasher {
      * Adds a hasher to the collection.
      * @param hasher The hasher to add.
      */
-    public void add(Hasher hasher) {
+    public void add(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
         hashers.add(hasher);
     }
@@ -79,7 +79,7 @@ public class HasherCollection implements Hasher {
      * Add all the Hashers in a collection to this HasherCollection.
      * @param hashers The hashers to add.
      */
-    public void add(Collection<Hasher> hashers) {
+    public void add(final Collection<Hasher> hashers) {
         Objects.requireNonNull(hashers, "hashers");
         this.hashers.addAll(hashers);
     }
@@ -109,8 +109,8 @@ public class HasherCollection implements Hasher {
         Objects.requireNonNull(shape, "shape");
         return new HasherCollectionIndexProducer(shape) {
             @Override
-            public boolean forEachIndex(IntPredicate consumer) {
-                for (Hasher hasher : hashers) {
+            public boolean forEachIndex(final IntPredicate consumer) {
+                for (final Hasher hasher : hashers) {
                     if (!hasher.uniqueIndices(shape).forEachIndex(consumer)) {
                         return false;
                     }
@@ -131,7 +131,7 @@ public class HasherCollection implements Hasher {
      * @return the iterator of integers
      */
     public IndexProducer absoluteUniqueIndices(final Shape shape) {
-        int kCount = hashers.size() > 0 ? hashers.size() : 1;
+        final int kCount = hashers.size() > 0 ? hashers.size() : 1;
         return consumer -> {
             Objects.requireNonNull(consumer, "consumer");
             // shape must handle maximum unique indices
@@ -160,13 +160,13 @@ public class HasherCollection implements Hasher {
          *
          * @param shape The shape for the filter.
          */
-        HasherCollectionIndexProducer(Shape shape) {
+        HasherCollectionIndexProducer(final Shape shape) {
             this.shape = shape;
         }
 
         @Override
-        public boolean forEachIndex(IntPredicate consumer) {
-            for (Hasher hasher : hashers) {
+        public boolean forEachIndex(final IntPredicate consumer) {
+            for (final Hasher hasher : hashers) {
                 if (!hasher.indices(shape).forEachIndex(consumer)) {
                     return false;
                 }
@@ -176,8 +176,8 @@ public class HasherCollection implements Hasher {
 
         @Override
         public int[] asIndexArray() {
-            int[] result = new int[shape.getNumberOfHashFunctions() * hashers.size()];
-            int[] idx = new int[1];
+            final int[] result = new int[shape.getNumberOfHashFunctions() * hashers.size()];
+            final int[] idx = new int[1];
 
             // This method needs to return duplicate indices
 

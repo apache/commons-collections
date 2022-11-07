@@ -65,7 +65,7 @@ import org.junit.jupiter.api.Test;
  *
  * <b>Indicate Map Behaviour</b>
  * <p>
- * Override these if your map makes specific behaviour guarantees:
+ * Override these if your map makes specific behavior guarantees:
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
@@ -342,7 +342,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * {@link #getOtherKeys()} or {@link #getOtherValues}.
      *
      * <p>Override getOtherElements to return the results of this method if your
-     * collection does not support heterogenous elements or the null element.
+     * collection does not support heterogeneous elements or the null element.
      * </p>
      */
     public Object[] getOtherNonNullStringElements() {
@@ -374,7 +374,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Returns a the set of values that can be used to replace the values
+     * Returns a set of values that can be used to replace the values
      * returned from {@link #getSampleValues()}.  This method must return an
      * array with the same length as {@link #getSampleValues()}.  The values
      * returned from this method should not be the same as those returned from
@@ -532,11 +532,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Return a flag specifying the iteration behaviour of the collection.
+     * Return a flag specifying the iteration behavior of the collection.
      * This is used to change the assertions used by specific tests.
-     * The default implementation returns 0 which indicates ordered iteration behaviour.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behaviour
+     * @return the iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour(){
@@ -604,7 +604,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()}
+     * Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()
      * can add and remove elements}, then {@link Map#size()} and
      * {@link Map#isEmpty()} are used to ensure that map has no elements after
      * a call to clear.  If the map does not support adding and removing
@@ -1646,10 +1646,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         @Test
         public void testMapEntrySetIteratorEntry() {
             resetFull();
-            final Iterator<Map.Entry<K, V>> it = getCollection().iterator();
             int count = 0;
-            while (it.hasNext()) {
-                final Map.Entry<K, V> entry = it.next();
+            for (final Entry<K, V> entry : getCollection()) {
                 assertTrue(AbstractMapTest.this.getMap().containsKey(entry.getKey()));
                 assertTrue(AbstractMapTest.this.getMap().containsValue(entry.getValue()));
                 if (!isGetStructuralModify()) {

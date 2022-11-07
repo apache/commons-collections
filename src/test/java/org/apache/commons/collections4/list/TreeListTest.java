@@ -228,7 +228,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         treelist.add(Integer.valueOf(3));
         treelist.add(Integer.valueOf(4));
 
-        // this cause inconsistence of ListIterator()
+        // this cause inconsistency in ListIterator()
         treelist.remove(objectToRemove);
 
         final ListIterator<Integer> li = treelist.listIterator();

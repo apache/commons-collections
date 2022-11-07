@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
@@ -274,10 +273,8 @@ public class MapUtilsTest {
             @Override
             public Object[][] getContents() {
                 final Object[][] contents = new Object[in.size()][2];
-                final Iterator<String> i = in.keySet().iterator();
                 int n = 0;
-                while (i.hasNext()) {
-                    final Object key = i.next();
+                for (final Object key : in.keySet()) {
                     final Object val = in.get(key);
                     contents[n][0] = key;
                     contents[n][1] = val;

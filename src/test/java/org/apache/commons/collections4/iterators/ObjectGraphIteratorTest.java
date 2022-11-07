@@ -44,6 +44,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         super(ObjectGraphIteratorTest.class.getSimpleName());
     }
 
+    @Override
     @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();

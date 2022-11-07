@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     /** Make forEachIndex unordered and contain duplicates. */
-    private int[] values = {10, 1, 10, 1};
+    private final int[] values = {10, 1, 10, 1};
 
     @Override
     protected int[] getExpectedIndices() {
@@ -28,27 +28,19 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     @Override
     protected BitCountProducer createProducer() {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(BitCountConsumer consumer) {
-                for (int i : values) {
-                    if (!consumer.test(i, 1)) {
-                        return false;
-                    }
+        return consumer -> {
+            for (final int i : values) {
+                if (!consumer.test(i, 1)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
     }
 
     @Override
     protected BitCountProducer createEmptyProducer() {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(BitCountConsumer consumer) {
-                return true;
-            }
-        };
+        return consumer -> true;
     }
 
     @Override
@@ -59,7 +51,7 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
 
     @Override
     protected int getForEachIndexBehaviour() {
-        // The default method has the same behaviour as the forEachCount() method.
+        // The default method has the same behavior as the forEachCount() method.
         return 0;
     }
 

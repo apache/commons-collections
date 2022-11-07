@@ -30,24 +30,12 @@ public abstract class AbstractBitMapProducerTest {
     /**
      * A testing consumer that always returns false.
      */
-    public static final LongPredicate FALSE_CONSUMER = new LongPredicate() {
-
-        @Override
-        public boolean test(long arg0) {
-            return false;
-        }
-    };
+    public static final LongPredicate FALSE_CONSUMER = arg0 -> false;
 
     /**
      * A testing consumer that always returns true.
      */
-    public static final LongPredicate TRUE_CONSUMER = new LongPredicate() {
-
-        @Override
-        public boolean test(long arg0) {
-            return true;
-        }
-    };
+    public static final LongPredicate TRUE_CONSUMER = arg0 -> true;
 
     /**
      * Creates a producer with some data.
@@ -91,27 +79,23 @@ public abstract class AbstractBitMapProducerTest {
 
     @Test
     public final void testForEachBitMapPair() {
-        LongBiPredicate func = (x, y) -> x == y;
+        final LongBiPredicate func = (x, y) -> x == y;
         assertTrue(createEmptyProducer().forEachBitMapPair(createEmptyProducer(), func), "empty == empty failed");
         assertFalse(createEmptyProducer().forEachBitMapPair(createProducer(), func), "empty == not_empty failed");
         assertFalse(createProducer().forEachBitMapPair(createEmptyProducer(), func), "not_empty == empty passed");
         assertTrue(createProducer().forEachBitMapPair(createProducer(), func), "not_empty == not_empty failed");
 
         // test BitMapProducers of different length send 0 for missing values.
-        int[] count = new int[3];
-        LongBiPredicate lbp = new LongBiPredicate() {
-
-            @Override
-            public boolean test(long x, long y) {
-                if (x == 0) {
-                    count[0]++;
-                }
-                if (y == 0) {
-                    count[1]++;
-                }
-                count[2]++;
-                return true;
+        final int[] count = new int[3];
+        final LongBiPredicate lbp = (x, y) -> {
+            if (x == 0) {
+                count[0]++;
             }
+            if (y == 0) {
+                count[1]++;
+            }
+            count[2]++;
+            return true;
         };
         createEmptyProducer().forEachBitMapPair(createProducer(), lbp);
         assertEquals(count[2], count[0]);
@@ -123,7 +107,7 @@ public abstract class AbstractBitMapProducerTest {
 
     @Test
     public void testForEachBitMapEarlyExit() {
-        int[] passes = new int[1];
+        final int[] passes = new int[1];
         assertFalse(createProducer().forEachBitMap(l -> {
             passes[0]++;
             return false;
@@ -150,14 +134,10 @@ public abstract class AbstractBitMapProducerTest {
     public void testForEachBitMapPairEarlyExit() {
 
         // test BitMapProducers of different length send 0 for missing values.
-        int[] count = new int[1];
-        LongBiPredicate lbp = new LongBiPredicate() {
-
-            @Override
-            public boolean test(long x, long y) {
-                count[0]++;
-                return false;
-            }
+        final int[] count = new int[1];
+        final LongBiPredicate lbp = (x, y) -> {
+            count[0]++;
+            return false;
         };
         createProducer().forEachBitMapPair(createEmptyProducer(), lbp);
         assertEquals(1, count[0]);

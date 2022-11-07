@@ -566,7 +566,7 @@
     <commons.release.4.name>commons-collections-${commons.release.4.version}</commons.release.4.name>
     <!-- Older release has sha256 only -->
     <commons.release.4.hash>sha256</commons.release.4.hash>
-    <!-- This is needed uptil CP49 is released -->
+    <!-- This is needed until CP49 is released -->
     <commons.release.4.binary.suffix>-bin</commons.release.4.binary.suffix>
 
     <commons.jira.id>COLLECTIONS</commons.jira.id>
@@ -597,9 +597,8 @@
 
   </properties>
 
-
   <build>
-    <defaultGoal>clean verify apache-rat:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
     <pluginManagement>
       <plugins>
         <plugin>
