@@ -103,7 +103,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(final IndexProducer indexProducer) {
-            return indexProducer.forEachIndex(i -> indices.contains(i));
+            return indexProducer.forEachIndex(indices::contains);
         }
 
         @Override
