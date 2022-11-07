@@ -1578,6 +1578,32 @@ public class CollectionUtils {
     }
 
     /**
+     * Checks if the specified collection/array/iterator is not empty.
+     * <p>
+     * This method can handles objects as follows
+     * </p>
+     * <ul>
+     * <li>Collection - via collection isEmpty
+     * <li>Map - via map isEmpty
+     * <li>Array - using array size
+     * <li>Iterator - via hasNext
+     * <li>Enumeration - via hasMoreElements
+     * </ul>
+     * <p>
+     * Note: This method is named to avoid clashing with
+     * {@link #isNotEmpty(Collection)}.
+     * </p>
+     *
+     * @param object  the object to get the size of, may be null
+     * @return false if empty or null, true otherwise
+     * @throws IllegalArgumentException thrown if object is not recognized
+     * @since 4.5
+     */
+    public static boolean sizeIsNotEmpty(final Object object) {
+        return !sizeIsEmpty(object);
+    }
+
+    /**
      * Null-safe check if the specified collection is empty.
      * <p>
      * Null returns true.
