@@ -281,7 +281,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testEstimateN() {
         // build a filter
-        final BloomFilter filter1 = createFilter(getTestShape(), from1);
+        BloomFilter filter1 = createFilter(getTestShape(), from1);
         assertEquals(1, filter1.estimateN());
 
         // the data provided above do not generate an estimate that is equivalent to the
