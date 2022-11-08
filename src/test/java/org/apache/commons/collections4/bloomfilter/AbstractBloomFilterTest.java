@@ -250,11 +250,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         // test split to union
         HasherCollection firstHalf = new HasherCollection(new IncrementingHasher(0, 1)/* 0-16 */,
                 new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */);
-                // test split to union
+        // test split to union
         HasherCollection secondHalf = new HasherCollection(new IncrementingHasher(50, 1)/* 50-66 */,
                         new IncrementingHasher(67, 1)/* 67-83 */);
-        BloomFilter bf5 = createFilter( getTestShape(), firstHalf);
-        BloomFilter bf6 = createFilter( getTestShape(), secondHalf);
+        BloomFilter bf5 = createFilter(getTestShape(), firstHalf);
+        BloomFilter bf6 = createFilter(getTestShape(), secondHalf);
         assertThrows(IllegalArgumentException.class, () -> bf5.estimateIntersection(bf6));
     }
 

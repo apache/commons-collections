@@ -216,12 +216,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * shape and cardinality of this filter.</p>
      *
      * <p>This produces an estimate roughly equivalent to the number of Hashers that have been merged into the filter
-     * by rounding the value from the calculation described in the {@code Shape} class javadoc.</p>
+     * by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
      *
      * <p><em>Note:</em></p>
      * <ul>
-     * <li> if cardinality == numberOfBits, then result is Integer.MAX_VALUE.</li>
-     * <li> if cardinality &gt; numberOfBits, then an IllegalArgumentException is thrown.</li>
+     * <li>if cardinality == numberOfBits, then result is Integer.MAX_VALUE.</li>
+     * <li>if cardinality &gt; numberOfBits, then an IllegalArgumentException is thrown.</li>
      * </ul>
      *
      * @return an estimate of the number of items in the bloom filter.  Will return Integer.MAX_VALUE if the
@@ -236,17 +236,17 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             return Integer.MAX_VALUE;
         }
         if (Double.isNaN(d)) {
-            throw new IllegalArgumentException("Cardinality too large: "+cardinality());
+            throw new IllegalArgumentException("Cardinality too large: " + cardinality());
         }
         long l = Math.round(d);
-        return l>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) l;
+        return l > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) l;
     }
 
     /**
      * Estimates the number of items in the union of this Bloom filter with the other bloom filter.
      *
      * <p>This produces an estimate roughly equivalent to the number of unique Hashers that have been merged into either
-     * of the filters by rounding the value from the calculation described in the {@code Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
      *
      * <p><em>{@code estimateUnion} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}
@@ -269,7 +269,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
      *
      * <p>This method produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
-     * of the filters by rounding the value from the calculation described in the {@code Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
      *
      * <p><em>{@code estimateIntersection} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}
@@ -292,18 +292,18 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         }
         // if one is infinite the intersection is the other.
         if (Double.isInfinite(eThis)) {
-            estimate = Math.round( eOther );
+            estimate = Math.round(eOther);
         } else if (Double.isInfinite(eOther)) {
-            estimate = Math.round( eThis );
+            estimate = Math.round(eThis);
         } else {
             BloomFilter union = this.copy();
             union.merge(other);
             double eUnion = getShape().estimateN(union.cardinality());
             if (Double.isInfinite(eUnion)) {
-                throw new IllegalArgumentException( "The estimated N for the union of the filters is infinite");
+                throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
             }
             // all estimated values are small values greater than 0 but less that number of bits
-            estimate = Math.round( eThis + eOther - eUnion );
+            estimate = Math.round(eThis + eOther - eUnion);
         }
         return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) estimate;
     }

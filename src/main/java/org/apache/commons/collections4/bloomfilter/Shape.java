@@ -49,14 +49,14 @@ package org.apache.commons.collections4.bloomfilter;
  *
  * <h3>Estimate N - n()</h3>
  *
- * <p>The calculation for the estimate of N is: {@code -(m/k) * ln( 1 - (c/m))}.  This is the calculation
- * performed by the {@code Shape.estimateN(cardinality)} method below.  This estimates is roughly equivalent to the
+ * <p>The calculation for the estimate of N is: {@code -(m/k) * ln(1 - (c/m))}.  This is the calculation
+ * performed by the {@code Shape.estimateN(cardinality)} method below.  This estimate is roughly equivalent to the
  * number of hashers that have been merged into a filter to create the cardinality specified.</p>
  *
  * <p><em>Note:</em></p>
  * <ul>
- * <li> if cardinality == numberOfBits, then result is infinity.</li>
- * <li> if cardinality &gt; numberOfBits, then result is NaN.</li>
+ * <li>if cardinality == numberOfBits, then result is infinity.</li>
+ * <li>if cardinality &gt; numberOfBits, then result is NaN.</li>
  * </ul>
  *
  * <h3>Estimate N of Union - n(A &cup; B)</h3>
@@ -67,7 +67,7 @@ package org.apache.commons.collections4.bloomfilter;
  * <h3>Estimate N of the Intersection - n(A &cap; B)</h3>
  *
  * <p>To estimate the number of items in the intersection of two Bloom filters A and B with the same shape the calculation is:
- * n(A) + n(b) - n( A &cup; B )
+ * n(A) + n(b) - n(A &cup; B)
  *</p>
  *
  * <p>Care must be taken when any of the n(x) returns infinity.  In general the following assumptions are true:
