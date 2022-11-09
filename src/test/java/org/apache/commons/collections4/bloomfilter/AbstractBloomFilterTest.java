@@ -44,7 +44,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */, new IncrementingHasher(50, 1)/* 50-66 */,
             new IncrementingHasher(67, 1)/* 67-83 */
     );
-    protected final long[] fullHashValue = { 0xffffffffffffffffL, 0xfffffL };
+    protected final long[] fullHashValue = {0xffffffffffffffffL, 0xfffffL};
 
     /**
      * The shape of the Bloom filters for testing.
