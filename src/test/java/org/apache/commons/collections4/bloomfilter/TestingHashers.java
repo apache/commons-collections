@@ -55,7 +55,7 @@ public class TestingHashers {
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T bigHasher(T filter) {
-        return mergeHashers( filter, from1, from11);
+        return mergeHashers(filter, from1, from11);
     }
 
     /**
@@ -66,7 +66,7 @@ public class TestingHashers {
      */
     public static <T extends BloomFilter> T fullHasher(T filter) {
         for (int i=0; i<filter.getShape().getNumberOfBits(); i+=filter.getShape().getNumberOfHashFunctions()) {
-            filter.merge( new IncrementingHasher(i,1));
+            filter.merge(new IncrementingHasher(i, 1));
         }
         return filter;
     }
