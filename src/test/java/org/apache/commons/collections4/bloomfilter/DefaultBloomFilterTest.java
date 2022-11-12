@@ -71,8 +71,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testEstimateNWithBrokenCardinality() {
         // build a filter
-        BloomFilter filter1 = new BrokenCardinality(getTestShape());
-        filter1.merge(fullHasher);
+        BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
         assertThrows(IllegalArgumentException.class, ()->filter1.estimateN());
     }
 
@@ -160,9 +159,9 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testSparseNonSparseMerging() {
         BloomFilter bf1 = new SparseDefaultBloomFilter(getTestShape());
-        bf1.merge(from1);
+        bf1.merge(TestingHashers.FROM1);
         BloomFilter bf2 = new NonSparseDefaultBloomFilter(getTestShape());
-        bf2.merge(from11);
+        bf2.merge(TestingHashers.FROM11);
 
         BloomFilter result = bf1.copy();
         result.merge(bf2);

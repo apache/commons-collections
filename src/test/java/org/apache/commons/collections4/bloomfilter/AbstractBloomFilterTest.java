@@ -34,18 +34,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
-    protected final Hasher from1 = new IncrementingHasher(1, 1);
-    protected final long from1Value = 0x3fffeL;
-    protected final Hasher from11 = new IncrementingHasher(11, 1);
-    protected final long from11Value = 0xffff800L;
-    protected final HasherCollection bigHasher = new HasherCollection(from1, from11);
-    protected final long bigHashValue = 0xffffffeL;
-    protected final HasherCollection fullHasher = new HasherCollection(new IncrementingHasher(0, 1)/* 0-16 */,
-            new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */, new IncrementingHasher(50, 1)/* 50-66 */,
-            new IncrementingHasher(67, 1)/* 67-83 */
-    );
-    protected final long[] fullHashValue = { 0xffffffffffffffffL, 0xfffffL };
-
     /**
      * The shape of the Bloom filters for testing.
      * <ul>
@@ -182,8 +170,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public final void testContains() {
-        BloomFilter bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
+        BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
+        final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
         assertTrue(bf1.contains(bf1), "BF Should contain itself");
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
@@ -206,21 +194,21 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertFalse(bf2.contains(bitMapProducer), "BF2 Should not contain this hasher");
 
         // Test different lengths
-        bf1 = createFilter(getTestShape(), from1);
+        bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
-                from1);
+                TestingHashers.FROM1);
         assertTrue(bf1.contains(bf3));
         assertTrue(bf3.contains(bf1));
 
-        final BloomFilter bf4 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
-                bigHasher);
+        final BloomFilter bf4 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1)));
+
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
     }
 
     @Test
     public void testClear() {
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
+        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         assertNotEquals(0, bf1.cardinality());
         bf1.clear();
         assertEquals(0, bf1.cardinality());
@@ -232,9 +220,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testEstimateIntersection() {
 
-        final BloomFilter bf = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createFilter(getTestShape(), bigHasher);
-        final BloomFilter bf3 = createFilter(getTestShape(), fullHasher);
+        final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
+        final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
+
+        final BloomFilter bf3 = TestingHashers.populateEntireFilter(createEmptyFilter(getTestShape()));
 
         assertEquals(1, bf.estimateIntersection(bf2));
         assertEquals(1, bf2.estimateIntersection(bf));
@@ -247,14 +236,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertEquals(0, bf.estimateIntersection(bf4));
         assertEquals(0, bf4.estimateIntersection(bf));
 
-        // test split to union
-        HasherCollection firstHalf = new HasherCollection(new IncrementingHasher(0, 1)/* 0-16 */,
+        BloomFilter bf5 = TestingHashers.mergeHashers(createEmptyFilter(getTestShape()), new IncrementingHasher(0, 1)/* 0-16 */,
                 new IncrementingHasher(17, 1)/* 17-33 */, new IncrementingHasher(33, 1)/* 33-49 */);
-        // test split to union
-        HasherCollection secondHalf = new HasherCollection(new IncrementingHasher(50, 1)/* 50-66 */,
-                        new IncrementingHasher(67, 1)/* 67-83 */);
-        BloomFilter bf5 = createFilter(getTestShape(), firstHalf);
-        BloomFilter bf6 = createFilter(getTestShape(), secondHalf);
+        BloomFilter bf6 = TestingHashers.mergeHashers(createEmptyFilter(getTestShape()), new IncrementingHasher(50, 1)/* 50-66 */,
+                new IncrementingHasher(67, 1)/* 67-83 */);
         assertThrows(IllegalArgumentException.class, () -> bf5.estimateIntersection(bf6));
 
         // infinite with infinite
@@ -266,8 +251,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      */
     @Test
     public final void testEstimateUnion() {
-        final BloomFilter bf = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
+        final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
+        final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
 
         assertEquals(2, bf.estimateUnion(bf2));
         assertEquals(2, bf2.estimateUnion(bf));
@@ -284,7 +269,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testEstimateN() {
         // build a filter
-        BloomFilter filter1 = createFilter(getTestShape(), from1);
+        BloomFilter filter1 = createFilter(getTestShape(), TestingHashers.FROM1);
         assertEquals(1, filter1.estimateN());
 
         // the data provided above do not generate an estimate that is equivalent to the
@@ -296,7 +281,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         assertEquals(3, filter1.estimateN());
 
-        filter1 = createFilter(getTestShape(), fullHasher);
+        filter1 = TestingHashers.populateEntireFilter(createEmptyFilter(getTestShape()));
         assertEquals(Integer.MAX_VALUE, filter1.estimateN());
     }
 
@@ -325,7 +310,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         BloomFilter filter = createEmptyFilter(getTestShape());
         assertFalse(filter.isFull(), "Should not be full");
 
-        filter = createFilter(getTestShape(), fullHasher);
+        filter = TestingHashers.populateEntireFilter(filter);
         assertTrue(filter.isFull(), "Should be full");
 
         filter = createFilter(getTestShape(), new IncrementingHasher(1, 3));
@@ -338,8 +323,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public final void testMerge() {
 
-        final BloomFilter bf1 = createFilter(getTestShape(), from1);
-        final BloomFilter bf2 = createFilter(getTestShape(), from11);
+        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
+        final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
         final BloomFilter bf3 = bf1.copy();
         bf3.merge(bf2);
 
@@ -362,8 +347,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         // test with hasher
 
-        final BloomFilter bf4 = createFilter(getTestShape(), from1);
-        bf4.merge(from11);
+        final BloomFilter bf4 = createFilter(getTestShape(), TestingHashers.FROM1);
+        bf4.merge(TestingHashers.FROM11);
 
         assertTrue(bf4.contains(bf2), "Should contain Bf2");
         assertTrue(bf4.contains(bf3), "Should contain Bf3");
@@ -422,7 +407,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testBitMapProducerSize() {
         final int[] idx = new int[1];
-        createFilter(getTestShape(), from1).forEachBitMap(i -> {
+        createFilter(getTestShape(), TestingHashers.FROM1).forEachBitMap(i -> {
             idx[0]++;
             return true;
         });
