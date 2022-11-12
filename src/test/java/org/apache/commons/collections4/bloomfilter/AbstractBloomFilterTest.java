@@ -256,6 +256,9 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         BloomFilter bf5 = createFilter(getTestShape(), firstHalf);
         BloomFilter bf6 = createFilter(getTestShape(), secondHalf);
         assertThrows(IllegalArgumentException.class, () -> bf5.estimateIntersection(bf6));
+        
+        // infinite with infinite
+        assertEquals(Integer.MAX_VALUE, bf3.estimateIntersection(bf3));
     }
 
     /**
