@@ -79,9 +79,8 @@
  *
  * <h3>Hasher</h3>
  *
- * <p>A Hasher converts bytes into a series of integers based on a Shape. With the exception of the HasherCollecton,
- * each hasher represents one item being added to the Bloom filter. The HasherCollection represents the number of
- * items as the sum of the number of items represented by the Hashers in the collection.</p>
+ * <p>A Hasher converts bytes into a series of integers based on a Shape. Each hasher represents one item being added
+ * to the Bloom filter.</p>
  *
  * <p>The EnhancedDoubleHasher uses a combinatorial generation technique to create the integers. It is easily
  * initialized by using a byte array returned by the standard {@code MessageDigest} or other hash function to
