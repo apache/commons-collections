@@ -73,14 +73,14 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         // build a filter
         BloomFilter filter1 = new BrokenCardinality(getTestShape());
         filter1.merge(fullHasher);
-        assertThrows( IllegalArgumentException.class , ()->filter1.estimateN());
+        assertThrows(IllegalArgumentException.class, ()->filter1.estimateN());
     }
 
     @Test
     public void testLargeBitmapAsArray() {
         Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bit set.
-        BloomFilter bf1 = new SimpleBloomFilter( s );
+        BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge(new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
@@ -90,7 +90,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                     limit -= 64;
                 }
                 long last = 0L;
-                for (int i=0;i<limit;i++) {
+                for (int i=0; i<limit; i++) {
                     last |= BitMap.getLongBit(i);
                 }
                 predicate.test(last);
@@ -98,22 +98,22 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             }} );
         // the actual result of the calculation is: 46144189292
         long[] ary = bf1.asBitMapArray();
-        for (int i=0;i<ary.length-2;i++) {
+        for (int i=0; i<ary.length-2; i++) {
             assertEquals(0xFFFFFFFFFFFFFFFFL, ary[i]);
         }
         int lastBits = (Integer.MAX_VALUE-1) % 64;
         long last = 0L;
-        for (int i=0;i<lastBits;i++) {
+        for (int i=0; i<lastBits; i++) {
             last |= BitMap.getLongBit(i);
         }
         assertEquals(last, ary[ary.length-1]);
     }
-    
+
     @Test
     public void testEstimateLargeN() {
         Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bit set.
-        BloomFilter bf1 = new SimpleBloomFilter( s );
+        BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge(new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
@@ -123,7 +123,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                     limit -= 64;
                 }
                 long last = 0L;
-                for (int i=0;i<limit;i++) {
+                for (int i=0; i<limit; i++) {
                     last |= BitMap.getLongBit(i);
                 }
                 predicate.test(last);
@@ -137,7 +137,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     public void testIntersectionLimit() {
         Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bit set.
-        BloomFilter bf1 = new SimpleBloomFilter( s );
+        BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge(new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
@@ -147,7 +147,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
                     limit -= 64;
                 }
                 long last = 0L;
-                for (int i=0;i<limit;i++) {
+                for (int i=0; i<limit; i++) {
                     last |= BitMap.getLongBit(i);
                 }
                 predicate.test(last);
@@ -156,21 +156,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         // the actual result of the calculation is: 46144189292
         assertEquals(Integer.MAX_VALUE, bf1.estimateIntersection(bf1));
     }
-    
+
     @Test
     public void testSparseNonSparseMerging() {
-        BloomFilter bf1 = new SparseDefaultBloomFilter( getTestShape() );
-        bf1.merge( from1 );
-        BloomFilter bf2 = new NonSparseDefaultBloomFilter( getTestShape() );
-        bf2.merge( from11);
+        BloomFilter bf1 = new SparseDefaultBloomFilter(getTestShape());
+        bf1.merge(from1);
+        BloomFilter bf2 = new NonSparseDefaultBloomFilter(getTestShape());
+        bf2.merge(from11);
 
         BloomFilter result = bf1.copy();
-        result.merge( bf2 );
-        assertEquals( 27, result.cardinality());
+        result.merge(bf2);
+        assertEquals(27, result.cardinality());
 
         result = bf2.copy();
-        result.merge( bf1 );
-        assertEquals( 27, result.cardinality());
+        result.merge(bf1);
+        assertEquals(27, result.cardinality());
     }
 
     abstract static class AbstractDefaultBloomFilter implements BloomFilter {
@@ -289,19 +289,16 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             return result;
         }
     }
-    
+
     static class BrokenCardinality extends NonSparseDefaultBloomFilter {
 
         BrokenCardinality(Shape shape) {
             super(shape);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
         public int cardinality() {
             return super.cardinality() + 1;
         }
-
-        
     }
 }
