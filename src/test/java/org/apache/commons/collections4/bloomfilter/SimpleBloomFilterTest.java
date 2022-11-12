@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 /**
  * Tests for the {@link SimpleBloomFilter}.
  */
@@ -23,5 +28,16 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     @Override
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
         return new SimpleBloomFilter(shape);
+    }
+
+    @Test
+    public void testMergeShortBitMapProducer() {
+        SimpleBloomFilter filter = createEmptyFilter(getTestShape());
+        // create a producer that returns too few values
+        BitMapProducer producer = (p) -> {
+            return p.test(0L);
+        };
+        assertTrue(filter.merge(producer));
+        assertEquals(0, filter.cardinality());
     }
 }
