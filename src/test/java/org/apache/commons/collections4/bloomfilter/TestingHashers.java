@@ -18,19 +18,19 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * A collection of methods and statics that represent standard hashers in testing.
  */
-public class TestingHashers {
+class TestingHashers {
     /**
-     * Hasher that increments from 1
+     * Hasher that increments from 1.
      */
-    public static final Hasher from1 = new IncrementingHasher(1, 1);
+    static final Hasher FROM1 = new IncrementingHasher(1, 1);
 
     /**
-     * Hasher that increments from 11
+     * Hasher that increments from 11.
      */
-    public static final Hasher from11 = new IncrementingHasher(11, 1);
+    static final Hasher FROM11 = new IncrementingHasher(11, 1);
 
     /**
-     * Do not instantiate
+     * Do not instantiate.
      */
     private TestingHashers() {}
 
@@ -41,7 +41,7 @@ public class TestingHashers {
      * @param hashers The hashers to merge
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T mergeHashers(T filter, Hasher...hashers) {
+    static <T extends BloomFilter> T mergeHashers(T filter, Hasher...hashers) {
         for (Hasher h : hashers) {
             filter.merge(h);
         }
@@ -54,8 +54,8 @@ public class TestingHashers {
      * @param filter The Bloom filter to populate
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T bigHasher(T filter) {
-        return mergeHashers(filter, from1, from11);
+    static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(T filter) {
+        return mergeHashers(filter, FROM1, FROM11);
     }
 
     /**
@@ -64,8 +64,10 @@ public class TestingHashers {
      * @param filter the Bloom filter to populate
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T fullHasher(T filter) {
-        for (int i=0; i<filter.getShape().getNumberOfBits(); i+=filter.getShape().getNumberOfHashFunctions()) {
+    static <T extends BloomFilter> T populateEntireFilter(T filter) {
+        int n = filter.getShape().getNumberOfBits();
+        int k = filter.getShape().getNumberOfHashFunctions();
+        for (int i = 0; i < n; i += k) {
             filter.merge(new IncrementingHasher(i, 1));
         }
         return filter;

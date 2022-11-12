@@ -60,15 +60,15 @@ public class SetOperationsTest {
     @Test
     public final void testCosineDistance() {
 
-        BloomFilter filter1 = createFilter(shape, TestingHashers.from1);
-        BloomFilter filter2 = createFilter(shape, TestingHashers.from1);
+        BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
+        BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
         // identical filters should have no distance.
         double expected = 0;
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
         final Shape shape2 = Shape.fromKM(2, 72);
-        filter1 = createFilter(shape2, TestingHashers.from1);
+        filter1 = createFilter(shape2, TestingHashers.FROM1);
         filter2 = createFilter(shape2, new IncrementingHasher(2, 1));
 
         int dotProduct = /* [1,2] & [2,3] = [2] = */ 1;
@@ -77,8 +77,8 @@ public class SetOperationsTest {
         expected = 1 - dotProduct / Math.sqrt(cardinalityA * cardinalityB);
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
-        filter1 = createFilter(shape, TestingHashers.from1);
-        filter2 = createFilter(shape, TestingHashers.from11);
+        filter1 = createFilter(shape, TestingHashers.FROM1);
+        filter2 = createFilter(shape, TestingHashers.FROM11);
         dotProduct = /* [1..17] & [11..27] = [] = */ 7;
         cardinalityA = 17;
         cardinalityB = 17;
@@ -86,7 +86,7 @@ public class SetOperationsTest {
         assertSymmetricOperation(expected, SetOperations::cosineDistance, filter1, filter2);
 
         // test with no values
-        filter1 = createFilter(shape, TestingHashers.from1);
+        filter1 = createFilter(shape, TestingHashers.FROM1);
         filter2 = new SimpleBloomFilter(shape);
 
         dotProduct = /* [1,2] & [] = [] = */ 0;
@@ -107,8 +107,8 @@ public class SetOperationsTest {
      */
     @Test
     public final void testCosineSimilarity() {
-        BloomFilter filter1 = createFilter(shape, TestingHashers.from1);
-        BloomFilter filter2 = createFilter(shape, TestingHashers.from1);
+        BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
+        BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
         int dotProduct = /* [1..17] & [1..17] = [1..17] = */ 17;
         int cardinalityA = 17;
@@ -120,14 +120,14 @@ public class SetOperationsTest {
         cardinalityA = 17;
         cardinalityB = 17;
         expected = dotProduct / Math.sqrt(cardinalityA * cardinalityB);
-        filter2 = createFilter(shape, TestingHashers.from11);
+        filter2 = createFilter(shape, TestingHashers.FROM11);
         assertSymmetricOperation(expected, SetOperations::cosineSimilarity, filter1, filter2);
 
         // test no values
         filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
         // build a filter
-        final BloomFilter filter3 = createFilter(shape, TestingHashers.from1);
+        final BloomFilter filter3 = createFilter(shape, TestingHashers.FROM1);
         assertSymmetricOperation(0.0, SetOperations::cosineSimilarity, filter1, filter2);
         assertSymmetricOperation(0.0, SetOperations::cosineSimilarity, filter1, filter3);
     }
@@ -137,13 +137,13 @@ public class SetOperationsTest {
      */
     @Test
     public final void testHammingDistance() {
-        final BloomFilter filter1 = createFilter(shape, TestingHashers.from1);
-        BloomFilter filter2 = createFilter(shape, TestingHashers.from1);
+        final BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
+        BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
         int hammingDistance = /* [1..17] ^ [1..17] = [] = */ 0;
         assertSymmetricOperation(hammingDistance, SetOperations::hammingDistance, filter1, filter2);
 
-        filter2 = createFilter(shape, TestingHashers.from11);
+        filter2 = createFilter(shape, TestingHashers.FROM11);
         hammingDistance = /* [1..17] ^ [11..27] = [1..10][17-27] = */ 20;
         assertSymmetricOperation(hammingDistance, SetOperations::hammingDistance, filter1, filter2);
     }
@@ -153,13 +153,13 @@ public class SetOperationsTest {
      */
     @Test
     public final void testJaccardDistance() {
-        BloomFilter filter1 = createFilter(shape, TestingHashers.from1);
-        BloomFilter filter2 = createFilter(shape, TestingHashers.from1);
+        BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
+        BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
         // 1 - jaccardSimilarity -- see jaccardSimilarityTest
         assertSymmetricOperation(0.0, SetOperations::jaccardDistance, filter1, filter2);
 
-        filter2 = createFilter(shape, TestingHashers.from11);
+        filter2 = createFilter(shape, TestingHashers.FROM11);
         final double intersection = /* [1..17] & [11..27] = [11..17] = */ 7.0;
         final int union = /* [1..17] | [11..27] = [1..27] = */ 27;
         final double expected = 1 - intersection / union;
@@ -168,7 +168,7 @@ public class SetOperationsTest {
         // test no values
         filter1 = new SimpleBloomFilter(shape);
         filter2 = new SimpleBloomFilter(shape);
-        final BloomFilter filter3 = createFilter(shape, TestingHashers.from1);
+        final BloomFilter filter3 = createFilter(shape, TestingHashers.FROM1);
 
         // 1 - jaccardSimilarity -- see jaccardSimilarityTest
         assertSymmetricOperation(1.0, SetOperations::jaccardDistance, filter1, filter2);
@@ -180,15 +180,15 @@ public class SetOperationsTest {
      */
     @Test
     public final void testJaccardSimilarity() {
-        BloomFilter filter1 = createFilter(shape, TestingHashers.from1);
-        BloomFilter filter2 = createFilter(shape, TestingHashers.from1);
+        BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
+        BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
         double intersection = /* [1..17] & [1..17] = [1..17] = */ 17.0;
         int union = /* [1..17] | [1..17] = [1..17] = */ 17;
         double expected = intersection / union;
         assertSymmetricOperation(expected, SetOperations::jaccardSimilarity, filter1, filter2);
 
-        filter2 = createFilter(shape, TestingHashers.from11);
+        filter2 = createFilter(shape, TestingHashers.FROM11);
         intersection = /* [1..17] & [11..27] = [11..17] = */ 7.0;
         union = /* [1..17] | [11..27] = [1..27] = */ 27;
         expected = intersection / union;
