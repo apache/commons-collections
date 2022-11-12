@@ -85,7 +85,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     public void testBloomFilterBasedMergeEdgeCases() {
         final BloomFilter bf1 = createEmptyFilter(getTestShape());
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
-        bf2.merge(from1);
+        bf2.merge(TestingHashers.FROM1);
         bf1.merge(bf2);
         assertTrue(bf2.forEachBitMapPair(bf1, (x, y) -> x == y));
     }

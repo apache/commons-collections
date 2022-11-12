@@ -187,9 +187,6 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * <p>Specifically all counts for the unique indices produced by the {@code hasher} will be
      * decremented by 1.</p>
      *
-     * <p>For HasherCollections each enclosed Hasher will be considered a single item and decremented
-     * from the counts separately.</p>
-     *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param hasher the hasher to provide the indexes
