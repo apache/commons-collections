@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,10 +28,6 @@ import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.FunctorException;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class CatchAndRethrowClosureTest extends AbstractClosureTest {
 

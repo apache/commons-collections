@@ -16,8 +16,8 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.NullPredicate.*;
-import static org.apache.commons.collections4.functors.TruePredicate.*;
+import static org.apache.commons.collections4.functors.NullPredicate.nullPredicate;
+import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;

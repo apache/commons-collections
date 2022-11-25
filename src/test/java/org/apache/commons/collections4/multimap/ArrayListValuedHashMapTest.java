@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.ListValuedMap;

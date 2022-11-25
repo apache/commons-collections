@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.apache.commons.collections4.map.LazySortedMap.*;
+import static org.apache.commons.collections4.map.LazySortedMap.lazySortedMap;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

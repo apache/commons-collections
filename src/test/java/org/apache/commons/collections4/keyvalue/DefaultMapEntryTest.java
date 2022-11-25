@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * Test the DefaultMapEntry class.
