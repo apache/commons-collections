@@ -19,8 +19,8 @@ package org.apache.commons.collections4.properties;
 
 import java.util.Properties;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
 

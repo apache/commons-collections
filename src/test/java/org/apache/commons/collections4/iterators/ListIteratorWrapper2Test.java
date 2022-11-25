@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -24,8 +26,6 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests the ListIteratorWrapper to ensure that it behaves as expected when wrapping a ListIterator.

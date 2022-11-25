@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4.functors;
 
-import static org.apache.commons.collections4.functors.ComparatorPredicate.*;
+import static org.apache.commons.collections4.functors.ComparatorPredicate.comparatorPredicate;
 
 import java.util.Comparator;
 
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.ComparatorPredicate.Criterion;
 import org.junit.jupiter.api.Test;
 
 

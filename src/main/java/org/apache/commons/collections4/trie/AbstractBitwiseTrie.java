@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections4.Trie;
 

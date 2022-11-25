@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.nio.file.Files;
@@ -24,14 +26,12 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 

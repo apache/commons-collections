@@ -18,9 +18,9 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
