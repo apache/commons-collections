@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -170,7 +171,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertEquals(FixedOrderComparator.UnknownObjectBehavior.BEFORE, comparator.getUnknownObjectBehavior());
         LinkedList<String> keys = new LinkedList<>(Arrays.asList(topCities));
         keys.addFirst("Minneapolis");
-        assertComparatorYieldsOrder(keys.toArray(new String[0]), comparator);
+        assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
         assertEquals(-1, comparator.compare("Minneapolis", "New York"));
         assertEquals( 1, comparator.compare("New York", "Minneapolis"));
@@ -180,7 +181,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         comparator.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.AFTER);
         keys = new LinkedList<>(Arrays.asList(topCities));
         keys.add("Minneapolis");
-        assertComparatorYieldsOrder(keys.toArray(new String[0]), comparator);
+        assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
         assertEquals( 1, comparator.compare("Minneapolis", "New York"));
         assertEquals(-1, comparator.compare("New York", "Minneapolis"));
