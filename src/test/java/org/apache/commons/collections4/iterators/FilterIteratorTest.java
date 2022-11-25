@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -105,7 +106,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     public void testReturnValues() {
-        verifyElementsInPredicate(new String[0]);
+        verifyElementsInPredicate(ArrayUtils.EMPTY_STRING_ARRAY);
         verifyElementsInPredicate(new String[] { "a" });
         verifyElementsInPredicate(new String[] { "b" });
         verifyElementsInPredicate(new String[] { "c" });

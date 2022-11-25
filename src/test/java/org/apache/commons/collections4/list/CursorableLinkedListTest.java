@@ -29,6 +29,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -1390,7 +1391,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("5", elts[4]);
         assertEquals(5, elts.length);
 
-        final String[] elts2 = list.toArray(new String[0]);
+        final String[] elts2 = list.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
         assertEquals("1", elts2[0]);
         assertEquals("2", elts2[1]);
         assertEquals("3", elts2[2]);
@@ -1513,7 +1514,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
             list.add(prefix + bulk + element);
             list.add(prefix + bulk + bulk + element);
         }
-        return list.toArray(new String[0]);
+        return list.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
     }
 
     @Override

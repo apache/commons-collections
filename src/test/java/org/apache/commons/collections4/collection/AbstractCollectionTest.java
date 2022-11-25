@@ -39,6 +39,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -1120,7 +1121,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                 "toArray(null) should raise NPE");
         verify();
 
-        array = getCollection().toArray(new Object[0]);
+        array = getCollection().toArray(ArrayUtils.EMPTY_OBJECT_ARRAY);
         a = getCollection().toArray();
 
         if ((getIterationBehaviour() & UNORDERED) != 0) {
