@@ -16,15 +16,15 @@
  */
 package org.apache.commons.collections4.list;
 
-import org.apache.commons.collections4.AbstractObjectTest;
-import org.apache.commons.collections4.Factory;
-import org.apache.commons.collections4.Transformer;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.collections4.Factory;
+import org.apache.commons.collections4.Transformer;
+import org.junit.jupiter.api.Test;
 
 public class LazyListTest extends AbstractObjectTest {
 

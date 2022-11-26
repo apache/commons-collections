@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,6 +27,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link java.lang.Object} methods and contracts.

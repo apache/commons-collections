@@ -43,6 +43,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
@@ -166,7 +167,7 @@ public class MapUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]))
         );
 
-        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), new String[0]);
+        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY);
         assertEquals(0, test.size());
 
         // sub array

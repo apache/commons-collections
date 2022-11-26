@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,10 +35,8 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.
@@ -503,7 +504,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag.add((T) "B");
         bag.add((T) "B");
         bag.add((T) "C");
-        final String[] array = bag.toArray(new String[0]);
+        final String[] array = bag.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
         int a = 0, b = 0, c = 0;
         for (final String element : array) {
             a += element.equals("A") ? 1 : 0;

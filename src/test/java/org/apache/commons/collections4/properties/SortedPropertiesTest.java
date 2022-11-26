@@ -20,8 +20,8 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesTest {
 

@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4.functors;
 
-import org.apache.commons.collections4.Predicate;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+
+import org.apache.commons.collections4.Predicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for tests of AnyPredicate, AllPredicate, and OnePredicate.

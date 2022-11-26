@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -25,8 +27,6 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the

@@ -18,9 +18,9 @@ package org.apache.commons.collections4.set;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.TreeSet;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;

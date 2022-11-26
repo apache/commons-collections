@@ -17,14 +17,13 @@
 package org.apache.commons.collections4.map;
 
 import java.io.Serializable;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.CompositeSet;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.CompositeCollection;
+import org.apache.commons.collections4.set.CompositeSet;
 
 /**
  * Decorates a map of other maps to provide a single unified view.

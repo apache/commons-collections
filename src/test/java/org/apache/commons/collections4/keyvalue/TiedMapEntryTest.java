@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the TiedMapEntry class.

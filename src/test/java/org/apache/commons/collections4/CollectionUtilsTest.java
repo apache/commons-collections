@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +54,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -1029,7 +1030,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void reverse() {
         CollectionUtils.reverseArray(new Object[] {});
-        final Integer[] a = collectionA.toArray(new Integer[collectionA.size()]);
+        final Integer[] a = collectionA.toArray(ArrayUtils.EMPTY_INTEGER_OBJECT_ARRAY);
         CollectionUtils.reverseArray(a);
         // assume our implementation is correct if it returns the same order as the Java function
         Collections.reverse(collectionA);
