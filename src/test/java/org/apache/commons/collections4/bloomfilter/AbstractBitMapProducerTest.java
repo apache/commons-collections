@@ -104,14 +104,14 @@ public abstract class AbstractBitMapProducerTest {
         createProducer().forEachBitMapPair(createEmptyProducer(), lbp);
         assertEquals(count[2], count[1]);
 
-        // test where both producer does not process all records and function
+        // test where the created producer does not process all records because the predicate function
         // returns false before the processing is completed.
         int[] limit = new int[1];
         final LongBiPredicate shortFunc =  (x, y) -> {
             limit[0]++;
-            return limit[0]<2;
+            return limit[0] < 2;
         };
-        final BitMapProducer shortProducer = (l) -> {
+        final BitMapProducer shortProducer = l -> {
             return true;
         };
         assertFalse(createProducer().forEachBitMapPair(shortProducer, shortFunc));

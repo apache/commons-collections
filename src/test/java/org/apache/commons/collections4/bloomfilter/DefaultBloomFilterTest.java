@@ -72,63 +72,32 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     public void testEstimateNWithBrokenCardinality() {
         // build a filter
         BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
-        assertThrows(IllegalArgumentException.class, ()->filter1.estimateN());
-    }
-
-    @Test
-    public void testLargeBitmapAsArray() {
-        Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
-        // create a very large filter with Integer.MAX_VALUE-1 bit set.
-        BloomFilter bf1 = new SimpleBloomFilter(s);
-        bf1.merge(new BitMapProducer() {
-            @Override
-            public boolean forEachBitMap(LongPredicate predicate) {
-                int limit = Integer.MAX_VALUE-1;
-                while (limit>64) {
-                    predicate.test(0xFFFFFFFFFFFFFFFFL);
-                    limit -= 64;
-                }
-                long last = 0L;
-                for (int i=0; i<limit; i++) {
-                    last |= BitMap.getLongBit(i);
-                }
-                predicate.test(last);
-                return true;
-            }} );
-        // the actual result of the calculation is: 46144189292
-        long[] ary = bf1.asBitMapArray();
-        for (int i=0; i<ary.length-2; i++) {
-            assertEquals(0xFFFFFFFFFFFFFFFFL, ary[i]);
-        }
-        int lastBits = (Integer.MAX_VALUE-1) % 64;
-        long last = 0L;
-        for (int i=0; i<lastBits; i++) {
-            last |= BitMap.getLongBit(i);
-        }
-        assertEquals(last, ary[ary.length-1]);
+        assertThrows(IllegalArgumentException.class, () -> filter1.estimateN());
     }
 
     @Test
     public void testEstimateLargeN() {
         Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
-        // create a very large filter with Integer.MAX_VALUE-1 bit set.
+        // create a very large filter with Integer.MAX_VALUE-1 bits set.
         BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge(new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
-                int limit = Integer.MAX_VALUE-1;
-                while (limit>64) {
+                int limit = Integer.MAX_VALUE - 1;
+                while (limit > 64) {
                     predicate.test(0xFFFFFFFFFFFFFFFFL);
                     limit -= 64;
                 }
                 long last = 0L;
-                for (int i=0; i<limit; i++) {
+                for (int i=0; i < limit; i++) {
                     last |= BitMap.getLongBit(i);
                 }
                 predicate.test(last);
                 return true;
-            }} );
-        // the actual result of the calculation is: 46144189292
+            }
+        } );
+        // the actual result of the calculation is: 46144189292, so the returned value
+        // should be Integer.MAX_VALUE.
         assertEquals(Integer.MAX_VALUE, bf1.estimateN());
     }
 
@@ -140,18 +109,19 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         bf1.merge(new BitMapProducer() {
             @Override
             public boolean forEachBitMap(LongPredicate predicate) {
-                int limit = Integer.MAX_VALUE-1;
-                while (limit>64) {
+                int limit = Integer.MAX_VALUE - 1;
+                while (limit > 64) {
                     predicate.test(0xFFFFFFFFFFFFFFFFL);
                     limit -= 64;
                 }
                 long last = 0L;
-                for (int i=0; i<limit; i++) {
+                for (int i=0; i < limit; i++) {
                     last |= BitMap.getLongBit(i);
                 }
                 predicate.test(last);
                 return true;
-            }} );
+            }
+        } );
         // the actual result of the calculation is: 46144189292
         assertEquals(Integer.MAX_VALUE, bf1.estimateIntersection(bf1));
     }

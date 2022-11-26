@@ -302,7 +302,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             if (Double.isInfinite(eUnion)) {
                 throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
             }
-            // maximum estimate value using integer valuess is: 46144189292
+            // maximum estimate value using integer values is: 46144189292 thus
+            // eThis + eOther can not overflow the long value.
             estimate = Math.round(eThis + eOther - eUnion);
         }
         return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) estimate;
