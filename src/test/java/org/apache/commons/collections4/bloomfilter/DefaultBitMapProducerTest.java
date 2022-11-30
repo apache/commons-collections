@@ -66,7 +66,7 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
      * @param size the number of values to generate
      * @return the array of random values.
      */
-    public static long[] generateLongArray(final int size) {
+    static long[] generateLongArray(final int size) {
         return ThreadLocalRandom.current().longs(size).toArray();
     }
 
