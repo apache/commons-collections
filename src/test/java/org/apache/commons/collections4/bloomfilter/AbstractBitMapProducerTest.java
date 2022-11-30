@@ -30,12 +30,12 @@ public abstract class AbstractBitMapProducerTest {
     /**
      * A testing consumer that always returns false.
      */
-    public static final LongPredicate FALSE_CONSUMER = arg0 -> false;
+    static final LongPredicate FALSE_CONSUMER = arg0 -> false;
 
     /**
      * A testing consumer that always returns true.
      */
-    public static final LongPredicate TRUE_CONSUMER = arg0 -> true;
+    static final LongPredicate TRUE_CONSUMER = arg0 -> true;
 
     /**
      * Creates a producer with some data.
