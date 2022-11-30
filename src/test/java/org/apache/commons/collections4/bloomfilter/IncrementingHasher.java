@@ -56,7 +56,6 @@ final class IncrementingHasher implements Hasher {
         Objects.requireNonNull(shape, "shape");
 
         return new IndexProducer() {
-
             @Override
             public boolean forEachIndex(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
