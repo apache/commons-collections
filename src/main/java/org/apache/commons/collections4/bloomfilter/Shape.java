@@ -36,6 +36,48 @@ package org.apache.commons.collections4.bloomfilter;
  * <dd>{@code k = round((m / n) * ln(2))}</dd>
  * </dl>
  *
+ * <h2>Estimations from cardinality based on shape</h2>
+ *
+ * <p>Several estimates can be calculated from the Shape and the cardinality of a Bloom filter.</p>
+ *
+ * <p>In the calculation below the following values are used:</p>
+ * <ul>
+ * <li>double c = the cardinality of the Bloom filter.</li>
+ * <li>double m = numberOfBits as specified in the shape.</li>
+ * <li>double k = numberOfHashFunctions as specified in the shape.</li>
+ * </ul>
+ *
+ * <h3>Estimate N - n()</h3>
+ *
+ * <p>The calculation for the estimate of N is: {@code -(m/k) * ln(1 - (c/m))}.  This is the calculation
+ * performed by the {@code Shape.estimateN(cardinality)} method below.  This estimate is roughly equivalent to the
+ * number of hashers that have been merged into a filter to create the cardinality specified.</p>
+ *
+ * <p><em>Note:</em></p>
+ * <ul>
+ * <li>if cardinality == numberOfBits, then result is infinity.</li>
+ * <li>if cardinality &gt; numberOfBits, then result is NaN.</li>
+ * </ul>
+ *
+ * <h3>Estimate N of Union - n(A &cup; B)</h3>
+ *
+ * <p>To estimate the number of items in the union of two Bloom filters with the same shape, merge them together and
+ * calculate the estimated N from the result.</p>
+ *
+ * <h3>Estimate N of the Intersection - n(A &cap; B)</h3>
+ *
+ * <p>To estimate the number of items in the intersection of two Bloom filters A and B with the same shape the calculation is:
+ * n(A) + n(b) - n(A &cup; B).</p>
+ *
+ * <p>Care must be taken when any of the n(x) returns infinity.  In general the following assumptions are true:
+ *
+ * <ul>
+ * <li>If n(A) = &infin; and n(B) &lt; &infin; then n(A &cap; B) = n(B)</li>
+ * <li>If n(A) &lt; &infin; and n(B) = &infin; then n(A &cap; B) = n(A)</li>
+ * <li>If n(A) = &infin; and n(B) = &infin; then n(A &cap; B) = &infin;</li>
+ * <li>If n(A) &lt; &infin; and n(B) &lt; &infin; and n(A &cup; B) = &infin; then n(A &cap; B) is undefined.</li>
+ * </ul>
+ *
  * @see <a href="https://hur.st/bloomfilter">Bloom Filter calculator</a>
  * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
  * [Wikipedia]</a>

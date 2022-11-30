@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.TreeSet;
 import java.util.function.IntPredicate;
@@ -65,6 +66,74 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         bf1.merge(hasher);
         assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .forEachBitMapPair(bf1, (x, y) -> x == y));
+    }
+
+    @Test
+    public void testEstimateNWithBrokenCardinality() {
+        // build a filter
+        BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
+        assertThrows(IllegalArgumentException.class, () -> filter1.estimateN());
+    }
+
+    @Test
+    public void testEstimateLargeN() {
+        Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
+        // create a very large filter with Integer.MAX_VALUE-1 bits set.
+        BloomFilter bf1 = new SimpleBloomFilter(s);
+        bf1.merge((BitMapProducer) predicate -> {
+            int limit = Integer.MAX_VALUE - 1;
+            while (limit > 64) {
+                predicate.test(0xFFFFFFFFFFFFFFFFL);
+                limit -= 64;
+            }
+            long last = 0L;
+            for (int i = 0; i < limit; i++) {
+                last |= BitMap.getLongBit(i);
+            }
+            predicate.test(last);
+            return true;
+        });
+        // the actual result of the calculation is: 46144189292, so the returned value
+        // should be Integer.MAX_VALUE.
+        assertEquals(Integer.MAX_VALUE, bf1.estimateN());
+    }
+
+    @Test
+    public void testIntersectionLimit() {
+        Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
+        // create a very large filter with Integer.MAX_VALUE-1 bit set.
+        BloomFilter bf1 = new SimpleBloomFilter(s);
+        bf1.merge((BitMapProducer) predicate -> {
+            int limit = Integer.MAX_VALUE - 1;
+            while (limit > 64) {
+                predicate.test(0xFFFFFFFFFFFFFFFFL);
+                limit -= 64;
+            }
+            long last = 0L;
+            for (int i = 0; i < limit; i++) {
+                last |= BitMap.getLongBit(i);
+            }
+            predicate.test(last);
+            return true;
+        });
+        // the actual result of the calculation is: 46144189292
+        assertEquals(Integer.MAX_VALUE, bf1.estimateIntersection(bf1));
+    }
+
+    @Test
+    public void testSparseNonSparseMerging() {
+        BloomFilter bf1 = new SparseDefaultBloomFilter(getTestShape());
+        bf1.merge(TestingHashers.FROM1);
+        BloomFilter bf2 = new NonSparseDefaultBloomFilter(getTestShape());
+        bf2.merge(TestingHashers.FROM11);
+
+        BloomFilter result = bf1.copy();
+        result.merge(bf2);
+        assertEquals(27, result.cardinality());
+
+        result = bf2.copy();
+        result.merge(bf1);
+        assertEquals(27, result.cardinality());
     }
 
     abstract static class AbstractDefaultBloomFilter implements BloomFilter {
@@ -178,9 +247,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public AbstractDefaultBloomFilter copy() {
-            final AbstractDefaultBloomFilter result = new SparseDefaultBloomFilter(getShape());
+            final AbstractDefaultBloomFilter result = new NonSparseDefaultBloomFilter(getShape());
             result.indices.addAll(indices);
             return result;
+        }
+    }
+
+    static class BrokenCardinality extends NonSparseDefaultBloomFilter {
+
+        BrokenCardinality(Shape shape) {
+            super(shape);
+        }
+
+        @Override
+        public int cardinality() {
+            return super.cardinality() + 1;
         }
     }
 }
