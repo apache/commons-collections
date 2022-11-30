@@ -18,7 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.function.IntPredicate;
 
-/*
+/**
  * Defines a mapping of index to counts.
  *
  * <p>Note that a BitCountProducer may return duplicate indices and may be unordered.
