@@ -325,7 +325,7 @@
       Bump maven-pmd-plugin from 3.15.0 to 3.16.0 #286.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump commons-parent from 52 to 54 #299.
+      Bump commons-parent from 52 to 55 #299, #368.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
       Bump japicmp from 0.15.4 to 0.16.0.
