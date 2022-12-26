@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
@@ -36,10 +35,6 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     public PredicatedBagTest() {
         super(PredicatedBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PredicatedBagTest.class);
     }
 
     protected Predicate<T> stringPredicate() {

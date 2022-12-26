@@ -19,7 +19,6 @@ package org.apache.commons.collections4.list;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -30,10 +29,6 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     public NodeCachingLinkedListTest() {
         super(NodeCachingLinkedListTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(NodeCachingLinkedListTest.class);
     }
 
     @Override

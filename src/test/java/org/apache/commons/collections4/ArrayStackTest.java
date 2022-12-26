@@ -32,10 +32,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         super(ArrayStackTest.class.getSimpleName());
     }
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ArrayStackTest.class);
-    }
-
     @Override
     public ArrayStack<E> makeObject() {
         return new ArrayStack<>();

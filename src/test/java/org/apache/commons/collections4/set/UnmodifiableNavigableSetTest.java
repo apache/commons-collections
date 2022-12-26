@@ -25,7 +25,6 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,10 +39,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
 
     public UnmodifiableNavigableSetTest() {
         super(UnmodifiableNavigableSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableNavigableSetTest.class);
     }
 
     @Override

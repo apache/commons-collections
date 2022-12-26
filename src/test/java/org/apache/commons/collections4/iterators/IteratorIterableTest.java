@@ -29,10 +29,6 @@ import org.junit.jupiter.api.Test;
  */
 public class IteratorIterableTest extends BulkTest {
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(IteratorIterableTest.class);
-    }
-
     public IteratorIterableTest() {
         super(IteratorIterableTest.class.getSimpleName());
     }

@@ -19,7 +19,6 @@ package org.apache.commons.collections4.map;
 import java.util.HashMap;
 
 import org.apache.commons.collections4.BoundedMap;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
 import org.junit.jupiter.api.Test;
@@ -36,10 +35,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public SingletonMapTest() {
         super(SingletonMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(SingletonMapTest.class);
     }
 
     @Override

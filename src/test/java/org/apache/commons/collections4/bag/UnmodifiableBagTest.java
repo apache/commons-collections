@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.Arrays;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
@@ -36,10 +35,6 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
     public UnmodifiableBagTest() {
         super(UnmodifiableBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableBagTest.class);
     }
 
     @Override

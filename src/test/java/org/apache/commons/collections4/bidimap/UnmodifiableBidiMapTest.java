@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
@@ -31,10 +30,6 @@ import org.junit.jupiter.api.Test;
  * JUnit tests.
  */
 public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableBidiMapTest.class);
-    }
 
     public UnmodifiableBidiMapTest() {
         super(UnmodifiableBidiMapTest.class.getSimpleName());

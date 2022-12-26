@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bag;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
@@ -33,11 +32,6 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     public TransformedSortedBagTest() {
         super(TransformedSortedBagTest.class.getSimpleName());
     }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(TransformedSortedBagTest.class);
-    }
-
 
     @Override
     @SuppressWarnings("unchecked")

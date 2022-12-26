@@ -16,17 +16,11 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import org.apache.commons.collections4.BulkTest;
-
 /**
  * JUnit tests.
  *
  */
 public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(DualTreeBidiMapTest.class);
-    }
 
     public DualTreeBidiMapTest() {
         super(DualTreeBidiMapTest.class.getSimpleName());

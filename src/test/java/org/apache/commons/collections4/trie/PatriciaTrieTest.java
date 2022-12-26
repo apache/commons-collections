@@ -26,7 +26,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
 import org.junit.jupiter.api.Assertions;
@@ -41,10 +40,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
     public PatriciaTrieTest() {
         super(PatriciaTrieTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PatriciaTrieTest.class);
     }
 
     @Override

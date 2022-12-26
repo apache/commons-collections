@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bag;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
@@ -29,10 +28,6 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
     public SynchronizedBagTest() {
         super(SynchronizedBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(SynchronizedBagTest.class);
     }
 
 

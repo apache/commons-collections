@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
@@ -36,10 +35,6 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     public PredicatedMultiSetTest() {
         super(PredicatedMultiSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PredicatedMultiSetTest.class);
     }
 
     protected Predicate<T> stringPredicate() {

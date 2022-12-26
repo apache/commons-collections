@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bag;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +30,6 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
     public TreeBagTest() {
         super(TreeBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(TreeBagTest.class);
     }
 
     @Override

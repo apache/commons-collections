@@ -30,10 +30,6 @@ import org.junit.jupiter.api.Test;
  */
 public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(SynchronizedQueueTest.class);
-    }
-
     public SynchronizedQueueTest() {
         super(SynchronizedQueueTest.class.getSimpleName());
     }
