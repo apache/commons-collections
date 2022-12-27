@@ -115,6 +115,9 @@
     <action type="fix" dev="ggregory" due-to="Arturo Bernal">
       Use Java style array decelerations #362.
     </action>
+    <action issue="COLLECTIONS-806" type="fix" dev="ggregory" due-to="Piyush Sagar">
+      Remove use of JUnit4 junit.framework.Test class #371.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-760" dev="kinow" type="add" due-to="Isira Seneviratne">
       Add tests for MapUtils.
