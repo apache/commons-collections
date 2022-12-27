@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
@@ -44,10 +43,6 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public ReferenceMapTest() {
         super(ReferenceMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ReferenceMapTest.class);
     }
 
     @Override

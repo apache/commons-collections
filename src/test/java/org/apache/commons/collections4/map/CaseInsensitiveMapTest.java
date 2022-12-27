@@ -21,7 +21,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,10 +28,6 @@ import org.junit.jupiter.api.Test;
  *
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(CaseInsensitiveMapTest.class);
-    }
 
     public CaseInsensitiveMapTest() {
         super(CaseInsensitiveMapTest.class.getSimpleName());

@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
@@ -38,10 +37,6 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     public PredicatedSortedBagTest() {
         super(PredicatedSortedBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PredicatedSortedBagTest.class);
     }
 
     protected Predicate<T> stringPredicate() {

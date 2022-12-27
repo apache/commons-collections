@@ -26,7 +26,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -41,10 +40,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     public UnmodifiableSortedSetTest() {
         super(UnmodifiableSortedSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedSetTest.class);
     }
 
     @Override

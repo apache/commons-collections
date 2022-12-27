@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.SetValuedMap;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
@@ -36,10 +35,6 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     public HashSetValuedHashMapTest() {
         super(HashSetValuedHashMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(HashSetValuedHashMapTest.class);
     }
 
     @Override

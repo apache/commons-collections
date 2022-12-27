@@ -38,10 +38,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         super(LinkedMapTest.class.getSimpleName());
     }
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(LinkedMapTest.class);
-    }
-
     @Override
     public LinkedMap<K, V> makeObject() {
         return new LinkedMap<>();

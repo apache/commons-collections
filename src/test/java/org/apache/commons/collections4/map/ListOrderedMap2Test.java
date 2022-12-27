@@ -36,10 +36,6 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         super(ListOrderedMap2Test.class.getSimpleName());
     }
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ListOrderedMap2Test.class);
-    }
-
     @Override
     public ListOrderedMap<K, V> makeObject() {
         return new ListOrderedMap<>();

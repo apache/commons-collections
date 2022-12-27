@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.comparators.ComparableComparator;
 import org.apache.commons.collections4.comparators.ReverseComparator;
@@ -39,10 +38,6 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("boxing")
 public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(DualTreeBidiMap2Test.class);
-    }
 
     public DualTreeBidiMap2Test() {
         super(DualTreeBidiMap2Test.class.getSimpleName());

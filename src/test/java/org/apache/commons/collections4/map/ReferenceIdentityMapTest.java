@@ -22,7 +22,6 @@ import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
@@ -46,10 +45,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         } catch (final OutOfMemoryError ex) {
             System.gc(); // ignore
         }
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ReferenceIdentityMapTest.class);
     }
 
     WeakReference<K> keyReference;

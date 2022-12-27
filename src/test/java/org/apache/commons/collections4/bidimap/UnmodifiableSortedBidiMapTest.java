@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
@@ -30,10 +29,6 @@ import org.junit.jupiter.api.Test;
  * JUnit tests.
  */
 public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedBidiMapTest.class);
-    }
 
     public UnmodifiableSortedBidiMapTest() {
         super(UnmodifiableSortedBidiMapTest.class.getSimpleName());

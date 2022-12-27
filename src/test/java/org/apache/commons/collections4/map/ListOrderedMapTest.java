@@ -42,10 +42,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         super(ListOrderedMapTest.class.getSimpleName());
     }
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ListOrderedMapTest.class);
-    }
-
     @Override
     public ListOrderedMap<K, V> makeObject() {
         return ListOrderedMap.listOrderedMap(new HashMap<K, V>());

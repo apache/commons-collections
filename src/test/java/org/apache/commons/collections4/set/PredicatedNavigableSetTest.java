@@ -24,7 +24,6 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
@@ -39,10 +38,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     public PredicatedNavigableSetTest() {
         super(PredicatedNavigableSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PredicatedNavigableSetTest.class);
     }
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();

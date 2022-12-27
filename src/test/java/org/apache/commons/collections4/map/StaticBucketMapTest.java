@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,10 +27,6 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public StaticBucketMapTest() {
         super(StaticBucketMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(StaticBucketMapTest.class);
     }
 
     @Override

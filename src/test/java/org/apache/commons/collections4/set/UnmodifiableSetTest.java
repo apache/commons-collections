@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
@@ -36,10 +35,6 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
     public UnmodifiableSetTest() {
         super(UnmodifiableSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSetTest.class);
     }
 
     @Override

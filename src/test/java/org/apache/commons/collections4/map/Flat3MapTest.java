@@ -48,10 +48,6 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(Flat3MapTest.class.getSimpleName());
     }
 
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(Flat3MapTest.class);
-    }
-
     @Override
     public Flat3Map<K, V> makeObject() {
         return new Flat3Map<>();
