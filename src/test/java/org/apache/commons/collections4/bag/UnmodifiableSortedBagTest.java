@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
@@ -36,10 +35,6 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 
     public UnmodifiableSortedBagTest() {
         super(UnmodifiableSortedBagTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedBagTest.class);
     }
 
     @Override

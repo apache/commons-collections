@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,10 +45,6 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        System.out.print("\n NodeCachingLinkedList = ");
 //        benchmark(new NodeCachingLinkedList());
 //    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(TreeListTest.class);
-    }
 
     public static void benchmark(final List<? super Integer> l) {
         long startMillis = System.currentTimeMillis();

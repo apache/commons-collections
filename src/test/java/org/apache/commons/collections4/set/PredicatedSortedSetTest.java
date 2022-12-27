@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
@@ -39,10 +38,6 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     public PredicatedSortedSetTest() {
         super(PredicatedSortedSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(PredicatedSortedSetTest.class);
     }
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();

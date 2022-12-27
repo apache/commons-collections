@@ -22,7 +22,6 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.junit.jupiter.api.Test;
@@ -37,10 +36,6 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
 
     public TransformedNavigableSetTest() {
         super(TransformedNavigableSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(TransformedNavigableSetTest.class);
     }
 
     @Override

@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -43,10 +42,6 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
 
     public UnmodifiableMultiValuedMapTest() {
         super(UnmodifiableMultiValuedMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
 
     /**

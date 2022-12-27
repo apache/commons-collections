@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,11 +40,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     public CursorableLinkedListTest() {
         super(CursorableLinkedListTest.class.getSimpleName());
     }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(CursorableLinkedListTest.class);
-    }
-
     private CursorableLinkedList<E> list;
 
     @Override

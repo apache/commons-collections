@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
@@ -38,10 +37,6 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     public ArrayListValuedHashMapTest() {
         super(ArrayListValuedHashMapTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(ArrayListValuedHashMapTest.class);
     }
 
     @Override

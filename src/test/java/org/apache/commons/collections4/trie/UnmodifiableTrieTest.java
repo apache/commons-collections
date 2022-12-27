@@ -18,7 +18,6 @@ package org.apache.commons.collections4.trie;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
@@ -34,10 +33,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
     public UnmodifiableTrieTest() {
         super(UnmodifiableTrieTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableTrieTest.class);
     }
 
     @Override

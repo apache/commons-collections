@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
@@ -39,11 +38,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     public LRUMapTest() {
         super(LRUMapTest.class.getSimpleName());
     }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(LRUMapTest.class);
-    }
-
     @Override
     public LRUMap<K, V> makeObject() {
         return new LRUMap<>();

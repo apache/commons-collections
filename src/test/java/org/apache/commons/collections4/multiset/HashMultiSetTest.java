@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.multiset;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 
 /**
@@ -30,11 +29,6 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
     public HashMultiSetTest() {
         super(HashMultiSetTest.class.getSimpleName());
     }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(HashMultiSetTest.class);
-    }
-
 
     @Override
     public MultiSet<T> makeObject() {

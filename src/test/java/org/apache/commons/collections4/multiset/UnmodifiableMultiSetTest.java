@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
@@ -35,10 +34,6 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
     public UnmodifiableMultiSetTest() {
         super(UnmodifiableMultiSetTest.class.getSimpleName());
-    }
-
-    public static junit.framework.Test suite() {
-        return BulkTest.makeSuite(UnmodifiableMultiSetTest.class);
     }
 
     @Override
