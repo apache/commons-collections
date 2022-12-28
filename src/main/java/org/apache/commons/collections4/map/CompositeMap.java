@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -132,7 +133,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws IllegalArgumentException if there is a key collision and there is no
      *         MapMutator set to handle it.
      */
-    @SuppressWarnings("unchecked")
     public synchronized void addComposited(final Map<K, V> map) throws IllegalArgumentException {
         if (map != null) {
             for (int i = composite.length - 1; i >= 0; --i) {
@@ -144,8 +144,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
                     this.mutator.resolveCollision(this, this.composite[i], map, intersect);
                 }
             }
-            final Map<K, V>[] temp = new Map[this.composite.length + 1];
-            System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
+            final Map<K, V>[] temp = Arrays.copyOf(this.composite, this.composite.length + 1);
             temp[temp.length - 1] = map;
             this.composite = temp;
         }
