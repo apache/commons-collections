@@ -112,7 +112,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Returns {@code true} if this filter contains the bits specified in the bit maps produced by the
      * bitMapProducer.
      *
-     * @param bitMapProducer the the {@code BitMapProducer} to provide the bit maps.
+     * @param bitMapProducer the {@code BitMapProducer} to provide the bit maps.
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(final BitMapProducer bitMapProducer) {
