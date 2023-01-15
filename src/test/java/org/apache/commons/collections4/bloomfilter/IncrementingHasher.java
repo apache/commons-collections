@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 
 /**
- * A Hasher that implements simple combinatorial hashing as as described by
+ * A Hasher that implements simple combinatorial hashing as described by
  * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a>.
  *
  * <p>To be used for testing only.</p>

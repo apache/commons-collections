@@ -41,7 +41,7 @@ import org.apache.commons.collections4.Predicate;
  * };
  * </pre>
  *
- * <p>Using the declared variables, the {@code ComparatorPredicate} can be used used in the
+ * <p>Using the declared variables, the {@code ComparatorPredicate} can be used in the
  * following way:</p>
  *
  * <pre>
