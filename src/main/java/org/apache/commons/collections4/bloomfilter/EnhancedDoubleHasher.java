@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 
 /**
- * A Hasher that implements combinatorial hashing as as described by
+ * A Hasher that implements combinatorial hashing as described by
  * <a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Krisch and Mitzenmacher</a> using the enhanced double hashing technique
  * described in the wikipedia article  <a href="https://en.wikipedia.org/wiki/Double_hashing#Enhanced_double_hashing">Double Hashing</a>.
  * <p>
