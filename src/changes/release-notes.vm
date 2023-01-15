@@ -14,7 +14,7 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-              Apache ${project.name} ${version} RELEASE NOTES
+              ${project.name} ${version} RELEASE NOTES
 
 $introduction.replaceAll("(?<!\015)\012", "
 ")
@@ -133,7 +133,7 @@ o#if($!issue != "") $issue. #end ${action} #if($!dueto != "")Thanks to $dueto. #
 #end
  
 For complete information on ${project.name}, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache ${project.name} website:
+patches, or suggestions for improvement, see the ${project.name} website:
 
 ${project.url}
 
