@@ -641,13 +641,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.dep.version}</version>
-          </dependency>
-        </dependencies>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
           <headerLocation>${basedir}/src/conf/license-header.txt</headerLocation>
@@ -728,7 +721,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.version}</version>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
