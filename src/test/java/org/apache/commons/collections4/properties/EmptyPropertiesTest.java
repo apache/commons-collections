@@ -206,13 +206,13 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testLoadFromXML() throws IOException {
+    public void testLoadFromXML() {
         assertThrows(UnsupportedOperationException.class,
             () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
     @Test
-    public void testLoadInputStream() throws IOException {
+    public void testLoadInputStream() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
