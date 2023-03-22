@@ -157,7 +157,6 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
                 .addMockedMethod("convertKey")
                 .createMock();
         mock.data = new AbstractHashedMap.HashEntry[16];
-
         EasyMock.expect(mock.convertKey("Key")).andReturn("key").once();
         EasyMock.replay(mock);
 
