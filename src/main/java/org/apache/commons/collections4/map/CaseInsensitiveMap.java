@@ -141,13 +141,6 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
         return AbstractHashedMap.NULL;
     }
 
-    /**
-     * Puts a key-value mapping into this map.
-     *
-     * @param key  the key to add
-     * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
-     */
     @Override
     public V put(final K key, final V value) {
         final Object convertedKey = convertKey(key);
@@ -170,19 +163,19 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     /**
      * Adds a new key-value mapping into this map.
      * <p>
-     * This implementation calls {@code createEntry()}, {@code addEntry()}
+     * This implementation calls {@code createEntryWithoutKeyConversion()}, {@code addEntry()}
      * and {@code checkCapacity()}.
      * It also handles changes to {@code modCount} and {@code size}.
      * Subclasses could override to fully control adds to the map.
      *
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
-     * @param key  the key to add
+     * @param convertedKey  the key to add, already converted to lower case by {@code convertKey()}
      * @param value  the value to add
      */
-    private void addMappingWithoutKeyConversion(final int hashIndex, final int hashCode, final Object key, final V value) {
+    protected void addMappingWithoutKeyConversion(final int hashIndex, final int hashCode, final Object convertedKey, final V value) {
         modCount++;
-        final HashEntry<K, V> entry = createEntryWithoutKeyConversion(data[hashIndex], hashCode, key, value);
+        final HashEntry<K, V> entry = createEntryWithoutKeyConversion(data[hashIndex], hashCode, convertedKey, value);
         addEntry(entry, hashIndex);
         size++;
         checkCapacity();
@@ -197,12 +190,12 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      *
      * @param next  the next entry in sequence
      * @param hashCode  the hash code to use
-     * @param key  the key to store
+     * @param convertedKey  the key to add, already converted to lower case by {@code convertKey()}
      * @param value  the value to store
      * @return the newly created entry
      */
-    private HashEntry<K, V> createEntryWithoutKeyConversion(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
-        return new HashEntry<>(next, hashCode, key, value);
+    protected HashEntry<K, V> createEntryWithoutKeyConversion(final HashEntry<K, V> next, final int hashCode, final Object convertedKey, final V value) {
+        return new HashEntry<>(next, hashCode, convertedKey, value);
     }
 
     /**
