@@ -153,7 +153,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     @Test
     @SuppressWarnings("unchecked")
     public void testPutConvertKeyOnlyOnce() {
-        CaseInsensitiveMap mock = EasyMock.partialMockBuilder(CaseInsensitiveMap.class)
+        CaseInsensitiveMap<String, String> mock = EasyMock.partialMockBuilder(CaseInsensitiveMap.class)
                 .addMockedMethod("convertKey")
                 .createMock();
         mock.data = new AbstractHashedMap.HashEntry[16];
