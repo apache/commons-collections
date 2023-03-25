@@ -22,7 +22,6 @@ import org.apache.commons.collections4.BidiMap;
 
 /**
  * JUnit tests.
- *
  */
 public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 

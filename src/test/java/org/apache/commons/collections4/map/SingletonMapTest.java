@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

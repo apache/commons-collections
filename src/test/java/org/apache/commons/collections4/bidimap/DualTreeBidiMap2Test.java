@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 @SuppressWarnings("boxing")
 public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {

@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bidimap;
 
 /**
  * JUnit tests.
- *
  */
 public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 

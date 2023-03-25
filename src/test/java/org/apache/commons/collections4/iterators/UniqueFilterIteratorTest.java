@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UniqueFilterIterator class.
- *
  */
 public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 

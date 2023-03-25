@@ -127,7 +127,6 @@ import junit.framework.TestSuite;
  *  define your {@code suite()} method to use {@link #makeSuite}.
  *  The ordinary {@link TestSuite} constructor doesn't know how to
  *  interpret bulk test methods.
- *
  */
 public class BulkTest extends TestCase implements Cloneable {
 

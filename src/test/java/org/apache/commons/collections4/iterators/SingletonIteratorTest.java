@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
- *
  */
 public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 

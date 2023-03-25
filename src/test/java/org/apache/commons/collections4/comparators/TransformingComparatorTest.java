@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for TransformingComparator.
- *
  */
 public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 

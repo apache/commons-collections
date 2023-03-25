@@ -23,7 +23,6 @@ import java.util.function.LongPredicate;
  * if the @{code ary} is exhausted, the subsequent calls to @{code test} are executed with a zero value.
  * If the calls to @{code test} do not exhaust the @{code ary} the @{code forEachRemaining} method can be called to
  * execute the @code{text} with a zero value for each remaining @{code idx} value.
- *
  */
 class CountingLongPredicate implements LongPredicate {
     private int idx = 0;

@@ -22,7 +22,6 @@ import java.util.List;
 
 /**
  * Test the NullComparator.
- *
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 

@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
- *
  */
 public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 

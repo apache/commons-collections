@@ -18,7 +18,6 @@ package org.apache.commons.collections4.bidimap;
 
 /**
  * JUnit tests.
- *
  */
 public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 

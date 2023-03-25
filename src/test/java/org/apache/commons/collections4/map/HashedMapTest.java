@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
