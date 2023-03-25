@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReverseComparator.
- *
  */
 public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 

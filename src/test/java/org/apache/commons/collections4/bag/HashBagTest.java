@@ -21,7 +21,6 @@ import org.apache.commons.collections4.Bag;
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
  * implementation.
- *
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 

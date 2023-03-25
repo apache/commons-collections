@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests.
  * {@link StaticBucketMap}.
- *
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

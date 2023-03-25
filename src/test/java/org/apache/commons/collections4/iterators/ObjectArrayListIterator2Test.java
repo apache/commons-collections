@@ -18,7 +18,6 @@ package org.apache.commons.collections4.iterators;
 
 /**
  * Tests the ObjectArrayListIterator class.
- *
  */
 public class ObjectArrayListIterator2Test<E> extends AbstractListIteratorTest<E> {
 

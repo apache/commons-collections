@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

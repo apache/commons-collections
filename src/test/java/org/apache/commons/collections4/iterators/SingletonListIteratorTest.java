@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
- *
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 

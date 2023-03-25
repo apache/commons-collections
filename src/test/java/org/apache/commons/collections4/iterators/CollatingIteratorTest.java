@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test suite for {@link CollatingIterator}.
- *
  */
 @SuppressWarnings("boxing")
 public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {

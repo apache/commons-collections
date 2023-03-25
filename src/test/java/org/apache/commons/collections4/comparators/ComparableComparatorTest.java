@@ -23,7 +23,6 @@ import java.util.List;
 /**
  * Tests for ComparableComparator.
  *
- *
  */
 @SuppressWarnings("boxing")
 public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {

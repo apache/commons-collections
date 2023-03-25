@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IteratorIterable.
- *
  */
 public class IteratorIterableTest extends BulkTest {
 

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Unit test suite for {@link ZippingIterator}.
- *
  */
 @SuppressWarnings("boxing")
 public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {

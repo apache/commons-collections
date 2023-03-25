@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests TreeMap.
- *
  */
 public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
 
