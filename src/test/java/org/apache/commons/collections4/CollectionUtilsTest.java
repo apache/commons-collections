@@ -2393,7 +2393,7 @@ public class CollectionUtilsTest extends MockTestCase {
                             "failed to check if input collection is null");
                 },
                 () -> {
-                @SuppressWarnings("rawtypes")
+                    @SuppressWarnings("rawtypes")
                     Collection mockCollection = createMock(Collection.class);
                     expect(mockCollection.stream()).andReturn(Arrays.asList("").stream());
                     replay();
