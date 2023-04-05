@@ -24,6 +24,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
@@ -33,8 +34,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public TransformedMapTest(final String testName) {
-        super(testName);
+    public TransformedMapTest() {
+        super(TransformedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -44,8 +45,9 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap
                 .transformingMap(
@@ -92,6 +94,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
@@ -112,6 +115,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final Map<K, V> base = new HashMap<>();

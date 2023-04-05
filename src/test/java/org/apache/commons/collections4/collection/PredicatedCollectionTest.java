@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -32,11 +35,10 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public PredicatedCollectionTest(final String name) {
-        super(name);
+    public PredicatedCollectionTest() {
+        super(PredicatedCollectionTest.class.getSimpleName());
     }
 
-   //------------------------------------------------------------------------
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Collection<E> decorateCollection(
@@ -78,19 +80,18 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         return decorateCollection(new ArrayList<E>(), testPredicate);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Collection<E> c = makeTestCollection();
         final Integer i = 3;
-        try {
-            c.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> c.add((E) i), "Integer should fail string predicate.");
+
         assertFalse("Collection shouldn't contain illegal element", c.contains(i));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Collection<E> c = makeTestCollection();
@@ -99,12 +100,9 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            c.addAll(elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> c.addAll(elements), "Integer should fail string predicate.");
+
         assertFalse("Collection shouldn't contain illegal element", c.contains("one"));
         assertFalse("Collection shouldn't contain illegal element", c.contains("two"));
         assertFalse("Collection shouldn't contain illegal element", c.contains(3));

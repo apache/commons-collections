@@ -148,7 +148,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
             // within bounds, get the object
             E object = decorated().get(index);
             if (object == null) {
-                // item is a place holder, create new one, set and return
+                // item is a placeholder, create new one, set and return
                 object = element(index);
                 decorated().set(index, object);
             }

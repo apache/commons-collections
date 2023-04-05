@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -37,6 +39,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -65,6 +70,13 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * <li>{@link #areEqualElementsDistinguishable()}
  * <li>{@link #isNullSupported()}
  * <li>{@link #isFailFastSupported()}
+ * </ul>
+ * <p>
+ * <b>Indicate Collection Behaviour</b>
+ * <p>
+ * Override these if your collection makes specific behavior guarantees:
+ * <ul>
+ * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
  * <p>
  * <b>Fixture Methods</b>
@@ -118,7 +130,6 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * If your {@link Collection} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
- *
  */
 public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
@@ -131,6 +142,13 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     // and bags will have to be written in test subclasses.  Thus, there is no
     // tests on Collection.equals nor any for Collection.hashCode.
     //
+
+    /**
+     * Flag to indicate the collection makes no ordering guarantees for the iterator. If this is not used
+     * then the behavior is assumed to be ordered and the output order of the iterator is matched by
+     * the toArray method.
+     */
+    public static final int UNORDERED = 0x1;
 
     // These fields are used by reset() and verify(), and any test
     // method that tests a modification.
@@ -378,7 +396,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of objects that are contained in a collection
      *  produced by {@link #makeFullCollection()}.  Every element in the
      *  returned array <I>must</I> be an element in a full collection.<P>
-     *  The default implementation returns a heterogenous array of
+     *  The default implementation returns a heterogeneous array of
      *  objects with some duplicates. null is added if allowed.
      *  Override if you require specific testing elements.  Note that if you
      *  override {@link #makeFullCollection()}, you <I>must</I> override
@@ -398,7 +416,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns an array of elements that are <I>not</I> contained in a
      *  full collection.  Every element in the returned array must
      *  not exist in a collection returned by {@link #makeFullCollection()}.
-     *  The default implementation returns a heterogenous array of elements
+     *  The default implementation returns a heterogeneous array of elements
      *  without null.  Note that some of the tests add these elements
      *  to an empty or full collection, so if your collection restricts
      *  certain kinds of elements, you should override this method.
@@ -463,7 +481,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getFullElements()}.  Override getFullElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getFullNonNullStringElements() {
         return new Object[] {
@@ -476,7 +494,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a list of string elements suitable for return by
      *  {@link #getOtherElements()}.  Override getOtherElements to return
      *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     *  heterogeneous elements or the null element.
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] {
@@ -485,10 +503,23 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         };
     }
 
+    /**
+     * Return a flag specifying the iteration behavior of the collection.
+     * This is used to change the assertions used by specific tests.
+     * The default implementation returns 0 which indicates ordered iteration behavior.
+     *
+     * @return the iteration behavior
+     * @see #UNORDERED
+     */
+    protected int getIterationBehaviour(){
+        return 0;
+    }
+
     // Tests
     /**
      *  Tests {@link Collection#add(Object)}.
      */
+    @Test
     public void testCollectionAdd() {
         if (!isAddSupported()) {
             return;
@@ -521,6 +552,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#addAll(Collection)}.
      */
+    @Test
     public void testCollectionAddAll() {
         if (!isAddSupported()) {
             return;
@@ -565,49 +597,34 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  If {@link #isAddSupported()} returns false, tests that add operations
      *  raise <code>UnsupportedOperationException.
      */
+    @Test
     public void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
         }
 
         resetEmpty();
-        try {
-            getCollection().add(getFullNonNullElements()[0]);
-            fail("Empty collection should not support add.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().add(getFullNonNullElements()[0]),
+                "Empty collection should not support add.");
         // make sure things didn't change even if the expected exception was
         // thrown.
         verify();
 
-        try {
-            getCollection().addAll(Arrays.asList(getFullElements()));
-            fail("Empty collection should not support addAll.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().addAll(Arrays.asList(getFullElements())),
+                "Empty collection should not support addAll.");
         // make sure things didn't change even if the expected exception was
         // thrown.
         verify();
 
         resetFull();
-        try {
-            getCollection().add(getFullNonNullElements()[0]);
-            fail("Full collection should not support add.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().add(getFullNonNullElements()[0]),
+                "Full collection should not support add.");
         // make sure things didn't change even if the expected exception was
         // thrown.
         verify();
 
-        try {
-            getCollection().addAll(Arrays.asList(getOtherElements()));
-            fail("Full collection should not support addAll.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().addAll(Arrays.asList(getOtherElements())),
+                "Full collection should not support addAll.");
         // make sure things didn't change even if the expected exception was
         // thrown.
         verify();
@@ -616,6 +633,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Test {@link Collection#clear()}.
      */
+    @Test
     public void testCollectionClear() {
         if (!isRemoveSupported()) {
             return;
@@ -634,6 +652,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#contains(Object)}.
      */
+    @Test
     public void testCollectionContains() {
         Object[] elements;
 
@@ -671,6 +690,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#containsAll(Collection)}.
      */
+    @Test
     public void testCollectionContainsAll() {
         resetEmpty();
         Collection<E> col = new HashSet<>();
@@ -714,6 +734,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#isEmpty()}.
      */
+    @Test
     public void testCollectionIsEmpty() {
         resetEmpty();
         assertTrue("New Collection should be empty.", getCollection().isEmpty());
@@ -729,17 +750,14 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests the read-only functionality of {@link Collection#iterator()}.
      */
+    @Test
     public void testCollectionIterator() {
         resetEmpty();
         Iterator<E> it1 = getCollection().iterator();
         assertFalse("Iterator for empty Collection shouldn't have next.", it1.hasNext());
-        try {
-            it1.next();
-            fail("Iterator at end of Collection should throw "
-                    + "NoSuchElementException when next is called.");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        final Iterator<E> finalIt1 = it1;
+        assertThrows(NoSuchElementException.class, () -> finalIt1.next(),
+                "Iterator at end of Collection should throw NoSuchElementException when next is called.");
         // make sure nothing has changed after non-modification
         verify();
 
@@ -759,12 +777,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                     getCollection().contains(next));
             list.add(next);
         }
-        try {
-            it1.next();
-            fail("iterator.next() should raise NoSuchElementException after it finishes");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        final Iterator<E> finalIt2 = it1;
+        assertThrows(NoSuchElementException.class, () -> finalIt2.next(),
+                "iterator.next() should raise NoSuchElementException after it finishes");
         // make sure nothing has changed after non-modification
         verify();
     }
@@ -772,6 +787,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests removals from {@link Collection#iterator()}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testCollectionIteratorRemove() {
         if (!isRemoveSupported()) {
@@ -779,22 +795,14 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
 
         resetEmpty();
-        try {
-            getCollection().iterator().remove();
-            fail("New iterator.remove should raise IllegalState");
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, () -> getCollection().iterator().remove(),
+                "New iterator.remove should raise IllegalState");
         verify();
 
-        try {
-            final Iterator<E> iter = getCollection().iterator();
-            iter.hasNext();
-            iter.remove();
-            fail("New iterator.remove should raise IllegalState even after hasNext");
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        final Iterator<E> iter0 = getCollection().iterator();
+        iter0.hasNext();
+        assertThrows(IllegalStateException.class, () -> iter0.remove(),
+                "New iterator.remove should raise IllegalState even after hasNext");
         verify();
 
         resetFull();
@@ -832,17 +840,15 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         iter = getCollection().iterator();
         iter.next();
         iter.remove();
-        try {
-            iter.remove();
-            fail("Second iter.remove should raise IllegalState");
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        final Iterator<E> finalIter = iter;
+        assertThrows(IllegalStateException.class, () -> finalIter.remove(),
+                "Second iter.remove should raise IllegalState");
     }
 
     /**
      *  Tests {@link Collection#remove(Object)}.
      */
+    @Test
     public void testCollectionRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -889,6 +895,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#removeAll(Collection)}.
      */
+    @Test
     public void testCollectionRemoveAll() {
         if (!isRemoveSupported()) {
             return;
@@ -933,6 +940,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#removeIf(Predicate)}.
      * @since 4.4
      */
+    @Test
     public void testCollectionRemoveIf() {
         if (!isRemoveSupported()) {
             return;
@@ -963,7 +971,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         final int size = getCollection().size();
         final int targetCount = Collections.frequency(elements, target);
 
-        final Predicate<E> filter = e -> target.equals(e);
+        final Predicate<E> filter = target::equals;
 
         assertTrue("Full collection removeIf should work", getCollection().removeIf(filter));
         getConfirmed().removeIf(filter);
@@ -976,6 +984,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#retainAll(Collection)}.
      */
+    @Test
     public void testCollectionRetainAll() {
         if (!isRemoveSupported()) {
             return;
@@ -1036,6 +1045,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#size()}.
      */
+    @Test
     public void testCollectionSize() {
         resetEmpty();
         assertEquals("Size of new Collection is 0.", 0, getCollection().size());
@@ -1047,6 +1057,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#toArray()}.
      */
+    @Test
     public void testCollectionToArray() {
         resetEmpty();
         assertEquals("Empty Collection should return empty array for toArray",
@@ -1091,37 +1102,33 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests {@link Collection#toArray(Object[])}.
      */
+    @Test
     public void testCollectionToArray2() {
         resetEmpty();
-        Object[] a = new Object[] { new Object(), null, null };
+        Object[] a = { new Object(), null, null };
         Object[] array = getCollection().toArray(a);
         assertEquals("Given array shouldn't shrink", array, a);
         assertNull("Last element should be set to null", a[0]);
         verify();
 
         resetFull();
-        try {
-            array = getCollection().toArray(new Void[0]);
-            fail("toArray(new Void[0]) should raise ArrayStore");
-        } catch (final ArrayStoreException e) {
-            // expected
-        }
+        assertThrows(ArrayStoreException.class, () -> getCollection().toArray(new Void[0]),
+                "toArray(new Void[0]) should raise ArrayStore");
         verify();
 
-        try {
-            // Casting to Object[] allows compilation on Java 11.
-            array = getCollection().toArray((Object[]) null);
-            fail("toArray(null) should raise NPE");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        // Casting to Object[] allows compilation on Java 11.
+        assertThrows(NullPointerException.class, () -> getCollection().toArray((Object[]) null),
+                "toArray(null) should raise NPE");
         verify();
 
-        array = getCollection().toArray(new Object[0]);
+        array = getCollection().toArray(ArrayUtils.EMPTY_OBJECT_ARRAY);
         a = getCollection().toArray();
-        assertEquals("toArrays should be equal",
-                     Arrays.asList(array), Arrays.asList(a));
 
+        if ((getIterationBehaviour() & UNORDERED) != 0) {
+            assertUnorderedArrayEquals(array, a, "toArray(Object[]) and toArray()");
+        } else {
+            assertEquals("toArrays should be equal", Arrays.asList(array), Arrays.asList(a));
+        }
         // Figure out if they're all the same class
         // TODO: It'd be nicer to detect a common superclass
         final HashSet<Class<?>> classes = new HashSet<>();
@@ -1140,15 +1147,54 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         array = getCollection().toArray(a);
         assertEquals("toArray(Object[]) should return correct array type",
                 a.getClass(), array.getClass());
-        assertEquals("type-specific toArrays should be equal",
-                Arrays.asList(array),
-                Arrays.asList(getCollection().toArray()));
+
+        if ((getIterationBehaviour() & UNORDERED) != 0) {
+            assertUnorderedArrayEquals(array, getCollection().toArray(), "type-specific toArray(T[]) and toArray()");
+        } else {
+            assertEquals("type-specific toArrays should be equal",
+                    Arrays.asList(array),
+                    Arrays.asList(getCollection().toArray()));
+        }
         verify();
+    }
+
+    /**
+     * Assert the arrays contain the same elements, ignoring the order.
+     *
+     * <p>Note this does not test the arrays are deeply equal. Array elements are compared
+     * using {@link Object#equals(Object)}.
+     *
+     * @param a1 First array
+     * @param a2 Second array
+     * @param msg Failure message prefix
+     */
+    private static void assertUnorderedArrayEquals(final Object[] a1, final Object[] a2, final String msg) {
+        Assertions.assertEquals(a1.length, a2.length, () -> msg + ": length");
+        final int size = a1.length;
+        // Track values that have been matched once (and only once)
+        final boolean[] matched = new boolean[size];
+        NEXT_OBJECT:
+        for (final Object o : a1) {
+            for (int i = 0; i < size; i++) {
+                if (matched[i]) {
+                    // skip values already matched
+                    continue;
+                }
+                if (Objects.equals(o, a2[i])) {
+                    // values matched
+                    matched[i] = true;
+                    // continue to the outer loop
+                    continue NEXT_OBJECT;
+                }
+            }
+            fail(msg + ": array 2 does not have object: " + o);
+        }
     }
 
     /**
      *  Tests {@code toString} on a collection.
      */
+    @Test
     public void testCollectionToString() {
         resetEmpty();
         assertNotNull("toString shouldn't return null", getCollection().toString());
@@ -1161,61 +1207,38 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  If isRemoveSupported() returns false, tests to see that remove
      *  operations raise an UnsupportedOperationException.
      */
+    @Test
     public void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
         }
 
         resetEmpty();
-        try {
-            getCollection().clear();
-            fail("clear should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().clear(),
+                "clear should raise UnsupportedOperationException");
         verify();
 
-        try {
-            getCollection().remove(null);
-            fail("remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove(null),
+                "remove should raise UnsupportedOperationException");
         verify();
 
-        try {
-            getCollection().removeIf(e -> true);
-            fail("removeIf should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().removeIf(e -> true),
+                "removeIf should raise UnsupportedOperationException");
         verify();
 
-        try {
-            getCollection().removeAll(null);
-            fail("removeAll should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().removeAll(null),
+                "removeAll should raise UnsupportedOperationException");
         verify();
 
-        try {
-            getCollection().retainAll(null);
-            fail("retainAll should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().retainAll(null),
+                "retainAll should raise UnsupportedOperationException");
         verify();
 
         resetFull();
-        try {
-            final Iterator<E> iterator = getCollection().iterator();
-            iterator.next();
-            iterator.remove();
-            fail("iterator.remove should raise UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        final Iterator<E> iterator = getCollection().iterator();
+        iterator.next();
+        assertThrows(UnsupportedOperationException.class, () -> iterator.remove(),
+                "iterator.remove should raise UnsupportedOperationException");
         verify();
 
     }
@@ -1223,6 +1246,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Tests that the collection's iterator is fail-fast.
      */
+    @Test
     public void testCollectionIteratorFailFast() {
         if (!isFailFastSupported()) {
             return;
@@ -1230,28 +1254,20 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         if (isAddSupported()) {
             resetFull();
-            try {
-                final Iterator<E> iter = getCollection().iterator();
-                final E o = getOtherElements()[0];
-                getCollection().add(o);
-                getConfirmed().add(o);
-                iter.next();
-                fail("next after add should raise ConcurrentModification");
-            } catch (final ConcurrentModificationException e) {
-                // expected
-            }
+            final Iterator<E> iter0 = getCollection().iterator();
+            final E o = getOtherElements()[0];
+            getCollection().add(o);
+            getConfirmed().add(o);
+            assertThrows(ConcurrentModificationException.class, () -> iter0.next(),
+                    "next after add should raise ConcurrentModification");
             verify();
 
             resetFull();
-            try {
-                final Iterator<E> iter = getCollection().iterator();
-                getCollection().addAll(Arrays.asList(getOtherElements()));
-                getConfirmed().addAll(Arrays.asList(getOtherElements()));
-                iter.next();
-                fail("next after addAll should raise ConcurrentModification");
-            } catch (final ConcurrentModificationException e) {
-                // expected
-            }
+            final Iterator<E> iter = getCollection().iterator();
+            getCollection().addAll(Arrays.asList(getOtherElements()));
+            getConfirmed().addAll(Arrays.asList(getOtherElements()));
+            assertThrows(ConcurrentModificationException.class, () -> iter.next(),
+                    "next after addAll should raise ConcurrentModification");
             verify();
         }
 
@@ -1271,48 +1287,33 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
 
         resetFull();
-        try {
-            final Iterator<E> iter = getCollection().iterator();
-            getCollection().remove(getFullElements()[0]);
-            iter.next();
-            fail("next after remove should raise ConcurrentModification");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        final Iterator<E> iter0 = getCollection().iterator();
+        getCollection().remove(getFullElements()[0]);
+        assertThrows(ConcurrentModificationException.class, () -> iter0.next(),
+                "next after remove should raise ConcurrentModification");
 
         resetFull();
-        try {
-            final Iterator<E> iter = getCollection().iterator();
-            getCollection().removeIf(e -> false);
-            iter.next();
-            fail("next after removeIf should raise ConcurrentModification");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        final Iterator<E> iter1 = getCollection().iterator();
+        getCollection().removeIf(e -> false);
+        assertThrows(ConcurrentModificationException.class, () -> iter1.next(),
+                "next after removeIf should raise ConcurrentModification");
 
         resetFull();
-        try {
-            final Iterator<E> iter = getCollection().iterator();
-            final List<E> sublist = Arrays.asList(getFullElements()).subList(2, 5);
-            getCollection().removeAll(sublist);
-            iter.next();
-            fail("next after removeAll should raise ConcurrentModification");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        final Iterator<E> iter2 = getCollection().iterator();
+        final List<E> sublist = Arrays.asList(getFullElements()).subList(2, 5);
+        getCollection().removeAll(sublist);
+        assertThrows(ConcurrentModificationException.class, () -> iter2.next(),
+                "next after removeAll should raise ConcurrentModification");
 
         resetFull();
-        try {
-            final Iterator<E> iter = getCollection().iterator();
-            final List<E> sublist = Arrays.asList(getFullElements()).subList(2, 5);
-            getCollection().retainAll(sublist);
-            iter.next();
-            fail("next after retainAll should raise ConcurrentModification");
-        } catch (final ConcurrentModificationException e) {
-            // expected
-        }
+        final Iterator<E> iter3 = getCollection().iterator();
+        final List<E> sublist3 = Arrays.asList(getFullElements()).subList(2, 5);
+        getCollection().retainAll(sublist3);
+        assertThrows(ConcurrentModificationException.class, () -> iter3.next(),
+                "next after retainAll should raise ConcurrentModification");
     }
 
+    @Test
     @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
@@ -1420,4 +1421,5 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             //apparently not
         }
     }
+
 }

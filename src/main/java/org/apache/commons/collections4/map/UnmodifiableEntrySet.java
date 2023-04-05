@@ -130,7 +130,7 @@ public final class UnmodifiableEntrySet<K, V>
     public <T> T[] toArray(final T[] array) {
         Object[] result = array;
         if (array.length > 0) {
-            // we must create a new array to handle multi-threaded situations
+            // we must create a new array to handle multithreaded situations
             // where another thread could access data before we decorate it
             result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
         }

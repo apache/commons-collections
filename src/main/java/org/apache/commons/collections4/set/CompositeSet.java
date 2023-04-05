@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -152,9 +152,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<>();
-        for (final Set<E> item : all) {
-            chain.addIterator(item.iterator());
-        }
+        all.forEach(item -> chain.addIterator(item.iterator()));
         return chain;
     }
 

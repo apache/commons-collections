@@ -16,19 +16,23 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Tests the ArrayIterator with primitive type arrays.
- *
  */
 public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
-    public ArrayIterator2Test(final String testName) {
-        super(testName);
+    public ArrayIterator2Test() {
+        super(ArrayIterator2Test.class.getSimpleName());
     }
 
     @Override
@@ -58,6 +62,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final int element : testArray) {
@@ -76,6 +81,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
     public void testIndexedArray() {
         Iterator<E> iter = makeArrayIterator(testArray, 2);
         int count = 0;
@@ -97,34 +103,18 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ",
             count,
             testArray.length - 2);
-
-        try {
-            iter = makeArrayIterator(testArray, -1);
-            fail("new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
-
-        try {
-            iter = makeArrayIterator(testArray, testArray.length + 1);
-            fail("new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
-
-        try {
-            iter = makeArrayIterator(testArray, 0, -1);
-            fail("new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
-
-        try {
-            iter = makeArrayIterator(testArray, 0, testArray.length + 1);
-            fail("new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, -1),
+                        "new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException"),
+                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, testArray.length + 1),
+                        "new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException"),
+                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, -1),
+                        "new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException"),
+                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, testArray.length + 1),
+                        "new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException"),
+                () -> assertThrows(IllegalArgumentException.class, () -> makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2),
+                        "new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException")
+        );
 
         try {
             iter = makeArrayIterator(testArray, 1, 1);
@@ -134,12 +124,6 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             //  should be perfectly legal behavior
             fail("new ArrayIterator(Object,1,1) should NOT throw an IllegalArgumentException");
         }
-
-        try {
-            iter = makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2);
-            fail("new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
     }
+
 }

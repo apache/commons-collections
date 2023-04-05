@@ -66,8 +66,6 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /** recall whether the wrapped iterator's "cursor" is in such a state as to allow remove() to be called */
     private boolean removeState;
 
-    // Constructor
-    //-------------------------------------------------------------------------
     /**
      * Constructs a new {@code ListIteratorWrapper} that will wrap
      * the given iterator.
@@ -79,8 +77,6 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
-    // ListIterator interface
-    //-------------------------------------------------------------------------
     /**
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
@@ -246,8 +242,6 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
-    // ResettableIterator interface
-    //-------------------------------------------------------------------------
     /**
      * Resets this iterator back to the position at which the iterator
      * was created.

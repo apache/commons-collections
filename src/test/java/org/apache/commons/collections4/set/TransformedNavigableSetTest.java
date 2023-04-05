@@ -19,14 +19,12 @@ package org.apache.commons.collections4.set;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.NavigableSet;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.TreeSet;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -36,12 +34,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
-    public TransformedNavigableSetTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(TransformedNavigableSetTest.class);
+    public TransformedNavigableSetTest() {
+        super(TransformedNavigableSetTest.class.getSimpleName());
     }
 
     @Override
@@ -59,6 +53,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final NavigableSet<E> set = TransformedNavigableSet.transformingNavigableSet(new TreeSet<E>(),
@@ -74,9 +69,10 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new TreeSet<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet,
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);

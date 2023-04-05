@@ -20,9 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests
@@ -31,8 +29,8 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
 
-    public TreeListTest(final String name) {
-        super(name);
+    public TreeListTest() {
+        super(TreeListTest.class.getSimpleName());
     }
 
 //    public static void main(String[] args) {
@@ -47,10 +45,6 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        System.out.print("\n NodeCachingLinkedList = ");
 //        benchmark(new NodeCachingLinkedList());
 //    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(TreeListTest.class);
-    }
 
     public static void benchmark(final List<? super Integer> l) {
         long startMillis = System.currentTimeMillis();
@@ -108,6 +102,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         return new TreeList<>();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testAddMultiple() {
         final List<E> l = makeObject();
@@ -125,6 +120,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("harald", l.get(5));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRemove() {
         final List<E> l = makeObject();
@@ -164,6 +160,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("harald", l.get(i++));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testInsertBefore() {
         final List<E> l = makeObject();
@@ -173,6 +170,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("erna", l.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIndexOf() {
         final List<E> l = makeObject();
@@ -214,6 +212,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        l.add("A6");
 //    }
 
+    @Test
     public void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
 
@@ -224,7 +223,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         treelist.add(Integer.valueOf(3));
         treelist.add(Integer.valueOf(4));
 
-        // this cause inconsistence of ListIterator()
+        // this cause inconsistency in ListIterator()
         treelist.remove(objectToRemove);
 
         final ListIterator<Integer> li = treelist.listIterator();
@@ -244,6 +243,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertFalse(li.hasNext());
     }
 
+    @Test
     public void testBugCollections447() {
         final List<String> treeList = new TreeList<>();
         treeList.add("A");
@@ -264,6 +264,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("A", li.previous());
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrder() {
         // COLLECTIONS-433:
@@ -290,6 +291,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         }
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrderAfterAddAll() {
         // COLLECTIONS-433:

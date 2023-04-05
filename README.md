@@ -43,10 +43,13 @@
 Apache Commons Collections
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-collections.svg)](https://travis-ci.org/apache/commons-collections)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg)](https://coveralls.io/r/apache/commons-collections)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
+[![GitHub Actions Status](https://github.com/apache/commons-collections/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-collections/actions)
+[![Coverage Status](https://codecov.io/gh/apache/commons-collections/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-collections/branch/master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/?gav=true)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.4.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.4)
+[![CodeQL](https://github.com/apache/commons-collections/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
+[![OpenSSF
+Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -79,7 +82,7 @@ There are some guidelines which will make applying PRs easier for us:
 + No tabs! Please use spaces for indentation.
 + Respect the code style.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
-+ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn clean test```.
++ Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running ```mvn```.
 
 If you plan to contribute on a regular basis, please consider filing a [contributor license agreement](https://www.apache.org/licenses/#clas).
 You can learn more about contributing via GitHub in our [contribution guidelines](CONTRIBUTING.md).

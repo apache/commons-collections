@@ -152,7 +152,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param defaultValueTransformer transformer to use to generate missing values.
      */
     public DefaultedMap(final Transformer<? super K, ? extends V> defaultValueTransformer) {
-        this(new HashMap<K, V>(), defaultValueTransformer);
+        this(new HashMap<>(), defaultValueTransformer);
     }
 
     /**
@@ -195,7 +195,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     @SuppressWarnings("unchecked")
     public V get(final Object key) {
         final V v;
-        return (((v = map.get(key)) != null) || map.containsKey(key))
+        return (v = map.get(key)) != null || map.containsKey(key)
             ? v
             : value.transform((K) key);
     }

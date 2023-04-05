@@ -19,11 +19,10 @@ package org.apache.commons.collections4.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
@@ -33,12 +32,8 @@ import org.apache.commons.collections4.list.AbstractListTest;
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public ListOrderedMap2Test(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(ListOrderedMap2Test.class);
+    public ListOrderedMap2Test() {
+        super(ListOrderedMap2Test.class.getSimpleName());
     }
 
     @Override
@@ -54,6 +49,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
+    @Test
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -79,6 +75,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testGetValueByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -105,6 +102,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testIndexOf() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -121,6 +119,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testRemoveByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();

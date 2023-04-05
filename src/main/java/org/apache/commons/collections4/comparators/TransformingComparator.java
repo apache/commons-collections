@@ -18,6 +18,7 @@ package org.apache.commons.collections4.comparators;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.commons.collections4.Transformer;
@@ -100,7 +101,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
 
     /**
      * Returns {@code true} iff <i>that</i> Object is
-     * is a {@link Comparator} whose ordering is known to be
+     * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
@@ -120,8 +121,8 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
         }
         if (object.getClass().equals(this.getClass())) {
             final TransformingComparator<?, ?> comp = (TransformingComparator<?, ?>) object;
-            return (null == decorated ? null == comp.decorated : decorated.equals(comp.decorated)) &&
-                   (null == transformer ? null == comp.transformer : transformer.equals(comp.transformer));
+            return Objects.equals(decorated, comp.decorated) &&
+                   Objects.equals(transformer, comp.transformer);
         }
         return false;
     }

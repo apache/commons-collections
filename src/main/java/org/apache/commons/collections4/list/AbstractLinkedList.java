@@ -59,7 +59,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     /**
      * A {@link Node} which indicates the start and end of the list and does not
      * hold a value. The value of {@code next} is the first item in the
-     * list. The value of of {@code previous} is the last item in the list.
+     * list. The value of {@code previous} is the last item in the list.
      */
     transient Node<E> header;
 
@@ -70,7 +70,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     transient int modCount;
 
     /**
-     * Constructor that does nothing intended for deserialization.
+     * Constructor that does nothing (intended for deserialization).
      * <p>
      * If this constructor is used by a serializable subclass then the init()
      * method must be called.
@@ -376,7 +376,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         final ListIterator<?> it1 = listIterator();
         final ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
-            if (!(Objects.equals(it1.next(), it2.next()))) {
+            if (!Objects.equals(it1.next(), it2.next())) {
                 return false;
             }
         }
@@ -994,7 +994,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             parent.add(index + offset, obj);
             expectedModCount = parent.modCount;
             size++;
-            LinkedSubList.this.modCount++;
+            modCount++;
         }
 
         @Override
@@ -1004,7 +1004,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             final E result = parent.remove(index + offset);
             expectedModCount = parent.modCount;
             size--;
-            LinkedSubList.this.modCount++;
+            modCount++;
             return result;
         }
 
@@ -1025,7 +1025,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             parent.addAll(offset + index, coll);
             expectedModCount = parent.modCount;
             size += cSize;
-            LinkedSubList.this.modCount++;
+            modCount++;
             return true;
         }
 

@@ -43,18 +43,18 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
         // Check that iterator returns elements in order and first() and last()
         // are consistent
-        final Iterator<T> colliter = getCollection().iterator();
-        final Iterator<T> confiter = getConfirmed().iterator();
+        final Iterator<T> collIter = getCollection().iterator();
+        final Iterator<T> confIter = getConfirmed().iterator();
         T first = null;
         T last = null;
-        while (colliter.hasNext()) {
+        while (collIter.hasNext()) {
             if (first == null) {
-                first = colliter.next();
+                first = collIter.next();
                 last = first;
             } else {
-                last = colliter.next();
+                last = collIter.next();
             }
-            assertEquals("Element appears to be out of order.", last, confiter.next());
+            assertEquals("Element appears to be out of order.", last, confIter.next());
         }
         if (!getCollection().isEmpty()) {
             assertEquals("Incorrect element returned by first().", first,

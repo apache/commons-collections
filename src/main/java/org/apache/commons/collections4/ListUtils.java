@@ -185,7 +185,7 @@ public class ListUtils {
      * @see List#get(int)
      * @since 4.5
      */
-    public static <T> T getFirst(List<T> list) {
+    public static <T> T getFirst(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(0);
     }
 
@@ -200,7 +200,7 @@ public class ListUtils {
      * @see List#get(int)
      * @since 4.5
      */
-    public static <T> T getLast(List<T> list) {
+    public static <T> T getLast(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(list.size() - 1);
     }
 
@@ -221,10 +221,8 @@ public class ListUtils {
             return 0;
         }
         int hashCode = 1;
-        final Iterator<?> it = list.iterator();
 
-        while (it.hasNext()) {
-            final Object obj = it.next();
+        for (final Object obj : list) {
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;
@@ -286,7 +284,7 @@ public class ListUtils {
 
     /**
      * Tests two lists for value-equality as per the equality contract in
-     * {@link java.util.List#equals(java.lang.Object)}.
+     * {@link java.util.List#equals(Object)}.
      * <p>
      * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
@@ -323,14 +321,12 @@ public class ListUtils {
 
         final Iterator<?> it1 = list1.iterator();
         final Iterator<?> it2 = list2.iterator();
-        Object obj1 = null;
-        Object obj2 = null;
 
         while (it1.hasNext() && it2.hasNext()) {
-            obj1 = it1.next();
-            obj2 = it2.next();
+            final Object obj1 = it1.next();
+            final Object obj2 = it2.next();
 
-            if (!(obj1 == null ? obj2 == null : obj1.equals(obj2))) {
+            if (!Objects.equals(obj1, obj2)) {
                 return false;
             }
         }
@@ -477,7 +473,7 @@ public class ListUtils {
      * produced on demand using {@link List#subList(int, int)}, and are subject
      * to all the usual caveats about modification as explained in that API.
      * <p>
-     * Adapted from http://code.google.com/p/guava-libraries/
+     * Adapted from https://github.com/google/guava
      *
      * @param <T> the element type
      * @param list  the list to return consecutive sublists of
@@ -537,6 +533,8 @@ public class ListUtils {
      * @since 3.2
      */
     public static <E> List<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
+        Objects.requireNonNull(collection, "collection");
+        Objects.requireNonNull(remove, "remove");
         final List<E> list = new ArrayList<>();
         for (final E obj : collection) {
             if (!remove.contains(obj)) {
@@ -596,7 +594,7 @@ public class ListUtils {
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.select(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**
@@ -616,7 +614,7 @@ public class ListUtils {
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
     /**

@@ -23,6 +23,7 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
@@ -74,8 +75,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     public int getCount(final Object object) {
         for (final Entry<E> entry : entrySet()) {
             final E element = entry.getElement();
-            if (element == object ||
-                element != null && element.equals(object)) {
+            if (Objects.equals(element, object)) {
                 return entry.getCount();
             }
         }
@@ -211,9 +211,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
-        final Iterator<?> i = coll.iterator();
-        while (i.hasNext()) {
-            final Object obj = i.next();
+        for (final Object obj : coll) {
             final boolean changed = remove(obj, getCount(obj)) != 0;
             result = result || changed;
         }
@@ -405,8 +403,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
                 final Object otherElement = other.getElement();
 
                 return this.getCount() == other.getCount() &&
-                       (element == otherElement ||
-                        element != null && element.equals(otherElement));
+                       Objects.equals(element, otherElement);
             }
             return false;
         }
@@ -414,7 +411,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         @Override
         public int hashCode() {
             final E element = getElement();
-            return ((element == null) ? 0 : element.hashCode()) ^ getCount();
+            return (element == null ? 0 : element.hashCode()) ^ getCount();
         }
 
         @Override

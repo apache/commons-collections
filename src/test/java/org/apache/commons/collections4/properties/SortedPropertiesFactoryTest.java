@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.collections4.properties;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
 
-    public SortedPropertiesFactoryTest(final String fileExtension) {
-        super(SortedPropertiesFactory.INSTANCE, fileExtension);
+    public SortedPropertiesFactoryTest() {
+        super(SortedPropertiesFactory.INSTANCE);
     }
 
-    @Override
     @Test
+    @Override
     public void testInstance() {
-        Assert.assertNotNull(SortedPropertiesFactory.INSTANCE);
+        Assertions.assertNotNull(SortedPropertiesFactory.INSTANCE);
     }
+
 }

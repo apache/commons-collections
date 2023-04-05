@@ -53,7 +53,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * passed in and a reference to it held.
      *
      * @param list the list to wrap
-     * @throws NullPointerException if the list it null
+     * @throws NullPointerException if the list is null
      */
     public LoopingListIterator(final List<E> list) {
         this.list = Objects.requireNonNull(list, "collection");

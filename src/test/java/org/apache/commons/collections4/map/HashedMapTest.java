@@ -16,22 +16,15 @@
  */
 package org.apache.commons.collections4.map;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public HashedMapTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(HashedMapTest.class);
+    public HashedMapTest() {
+        super(HashedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -44,6 +37,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return "4";
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone() {
         final HashedMap<K, V> map = new HashedMap<>(10);
@@ -53,6 +47,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(map.get("1"), cloned.get("1"));
     }
 
+    @Test
     public void testInternalState() {
         final HashedMap<Integer, Integer> map = new HashedMap<>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
@@ -83,6 +78,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /**
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
+    @Test
     public void testInitialCapacityZero() {
         final HashedMap<String, String> map = new HashedMap<>(0);
         assertEquals(1, map.data.length);

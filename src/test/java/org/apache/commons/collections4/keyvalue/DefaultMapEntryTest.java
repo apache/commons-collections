@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test the DefaultMapEntry class.
@@ -54,9 +54,9 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * Subclasses should override this method.
      *
      */
+    @Test
     @Override
     @SuppressWarnings("unchecked")
-    @Test
     public void testConstructors() {
         // 1. test key-value constructor
         final Map.Entry<K, V> entry = new DefaultMapEntry<>((K) key, (V) value);
@@ -78,18 +78,14 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(value, entry2.getValue());
     }
 
+    @Test
     @Override
     @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         final Map.Entry<K, V> entry = makeMapEntry();
 
-        try {
-            entry.setValue((V) entry);
-            assertSame(entry, entry.getValue());
-
-        } catch (final Exception e) {
-            fail("This Map.Entry implementation supports value self-reference.");
-        }
+        entry.setValue((V) entry);
+        assertSame(entry, entry.getValue());
     }
 
 }

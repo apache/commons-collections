@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bidimap;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.BidiMap;
@@ -389,9 +389,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 return false;
             }
             boolean modified = false;
-            final Iterator<?> it = coll.iterator();
-            while (it.hasNext()) {
-                modified |= remove(it.next());
+            for (final Object current : coll) {
+                modified |= remove(current);
             }
             return modified;
         }
@@ -674,7 +673,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            // store value as remove may change the entry in the decorator (eg.TreeMap)
+            // store value as remove may change the entry in the decorator (e.g. TreeMap)
             final Object value = last.getValue();
             super.remove();
             parent.reverseMap.remove(value);
@@ -703,7 +702,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         @Override
         public V setValue(final V value) {
-            final K key = MapEntry.this.getKey();
+            final K key = getKey();
             if (parent.reverseMap.containsKey(value) &&
                 parent.reverseMap.get(value) != key) {
                 throw new IllegalArgumentException(
@@ -757,7 +756,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            // store value as remove may change the entry in the decorator (eg.TreeMap)
+            // store value as remove may change the entry in the decorator (e.g. TreeMap)
             final V value = last.getValue();
             iterator.remove();
             parent.reverseMap.remove(value);

@@ -16,14 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
@@ -31,8 +23,8 @@ import junit.framework.TestSuite;
  * A {@link TestCase} that can define both simple and bulk test methods.
  * <p>
  * A <I>simple test method</I> is the type of test traditionally
- * supplied by by {@link TestCase}.  To define a simple test, create a public
- * no-argument method whose name starts with "test".  You can specify the
+ * supplied by {@link TestCase}.  To define a simple test, create a public
+ * no-argument method whose name starts with "test".  You can specify
  * the name of simple test in the constructor of {@code BulkTest};
  * a subsequent call to {@link TestCase#run} will run that simple test.
  * <p>
@@ -52,11 +44,13 @@ import junit.framework.TestSuite;
  *          this.set = set;
  *      }
  *
+ *      @Test
  *      public void testContains() {
  *          boolean r = set.contains(set.iterator().next()));
  *          assertTrue("Set should contain first element, r);
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          set.clear();
  *          assertTrue("Set should be empty after clear", set.isEmpty());
@@ -73,6 +67,7 @@ import junit.framework.TestSuite;
  *          return result;
  *      }
  *
+ *      @Test
  *      public void testClear() {
  *          Map map = makeFullMap();
  *          map.clear();
@@ -132,7 +127,6 @@ import junit.framework.TestSuite;
  *  define your {@code suite()} method to use {@link #makeSuite}.
  *  The ordinary {@link TestSuite} constructor doesn't know how to
  *  interpret bulk test methods.
- *
  */
 public class BulkTest extends TestCase implements Cloneable {
 
@@ -228,263 +222,6 @@ public class BulkTest extends TestCase implements Cloneable {
     @Override
     public String toString() {
         return getName() + "(" + verboseName + ") ";
-    }
-
-    /**
-     *  Returns a {@link TestSuite} for testing all of the simple tests
-     *  <I>and</I> all the bulk tests defined by the given class.<P>
-     *
-     *  The class is examined for simple and bulk test methods; any child
-     *  bulk tests are also examined recursively; and the results are stored
-     *  in a hierarchical {@link TestSuite}.<P>
-     *
-     *  The given class must be a subclass of {@code BulkTest} and must
-     *  not be abstract.<P>
-     *
-     *  @param c  the class to examine for simple and bulk tests
-     *  @return  a {@link TestSuite} containing all the simple and bulk tests
-     *    defined by that class
-     */
-    public static TestSuite makeSuite(final Class<? extends BulkTest> c) {
-        if (Modifier.isAbstract(c.getModifiers())) {
-            throw new IllegalArgumentException("Class must not be abstract.");
-        }
-        if (!BulkTest.class.isAssignableFrom(c)) {
-            throw new IllegalArgumentException("Class must extend BulkTest.");
-        }
-        return new BulkTestSuiteMaker(c).make();
-    }
-
-}
-
-// It was easier to use a separate class to do all the reflection stuff
-// for making the TestSuite instances.  Having permanent state around makes
-// it easier to handle the recursion.
-class BulkTestSuiteMaker {
-
-    /** The class that defines simple and bulk tests methods. */
-    private final Class<? extends BulkTest> startingClass;
-
-    /** List of ignored simple test names. */
-    private List<String> ignored;
-
-    /** The TestSuite we're currently populating.  Can change over time. */
-    private TestSuite result;
-
-    /**
-     * The prefix for simple test methods.  Used to check if a test is in
-     * the ignored list.
-     */
-    private String prefix;
-
-    /**
-     * Constructor.
-     *
-     * @param startingClass  the starting class
-     */
-    BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
-        this.startingClass = startingClass;
-    }
-
-    /**
-     * Makes a hierarchical TestSuite based on the starting class.
-     *
-     * @return the hierarchical TestSuite for startingClass
-     */
-    public TestSuite make() {
-        this.result = new TestSuite();
-        this.prefix = getBaseName(startingClass);
-        result.setName(prefix);
-
-        final BulkTest bulk = makeFirstTestCase(startingClass);
-        ignored = new ArrayList<>();
-        final String[] s = bulk.ignoredTests();
-        if (s != null) {
-            ignored.addAll(Arrays.asList(s));
-        }
-        make(bulk);
-        return result;
-    }
-
-    /**
-     * Appends all the simple tests and bulk tests defined by the given
-     * instance's class to the current TestSuite.
-     *
-     * @param bulk  An instance of the class that defines simple and bulk
-     *    tests for us to append
-     */
-    void make(final BulkTest bulk) {
-        final Class<? extends BulkTest> c = bulk.getClass();
-        final Method[] all = c.getMethods();
-        for (final Method element : all) {
-            if (isTest(element)) {
-                addTest(bulk, element);
-            }
-            if (isBulk(element)) {
-                addBulk(bulk, element);
-            }
-        }
-    }
-
-    /**
-     * Adds the simple test defined by the given method to the TestSuite.
-     *
-     * @param bulk  The instance of the class that defined the method
-     *   (I know it's weird.  But the point is, we can clone the instance
-     *   and not have to worry about constructors.)
-     * @param m  The simple test method
-     */
-    void addTest(final BulkTest bulk, final Method m) {
-        final BulkTest bulk2 = (BulkTest) bulk.clone();
-        bulk2.setName(m.getName());
-        bulk2.verboseName = prefix + "." + m.getName();
-        if (ignored.contains(bulk2.verboseName)) {
-            return;
-        }
-        result.addTest(bulk2);
-    }
-
-    /**
-     * Adds a whole new suite of tests that are defined by the result of
-     * the given bulk test method.  In other words, the given bulk test
-     * method is invoked, and the resulting BulkTest instance is examined
-     * for yet more simple and bulk tests.
-     *
-     * @param bulk  The instance of the class that defined the method
-     * @param m  The bulk test method
-     */
-    void addBulk(final BulkTest bulk, final Method m) {
-        final String verboseName = prefix + "." + m.getName();
-        if (ignored.contains(verboseName)) {
-            return;
-        }
-
-        final BulkTest bulk2;
-        try {
-            bulk2 = (BulkTest) m.invoke(bulk, (Object[]) null);
-            if (bulk2 == null) {
-                return;
-            }
-        } catch (final InvocationTargetException ex) {
-            ex.getTargetException().printStackTrace();
-            throw new Error(); // FIXME;
-        } catch (final IllegalAccessException ex) {
-            ex.printStackTrace();
-            throw new Error(); // FIXME;
-        }
-
-        // Save current state on the stack.
-        final String oldPrefix = prefix;
-        final TestSuite oldResult = result;
-
-        prefix = prefix + "." + m.getName();
-        result = new TestSuite();
-        result.setName(m.getName());
-
-        make(bulk2);
-
-        oldResult.addTest(result);
-
-        // Restore the old state
-        prefix = oldPrefix;
-        result = oldResult;
-    }
-
-    /**
-     * Returns the base name of the given class.
-     *
-     * @param c  the class
-     * @return the name of that class, minus any package names
-     */
-    private static String getBaseName(final Class<?> c) {
-        String name = c.getName();
-        final int p = name.lastIndexOf('.');
-        if (p > 0) {
-            name = name.substring(p + 1);
-        }
-        return name;
-    }
-
-
-    // These three methods are used to create a valid BulkTest instance
-    // from a class.
-
-    private static <T> Constructor<T> getTestCaseConstructor(final Class<T> c) {
-        try {
-            return c.getConstructor(String.class);
-        } catch (final NoSuchMethodException e) {
-            throw new IllegalArgumentException(c + " must provide a (String) constructor");
-        }
-    }
-
-    private static <T extends BulkTest> BulkTest makeTestCase(final Class<T> c, final Method m) {
-        final Constructor<T> con = getTestCaseConstructor(c);
-        try {
-            return con.newInstance(m.getName());
-        } catch (final InvocationTargetException e) {
-            e.printStackTrace();
-            throw new RuntimeException(); // FIXME;
-        } catch (final IllegalAccessException e) {
-            throw new Error(); // should never occur
-        } catch (final InstantiationException e) {
-            throw new RuntimeException(); // FIXME;
-        }
-    }
-
-    private static <T extends BulkTest> BulkTest makeFirstTestCase(final Class<T> c) {
-        final Method[] all = c.getMethods();
-        for (final Method element : all) {
-            if (isTest(element)) {
-                return makeTestCase(c, element);
-            }
-        }
-        throw new IllegalArgumentException(c.getName() + " must provide at least one test method.");
-    }
-
-    /**
-     * Returns true if the given method is a simple test method.
-     */
-    private static boolean isTest(final Method m) {
-        if (!m.getName().startsWith("test")) {
-            return false;
-        }
-        if (m.getReturnType() != Void.TYPE) {
-            return false;
-        }
-        if (m.getParameterTypes().length != 0) {
-            return false;
-        }
-        final int mods = m.getModifiers();
-        if (Modifier.isStatic(mods)) {
-            return false;
-        }
-        if (Modifier.isAbstract(mods)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Returns true if the given method is a bulk test method.
-     */
-    private static boolean isBulk(final Method m) {
-        if (!m.getName().startsWith("bulkTest")) {
-            return false;
-        }
-        if (m.getReturnType() != BulkTest.class) {
-            return false;
-        }
-        if (m.getParameterTypes().length != 0) {
-            return false;
-        }
-        final int mods = m.getModifiers();
-        if (Modifier.isStatic(mods)) {
-            return false;
-        }
-        if (Modifier.isAbstract(mods)) {
-            return false;
-        }
-        return true;
     }
 
 }

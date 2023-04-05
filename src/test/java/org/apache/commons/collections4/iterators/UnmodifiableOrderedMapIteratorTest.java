@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,15 +26,15 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.ListOrderedMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableOrderedMapIterator.
- *
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
-    public UnmodifiableOrderedMapIteratorTest(final String testName) {
-        super(testName);
+    public UnmodifiableOrderedMapIteratorTest() {
+        super(UnmodifiableOrderedMapIteratorTest.class.getSimpleName());
     }
 
     @Override
@@ -76,10 +78,12 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         return false;
     }
 
+    @Test
     public void testOrderedMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         OrderedMapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
@@ -87,10 +91,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         it = getMap().mapIterator();
         assertNotSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
-        try {
-            UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null));
     }
 
 }

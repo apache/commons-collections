@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -42,8 +46,8 @@ public class ListOrderedSetTest<E>
 
     private static final Integer THREE = Integer.valueOf(3);
 
-    public ListOrderedSetTest(final String testName) {
-        super(testName);
+    public ListOrderedSetTest() {
+        super(ListOrderedSetTest.class.getSimpleName());
     }
 
     @Override
@@ -61,6 +65,7 @@ public class ListOrderedSetTest<E>
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testOrdering() {
         final ListOrderedSet<E> set = setupSet();
@@ -96,6 +101,7 @@ public class ListOrderedSetTest<E>
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddRemove() {
         final ListOrderedSet<E> set = makeObject();
@@ -126,6 +132,7 @@ public class ListOrderedSetTest<E>
         assertSame(TWO, view.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
         final ListOrderedSet<E> set = makeObject();
@@ -164,6 +171,7 @@ public class ListOrderedSetTest<E>
         assertSame(ONE, set.get(3));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddReplacing() {
         final ListOrderedSet<E> set = makeObject();
@@ -179,6 +187,7 @@ public class ListOrderedSetTest<E>
         assertSame(a, set.asList().get(0));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRetainAll() {
         final List<E> list = new ArrayList<>(10);
@@ -203,6 +212,7 @@ public class ListOrderedSetTest<E>
         assertEquals(Integer.valueOf(0), orderedSet.get(4));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testDuplicates() {
         final List<E> list = new ArrayList<>(10);
@@ -248,32 +258,15 @@ public class ListOrderedSetTest<E>
         }
     }
 
+    @Test
     public void testDecorator() {
-        try {
-            ListOrderedSet.listOrderedSet((List<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet((Set<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<E>(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<E>()))
+        );
     }
 
     @Override

@@ -21,9 +21,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * Tests the UniqueFilterIterator class.
- *
  */
 public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -33,11 +35,12 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1 = null;
 
-    public UniqueFilterIteratorTest(final String testName) {
-        super(testName);
+    public UniqueFilterIteratorTest() {
+        super(UniqueFilterIteratorTest.class.getSimpleName());
     }
 
     @Override
+    @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {
         list1 = new ArrayList<>();
@@ -65,6 +68,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         return new UniqueFilterIterator<>(i);
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {

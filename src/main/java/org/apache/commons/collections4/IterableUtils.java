@@ -61,9 +61,6 @@ public class IterableUtils {
         }
     };
 
-    // Empty
-    // ----------------------------------------------------------------------
-
     /**
      * Gets an empty iterable.
      * <p>
@@ -76,9 +73,6 @@ public class IterableUtils {
     public static <E> Iterable<E> emptyIterable() {
         return EMPTY_ITERABLE;
     }
-
-    // Chained
-    // ----------------------------------------------------------------------
 
     /**
      * Combines two iterables into a single iterable.
@@ -185,9 +179,6 @@ public class IterableUtils {
         };
     }
 
-    // Collated
-    // ----------------------------------------------------------------------
-
     /**
      * Combines the two provided iterables into an ordered iterable using
      * natural ordering.
@@ -240,9 +231,6 @@ public class IterableUtils {
         };
     }
 
-    // Filtered
-    // ----------------------------------------------------------------------
-
     /**
      * Returns a view of the given iterable that only contains elements matching
      * the provided predicate.
@@ -267,9 +255,6 @@ public class IterableUtils {
             }
         };
     }
-
-    // Bounded
-    // ----------------------------------------------------------------------
 
     /**
      * Returns a view of the given iterable that contains at most the given number
@@ -298,9 +283,6 @@ public class IterableUtils {
             }
         };
     }
-
-    // Looping
-    // ----------------------------------------------------------------------
 
     /**
      * Returns a view of the given iterable which will cycle infinitely over
@@ -335,9 +317,6 @@ public class IterableUtils {
         };
     }
 
-    // Reversed
-    // ----------------------------------------------------------------------
-
     /**
      * Returns a reversed view of the given iterable.
      * <p>
@@ -359,16 +338,13 @@ public class IterableUtils {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                final List<E> list = (iterable instanceof List<?>) ?
+                final List<E> list = iterable instanceof List<?> ?
                         (List<E>) iterable :
                         IteratorUtils.toList(iterable.iterator());
                 return new ReverseListIterator<>(list);
             }
         };
     }
-
-    // Skipping
-    // ----------------------------------------------------------------------
 
     /**
      * Returns a view of the given iterable that skips the first N elements.
@@ -397,9 +373,6 @@ public class IterableUtils {
         };
     }
 
-    // Transformed
-    // ----------------------------------------------------------------------
-
     /**
      * Returns a transformed view of the given iterable where all of its elements
      * have been transformed by the provided transformer.
@@ -426,9 +399,6 @@ public class IterableUtils {
         };
     }
 
-    // Unique
-    // ----------------------------------------------------------------------
-
     /**
      * Returns a unique view of the given iterable.
      * <p>
@@ -450,9 +420,6 @@ public class IterableUtils {
             }
         };
     }
-
-    // Unmodifiable
-    // ----------------------------------------------------------------------
 
     /**
      * Returns an unmodifiable view of the given iterable.
@@ -487,9 +454,6 @@ public class IterableUtils {
             return IteratorUtils.unmodifiableIterator(unmodifiable.iterator());
         }
     }
-
-    // Zipping
-    // ----------------------------------------------------------------------
 
     /**
      * Interleaves two iterables into a single iterable.
@@ -553,9 +517,6 @@ public class IterableUtils {
             }
         };
     }
-
-    // Utility methods
-    // ----------------------------------------------------------------------
 
     /**
      * Returns an immutable empty iterable if the argument is null,
@@ -1043,9 +1004,6 @@ public class IterableUtils {
         return IteratorUtils.toString(emptyIteratorIfNull(iterable),
                                       transformer, delimiter, prefix, suffix);
     }
-
-    // Helper methods
-    // ----------------------------------------------------------------------
 
     /**
      * Fail-fast check for null arguments.

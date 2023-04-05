@@ -47,7 +47,7 @@ import java.util.Objects;
  * @since 3.0
  */
 public class MultiKey<K> implements Serializable {
-    // This class could implement List, but that would confuse it's purpose
+    // This class could implement List, but that would confuse its purpose
 
     /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
@@ -290,7 +290,7 @@ public class MultiKey<K> implements Serializable {
      * This value is computed once and then cached, so elements should not
      * change their hash codes once created (note that this is the same
      * constraint that would be used if the individual keys elements were
-     * themselves {@link java.util.Map Map} keys.
+     * themselves {@link java.util.Map Map} keys).
      *
      * @return the hash code
      */

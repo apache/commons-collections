@@ -63,7 +63,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * Different types of references can be specified for keys and values.
  * The keys can be configured to be weak but the values hard,
  * in which case this class will behave like a
- * <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
+ * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/WeakHashMap.html">
  * {@code WeakHashMap}</a>. However, you can also specify hard keys and
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.
@@ -294,9 +294,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public void clear() {
         super.clear();
-        // drain the queue
-        while (queue.poll() != null) {
-            // empty
+        // Drain the queue
+        while (queue.poll() != null) { // NOPMD
         }
     }
 
@@ -487,7 +486,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an key set iterator.
+     * Creates a key set iterator.
      *
      * @return the keySet iterator
      */
@@ -497,7 +496,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Creates an values iterator.
+     * Creates a values iterator.
      *
      * @return the values iterator
      */
@@ -586,7 +585,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * <p>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
+     * </p>
      *
+     * @param <K> the type of the keys
+     * @param <V> the type of the values
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
@@ -772,8 +774,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         // These fields keep track of where we are in the table.
         int index;
-        ReferenceEntry<K, V> entry;
-        ReferenceEntry<K, V> previous;
+        ReferenceEntry<K, V> next;
+        ReferenceEntry<K, V> current;
 
         // These Object fields provide hard references to the
         // current and next entry; this assures that if hasNext()
@@ -794,23 +796,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public boolean hasNext() {
             checkMod();
             while (nextNull()) {
-                ReferenceEntry<K, V> e = entry;
+                ReferenceEntry<K, V> e = next;
                 int i = index;
                 while (e == null && i > 0) {
                     i--;
                     e = (ReferenceEntry<K, V>) parent.data[i];
                 }
-                entry = e;
+                next = e;
                 index = i;
                 if (e == null) {
-                    currentKey = null;
-                    currentValue = null;
                     return false;
                 }
                 nextKey = e.getKey();
                 nextValue = e.getValue();
                 if (nextNull()) {
-                    entry = entry.next();
+                    next = next.next();
                 }
             }
             return true;
@@ -831,27 +831,27 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             if (nextNull() && !hasNext()) {
                 throw new NoSuchElementException();
             }
-            previous = entry;
-            entry = entry.next();
+            current = next;
+            next = next.next();
             currentKey = nextKey;
             currentValue = nextValue;
             nextKey = null;
             nextValue = null;
-            return previous;
+            return current;
         }
 
         protected ReferenceEntry<K, V> currentEntry() {
             checkMod();
-            return previous;
+            return current;
         }
 
         public void remove() {
             checkMod();
-            if (previous == null) {
+            if (current == null) {
                 throw new IllegalStateException();
             }
             parent.remove(currentKey);
-            previous = null;
+            current = null;
             currentKey = null;
             currentValue = null;
             expectedModCount = parent.modCount;
@@ -950,7 +950,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     // These two classes store the hashCode of the key of
-    // of the mapping, so that after they're dequeued a quick
+    // the mapping, so that after they're dequeued a quick
     // lookup of the bucket in the table can occur.
 
     /**
@@ -969,6 +969,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public int hashCode() {
             return hash;
         }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final SoftRef<?> other = (SoftRef<?>) obj;
+            return hash == other.hash;
+        }
     }
 
     /**
@@ -986,6 +1001,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public int hashCode() {
             return hash;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final WeakRef<?> other = (WeakRef<?>) obj;
+            return hash == other.hash;
         }
     }
 

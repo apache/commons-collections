@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +27,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the OrderedMapIterator interface.
@@ -56,6 +59,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     @Override
     public void testEmptyMapIterator() {
         if (!supportsEmptyIterator()) {
@@ -66,15 +70,14 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
         final OrderedMapIterator<K, V> it = makeEmptyIterator();
         assertFalse(it.hasPrevious());
-        try {
-            it.previous();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+
+        assertThrows(NoSuchElementException.class, () -> it.previous());
     }
 
     /**
      * Test that the full list iterator contract is correct.
      */
+    @Test
     @Override
     public void testFullMapIterator() {
         if (!supportsFullIterator()) {
@@ -130,6 +133,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     /**
      * Test that the iterator order matches the keySet order.
      */
+    @Test
     public void testMapIteratorOrder() {
         if (!supportsFullIterator()) {
             return;

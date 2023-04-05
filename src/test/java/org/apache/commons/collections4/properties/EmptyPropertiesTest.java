@@ -17,11 +17,21 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
@@ -30,16 +40,30 @@ import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
 public class EmptyPropertiesTest {
+
+    /**
+     * Returns the first line from multi-lined string separated by a line separator character
+     *
+     * @param x the multi-lined String
+     * @return the first line from x
+     */
+    private String getFirstLine(final String x) {
+        return x.split("\\R", 2)[0];
+    }
+
+    private PrintStream newPrintStream(final ByteArrayOutputStream baos) throws UnsupportedEncodingException {
+        return new PrintStream(baos, true, StandardCharsets.UTF_8.name());
+    }
+
+    private String removeLine2(final ByteArrayOutputStream baos) {
+        return removeLine2(toString(baos));
+    }
+
+    private String removeLine2(final String x) {
+        final String[] s = x.split("\\R", 2);
+        return s[0] + System.lineSeparator() + (s.length > 2 ? s[2] : "");
+    }
 
     @Test
     public void testClear() {
@@ -106,6 +130,7 @@ public class EmptyPropertiesTest {
         assertNotEquals(p, PropertiesFactory.EMPTY_PROPERTIES);
     }
 
+    @Test
     public void testForEach() {
         PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }
@@ -132,8 +157,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(),
-            PropertiesFactory.EMPTY_PROPERTIES.hashCode());
+        assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), PropertiesFactory.EMPTY_PROPERTIES.hashCode());
         // Should be equals?
         // assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), new Properties().hashCode());
     }
@@ -150,7 +174,7 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testKeySet() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.keySet().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
@@ -182,12 +206,13 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testLoadFromXML() throws IOException {
-        assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
+    public void testLoadFromXML() {
+        assertThrows(UnsupportedOperationException.class,
+            () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
     @Test
-    public void testLoadInputStream() throws IOException {
+    public void testLoadInputStream() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
@@ -257,23 +282,29 @@ public class EmptyPropertiesTest {
     @Test
     public void testSave() throws IOException {
         final String comments = "Hello world!";
-        // actual
-        try (ByteArrayOutputStream actual = new ByteArrayOutputStream()) {
-            try (PrintStream out = new PrintStream(actual)) {
-                PropertiesFactory.EMPTY_PROPERTIES.save(out, comments);
-            }
+        try (ByteArrayOutputStream actual = new ByteArrayOutputStream(); ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
+            // actual
+            PropertiesFactory.EMPTY_PROPERTIES.store(actual, comments);
             // expected
-            try (ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
-                try (PrintStream out = new PrintStream(expected)) {
-                    PropertiesFactory.INSTANCE.createProperties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
-                expected.reset();
-                try (PrintStream out = new PrintStream(expected)) {
-                    new Properties().save(out, comments);
-                }
-                assertArrayEquals(expected.toByteArray(), actual.toByteArray(), () -> new String(expected.toByteArray()));
+            PropertiesFactory.INSTANCE.createProperties().store(expected, comments);
+
+            // Properties.store stores the specified comment appended with current time stamp in the next line
+            final String expectedComment = getFirstLine(expected.toString("UTF-8"));
+            final String actualComment = getFirstLine(actual.toString("UTF-8"));
+            assertEquals(expectedComment, actualComment,
+                () -> String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
+            expected.reset();
+            try (PrintStream out = new PrintStream(expected)) {
+                new Properties().store(out, comments);
             }
+            final String[] expectedLines = expected.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            final String[] actualLines = actual.toString(StandardCharsets.UTF_8.displayName()).split("\\n");
+            assertEquals(expectedLines.length, actualLines.length);
+            // The assertion below checks that the comment is the same in both files
+            assertEquals(expectedLines[0], actualLines[0]);
+            // N.B.: We must not expect expectedLines[1] and actualLines[1] to have the same value as
+            // it contains the timestamp of when the data was written to the stream, which makes
+            // this test brittle, causing intermitent failures, see COLLECTIONS-812
         }
     }
 
@@ -289,63 +320,91 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testStoreToOutputStream() throws IOException {
+        // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
-        PropertiesFactory.EMPTY_PROPERTIES.store(new PrintStream(actual), comments);
+        try (PrintStream ps = newPrintStream(actual)) {
+            PropertiesFactory.EMPTY_PROPERTIES.store(ps, comments);
+        }
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        PropertiesFactory.INSTANCE.createProperties().store(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            PropertiesFactory.INSTANCE.createProperties().store(ps, comments);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
         expected.reset();
-        new Properties().store(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            new Properties().store(ps, comments);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual), () -> removeLine2(actual));
     }
 
     @Test
     public void testStoreToPrintWriter() throws IOException {
+        // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
-        PropertiesFactory.EMPTY_PROPERTIES.store(new PrintWriter(actual), comments);
+        try (PrintStream ps = newPrintStream(actual)) {
+            PropertiesFactory.EMPTY_PROPERTIES.store(ps, comments);
+        }
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        PropertiesFactory.INSTANCE.createProperties().store(new PrintWriter(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            PropertiesFactory.INSTANCE.createProperties().store(ps, comments);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
         expected.reset();
-        new Properties().store(new PrintWriter(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            new Properties().store(ps, comments);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
     }
 
     @Test
     public void testStoreToXMLOutputStream() throws IOException {
+        // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
-        PropertiesFactory.EMPTY_PROPERTIES.storeToXML(new PrintStream(actual), comments);
+        try (PrintStream ps = newPrintStream(actual)) {
+            PropertiesFactory.EMPTY_PROPERTIES.storeToXML(ps, comments);
+        }
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        PropertiesFactory.INSTANCE.createProperties().storeToXML(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            PropertiesFactory.INSTANCE.createProperties().storeToXML(ps, comments);
+        }
+        assertEquals(toString(expected), toString(actual));
         expected.reset();
-        new Properties().storeToXML(new PrintStream(expected), comments);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = new PrintStream(expected)) {
+            new Properties().storeToXML(ps, comments);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
     }
 
     @Test
     public void testStoreToXMLOutputStreamWithEncoding() throws IOException {
+        // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         final String encoding = StandardCharsets.UTF_8.name();
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
-        PropertiesFactory.EMPTY_PROPERTIES.storeToXML(new PrintStream(actual), comments, encoding);
+        try (PrintStream ps = newPrintStream(actual)) {
+            PropertiesFactory.EMPTY_PROPERTIES.storeToXML(ps, comments, encoding);
+        }
         // expected
         final ByteArrayOutputStream expected = new ByteArrayOutputStream();
-        PropertiesFactory.INSTANCE.createProperties().storeToXML(new PrintStream(expected), comments, encoding);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            PropertiesFactory.INSTANCE.createProperties().storeToXML(ps, comments, encoding);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
         expected.reset();
-        new Properties().storeToXML(new PrintStream(expected), comments, encoding);
-        assertArrayEquals(expected.toByteArray(), actual.toByteArray());
+        try (PrintStream ps = newPrintStream(expected)) {
+            new Properties().storeToXML(ps, comments, encoding);
+        }
+        assertEquals(removeLine2(expected), removeLine2(actual));
     }
 
     @Test
@@ -360,6 +419,10 @@ public class EmptyPropertiesTest {
 
     @Test
     public void testValues() {
-        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.values().isEmpty());
+        assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
+    }
+
+    private String toString(final ByteArrayOutputStream expected) {
+        return new String(expected.toByteArray(), StandardCharsets.UTF_8);
     }
 }

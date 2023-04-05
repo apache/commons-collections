@@ -16,10 +16,13 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the Iterator interface.
@@ -97,6 +100,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test the empty iterator.
      */
+    @Test
     public void testEmptyIterator() {
         if (!supportsEmptyIterator()) {
             return;
@@ -108,11 +112,8 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         assertFalse("hasNext() should return false for empty iterators", it.hasNext());
 
         // next() should throw a NoSuchElementException
-        try {
-            it.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (final NoSuchElementException e) {
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown when Iterator is exhausted");
         verify();
 
         assertNotNull(it.toString());
@@ -121,6 +122,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test normal iteration behavior.
      */
+    @Test
     public void testFullIterator() {
         if (!supportsFullIterator()) {
             return;
@@ -145,11 +147,8 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         }
 
         // next() must throw NoSuchElementException now
-        try {
-            it.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (final NoSuchElementException e) {
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown when Iterator is exhausted");
 
         assertNotNull(it.toString());
     }
@@ -157,6 +156,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Test remove behavior.
      */
+    @Test
     public void testRemove() {
         final Iterator<E> it = makeObject();
 
@@ -169,10 +169,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         }
 
         // should throw IllegalStateException before next() called
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.remove());
         verify();
 
         // remove after next should be fine
@@ -180,10 +177,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         it.remove();
 
         // should throw IllegalStateException for second remove()
-        try {
-            it.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.remove());
     }
 
 }

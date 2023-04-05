@@ -20,18 +20,18 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
- *
  */
 public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonIterator2Test(final String testName) {
-        super(testName);
+    public SingletonIterator2Test() {
+        super(SingletonIterator2Test.class.getSimpleName());
     }
 
     @Override
@@ -60,6 +60,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());
@@ -76,6 +77,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
     public void testReset() {
         final ResettableIterator<E> it = makeObject();
 

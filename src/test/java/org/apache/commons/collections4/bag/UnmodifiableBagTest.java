@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -33,12 +33,8 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  */
 public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
-    public UnmodifiableBagTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(UnmodifiableBagTest.class);
+    public UnmodifiableBagTest() {
+        super(UnmodifiableBagTest.class.getSimpleName());
     }
 
     @Override
@@ -73,22 +69,24 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         return false;
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Bag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableBag.unmodifiableBag(queue));
 
-        try {
-            UnmodifiableBag.unmodifiableBag(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableBag.unmodifiableBag(null));
     }
-
 
     @Override
     public String getCompatibilityVersion() {

@@ -28,6 +28,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Abstract test class for {@link java.lang.Object} methods and contracts.
  * <p>
@@ -97,21 +99,25 @@ public abstract class AbstractObjectTest extends BulkTest {
         return true;
     }
 
+    @Test
     public void testObjectEqualsSelf() {
         final Object obj = makeObject();
         assertEquals("A Object should equal itself", obj, obj);
     }
 
+    @Test
     public void testEqualsNull() {
         final Object obj = makeObject();
         assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
+    @Test
     public void testObjectHashCodeEqualsSelfHashCode() {
         final Object obj = makeObject();
         assertEquals("hashCode should be repeatable", obj.hashCode(), obj.hashCode());
     }
 
+    @Test
     public void testObjectHashCodeEqualsContract() {
         final Object obj1 = makeObject();
         if (obj1.equals(obj1)) {
@@ -141,6 +147,7 @@ public abstract class AbstractObjectTest extends BulkTest {
         return dest;
     }
 
+    @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
@@ -159,11 +166,12 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @Test
     public void testSimpleSerialization() throws Exception {
         final Object o = makeObject();
         if (o instanceof Serializable && isTestSerialization()) {
-            final byte[] objekt = writeExternalFormToBytes((Serializable) o);
-            readExternalFormFromBytes(objekt);
+            final byte[] object = writeExternalFormToBytes((Serializable) o);
+            readExternalFormFromBytes(object);
         }
     }
 
@@ -171,6 +179,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
+    @Test
     public void testCanonicalEmptyCollectionExists() {
         if (supportsEmptyCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();
@@ -187,6 +196,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
+    @Test
     public void testCanonicalFullCollectionExists() {
         if (supportsFullCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();

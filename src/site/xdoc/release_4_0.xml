@@ -106,7 +106,7 @@ have changed.
 <li>PermutationIterator - generates unordered permutations of a collection. Thanks to Benoit Corne.</li>
 <li>SequencesComparator - an implementation of Eugene Myers difference algorithm in package o.a.c.c.sequence. Thanks to Jordane Sarda.</li>
 <li>LazyIteratorChain - a variant of IteratorChain which supports lazy initialization. Thanks to Jeff Rodriguez.</li>
-<li>NodeListIterator - supports iteration over a org.w3c.dom.NodeList. Thanks to Thomas Vahrst.</li>
+<li>NodeListIterator - supports iteration over an org.w3c.dom.NodeList. Thanks to Thomas Vahrst.</li>
 <li>CatchAndRethrowClosure - re-throws any checked exception as unchecked "FunctorException". Thanks to David J. M. Karlsen.</li>
 <li>IndexedCollection - collection decorator which provides a map-like view on an existing collection. Thanks to Stephen Kestle.</li>
 <li>DualLinkedHashBidiMap - bidi map implementation using LinkedHashMap instances. Thanks to Nathan Blomquist.</li>
@@ -211,7 +211,7 @@ have changed.
 <li>Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately after a difference has been found. Thanks to Adrian Nistor.</li>
 <li>Added additional clarification to javadoc of interface "Put" wrt return type of "put(Object, Object)" method. Thanks to Matt Benson, sebb.</li>
 <li>Tree traversal with a TreeListIterator will not be affected anymore by the removal of an element directly after a call to previous(). Thanks to Jeffrey Barnes.</li>
-<li>Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0) due to a faulty "java.util.TreeMap" implementation.</li>
+<li>Adapt and/or ignore several unit tests when run on an IBM J9 VM (specification version 1.6.0) due to a faulty "java.util.TreeMap" implementation.</li>
 <li>SetUniqueList.set(int, E) now works correctly if the object to be inserted is already placed at the given position. Thanks to Thomas Vahrst, John Vasileff.</li>
 <li>MultiKeyMap.clone() now correctly calls super.clone(). Thanks to Thomas Vahrst.</li>
 <li>Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting the input collection into an AVL tree and efficiently merge it into the existing tree. Thanks to Jeffrey Barnes.</li>
@@ -262,8 +262,8 @@ have changed.
 <li>Use of final keyword where applicable, minor performance improvements by properly initializing the capacity of newly created collections when known in advance. Thanks to Peter Lawrey, Gary Gregory.</li>
 <li>"SetUniqueList#subList()#contains(Object)" will now correctly check the subList rather than the parent list. Thanks to Christian Semrau.</li>
 <li>"SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint. Thanks to Rafał Figas,Bjorn Townsend.</li>
-<li>Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries to modify the collection. Thanks to Emmanuel Bourg.</li>
-<li>"CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independant manner. Thanks to Benjamin Bentmann.</li>
+<li>Improved javadoc for "Unmodifiable*" classes wrt behavior when the user tries to modify the collection. Thanks to Emmanuel Bourg.</li>
+<li>"CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independent manner. Thanks to Benjamin Bentmann.</li>
 <li>Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects in the list are not transformed. Thanks to Paul Benedict.</li>
 <li>"MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible.</li>
 <li>Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap". Thanks to Lisen Mu.</li>

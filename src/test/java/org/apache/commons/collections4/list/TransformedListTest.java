@@ -18,11 +18,13 @@ package org.apache.commons.collections4.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}
@@ -32,8 +34,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedListTest<E> extends AbstractListTest<E> {
 
-    public TransformedListTest(final String testName) {
-        super(testName);
+    public TransformedListTest() {
+        super(TransformedListTest.class.getSimpleName());
     }
 
     @Override
@@ -59,6 +61,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedList() {
         final List<E> list = TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
@@ -107,12 +110,11 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertEquals(Integer.valueOf(2), list.get(2));
     }
 
+    @Test
     public void testTransformedList_decorateTransform() {
         final List<Object> originalList = new ArrayList<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (final Object el : els) {
-            originalList.add(el);
-        }
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
+        Collections.addAll(originalList, els);
         final List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
         for (final Object el : els) {
@@ -124,6 +126,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertTrue(list.remove(Integer.valueOf((String) els[0])));
     }
 
+    @Test
     public void testSubList() {
         final List<E> list = makeObject();
         List<E> subList = list.subList(0, 0);

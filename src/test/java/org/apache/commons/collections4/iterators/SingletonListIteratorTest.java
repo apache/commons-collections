@@ -20,17 +20,17 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
- *
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonListIteratorTest(final String testName) {
-        super(testName);
+    public SingletonListIteratorTest() {
+        super(SingletonListIteratorTest.class.getSimpleName());
     }
 
     /**
@@ -67,6 +67,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         return true;
     }
 
+    @Test
     public void testIterator() {
         final ListIterator<E> iter = makeObject();
         assertTrue( "Iterator should have next item", iter.hasNext() );
@@ -111,6 +112,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         }
     }
 
+    @Test
     public void testReset() {
         final ResettableListIterator<E> it = makeObject();
 

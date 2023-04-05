@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,12 +27,14 @@ import java.util.Set;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
- *
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -75,6 +79,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // BidiPut
+    @Test
     @SuppressWarnings("unchecked")
     public void testBidiPut() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
@@ -137,10 +142,12 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // testGetKey
+    @Test
     public void testBidiGetKey() {
         doTestGetKey(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
     }
 
+    @Test
     public void testBidiGetKeyInverse() {
         doTestGetKey(
             makeFullMap().inverseBidiMap(),
@@ -154,6 +161,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     // testInverse
+    @Test
     public void testBidiInverse() {
         final BidiMap<K, V> map = makeFullMap();
         final BidiMap<V, K> inverseMap = map.inverseBidiMap();
@@ -174,6 +182,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             inverseMap.getKey(getSampleKeys()[0]));
     }
 
+    @Test
     public void testBidiModifyEntrySet() {
         if (!isSetValueSupported()) {
             return;
@@ -206,12 +215,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             map.getKey(oldValue));
     }
 
+    @Test
     public void testBidiClear() {
         if (!isRemoveSupported()) {
-            try {
-                makeFullMap().clear();
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().clear());
             return;
         }
 
@@ -225,19 +232,15 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         map.clear();
         assertTrue("Map was not cleared.", map.isEmpty());
         assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
-
     }
 
+    @Test
     public void testBidiRemove() {
         if (!isRemoveSupported()) {
-            try {
-                makeFullMap().remove(getSampleKeys()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
-            try {
-                makeFullMap().removeValue(getSampleValues()[0]);
-                fail();
-            } catch(final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().remove(getSampleKeys()[0]));
+
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().removeValue(getSampleValues()[0]));
+
             return;
         }
 
@@ -262,7 +265,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertNull("Value was not removed.", map.getKey(value));
     }
 
+    @Test
     public void testBidiKeySetValuesOrder() {
+        // Skip if collection is unordered
+        Assumptions.assumeFalse((getIterationBehaviour() & AbstractCollectionTest.UNORDERED) != 0);
         resetFull();
         final Iterator<K> keys = map.keySet().iterator();
         final Iterator<V> values = map.values().iterator();
@@ -275,6 +281,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertFalse(values.hasNext());
     }
 
+    @Test
     public void testBidiRemoveByKeySet() {
         if (!isRemoveSupported()) {
             return;
@@ -285,7 +292,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
-        map.keySet().remove(key);
+        map.remove(key);
 
         assertFalse("Key was not removed.", map.containsKey(key));
         assertFalse("Value was not removed.", map.containsValue(value));
@@ -294,6 +301,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertFalse("Value was not removed from inverse map.", map.inverseBidiMap().containsKey(value));
     }
 
+    @Test
     public void testBidiRemoveByEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -329,8 +337,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestBidiMapEntrySet extends TestMapEntrySet {
+
         public TestBidiMapEntrySet() {
         }
+
+        @Test
         public void testMapEntrySetIteratorEntrySetValueCrossCheck() {
             final K key1 = getSampleKeys()[0];
             final K key2 = getSampleKeys()[1];
@@ -387,6 +398,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
                 it.remove();
             }
         }
+
     }
 
     public BulkTest bulkTestInverseMap() {
@@ -394,6 +406,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestInverseBidiMap extends AbstractBidiMapTest<V, K> {
+
         final AbstractBidiMapTest<K, V> main;
 
         public TestInverseBidiMap(final AbstractBidiMapTest<K, V> main) {
@@ -414,6 +427,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         public V[] getSampleKeys() {
             return main.getSampleValues();
         }
+
         @Override
         public K[] getSampleValues() {
             return main.getSampleKeys();
@@ -454,6 +468,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             return main.isRemoveSupported();
         }
 
+        @Override
+        protected int getIterationBehaviour() {
+            return main.getIterationBehaviour();
+        }
     }
 
     public BulkTest bulkTestBidiMapIterator() {
@@ -461,6 +479,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
+
         public TestBidiMapIterator() {
             super("TestBidiMapIterator");
         }
@@ -509,8 +528,10 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             super.verify();
             AbstractBidiMapTest.this.verify();
         }
+
     }
 
+    @Test
     public void testBidiMapIteratorSet() {
         final V newValue1 = getOtherValues()[0];
         final V newValue2 = getOtherValues()[1];
@@ -522,11 +543,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         final K key1 = it.next();
 
         if (!isSetValueSupported()) {
-            try {
-                it.setValue(newValue1);
-                fail();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> it.setValue(newValue1));
             return;
         }
 
@@ -560,27 +577,23 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
         // at this point
         // key1=newValue1, key2=newValue2
-        try {
-            it.setValue(newValue1);  // should remove key1
-            fail();
-        } catch (final IllegalArgumentException ex) {
-            return;  // simplest way of dealing with tricky situation
-        }
-        confirmed.put(key2, newValue1);
-        AbstractBidiMapTest.this.getConfirmed().remove(key1);
-        assertEquals(newValue1, it.getValue());
-        assertTrue(bidi.containsKey(it.getKey()));
-        assertTrue(bidi.containsValue(newValue1));
-        assertEquals(newValue1, bidi.get(it.getKey()));
-        assertFalse(bidi.containsKey(key1));
-        assertFalse(bidi.containsValue(newValue2));
-        verify();
-
-        // check for ConcurrentModification
-        it.next();  // if you fail here, maybe you should be throwing an IAE, see above
-        if (isRemoveSupported()) {
-            it.remove();
-        }
+        assertThrows(IllegalArgumentException.class, () -> it.setValue(newValue1));  // should remove key1
+        // below code was previously never executed
+//        confirmed.put(key2, newValue1);
+//        AbstractBidiMapTest.this.getConfirmed().remove(key1);
+//        assertEquals(newValue1, it.getValue());
+//        assertTrue(bidi.containsKey(it.getKey()));
+//        assertTrue(bidi.containsValue(newValue1));
+//        assertEquals(newValue1, bidi.get(it.getKey()));
+//        assertFalse(bidi.containsKey(key1));
+//        assertFalse(bidi.containsValue(newValue2));
+//        verify();
+//
+//        // check for ConcurrentModification
+//        it.next();  // if you fail here, maybe you should be throwing an IAE, see above
+//        if (isRemoveSupported()) {
+//            it.remove();
+//        }
     }
 
 }

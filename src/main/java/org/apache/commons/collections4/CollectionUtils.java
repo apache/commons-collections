@@ -436,7 +436,6 @@ public class CollectionUtils {
         if (coll2.isEmpty()) {
             return true;
         }
-        final Iterator<?> it = coll1.iterator();
         final Set<Object> elementsAlreadySeen = new HashSet<>();
         for (final Object nextElement : coll2) {
             if (elementsAlreadySeen.contains(nextElement)) {
@@ -444,10 +443,9 @@ public class CollectionUtils {
             }
 
             boolean foundCurrentElement = false;
-            while (it.hasNext()) {
-                final Object p = it.next();
+            for (final Object p : coll1) {
                 elementsAlreadySeen.add(p);
-                if (nextElement == null ? p == null : nextElement.equals(p)) {
+                if (Objects.equals(nextElement, p)) {
                     foundCurrentElement = true;
                     break;
                 }
@@ -1193,7 +1191,7 @@ public class CollectionUtils {
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
                                                final Transformer<? super I, ? extends O> transformer) {
-        return collect(inputIterator, transformer, new ArrayList<O>());
+        return collect(inputIterator, transformer, new ArrayList<>());
     }
 
     /**
@@ -1896,7 +1894,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
-                collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(retain, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
@@ -2035,7 +2033,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
-                collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(remove, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {

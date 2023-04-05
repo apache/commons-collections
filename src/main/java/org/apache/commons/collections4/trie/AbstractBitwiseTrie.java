@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections4.Trie;
 
@@ -120,7 +119,7 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * An utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
+     * A utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
      */
     final boolean compareKeys(final K key, final K other) {
         if (key == null) {
@@ -134,10 +133,10 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * Returns true if both values are either null or equal.
+     * Delegates to {@link Objects#equals(Object, Object)}.
      */
     static boolean compare(final Object a, final Object b) {
-        return a == null ? b == null : a.equals(b);
+        return Objects.equals(a, b);
     }
 
     /**

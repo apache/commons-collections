@@ -37,7 +37,7 @@ completely removed (classes do not implement the Serializable interface anymore)
 For more details, please refer to COLLECTIONS-580.
 </p>
 <p>
-All users are strongly encouraged to updated to this release.
+All users are strongly encouraged to update to this release.
 </p>
 
 <h3>Compatibility</h3>

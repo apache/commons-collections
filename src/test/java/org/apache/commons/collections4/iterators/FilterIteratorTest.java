@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,16 +28,18 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
+import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the filter iterator.
- *
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /** Creates new TestFilterIterator */
-    public FilterIteratorTest(final String name) {
-        super(name);
+    public FilterIteratorTest() {
+        super(FilterIteratorTest.class.getSimpleName());
     }
 
     private String[] array;
@@ -47,6 +50,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Set up instance variables required by this test case.
      */
     @Override
+    @BeforeEach
     public void setUp() {
         array = new String[] { "a", "b", "c" };
         initIterator();
@@ -61,7 +65,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Returns an full iterator wrapped in a
+     * Returns a full iterator wrapped in a
      * FilterIterator that blocks all the elements
      *
      * @return "empty" FilterIterator
@@ -84,12 +88,14 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         return makePassThroughFilter(list.iterator());
     }
 
+    @Test
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
             assertTrue(iterator.hasNext());
         }
     }
 
+    @Test
     @SuppressWarnings("unused")
     public void testRepeatedNext() {
         for (final String element : array) {
@@ -98,8 +104,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         verifyNoMoreElements();
     }
 
+    @Test
     public void testReturnValues() {
-        verifyElementsInPredicate(new String[0]);
+        verifyElementsInPredicate(ArrayUtils.EMPTY_STRING_ARRAY);
         verifyElementsInPredicate(new String[] { "a" });
         verifyElementsInPredicate(new String[] { "b" });
         verifyElementsInPredicate(new String[] { "c" });
@@ -113,6 +120,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test that when the iterator is changed, the hasNext method returns the
      * correct response for the new iterator.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetIterator() {
         final Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
@@ -132,6 +140,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Test that when the predicate is changed, the hasNext method returns the
      * correct response for the new predicate.
      */
+    @Test
     public void testSetPredicate() {
         final Iterator<E> iter = Collections.singleton((E) null).iterator();
 
@@ -147,12 +156,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private void verifyNoMoreElements() {
         assertFalse(iterator.hasNext());
-        try {
-            iterator.next();
-            fail("NoSuchElementException expected");
-        } catch (final NoSuchElementException e) {
-            // success
-        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
@@ -210,5 +214,5 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Predicate<E> pred = x -> false;
         return new FilterIterator<>(i, pred);
     }
-}
 
+}

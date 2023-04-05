@@ -79,7 +79,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * Constructor that uses an ArrayList internally.
      */
     public GrowthList() {
-        super(new ArrayList<E>());
+        super(new ArrayList<>());
     }
 
     /**
@@ -89,7 +89,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException if initial capacity is invalid
      */
     public GrowthList(final int initialCapacity) {
-        super(new ArrayList<E>(initialCapacity));
+        super(new ArrayList<>(initialCapacity));
     }
 
     /**

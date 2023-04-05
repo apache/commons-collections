@@ -43,7 +43,6 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     /** The current iterator index */
     int index;
 
-    //-------------------------------------------------------------------------
     /**
      * Constructs an ObjectArrayIterator that will iterate over the values in the
      * specified array.
@@ -64,7 +63,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ObjectArrayIterator(final E array[], final int start) {
+    public ObjectArrayIterator(final E[] array, final int start) {
         this(array, start, array.length);
     }
 
@@ -79,7 +78,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if {@code array} is {@code null}
      */
-    public ObjectArrayIterator(final E array[], final int start, final int end) {
+    public ObjectArrayIterator(final E[] array, final int start, final int end) {
         if (start < 0) {
             throw new ArrayIndexOutOfBoundsException("Start index must not be less than zero");
         }
@@ -97,9 +96,6 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
         this.endIndex = end;
         this.index = start;
     }
-
-    // Iterator interface
-    //-------------------------------------------------------------------------
 
     /**
      * Returns true if there are more elements to return from the array.
@@ -135,9 +131,6 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     public void remove() {
         throw new UnsupportedOperationException("remove() method is not supported for an ObjectArrayIterator");
     }
-
-    // Properties
-    //-------------------------------------------------------------------------
 
     /**
      * Gets the array that this iterator is iterating over.

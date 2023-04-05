@@ -19,10 +19,6 @@ package org.apache.commons.collections4.map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
-
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}
  * implementation.
@@ -31,12 +27,8 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public FixedSizeSortedMapTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(FixedSizeSortedMapTest.class);
+    public FixedSizeSortedMapTest() {
+        super(FixedSizeSortedMapTest.class.getSimpleName());
     }
 
     @Override

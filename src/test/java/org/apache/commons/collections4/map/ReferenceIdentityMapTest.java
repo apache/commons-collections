@@ -16,19 +16,18 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReferenceIdentityMap.
- *
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -48,16 +47,12 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(ReferenceIdentityMapTest.class);
-    }
-
     WeakReference<K> keyReference;
 
     WeakReference<V> valueReference;
 
-    public ReferenceIdentityMapTest(final String testName) {
-        super(testName);
+    public ReferenceIdentityMapTest() {
+        super(ReferenceIdentityMapTest.class.getSimpleName());
     }
 
     @SuppressWarnings("unchecked")
@@ -114,6 +109,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 /*
     // Tests often fail because gc is uncontrollable
 
+    @Test
     public void testPurge() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -139,7 +135,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
-
+    @Test
     public void testGetAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         for (int i = 0; i < 10; i++) {
@@ -154,7 +150,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-
+    @Test
     public void testEntrySetIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -176,6 +172,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     }
 
+    @Test
     public void testMapIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -198,6 +195,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     }
 
+    @Test
     public void testMapIteratorAfterGC2() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -226,6 +224,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testBasics() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -259,6 +258,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue(map.containsValue(I2B));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testHashEntry() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
@@ -276,6 +276,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertFalse(entry1.equals(entry3));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
@@ -284,23 +285,15 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertFalse(getMap().containsValue(null));
         assertNull(getMap().remove(null));
         assertFalse(getMap().entrySet().contains(null));
-        assertFalse(getMap().keySet().contains(null));
-        assertFalse(getMap().values().contains(null));
-        try {
-            getMap().put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            getMap().put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            getMap().put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertFalse(getMap().containsKey(null));
+        assertFalse(getMap().containsValue(null));
+        assertThrows(NullPointerException.class, () -> getMap().put(null, null));
+        assertThrows(NullPointerException.class, () -> getMap().put((K) new Object(), null));
+        assertThrows(NullPointerException.class, () -> getMap().put(null, (V) new Object()));
     }
 
     /** Tests whether purge values setting works */
+    @Test
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();

@@ -54,8 +54,6 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
         this.key = key;
     }
 
-    // Map.Entry interface
-    //-------------------------------------------------------------------------
     /**
      * Gets the key of this entry
      *

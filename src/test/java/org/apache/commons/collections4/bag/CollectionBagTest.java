@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link CollectionBag}.
@@ -37,11 +38,9 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * JUnit constructor.
-     *
-     * @param testName  the test class name
      */
-    public CollectionBagTest(final String testName) {
-        super(testName);
+    public CollectionBagTest() {
+        super(CollectionBagTest.class.getSimpleName());
     }
 
 
@@ -77,6 +76,11 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
@@ -89,6 +93,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
@@ -103,6 +108,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = (Bag<T>) makeFullCollection();

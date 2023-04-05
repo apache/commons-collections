@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -23,6 +25,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -32,8 +35,8 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  */
 public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
-    public UnmodifiableQueueTest(final String testName) {
-        super(testName);
+    public UnmodifiableQueueTest() {
+        super(UnmodifiableQueueTest.class.getSimpleName());
     }
 
     @Override
@@ -77,45 +80,38 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         return false;
     }
 
+    @Test
     @Override
     public void testQueueRemove() {
         resetEmpty();
-        try {
-            getCollection().remove();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove());
     }
 
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
 
-        try {
-            UnmodifiableQueue.unmodifiableQueue(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableQueue.unmodifiableQueue(null));
     }
 
+    @Test
     public void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
-        try {
-            queue.offer(e);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> queue.offer(e));
     }
 
+    @Test
     public void testPoll() {
         final Queue<E> queue = makeFullCollection();
-        try {
-            queue.poll();
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
 
 
