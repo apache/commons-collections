@@ -2398,7 +2398,7 @@ public class CollectionUtilsTest extends MockTestCase {
                     expect(mockCollection.stream()).andReturn(Arrays.asList("").stream());
                     replay();
                     assertThrows(IllegalArgumentException.class, () -> CollectionUtils.partitionByChunkSize(mockCollection, 2),
-                            "failed to check if input collection is empty");
+                            "failed to check instance of given input collection");
                 }
         );
     }
