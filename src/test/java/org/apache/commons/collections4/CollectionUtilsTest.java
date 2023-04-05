@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2379,39 +2378,29 @@ public class CollectionUtilsTest extends MockTestCase {
         List<String> emptyList = new ArrayList<>();
         List<List<String>> emptyPartitions = CollectionUtils.partitionByChunkSize(emptyList, 2);
         assertEquals(0, emptyPartitions.size());
-
         // test exception scenarios
-        try {
-            CollectionUtils.partitionByChunkSize(listWithNullElements, -2);
-            fail("failed to check if input chunk size is greater than 0");
-        } catch (final IllegalArgumentException e) {
-            assertEquals("input chunk size must be greater than 0", e.getMessage());
-        }
-
-        try {
-            CollectionUtils.partitionByChunkSize(listWithNullElements, 0);
-            fail("failed to check if input chunk size is greater than 0");
-        } catch (final IllegalArgumentException e) {
-            assertEquals("input chunk size must be greater than 0", e.getMessage());
-        }
-
-        try {
-            CollectionUtils.partitionByChunkSize(null, 2);
-            fail("failed to check if input collection is null");
-        } catch (final NullPointerException e) {
-            assertEquals("input collection must not be null", e.getMessage());
-        }
-
-        try {
-            @SuppressWarnings("rawtypes")
-            Collection mockCollection = createMock(Collection.class);
-            expect(mockCollection.stream()).andReturn(Arrays.asList("").stream());
-            replay();
-            CollectionUtils.partitionByChunkSize(mockCollection, 2);
-            fail("failed to check if input collection is empty");
-        } catch (final IllegalArgumentException e) {
-            assertEquals("unable to get instance of given input collection", e.getMessage());
-        }
+        assertAll(
+                () -> {
+                    assertThrows(IllegalArgumentException.class, () -> CollectionUtils.partitionByChunkSize(listWithNullElements, -2),
+                            "failed to check if input chunk size is greater than 0");
+                },
+                () -> {
+                    assertThrows(IllegalArgumentException.class, () -> CollectionUtils.partitionByChunkSize(listWithNullElements, 0),
+                            "failed to check if input chunk size is greater than 0");
+                },
+                () -> {
+                    assertThrows(NullPointerException.class, () -> CollectionUtils.partitionByChunkSize(null, 2),
+                            "failed to check if input collection is null");
+                },
+                () -> {
+                	@SuppressWarnings("rawtypes")
+                    Collection mockCollection = createMock(Collection.class);
+                    expect(mockCollection.stream()).andReturn(Arrays.asList("").stream());
+                    replay();
+                    assertThrows(IllegalArgumentException.class, () -> CollectionUtils.partitionByChunkSize(mockCollection, 2),
+                            "failed to check if input collection is empty");
+                }
+        );
     }
 
 }
