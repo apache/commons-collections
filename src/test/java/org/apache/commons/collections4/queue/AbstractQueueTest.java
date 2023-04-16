@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -141,8 +145,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             final boolean r = getCollection().offer(element);
             getConfirmed().add(element);
             verify();
-            assertTrue("Empty queue changed after add", r);
-            assertEquals("Queue size is 1 after first add", 1, getCollection().size());
+            assertTrue(r, "Empty queue changed after add");
+            assertEquals(1, getCollection().size(), "Queue size is 1 after first add");
         }
 
         resetEmpty();
@@ -154,8 +158,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             if (r) {
                 size++;
             }
-            assertEquals("Queue size should grow after add", size, getCollection().size());
-            assertTrue("Queue should contain added element", getCollection().contains(element));
+            assertEquals(size, getCollection().size(), "Queue size should grow after add");
+            assertTrue(getCollection().contains(element), "Queue should contain added element");
         }
     }
 
@@ -253,7 +257,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < max; i++) {
             final E element = getCollection().remove();
             final boolean success = getConfirmed().remove(element);
-            assertTrue("remove should return correct element", success);
+            assertTrue(success, "remove should return correct element");
             verify();
         }
 
@@ -281,7 +285,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < max; i++) {
             element = getCollection().poll();
             final boolean success = getConfirmed().remove(element);
-            assertTrue("poll should return correct element", success);
+            assertTrue(success, "poll should return correct element");
             verify();
         }
 
@@ -300,8 +304,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) queue);
         final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both queues are empty", 0, queue.size());
-        assertEquals("Both queues are empty", 0, queue2.size());
+        assertEquals(0, queue.size(), "Both queues are empty");
+        assertEquals(0, queue2.size(), "Both queues are empty");
     }
 
     @Test
@@ -316,8 +320,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) queue);
         final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both queues are same size", size, queue.size());
-        assertEquals("Both queues are same size", size, queue2.size());
+        assertEquals(size, queue.size(), "Both queues are same size");
+        assertEquals(size, queue2.size(), "Both queues are same size");
     }
 
     /**
@@ -340,7 +344,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         if (queue instanceof Serializable && !skipSerializedCanonicalTests()
                 && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue));
-            assertEquals("Queue is empty", 0, queue2.size());
+            assertEquals(0, queue2.size(), "Queue is empty");
         }
     }
 
@@ -363,7 +367,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final Queue<E> queue = makeFullCollection();
         if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
-            assertEquals("Queues are not the right size", queue.size(), queue2.size());
+            assertEquals(queue.size(), queue2.size(), "Queues are not the right size");
         }
     }
 

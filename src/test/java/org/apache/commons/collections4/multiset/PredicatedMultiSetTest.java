@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
@@ -73,11 +76,11 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
             assertTrue(multiset.contains(els[i]));
         }
         Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set contains the first element", set.contains(els[0]));
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
         assertTrue(multiset.remove(els[0]));
         set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set does not contain anymore the first element",
-            set.contains(els[0]));
+        assertTrue(set.contains(els[0]),
+            "Unique set does not contain anymore the first element");
     }
 
     @Test
@@ -87,7 +90,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         final Integer i = Integer.valueOf(3);
         assertThrows(IllegalArgumentException.class, () -> multiset.add((T) i),
                 "Integer should fail string predicate.");
-        assertFalse("Collection shouldn't contain illegal element", multiset.contains(i));
+        assertFalse(multiset.contains(i), "Collection shouldn't contain illegal element");
     }
 
     @Test

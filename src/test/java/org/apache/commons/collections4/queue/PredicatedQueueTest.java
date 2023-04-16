@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -83,7 +86,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         queue.add((E) "one");
         queue.add((E) "two");
         queue.add((E) "three");
-        assertEquals("Queue get", "one", queue.peek());
+        assertEquals("one", queue.peek(), "Queue get");
     }
 
     @Test
@@ -91,7 +94,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
     public void testRemove() {
         final Queue<E> queue = makeTestQueue();
         queue.add((E) "one");
-        assertEquals("Queue get", "one", queue.poll());
+        assertEquals("one", queue.poll(), "Queue get");
         assertNull(queue.peek());
     }
 

@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -91,10 +95,10 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
             for (final Locale locale : locales) {
                 Locale.setDefault(locale);
                 for (int j = 0; j < data.length; j++) {
-                    assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
+                    assertTrue(data[j][0].equalsIgnoreCase(data[j][1]), "Test data corrupt: " + j);
                     final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
                     map.put(data[j][0], "value");
-                    assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
+                    assertEquals("value", map.get(data[j][1]), Locale.getDefault() + ": " + j);
                 }
             }
         } finally {

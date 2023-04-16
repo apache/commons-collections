@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashSet;
@@ -64,7 +66,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     @Test
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
-        assertNotNull("returned set should not be null", set.decorated());
+        assertNotNull(set.decorated(), "returned set should not be null");
     }
 
     @Test
@@ -74,7 +76,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         final Integer i = Integer.valueOf(3);
         assertThrows(IllegalArgumentException.class, () -> set.add((E) i),
                 "Integer should fail string predicate.");
-        assertFalse("Collection shouldn't contain illegal element", set.contains(i));
+        assertFalse(set.contains(i), "Collection shouldn't contain illegal element");
     }
 
     @Test
@@ -88,10 +90,10 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         elements.add((E) "four");
         assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
                 "Integer should fail string predicate.");
-        assertFalse("Set shouldn't contain illegal element", set.contains("one"));
-        assertFalse("Set shouldn't contain illegal element", set.contains("two"));
-        assertFalse("Set shouldn't contain illegal element", set.contains(Integer.valueOf(3)));
-        assertFalse("Set shouldn't contain illegal element", set.contains("four"));
+        assertFalse(set.contains("one"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("two"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains(Integer.valueOf(3)), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("four"), "Set shouldn't contain illegal element");
     }
 
     @Override

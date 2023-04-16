@@ -49,10 +49,8 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         super(NodeListIteratorTest.class.getSimpleName());
     }
 
-    @Override
     @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
 
         // Default: use standard constr.
         createIteratorWithStandardConstr = true;

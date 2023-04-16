@@ -16,7 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -161,16 +166,16 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         while (it.hasNext()) {
             // getKey
             final K key = it.next();
-            assertSame("it.next() should equals getKey()", key, it.getKey());
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Key must be unique", set.add(key));
+            assertSame(key, it.getKey(), "it.next() should equals getKey()");
+            assertTrue(map.containsKey(key),  "Key must be in map");
+            assertTrue(set.add(key), "Key must be unique");
 
             // getValue
             final V value = it.getValue();
             if (!isGetStructuralModify()) {
-                assertSame("Value must be mapped to key", map.get(key), value);
+                assertSame(map.get(key), value, "Value must be mapped to key");
             }
-            assertTrue("Value must be in map",  map.containsValue(value));
+            assertTrue(map.containsValue(value),  "Value must be in map");
 
             verify();
         }
@@ -197,26 +202,26 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
         final V old = it.setValue(newValue);
         confirmed.put(key, newValue);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("setValue must return old value", value, old);
-        assertTrue("Map must contain key", map.containsKey(key));
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue, it.getValue(), "Value must be changed after setValue");
+        assertSame(value, old, "setValue must return old value");
+        assertTrue(map.containsKey(key), "Map must contain key");
         // test against confirmed, as map may contain value twice
-        assertEquals("Map must not contain old value",
-            confirmed.containsValue(old), map.containsValue(old));
-        assertTrue("Map must contain new value", map.containsValue(newValue));
+        assertEquals(confirmed.containsValue(old), map.containsValue(old),
+            "Map must not contain old value");
+        assertTrue(map.containsValue(newValue), "Map must contain new value");
         verify();
 
         it.setValue(newValue);  // same value - should be OK
         confirmed.put(key, newValue);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue, it.getValue(), "Value must be changed after setValue");
         verify();
 
         it.setValue(newValue2);  // new value
         confirmed.put(key, newValue2);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue2, it.getValue());
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue2, it.getValue(), "Value must be changed after setValue");
         verify();
     }
 

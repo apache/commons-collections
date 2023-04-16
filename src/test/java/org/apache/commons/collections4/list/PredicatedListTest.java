@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +74,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertThrows(IllegalArgumentException.class, () -> list.add((E) i),
                 "Integer should fail string predicate.");
 
-        assertFalse("Collection shouldn't contain illegal element", list.contains(i));
+        assertFalse(list.contains(i), "Collection shouldn't contain illegal element");
     }
 
     @Test
@@ -86,10 +90,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertThrows(IllegalArgumentException.class, () -> list.addAll(0, elements),
                 "Integer should fail string predicate.");
 
-        assertFalse("List shouldn't contain illegal element", list.contains("one"));
-        assertFalse("List shouldn't contain illegal element", list.contains("two"));
-        assertFalse("List shouldn't contain illegal element", list.contains(Integer.valueOf(3)));
-        assertFalse("List shouldn't contain illegal element", list.contains("four"));
+        assertFalse(list.contains("one"), "List shouldn't contain illegal element");
+        assertFalse(list.contains("two"), "List shouldn't contain illegal element");
+        assertFalse(list.contains(Integer.valueOf(3)), "List shouldn't contain illegal element");
+        assertFalse(list.contains("four"), "List shouldn't contain illegal element");
     }
 
     @Test
@@ -110,10 +114,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         elements.add((E) "two");
         elements.add((E) "three");
         list.addAll(1, elements);
-        assertTrue("List should contain legal element", list.contains("zero"));
-        assertTrue("List should contain legal element", list.contains("one"));
-        assertTrue("List should contain legal element", list.contains("two"));
-        assertTrue("List should contain legal element", list.contains("three"));
+        assertTrue(list.contains("zero"), "List should contain legal element");
+        assertTrue(list.contains("one"), "List should contain legal element");
+        assertTrue(list.contains("two"), "List should contain legal element");
+        assertTrue(list.contains("three"), "List should contain legal element");
     }
 
     @Test

@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -70,45 +74,45 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     @Test
     public void testIterator() {
         final ListIterator<E> iter = makeObject();
-        assertTrue( "Iterator should have next item", iter.hasNext() );
-        assertFalse("Iterator should have no previous item", iter.hasPrevious());
-        assertEquals( "Iteration next index", 0, iter.nextIndex() );
-        assertEquals( "Iteration previous index", -1, iter.previousIndex() );
+        assertTrue(iter.hasNext(), "Iterator should have next item");
+        assertFalse(iter.hasPrevious(), "Iterator should have no previous item");
+        assertEquals(0, iter.nextIndex(), "Iteration next index");
+        assertEquals(-1, iter.previousIndex(), "Iteration previous index");
 
         Object iterValue = iter.next();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertFalse("Iterator should have no next item", iter.hasNext());
-        assertTrue( "Iterator should have previous item", iter.hasPrevious() );
-        assertEquals( "Iteration next index", 1, iter.nextIndex() );
-        assertEquals( "Iteration previous index", 0, iter.previousIndex() );
+        assertFalse(iter.hasNext(), "Iterator should have no next item");
+        assertTrue(iter.hasPrevious(), "Iterator should have previous item");
+        assertEquals(1, iter.nextIndex(), "Iteration next index");
+        assertEquals(0, iter.previousIndex(), "Iteration previous index");
 
         iterValue = iter.previous();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertTrue( "Iterator should have next item", iter.hasNext() );
-        assertFalse("Iterator should have no previous item", iter.hasPrevious());
-        assertEquals( "Iteration next index", 0, iter.nextIndex() );
-        assertEquals( "Iteration previous index", -1, iter.previousIndex() );
+        assertTrue(iter.hasNext(), "Iterator should have next item");
+        assertFalse(iter.hasPrevious(), "Iterator should have no previous item");
+        assertEquals(0, iter.nextIndex(), "Iteration next index");
+        assertEquals(-1, iter.previousIndex(), "Iteration previous index");
 
         iterValue = iter.next();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertFalse("Iterator should have no next item", iter.hasNext());
-        assertTrue( "Iterator should have previous item", iter.hasPrevious() );
-        assertEquals( "Iteration next index", 1, iter.nextIndex() );
-        assertEquals( "Iteration previous index", 0, iter.previousIndex() );
+        assertFalse(iter.hasNext(), "Iterator should have no next item");
+        assertTrue(iter.hasPrevious(), "Iterator should have previous item");
+        assertEquals(1, iter.nextIndex(), "Iteration next index");
+        assertEquals(0, iter.previousIndex(), "Iteration previous index");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
         iter.previous();
         try {
             iter.previous();
         } catch (final Exception e) {
-            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 

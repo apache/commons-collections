@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,7 +49,6 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         super(LazyIteratorChainTest.class.getSimpleName());
     }
 
-    @Override
     @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();
@@ -96,15 +98,15 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
 
-            assertEquals( "Iteration value is correct", testValue, iterValue );
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertFalse("Iterator should now be empty", iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 
@@ -144,16 +146,16 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         for (final String testValue : testArray) {
             final String iterValue = iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
 
             if (!iterValue.equals("Four")) {
                 iter.remove();
             }
         }
 
-        assertTrue("List is empty", list1.isEmpty());
-        assertEquals("List is empty", 1, list2.size());
-        assertTrue("List is empty", list3.isEmpty());
+        assertTrue(list1.isEmpty(), "List is empty");
+        assertEquals(1, list2.size(), "List is empty");
+        assertTrue(list3.isEmpty(), "List is empty");
     }
 
     @Test
@@ -175,13 +177,13 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
                 return null;
             }
         };
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("A", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("B", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("C", chain.next());
-        assertFalse("should not have next", chain.hasNext());
+        assertFalse(chain.hasNext(), "should not have next");
     }
 
     @Test

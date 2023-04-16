@@ -128,7 +128,7 @@ import junit.framework.TestSuite;
  *  The ordinary {@link TestSuite} constructor doesn't know how to
  *  interpret bulk test methods.
  */
-public class BulkTest extends TestCase implements Cloneable {
+public class BulkTest implements Cloneable {
 
     // Note:  BulkTest is Cloneable to make it easier to construct
     // BulkTest instances for simple test methods that are defined in
@@ -153,14 +153,28 @@ public class BulkTest extends TestCase implements Cloneable {
     String verboseName;
 
     /**
+     *  the name of the simple test method
+     */
+    private String name;
+
+    /**
      *  Constructs a new {@code BulkTest} instance that will run the
      *  specified simple test.
      *
      *  @param name  the name of the simple test method to run
      */
     public BulkTest(final String name) {
-        super(name);
+        this.name = name;
         this.verboseName = getClass().getName();
+    }
+
+    /**
+     *  Returns the name of the simple test method of this {@code BulkTest}.
+     *
+     *  @return the name of the simple test method of this {@code BulkTest}
+     */
+    public String getName() {
+        return name;
     }
 
     /**

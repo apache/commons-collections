@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -63,7 +66,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     @Test
     public void testGetSet() {
         final PredicatedSortedSet<E> set = makeTestSet();
-        assertNotNull("returned set should not be null", set.decorated());
+        assertNotNull(set.decorated(), "returned set should not be null");
     }
 
     @Test
@@ -73,7 +76,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         final String testString = "B";
         assertThrows(IllegalArgumentException.class, () -> set.add((E) testString),
                 "Should fail string predicate.");
-        assertFalse("Collection shouldn't contain illegal element", set.contains(testString));
+        assertFalse(set.contains(testString), "Collection shouldn't contain illegal element");
     }
 
     @Test
@@ -87,17 +90,17 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         elements.add((E) "Afour");
         assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
                 "Should fail string predicate.");
-        assertFalse("Set shouldn't contain illegal element", set.contains("Aone"));
-        assertFalse("Set shouldn't contain illegal element", set.contains("Atwo"));
-        assertFalse("Set shouldn't contain illegal element", set.contains("Bthree"));
-        assertFalse("Set shouldn't contain illegal element", set.contains("Afour"));
+        assertFalse(set.contains("Aone"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("Atwo"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("Bthree"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("Afour"), "Set shouldn't contain illegal element");
     }
 
     @Test
     public void testComparator() {
         final SortedSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Override

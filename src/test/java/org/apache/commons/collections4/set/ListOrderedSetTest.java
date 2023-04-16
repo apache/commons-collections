@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.set;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,32 +75,32 @@ public class ListOrderedSetTest<E>
         Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
 
         for (int i = 0; i < 10; i += 2) {
-            assertTrue("Must be able to remove int",
-                       set.remove(Integer.toString(i)));
+            assertTrue(set.remove(Integer.toString(i)),
+                       "Must be able to remove int");
         }
 
         it = set.iterator();
         for (int i = 1; i < 10; i += 2) {
-            assertEquals("Sequence is wrong after remove ",
-                         Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(),
+                         "Sequence is wrong after remove ");
         }
 
         for (int i = 0; i < 10; i++) {
             set.add((E) Integer.toString(i));
         }
 
-        assertEquals("Size of set is wrong!", 10, set.size());
+        assertEquals(10, set.size(), "Size of set is wrong!");
 
         it = set.iterator();
         for (int i = 1; i < 10; i += 2) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
         for (int i = 0; i < 10; i += 2) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
     }
 

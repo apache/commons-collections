@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.io.BufferedReader;
@@ -26,7 +29,6 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BulkTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,17 +51,17 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
     }
 
     private void assertContents(final T properties) {
-        Assertions.assertEquals("value1", properties.getProperty("key1"));
-        Assertions.assertEquals("value2", properties.getProperty("key2"));
-        Assertions.assertEquals("value3", properties.getProperty("key3"));
-        Assertions.assertEquals("value4", properties.getProperty("key4"));
-        Assertions.assertEquals("value5", properties.getProperty("key5"));
-        Assertions.assertEquals("value6", properties.getProperty("key6"));
-        Assertions.assertEquals("value7", properties.getProperty("key7"));
-        Assertions.assertEquals("value8", properties.getProperty("key8"));
-        Assertions.assertEquals("value9", properties.getProperty("key9"));
-        Assertions.assertEquals("value10", properties.getProperty("key10"));
-        Assertions.assertEquals("value11", properties.getProperty("key11"));
+        assertEquals("value1", properties.getProperty("key1"));
+        assertEquals("value2", properties.getProperty("key2"));
+        assertEquals("value3", properties.getProperty("key3"));
+        assertEquals("value4", properties.getProperty("key4"));
+        assertEquals("value5", properties.getProperty("key5"));
+        assertEquals("value6", properties.getProperty("key6"));
+        assertEquals("value7", properties.getProperty("key7"));
+        assertEquals("value8", properties.getProperty("key8"));
+        assertEquals("value9", properties.getProperty("key9"));
+        assertEquals("value10", properties.getProperty("key10"));
+        assertEquals("value11", properties.getProperty("key11"));
     }
 
     private boolean isXmlTest(final String fileExtension) {
@@ -72,13 +74,13 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @Test
     public void testInstance() {
-        Assertions.assertNotNull(PropertiesFactory.INSTANCE);
+        assertNotNull(PropertiesFactory.INSTANCE);
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
     public void testLoadClassLoaderMissingResource(final String fileExtension) throws Exception {
-        Assertions.assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
+        assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
     }
 
     @ParameterizedTest

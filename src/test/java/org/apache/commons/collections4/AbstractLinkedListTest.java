@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -122,8 +123,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         resetFull();
         final Object first = getCollection().getFirst();
         final Object confirmedFirst = getConfirmedLinkedList().getFirst();
-        assertEquals("Result returned by getFirst() was wrong.",
-                confirmedFirst, first);
+        assertEquals(confirmedFirst, first,
+                "Result returned by getFirst() was wrong.");
         verify();
     }
 
@@ -140,8 +141,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         resetFull();
         final Object last = getCollection().getLast();
         final Object confirmedLast = getConfirmedLinkedList().getLast();
-        assertEquals("Result returned by getLast() was wrong.",
-                confirmedLast, last);
+        assertEquals(confirmedLast, last,
+                "Result returned by getLast() was wrong.");
         verify();
     }
 
@@ -162,8 +163,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         resetFull();
         final Object first = getCollection().removeFirst();
         final Object confirmedFirst = getConfirmedLinkedList().removeFirst();
-        assertEquals("Result returned by removeFirst() was wrong.",
-                confirmedFirst, first);
+        assertEquals(confirmedFirst, first,
+                "Result returned by removeFirst() was wrong.");
         verify();
     }
 
@@ -184,8 +185,8 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         resetFull();
         final Object last = getCollection().removeLast();
         final Object confirmedLast = getConfirmedLinkedList().removeLast();
-        assertEquals("Result returned by removeLast() was wrong.",
-                confirmedLast, last);
+        assertEquals(confirmedLast, last,
+                "Result returned by removeLast() was wrong.");
         verify();
     }
 

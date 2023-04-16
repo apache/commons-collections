@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,7 +25,6 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.function.IntPredicate;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -132,7 +133,7 @@ public abstract class AbstractIndexProducerTest {
             bs2.set(i);
             return true;
         });
-        Assertions.assertEquals(bs1, bs2);
+        assertEquals(bs1, bs2);
     }
 
     @Test
@@ -151,7 +152,7 @@ public abstract class AbstractIndexProducerTest {
     public final void testEmptyProducer() {
         final IndexProducer empty = createEmptyProducer();
         final int ary[] = empty.asIndexArray();
-        Assertions.assertEquals(0, ary.length);
+        assertEquals(0, ary.length);
         assertTrue(empty.forEachIndex(i -> {
             throw new AssertionError("forEach predictate should not be called");
         }));
@@ -170,7 +171,7 @@ public abstract class AbstractIndexProducerTest {
             bs2.set(i);
             return true;
         });
-        Assertions.assertEquals(bs1, bs2);
+        assertEquals(bs1, bs2);
     }
 
     /**
@@ -186,18 +187,18 @@ public abstract class AbstractIndexProducerTest {
         final int[] actual = createProducer().asIndexArray();
         if ((flags & ORDERED) != 0) {
             final int[] expected = Arrays.stream(actual).sorted().toArray();
-            Assertions.assertArrayEquals(expected, actual);
+            assertArrayEquals(expected, actual);
         }
         if ((flags & DISTINCT) != 0) {
             final long count = Arrays.stream(actual).distinct().count();
-            Assertions.assertEquals(count, actual.length);
+            assertEquals(count, actual.length);
         } else {
             // if the array is not distinct all expected elements must be generated
             // This is modified so use a copy
             final int[] expected = getExpectedIndices().clone();
             Arrays.sort(expected);
             Arrays.sort(actual);
-            Assertions.assertArrayEquals(expected, actual);
+            assertArrayEquals(expected, actual);
         }
     }
 
@@ -214,17 +215,17 @@ public abstract class AbstractIndexProducerTest {
         final int[] actual = list.toArray();
         if ((flags & ORDERED) != 0) {
             final int[] expected = Arrays.stream(actual).sorted().toArray();
-            Assertions.assertArrayEquals(expected, actual);
+            assertArrayEquals(expected, actual);
         }
         if ((flags & DISTINCT) != 0) {
             final long count = Arrays.stream(actual).distinct().count();
-            Assertions.assertEquals(count, actual.length);
+            assertEquals(count, actual.length);
         } else {
             // if forEach is not distinct all expected elements must be generated
             final int[] expected = getExpectedIndices().clone();
             Arrays.sort(expected);
             Arrays.sort(actual);
-            Assertions.assertArrayEquals(expected, actual);
+            assertArrayEquals(expected, actual);
         }
     }
 
@@ -235,13 +236,13 @@ public abstract class AbstractIndexProducerTest {
             passes[0]++;
             return false;
         }));
-        Assertions.assertEquals(1, passes[0]);
+        assertEquals(1, passes[0]);
 
         passes[0] = 0;
         assertTrue(createEmptyProducer().forEachIndex(i -> {
             passes[0]++;
             return false;
         }));
-        Assertions.assertEquals(0, passes[0]);
+        assertEquals(0, passes[0]);
     }
 }

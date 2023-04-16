@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +47,6 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         super(PermutationIteratorTest.class.getSimpleName());
     }
 
-    @Override
     @BeforeEach
     public void setUp() {
         testList = new ArrayList<>();

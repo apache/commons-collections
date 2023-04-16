@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,11 +46,9 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * {@inheritDoc}
      */
-    @Override
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
         testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 

@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -44,10 +50,8 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
-    @Override
     @BeforeEach
     public void setUp() throws Exception {
-        super.setUp();
         comparator = new ComparableComparator<>();
         evens = new ArrayList<>();
         odds = new ArrayList<>();
@@ -264,9 +268,9 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         collatingIterator2.setComparator(new ComparableComparator<Integer>());
         for ( ; collatingIterator2.hasNext(); i++ ) {
             final Integer n = collatingIterator2.next();
-            assertEquals("wrong order", (int) n, i + 1);
+            assertEquals((int) n, i + 1, "wrong order");
         }
-        assertEquals("wrong size", i, l1.size() + l2.size());
+        assertEquals(i, l1.size() + l2.size(), "wrong size");
     }
 }
 

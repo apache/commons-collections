@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -62,7 +67,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
             final String str = String.valueOf((char) i);
-            assertNull("String: " + str, map.get(str));
+            assertNull(map.get(str), "String: " + str);
         }
     }
 
@@ -75,7 +80,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
             final String str = String.valueOf((char) i);
-            assertFalse("String: " + str, map.containsKey(str));
+            assertFalse(map.containsKey(str), "String: " + str);
         }
     }
 
@@ -88,7 +93,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
             final String str = String.valueOf((char) i);
-            assertFalse("String: " + str, map.containsValue(str));
+            assertFalse(map.containsValue(str), "String: " + str);
         }
     }
 

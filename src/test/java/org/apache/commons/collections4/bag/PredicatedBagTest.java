@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
@@ -73,10 +76,10 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
             assertTrue(bag.contains(els[i]));
         }
         Set<T> set = bag.uniqueSet();
-        assertTrue("Unique set contains the first element", set.contains(els[0]));
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
         assertTrue(bag.remove(els[0]));
         set = bag.uniqueSet();
-        assertFalse("Unique set now does not contain the first element", set.contains(els[0]));
+        assertFalse(set.contains(els[0]), "Unique set now does not contain the first element");
     }
 
     @Test
@@ -87,7 +90,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
         assertThrows(IllegalArgumentException.class, () -> bag.add((T) i));
 
-        assertFalse("Collection shouldn't contain illegal element", bag.contains(i));
+        assertFalse(bag.contains(i), "Collection shouldn't contain illegal element");
     }
 
     @Test

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.map.AbstractMapTest;
@@ -44,8 +47,8 @@ public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
     @Test
     public void testNewMap() {
         final TreeMap<K, V> map = makeObject();
-        assertTrue("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", 0, map.size());
+        assertTrue(map.isEmpty(), "New map is empty");
+        assertEquals(0, map.size(), "New map has size zero");
     }
 
     @Test
@@ -54,10 +57,10 @@ public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
         final TreeMap<K, V> map = makeObject();
         map.put((K) "first", (V) "First Item");
         map.put((K) "second", (V) "Second Item");
-        assertEquals("Top item is 'Second Item'",
-            "First Item", map.get("first"));
-        assertEquals("Next Item is 'First Item'",
-            "Second Item", map.get("second"));
+        assertEquals("First Item", map.get("first"),
+                "Top item is 'Second Item'");
+        assertEquals("Second Item", map.get("second"),
+                "Next Item is 'First Item'");
     }
 
 }

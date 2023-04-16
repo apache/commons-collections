@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EmptyStackException;
 
@@ -40,8 +43,8 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     @Test
     public void testNewStack() {
         final ArrayStack<E> stack = makeObject();
-        assertTrue("New stack is empty", stack.empty());
-        assertEquals("New stack has size zero", 0, stack.size());
+        assertTrue(stack.empty(), "New stack is empty");
+        assertEquals(0, stack.size(), "New stack has size zero");
 
         assertThrows(EmptyStackException.class, () -> stack.peek());
 
@@ -54,27 +57,27 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
         final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
-        assertFalse("Stack is not empty", stack.empty());
-        assertEquals("Stack size is one", 1, stack.size());
-        assertEquals("Top item is 'First Item'",
-                     "First Item", (String) stack.peek());
-        assertEquals("Stack size is one", 1, stack.size());
+        assertFalse(stack.empty(), "Stack is not empty");
+        assertEquals(1, stack.size(), "Stack size is one");
+        assertEquals("First Item", (String) stack.peek(),
+                "Top item is 'First Item'");
+        assertEquals(1, stack.size(), "Stack size is one");
 
         stack.push((E) "Second Item");
-        assertEquals("Stack size is two", 2, stack.size());
-        assertEquals("Top item is 'Second Item'",
-                     "Second Item", (String) stack.peek());
-        assertEquals("Stack size is two", 2, stack.size());
+        assertEquals(2, stack.size(), "Stack size is two");
+        assertEquals("Second Item", (String) stack.peek(),
+                "Top item is 'Second Item'");
+        assertEquals(2, stack.size(), "Stack size is two");
 
-        assertEquals("Popped item is 'Second Item'",
-                     "Second Item", (String) stack.pop());
-        assertEquals("Top item is 'First Item'",
-                     "First Item", (String) stack.peek());
-        assertEquals("Stack size is one", 1, stack.size());
+        assertEquals("Second Item", (String) stack.pop(),
+                "Popped item is 'Second Item'");
+        assertEquals("First Item", (String) stack.peek(),
+                "Top item is 'First Item'");
+        assertEquals(1, stack.size(), "Stack size is one");
 
-        assertEquals("Popped item is 'First Item'",
-                     "First Item", (String) stack.pop());
-        assertEquals("Stack size is zero", 0, stack.size());
+        assertEquals("First Item", (String) stack.pop(),
+                "Popped item is 'First Item'");
+        assertEquals(0, stack.size(), "Stack size is zero");
     }
 
     @Test
@@ -85,12 +88,12 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
         stack.push((E) "First Item");
         stack.push((E) "Second Item");
-        assertEquals("Top item is 'Second Item'",
-                     1, stack.search("Second Item"));
-        assertEquals("Next Item is 'First Item'",
-                     2, stack.search("First Item"));
-        assertEquals("Cannot find 'Missing Item'",
-                     -1, stack.search("Missing Item"));
+        assertEquals(1, stack.search("Second Item"),
+                "Top item is 'Second Item'");
+        assertEquals(2, stack.search("First Item"),
+                "Next Item is 'First Item'");
+        assertEquals(-1, stack.search("Missing Item"),
+                "Cannot find 'Missing Item'");
     }
 
     @Override
