@@ -1095,7 +1095,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         final ListIterator<E> it = list.listIterator();
         try {
             it.remove();
-        } catch(final IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // expected
         }
         assertEquals("1", it.next());
