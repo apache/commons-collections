@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.commons.collections4.Bag;
@@ -71,11 +72,11 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     @Test
     public void testOrdering() {
         final Bag<T> bag = setupBag();
-        assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);
-        assertEquals("Should get elements in correct order", "B", bag.toArray()[1]);
-        assertEquals("Should get elements in correct order", "C", bag.toArray()[2]);
-        assertEquals("Should get first key", "A", ((SortedBag<T>) bag).first());
-        assertEquals("Should get last key", "D", ((SortedBag<T>) bag).last());
+        assertEquals("A", bag.toArray()[0], "Should get elements in correct order");
+        assertEquals("B", bag.toArray()[1], "Should get elements in correct order");
+        assertEquals("C", bag.toArray()[2], "Should get elements in correct order");
+        assertEquals("A", ((SortedBag<T>) bag).first(), "Should get first key");
+        assertEquals("D", ((SortedBag<T>) bag).last(), "Should get last key");
     }
 
     @Override

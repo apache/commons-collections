@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -139,11 +142,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A");
-        assertTrue("Should contain 'A'", multiset.contains("A"));
-        assertEquals("Should have count of 1", 1, multiset.getCount("A"));
+        assertTrue(multiset.contains("A"), "Should contain 'A'");
+        assertEquals(1, multiset.getCount("A"), "Should have count of 1");
         multiset.add((T) "A");
-        assertTrue("Should contain 'A'", multiset.contains("A"));
-        assertEquals("Should have count of 2", 2, multiset.getCount("A"));
+        assertTrue(multiset.contains("A"), "Should contain 'A'");
+        assertEquals(2, multiset.getCount("A"), "Should have count of 2");
         multiset.add((T) "B");
         assertTrue(multiset.contains("A"));
         assertTrue(multiset.contains("B"));
@@ -176,20 +179,20 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A");
-        assertEquals("Should have count of 1", 1, multiset.getCount("A"));
+        assertEquals(1, multiset.getCount("A"), "Should have count of 1");
         multiset.remove("A");
-        assertEquals("Should have count of 0", 0, multiset.getCount("A"));
+        assertEquals(0, multiset.getCount("A"), "Should have count of 0");
         multiset.add((T) "A");
         multiset.add((T) "A");
         multiset.add((T) "A");
         multiset.add((T) "A");
-        assertEquals("Should have count of 4", 4, multiset.getCount("A"));
+        assertEquals(4, multiset.getCount("A"), "Should have count of 4");
         multiset.remove("A", 0);
-        assertEquals("Should have count of 4", 4, multiset.getCount("A"));
+        assertEquals(4, multiset.getCount("A"), "Should have count of 4");
         multiset.remove("A", 2);
-        assertEquals("Should have count of 2", 2, multiset.getCount("A"));
+        assertEquals(2, multiset.getCount("A"), "Should have count of 2");
         multiset.remove("A");
-        assertEquals("Should have count of 1", 1, multiset.getCount("A"));
+        assertEquals(1, multiset.getCount("A"), "Should have count of 1");
     }
 
     @Test
@@ -201,18 +204,18 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A", 2);
-        assertEquals("Should have count of 2", 2, multiset.getCount("A"));
+        assertEquals(2, multiset.getCount("A"), "Should have count of 2");
         multiset.add((T) "B");
         multiset.add((T) "C");
-        assertEquals("Should have count of 4", 4, multiset.size());
+        assertEquals(4, multiset.size(), "Should have count of 4");
         final List<String> delete = new ArrayList<>();
         delete.add("A");
         delete.add("B");
         multiset.removeAll(delete);
-        assertEquals("Should have count of 0", 0, multiset.getCount("A"));
-        assertEquals("Should have count of 0", 0, multiset.getCount("B"));
-        assertEquals("Should have count of 1", 1, multiset.getCount("C"));
-        assertEquals("Should have count of 1", 1, multiset.size());
+        assertEquals(0, multiset.getCount("A"), "Should have count of 0");
+        assertEquals(0, multiset.getCount("B"), "Should have count of 0");
+        assertEquals(1, multiset.getCount("C"), "Should have count of 1");
+        assertEquals(1, multiset.size(), "Should have count of 1");
     }
 
     @Test
@@ -224,20 +227,20 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
 
-        assertFalse("MultiSet does not have at least 1 'A'", multiset.contains("A"));
-        assertFalse("MultiSet does not have at least 1 'B'", multiset.contains("B"));
+        assertFalse(multiset.contains("A"), "MultiSet does not have at least 1 'A'");
+        assertFalse(multiset.contains("B"), "MultiSet does not have at least 1 'B'");
 
         multiset.add((T) "A");  // multiset 1A
-        assertTrue("MultiSet has at least 1 'A'", multiset.contains("A"));
-        assertFalse("MultiSet does not have at least 1 'B'", multiset.contains("B"));
+        assertTrue(multiset.contains("A"), "MultiSet has at least 1 'A'");
+        assertFalse(multiset.contains("B"), "MultiSet does not have at least 1 'B'");
 
         multiset.add((T) "A");  // multiset 2A
-        assertTrue("MultiSet has at least 1 'A'", multiset.contains("A"));
-        assertFalse("MultiSet does not have at least 1 'B'", multiset.contains("B"));
+        assertTrue(multiset.contains("A"), "MultiSet has at least 1 'A'");
+        assertFalse(multiset.contains("B"), "MultiSet does not have at least 1 'B'");
 
         multiset.add((T) "B");  // multiset 2A,1B
-        assertTrue("MultiSet has at least 1 'A'", multiset.contains("A"));
-        assertTrue("MultiSet has at least 1 'B'", multiset.contains("B"));
+        assertTrue(multiset.contains("A"), "MultiSet has at least 1 'A'");
+        assertTrue(multiset.contains("B"), "MultiSet has at least 1 'B'");
     }
 
     @Test
@@ -260,39 +263,39 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         known1A1B.add("A");
         known1A1B.add("B");
 
-        assertTrue("MultiSet containsAll of empty", multiset.containsAll(known));
-        assertFalse("MultiSet does not containsAll of 1 'A'", multiset.containsAll(known1A));
-        assertFalse("MultiSet does not containsAll of 2 'A'", multiset.containsAll(known2A));
-        assertFalse("MultiSet does not containsAll of 1 'B'", multiset.containsAll(known1B));
-        assertFalse("MultiSet does not containsAll of 1 'A' 1 'B'", multiset.containsAll(known1A1B));
+        assertTrue(multiset.containsAll(known), "MultiSet containsAll of empty");
+        assertFalse(multiset.containsAll(known1A), "MultiSet does not containsAll of 1 'A'");
+        assertFalse(multiset.containsAll(known2A), "MultiSet does not containsAll of 2 'A'");
+        assertFalse(multiset.containsAll(known1B), "MultiSet does not containsAll of 1 'B'");
+        assertFalse(multiset.containsAll(known1A1B), "MultiSet does not containsAll of 1 'A' 1 'B'");
 
         multiset.add((T) "A");  // multiset 1A
-        assertTrue("MultiSet containsAll of empty", multiset.containsAll(known));
-        assertTrue("MultiSet containsAll of 1 'A'", multiset.containsAll(known1A));
-        assertTrue("MultiSet does not containsAll 'A'", multiset.containsAll(known2A));
-        assertFalse("MultiSet does not containsAll of 1 'B'", multiset.containsAll(known1B));
-        assertFalse("MultiSet does not containsAll of 1 'A' 1 'B'", multiset.containsAll(known1A1B));
+        assertTrue(multiset.containsAll(known), "MultiSet containsAll of empty");
+        assertTrue(multiset.containsAll(known1A), "MultiSet containsAll of 1 'A'");
+        assertTrue(multiset.containsAll(known2A), "MultiSet does not containsAll 'A'");
+        assertFalse(multiset.containsAll(known1B), "MultiSet does not containsAll of 1 'B'");
+        assertFalse(multiset.containsAll(known1A1B), "MultiSet does not containsAll of 1 'A' 1 'B'");
 
         multiset.add((T) "A");  // multiset 2A
-        assertTrue("MultiSet containsAll of empty", multiset.containsAll(known));
-        assertTrue("MultiSet containsAll of 1 'A'", multiset.containsAll(known1A));
-        assertTrue("MultiSet containsAll of 2 'A'", multiset.containsAll(known2A));
-        assertFalse("MultiSet does not containsAll of 1 'B'", multiset.containsAll(known1B));
-        assertFalse("MultiSet does not containsAll of 1 'A' 1 'B'", multiset.containsAll(known1A1B));
+        assertTrue(multiset.containsAll(known), "MultiSet containsAll of empty");
+        assertTrue(multiset.containsAll(known1A), "MultiSet containsAll of 1 'A'");
+        assertTrue(multiset.containsAll(known2A), "MultiSet containsAll of 2 'A'");
+        assertFalse(multiset.containsAll(known1B), "MultiSet does not containsAll of 1 'B'");
+        assertFalse(multiset.containsAll(known1A1B), "MultiSet does not containsAll of 1 'A' 1 'B'");
 
         multiset.add((T) "A");  // multiset 3A
-        assertTrue("MultiSet containsAll of empty", multiset.containsAll(known));
-        assertTrue("MultiSet containsAll of 1 'A'", multiset.containsAll(known1A));
-        assertTrue("MultiSet containsAll of 2 'A'", multiset.containsAll(known2A));
-        assertFalse("MultiSet does not containsAll of 1 'B'", multiset.containsAll(known1B));
-        assertFalse("MultiSet does not containsAll of 1 'A' 1 'B'", multiset.containsAll(known1A1B));
+        assertTrue(multiset.containsAll(known), "MultiSet containsAll of empty");
+        assertTrue(multiset.containsAll(known1A), "MultiSet containsAll of 1 'A'");
+        assertTrue(multiset.containsAll(known2A), "MultiSet containsAll of 2 'A'");
+        assertFalse(multiset.containsAll(known1B), "MultiSet does not containsAll of 1 'B'");
+        assertFalse(multiset.containsAll(known1A1B), "MultiSet does not containsAll of 1 'A' 1 'B'");
 
         multiset.add((T) "B");  // multiset 3A1B
-        assertTrue("MultiSet containsAll of empty", multiset.containsAll(known));
-        assertTrue("MultiSet containsAll of 1 'A'", multiset.containsAll(known1A));
-        assertTrue("MultiSet containsAll of 2 'A'", multiset.containsAll(known2A));
-        assertTrue("MultiSet containsAll of 1 'B'", multiset.containsAll(known1B));
-        assertTrue("MultiSet containsAll of 1 'A' 1 'B'", multiset.containsAll(known1A1B));
+        assertTrue(multiset.containsAll(known), "MultiSet containsAll of empty");
+        assertTrue(multiset.containsAll(known1A), "MultiSet containsAll of 1 'A'");
+        assertTrue(multiset.containsAll(known2A), "MultiSet containsAll of 2 'A'");
+        assertTrue(multiset.containsAll(known1B), "MultiSet containsAll of 1 'B'");
+        assertTrue(multiset.containsAll(known1A1B), "MultiSet containsAll of 1 'A' 1 'B'");
     }
 
     @Test
@@ -303,22 +306,22 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
 
         final MultiSet<T> multiset = makeObject();
-        assertEquals("Should have 0 total items", 0, multiset.size());
+        assertEquals(0, multiset.size(), "Should have 0 total items");
         multiset.add((T) "A");
-        assertEquals("Should have 1 total items", 1, multiset.size());
+        assertEquals(1, multiset.size(), "Should have 1 total items");
         multiset.add((T) "A");
-        assertEquals("Should have 2 total items", 2, multiset.size());
+        assertEquals(2, multiset.size(), "Should have 2 total items");
         multiset.add((T) "A");
-        assertEquals("Should have 3 total items", 3, multiset.size());
+        assertEquals(3, multiset.size(), "Should have 3 total items");
         multiset.add((T) "B");
-        assertEquals("Should have 4 total items", 4, multiset.size());
+        assertEquals(4, multiset.size(), "Should have 4 total items");
         multiset.add((T) "B");
-        assertEquals("Should have 5 total items", 5, multiset.size());
+        assertEquals(5, multiset.size(), "Should have 5 total items");
         multiset.remove("A", 2);
-        assertEquals("Should have 1 'A'", 1, multiset.getCount("A"));
-        assertEquals("Should have 3 total items", 3, multiset.size());
+        assertEquals(1, multiset.getCount("A"), "Should have 1 'A'");
+        assertEquals(3, multiset.size(), "Should have 3 total items");
         multiset.remove("B");
-        assertEquals("Should have 2 total item", 2, multiset.size());
+        assertEquals(2, multiset.size(), "Should have 2 total item");
     }
 
     @Test
@@ -339,7 +342,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         retains.add("B");
         retains.add("C");
         multiset.retainAll(retains);
-        assertEquals("Should have 3 total items", 3, multiset.size());
+        assertEquals(3, multiset.size(), "Should have 3 total items");
     }
 
     @Test
@@ -353,7 +356,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset.add((T) "A");
         multiset.add((T) "A");
         multiset.add((T) "B");
-        assertEquals("MultiSet should have 3 items", 3, multiset.size());
+        assertEquals(3, multiset.size(), "MultiSet should have 3 items");
         final Iterator<T> i = multiset.iterator();
 
         boolean foundA = false;
@@ -369,9 +372,9 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
             }
         }
 
-        assertTrue("MultiSet should still contain 'A'", multiset.contains("A"));
-        assertEquals("MultiSet should have 2 items", 2, multiset.size());
-        assertEquals("MultiSet should have 1 'A'", 1, multiset.getCount("A"));
+        assertTrue(multiset.contains("A"), "MultiSet should still contain 'A'");
+        assertEquals(2, multiset.size(), "MultiSet should have 2 items");
+        assertEquals(1, multiset.getCount("A"), "MultiSet should have 1 'A'");
     }
 
     @Test
@@ -706,7 +709,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(multiset));
-            assertTrue("MultiSet is empty", multiset2.isEmpty());
+            assertTrue(multiset2.isEmpty(), "MultiSet is empty");
             assertEquals(multiset, multiset2);
         }
     }
@@ -721,7 +724,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeFullCollection();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final MultiSet<?> multiset2 = (MultiSet<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(multiset));
-            assertEquals("MultiSet is the right size", multiset.size(), multiset2.size());
+            assertEquals(multiset.size(), multiset2.size(), "MultiSet is the right size");
             assertEquals(multiset, multiset2);
         }
     }

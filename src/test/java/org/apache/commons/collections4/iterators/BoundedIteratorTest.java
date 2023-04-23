@@ -20,7 +20,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,12 +51,10 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         super(BoundedIteratorTest.class.getSimpleName());
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     @BeforeEach
     public void setUp()
         throws Exception {
-        super.setUp();
         testList = Arrays.asList((E[]) testArray);
     }
 

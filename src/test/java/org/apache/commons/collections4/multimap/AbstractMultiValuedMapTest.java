@@ -16,7 +16,12 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -861,7 +866,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         final MultiValuedMap<?, ?> map = makeObject();
         final MultiValuedMap<?, ?> map2 =
                 (MultiValuedMap<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
-        assertEquals("Map is empty", 0, map2.size());
+        assertEquals(0, map2.size(), "Map is empty");
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -870,16 +875,16 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         final MultiValuedMap map = makeFullMap();
         final MultiValuedMap map2 =
                 (MultiValuedMap) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
-        assertEquals("Map is the right size", map.size(), map2.size());
+        assertEquals(map.size(), map2.size(), "Map is the right size");
         for (final Object key : map.keySet()) {
-            assertTrue("Map had inequal elements",
-                       CollectionUtils.isEqualCollection(map.get(key), map2.get(key)));
+            assertTrue(CollectionUtils.isEqualCollection(map.get(key), map2.get(key)),
+                    "Map had inequal elements");
             if (isRemoveSupported()) {
                 map2.remove(key);
             }
         }
         if (isRemoveSupported()) {
-            assertEquals("Map had extra values", 0, map2.size());
+            assertEquals(0, map2.size(), "Map had extra values");
         }
     }
 

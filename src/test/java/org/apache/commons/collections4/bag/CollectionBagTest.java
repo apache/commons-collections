@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -99,7 +102,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
-            assertTrue("Bag is empty", bag2.isEmpty());
+            assertTrue(bag2.isEmpty(), "Bag is empty");
             assertEquals(bag, bag2);
         }
     }
@@ -114,7 +117,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         final Bag<T> bag = (Bag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
-            assertEquals("Bag is the right size", bag.size(), bag2.size());
+            assertEquals(bag.size(), bag2.size(), "Bag is the right size");
             assertEquals(bag, bag2);
         }
     }

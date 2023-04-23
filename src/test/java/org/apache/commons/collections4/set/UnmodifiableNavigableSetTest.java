@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -119,7 +121,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
 

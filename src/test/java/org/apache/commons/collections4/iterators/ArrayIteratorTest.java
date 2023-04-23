@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
@@ -57,10 +59,10 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         for (final String testValue : testArray) {
             final E iterValue = iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertFalse("Iterator should now be empty", iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
         assertThrows(NoSuchElementException.class, iter::next, "NoSuchElementException must be thrown");
     }

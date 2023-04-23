@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +32,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +53,6 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * Set up instance variables required by this test case.
      */
-    @Override
     @BeforeEach
     public void setUp() {
         array = new String[] { "a", "b", "c" };
@@ -59,7 +62,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * Tear down instance variables required by this test case.
      */
-    @Override
+    @AfterEach
     public void tearDown() throws Exception {
         iterator = null;
     }
@@ -183,7 +186,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         if (iterator.hasNext()) {
             final Object last = iterator.next();
             iterator.remove();
-            assertFalse("Base of FilterIterator still contains removed element.", list.contains(last));
+            assertFalse(list.contains(last), "Base of FilterIterator still contains removed element.");
         }
     }
 

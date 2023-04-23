@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,7 +99,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
         // loop back through comparing
         for (int i = list.size() - 1; i >= 0; i--) {
-            assertEquals("" + i, list.size() - i - 2, it.nextIndex());  // reversed index
+            assertEquals(list.size() - i - 2, it.nextIndex(), "" + i);  // reversed index
             assertEquals(list.size() - i - 1, it.previousIndex());  // reversed index
 
             final Object obj = list.get(i);

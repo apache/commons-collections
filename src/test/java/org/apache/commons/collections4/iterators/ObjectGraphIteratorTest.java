@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +48,6 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
         super(ObjectGraphIteratorTest.class.getSimpleName());
     }
 
-    @Override
     @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();

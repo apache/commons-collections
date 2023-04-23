@@ -17,6 +17,9 @@
 package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -398,11 +401,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final HashMap<Object, Object> hmap = new HashMap<>();
         hmap.put(key1, null);
         hmap.put(key2, null);
-        assertEquals("Should have two elements", 2, hmap.size());
+        assertEquals(2, hmap.size(), "Should have two elements");
         final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
         listMap.put(key1, null);
         listMap.put(key2, null);
-        assertEquals("Should have two elements", 2, listMap.size());
+        assertEquals(2, listMap.size(), "Should have two elements");
         listMap.putAll(2, hmap);
     }
 
@@ -413,11 +416,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final HashMap<Object, Object> hmap = new HashMap<>();
         hmap.put(key1, "1");
         hmap.put(key2, "2");
-        assertEquals("Should have two elements", 2, hmap.size());
+        assertEquals(2, hmap.size(), "Should have two elements");
         final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
         listMap.put(key1, "3");
         listMap.put(key2, "4");
-        assertEquals("Should have two elements", 2, listMap.size());
+        assertEquals(2, listMap.size(), "Should have two elements");
         listMap.putAll(2, hmap);
     }
 

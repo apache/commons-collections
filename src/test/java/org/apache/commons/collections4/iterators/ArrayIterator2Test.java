@@ -17,7 +17,10 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -69,15 +72,15 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             final Integer testValue = Integer.valueOf(element);
             final Number iterValue = (Number) iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertFalse("Iterator should now be empty", iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertEquals("NoSuchElementException must be thrown", e.getClass(), new NoSuchElementException().getClass());
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 
@@ -90,7 +93,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             iter.next();
         }
 
-        assertEquals("the count should be right using ArrayIterator(Object,2) ", count, testArray.length - 2);
+        assertEquals(count, testArray.length - 2, "the count should be right using ArrayIterator(Object,2) ");
 
         iter = makeArrayIterator(testArray, 1, testArray.length - 1);
         count = 0;
@@ -100,9 +103,9 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         }
 
         assertEquals(
-            "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ",
-            count,
-            testArray.length - 2);
+                count,
+                testArray.length - 2,
+                "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ");
         assertAll(
                 () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, -1),
                         "new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException"),

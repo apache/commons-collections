@@ -16,7 +16,12 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -478,19 +483,19 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     public void testEmptyMapCompatibility() throws Exception {
         final Map<?, ?> map = makeEmptyMap();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
-        assertEquals("Map is empty", 0, map2.size());
+        assertEquals(0, map2.size(), "Map is empty");
     }
 
     @Test
     public void testFullMapCompatibility() throws Exception {
         final Map<?, ?> map = (Map<?, ?>) makeObject();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
-        assertEquals("Map is the right size", map.size(), map2.size());
+        assertEquals(map.size(), map2.size(), "Map is the right size");
         for (final Object key : map.keySet()) {
-            assertEquals( "Map had unequal elements", map.get(key), map2.get(key) );
+            assertEquals(map.get(key), map2.get(key), "Map had unequal elements");
             map2.remove(key);
         }
-        assertEquals("Map had extra values", 0, map2.size());
+        assertEquals(0, map2.size(), "Map had extra values");
     }
 
 //    public void testCreate() throws Exception {

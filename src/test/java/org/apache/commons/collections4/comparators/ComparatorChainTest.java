@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -60,7 +62,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         chain.addComparator(new ComparableComparator<>());
 
         final int correctValue = i1.compareTo(i2);
-        assertEquals("Comparison returns the right order", chain.compare(i1, i2), correctValue);
+        assertEquals(chain.compare(i1, i2), correctValue, "Comparison returns the right order");
     }
 
     @Test
@@ -81,7 +83,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final Integer i2 = 6;
 
         final int correctValue = i1.compareTo(i2);
-        assertEquals("Comparison returns the right order", chain.compare(i1, i2), correctValue);
+        assertEquals(chain.compare(i1, i2), correctValue, "Comparison returns the right order");
     }
 
     @Test

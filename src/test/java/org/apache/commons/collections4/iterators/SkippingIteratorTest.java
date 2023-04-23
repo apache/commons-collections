@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,12 +47,10 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
         super(SkippingIteratorTest.class.getSimpleName());
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     @BeforeEach
     public void setUp()
         throws Exception {
-        super.setUp();
         testList = Arrays.asList((E[]) testArray);
     }
 

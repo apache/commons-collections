@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -109,7 +108,7 @@ public class ShapeTest {
                 final int c = n;
                 // is sparse when number of bits stored as integers is less than 2 times the
                 // number of bitmaps
-                Assertions.assertEquals(n * Integer.SIZE <= Math.ceil((double) bits / Long.SIZE) * Long.SIZE,
+                assertEquals(n * Integer.SIZE <= Math.ceil((double) bits / Long.SIZE) * Long.SIZE,
                         shape.isSparse(n), () -> String.format("n=%d : bits=%d", c, bits));
             }
         }

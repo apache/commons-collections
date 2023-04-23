@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Arrays;
@@ -27,7 +28,6 @@ import java.util.BitSet;
 
 import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.bloomfilter.BitCountProducer.BitCountConsumer;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBitCountProducerTest extends AbstractIndexProducerTest {
@@ -93,7 +93,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
         final int ary[] = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachCount((i, j) -> {
-            Assertions.fail("forEachCount consumer should not be called");
+            fail("forEachCount consumer should not be called");
             return false;
         }));
     }
@@ -111,7 +111,7 @@ public abstract class AbstractBitCountProducerTest extends AbstractIndexProducer
             bs2.set(i);
             return true;
         });
-        Assertions.assertEquals(bs1, bs2);
+        assertEquals(bs1, bs2);
     }
 
     @Test

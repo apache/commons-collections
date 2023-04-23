@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;

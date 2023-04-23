@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,12 +69,12 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         final TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
 
         // Checks the contract: equals-hashcode on comp1 and comp2
-        assertTrue("Contract failed: equals-hashcode",
-                comp1.equals(comp2) ? comp1.hashCode() == comp2.hashCode() : true);
+        assertTrue(comp1.equals(comp2) ? comp1.hashCode() == comp2.hashCode() : true,
+                "Contract failed: equals-hashcode");
 
         // Checks the contract: equals-hashcode on comp1 and comp2
-        assertTrue("Contract failed: equals-hashcode",
-                comp2.equals(comp1) ? comp2.hashCode() == comp1.hashCode() : true);
+        assertTrue(comp2.equals(comp1) ? comp2.hashCode() == comp1.hashCode() : true,
+                "Contract failed: equals-hashcode");
     }
 
     @Override

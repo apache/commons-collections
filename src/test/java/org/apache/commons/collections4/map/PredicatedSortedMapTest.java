@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
@@ -89,10 +94,10 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
-        assertNotNull("returned entryset should not be null", map.entrySet());
+        assertNotNull(map.entrySet(), "returned entryset should not be null");
         map = decorateMap(new TreeMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertEquals("returned entryset should contain one entry", 1, map.entrySet().size());
+        assertEquals(1, map.entrySet().size(), "returned entryset should contain one entry");
         map = decorateMap(map, null, null);
     }
 
@@ -136,24 +141,24 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedMap<K, V> map = makeTestMap();
-        map.put((K) "A",  (V) "a");
+        map.put((K) "A", (V) "a");
         map.put((K) "B", (V) "b");
         assertThrows(IllegalArgumentException.class, () -> map.put(null, (V) "c"),
                 "Null key should raise IllegalArgument");
         map.put((K) "C", (V) "c");
         assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
                 "Null value should raise IllegalArgument");
-        assertEquals("First key should be A", "A", map.firstKey());
-        assertEquals("Last key should be C", "C", map.lastKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap((K) "B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap((K) "C").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap((K) "A", (K) "C").lastKey());
+        assertEquals("A", map.firstKey(), "First key should be A");
+        assertEquals("C", map.lastKey(), "Last key should be C");
+        assertEquals("B", map.tailMap((K) "B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap((K) "C").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap((K) "A", (K) "C").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<? super K> c = map.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
@@ -167,17 +172,17 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map.put((K) "C", (V) "c");
         assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
                 "Null value should raise IllegalArgument");
-        assertEquals("Last key should be A", "A", map.lastKey());
-        assertEquals("First key should be C", "C", map.firstKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap((K) "B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap((K) "A").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap((K) "C", (K) "A").lastKey());
+        assertEquals("A", map.lastKey(), "Last key should be A");
+        assertEquals("C", map.firstKey(), "First key should be C");
+        assertEquals("B", map.tailMap((K) "B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap((K) "A").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap((K) "C", (K) "A").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<? super K> c = map.comparator();
-        assertSame("reverse order, so comparator should be reverseStringComparator", c, reverseStringComparator);
+        assertSame(c, reverseStringComparator, "reverse order, so comparator should be reverseStringComparator");
     }
 
     @Override

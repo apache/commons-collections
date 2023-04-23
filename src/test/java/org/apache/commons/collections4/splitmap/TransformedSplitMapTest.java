@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.splitmap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -119,8 +124,8 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertTrue( "Map should be empty", readMap.isEmpty() );
-        assertEquals( map.entrySet(), readMap.entrySet() );
+        assertTrue(readMap.isEmpty(), "Map should be empty");
+        assertEquals(map.entrySet(), readMap.entrySet());
     }
 
     @Test
@@ -140,7 +145,7 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertFalse( "Map should not be empty", readMap.isEmpty() );
+        assertFalse(readMap.isEmpty(), "Map should not be empty");
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 

@@ -16,8 +16,11 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.commons.collections4.Predicate;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +40,7 @@ public abstract class AbstractPredicateTest {
     @Test
     public void predicateSanityTests() throws Exception {
         final Predicate<?> predicate = generatePredicate();
-        Assertions.assertNotNull(predicate);
+        assertNotNull(predicate);
     }
 
     /**
@@ -46,11 +49,11 @@ public abstract class AbstractPredicateTest {
     protected abstract Predicate<?> generatePredicate();
 
     protected <T> void assertPredicateFalse(final Predicate<T> predicate, final T testObject) {
-        Assertions.assertFalse(predicate.evaluate(testObject));
+        assertFalse(predicate.evaluate(testObject));
     }
 
     protected <T> void assertPredicateTrue(final Predicate<T> predicate, final T testObject) {
-        Assertions.assertTrue(predicate.evaluate(testObject));
+        assertTrue(predicate.evaluate(testObject));
     }
 
 }

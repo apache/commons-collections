@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -148,7 +151,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         for (int i = 0; i < size; i++) {
             final Object o1 = getCollection().remove();
             final Object o2 = ((List<?>) getConfirmed()).remove(0);
-            assertEquals("Removed objects should be equal", o1, o2);
+            assertEquals(o1, o2, "Removed objects should be equal");
             verify();
         }
 

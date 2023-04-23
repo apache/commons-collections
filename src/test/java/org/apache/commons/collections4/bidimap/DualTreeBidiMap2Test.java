@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -133,9 +137,9 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         final Iterator<K> mapIter = sm.keySet().iterator();
         for (final K expectedKey : newSortedKeys) {
             final K mapKey = mapIter.next();
-            assertNotNull("key in sorted list may not be null", expectedKey);
-            assertNotNull("key in map may not be null", mapKey);
-            assertEquals("key from sorted list and map must be equal", expectedKey, mapKey);
+            assertNotNull(expectedKey, "key in sorted list may not be null");
+            assertNotNull(mapKey, "key in map may not be null");
+            assertEquals(expectedKey, mapKey, "key from sorted list and map must be equal");
         }
     }
 
