@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Comparator;
@@ -78,10 +80,10 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         bag.add((T) one);
         bag.add((T) two);
         bag.add((T) three);
-        assertEquals("first element", bag.first(), one);
-        assertEquals("last element", bag.last(), two);
+        assertEquals(bag.first(), one, "first element");
+        assertEquals(bag.last(), two, "last element");
         final Comparator<? super T> c = bag.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Override

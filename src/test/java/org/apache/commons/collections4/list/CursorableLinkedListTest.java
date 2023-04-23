@@ -17,7 +17,13 @@
 package org.apache.commons.collections4.list;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -42,7 +48,6 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     }
     private CursorableLinkedList<E> list;
 
-    @Override
     @BeforeEach
     public void setUp() {
         list = new CursorableLinkedList<>();

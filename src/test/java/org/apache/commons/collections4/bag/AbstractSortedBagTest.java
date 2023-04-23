@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Iterator;
 
 import org.apache.commons.collections4.SortedBag;
@@ -54,13 +56,13 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
             } else {
                 last = collIter.next();
             }
-            assertEquals("Element appears to be out of order.", last, confIter.next());
+            assertEquals(last, confIter.next(), "Element appears to be out of order.");
         }
         if (!getCollection().isEmpty()) {
-            assertEquals("Incorrect element returned by first().", first,
-                getCollection().first());
-            assertEquals("Incorrect element returned by last().", last,
-                getCollection().last());
+            assertEquals(first, getCollection().first(),
+                "Incorrect element returned by first().");
+            assertEquals(last, getCollection().last(),
+                "Incorrect element returned by last().");
         }
     }
 

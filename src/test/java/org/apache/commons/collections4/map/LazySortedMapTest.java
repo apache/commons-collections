@@ -18,7 +18,11 @@ package org.apache.commons.collections4.map;
 
 import static org.apache.commons.collections4.map.LazySortedMap.lazySortedMap;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -96,36 +100,36 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("First key should be A", "A", map.firstKey());
-        assertEquals("Last key should be C", "C", map.lastKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("C").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("A", "C").lastKey());
+        assertEquals("A", map.firstKey(), "First key should be A");
+        assertEquals("C", map.lastKey(), "Last key should be C");
+        assertEquals("B", map.tailMap("B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap("C").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap("A", "C").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<?> c = map.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
     public void testReverseSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new ConcurrentSkipListMap<String, Number>(reverseStringComparator), oneFactory);
-        map.put("A",  5);
+        map.put("A", 5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("Last key should be A", "A", map.lastKey());
-        assertEquals("First key should be C", "C", map.firstKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("A").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("C", "A").lastKey());
+        assertEquals("A", map.lastKey(), "Last key should be A");
+        assertEquals("C", map.firstKey(), "First key should be C");
+        assertEquals("B", map.tailMap("B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap("A").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap("C", "A").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<?> c = map.comparator();
-        assertSame("natural order, so comparator should be null", c, reverseStringComparator);
+        assertSame(c, reverseStringComparator, "natural order, so comparator should be null");
     }
 
     @Test

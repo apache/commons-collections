@@ -16,13 +16,15 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -81,9 +83,9 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final int sizeBefore = fixedSizeList.size();
         //
         final boolean changed = decoratedList.add("New Value");
-        Assertions.assertTrue(changed);
+        assertTrue(changed);
         //
-        Assertions.assertEquals(sizeBefore + 1, fixedSizeList.size(),
+        assertEquals(sizeBefore + 1, fixedSizeList.size(),
                 "Modifying an the underlying list is allowed");
     }
 
@@ -125,22 +127,22 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
-        Assertions.assertNotNull(subFixedSizeList);
-        Assertions.assertEquals(0, subFixedSizeList.size());
+        assertNotNull(subFixedSizeList);
+        assertEquals(0, subFixedSizeList.size());
     }
 
     @Test
     public void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assertions.assertTrue(fixedSizeList.isFull());
+        assertTrue(fixedSizeList.isFull());
     }
 
     @Test
     public void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assertions.assertEquals(2, fixedSizeList.maxSize());
+        assertEquals(2, fixedSizeList.maxSize());
     }
 
 }

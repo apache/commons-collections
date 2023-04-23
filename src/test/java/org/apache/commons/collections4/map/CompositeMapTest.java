@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,10 +43,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         super(CompositeMapTest.class.getSimpleName());
     }
 
-    @Override
     @BeforeEach
     public void setUp() throws Exception {
-        super.setUp();
         this.pass = false;
     }
 

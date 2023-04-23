@@ -16,7 +16,14 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -66,9 +73,9 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         final Map<K, V> testMap = new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
-        assertEquals("In map", value, testMap.get(key));
-        assertNotNull("Weak reference released early (1)", keyReference.get());
-        assertNotNull("Weak reference released early (2)", valueReference.get());
+        assertEquals(value, testMap.get(key), "In map");
+        assertNotNull(keyReference.get(), "Weak reference released early (1)");
+        assertNotNull(valueReference.get(), "Weak reference released early (2)");
         return testMap;
     }
 

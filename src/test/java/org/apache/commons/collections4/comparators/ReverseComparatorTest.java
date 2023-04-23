@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -89,7 +91,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         final Object dest = in.readObject();
         in.close();
-        assertEquals("obj != deserialize(serialize(obj))", comp, dest);
+        assertEquals(comp, dest, "obj != deserialize(serialize(obj))");
     }
 
 }

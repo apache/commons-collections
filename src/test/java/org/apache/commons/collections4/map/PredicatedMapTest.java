@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashMap;
@@ -61,10 +64,10 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();
-        assertNotNull("returned entryset should not be null", map.entrySet());
+        assertNotNull(map.entrySet(), "returned entryset should not be null");
         map = decorateMap(new HashMap<K, V>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
-        assertEquals("returned entryset should contain one entry", 1, map.entrySet().size());
+        assertEquals(1, map.entrySet().size(), "returned entryset should contain one entry");
         map = decorateMap(map, null, null);
     }
 

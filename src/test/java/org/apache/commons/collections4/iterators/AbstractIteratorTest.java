@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -109,7 +113,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeEmptyIterator();
 
         // hasNext() should return false
-        assertFalse("hasNext() should return false for empty iterators", it.hasNext());
+        assertFalse(it.hasNext(), "hasNext() should return false for empty iterators");
 
         // next() should throw a NoSuchElementException
         assertThrows(NoSuchElementException.class, () -> it.next(),
@@ -131,7 +135,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeObject();
 
         // hasNext() must be true (ensure makeFullIterator is correct!)
-        assertTrue("hasNext() should return true for at least one element", it.hasNext());
+        assertTrue(it.hasNext(), "hasNext() should return true for at least one element");
 
         // next() must not throw exception (ensure makeFullIterator is correct!)
         try {

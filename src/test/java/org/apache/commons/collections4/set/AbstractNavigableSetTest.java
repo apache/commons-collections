@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -83,19 +85,19 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         while (collIter.hasNext()) {
             final E element = collIter.next();
             final E confElement = confIter.next();
-            assertEquals("Element appears to be out of order.", confElement, element);
+            assertEquals(confElement, element, "Element appears to be out of order.");
 
-            assertEquals("Incorrect element returned by higher().", getConfirmed().higher(element),
-                                                                    getCollection().higher(element));
+            assertEquals(getConfirmed().higher(element),
+                    getCollection().higher(element), "Incorrect element returned by higher().");
 
-            assertEquals("Incorrect element returned by lower().", getConfirmed().lower(element),
-                                                                   getCollection().lower(element));
+            assertEquals(getConfirmed().lower(element),
+                    getCollection().lower(element), "Incorrect element returned by lower().");
 
-            assertEquals("Incorrect element returned by floor().", getConfirmed().floor(element),
-                                                                   getCollection().floor(element));
+            assertEquals(getConfirmed().floor(element),
+                    getCollection().floor(element), "Incorrect element returned by floor().");
 
-            assertEquals("Incorrect element returned by ceiling().", getConfirmed().ceiling(element),
-                                                                     getCollection().ceiling(element));
+            assertEquals(getConfirmed().ceiling(element),
+                    getCollection().ceiling(element), "Incorrect element returned by ceiling().");
         }
     }
 

@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
         assertThrows(IllegalArgumentException.class, () -> c.add((E) i), "Integer should fail string predicate.");
 
-        assertFalse("Collection shouldn't contain illegal element", c.contains(i));
+        assertFalse(c.contains(i), "Collection shouldn't contain illegal element");
     }
 
     @Test
@@ -103,10 +104,10 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
         assertThrows(IllegalArgumentException.class, () -> c.addAll(elements), "Integer should fail string predicate.");
 
-        assertFalse("Collection shouldn't contain illegal element", c.contains("one"));
-        assertFalse("Collection shouldn't contain illegal element", c.contains("two"));
-        assertFalse("Collection shouldn't contain illegal element", c.contains(3));
-        assertFalse("Collection shouldn't contain illegal element", c.contains("four"));
+        assertFalse(c.contains("one"), "Collection shouldn't contain illegal element");
+        assertFalse(c.contains("two"), "Collection shouldn't contain illegal element");
+        assertFalse(c.contains(3), "Collection shouldn't contain illegal element");
+        assertFalse(c.contains("four"), "Collection shouldn't contain illegal element");
     }
 
     @Override

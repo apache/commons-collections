@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.trie;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;

@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,7 +39,6 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -84,22 +86,22 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
 
-        assertEquals("List should equal confirmed", list1, list2);
-        assertEquals("Confirmed should equal list", list2, list1);
+        assertEquals(list1, list2, "List should equal confirmed");
+        assertEquals(list2, list1, "Confirmed should equal list");
 
-        assertEquals("Hash codes should be equal", list1.hashCode(), list2.hashCode());
+        assertEquals(list1.hashCode(), list2.hashCode(), "Hash codes should be equal");
 
         int i = 0;
         final Iterator<E> iterator1 = list1.iterator();
         final E[] array = (E[]) list1.toArray();
         for (Object o2 : list2) {
-            assertTrue("List iterator should have next", iterator1.hasNext());
+            assertTrue(iterator1.hasNext(), "List iterator should have next");
             final Object o1 = iterator1.next();
-            assertEquals("Iterator elements should be equal", o1, o2);
+            assertEquals(o1, o2, "Iterator elements should be equal");
             o2 = list1.get(i);
-            assertEquals("get should return correct element", o1, o2);
+            assertEquals(o1, o2, "get should return correct element");
             o2 = array[i];
-            assertEquals("toArray should have correct element", o1, o2);
+            assertEquals(o1, o2, "toArray should have correct element");
             i++;
         }
     }
@@ -253,32 +255,32 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     public void testListEquals() {
         resetEmpty();
         List<E> list = getCollection();
-        assertTrue("Empty lists should be equal", list.equals(getConfirmed()));
+        assertTrue(list.equals(getConfirmed()), "Empty lists should be equal");
         verify();
-        assertTrue("Empty list should equal self", list.equals(list));
+        assertTrue(list.equals(list), "Empty list should equal self");
         verify();
 
         List<E> list2 = Arrays.asList(getFullElements());
-        assertFalse("Empty list shouldn't equal full", list.equals(list2));
+        assertFalse(list.equals(list2), "Empty list shouldn't equal full");
         verify();
 
         list2 = Arrays.asList(getOtherElements());
-        assertFalse("Empty list shouldn't equal other", list.equals(list2));
+        assertFalse(list.equals(list2), "Empty list shouldn't equal other");
         verify();
 
         resetFull();
         list = getCollection();
-        assertTrue("Full lists should be equal", list.equals(getConfirmed()));
+        assertTrue(list.equals(getConfirmed()), "Full lists should be equal");
         verify();
-        assertTrue("Full list should equal self", list.equals(list));
+        assertTrue(list.equals(list), "Full list should equal self");
         verify();
 
         list2 = makeObject();
-        assertFalse("Full list shouldn't equal empty", list.equals(list2));
+        assertFalse(list.equals(list2), "Full list shouldn't equal empty");
         verify();
 
         list2 = Arrays.asList(getOtherElements());
-        assertFalse("Full list shouldn't equal other", list.equals(list2));
+        assertFalse(list.equals(list2), "Full list shouldn't equal other");
         verify();
 
         list2 = Arrays.asList(getFullElements());
@@ -291,13 +293,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
         if (list2.size() > 1) {
             Collections.reverse(list2);
-            assertFalse("Full list shouldn't equal full list with same elements but different order", list.equals(list2));
+            assertFalse(list.equals(list2), "Full list shouldn't equal full list with same elements but different order");
             verify();
         }
 
         resetFull();
         list = getCollection();
-        assertFalse("List shouldn't equal String", list.equals(""));
+        assertFalse(list.equals(""), "List shouldn't equal String");
         verify();
 
         final List<E> listForC = Arrays.asList(getFullElements());
@@ -313,7 +315,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             }
         };
 
-        assertFalse("List shouldn't equal nonlist with same elements in same order", list.equals(c));
+        assertFalse(list.equals(c), "List shouldn't equal nonlist with same elements in same order");
         verify();
     }
 
@@ -325,13 +327,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         resetEmpty();
         int hash1 = getCollection().hashCode();
         int hash2 = getConfirmed().hashCode();
-        assertEquals("Empty lists should have equal hashCodes", hash1, hash2);
+        assertEquals(hash1, hash2, "Empty lists should have equal hashCodes");
         verify();
 
         resetFull();
         hash1 = getCollection().hashCode();
         hash2 = getConfirmed().hashCode();
-        assertEquals("Full lists should have equal hashCodes", hash1, hash2);
+        assertEquals(hash1, hash2, "Full lists should have equal hashCodes");
         verify();
     }
 
@@ -344,7 +346,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list = getCollection();
         final E[] elements = getFullElements();
         for (int i = 0; i < elements.length; i++) {
-            assertEquals("List should contain correct elements", elements[i], list.get(i));
+            assertEquals(elements[i], list.get(i), "List should contain correct elements");
             verify();
         }
     }
@@ -404,15 +406,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list2 = getConfirmed();
 
         for (final E element : list2) {
-            assertEquals("indexOf should return correct result",
-                    list1.indexOf(element), list2.indexOf(element));
+            assertEquals(list1.indexOf(element),
+                    list2.indexOf(element), "indexOf should return correct result");
             verify();
         }
 
         final E[] other = getOtherElements();
         for (final E element : other) {
-            assertEquals("indexOf should return -1 for nonexistent element",
-                -1, list1.indexOf(element));
+            assertEquals(-1, list1.indexOf(element),
+                    "indexOf should return -1 for nonexistent element");
             verify();
         }
     }
@@ -427,15 +429,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list2 = getConfirmed();
 
         for (final E element : list2) {
-            assertEquals("lastIndexOf should return correct result",
-                list1.lastIndexOf(element), list2.lastIndexOf(element));
+            assertEquals(list1.lastIndexOf(element), list2.lastIndexOf(element),
+                    "lastIndexOf should return correct result");
             verify();
         }
 
         final E[] other = getOtherElements();
         for (final E element : other) {
-            assertEquals("lastIndexOf should return -1 for nonexistent " +
-                "element", -1, list1.lastIndexOf(element));
+            assertEquals(-1, list1.lastIndexOf(element),
+                    "lastIndexOf should return -1 for nonexistent " + "element");
             verify();
         }
     }
@@ -511,7 +513,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < elements.length; i++) {
             final E n = other[i % other.length];
             final E v = getCollection().set(i, n);
-            assertEquals("Set should return correct element", elements[i], v);
+            assertEquals(elements[i], v, "Set should return correct element");
             getConfirmed().set(i, n);
             verify();
         }
@@ -602,7 +604,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
             resetFull();
             final E o1 = getCollection().remove(i);
             final E o2 = getConfirmed().remove(i);
-            assertEquals("remove should return correct element", o1, o2);
+            assertEquals(o1, o2, "remove should return correct element");
             verify();
         }
     }
@@ -777,19 +779,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final int max = getFullElements().length;
 
         while (i < max) {
-            assertTrue("Iterator should have next", iter.hasNext());
-            assertEquals("Iterator.nextIndex should work",
-                i, iter.nextIndex());
-            assertEquals("Iterator.previousIndex should work",
-                i - 1, iter.previousIndex());
+            assertTrue(iter.hasNext(), "Iterator should have next");
+            assertEquals(i, iter.nextIndex(),
+                "Iterator.nextIndex should work");
+            assertEquals(i - 1, iter.previousIndex(),
+                "Iterator.previousIndex should work");
             final Object o = iter.next();
-            assertEquals("Iterator returned correct element", list.get(i), o);
+            assertEquals(list.get(i), o, "Iterator returned correct element");
             i++;
         }
 
-        assertFalse("Iterator shouldn't have next", iter.hasNext());
-        assertEquals("nextIndex should be size", max, iter.nextIndex());
-        assertEquals("previousIndex should be size - 1", max - 1, iter.previousIndex());
+        assertFalse(iter.hasNext(), "Iterator shouldn't have next");
+        assertEquals(max, iter.nextIndex(), "nextIndex should be size");
+        assertEquals(max - 1, iter.previousIndex(), "previousIndex should be size - 1");
 
         assertThrows(NoSuchElementException.class, () -> iter.next(),
                 "Exhausted iterator should raise NoSuchElement");
@@ -805,23 +807,23 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list = getCollection();
 
         while (i > 0) {
-            assertTrue("Iterator should have previous, i:" + i,
-                iter.hasPrevious());
-            assertEquals("Iterator.nextIndex should work, i:" + i,
-                i, iter.nextIndex());
-            assertEquals("Iterator.previousIndex should work, i:" + i,
-                i - 1, iter.previousIndex());
+            assertTrue(iter.hasPrevious(),
+                "Iterator should have previous, i:" + i);
+            assertEquals(i, iter.nextIndex(),
+                "Iterator.nextIndex should work, i:" + i);
+            assertEquals(i - 1, iter.previousIndex(),
+                "Iterator.previousIndex should work, i:" + i);
             final E o = iter.previous();
-            assertEquals("Iterator returned correct element",
-                list.get(i - 1), o);
+            assertEquals(list.get(i - 1), o,
+                "Iterator returned correct element");
             i--;
         }
 
-        assertFalse("Iterator shouldn't have previous", iter.hasPrevious());
+        assertFalse(iter.hasPrevious(), "Iterator shouldn't have previous");
         final int nextIndex = iter.nextIndex();
-        assertEquals("nextIndex should be 0", 0, nextIndex);
+        assertEquals(0, nextIndex, "nextIndex should be 0");
         final int prevIndex = iter.previousIndex();
-        assertEquals("previousIndex should be -1", -1, prevIndex);
+        assertEquals(-1, prevIndex, "previousIndex should be -1");
 
         assertThrows(NoSuchElementException.class, () -> iter.previous(),
                 "Exhausted iterator should raise NoSuchElement");
@@ -899,8 +901,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) list);
         final List<E> list2 = (List<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both lists are empty", 0, list.size());
-        assertEquals("Both lists are empty", 0, list2.size());
+        assertEquals(0, list.size(), "Both lists are empty");
+        assertEquals(0, list2.size(), "Both lists are empty");
     }
 
     @Test
@@ -915,8 +917,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) list);
         final List<E> list2 = (List<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both lists are same size", size, list.size());
-        assertEquals("Both lists are same size", size, list2.size());
+        assertEquals(size, list.size(), "Both lists are same size");
+        assertEquals(size, list2.size(), "Both lists are same size");
     }
 
     /**
@@ -939,7 +941,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         if (list instanceof Serializable && !skipSerializedCanonicalTests()
                 && isTestSerialization()) {
             final List<E> list2 = (List<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
-            assertEquals("List is empty", 0, list2.size());
+            assertEquals(0, list2.size(), "List is empty");
             assertEquals(list, list2);
         }
     }
@@ -967,7 +969,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 // old serialized tests
                 return;
             }
-            assertEquals("List is the right size", list.size(), list2.size());
+            assertEquals(list.size(), list2.size(), "List is the right size");
             assertEquals(list, list2);
         }
     }
@@ -1185,7 +1187,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         final InvocationTargetException thrown = assertThrows(InvocationTargetException.class, () -> m.invoke(list, params),
                 m.getName() + " should raise ConcurrentModification");
-        Assertions.assertTrue(thrown.getTargetException() instanceof ConcurrentModificationException,
+        assertTrue(thrown.getTargetException() instanceof ConcurrentModificationException,
                 m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 

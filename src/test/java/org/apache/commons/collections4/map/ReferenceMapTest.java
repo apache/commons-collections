@@ -16,7 +16,13 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -219,9 +225,9 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> testMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
-        assertEquals("In map", value, testMap.get(key));
-        assertNotNull("Weak reference released early (1)", keyReference.get());
-        assertNotNull("Weak reference released early (2)", valueReference.get());
+        assertEquals(value, testMap.get(key), "In map");
+        assertNotNull(keyReference.get(), "Weak reference released early (1)");
+        assertNotNull(valueReference.get(), "Weak reference released early (2)");
         return testMap;
     }
 
@@ -282,7 +288,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             final byte[] b = new byte[bytz];
             bytz = bytz * 2;
         }
-        assertFalse("Value should be stored", expiredValues.isEmpty());
+        assertFalse(expiredValues.isEmpty(), "Value should be stored");
     }
 
     /**
@@ -326,7 +332,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         // below line should not affect remove
         assertFalse(iter.hasNext());
         iter.remove();
-        assertTrue("Expect empty but have entry: " + map, map.isEmpty());
+        assertTrue(map.isEmpty(), "Expect empty but have entry: " + map);
     }
 
     @SuppressWarnings("unused")

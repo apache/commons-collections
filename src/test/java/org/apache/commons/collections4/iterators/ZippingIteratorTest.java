@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import org.apache.commons.collections4.IteratorUtils;
@@ -40,10 +44,8 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
-    @Override
     @BeforeEach
     public void setUp() throws Exception {
-        super.setUp();
         evens = new ArrayList<>();
         odds = new ArrayList<>();
         for (int i = 0; i < 20; i++) {

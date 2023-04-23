@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesTest {
@@ -34,8 +35,8 @@ public class SortedPropertiesTest {
         final Iterator<Map.Entry<Object, Object>> entries = sortedProperties.entrySet().iterator();
         for (char ch = 'A'; ch <= 'Z'; ch++) {
             final Map.Entry<Object, Object> entry = entries.next();
-            Assertions.assertEquals(String.valueOf(ch), entry.getKey());
-            Assertions.assertEquals("Value" + ch, entry.getValue());
+            assertEquals(String.valueOf(ch), entry.getKey());
+            assertEquals("Value" + ch, entry.getValue());
         }
     }
 
@@ -47,7 +48,7 @@ public class SortedPropertiesTest {
         }
         final Enumeration<Object> keys = sortedProperties.keys();
         for (char ch = 'A'; ch <= 'Z'; ch++) {
-            Assertions.assertEquals(String.valueOf(ch), keys.nextElement());
+            assertEquals(String.valueOf(ch), keys.nextElement());
         }
     }
 

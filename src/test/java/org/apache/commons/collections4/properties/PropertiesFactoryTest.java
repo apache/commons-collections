@@ -17,9 +17,10 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Properties;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
@@ -31,7 +32,7 @@ public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Propert
     @Test
     @Override
     public void testInstance() {
-        Assertions.assertNotNull(PropertiesFactory.INSTANCE);
+        assertNotNull(PropertiesFactory.INSTANCE);
     }
 
 }

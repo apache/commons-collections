@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -41,8 +43,8 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
     @Test
     public void testNewArrayList() {
         final ArrayList<E> list = makeObject();
-        assertTrue("New list is empty", list.isEmpty());
-        assertEquals("New list has size zero", 0, list.size());
+        assertTrue(list.isEmpty(), "New list is empty");
+        assertEquals(0, list.size(), "New list has size zero");
 
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
     }
@@ -53,8 +55,8 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
         final ArrayList<E> list = makeObject();
         list.add((E) "First Item");
         list.add((E) "Last Item");
-        assertEquals("First item is 'First Item'", "First Item", list.get(0));
-        assertEquals("Last Item is 'Last Item'", "Last Item", list.get(1));
+        assertEquals("First Item", list.get(0), "First item is 'First Item'");
+        assertEquals("Last Item", list.get(1), "Last Item is 'Last Item'");
     }
 
 }
