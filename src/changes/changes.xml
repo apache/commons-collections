@@ -279,7 +279,7 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump tests from commons-io:commons-io 2.6 to 2.11.0 #180.
+      Bump tests from commons-io:commons-io 2.6 to 2.12.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
       Bump maven-pmd-plugin from 3.12.0 to 3.19.0 #167, #196, #253, #311, #334.
