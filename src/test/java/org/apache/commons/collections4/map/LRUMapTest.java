@@ -450,7 +450,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         @Override
         public int hashCode() {
-            // always return the same hashcode
+            // always return the same hash code
             // that way, it will end up in the same bucket
             return 12;
         }
