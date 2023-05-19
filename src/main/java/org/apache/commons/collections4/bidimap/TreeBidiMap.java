@@ -1868,7 +1868,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         private final Node<K, V>[] rightNode;
         private final Node<K, V>[] parentNode;
         private final boolean[] blackColor;
-        private int hashcodeValue;
+        private int hashCodeValue;
         private boolean calculatedHashCode;
 
         /**
@@ -2073,10 +2073,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         @Override
         public int hashCode() {
             if (!calculatedHashCode) {
-                hashcodeValue = getKey().hashCode() ^ getValue().hashCode();
+                hashCodeValue = getKey().hashCode() ^ getValue().hashCode();
                 calculatedHashCode = true;
             }
-            return hashcodeValue;
+            return hashCodeValue;
         }
     }
 

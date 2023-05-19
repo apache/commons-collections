@@ -684,11 +684,11 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
 
         /**
-         * Gets the hashcode of the entry using temporary hard references.
+         * Gets the hash code of the entry using temporary hard references.
          * <p>
          * This implementation uses {@code hashEntry} on the main map.
          *
-         * @return the hashcode of the entry
+         * @return the hash code of the entry
          */
         @Override
         public int hashCode() {
