@@ -90,7 +90,7 @@ public class SplitMapUtilsTest {
         m.put("baz", 300);
         attemptPutOperation(() -> map.putAll(m));
 
-        // equals, hashcode
+        // equals, hashCode
         final IterableMap<String, Integer> other = SplitMapUtils.readableMap(transformedMap);
         assertEquals(other, map);
         assertEquals(other.hashCode(), map.hashCode());
@@ -124,7 +124,7 @@ public class SplitMapUtilsTest {
         attemptGetOperation(() -> map.containsValue(null));
         attemptGetOperation(() -> map.remove(null));
 
-        // equals, hashcode
+        // equals, hashCode
         final Map<String, String> other = SplitMapUtils.writableMap(transformedMap);
         assertEquals(other, map);
         assertEquals(other.hashCode(), map.hashCode());

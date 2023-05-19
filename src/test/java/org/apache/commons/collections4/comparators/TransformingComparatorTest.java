@@ -68,13 +68,13 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         final TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
         final TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
 
-        // Checks the contract: equals-hashcode on comp1 and comp2
+        // Checks the contract: equals-hashCode on comp1 and comp2
         assertTrue(comp1.equals(comp2) ? comp1.hashCode() == comp2.hashCode() : true,
-                "Contract failed: equals-hashcode");
+                "Contract failed: equals-hashCode");
 
-        // Checks the contract: equals-hashcode on comp1 and comp2
+        // Checks the contract: equals-hashCode on comp1 and comp2
         assertTrue(comp2.equals(comp1) ? comp2.hashCode() == comp1.hashCode() : true,
-                "Contract failed: equals-hashcode");
+                "Contract failed: equals-hashCode");
     }
 
     @Override
