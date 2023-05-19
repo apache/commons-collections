@@ -198,8 +198,8 @@ public class MultiKey<K> implements Serializable {
      * <b>If the array is not cloned, then it must not be modified.</b>
      * <p>
      * This method is public for performance reasons only, to avoid a clone.
-     * The hashcode is calculated once here in this method.
-     * Therefore, changing the array passed in would not change the hashcode but
+     * The hash code is calculated once here in this method.
+     * Therefore, changing the array passed in would not change the hash code but
      * would change the equals method, which is a bug.
      * <p>
      * This is the only fully safe usage of this constructor, as the object array
