@@ -140,7 +140,7 @@ public class MultiKeyTest {
         mk = new MultiKey<>(keys, false);
         assertArrayEquals(new Object[]{THREE, FOUR, ONE, TWO}, mk.getKeys());
         // change key - don't do this!
-        // the hashcode of the MultiKey is now broken
+        // the hash code of the MultiKey is now broken
         keys[3] = FIVE;
         assertArrayEquals(new Object[]{THREE, FOUR, ONE, FIVE}, mk.getKeys());
     }
