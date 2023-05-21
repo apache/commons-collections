@@ -205,6 +205,7 @@ public class ClosureUtils {
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
+    @SafeVarargs
     public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
         return ChainedClosure.chainedClosure(closures);
     }

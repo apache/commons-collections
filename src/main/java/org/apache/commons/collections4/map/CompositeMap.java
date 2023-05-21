@@ -97,6 +97,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param composite  the Maps to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
+    @SafeVarargs
     public CompositeMap(final Map<K, V>... composite) {
         this(composite, null);
     }

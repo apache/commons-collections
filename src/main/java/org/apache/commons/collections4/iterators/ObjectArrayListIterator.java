@@ -54,6 +54,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @param array the array to iterate over
      * @throws NullPointerException if {@code array} is {@code null}
      */
+    @SafeVarargs
     public ObjectArrayListIterator(final E... array) {
         super(array);
     }

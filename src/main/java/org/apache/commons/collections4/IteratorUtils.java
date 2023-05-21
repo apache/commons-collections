@@ -220,6 +220,7 @@ public class IteratorUtils {
      * @return an iterator over the array
      * @throws NullPointerException if array is null
      */
+    @SafeVarargs
     public static <E> ResettableIterator<E> arrayIterator(final E... array) {
         return new ObjectArrayIterator<>(array);
     }
@@ -317,6 +318,7 @@ public class IteratorUtils {
      * @return a list iterator over the array
      * @throws NullPointerException if array is null
      */
+    @SafeVarargs
     public static <E> ResettableListIterator<E> arrayListIterator(final E... array) {
         return new ObjectArrayListIterator<>(array);
     }
@@ -513,6 +515,7 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators array is null or contains a null
      */
+    @SafeVarargs
     public static <E> Iterator<E> chainedIterator(final Iterator<? extends E>... iterators) {
         return new IteratorChain<>(iterators);
     }
@@ -574,6 +577,7 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators array is null or contains a null value
      */
+    @SafeVarargs
     public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator,
                                                    final Iterator<? extends E>... iterators) {
         @SuppressWarnings("unchecked")
@@ -885,6 +889,7 @@ public class IteratorUtils {
      * @throws NullPointerException if any iterator is null
      * @since 4.1
      */
+    @SafeVarargs
     public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E>... iterators) {
         return new ZippingIterator<>(iterators);
     }

@@ -47,6 +47,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
+    @SafeVarargs
     public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
@@ -80,6 +81,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
+    @SafeVarargs
     public NonePredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }

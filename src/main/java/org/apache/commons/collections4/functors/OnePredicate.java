@@ -80,6 +80,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
+    @SafeVarargs
     public OnePredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }

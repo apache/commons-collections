@@ -263,6 +263,7 @@ public class PredicateUtils {
      * @throws NullPointerException if any predicate in the array is null
      * @see AllPredicate
      */
+    @SafeVarargs
     public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
         return AllPredicate.allPredicate(predicates);
     }
@@ -311,6 +312,7 @@ public class PredicateUtils {
      * @throws NullPointerException if any predicate in the array is null
      * @see AnyPredicate
      */
+    @SafeVarargs
     public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
         return AnyPredicate.anyPredicate(predicates);
     }
@@ -361,6 +363,7 @@ public class PredicateUtils {
      * @throws NullPointerException if any predicate in the array is null
      * @see OnePredicate
      */
+    @SafeVarargs
     public static <T> Predicate<T> onePredicate(final Predicate<? super T>... predicates) {
         return OnePredicate.onePredicate(predicates);
     }
@@ -411,6 +414,7 @@ public class PredicateUtils {
      * @throws NullPointerException if any predicate in the array is null
      * @see NonePredicate
      */
+    @SafeVarargs
     public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
         return NonePredicate.nonePredicate(predicates);
     }

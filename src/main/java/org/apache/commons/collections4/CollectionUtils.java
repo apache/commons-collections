@@ -469,6 +469,7 @@ public class CollectionUtils {
      * @since 4.2
      * @see #intersection
      */
+    @SafeVarargs
     public static <T> boolean containsAny(final Collection<?> coll1, @SuppressWarnings("unchecked") final T... coll2) {
         Objects.requireNonNull(coll1, "coll1");
         Objects.requireNonNull(coll2, "coll2");
@@ -1330,6 +1331,7 @@ public class CollectionUtils {
      * @return {@code true} if the collection was changed, {@code false} otherwise
      * @throws NullPointerException if the collection or elements is null
      */
+    @SafeVarargs
     public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
         Objects.requireNonNull(collection, "collection");
         Objects.requireNonNull(elements, "elements");

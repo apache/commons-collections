@@ -253,6 +253,7 @@ public class SetUtils {
      * @return a set
      * @since 4.3
      */
+    @SafeVarargs
     public static <E> HashSet<E> hashSet(final E... items) {
         if (items == null) {
             return null;
@@ -615,6 +616,7 @@ public class SetUtils {
      * @return a set
      * @since 4.3
      */
+    @SafeVarargs
     public static <E> Set<E> unmodifiableSet(final E... items) {
         if (items == null) {
             return null;
