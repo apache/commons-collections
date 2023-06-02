@@ -352,6 +352,9 @@
       Correct test of BidiMap to optionally ignore testing the key set matches the values order.
       Ordering is not specified for some BidiMaps such as DualHashBidiMaps.
     </action>
+    <action type="update" dev="ggregory" due-to="Dependabot">
+      Bump guava-testlib from 31.1-jre to 32.0.0-jre #394.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
