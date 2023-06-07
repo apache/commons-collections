@@ -281,7 +281,7 @@
       Bump codecov/codecov-action from 2 to 3 #297.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump Apache commons-parent from 48 to 54, #339.
+      Bump Apache commons-parent from 48 to 58, #339.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.
@@ -308,7 +308,7 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump tests from commons-io:commons-io 2.6 to 2.12.0 #180.
+      Bump tests from commons-io:commons-io 2.6 to 2.13.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
       Bump maven-pmd-plugin from 3.12.0 to 3.19.0 #167, #196, #253, #311, #334.
