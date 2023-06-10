@@ -66,8 +66,8 @@ final class IncrementingHasher implements Hasher {
                 // This avoids any modulus operation inside the while loop. It uses a long index
                 // to avoid overflow.
 
-                long index = EnhancedDoubleHasher.mod(initial, bits);
-                final int inc = EnhancedDoubleHasher.mod(increment, bits);
+                long index = BitMap.mod(initial, bits);
+                final int inc = BitMap.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     if (!consumer.test((int) index)) {
