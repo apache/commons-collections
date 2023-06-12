@@ -169,7 +169,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public final void testContains() {
+    public void testContains() {
         BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
@@ -218,7 +218,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the estimated intersection calculations are correct.
      */
     @Test
-    public final void testEstimateIntersection() {
+    public void testEstimateIntersection() {
 
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
@@ -247,10 +247,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Tests that the andCardinality calculations are correct.
+     * Tests that the estimateUnion calculations are correct.
      */
     @Test
-    public final void testEstimateUnion() {
+    public void testEstimateUnion() {
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
 
@@ -267,7 +267,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the size estimate is correctly calculated.
      */
     @Test
-    public final void testEstimateN() {
+    public void testEstimateN() {
         // build a filter
         BloomFilter filter1 = createFilter(getTestShape(), TestingHashers.FROM1);
         assertEquals(1, filter1.estimateN());
@@ -289,7 +289,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that asBitMapArray works correctly.
      */
     @Test
-    public final void testAsBitMapArray() {
+    public void testAsBitMapArray() {
 
         // test when multiple long values are returned.
         final IncrementingHasher hasher = new IncrementingHasher(63, 1);
@@ -304,7 +304,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that isFull() returns the proper values.
      */
     @Test
-    public final void testIsFull() {
+    public void testIsFull() {
 
         // create empty filter
         BloomFilter filter = createEmptyFilter(getTestShape());
@@ -321,7 +321,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
      */
     @Test
-    public final void testMerge() {
+    public void testMerge() {
 
         final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
@@ -424,11 +424,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Testing class returns the value as the only value.
      */
-    class BadHasher implements Hasher {
+    public static class BadHasher implements Hasher {
 
         IndexProducer producer;
 
-        BadHasher(final int value) {
+        public BadHasher(final int value) {
             this.producer = IndexProducer.fromIndexArray(new int[] {value});
         }
 

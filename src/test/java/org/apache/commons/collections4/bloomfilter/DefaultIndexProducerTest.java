@@ -74,7 +74,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param bound the upper bound (exclusive) of the values in the array.
      * @return an array of int.
      */
-    static int[] generateIntArray(final int size, final int bound) {
+    public static int[] generateIntArray(final int size, final int bound) {
         return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
     }
 
@@ -83,7 +83,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param ary the array
      * @return the set.
      */
-    static BitSet uniqueSet(final int[] ary) {
+    public static BitSet uniqueSet(final int[] ary) {
         final BitSet bs = new BitSet();
         Arrays.stream(ary).forEach(bs::set);
         return bs;
@@ -94,7 +94,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
      * @param ary the array to sort and make unique
      * @return the sorted unique array.
      */
-    static int[] unique(final int[] ary) {
+    public static int[] unique(final int[] ary) {
         return Arrays.stream(ary).distinct().sorted().toArray();
     }
 

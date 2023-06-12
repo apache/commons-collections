@@ -289,12 +289,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             // if both are infinite the union is infinite and we return Integer.MAX_VALUE
             return Integer.MAX_VALUE;
         }
-        long estimate;
+        double estimate;
         // if one is infinite the intersection is the other.
         if (Double.isInfinite(eThis)) {
-            estimate = Math.round(eOther);
+            estimate = eOther;
         } else if (Double.isInfinite(eOther)) {
-            estimate = Math.round(eThis);
+            estimate = eThis;
         } else {
             BloomFilter union = this.copy();
             union.merge(other);
@@ -304,8 +304,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             }
             // maximum estimate value using integer values is: 46144189292 thus
             // eThis + eOther can not overflow the long value.
-            estimate = Math.round(eThis + eOther - eUnion);
+            estimate = eThis + eOther - eUnion;
         }
-        return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) estimate;
+        // in some cases the estimate may be negative, report that as zero.
+        return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(estimate<0.0?0:(int)Math.round(estimate));
     }
 }

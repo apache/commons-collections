@@ -25,7 +25,7 @@ import java.util.function.IntPredicate;
  *
  * <p>To be used for testing only.</p>
  */
-final class IncrementingHasher implements Hasher {
+public final class IncrementingHasher implements Hasher {
 
     /**
      * The initial hash value.
@@ -46,7 +46,7 @@ final class IncrementingHasher implements Hasher {
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
-    IncrementingHasher(final long initial, final long increment) {
+    public IncrementingHasher(final long initial, final long increment) {
         this.initial = initial;
         this.increment = increment;
     }
