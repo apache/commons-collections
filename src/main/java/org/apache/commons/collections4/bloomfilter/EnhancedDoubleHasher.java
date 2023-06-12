@@ -129,6 +129,22 @@ public class EnhancedDoubleHasher implements Hasher {
         return increment;
     }
 
+    /**
+     * Performs a modulus calculation on an unsigned long and an integer divisor.
+     * @param dividend a unsigned long value to calculate the modulus of.
+     * @param divisor the divisor for the modulus calculation, must be positive.
+     * @return the remainder or modulus value.
+     */
+    public static int mod(final long dividend, final int divisor) {
+        // See Hacker's Delight (2nd ed), section 9.3.
+        // Assume divisor is positive.
+        // Divide half the unsigned number and then double the quotient result.
+        final long quotient = (dividend >>> 1) / divisor << 1;
+        final long remainder = dividend - quotient * divisor;
+        // remainder in [0, 2 * divisor)
+        return (int) (remainder >= divisor ? remainder - divisor : remainder);
+    }
+
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
@@ -152,8 +168,8 @@ public class EnhancedDoubleHasher implements Hasher {
                 // The final hash is:
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
-                int index = BitMap.mod(initial, bits);
-                int inc = BitMap.mod(increment, bits);
+                int index = EnhancedDoubleHasher.mod(initial, bits);
+                int inc = EnhancedDoubleHasher.mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
                 if (k > bits) {
