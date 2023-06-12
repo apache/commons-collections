@@ -135,7 +135,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * @param divisor the divisor for the modulus calculation, must be positive.
      * @return the remainder or modulus value.
      */
-    public static int mod(final long dividend, final int divisor) {
+    static int mod(final long dividend, final int divisor) {
         // See Hacker's Delight (2nd ed), section 9.3.
         // Assume divisor is positive.
         // Divide half the unsigned number and then double the quotient result.
@@ -168,8 +168,8 @@ public class EnhancedDoubleHasher implements Hasher {
                 // The final hash is:
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
-                int index = EnhancedDoubleHasher.mod(initial, bits);
-                int inc = EnhancedDoubleHasher.mod(increment, bits);
+                int index = mod(initial, bits);
+                int inc = mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
                 if (k > bits) {
