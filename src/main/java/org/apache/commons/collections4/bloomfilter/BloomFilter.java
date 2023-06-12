@@ -307,6 +307,6 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             estimate = eThis + eOther - eUnion;
         }
         // in some cases the estimate may be negative, report that as zero.
-        return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(estimate<0.0?0:(int)Math.round(estimate));
+        return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE: estimate<0.0?0:(int)Math.round(estimate);
     }
 }
