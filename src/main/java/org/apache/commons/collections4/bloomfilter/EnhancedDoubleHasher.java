@@ -132,7 +132,7 @@ public class EnhancedDoubleHasher implements Hasher {
     /**
      * Performs a modulus calculation on an unsigned long and an integer divisor.
      * @param dividend a unsigned long value to calculate the modulus of.
-     * @param divisor the divisor for the modulus calculation.
+     * @param divisor the divisor for the modulus calculation (must be strictly positive).
      * @return the remainder or modulus value.
      */
     static int mod(final long dividend, final int divisor) {
