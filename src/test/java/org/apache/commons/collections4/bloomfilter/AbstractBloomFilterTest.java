@@ -247,7 +247,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Tests that the andCardinality calculations are correct.
+     * Tests that the estimated union calculations are correct.
      */
     @Test
     public final void testEstimateUnion() {
