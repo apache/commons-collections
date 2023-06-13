@@ -115,13 +115,17 @@ public class BitMap {
     }
 
     /**
-     * Performs a modulus calculation on an unsigned long and an integer divisor.
+     * Performs a modulus calculation on an unsigned long and an positive integer divisor.
+     *
+     * <p><em>If the divisor is negative the behavior is not defined.</em></p>
+     *
      * @param dividend a unsigned long value to calculate the modulus of.
      * @param divisor the divisor for the modulus calculation, must be positive.
      * @return the remainder or modulus value.
      * @since 4.5
      */
     public static int mod(final long dividend, final int divisor) {
+        
         // See Hacker's Delight (2nd ed), section 9.3.
         // Assume divisor is positive.
         // Divide half the unsigned number and then double the quotient result.
