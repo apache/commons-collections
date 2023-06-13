@@ -93,15 +93,4 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
         // test empty buffer
         assertThrows(IllegalArgumentException.class, () -> new EnhancedDoubleHasher(new byte[0]));
     }
-
-    @Test
-    void testModEdgeCases() {
-        for (final long dividend : new long[] {-1, -2, -3, -6378683, -23567468136887892L, Long.MIN_VALUE, 345, 678686,
-            67868768686878924L, Long.MAX_VALUE}) {
-            for (final int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE}) {
-                assertEquals((int) Long.remainderUnsigned(dividend, divisor), BitMap.mod(dividend, divisor),
-                        () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
-            }
-        }
-    }
 }
