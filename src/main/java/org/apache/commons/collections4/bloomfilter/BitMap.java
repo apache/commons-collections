@@ -125,7 +125,6 @@ public class BitMap {
      * @since 4.5
      */
     public static int mod(final long dividend, final int divisor) {
-        
         // See Hacker's Delight (2nd ed), section 9.3.
         // Assume divisor is positive.
         // Divide half the unsigned number and then double the quotient result.

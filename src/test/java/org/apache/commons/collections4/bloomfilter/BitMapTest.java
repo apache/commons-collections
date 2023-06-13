@@ -103,11 +103,11 @@ public class BitMapTest {
         ary[1] = 1;
         assertTrue(BitMap.contains(ary, 64));
     }
-    
-    private void assertMod( long l, int i) {
+
+    private void assertMod(long l, int i) {
         assertEquals(Math.floorMod(l, i), BitMap.mod(l, i));
     }
-    
+
     @Test
     public final void testMod() {
         assertMod(Long.MAX_VALUE, Integer.MAX_VALUE);
@@ -116,6 +116,6 @@ public class BitMapTest {
         assertMod(Long.MAX_VALUE-1, Integer.MAX_VALUE);
         assertMod(Long.MAX_VALUE-1, Integer.MAX_VALUE-1);
         assertMod(0, Integer.MAX_VALUE);
-        assertNotEquals(Math.floorMod(5,-1), BitMap.mod(5,-1));
+        assertNotEquals(Math.floorMod(5, -1), BitMap.mod(5, -1));
     }
 }
