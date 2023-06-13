@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -101,5 +102,20 @@ public class BitMapTest {
         assertFalse(BitMap.contains(ary, 64));
         ary[1] = 1;
         assertTrue(BitMap.contains(ary, 64));
+    }
+
+    private void assertMod(long l, int i) {
+        assertEquals(Math.floorMod(l, i), BitMap.mod(l, i));
+    }
+
+    @Test
+    public final void testMod() {
+        assertMod(Long.MAX_VALUE, Integer.MAX_VALUE);
+        assertMod(Long.MAX_VALUE, Integer.MAX_VALUE-1);
+        assertThrows(ArithmeticException.class, () -> BitMap.mod(Long.MAX_VALUE, 0));
+        assertMod(Long.MAX_VALUE-1, Integer.MAX_VALUE);
+        assertMod(Long.MAX_VALUE-1, Integer.MAX_VALUE-1);
+        assertMod(0, Integer.MAX_VALUE);
+        assertNotEquals(Math.floorMod(5, -1), BitMap.mod(5, -1));
     }
 }
