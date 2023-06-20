@@ -24,10 +24,10 @@ import java.util.function.IntPredicate;
  *
  * <p>To be used for testing only.</p>
  */
-final class ArrayHasher implements Hasher {
+public final class ArrayHasher implements Hasher {
     private final int[] values;
 
-    ArrayHasher(final int... values) {
+    public ArrayHasher(final int... values) {
         this.values = values;
     }
 
