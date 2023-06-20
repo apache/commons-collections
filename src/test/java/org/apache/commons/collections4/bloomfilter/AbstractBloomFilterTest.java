@@ -214,6 +214,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertEquals(0, bf1.cardinality());
     }
 
+    @Test
+    public final void testNegativeIntersection() {
+        IndexProducer p1 = IndexProducer.fromIndexArray(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 26, 28, 30, 32, 34, 35, 36, 37, 39, 40, 41, 42, 43, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71);
+        IndexProducer p2 = IndexProducer.fromIndexArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
+
+        BloomFilter filter1 = createEmptyFilter(Shape.fromKM(17, 72));
+        filter1.merge(p1);
+        BloomFilter filter2 = createEmptyFilter(Shape.fromKM(17, 72));
+        filter2.merge(p2);
+        assertEquals(0, filter1.estimateIntersection(filter2));
+    }
     /**
      * Tests that the estimated intersection calculations are correct.
      */
@@ -424,11 +435,11 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Testing class returns the value as the only value.
      */
-    class BadHasher implements Hasher {
+    public static class BadHasher implements Hasher {
 
         IndexProducer producer;
 
-        BadHasher(final int value) {
+        public BadHasher(final int value) {
             this.producer = IndexProducer.fromIndexArray(new int[] {value});
         }
 

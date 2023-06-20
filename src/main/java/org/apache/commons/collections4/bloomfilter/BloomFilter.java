@@ -305,6 +305,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
             // maximum estimate value using integer values is: 46144189292 thus
             // eThis + eOther can not overflow the long value.
             estimate = Math.round(eThis + eOther - eUnion);
+            estimate = estimate < 0 ? 0 : estimate;
         }
         return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) estimate;
     }
