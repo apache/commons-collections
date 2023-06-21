@@ -68,7 +68,7 @@ public class TestingHashers {
     public static <T extends BloomFilter> T populateEntireFilter(T filter) {
         return populateRange( filter, 0, filter.getShape().getNumberOfBits()-1);
     }
-    
+
     /**
      * Enables all bits in a range (inclusive).
      * @param <T> the Bloom filter type.
@@ -78,7 +78,8 @@ public class TestingHashers {
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
-        filter.merge( (IndexProducer) p -> {for (int i=start;i<=end;i++) {
+        filter.merge( (IndexProducer) p -> {
+            for (int i=start; i<=end; i++) {
                 if (!p.test(i)) {
                     return false;
                 }
