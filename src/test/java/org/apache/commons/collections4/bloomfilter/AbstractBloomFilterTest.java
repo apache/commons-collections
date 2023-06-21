@@ -98,7 +98,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      *
      */
     @Test
-    public void testMergeWithBadHasher() {
+     public void testMergeWithBadHasher() {
         // value too large
         final BloomFilter f = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
