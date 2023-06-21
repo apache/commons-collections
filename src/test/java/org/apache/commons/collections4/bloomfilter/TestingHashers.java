@@ -66,7 +66,7 @@ public class TestingHashers {
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateEntireFilter(T filter) {
-        return populateRange( filter, 0, filter.getShape().getNumberOfBits()-1);
+        return populateRange(filter, 0, filter.getShape().getNumberOfBits() - 1);
     }
 
     /**
@@ -78,8 +78,8 @@ public class TestingHashers {
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
-        filter.merge( (IndexProducer) p -> {
-            for (int i=start; i<=end; i++) {
+        filter.merge((IndexProducer) p -> {
+            for (int i = start; i <= end; i++) {
                 if (!p.test(i)) {
                     return false;
                 }
