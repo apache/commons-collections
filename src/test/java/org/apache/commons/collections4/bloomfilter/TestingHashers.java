@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Random;
+
 /**
  * A collection of methods and statics that represent standard hashers in testing.
  */
@@ -88,5 +90,19 @@ public class TestingHashers {
             return true;
         });
         return filter;
+    }
+
+    private static Random random;
+
+    static {
+        random = new Random();
+        random.setSeed( System.currentTimeMillis());
+    }
+
+    /**
+     * Creates an EnhancedDoubleHasher hasher from 2 random longs.
+     */
+    public static Hasher randomHasher() {
+        return new EnhancedDoubleHasher( random.nextLong(), random.nextLong() );
     }
 }

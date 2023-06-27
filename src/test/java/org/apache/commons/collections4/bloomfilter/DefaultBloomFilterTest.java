@@ -215,9 +215,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
     }
 
-    static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
+    /**
+     * A default implementation of a Sparse bloom filter.
+     */
+    public static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
 
-        SparseDefaultBloomFilter(final Shape shape) {
+        public SparseDefaultBloomFilter(final Shape shape) {
             super(shape);
         }
 
@@ -234,9 +237,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
     }
 
-    static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
+    /**
+     * A default implementation of a non-sparse Bloom filter.
+     */
+    public static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
 
-        NonSparseDefaultBloomFilter(final Shape shape) {
+        public NonSparseDefaultBloomFilter(final Shape shape) {
             super(shape);
         }
 

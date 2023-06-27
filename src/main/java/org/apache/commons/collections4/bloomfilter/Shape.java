@@ -228,6 +228,15 @@ public final class Shape {
     }
 
     /**
+     * Estimates the maximum number of elements that can be merged into a filter of this shape before
+     * it begins to return excessive false positives.
+     * @return An estimate of max N.
+     */
+    public double estimateMaxN() {
+        return 1.0/(numberOfHashFunctions/LN_2/numberOfBits);
+    }
+
+    /**
      * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the
      * specified number of bits ({@code m}) and hash functions ({@code k}).
      *
