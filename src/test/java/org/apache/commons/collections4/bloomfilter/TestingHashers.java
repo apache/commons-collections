@@ -82,11 +82,7 @@ public class TestingHashers {
      */
     public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
         filter.merge((IndexProducer) p -> {
-<<<<<<< HEAD
             for (int i=start; i<=end; i++) {
-=======
-            for (int i = start; i <= end; i++) {
->>>>>>> 9dd483c34 (removed spaces)
                 if (!p.test(i)) {
                     return false;
                 }
