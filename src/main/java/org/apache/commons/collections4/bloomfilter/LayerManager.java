@@ -25,18 +25,23 @@ import java.util.function.Supplier;
 /**
  * Implementation of the methods to manage the Layers in a Layered Bloom filter.
  * <p>
- * The manager comprises a list of Bloom filters that are managed based on various rules.  The last filter in the 
- * list is known as the {@code target} and is the filter into which merges are performed.  The Layered manager utilizes
+ * The manager comprises a list of Bloom filters that are managed based on
+ * various rules. The last filter in the list is known as the {@code target} and
+ * is the filter into which merges are performed. The Layered manager utilizes
  * three methods to manage the list.
  * </p>
- * <ul> 
- * <li>ExtendCheck - A Predicate that if true causes a new Bloom filter to be created as the new target.</li>
- * <li>FilterSupplier - A Supplier that produces empty Bloom filters to be used as a new target.</li>
- * <li>Cleanup - A Consumer of a LinkedList of BloomFilter that removes any expired or outdates filters from the list.</li>
- * </ul> 
+ * <ul>
+ * <li>ExtendCheck - A Predicate that if true causes a new Bloom filter to be
+ * created as the new target.</li>
+ * <li>FilterSupplier - A Supplier that produces empty Bloom filters to be used
+ * as a new target.</li>
+ * <li>Cleanup - A Consumer of a LinkedList of BloomFilter that removes any
+ * expired or outdates filters from the list.</li>
+ * </ul>
  * <p>
- * When extendCheck is then if the current target is empty it is removed, the clean up is called, and then filterSupplier is
- * executed and the new filter added to the list as the target filter.
+ * When extendCheck is then if the current target is empty it is removed, the
+ * clean up is called, and then filterSupplier is executed and the new filter
+ * added to the list as the target filter.
  * </p>
  */
 public class LayerManager {
@@ -68,7 +73,7 @@ public class LayerManager {
          * on the shape. If the target is full then a new target is created.
          */
         public static final Predicate<LayerManager> ADVANCE_ON_CALCULATED_FULL = lm -> {
-            if (lm.filters.isEmpty()){
+            if (lm.filters.isEmpty()) {
                 return false;
             }
             BloomFilter bf = lm.filters.peekLast();
@@ -77,18 +82,21 @@ public class LayerManager {
         };
 
         /**
-         * Creates a new target after a specific number of filters have been added to the current target.
+         * Creates a new target after a specific number of filters have been added to
+         * the current target.
+         *
          * @param breakAt the number of filters to merge into each filter in the list.
          * @return a Predicate suitable for the LayerManager externCheck parameter.
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
             return new Predicate<LayerManager>() {
-                    int count = 0;
+                int count = 0;
 
-                    public boolean test(LayerManager filter) {
-                        return ++count % breakAt == 0;
-                    }
-                };
+                @Override
+                public boolean test(LayerManager filter) {
+                    return ++count % breakAt == 0;
+                }
+            };
         }
     }
 
@@ -102,15 +110,17 @@ public class LayerManager {
 
         /**
          * Creates SimpleBloom filters as the target.
+         *
          * @param shape the shape to create the filter with.
          * @return a Supplier suitable for the LayerManager filterSupplier parameter
          */
         public static final Supplier<BloomFilter> simple(Shape shape) {
             return () -> new SimpleBloomFilter(shape);
         }
-        
+
         /**
          * Creates SimpleBloom filters as the target.
+         *
          * @param shape the shape to create the filter with.
          * @return a Supplier suitable for the LayerManager filterSupplier parameter
          */
@@ -120,7 +130,8 @@ public class LayerManager {
     }
 
     /**
-     * Static methods to create a Consumer of a LinkedList of BloomFilter to manage the size of the list.
+     * Static methods to create a Consumer of a LinkedList of BloomFilter to manage
+     * the size of the list.
      *
      */
     public static class Cleanup {
@@ -128,7 +139,8 @@ public class LayerManager {
         }
 
         /**
-         * Removes the earliest filters in the list when the the number of filters exceeds maxSize.
+         * Removes the earliest filters in the list when the the number of filters
+         * exceeds maxSize.
          *
          * @param maxSize the maximum number of filters for the list.
          * @return A Consumer for the LayerManager filterCleanup constructor argument.
@@ -149,9 +161,12 @@ public class LayerManager {
 
     /**
      * Constructor.
-     * @param filterSupplier  the supplier of new Bloom filters to add the the list when necessary.
-     * @param extendCheck The predicate that checks if a new filter should be added to the list.
-     * @param filterCleanup the consumer the removes any old filters from the list.
+     *
+     * @param filterSupplier the supplier of new Bloom filters to add the the list
+     *                       when necessary.
+     * @param extendCheck    The predicate that checks if a new filter should be
+     *                       added to the list.
+     * @param filterCleanup  the consumer the removes any old filters from the list.
      */
     public LayerManager(Supplier<BloomFilter> filterSupplier, Predicate<LayerManager> extendCheck,
             Consumer<LinkedList<BloomFilter>> filterCleanup) {
@@ -163,6 +178,7 @@ public class LayerManager {
 
     /**
      * Creates a deep copy of this LayerManager.
+     *
      * @return a copy of this layer Manager.
      */
     public LayerManager copy() {
@@ -187,6 +203,7 @@ public class LayerManager {
 
     /**
      * Returns the number of filters in the LayerManager.
+     *
      * @return
      */
     public final int getDepth() {
@@ -194,10 +211,13 @@ public class LayerManager {
     }
 
     /**
-     * Gets the Bloom filter at the specified depth.  The filter at depth 0 is the oldest filter.
+     * Gets the Bloom filter at the specified depth. The filter at depth 0 is the
+     * oldest filter.
+     *
      * @param depth the depth at which the desired filter is to be found.
      * @return the filter.
-     * @throws NoSuchElementException if depth is not in the range [0,filters.size())
+     * @throws NoSuchElementException if depth is not in the range
+     *                                [0,filters.size())
      */
     public final BloomFilter get(int depth) {
         if (depth < 0 || depth >= filters.size()) {
@@ -207,8 +227,9 @@ public class LayerManager {
     }
 
     /**
-     * Returns the current target filter.  If the a new filter should be created based on {@code extendCheck} it will be
-     * created before this method returns.
+     * Returns the current target filter. If the a new filter should be created
+     * based on {@code extendCheck} it will be created before this method returns.
+     *
      * @return the current target filter.
      */
     public final BloomFilter target() {
@@ -219,7 +240,8 @@ public class LayerManager {
     }
 
     /**
-     * Clear all the filters in the layer manager, and set up a new one as the target.
+     * Clear all the filters in the layer manager, and set up a new one as the
+     * target.
      */
     public final void clear() {
         filters.clear();
@@ -227,10 +249,12 @@ public class LayerManager {
     }
 
     /**
-     * Executes a Bloom filter Predicate on each Bloom filter in the manager in depth order.  Oldest filter first.
+     * Executes a Bloom filter Predicate on each Bloom filter in the manager in
+     * depth order. Oldest filter first.
+     *
      * @param bloomFilterPredicate
-     * @return {@code false} when the first filter failes the predicate test.  Returns {@code true} if all filters
-     * pass the test.
+     * @return {@code false} when the first filter failes the predicate test.
+     *         Returns {@code true} if all filters pass the test.
      */
     public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         for (BloomFilter bf : filters) {

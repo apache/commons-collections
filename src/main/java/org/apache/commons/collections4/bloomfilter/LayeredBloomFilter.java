@@ -24,10 +24,12 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * A bloom filter comprising multiple Bloom filters.  Each enclosed filter is a "level".  Level 0 is the oldest filter 
- * and the highest level is the newest.  This class utilizes a LayerManager to handle the manipulation of the layers.
- * There is always at least one enclosed filter.  The newest filter is the target into which merges are performed. The
- * {@code contains} operation checks each layer in turn and will return {@code true} when the first match is found.
+ * A bloom filter comprising multiple Bloom filters. Each enclosed filter is a
+ * "level". Level 0 is the oldest filter and the highest level is the newest.
+ * This class utilizes a LayerManager to handle the manipulation of the layers.
+ * There is always at least one enclosed filter. The newest filter is the target
+ * into which merges are performed. The {@code contains} operation checks each
+ * layer in turn and will return {@code true} when the first match is found.
  */
 public class LayeredBloomFilter implements BloomFilter {
     private final Shape shape;
@@ -45,7 +47,8 @@ public class LayeredBloomFilter implements BloomFilter {
 
     /**
      * Constructor.
-     * @param shape the Shape of the enclosed Bloom filters
+     *
+     * @param shape        the Shape of the enclosed Bloom filters
      * @param layerManager the LayerManager to manage the layers.
      */
     public LayeredBloomFilter(Shape shape, LayerManager layerManager) {
@@ -107,10 +110,13 @@ public class LayeredBloomFilter implements BloomFilter {
     }
 
     /**
-     * Processes the Bloom filters in depth order with the most recent filters first. Each filter is passed to the 
-     * predicate in turn.  The function exits on the first {@code false} returned by the predicate.
+     * Processes the Bloom filters in depth order with the most recent filters
+     * first. Each filter is passed to the predicate in turn. The function exits on
+     * the first {@code false} returned by the predicate.
+     *
      * @param bloomFilterPredicate the predicate to execute.
-     * @returns {@code true} if all filters passed the predicate, {@code false} otherwise.
+     * @returns {@code true} if all filters passed the predicate, {@code false}
+     *          otherwise.
      */
     public final boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         return layerManager.forEachBloomFilter(bloomFilterPredicate);
@@ -176,7 +182,9 @@ public class LayeredBloomFilter implements BloomFilter {
     }
 
     /**
-     * Returns {@code true} if this any layer contained by this filter contains the specified filter.
+     * Returns {@code true} if this any layer contained by this filter contains the
+     * specified filter.
+     *
      * @param other the other Bloom filter
      * @return {@code true} if this filter contains the other filter.
      */
@@ -196,6 +204,7 @@ public class LayeredBloomFilter implements BloomFilter {
 
     /**
      * Creates a Bloom filter from a Hasher.
+     *
      * @param hasher the hasher to create the filter from.
      * @return the BloomFilter.
      */
@@ -207,6 +216,7 @@ public class LayeredBloomFilter implements BloomFilter {
 
     /**
      * Creates a Bloom filter from an IndexProducer.
+     *
      * @param indexProducer the IndexProducer to create the filter from.
      * @return the BloomFilter.
      */
@@ -218,6 +228,7 @@ public class LayeredBloomFilter implements BloomFilter {
 
     /**
      * Creates a Bloom filter from a BitMapProducer.
+     *
      * @param bitMapProducer the BitMapProducer to create the filter from.
      * @return the BloomFilter.
      */
