@@ -36,13 +36,16 @@ import java.util.function.Supplier;
  * <li>FilterSupplier - A Supplier that produces empty Bloom filters to be used
  * as a new target.</li>
  * <li>Cleanup - A Consumer of a LinkedList of BloomFilter that removes any
- * expired or outdates filters from the list.</li>
+ * expired or out dated filters from the list.</li>
  * </ul>
  * <p>
- * When extendCheck is then if the current target is empty it is removed, the
- * clean up is called, and then filterSupplier is executed and the new filter
- * added to the list as the target filter.
- * </p>
+ * When extendCheck returnes {@code true} the following steps are taken: </p>
+ * <ol>
+ * <li>If the current target is empty it is removed.</li>
+ * <li>{@code Cleanup} is called</li>
+ * <li>{@code FilterSuplier} is executed and the new filter
+ * added to the list as the {@code target} filter.</li>
+ * </ol>
  */
 public class LayerManager {
 
@@ -191,9 +194,9 @@ public class LayerManager {
     }
 
     /**
-     * Advance to the next depth for subsequent merges.
+     * Forces an advance to the next depth for subsequent merges.
      */
-    private void next() {
+    public void next() {
         if (!filters.isEmpty() && filters.getLast().cardinality() == 0) {
             filters.removeLast();
         }

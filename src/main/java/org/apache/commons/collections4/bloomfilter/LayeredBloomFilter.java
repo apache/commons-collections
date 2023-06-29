@@ -24,12 +24,32 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * A bloom filter comprising multiple Bloom filters. Each enclosed filter is a
- * "level". Level 0 is the oldest filter and the highest level is the newest.
- * This class utilizes a LayerManager to handle the manipulation of the layers.
- * There is always at least one enclosed filter. The newest filter is the target
- * into which merges are performed. The {@code contains} operation checks each
- * layer in turn and will return {@code true} when the first match is found.
+ * Layered Bloom filters are described in Zhiwang, Cen; Jungang, Xu; Jian, Sun
+ * (2010), "A multi-layer Bloom filter for duplicated URL detection", Proc. 3rd
+ * International Conference on Advanced Computer Theory and Engineering (ICACTE
+ * 2010), vol. 1, pp. V1–586–V1–591, doi:10.1109/ICACTE.2010.5578947, ISBN
+ * 978-1-4244-6539-2, S2CID 3108985
+ * <p>
+ * In short, Layered Bloom filter contains several bloom filters arranged in
+ * layers. When membership in the filter is checked each layer in turn is
+ * checked and if a match is found "true" is returned. When merging each bloom
+ * filters is merged into the last newest filter in the list of layers. When
+ * questions of cardinality are asked the cardinality of the union of the
+ * enclosed Bloom filters is returned.
+ * </p>
+ * <p>
+ * This implementation uses a LayerManager to handle the manipulation of the
+ * layers.
+ * </p>
+ * <ul>
+ * <li>Level 0 is the oldest layer and the highest level is the newest.</li>
+ * <li>There is always at least one enclosed filter.</li>
+ * <li>The newest filter is the {@code target} into which merges are performed.
+ * <li>Whenever the target is retrieved, or a {@code merge} operation is
+ * performed the code checks if any older layers should be removed, and if so
+ * removes them. It also checks it a new layer should be added, and if so adds
+ * it and sets the {@code target} before the operation.</li>
+ * </ul>
  */
 public class LayeredBloomFilter implements BloomFilter {
     private final Shape shape;
@@ -184,6 +204,10 @@ public class LayeredBloomFilter implements BloomFilter {
     /**
      * Returns {@code true} if this any layer contained by this filter contains the
      * specified filter.
+     * <p>
+     * If the {@code other} is another Layered Bloom filter each filter within the
+     * {@code other} is checked to see if it exits within this filter.
+     * </p>
      *
      * @param other the other Bloom filter
      * @return {@code true} if this filter contains the other filter.
@@ -248,19 +272,6 @@ public class LayeredBloomFilter implements BloomFilter {
         return shape;
     }
 
-    /**
-     * Returns {@code true} if this filter contains the bits specified in the
-     * hasher.
-     *
-     * <p>
-     * Specifically this returns {@code true} if this filter is enabled for all bit
-     * indexes identified by the {@code hasher}. Using the bit map representations
-     * this is effectively {@code (this AND hasher) == hasher}.
-     * </p>
-     *
-     * @param hasher the hasher to provide the indexes
-     * @return true if this filter is enabled for all bits specified by the hasher
-     */
     @Override
     public boolean contains(final Hasher hasher) {
         return contains(createFilter(hasher));
@@ -346,6 +357,16 @@ public class LayeredBloomFilter implements BloomFilter {
             estimate = estimate < 0 ? 0 : estimate;
         }
         return estimate > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) estimate;
+    }
+
+    /**
+     * Forces and advance to the next layer. Executes the same logic as when
+     * LayerManager.extendCheck returns {@code true}
+     *
+     * @see LayerManager
+     */
+    public void next() {
+        layerManager.next();
     }
 
     /**
