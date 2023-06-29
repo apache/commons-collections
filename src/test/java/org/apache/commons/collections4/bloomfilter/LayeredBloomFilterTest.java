@@ -238,6 +238,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         List<Long> lst = new ArrayList<>();
         Shape shape = Shape.fromNM(4, 64);
 
+        // create a filter that removes filters that are 4 seconds old
+        // and quantises time to 1 second intervals.
         LayeredBloomFilter underTest = createTimedLayeredFilter(shape, 4, TimeUnit.SECONDS, 1, TimeUnit.SECONDS);
 
         for (int i = 0; i < 10; i++)
@@ -263,10 +265,11 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         dbgInstrument.add("=== AFTER 3 seconds ====\n");
         underTest.forEachBloomFilter(dbg);
 
-        Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+        // sleep 1.5 seconds to ensure we cross the 4 second boundary
+        Thread.sleep(TimeUnit.SECONDS.toMillis(4)+500);
         underTest.merge(TestingHashers.randomHasher());
         dbgInstrument.add("=== AFTER 4 seconds ====\n");
         assertTrue(underTest.forEachBloomFilter(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
-                "Found filter that should have been deleted");
+                "Found filter that should have been deleted: "+dbgInstrument.get(dbgInstrument.size()-1));
     }
 }
