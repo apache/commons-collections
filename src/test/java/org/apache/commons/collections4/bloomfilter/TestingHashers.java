@@ -71,7 +71,6 @@ public class TestingHashers {
         return populateRange(filter, 0, filter.getShape().getNumberOfBits() - 1);
     }
 
-
     /**
      * Enables all bits in a range (inclusive).
      * @param <T> the Bloom filter type.
