@@ -177,7 +177,7 @@ public class LayerManager {
     /**
      * Advance to the next depth for subsequent merges.
      */
-    private final void next() {
+    private void next() {
         if (!filters.isEmpty() && filters.getLast().cardinality() == 0) {
             filters.removeLast();
         }

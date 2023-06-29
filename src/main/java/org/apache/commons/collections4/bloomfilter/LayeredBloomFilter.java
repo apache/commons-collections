@@ -288,10 +288,8 @@ public class LayeredBloomFilter implements BloomFilter {
     @Override
     public boolean forEachBitMap(LongPredicate predicate) {
         BloomFilter merged = new SimpleBloomFilter(shape);
-        if (forEachBloomFilter(merged::merge)) {
-            if (!merged.forEachBitMap(predicate)) {
-                return false;
-            }
+        if (forEachBloomFilter(merged::merge) && !merged.forEachBitMap(predicate)) {
+            return false;
         }
         return true;
     }
