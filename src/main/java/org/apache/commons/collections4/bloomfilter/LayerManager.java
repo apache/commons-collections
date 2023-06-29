@@ -39,12 +39,13 @@ import java.util.function.Supplier;
  * expired or out dated filters from the list.</li>
  * </ul>
  * <p>
- * When extendCheck returnes {@code true} the following steps are taken: </p>
+ * When extendCheck returns {@code true} the following steps are taken:
+ * </p>
  * <ol>
  * <li>If the current target is empty it is removed.</li>
  * <li>{@code Cleanup} is called</li>
- * <li>{@code FilterSuplier} is executed and the new filter
- * added to the list as the {@code target} filter.</li>
+ * <li>{@code FilterSuplier} is executed and the new filter added to the list as
+ * the {@code target} filter.</li>
  * </ol>
  */
 public class LayerManager {
@@ -194,7 +195,8 @@ public class LayerManager {
     }
 
     /**
-     * Forces an advance to the next depth for subsequent merges.
+     * Forces an advance to the next depth for subsequent merges. Executes the same
+     * logic as when {@code ExtendCheck} returns {@code true}
      */
     public void next() {
         if (!filters.isEmpty() && filters.getLast().cardinality() == 0) {
