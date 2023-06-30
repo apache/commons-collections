@@ -17,8 +17,15 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Arrays;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+/**
+ * Produces Bloom filters that are copies of Bloom filters in a collection (e.g.
+ * LayerBloomFilter).
+ *
+ * @since 4.5
+ */
 public interface BloomFilterProducer {
     /**
      * Executes a Bloom filter Predicate on each Bloom filter in the manager in
@@ -76,8 +83,9 @@ public interface BloomFilterProducer {
      * @return A LongPredicate that tests this BitMapProducers bitmap values in
      *         order.
      */
-    default boolean forEachBloomFilterPair(final BloomFilterProducer other, final BloomFilterBiPredicate func) {
-        final CountingBloomFilterPredicate p = new CountingBloomFilterPredicate(asBloomFilterArray(), func);
+    default boolean forEachBloomFilterPair(final BloomFilterProducer other,
+            final BiPredicate<BloomFilter, BloomFilter> func) {
+        final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
         return other.forEachBloomFilter(p) && p.forEachRemaining();
     }
 
