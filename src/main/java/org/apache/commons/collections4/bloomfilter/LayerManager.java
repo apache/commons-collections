@@ -47,6 +47,7 @@ import java.util.function.Supplier;
  * <li>{@code FilterSuplier} is executed and the new filter added to the list as
  * the {@code target} filter.</li>
  * </ol>
+ *
  * @since 4.5
  */
 public class LayerManager implements BloomFilterProducer {
@@ -76,7 +77,7 @@ public class LayerManager implements BloomFilterProducer {
          * Calculates the estimated number of Bloom filters (n) that have been merged
          * into the target and compares that with the estimated maximum expected n based
          * on the shape. If the target is full then a new target is created.
-         * 
+         *
          * @param shape The shape of the filters in the LayerManager.
          * @return A Predicate suitable for the LayerManager extendCheck parameter.
          */
@@ -147,10 +148,8 @@ public class LayerManager implements BloomFilterProducer {
                     BloomFilter bf = manager.filters.peekLast();
                     return maxN <= bf.getShape().estimateN(bf.cardinality());
                 }
-
             };
         }
-
     }
 
     /**
