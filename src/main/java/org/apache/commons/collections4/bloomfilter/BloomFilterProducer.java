@@ -74,8 +74,7 @@ public interface BloomFilterProducer {
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
      * of the Bloom filters from the other BloomFilterProducer to this producer. If
      * this producer does not have as many BloomFilters it will provide
-     *
-     * @{code null} for all excess calls to the BiPredicate.
+     * {@code null} for all excess calls to the BiPredicate.
      *
      * @param other The other BloomFilterProducer that provides the y values in the
      *              (x,y) pair.

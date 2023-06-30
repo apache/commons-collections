@@ -76,6 +76,9 @@ public class LayerManager implements BloomFilterProducer {
          * Calculates the estimated number of Bloom filters (n) that have been merged
          * into the target and compares that with the estimated maximum expected n based
          * on the shape. If the target is full then a new target is created.
+         * 
+         * @param shape The shape of the filters in the LayerManager.
+         * @return A Predicate suitable for the LayerManager extendCheck parameter.
          */
         public static final Predicate<LayerManager> advanceOnCalculatedFull(Shape shape) {
             return advanceOnSaturation(shape.estimateMaxN());
@@ -86,7 +89,7 @@ public class LayerManager implements BloomFilterProducer {
          * the current target.
          *
          * @param breakAt the number of filters to merge into each filter in the list.
-         * @return a Predicate suitable for the LayerManager externCheck parameter.
+         * @return A Predicate suitable for the LayerManager extendCheck parameter.
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
             return new Predicate<LayerManager>() {
@@ -108,7 +111,7 @@ public class LayerManager implements BloomFilterProducer {
          * estimation from the Shape use the double version of this function.
          *
          * @param maxN the maximum number of estimated items in the filter.
-         * @return a Predicate suitable for an ExtendCheck.
+         * @return A Predicate suitable for the LayerManager extendCheck parameter.
          */
         public static final Predicate<LayerManager> advanceOnSaturation(int maxN) {
             return new Predicate<LayerManager>() {
@@ -132,7 +135,7 @@ public class LayerManager implements BloomFilterProducer {
          * estimation from the Shape use the double version of this function.
          *
          * @param maxN the maximum number of estimated items in the filter.
-         * @return a Predicate suitable for an ExtendCheck.
+         * @return A Predicate suitable for the LayerManager extendCheck parameter.
          */
         public static final Predicate<LayerManager> advanceOnSaturation(double maxN) {
             return new Predicate<LayerManager>() {
