@@ -47,6 +47,7 @@ import java.util.function.Supplier;
  * <li>{@code FilterSuplier} is executed and the new filter added to the list as
  * the {@code target} filter.</li>
  * </ol>
+ * @since 4.5
  */
 public class LayerManager implements BloomFilterProducer {
 

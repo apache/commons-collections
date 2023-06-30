@@ -32,6 +32,7 @@ import java.util.function.Predicate;
  * <p>
  * In short, Layered Bloom filter contains several bloom filters arranged in
  * layers.
+ * </p>
  * <ul>
  * <li>When membership in the filter is checked each layer in turn is checked
  * and if a match is found {@code true} is returned.</li>
@@ -43,7 +44,6 @@ import java.util.function.Predicate;
  * The net result is that the layered Bloom filter can be populated with more
  * items than the Shape would indicate and yet still return a false positive
  * rate in line with the Shape and not the over population.
- * </p>
  * <p>
  * This implementation uses a LayerManager to handle the manipulation of the
  * layers.
