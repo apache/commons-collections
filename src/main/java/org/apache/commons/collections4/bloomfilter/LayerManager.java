@@ -209,7 +209,7 @@ public class LayerManager {
     /**
      * Returns the number of filters in the LayerManager.
      *
-     * @return
+     * @return the current depth.
      */
     public final int getDepth() {
         return filters.size();
@@ -257,9 +257,9 @@ public class LayerManager {
      * Executes a Bloom filter Predicate on each Bloom filter in the manager in
      * depth order. Oldest filter first.
      *
-     * @param bloomFilterPredicate
-     * @return {@code false} when the first filter failes the predicate test.
-     *         Returns {@code true} if all filters pass the test.
+     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
+     * @return {@code false} when the first filter fails the predicate test. Returns
+     *         {@code true} if all filters pass the test.
      */
     public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         for (BloomFilter bf : filters) {

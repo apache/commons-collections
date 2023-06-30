@@ -31,11 +31,18 @@ import java.util.function.Predicate;
  * 978-1-4244-6539-2, S2CID 3108985
  * <p>
  * In short, Layered Bloom filter contains several bloom filters arranged in
- * layers. When membership in the filter is checked each layer in turn is
- * checked and if a match is found "true" is returned. When merging each bloom
- * filters is merged into the last newest filter in the list of layers. When
- * questions of cardinality are asked the cardinality of the union of the
- * enclosed Bloom filters is returned.
+ * layers.
+ * <ul>
+ * <li>When membership in the filter is checked each layer in turn is checked
+ * and if a match is found {@code true} is returned.</li>
+ * <li>When merging each bloom filter is merged into the last newest filter in
+ * the list of layers.</li>
+ * <li>When questions of cardinality are asked the cardinality of the union of
+ * the enclosed Bloom filters is used.</li>
+ * </ul>
+ * The net result is that the layered Bloom filter can be populated with more
+ * items than the Shape would indicate and yet still return a false positive
+ * rate in line with the Shape and not the over population.
  * </p>
  * <p>
  * This implementation uses a LayerManager to handle the manipulation of the
@@ -59,6 +66,10 @@ public class LayeredBloomFilter implements BloomFilter {
      * Creates a fixed size layered bloom filter that adds new filters to the list,
      * but never merges them. List will never exceed maxDepth. As additional filters
      * are added earlier filters are removed.
+     *
+     * @param shape    The shape for the enclosed Bloom filters
+     * @param maxDepth The maximum depth of layers.
+     * @return An empty layered Bloom filter of the specified shape and depth.
      */
     public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
         return new LayeredBloomFilter(shape, new LayerManager(LayerManager.FilterSupplier.simple(shape),
@@ -121,9 +132,13 @@ public class LayeredBloomFilter implements BloomFilter {
     }
 
     /**
-     * Get the Bloom filter that is currently being merged into.
+     * Get the Bloom filter that is currently being merged into. This method ensures
+     * that the {@code target} filter meets the criteria specified within the
+     * {@code LayerManager}. if the {@code LayerManager} determines that a new
+     * target filter is required it is constructed and used.
      *
      * @return the current Bloom filter.
+     * @see LayerManager
      */
     public final BloomFilter target() {
         return layerManager.target();
@@ -135,8 +150,8 @@ public class LayeredBloomFilter implements BloomFilter {
      * the first {@code false} returned by the predicate.
      *
      * @param bloomFilterPredicate the predicate to execute.
-     * @returns {@code true} if all filters passed the predicate, {@code false}
-     *          otherwise.
+     * @return {@code true} if all filters passed the predicate, {@code false}
+     *         otherwise.
      */
     public final boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         return layerManager.forEachBloomFilter(bloomFilterPredicate);
