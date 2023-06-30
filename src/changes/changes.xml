@@ -356,7 +356,7 @@
       Bump pmd from 6.46.0 to 6.52.0 #318, #327, #333, #347.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump guava-testlib from 31.1-jre to 32.0.1-jre #394, #395.
+      Bump guava-testlib from 31.1-jre to 32.1.0-jre #394, #395, #404.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
