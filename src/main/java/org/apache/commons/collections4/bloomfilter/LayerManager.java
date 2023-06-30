@@ -48,7 +48,7 @@ import java.util.function.Supplier;
  * the {@code target} filter.</li>
  * </ol>
  */
-public class LayerManager {
+public class LayerManager implements BloomFilterProducer {
 
     /**
      * Static methods an variable for standard extend checks.
@@ -62,7 +62,7 @@ public class LayerManager {
          * Advances the target once a merge has been performed.
          */
         public static final Predicate<LayerManager> ADVANCE_ON_POPULATED = lm -> {
-            return !lm.filters.isEmpty() || !lm.filters.peekLast().forEachBitMap(y -> y == 0);
+            return !lm.filters.isEmpty() && !lm.filters.peekLast().forEachBitMap(y -> y == 0);
         };
 
         /**
@@ -76,14 +76,9 @@ public class LayerManager {
          * into the target and compares that with the estimated maximum expected n based
          * on the shape. If the target is full then a new target is created.
          */
-        public static final Predicate<LayerManager> ADVANCE_ON_CALCULATED_FULL = lm -> {
-            if (lm.filters.isEmpty()) {
-                return false;
-            }
-            BloomFilter bf = lm.filters.peekLast();
-            Shape s = bf.getShape();
-            return s.estimateMaxN() <= s.estimateN(bf.cardinality());
-        };
+        public static final Predicate<LayerManager> advanceOnCalculatedFull(Shape shape) {
+            return advanceOnSaturation(shape.estimateMaxN());
+        }
 
         /**
          * Creates a new target after a specific number of filters have been added to
@@ -102,35 +97,56 @@ public class LayerManager {
                 }
             };
         }
-    }
 
-    /**
-     * A collection of filter suppliers that create new target filters.
-     *
-     */
-    public static class FilterSupplier {
-        private FilterSupplier() {
+        /**
+         * Creates a new target after the current target is saturated. Saturation is
+         * defined as the estimated N of the target Bloom filter being greater than the
+         * maxN specified.
+         * <p>
+         * This method uses the integer estimation found in the Bloom filter. To use the
+         * estimation from the Shape use the double version of this function.
+         *
+         * @param maxN the maximum number of estimated items in the filter.
+         * @return a Predicate suitable for an ExtendCheck.
+         */
+        public static final Predicate<LayerManager> advanceOnSaturation(int maxN) {
+            return new Predicate<LayerManager>() {
+                @Override
+                public boolean test(LayerManager manager) {
+                    if (manager.filters.isEmpty()) {
+                        return false;
+                    }
+                    return maxN <= manager.filters.peekLast().estimateN();
+                }
+
+            };
         }
 
         /**
-         * Creates SimpleBloom filters as the target.
+         * Creates a new target after the current target is saturated. Saturation is
+         * defined as the estimated N of the target Bloom filter being greater than the
+         * maxN specified.
+         * <p>
+         * This method uses the integer estimation found in the Bloom filter. To use the
+         * estimation from the Shape use the double version of this function.
          *
-         * @param shape the shape to create the filter with.
-         * @return a Supplier suitable for the LayerManager filterSupplier parameter
+         * @param maxN the maximum number of estimated items in the filter.
+         * @return a Predicate suitable for an ExtendCheck.
          */
-        public static final Supplier<BloomFilter> simple(Shape shape) {
-            return () -> new SimpleBloomFilter(shape);
+        public static final Predicate<LayerManager> advanceOnSaturation(double maxN) {
+            return new Predicate<LayerManager>() {
+                @Override
+                public boolean test(LayerManager manager) {
+                    if (manager.filters.isEmpty()) {
+                        return false;
+                    }
+                    BloomFilter bf = manager.filters.peekLast();
+                    return maxN <= bf.getShape().estimateN(bf.cardinality());
+                }
+
+            };
         }
 
-        /**
-         * Creates SimpleBloom filters as the target.
-         *
-         * @param shape the shape to create the filter with.
-         * @return a Supplier suitable for the LayerManager filterSupplier parameter
-         */
-        public static final Supplier<BloomFilter> counting(Shape shape) {
-            return () -> new ArrayCountingBloomFilter(shape);
-        }
     }
 
     /**
@@ -141,6 +157,12 @@ public class LayerManager {
     public static class Cleanup {
         private Cleanup() {
         }
+
+        /**
+         * A Cleanup that never removes anything.
+         */
+        public static final Consumer<LinkedList<BloomFilter>> NO_CLEANUP = x -> {
+        };
 
         /**
          * Removes the earliest filters in the list when the the number of filters
@@ -164,6 +186,15 @@ public class LayerManager {
     private final Supplier<BloomFilter> filterSupplier;
 
     /**
+     * Creates a new Builder with defaults of NEVER_ADVANCE and NO_CLEANUP
+     *
+     * @return A builder.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
      * Constructor.
      *
      * @param filterSupplier the supplier of new Bloom filters to add the the list
@@ -172,7 +203,7 @@ public class LayerManager {
      *                       added to the list.
      * @param filterCleanup  the consumer the removes any old filters from the list.
      */
-    public LayerManager(Supplier<BloomFilter> filterSupplier, Predicate<LayerManager> extendCheck,
+    private LayerManager(Supplier<BloomFilter> filterSupplier, Predicate<LayerManager> extendCheck,
             Consumer<LinkedList<BloomFilter>> filterCleanup) {
         this.filterSupplier = filterSupplier;
         this.extendCheck = extendCheck;
@@ -261,6 +292,7 @@ public class LayerManager {
      * @return {@code false} when the first filter fails the predicate test. Returns
      *         {@code true} if all filters pass the test.
      */
+    @Override
     public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         for (BloomFilter bf : filters) {
             if (!bloomFilterPredicate.test(bf)) {
@@ -268,5 +300,47 @@ public class LayerManager {
             }
         }
         return true;
+    }
+
+    /**
+     * Builder to create Layer Manager
+     */
+    public static class Builder {
+        private Predicate<LayerManager> extendCheck;
+        private Supplier<BloomFilter> supplier;
+        private Consumer<LinkedList<BloomFilter>> cleanup;
+
+        private Builder() {
+            extendCheck = ExtendCheck.NEVER_ADVANCE;
+            cleanup = Cleanup.NO_CLEANUP;
+        }
+
+        public LayerManager build() {
+            if (supplier == null) {
+                throw new IllegalStateException("Supplier must not be null");
+            }
+            if (extendCheck == null) {
+                throw new IllegalStateException("ExtendCheck must not be null");
+            }
+            if (cleanup == null) {
+                throw new IllegalStateException("Cleanup must not be null");
+            }
+            return new LayerManager(supplier, extendCheck, cleanup);
+        }
+
+        public Builder withExtendCheck(Predicate<LayerManager> extendCheck) {
+            this.extendCheck = extendCheck;
+            return this;
+        }
+
+        public Builder withSuplier(Supplier<BloomFilter> supplier) {
+            this.supplier = supplier;
+            return this;
+        }
+
+        public Builder withCleanup(Consumer<LinkedList<BloomFilter>> cleanup) {
+            this.cleanup = cleanup;
+            return this;
+        }
     }
 }

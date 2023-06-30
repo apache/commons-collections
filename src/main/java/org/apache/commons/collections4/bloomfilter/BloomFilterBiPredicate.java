@@ -16,30 +16,22 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromLayeredBloomFilterTest extends AbstractBitCountProducerTest {
+/**
+ * Represents a function that accepts a two Bloom argument and produces a boolean result.
+ * This is the boolean returning specialization for {@code BiPredicate}.
+ *
+ * This is a functional interface whose functional method is {@code test(BloomFilter,BloomFilter)}.
+ *
+ * @since 4.5
+ */
+@FunctionalInterface
+public interface BloomFilterBiPredicate {
 
-    protected Shape shape = Shape.fromKM(17, 72);
-
-    @Override
-    protected BitCountProducer createProducer() {
-        final Hasher hasher = new IncrementingHasher(3, 2);
-        final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
-        bf.merge(hasher);
-        return BitCountProducer.from(bf);
-    }
-
-    @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(LayeredBloomFilter.fixed(shape, 10));
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
-    }
-
-    @Override
-    protected int[] getExpectedIndices() {
-        return new int[] { 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35 };
-    }
+    /**
+     * A function that takes to long arguments and returns a boolean.
+     * @param x the first Bloom filter argument.
+     * @param y the second Bloom filter argument.
+     * @return true or false.
+     */
+    boolean test(BloomFilter x, BloomFilter y);
 }

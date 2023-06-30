@@ -58,7 +58,7 @@ import java.util.function.Predicate;
  * it and sets the {@code target} before the operation.</li>
  * </ul>
  */
-public class LayeredBloomFilter implements BloomFilter {
+public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     private final Shape shape;
     private LayerManager layerManager;
 
@@ -72,8 +72,10 @@ public class LayeredBloomFilter implements BloomFilter {
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
     public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
-        return new LayeredBloomFilter(shape, new LayerManager(LayerManager.FilterSupplier.simple(shape),
-                LayerManager.ExtendCheck.ADVANCE_ON_POPULATED, LayerManager.Cleanup.onMaxSize(maxDepth)));
+        LayerManager manager = LayerManager.builder().withExtendCheck(LayerManager.ExtendCheck.ADVANCE_ON_POPULATED)
+                .withCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).withSuplier(() -> new SimpleBloomFilter(shape))
+                .build();
+        return new LayeredBloomFilter(shape, manager);
     }
 
     /**
@@ -153,6 +155,7 @@ public class LayeredBloomFilter implements BloomFilter {
      * @return {@code true} if all filters passed the predicate, {@code false}
      *         otherwise.
      */
+    @Override
     public final boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
         return layerManager.forEachBloomFilter(bloomFilterPredicate);
     }

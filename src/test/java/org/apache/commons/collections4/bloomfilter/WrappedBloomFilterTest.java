@@ -16,30 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromLayeredBloomFilterTest extends AbstractBitCountProducerTest {
-
-    protected Shape shape = Shape.fromKM(17, 72);
+public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloomFilter> {
 
     @Override
-    protected BitCountProducer createProducer() {
-        final Hasher hasher = new IncrementingHasher(3, 2);
-        final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
-        bf.merge(hasher);
-        return BitCountProducer.from(bf);
+    protected WrappedBloomFilter createEmptyFilter(Shape shape) {
+        return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+        };
     }
 
-    @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(LayeredBloomFilter.fixed(shape, 10));
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
-    }
-
-    @Override
-    protected int[] getExpectedIndices() {
-        return new int[] { 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35 };
-    }
 }
