@@ -160,7 +160,7 @@ public final class Shape {
     /**
      * Calculates the probability of false positives ({@code p}) given
      * numberOfItems ({@code n}), numberOfBits ({@code m}) and numberOfHashFunctions ({@code k}).
-     * <pre>p = pow(1 - exp(-k / (m / n)), k)</pre>
+     * <pre>p = pow(1 - exp(-kn/m)), k)</pre>
      *
      * <p>This is the probability that a Bloom filter will return true for the presence of an item
      * when it does not contain the item.</p>
