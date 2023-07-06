@@ -16,20 +16,20 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * Produces Bloom filters that are copies of Bloom filters in a collection (e.g.
- * LayerBloomFilter).
+ * Produces Bloom filters from a collection (e.g. LayeredBloomFilter).
  *
  * @since 4.5
  */
 public interface BloomFilterProducer {
     /**
-     * Executes a Bloom filter Predicate on each Bloom filter in the manager in
-     * depth order. Oldest filter first.
+     * Executes a Bloom filter Predicate on each Bloom filter in the collection.  
+     * The ordering of the Bloom filters is not specified by this interface.
      *
      * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
      * @return {@code false} when the first filter fails the predicate test. Returns
@@ -39,35 +39,13 @@ public interface BloomFilterProducer {
 
     /**
      * Return a deep copy of the BloomFilterProducer data as a Bloom filter array.
-     * <p>
-     * The default implementation of this method is slow. It is recommended that
-     * implementing classes reimplement this method.
-     * </p>
      *
      * @return An array of Bloom filters.
      */
-    default BloomFilter[] asBloomFilterArray() {
-        class Filters {
-            private BloomFilter[] data = new BloomFilter[16];
-            private int size;
-
-            boolean add(final BloomFilter filter) {
-                if (size == data.length) {
-                    // This will throw an out-of-memory error if there are too many Bloom filters.
-                    data = Arrays.copyOf(data, size * 2);
-                }
-                data[size++] = filter.copy();
-                return true;
-            }
-
-            BloomFilter[] toArray() {
-                // Edge case to avoid a large array copy
-                return size == data.length ? data : Arrays.copyOf(data, size);
-            }
-        }
-        final Filters filters = new Filters();
-        forEachBloomFilter(filters::add);
-        return filters.toArray();
+    default BloomFilter[] asBloomFilterArray() {        
+        final List<BloomFilter> filters = new ArrayList<>();
+        forEachBloomFilter(f -> filters.add(f.copy()));
+        return filters.toArray(new BloomFilter[filters.size()]);
     }
 
     /**
@@ -79,13 +57,11 @@ public interface BloomFilterProducer {
      * @param other The other BloomFilterProducer that provides the y values in the
      *              (x,y) pair.
      * @param func  The function to apply.
-     * @return A LongPredicate that tests this BitMapProducers bitmap values in
-     *         order.
+     * @return {@code true} if the func returned {@code true} for every pair, {@code false} otherwise.
      */
     default boolean forEachBloomFilterPair(final BloomFilterProducer other,
             final BiPredicate<BloomFilter, BloomFilter> func) {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
         return other.forEachBloomFilter(p) && p.forEachRemaining();
     }
-
 }

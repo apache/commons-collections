@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A collection of methods and statics that represent standard hashers in testing.
@@ -81,7 +81,7 @@ public class TestingHashers {
      */
     public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
         filter.merge((IndexProducer) p -> {
-            for (int i=start; i<=end; i++) {
+            for (int i = start; i <= end; i++) {
                 if (!p.test(i)) {
                     return false;
                 }
@@ -91,17 +91,10 @@ public class TestingHashers {
         return filter;
     }
 
-    private static Random random;
-
-    static {
-        random = new Random();
-        random.setSeed( System.currentTimeMillis());
-    }
-
     /**
      * Creates an EnhancedDoubleHasher hasher from 2 random longs.
      */
     public static Hasher randomHasher() {
-        return new EnhancedDoubleHasher( random.nextLong(), random.nextLong() );
+        return new EnhancedDoubleHasher( ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong() );
     }
 }

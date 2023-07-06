@@ -228,12 +228,19 @@ public final class Shape {
     }
 
     /**
-     * Estimates the maximum number of elements that can be merged into a filter of this shape before
-     * it begins to return excessive false positives.
+     * Estimates the maximum number of elements that can be merged into a filter of
+     * this shape before the false positive rate exceeds the desired rate.
+     * <p>
+     * The formula for deriving {@code k} when {@code m} and {@code n} are known is:
+     * <pre>k = ln2 * m / n</pre><br/>
+     * solving for {@code n} yields:
+     * <pre>n = ln2 * m / k</pre>
+     * The definition of {@code m} is dependent upon  
+     * </p>
      * @return An estimate of max N.
      */
     public double estimateMaxN() {
-        return 1.0/(numberOfHashFunctions/LN_2/numberOfBits);
+        return numberOfBits * LN_2 / numberOfHashFunctions;
     }
 
     /**
