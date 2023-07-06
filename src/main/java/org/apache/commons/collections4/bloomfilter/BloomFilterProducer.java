@@ -16,8 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -28,8 +28,8 @@ import java.util.function.Predicate;
  */
 public interface BloomFilterProducer {
     /**
-     * Executes a Bloom filter Predicate on each Bloom filter in the collection.  
-     * The ordering of the Bloom filters is not specified by this interface.
+     * Executes a Bloom filter Predicate on each Bloom filter in the collection. The
+     * ordering of the Bloom filters is not specified by this interface.
      *
      * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
      * @return {@code false} when the first filter fails the predicate test. Returns
@@ -42,7 +42,7 @@ public interface BloomFilterProducer {
      *
      * @return An array of Bloom filters.
      */
-    default BloomFilter[] asBloomFilterArray() {        
+    default BloomFilter[] asBloomFilterArray() {
         final List<BloomFilter> filters = new ArrayList<>();
         forEachBloomFilter(f -> filters.add(f.copy()));
         return filters.toArray(new BloomFilter[filters.size()]);
@@ -51,13 +51,14 @@ public interface BloomFilterProducer {
     /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
      * of the Bloom filters from the other BloomFilterProducer to this producer. If
-     * this producer does not have as many BloomFilters it will provide
-     * {@code null} for all excess calls to the BiPredicate.
+     * this producer does not have as many BloomFilters it will provide {@code null}
+     * for all excess calls to the BiPredicate.
      *
      * @param other The other BloomFilterProducer that provides the y values in the
      *              (x,y) pair.
      * @param func  The function to apply.
-     * @return {@code true} if the func returned {@code true} for every pair, {@code false} otherwise.
+     * @return {@code true} if the func returned {@code true} for every pair,
+     *         {@code false} otherwise.
      */
     default boolean forEachBloomFilterPair(final BloomFilterProducer other,
             final BiPredicate<BloomFilter, BloomFilter> func) {

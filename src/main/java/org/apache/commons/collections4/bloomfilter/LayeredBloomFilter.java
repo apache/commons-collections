@@ -36,8 +36,8 @@ import java.util.function.Predicate;
  * <ul>
  * <li>When membership in the filter is checked each layer in turn is checked
  * and if a match is found {@code true} is returned.</li>
- * <li>When merging each bloom filter is merged into the newest filter in
- * the list of layers.</li>
+ * <li>When merging each bloom filter is merged into the newest filter in the
+ * list of layers.</li>
  * <li>When questions of cardinality are asked the cardinality of the union of
  * the enclosed Bloom filters is used.</li>
  * </ul>
@@ -45,7 +45,8 @@ import java.util.function.Predicate;
  * The net result is that the layered Bloom filter can be populated with more
  * items than the Shape would indicate and yet still return a false positive
  * rate in line with the Shape and not the over population.
- * </p><p>
+ * </p>
+ * <p>
  * This implementation uses a LayerManager to handle the manipulation of the
  * layers.
  * </p>
@@ -74,8 +75,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      */
     public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
         LayerManager manager = LayerManager.builder().extendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
-                .cleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).supplier(() -> new SimpleBloomFilter(shape))
-                .build();
+                .cleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).supplier(() -> new SimpleBloomFilter(shape)).build();
         return new LayeredBloomFilter(shape, manager);
     }
 
@@ -96,8 +96,9 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     /**
-     * Gets the depth of the deepest layer.
-     * The minimum value returned by this method is 1.
+     * Gets the depth of the deepest layer. The minimum value returned by this
+     * method is 1.
+     *
      * @return the depth of the deepest layer.
      */
     public final int getDepth() {
@@ -119,7 +120,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     public int cardinality() {
         return SetOperations.cardinality(this);
     }
-    
+
     @Override
     public boolean isEmpty() {
         return forEachBloomFilter(BloomFilter::isEmpty);
@@ -145,8 +146,8 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     /**
-     * Create a standard (non-layered) Bloom filter by merging all of the layers.
-     * If the filter is empty this method will return an empty Bloom filter.
+     * Create a standard (non-layered) Bloom filter by merging all of the layers. If
+     * the filter is empty this method will return an empty Bloom filter.
      *
      * @return the merged bloom filter.
      */
@@ -220,17 +221,20 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         return other instanceof BloomFilterProducer ? contains((BloomFilterProducer) other)
                 : !forEachBloomFilter(x -> !x.contains(other));
     }
-    
+
     /**
-     * Returns {@code true} if each filter within the {@code producer} exits within this filter.
-     * 
-     * @param producer the BloomFilterProducer that provides the filters to check for.
-     * @return {@code true} if this filter contains all of the filters contained in the {@code producer}.
+     * Returns {@code true} if each filter within the {@code producer} exits within
+     * this filter.
+     *
+     * @param producer the BloomFilterProducer that provides the filters to check
+     *                 for.
+     * @return {@code true} if this filter contains all of the filters contained in
+     *         the {@code producer}.
      */
     public boolean contains(final BloomFilterProducer producer) {
         boolean[] result = { true };
         // return false when we have found a match to short circuit checks
-        return ((BloomFilterProducer) producer).forEachBloomFilter(x -> {
+        return producer.forEachBloomFilter(x -> {
             result[0] &= contains(x);
             return result[0];
         });

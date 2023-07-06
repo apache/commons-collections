@@ -53,8 +53,8 @@ import java.util.function.Supplier;
 public class LayerManager implements BloomFilterProducer {
 
     /**
-     * A collection of common ExtendCheck implementations to test whether to extend the
-     * depth of a LayerManager.
+     * A collection of common ExtendCheck implementations to test whether to extend
+     * the depth of a LayerManager.
      */
     public static class ExtendCheck {
         private ExtendCheck() {
@@ -63,7 +63,7 @@ public class LayerManager implements BloomFilterProducer {
         private static final Predicate<LayerManager> ADVANCE_ON_POPULATED = lm -> {
             return !lm.filters.peekLast().isEmpty();
         };
-        
+
         private static final Predicate<LayerManager> NEVER_ADVANCE = x -> false;
 
         /**
@@ -72,7 +72,6 @@ public class LayerManager implements BloomFilterProducer {
         public static final Predicate<LayerManager> advanceOnPopulated() {
             return ADVANCE_ON_POPULATED;
         }
-        
 
         /**
          * Does not automatically advance the target. next() must be called directly to
@@ -84,8 +83,9 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * Calculates the estimated number of Bloom filters (n) that have been merged
-         * into the target and compares that with the estimated maximum expected {@code n} based
-         * on the shape. If the target is saturated then a new target is created.
+         * into the target and compares that with the estimated maximum expected
+         * {@code n} based on the shape. If the target is saturated then a new target is
+         * created.
          *
          * @param shape The shape of the filters in the LayerManager.
          * @return A Predicate suitable for the LayerManager extendCheck parameter.
@@ -103,8 +103,8 @@ public class LayerManager implements BloomFilterProducer {
          * @throws IllegalArgumentException if breakAt is <= 0
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
-            if (breakAt<=0) {
-                throw new IllegalArgumentException( "'breakAt' must be greater than 0");
+            if (breakAt <= 0) {
+                throw new IllegalArgumentException("'breakAt' must be greater than 0");
             }
             return new Predicate<LayerManager>() {
                 int count = 0;
@@ -140,8 +140,8 @@ public class LayerManager implements BloomFilterProducer {
     }
 
     /**
-     * Static methods to create a Consumer of a LinkedList of BloomFilter perform tests on
-     * whether to reduce the collecton of Bloom filters.
+     * Static methods to create a Consumer of a LinkedList of BloomFilter perform
+     * tests on whether to reduce the collecton of Bloom filters.
      *
      */
     public static class Cleanup {
@@ -150,12 +150,13 @@ public class LayerManager implements BloomFilterProducer {
 
         private static final Consumer<LinkedList<BloomFilter>> NO_CLEANUP = x -> {
         };
-        
+
         private static final Consumer<LinkedList<BloomFilter>> REMOVE_EMPTY_TARGET = x -> {
             if (!x.isEmpty() && x.getLast().cardinality() == 0) {
                 x.removeLast();
             }
         };
+
         /**
          * A Cleanup that never removes anything.
          */
@@ -167,12 +168,13 @@ public class LayerManager implements BloomFilterProducer {
          * Removes the earliest filters in the list when the the number of filters
          * exceeds maxSize.
          *
-         * @param maxSize the maximum number of filters for the list.  Must be greater than 0
+         * @param maxSize the maximum number of filters for the list. Must be greater
+         *                than 0
          * @return A Consumer for the LayerManager filterCleanup constructor argument.
          * @throws IllegalArgumentException if maxSize is <= 0
          */
         public static final Consumer<LinkedList<BloomFilter>> onMaxSize(int maxSize) {
-            if (maxSize <=0 ) {
+            if (maxSize <= 0) {
                 throw new IllegalArgumentException("'maxSize' must be greater than 0");
             }
             return ll -> {
@@ -181,14 +183,15 @@ public class LayerManager implements BloomFilterProducer {
                 }
             };
         }
-        
+
         /**
          * Removes the last added target if it is empty.
+         *
          * @return A Consumer for the LayerManager filterCleanup constructor argument.
          */
         public static final Consumer<LinkedList<BloomFilter>> removeEmptyTarget() {
             return REMOVE_EMPTY_TARGET;
-        };
+        }
     }
 
     private final LinkedList<BloomFilter> filters = new LinkedList<>();
@@ -212,7 +215,8 @@ public class LayerManager implements BloomFilterProducer {
      *                       when necessary.
      * @param extendCheck    The predicate that checks if a new filter should be
      *                       added to the list.
-     * @param filterCleanup  the consumer that removes any old filters from the list.
+     * @param filterCleanup  the consumer that removes any old filters from the
+     *                       list.
      * @param initialize     true if the filter list should be initialized.
      */
     private LayerManager(Supplier<BloomFilter> filterSupplier, Predicate<LayerManager> extendCheck,
@@ -224,14 +228,14 @@ public class LayerManager implements BloomFilterProducer {
             addFilter();
         }
     }
-    
+
     /**
      * Adds a new Bloom filter to the list.
      */
     private void addFilter() {
         BloomFilter bf = filterSupplier.get();
         if (bf == null) {
-            throw new NullPointerException( "filterSupplier returned null.");
+            throw new NullPointerException("filterSupplier returned null.");
         }
         filters.add(bf);
     }
@@ -251,10 +255,12 @@ public class LayerManager implements BloomFilterProducer {
     }
 
     /**
-     * Forces an advance to the next depth.  This method will clean-up the current layers and generate
-     * a new filter layer.
-     * <p>Ths method is used within the {@link #getTarget()} when the configured {@code ExtendCheck} 
-     * returns {@code true}.</p>
+     * Forces an advance to the next depth. This method will clean-up the current
+     * layers and generate a new filter layer.
+     * <p>
+     * Ths method is used within the {@link #getTarget()} when the configured
+     * {@code ExtendCheck} returns {@code true}.
+     * </p>
      */
     void next() {
         this.filterCleanup.accept(filters);
@@ -287,8 +293,8 @@ public class LayerManager implements BloomFilterProducer {
     }
 
     /**
-     * Returns the current target filter. If a new filter should be created
-     * based on {@code extendCheck} it will be created before this method returns.
+     * Returns the current target filter. If a new filter should be created based on
+     * {@code extendCheck} it will be created before this method returns.
      *
      * @return the current target filter.
      */
@@ -341,6 +347,7 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * Builds the layer manager with the specified properties.
+         *
          * @return a new LayerManager.
          */
         public LayerManager build() {
@@ -357,9 +364,11 @@ public class LayerManager implements BloomFilterProducer {
         }
 
         /**
-         * Sets the extendCheck predicate.  When the predicate returns {@code true} a 
-         * new target will be created.
-         * @param extendCheck The predicate to determine if a new target should be created.
+         * Sets the extendCheck predicate. When the predicate returns {@code true} a new
+         * target will be created.
+         *
+         * @param extendCheck The predicate to determine if a new target should be
+         *                    created.
          * @return this for chaining.
          */
         public Builder extendCheck(Predicate<LayerManager> extendCheck) {
@@ -368,8 +377,9 @@ public class LayerManager implements BloomFilterProducer {
         }
 
         /**
-         * Sets the supplier of Bloom filters.  When extendCheck creates a new target, the supplier
-         * provides the instance of the Bloom filter.
+         * Sets the supplier of Bloom filters. When extendCheck creates a new target,
+         * the supplier provides the instance of the Bloom filter.
+         *
          * @param supplier The supplier of new Bloom filter instances.
          * @return this for chaining.
          */
@@ -380,8 +390,9 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * Sest the Consumer that cleans the list of Bloom filters.
-         * @param cleanup the Consumer that will modify the list of filters 
-         * removing out dated or stale filters.
+         *
+         * @param cleanup the Consumer that will modify the list of filters removing out
+         *                dated or stale filters.
          * @return this for chaining.
          */
         public Builder cleanup(Consumer<LinkedList<BloomFilter>> cleanup) {

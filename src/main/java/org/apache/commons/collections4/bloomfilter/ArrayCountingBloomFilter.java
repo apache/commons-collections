@@ -23,23 +23,28 @@ import java.util.function.LongPredicate;
 import java.util.stream.IntStream;
 
 /**
- * A counting Bloom filter using an int array to track counts for each enabled bit
- * index.
+ * A counting Bloom filter using an int array to track counts for each enabled
+ * bit index.
  *
- * <p>Any operation that results in negative counts or integer overflow of
- * counts will mark this filter as invalid. This transition is not reversible.
- * The operation is completed in full, no exception is raised and the state is
- * set to invalid. This allows the counts for the filter immediately prior to the
- * operation that created the invalid state to be recovered. See the documentation
- * in {@link #isValid()} for details.</p>
+ * <p>
+ * Any operation that results in negative counts or integer overflow of counts
+ * will mark this filter as invalid. This transition is not reversible. The
+ * operation is completed in full, no exception is raised and the state is set
+ * to invalid. This allows the counts for the filter immediately prior to the
+ * operation that created the invalid state to be recovered. See the
+ * documentation in {@link #isValid()} for details.
+ * </p>
  *
- * <p>All the operations in the filter assume the counts are currently valid,
- * for example {@code cardinality} or {@code contains} operations. Behavior of an invalid
- * filter is undefined. It will no longer function identically to a standard
- * Bloom filter that is the merge of all the Bloom filters that have been added
- * to and not later subtracted from the counting Bloom filter.</p>
+ * <p>
+ * All the operations in the filter assume the counts are currently valid, for
+ * example {@code cardinality} or {@code contains} operations. Behavior of an
+ * invalid filter is undefined. It will no longer function identically to a
+ * standard Bloom filter that is the merge of all the Bloom filters that have
+ * been added to and not later subtracted from the counting Bloom filter.
+ * </p>
  *
- * <p>The maximum supported number of items that can be stored in the filter is
+ * <p>
+ * The maximum supported number of items that can be stored in the filter is
  * limited by the maximum array size combined with the {@link Shape}. For
  * example an implementation using a {@link Shape} with a false-positive
  * probability of 1e-6 and {@link Integer#MAX_VALUE} bits can reversibly store
@@ -62,28 +67,35 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     private final int[] counts;
 
     /**
-     * The state flag. This is a bitwise @{code OR} of the entire history of all updated
-     * counts. If negative then a negative count or integer overflow has occurred on
-     * one or more counts in the history of the filter and the state is invalid.
+     * The state flag. This is a bitwise @{code OR} of the entire history of all
+     * updated counts. If negative then a negative count or integer overflow has
+     * occurred on one or more counts in the history of the filter and the state is
+     * invalid.
      *
-     * <p>Maintenance of this state flag is branch-free for improved performance. It
+     * <p>
+     * Maintenance of this state flag is branch-free for improved performance. It
      * eliminates a conditional check for a negative count during remove/subtract
      * operations and a conditional check for integer overflow during merge/add
-     * operations.</p>
+     * operations.
+     * </p>
      *
-     * <p>Note: Integer overflow is unlikely in realistic usage scenarios. A count
-     * that overflows indicates that the number of items in the filter exceeds the
+     * <p>
+     * Note: Integer overflow is unlikely in realistic usage scenarios. A count that
+     * overflows indicates that the number of items in the filter exceeds the
      * maximum possible size (number of bits) of any Bloom filter constrained by
      * integer indices. At this point the filter is most likely full (all bits are
-     * non-zero) and thus useless.</p>
+     * non-zero) and thus useless.
+     * </p>
      *
-     * <p>Negative counts are a concern if the filter is used incorrectly by
-     * removing an item that was never added. It is expected that a user of a
-     * counting Bloom filter will not perform this action as it is a mistake.
-     * Enabling an explicit recovery path for negative or overflow counts is a major
-     * performance burden not deemed necessary for the unlikely scenarios when an
-     * invalid state is created. Maintenance of the state flag is a concession to
-     * flag improper use that should not have a major performance impact.</p>
+     * <p>
+     * Negative counts are a concern if the filter is used incorrectly by removing
+     * an item that was never added. It is expected that a user of a counting Bloom
+     * filter will not perform this action as it is a mistake. Enabling an explicit
+     * recovery path for negative or overflow counts is a major performance burden
+     * not deemed necessary for the unlikely scenarios when an invalid state is
+     * created. Maintenance of the state flag is a concession to flag improper use
+     * that should not have a major performance impact.
+     * </p>
      */
     private int state;
 
@@ -123,12 +135,13 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public int cardinality() {
         return (int) IntStream.of(counts).filter(i -> i > 0).count();
-        //return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
+        // return (int) IntStream.range(0, counts.length).filter(i -> counts[i] >
+        // 0).count();
     }
-    
+
     @Override
     public boolean isEmpty() {
-        return !IntStream.of(counts).anyMatch( i -> i>0);
+        return !IntStream.of(counts).anyMatch(i -> i > 0);
     }
 
     @Override
@@ -148,16 +161,21 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * {@inheritDoc}
      *
-     * <p><em>Implementation note</em>
+     * <p>
+     * <em>Implementation note</em>
      *
-     * <p>The state transition to invalid is permanent.</p>
+     * <p>
+     * The state transition to invalid is permanent.
+     * </p>
      *
-     * <p>This implementation does not correct negative counts to zero or integer
+     * <p>
+     * This implementation does not correct negative counts to zero or integer
      * overflow counts to {@link Integer#MAX_VALUE}. Thus the operation that
      * generated invalid counts can be reversed by using the complement of the
      * original operation with the same Bloom filter. This will restore the counts
      * to the state prior to the invalid operation. Counts can then be extracted
-     * using {@link #forEachCount(BitCountConsumer)}.</p>
+     * using {@link #forEachCount(BitCountConsumer)}.
+     * </p>
      */
     @Override
     public boolean isValid() {
@@ -192,7 +210,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         final int blocksm1 = BitMap.numberOfBitMaps(counts.length) - 1;
         int i = 0;
         long value;
-        // must break final block separate as the number of bits may not fall on the long boundary
+        // must break final block separate as the number of bits may not fall on the
+        // long boundary
         for (int j = 0; j < blocksm1; j++) {
             value = 0;
             for (int k = 0; k < Long.SIZE; k++) {
@@ -217,7 +236,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Add to the count for the bit index.
      *
-     * @param idx the index
+     * @param idx    the index
      * @param addend the amount to add
      * @return {@code true} always.
      */
@@ -231,7 +250,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Subtract from the count for the bit index.
      *
-     * @param idx the index
+     * @param idx        the index
      * @param subtrahend the amount to subtract
      * @return {@code true} always.
      */

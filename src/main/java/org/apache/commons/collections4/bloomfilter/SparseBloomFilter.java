@@ -22,8 +22,10 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**
- * A bloom filter using a TreeSet of integers to track enabled bits. This is a standard
- * implementation and should work well for most low cardinality Bloom filters.
+ * A bloom filter using a TreeSet of integers to track enabled bits. This is a
+ * standard implementation and should work well for most low cardinality Bloom
+ * filters.
+ *
  * @since 4.5
  */
 public final class SparseBloomFilter implements BloomFilter {
@@ -70,6 +72,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     /**
      * Adds the index to the indices.
+     *
      * @param idx the index to add.
      * @return {@code true} always
      */
@@ -111,7 +114,8 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
+        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other
+                : IndexProducer.fromBitMapProducer(other);
         merge(producer);
         return true;
     }
@@ -135,7 +139,7 @@ public final class SparseBloomFilter implements BloomFilter {
     public int cardinality() {
         return indices.size();
     }
-    
+
     @Override
     public boolean isEmpty() {
         return indices.isEmpty();

@@ -172,11 +172,13 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertFalse(filter.get(1).contains(TestingHashers.FROM11));
         assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
     }
-    
+
+    @Override
     @Test
     public void testCardinalityAndIsEmpty() {
-        LayerManager layerManager = LayerManager.builder().extendCheck( ExtendCheck.neverAdvance()).supplier(() -> new SimpleBloomFilter(getTestShape())).build();
-        testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(),layerManager));
+        LayerManager layerManager = LayerManager.builder().extendCheck(ExtendCheck.neverAdvance())
+                .supplier(() -> new SimpleBloomFilter(getTestShape())).build();
+        testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(), layerManager));
     }
 
     // ***** TESTS THAT CHECK LAYERED PROCESSING ******
@@ -286,7 +288,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         // create a filter that removes filters that are 4 seconds old
         // and quantises time to 1 second intervals.
-        LayeredBloomFilter underTest = createTimedLayeredFilter(shape, 600, TimeUnit.MILLISECONDS, 150, TimeUnit.MILLISECONDS);
+        LayeredBloomFilter underTest = createTimedLayeredFilter(shape, 600, TimeUnit.MILLISECONDS, 150,
+                TimeUnit.MILLISECONDS);
 
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());

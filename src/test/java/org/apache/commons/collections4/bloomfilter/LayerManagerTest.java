@@ -64,21 +64,21 @@ public class LayerManagerTest {
     private void testAdvanceOnCount(int breakAt) {
         Predicate<LayerManager> underTest = LayerManager.ExtendCheck.advanceOnCount(breakAt);
         LayerManager layerManager = testingBuilder().build();
-        for (int i = 0; i < breakAt-1; i++) {
+        for (int i = 0; i < breakAt - 1; i++) {
             assertFalse(underTest.test(layerManager), "at " + i);
             layerManager.getTarget().merge(TestingHashers.FROM1);
         }
         assertTrue(underTest.test(layerManager));
     }
-    
+
     @Test
     public void testAdvanceOnCount() {
         testAdvanceOnCount(4);
         testAdvanceOnCount(10);
         testAdvanceOnCount(2);
         testAdvanceOnCount(1);
-        assertThrows(IllegalArgumentException.class, ()->LayerManager.ExtendCheck.advanceOnCount(0));
-        assertThrows(IllegalArgumentException.class, ()->LayerManager.ExtendCheck.advanceOnCount(-1));
+        assertThrows(IllegalArgumentException.class, () -> LayerManager.ExtendCheck.advanceOnCount(0));
+        assertThrows(IllegalArgumentException.class, () -> LayerManager.ExtendCheck.advanceOnCount(-1));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class LayerManagerTest {
             underTest.accept(list);
         }
         assertEquals(maxSize, list.size());
-        
+
         for (int i = 0; i < maxSize; i++) {
             list.add(new SimpleBloomFilter(shape));
             underTest.accept(list);
@@ -153,22 +153,23 @@ public class LayerManagerTest {
         assertTrue(
                 underTest.forEachBloomFilterPair(copy, (x, y) -> Arrays.equals(x.asBitMapArray(), y.asBitMapArray())));
     }
-    
+
     @Test
     public void testBuilder() {
         LayerManager.Builder underTest = LayerManager.builder();
         NullPointerException npe = assertThrows(NullPointerException.class, () -> underTest.build());
-        assertTrue( npe.getMessage().contains("Supplier must not be null"));
-        underTest.supplier( () -> null ).cleanup(null);
+        assertTrue(npe.getMessage().contains("Supplier must not be null"));
+        underTest.supplier(() -> null).cleanup(null);
         npe = assertThrows(NullPointerException.class, () -> underTest.build());
-        assertTrue( npe.getMessage().contains("Cleanup must not be null"));
-        underTest.cleanup( x -> {} ).extendCheck(null);
+        assertTrue(npe.getMessage().contains("Cleanup must not be null"));
+        underTest.cleanup(x -> {
+        }).extendCheck(null);
         npe = assertThrows(NullPointerException.class, () -> underTest.build());
-        assertTrue( npe.getMessage().contains("ExtendCheck must not be null"));
-        
-        npe = assertThrows(NullPointerException.class, () -> LayerManager.builder().supplier( () -> null ).build());
-        assertTrue( npe.getMessage().contains("filterSupplier returned null."));
-        
+        assertTrue(npe.getMessage().contains("ExtendCheck must not be null"));
+
+        npe = assertThrows(NullPointerException.class, () -> LayerManager.builder().supplier(() -> null).build());
+        assertTrue(npe.getMessage().contains("filterSupplier returned null."));
+
     }
 
     @Test
