@@ -28,6 +28,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import org.apache.commons.collections4.bloomfilter.LayerManager.Cleanup;
+import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
 import org.junit.jupiter.api.Test;
 
 public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter> {
@@ -152,19 +154,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public final void testClearLayer() {
-        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
-        filter.merge(TestingHashers.FROM1);
-        filter.merge(TestingHashers.FROM11);
-        filter.merge(new IncrementingHasher(11, 2));
-        filter.merge(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape())));
-        filter.clear(1);
-        assertEquals(0, filter.get(1).cardinality());
-    }
-
-    @Test
     public final void testNext() {
-        LayerManager layerManager = LayerManager.builder().withSuplier(() -> new SimpleBloomFilter(getTestShape()))
+        LayerManager layerManager = LayerManager.builder().supplier(() -> new SimpleBloomFilter(getTestShape()))
                 .build();
 
         LayeredBloomFilter filter = new LayeredBloomFilter(getTestShape(), layerManager);
@@ -180,6 +171,12 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertFalse(filter.get(1).contains(TestingHashers.FROM1));
         assertFalse(filter.get(1).contains(TestingHashers.FROM11));
         assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
+    }
+    
+    @Test
+    public void testCardinalityAndIsEmpty() {
+        LayerManager layerManager = LayerManager.builder().extendCheck( ExtendCheck.neverAdvance()).supplier(() -> new SimpleBloomFilter(getTestShape())).build();
+        testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(),layerManager));
     }
 
     // ***** TESTS THAT CHECK LAYERED PROCESSING ******
@@ -212,10 +209,10 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     static LayeredBloomFilter createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
             TimeUnit qUnit) {
         LayerManager layerManager = LayerManager.builder()
-                .withSuplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
-                .withCleanup(new CleanByTime(duration, dUnit))
-                .withExtendCheck(new AdvanceOnTimeQuanta(shape, quanta, qUnit)
-                        .or(LayerManager.ExtendCheck.advanceOnCalculatedFull(shape)))
+                .supplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
+                .cleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
+                .extendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
+                        .or(LayerManager.ExtendCheck.advanceOnCalculatedSaturation(shape)))
                 .build();
         return new LayeredBloomFilter(shape, layerManager);
     }
@@ -226,18 +223,14 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     static class AdvanceOnTimeQuanta implements Predicate<LayerManager> {
         long quanta;
 
-        AdvanceOnTimeQuanta(Shape shape, long quanta, TimeUnit unit) {
+        AdvanceOnTimeQuanta(long quanta, TimeUnit unit) {
             this.quanta = unit.toMillis(quanta);
         }
 
         @Override
         public boolean test(LayerManager lm) {
-            int depth = lm.getDepth();
-            if (depth == 0) {
-                return false;
-            }
             // can not use getTarget() as it causes recursion.
-            TimestampedBloomFilter bf = (TimestampedBloomFilter) lm.get(depth - 1);
+            TimestampedBloomFilter bf = (TimestampedBloomFilter) lm.get(lm.getDepth() - 1);
             return bf.timestamp + quanta < System.currentTimeMillis();
         }
     }
@@ -293,7 +286,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         // create a filter that removes filters that are 4 seconds old
         // and quantises time to 1 second intervals.
-        LayeredBloomFilter underTest = createTimedLayeredFilter(shape, 4, TimeUnit.SECONDS, 1, TimeUnit.SECONDS);
+        LayeredBloomFilter underTest = createTimedLayeredFilter(shape, 600, TimeUnit.MILLISECONDS, 150, TimeUnit.MILLISECONDS);
 
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
@@ -301,24 +294,24 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         underTest.forEachBloomFilter(dbg.and(x -> lst.add(((TimestampedBloomFilter) x).timestamp)));
         assertTrue(underTest.getDepth() > 1);
 
-        Thread.sleep(TimeUnit.SECONDS.toMillis(2));
+        Thread.sleep(300);
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
         }
-        dbgInstrument.add("=== AFTER 2 seconds ====\n");
+        dbgInstrument.add("=== AFTER 300 milliseconds ====\n");
         underTest.forEachBloomFilter(dbg);
 
-        Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+        Thread.sleep(150);
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
         }
-        dbgInstrument.add("=== AFTER 3 seconds ====\n");
+        dbgInstrument.add("=== AFTER 450 milliseconds ====\n");
         underTest.forEachBloomFilter(dbg);
 
-        // sleep 1.5 seconds to ensure we cross the 4 second boundary
-        Thread.sleep(TimeUnit.SECONDS.toMillis(4) + 500);
+        // sleep 200 milliseconds to ensure we cross the 600 millisecond boundary
+        Thread.sleep(200);
         underTest.merge(TestingHashers.randomHasher());
-        dbgInstrument.add("=== AFTER 4 seconds ====\n");
+        dbgInstrument.add("=== AFTER 600 milliseconds ====\n");
         assertTrue(underTest.forEachBloomFilter(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
                 "Found filter that should have been deleted: " + dbgInstrument.get(dbgInstrument.size() - 1));
     }

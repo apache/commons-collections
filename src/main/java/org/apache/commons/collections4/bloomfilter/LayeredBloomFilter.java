@@ -27,7 +27,7 @@ import java.util.function.Predicate;
  * Layered Bloom filters are described in Zhiwang, Cen; Jungang, Xu; Jian, Sun
  * (2010), "A multi-layer Bloom filter for duplicated URL detection", Proc. 3rd
  * International Conference on Advanced Computer Theory and Engineering (ICACTE
- * 2010), vol. 1, pp. V1–586–V1–591, doi:10.1109/ICACTE.2010.5578947, ISBN
+ * 2010), vol. 1, pp. V1-586-V1-591, doi:10.1109/ICACTE.2010.5578947, ISBN
  * 978-1-4244-6539-2, S2CID 3108985
  * <p>
  * In short, Layered Bloom filter contains several bloom filters arranged in
@@ -36,15 +36,16 @@ import java.util.function.Predicate;
  * <ul>
  * <li>When membership in the filter is checked each layer in turn is checked
  * and if a match is found {@code true} is returned.</li>
- * <li>When merging each bloom filter is merged into the last newest filter in
+ * <li>When merging each bloom filter is merged into the newest filter in
  * the list of layers.</li>
  * <li>When questions of cardinality are asked the cardinality of the union of
  * the enclosed Bloom filters is used.</li>
  * </ul>
+ * <p>
  * The net result is that the layered Bloom filter can be populated with more
  * items than the Shape would indicate and yet still return a false positive
  * rate in line with the Shape and not the over population.
- * <p>
+ * </p><p>
  * This implementation uses a LayerManager to handle the manipulation of the
  * layers.
  * </p>
@@ -67,13 +68,13 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * but never merges them. List will never exceed maxDepth. As additional filters
      * are added earlier filters are removed.
      *
-     * @param shape    The shape for the enclosed Bloom filters
+     * @param shape    The shape for the enclosed Bloom filters.
      * @param maxDepth The maximum depth of layers.
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
     public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
-        LayerManager manager = LayerManager.builder().withExtendCheck(LayerManager.ExtendCheck.ADVANCE_ON_POPULATED)
-                .withCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).withSuplier(() -> new SimpleBloomFilter(shape))
+        LayerManager manager = LayerManager.builder().extendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
+                .cleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).supplier(() -> new SimpleBloomFilter(shape))
                 .build();
         return new LayeredBloomFilter(shape, manager);
     }
@@ -96,7 +97,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
 
     /**
      * Gets the depth of the deepest layer.
-     *
+     * The minimum value returned by this method is 1.
      * @return the depth of the deepest layer.
      */
     public final int getDepth() {
@@ -118,32 +119,15 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     public int cardinality() {
         return SetOperations.cardinality(this);
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return forEachBloomFilter(BloomFilter::isEmpty);
+    }
 
     @Override
     public final void clear() {
         layerManager.clear();
-    }
-
-    /**
-     * Clears the Bloom filter (removes all set bits) at the specified level.
-     *
-     * @param level the level to clear.
-     */
-    public final void clear(int level) {
-        layerManager.get(level).clear();
-    }
-
-    /**
-     * Get the Bloom filter that is currently being merged into. This method ensures
-     * that the {@code target} filter meets the criteria specified within the
-     * {@code LayerManager}. if the {@code LayerManager} determines that a new
-     * target filter is required it is constructed and used.
-     *
-     * @return the current Bloom filter.
-     * @see LayerManager
-     */
-    public final BloomFilter target() {
-        return layerManager.target();
     }
 
     /**
@@ -162,6 +146,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
 
     /**
      * Create a standard (non-layered) Bloom filter by merging all of the layers.
+     * If the filter is empty this method will return an empty Bloom filter.
      *
      * @return the merged bloom filter.
      */
@@ -223,7 +208,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * Returns {@code true} if this any layer contained by this filter contains the
      * specified filter.
      * <p>
-     * If the {@code other} is another Layered Bloom filter each filter within the
+     * If the {@code other} is a BloomFilterProducer each filter within the
      * {@code other} is checked to see if it exits within this filter.
      * </p>
      *
@@ -232,16 +217,23 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      */
     @Override
     public boolean contains(final BloomFilter other) {
-        if (other instanceof LayeredBloomFilter) {
-            boolean[] result = { true };
-            // return false when we have found a match.
-            ((LayeredBloomFilter) other).forEachBloomFilter(x -> {
-                result[0] &= contains(x);
-                return result[0];
-            });
+        return other instanceof BloomFilterProducer ? contains((BloomFilterProducer) other)
+                : !forEachBloomFilter(x -> !x.contains(other));
+    }
+    
+    /**
+     * Returns {@code true} if each filter within the {@code producer} exits within this filter.
+     * 
+     * @param producer the BloomFilterProducer that provides the filters to check for.
+     * @return {@code true} if this filter contains all of the filters contained in the {@code producer}.
+     */
+    public boolean contains(final BloomFilterProducer producer) {
+        boolean[] result = { true };
+        // return false when we have found a match to short circuit checks
+        return ((BloomFilterProducer) producer).forEachBloomFilter(x -> {
+            result[0] &= contains(x);
             return result[0];
-        }
-        return !forEachBloomFilter(x -> !x.contains(other));
+        });
     }
 
     /**
@@ -307,17 +299,17 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
 
     @Override
     public boolean merge(BloomFilter bf) {
-        return target().merge(bf);
+        return layerManager.getTarget().merge(bf);
     }
 
     @Override
     public boolean merge(IndexProducer indexProducer) {
-        return target().merge(indexProducer);
+        return layerManager.getTarget().merge(indexProducer);
     }
 
     @Override
     public boolean merge(BitMapProducer bitMapProducer) {
-        return target().merge(bitMapProducer);
+        return layerManager.getTarget().merge(bitMapProducer);
     }
 
     @Override
@@ -327,18 +319,12 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
 
     @Override
     public boolean forEachBitMap(LongPredicate predicate) {
-        BloomFilter merged = new SimpleBloomFilter(shape);
-        if (forEachBloomFilter(merged::merge) && !merged.forEachBitMap(predicate)) {
-            return false;
-        }
-        return true;
+        return flatten().forEachBitMap(predicate);
     }
 
     @Override
     public int estimateN() {
-        BloomFilter result = new SimpleBloomFilter(shape);
-        forEachBloomFilter(result::merge);
-        return result.estimateN();
+        return flatten().estimateN();
     }
 
     @Override
@@ -347,34 +333,6 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         final BloomFilter cpy = this.flatten();
         cpy.merge(other);
         return cpy.estimateN();
-    }
-
-    @Override
-    public int estimateIntersection(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        long eThis = estimateN();
-        long eOther = other.estimateN();
-        if (eThis == Integer.MAX_VALUE && eOther == Integer.MAX_VALUE) {
-            // if both are infinite the union is infinite and we return Integer.MAX_VALUE
-            return Integer.MAX_VALUE;
-        }
-        long estimate;
-        // if one is infinite the intersection is the other.
-        if (eThis == Integer.MAX_VALUE) {
-            estimate = eOther;
-        } else if (eOther == Integer.MAX_VALUE) {
-            estimate = eThis;
-        } else {
-            long eUnion = estimateUnion(other);
-            if (eUnion == Integer.MAX_VALUE) {
-                throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
-            }
-            // maximum estimate value using integer values is: 46144189292 thus
-            // eThis + eOther can not overflow the long value.
-            estimate = eThis + eOther - eUnion;
-            estimate = estimate < 0 ? 0 : estimate;
-        }
-        return estimate > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) estimate;
     }
 
     /**
