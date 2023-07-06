@@ -686,7 +686,7 @@ public class TreeList<E> extends AbstractList<E> {
                 }
                 return rotateLeft();
             default :
-                throw new RuntimeException("tree inconsistent!");
+                throw new IllegalStateException("tree inconsistent!");
             }
         }
 
