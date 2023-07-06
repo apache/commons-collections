@@ -234,7 +234,7 @@ public class SequencesComparator<T> {
         }
 
         // this should not happen
-        throw new RuntimeException("Internal Error");
+        throw new IllegalStateException("Internal Error");
     }
 
 
