@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -27,6 +28,7 @@ import java.util.function.Predicate;
  * @since 4.5
  */
 public interface BloomFilterProducer {
+
     /**
      * Executes a Bloom filter Predicate on each Bloom filter in the collection. The
      * ordering of the Bloom filters is not specified by this interface.
@@ -64,5 +66,37 @@ public interface BloomFilterProducer {
             final BiPredicate<BloomFilter, BloomFilter> func) {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
         return other.forEachBloomFilter(p) && p.forEachRemaining();
+    }
+
+    /**
+     * Creates a BloomFilterProducer from an array of Bloom filters.
+     *
+     * @param filters The filters to be returned by the producer.
+     * @return THe BloomFilterProducer containing the filters.
+     */
+    static BloomFilterProducer fromBloomFilterArray(BloomFilter... filters) {
+        return new BloomFilterProducer() {
+            @Override
+            public boolean forEachBloomFilter(final Predicate<BloomFilter> predicate) {
+                for (final BloomFilter filter : filters) {
+                    if (!predicate.test(filter)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public BloomFilter[] asBloomFilterArray() {
+                return Arrays.copyOf(filters, filters.length);
+            }
+
+            @Override
+            public boolean forEachBloomFilterPair(final BloomFilterProducer other,
+                    final BiPredicate<BloomFilter, BloomFilter> func) {
+                final CountingPredicate<BloomFilter> p = new CountingPredicate<>(filters, func);
+                return other.forEachBloomFilter(p) && p.forEachRemaining();
+            }
+        };
     }
 }

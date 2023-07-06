@@ -72,10 +72,10 @@
  * <p>The counting Bloom filter extends the Bloom filter by counting the number of times a specific bit has been
  * enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
  * overhead.</p>
- * 
+ *
  * <h3>LayeredBloomFilter</h3>
  *
- * <p>The layered Bloom filter extends the Bloom filter by creating layers of Bloom filters that can be queried as a single 
+ * <p>The layered Bloom filter extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
  * Filter or as a set of filters.  This adds the ability to perform windowing on streams of data.</p>
  *
  * <h3>Shape</h3>

@@ -16,27 +16,22 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.function.Predicate;
 
-import org.junit.Test;
-
-public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloomFilter> {
+public class DefaultBloomFilterProducerTest extends AbstractBloomFilterProducerTest {
 
     @Override
-    protected WrappedBloomFilter createEmptyFilter(Shape shape) {
-        return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+    protected BloomFilterProducer createUnderTest(BloomFilter... filters) {
+        return new BloomFilterProducer() {
+            @Override
+            public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
+                for (BloomFilter bf : filters) {
+                    if (!bloomFilterPredicate.test(bf)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
         };
-    }
-
-    @Test
-    public void testCharacteristics() {
-        Shape shape = getTestShape();
-        BloomFilter inner = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-        WrappedBloomFilter underTest = createEmptyFilter(getTestShape());
-        assertEquals(inner.characteristics(), underTest.characteristics());
-
-        inner = new DefaultBloomFilterTest.NonSparseDefaultBloomFilter(shape);
-        underTest = createEmptyFilter(getTestShape());
-        assertEquals(inner.characteristics(), underTest.characteristics());
     }
 }

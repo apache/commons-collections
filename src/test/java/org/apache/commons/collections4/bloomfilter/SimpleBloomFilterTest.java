@@ -41,4 +41,16 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
         assertTrue(filter.merge(producer));
         assertEquals(1, filter.cardinality());
     }
+
+    @Test
+    public void testCardinalityAndIsEmpty() {
+        testCardinalityAndIsEmpty(createEmptyFilter(getTestShape()));
+
+        // test the case where is empty after merge
+        // in this case the internal cardinality == -1
+        BloomFilter bf = createEmptyFilter(getTestShape());
+        bf.merge(IndexProducer.fromIndexArray());
+        assertTrue(bf.isEmpty());
+    }
+
 }

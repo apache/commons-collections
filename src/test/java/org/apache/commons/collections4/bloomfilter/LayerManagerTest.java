@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -135,6 +137,57 @@ public class LayerManagerTest {
     }
 
     @Test
+    public void testNoCleanup() {
+        Consumer<LinkedList<BloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
+        LinkedList<BloomFilter> list = new LinkedList<>();
+        for (int i = 0; i < 20; i++) {
+            assertEquals(i, list.size());
+            list.add(new SimpleBloomFilter(shape));
+            underTest.accept(list);
+        }
+    }
+
+    @Test
+    public void testRemoveEmptyTarget() {
+        Consumer<LinkedList<BloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
+        LinkedList<BloomFilter> list = new LinkedList<>();
+
+        // removes an empty filter
+        BloomFilter bf = new SimpleBloomFilter(shape);
+        list.add(bf);
+        assertEquals(bf, list.get(0));
+        underTest.accept(list);
+        assertTrue(list.isEmpty());
+
+        // does not remove a populated filter.
+        bf.merge(IndexProducer.fromIndexArray(1));
+        list.add(bf);
+        assertEquals(bf, list.get(0));
+        underTest.accept(list);
+        assertEquals(bf, list.get(0));
+
+        // does not remove an empty filter followed by a populated filter.
+        list.clear();
+        list.add(new SimpleBloomFilter(shape));
+        list.add(bf);
+        assertEquals(2, list.size());
+        underTest.accept(list);
+        assertEquals(2, list.size());
+
+        // does not remove multiple empty filters at the end of the list, just the last
+        // one.
+        list.clear();
+        list.add(bf);
+        list.add(new SimpleBloomFilter(shape));
+        list.add(new SimpleBloomFilter(shape));
+        assertEquals(3, list.size());
+        underTest.accept(list);
+        assertEquals(2, list.size());
+        assertEquals(bf, list.get(0));
+
+    }
+
+    @Test
     public void testCopy() {
         LayerManager underTest = LayerManager.builder().supplier(() -> new SimpleBloomFilter(shape)).build();
         underTest.getTarget().merge(TestingHashers.randomHasher());
@@ -194,6 +247,15 @@ public class LayerManagerTest {
         assertEquals(1, underTest.getDepth());
         underTest.next();
         assertEquals(2, underTest.getDepth());
+    }
+
+    @Test
+    public void testGet() {
+        LayerManager underTest = LayerManager.builder().supplier(() -> new SimpleBloomFilter(shape)).build();
+        assertEquals(1, underTest.getDepth());
+        assertNotNull(underTest.get(0));
+        assertThrows(NoSuchElementException.class, () -> underTest.get(-1));
+        assertThrows(NoSuchElementException.class, () -> underTest.get(1));
     }
 
     @Test

@@ -130,9 +130,6 @@ public class LayerManager implements BloomFilterProducer {
                 throw new IllegalArgumentException("'maxN' must be greater than 0");
             }
             return manager -> {
-                if (manager.filters.isEmpty()) {
-                    return false;
-                }
                 BloomFilter bf = manager.filters.peekLast();
                 return maxN <= bf.getShape().estimateN(bf.cardinality());
             };
@@ -152,7 +149,7 @@ public class LayerManager implements BloomFilterProducer {
         };
 
         private static final Consumer<LinkedList<BloomFilter>> REMOVE_EMPTY_TARGET = x -> {
-            if (!x.isEmpty() && x.getLast().cardinality() == 0) {
+            if (x.getLast().cardinality() == 0) {
                 x.removeLast();
             }
         };

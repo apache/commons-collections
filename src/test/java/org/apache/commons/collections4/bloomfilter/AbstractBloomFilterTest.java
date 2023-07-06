@@ -459,6 +459,16 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             assertFalse(bf.isEmpty(), "Wrong value at " + i);
             assertEquals(i + 1, bf.cardinality(), "Wrong value at " + i);
         }
+
+        // check operations in reverse order
+        bf.clear();
+        assertEquals(0, bf.cardinality());
+        assertTrue(bf.isEmpty());
+        for (int i = 0; i < getTestShape().getNumberOfBits(); i++) {
+            bf.merge(IndexProducer.fromIndexArray(i));
+            assertEquals(i + 1, bf.cardinality(), "Wrong value at " + i);
+            assertFalse(bf.isEmpty(), "Wrong value at " + i);
+        }
     }
 
     @Test
