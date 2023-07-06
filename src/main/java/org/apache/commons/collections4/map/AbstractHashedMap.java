@@ -1306,7 +1306,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             cloned.putAll(this);
             return cloned;
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 
