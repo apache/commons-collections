@@ -100,7 +100,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param breakAt the number of filters to merge into each filter in the list.
          * @return A Predicate suitable for the LayerManager extendCheck parameter.
-         * @throws IllegalArgumentException if breakAt is <= 0
+         * @throws IllegalArgumentException if breakAt is &lt;= 0
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
             if (breakAt <= 0) {
@@ -123,7 +123,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param maxN the maximum number of estimated items in the filter.
          * @return A Predicate suitable for the LayerManager extendCheck parameter.
-         * @throws IllegalArgumentException if maxN is <= 0
+         * @throws IllegalArgumentException if maxN is &lt;= 0
          */
         public static final Predicate<LayerManager> advanceOnSaturation(double maxN) {
             if (maxN <= 0) {
@@ -171,7 +171,7 @@ public class LayerManager implements BloomFilterProducer {
          * @param maxSize the maximum number of filters for the list. Must be greater
          *                than 0
          * @return A Consumer for the LayerManager filterCleanup constructor argument.
-         * @throws IllegalArgumentException if maxSize is <= 0
+         * @throws IllegalArgumentException if maxSize is &lt;= 0
          */
         public static final Consumer<LinkedList<BloomFilter>> onMaxSize(int maxSize) {
             if (maxSize <= 0) {
