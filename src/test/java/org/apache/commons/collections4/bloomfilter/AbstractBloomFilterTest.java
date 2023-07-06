@@ -177,10 +177,10 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
-        assertTrue(bf1.contains(bf1), "BF Should contain itself");
+        assertTrue(bf1.contains(bf1), "BF1 Should contain itself");
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
-        assertFalse(bf1.contains(bf2), "BF should not contain BF2");
-        assertTrue(bf2.contains(bf1), "BF2 should contain BF");
+        assertFalse(bf1.contains(bf2), "BF1 should not contain BF2");
+        assertTrue(bf2.contains(bf1), "BF2 should contain BF1");
 
         assertTrue(bf2.contains(new IncrementingHasher(1, 1)), "BF2 Should contain this hasher");
         assertFalse(bf2.contains(new IncrementingHasher(1, 3)), "BF2 Should not contain this hasher");
@@ -434,6 +434,26 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             return true;
         });
         assertEquals(BitMap.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+    }
+    
+    /**
+     * Test cardinality and isEmpty.  Bloom filter must be able to accept multiple IndexProducer merges
+     * until all the bits are populated.
+     * @param bf The Bloom filter to test.
+     */
+    protected void testCardinalityAndIsEmpty(BloomFilter bf) {
+        assertTrue(bf.isEmpty());
+        assertEquals(0,bf.cardinality());
+        for (int i=0; i < getTestShape().getNumberOfBits(); i++) {
+            bf.merge(IndexProducer.fromIndexArray(i));
+            assertFalse(bf.isEmpty(), "Wrong value at "+i);
+            assertEquals(i+1,bf.cardinality(), "Wrong value at "+i);
+        }
+    }
+    
+    @Test
+    public void testCardinalityAndIsEmpty() {
+        testCardinalityAndIsEmpty(createEmptyFilter(getTestShape()));
     }
 
     /**

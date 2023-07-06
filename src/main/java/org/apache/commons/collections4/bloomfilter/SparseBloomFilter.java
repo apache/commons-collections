@@ -135,6 +135,11 @@ public final class SparseBloomFilter implements BloomFilter {
     public int cardinality() {
         return indices.size();
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return indices.isEmpty();
+    }
 
     @Override
     public boolean forEachIndex(final IntPredicate consumer) {

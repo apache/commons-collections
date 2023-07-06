@@ -208,6 +208,18 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return the cardinality of this filter
      */
     int cardinality();
+    
+    /**
+     * Determines if all the bits are off.  This is equivalent to {@code cardinality() == 0}.
+     * 
+     * <p><em>Note: This method is optimised for non-sparse filters.</em>  Implementers are encouraged to implement faster checks
+     * if possible.</p>
+     * 
+     * @return {@code true} if no bites are enabled, {@code false} otherwise.
+     */
+    default boolean isEmpty() {
+        return forEachBitMap(y -> y == 0);
+    }
 
     /**
      * Estimates the number of items in the Bloom filter.

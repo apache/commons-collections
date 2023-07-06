@@ -122,7 +122,13 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public int cardinality() {
-        return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
+        return (int) IntStream.of(counts).filter(i -> i > 0).count();
+        //return (int) IntStream.range(0, counts.length).filter(i -> counts[i] > 0).count();
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return !IntStream.of(counts).anyMatch( i -> i>0);
     }
 
     @Override

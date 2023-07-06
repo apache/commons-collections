@@ -166,6 +166,11 @@ public final class SimpleBloomFilter implements BloomFilter {
         }
         return c;
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return (cardinality == 0) ? true : forEachBitMap(y -> y == 0); 
+    }
 
     @Override
     public boolean forEachIndex(final IntPredicate consumer) {
