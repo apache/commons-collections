@@ -69,6 +69,23 @@ public interface BloomFilterProducer {
     }
 
     /**
+     * Create a standard (non-layered) Bloom filter by merging all of the layers. If
+     * the filter is empty this method will return an empty Bloom filter.
+     *
+     * @return the merged bloom filter.
+     */
+    default BloomFilter flatten() {
+        BloomFilter bf[] = {null};
+        forEachBloomFilter( x -> {
+            if (bf[0]==null) {
+                bf[0] = new SimpleBloomFilter( x.getShape());
+            }
+            return bf[0].merge( x );
+        });
+        return bf[0];
+    }
+
+    /**
      * Creates a BloomFilterProducer from an array of Bloom filters.
      *
      * @param filters The filters to be returned by the producer.

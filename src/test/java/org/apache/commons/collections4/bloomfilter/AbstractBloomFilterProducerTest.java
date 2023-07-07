@@ -51,7 +51,7 @@ public abstract class AbstractBloomFilterProducerTest {
         one.clear();
         one.merge(IndexProducer.fromIndexArray(1));
         two.clear();
-        two.merge(IndexProducer.fromIndexArray(1, 2));
+        two.merge(IndexProducer.fromIndexArray(2, 3));
         nullCount[0] = 0;
         nullCount[1] = 0;
         equalityCount[0] = 0;
@@ -122,5 +122,13 @@ public abstract class AbstractBloomFilterProducerTest {
     public void testForEachPairReturnFalseEarly() {
         assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
                 (x, y) -> false));
+    }
+
+    @Test
+    public void testFlatten() {
+        BloomFilter underTest = createUnderTest().flatten();
+        BloomFilter expected = new SimpleBloomFilter(shape);
+        expected.merge(IndexProducer.fromIndexArray(1, 2, 3));
+        assertArrayEquals(expected.asBitMapArray(), underTest.asBitMapArray());
     }
 }

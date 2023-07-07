@@ -27,6 +27,11 @@ import java.util.function.LongPredicate;
 public abstract class WrappedBloomFilter implements BloomFilter {
     final BloomFilter wrapped;
 
+    /**
+     * Wraps a Bloom filter.  The wrapped filter is maintained as a reference
+     * not a copy.  Changes in one will be reflected in the other.
+     * @param bf The Bloom filter.
+     */
     public WrappedBloomFilter(BloomFilter bf) {
         this.wrapped = bf;
     }
