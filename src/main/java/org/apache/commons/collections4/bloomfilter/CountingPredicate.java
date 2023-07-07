@@ -28,7 +28,7 @@ import java.util.function.Predicate;
  * {@code null} value for each remaining {@code idx} value.
  *
  * @param <T> the type of object being compared.
- * @Since 4.5
+ * @since 4.5
  */
 class CountingPredicate<T> implements Predicate<T> {
     private int idx = 0;
