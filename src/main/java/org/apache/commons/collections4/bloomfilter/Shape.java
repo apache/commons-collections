@@ -19,11 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * The definition of a Bloom filter shape.
  *
- * <p>
- * This class contains the values for the filter configuration and is used to
- * convert a Hasher into a BloomFilter as well as verify that two Bloom filters
- * are compatible. (i.e. can be compared or merged)
- * </p>
+ * <p> This class contains the values for the filter configuration and is used to
+ * convert a Hasher into a BloomFilter as well as verify that two Bloom filters are
+ * compatible. (i.e. can be compared or merged)</p>
  *
  * <h2>Interrelatedness of values</h2>
  *
@@ -40,14 +38,9 @@ package org.apache.commons.collections4.bloomfilter;
  *
  * <h2>Estimations from cardinality based on shape</h2>
  *
- * <p>
- * Several estimates can be calculated from the Shape and the cardinality of a
- * Bloom filter.
- * </p>
+ * <p>Several estimates can be calculated from the Shape and the cardinality of a Bloom filter.</p>
  *
- * <p>
- * In the calculation below the following values are used:
- * </p>
+ * <p>In the calculation below the following values are used:</p>
  * <ul>
  * <li>double c = the cardinality of the Bloom filter.</li>
  * <li>double m = numberOfBits as specified in the shape.</li>
@@ -56,16 +49,11 @@ package org.apache.commons.collections4.bloomfilter;
  *
  * <h3>Estimate N - n()</h3>
  *
- * <p>
- * The calculation for the estimate of N is: {@code -(m/k) * ln(1 - (c/m))}.
- * This is the calculation performed by the {@code Shape.estimateN(cardinality)}
- * method below. This estimate is roughly equivalent to the number of hashers
- * that have been merged into a filter to create the cardinality specified.
- * </p>
+ * <p>The calculation for the estimate of N is: {@code -(m/k) * ln(1 - (c/m))}.  This is the calculation
+ * performed by the {@code Shape.estimateN(cardinality)} method below.  This estimate is roughly equivalent to the
+ * number of hashers that have been merged into a filter to create the cardinality specified.</p>
  *
- * <p>
- * <em>Note:</em>
- * </p>
+ * <p><em>Note:</em></p>
  * <ul>
  * <li>if cardinality == numberOfBits, then result is infinity.</li>
  * <li>if cardinality &gt; numberOfBits, then result is NaN.</li>
@@ -73,50 +61,39 @@ package org.apache.commons.collections4.bloomfilter;
  *
  * <h3>Estimate N of Union - n(A &cup; B)</h3>
  *
- * <p>
- * To estimate the number of items in the union of two Bloom filters with the
- * same shape, merge them together and calculate the estimated N from the
- * result.
- * </p>
+ * <p>To estimate the number of items in the union of two Bloom filters with the same shape, merge them together and
+ * calculate the estimated N from the result.</p>
  *
  * <h3>Estimate N of the Intersection - n(A &cap; B)</h3>
  *
- * <p>
- * To estimate the number of items in the intersection of two Bloom filters A
- * and B with the same shape the calculation is: n(A) + n(b) - n(A &cup; B).
- * </p>
+ * <p>To estimate the number of items in the intersection of two Bloom filters A and B with the same shape the calculation is:
+ * n(A) + n(b) - n(A &cup; B).</p>
  *
- * <p>
- * Care must be taken when any of the n(x) returns infinity. In general the
- * following assumptions are true:
+ * <p>Care must be taken when any of the n(x) returns infinity.  In general the following assumptions are true:
  *
  * <ul>
  * <li>If n(A) = &infin; and n(B) &lt; &infin; then n(A &cap; B) = n(B)</li>
  * <li>If n(A) &lt; &infin; and n(B) = &infin; then n(A &cap; B) = n(A)</li>
  * <li>If n(A) = &infin; and n(B) = &infin; then n(A &cap; B) = &infin;</li>
- * <li>If n(A) &lt; &infin; and n(B) &lt; &infin; and n(A &cup; B) = &infin;
- * then n(A &cap; B) is undefined.</li>
+ * <li>If n(A) &lt; &infin; and n(B) &lt; &infin; and n(A &cup; B) = &infin; then n(A &cap; B) is undefined.</li>
  * </ul>
  *
  * @see <a href="https://hur.st/bloomfilter">Bloom Filter calculator</a>
  * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
- *      [Wikipedia]</a>
+ * [Wikipedia]</a>
  * @since 4.5
  */
 public final class Shape {
 
     /**
-     * The natural logarithm of 2. Used in several calculations. Approximately
-     * 0.693147180559945.
+     * The natural logarithm of 2. Used in several calculations. Approximately 0.693147180559945.
      */
     private static final double LN_2 = Math.log(2.0);
 
     /**
-     * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately
-     * -0.480453013918201.
+     * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
      *
-     * <p>
-     * ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
+     * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
      */
     private static final double DENOMINATOR = -LN_2 * LN_2;
 
@@ -131,14 +108,12 @@ public final class Shape {
     private final int numberOfBits;
 
     /**
-     * Constructs a filter configuration with the specified number of hashFunctions
-     * ({@code k}) and bits ({@code m}).
+     * Constructs a filter configuration with the specified number of hashFunctions ({@code k}) and
+     * bits ({@code m}).
      *
-     * @param numberOfHashFunctions Number of hash functions to use for each item
-     *                              placed in the filter.
-     * @param numberOfBits          The number of bits in the filter
-     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or
-     *                                  {@code numberOfBits < 1}
+     * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
+     * @param numberOfBits The number of bits in the filter
+     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
     private Shape(final int numberOfHashFunctions, final int numberOfBits) {
         this.numberOfHashFunctions = checkNumberOfHashFunctions(numberOfHashFunctions);
@@ -150,7 +125,8 @@ public final class Shape {
         // Shape is final so no check for the same class as inheritance is not possible
         if (obj instanceof Shape) {
             final Shape other = (Shape) obj;
-            return numberOfBits == other.numberOfBits && numberOfHashFunctions == other.numberOfHashFunctions;
+            return numberOfBits == other.numberOfBits &&
+                   numberOfHashFunctions == other.numberOfHashFunctions;
         }
         return false;
     }
@@ -162,7 +138,8 @@ public final class Shape {
     }
 
     /**
-     * Gets the number of bits in the Bloom filter. This is also known as {@code m}.
+     * Gets the number of bits in the Bloom filter.
+     * This is also known as {@code m}.
      *
      * @return the number of bits in the Bloom filter ({@code m}).
      */
@@ -171,35 +148,27 @@ public final class Shape {
     }
 
     /**
-     * Gets the number of hash functions used to construct the filter. This is also
-     * known as {@code k}.
+     * Gets the number of hash functions used to construct the filter.
+     * This is also known as {@code k}.
      *
-     * @return the number of hash functions used to construct the filter
-     *         ({@code k}).
+     * @return the number of hash functions used to construct the filter ({@code k}).
      */
     public int getNumberOfHashFunctions() {
         return numberOfHashFunctions;
     }
 
     /**
-     * Calculates the probability of false positives ({@code p}) given numberOfItems
-     * ({@code n}), numberOfBits ({@code m}) and numberOfHashFunctions ({@code k}).
+     * Calculates the probability of false positives ({@code p}) given
+     * numberOfItems ({@code n}), numberOfBits ({@code m}) and numberOfHashFunctions ({@code k}).
+     * <pre>p = pow(1 - exp(-k / (m / n)), k)</pre>
      *
-     * <pre>
-     * p = pow(1 - exp(-kn/m)), k)
-     * </pre>
+     * <p>This is the probability that a Bloom filter will return true for the presence of an item
+     * when it does not contain the item.</p>
      *
-     * <p>
-     * This is the probability that a Bloom filter will return true for the presence
-     * of an item when it does not contain the item.
-     * </p>
-     *
-     * <p>
-     * The probability assumes that the Bloom filter is filled with the expected
-     * number of items. If the filter contains fewer items then the actual
-     * probability will be lower. Thus, this returns the worst-case false positive
-     * probability for a filter that has not exceeded its expected number of items.
-     * </p>
+     * <p>The probability assumes that the Bloom filter is filled with the expected number of
+     * items. If the filter contains fewer items then the actual probability will be lower.
+     * Thus, this returns the worst-case false positive probability for a filter that has not
+     * exceeded its expected number of items.</p>
      *
      * @param numberOfItems the number of items hashed into the Bloom filter.
      * @return the probability of false positives.
@@ -222,13 +191,9 @@ public final class Shape {
 
     /**
      * Determines if a cardinality is sparse based on the shape.
-     * <p>
-     * This method assumes that bit maps are 64bits and indexes are 32bits. If the
-     * memory necessary to store the cardinality as indexes is less than the
-     * estimated memory for bit maps, the cardinality is determined to be
-     * {@code sparse}.
-     * </p>
-     *
+     * <p>This method assumes that bit maps are 64bits and indexes are 32bits. If the memory
+     * necessary to store the cardinality as indexes is less than the estimated memory for bit maps,
+     * the cardinality is determined to be {@code sparse}.</p>
      * @param cardinality the cardinality to check.
      * @return true if the cardinality is sparse within the shape.
      */
@@ -244,19 +209,15 @@ public final class Shape {
     }
 
     /**
-     * Estimate the number of items in a Bloom filter with this shape and the
-     * specified number of bits enabled.
+     * Estimate the number of items in a Bloom filter with this shape and the specified number of bits enabled.
      *
-     * <p>
-     * <em>Note:</em>
-     * </p>
+     * <p><em>Note:</em></p>
      * <ul>
-     * <li>if cardinality == numberOfBits, then result is infinity.</li>
-     * <li>if cardinality &gt; numberOfBits, then result is NaN.</li>
+     * <li> if cardinality == numberOfBits, then result is infinity.</li>
+     * <li> if cardinality &gt; numberOfBits, then result is NaN.</li>
      * </ul>
      *
-     * @param cardinality the number of enabled bits also known as the hamming
-     *                    value.
+     * @param cardinality the number of enabled  bits also known as the hamming value.
      * @return An estimate of the number of items in the Bloom filter.
      */
     public double estimateN(final int cardinality) {
@@ -268,23 +229,18 @@ public final class Shape {
 
     /**
      * Estimates the maximum number of elements that can be merged into a filter of
-     * this shape before the false positive rate exceeds the desired rate.
-     * <p>
-     * The formula for deriving {@code k} when {@code m} and {@code n} are known is:
+     * this shape before the false positive rate exceeds the desired rate. <p> The
+     * formula for deriving {@code k} when {@code m} and {@code n} are known is:
      *
      * <pre>
      * k = ln2 * m / n
      * </pre>
      *
-     * <br/>
      * solving for {@code n} yields:
      *
      * <pre>
      * n = ln2 * m / k
      * </pre>
-     *
-     * The definition of {@code m} is dependent upon
-     * </p>
      *
      * @return An estimate of max N.
      */
@@ -293,33 +249,24 @@ public final class Shape {
     }
 
     /**
-     * Constructs a filter configuration with a desired false-positive probability
-     * ({@code p}) and the specified number of bits ({@code m}) and hash functions
-     * ({@code k}).
+     * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the
+     * specified number of bits ({@code m}) and hash functions ({@code k}).
      *
-     * <p>
-     * The number of items ({@code n}) to be stored in the filter is computed.
+     * <p>The number of items ({@code n}) to be stored in the filter is computed.
+     * <pre>n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))</pre>
      *
-     * <pre>
-     * n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))
-     * </pre>
+     * <p>The actual probability will be approximately equal to the
+     * desired probability but will be dependent upon the calculated Bloom filter capacity
+     * (number of items). An exception is raised if this is greater than or equal to 1 (i.e. the
+     * shape is invalid for use as a Bloom filter).
      *
-     * <p>
-     * The actual probability will be approximately equal to the desired probability
-     * but will be dependent upon the calculated Bloom filter capacity (number of
-     * items). An exception is raised if this is greater than or equal to 1 (i.e.
-     * the shape is invalid for use as a Bloom filter).
-     *
-     * @param probability           The desired false-positive probability in the
-     *                              range {@code (0, 1)}
-     * @param numberOfBits          The number of bits in the filter
+     * @param probability The desired false-positive probability in the range {@code (0, 1)}
+     * @param numberOfBits The number of bits in the filter
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @return a valid Shape.
-     * @throws IllegalArgumentException if the desired probability is not in the
-     *                                  range {@code (0, 1)},
-     *                                  {@code numberOfBits < 1},
-     *                                  {@code numberOfHashFunctions < 1}, or the
-     *                                  actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)},
+     * {@code numberOfBits < 1}, {@code numberOfHashFunctions < 1}, or the actual
+     * probability is {@code >= 1.0}
      */
     public static Shape fromPMK(final double probability, final int numberOfBits, final int numberOfHashFunctions) {
         checkProbability(probability);
@@ -349,37 +296,25 @@ public final class Shape {
     }
 
     /**
-     * Constructs a filter configuration with the specified number of items
-     * ({@code n}) and desired false-positive probability ({@code p}).
+     * Constructs a filter configuration with the specified number of items ({@code n}) and
+     * desired false-positive probability ({@code p}).
      *
-     * <p>
-     * The number of bits ({@code m}) for the filter is computed.
+     * <p>The number of bits ({@code m}) for the filter is computed.
+     * <pre>m = ceil(n * ln(p) / ln(1 / 2^ln(2)))</pre>
      *
-     * <pre>
-     * m = ceil(n * ln(p) / ln(1 / 2 ^ ln(2)))
-     * </pre>
+     * <p>The optimal number of hash functions ({@code k}) is computed.
+     * <pre>k = round((m / n) * ln(2))</pre>
      *
-     * <p>
-     * The optimal number of hash functions ({@code k}) is computed.
-     *
-     * <pre>
-     * k = round((m / n) * ln(2))
-     * </pre>
-     *
-     * <p>
-     * The actual probability will be approximately equal to the desired probability
-     * but will be dependent upon the calculated number of bits and hash functions.
-     * An exception is raised if this is greater than or equal to 1 (i.e. the shape
-     * is invalid for use as a Bloom filter).
+     * <p>The actual probability will be approximately equal to the
+     * desired probability but will be dependent upon the calculated number of bits and hash
+     * functions. An exception is raised if this is greater than or equal to 1 (i.e. the
+     * shape is invalid for use as a Bloom filter).
      *
      * @param numberOfItems Number of items to be placed in the filter
-     * @param probability   The desired false-positive probability in the range
-     *                      {@code (0, 1)}
+     * @param probability The desired false-positive probability in the range {@code (0, 1)}
      * @return a valid Shape
-     * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired
-     *                                  probability is not in the range
-     *                                  {@code (0, 1)} or if the actual probability
-     *                                  is {@code >= 1.0}.
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired probability
+     * is not in the range {@code (0, 1)} or if the actual probability is {@code >= 1.0}.
      */
     public static Shape fromNP(final int numberOfItems, final double probability) {
         checkNumberOfItems(numberOfItems);
@@ -400,43 +335,34 @@ public final class Shape {
     }
 
     /**
-     * Constructs a filter configuration with the specified number of hashFunctions
-     * ({@code k}) and bits ({@code m}).
+     * Constructs a filter configuration with the specified number of hashFunctions ({@code k}) and
+     * bits ({@code m}).
      *
-     * @param numberOfHashFunctions Number of hash functions to use for each item
-     *                              placed in the filter.
-     * @param numberOfBits          The number of bits in the filter
+     * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
+     * @param numberOfBits The number of bits in the filter
      * @return a valid Shape.
-     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or
-     *                                  {@code numberOfBits < 1}
+     * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
     public static Shape fromKM(final int numberOfHashFunctions, final int numberOfBits) {
         return new Shape(numberOfHashFunctions, numberOfBits);
     }
 
     /**
-     * Constructs a filter configuration with the specified number of items
-     * ({@code n}) and bits ({@code m}).
+     * Constructs a filter configuration with the specified number of items ({@code n}) and
+     * bits ({@code m}).
      *
-     * <p>
-     * The optimal number of hash functions ({@code k}) is computed.
+     * <p>The optimal number of hash functions ({@code k}) is computed.
+     * <pre>k = round((m / n) * ln(2))</pre>
      *
-     * <pre>
-     * k = round((m / n) * ln(2))
-     * </pre>
-     *
-     * <p>
-     * The false-positive probability is computed using the number of items, bits
-     * and hash functions. An exception is raised if this is greater than or equal
-     * to 1 (i.e. the shape is invalid for use as a Bloom filter).
+     * <p>The false-positive probability is computed using the number of items, bits and hash
+     * functions. An exception is raised if this is greater than or equal to 1 (i.e. the
+     * shape is invalid for use as a Bloom filter).
      *
      * @param numberOfItems Number of items to be placed in the filter
-     * @param numberOfBits  The number of bits in the filter
+     * @param numberOfBits The number of bits in the filter
      * @return a valid Shape.
-     * @throws IllegalArgumentException if {@code numberOfItems < 1},
-     *                                  {@code numberOfBits < 1}, the calculated
-     *                                  number of hash function is {@code < 1}, or
-     *                                  if the actual probability is {@code >= 1.0}
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
+     * the calculated number of hash function is {@code < 1}, or if the actual probability is {@code >= 1.0}
      */
     public static Shape fromNM(final int numberOfItems, final int numberOfBits) {
         checkNumberOfItems(numberOfItems);
@@ -452,19 +378,16 @@ public final class Shape {
      * Constructs a filter configuration with the specified number of items, bits
      * and hash functions.
      *
-     * <p>
-     * The false-positive probability is computed using the number of items, bits
-     * and hash functions. An exception is raised if this is greater than or equal
-     * to 1 (i.e. the shape is invalid for use as a Bloom filter).
+     * <p>The false-positive probability is computed using the number of items, bits and hash
+     * functions. An exception is raised if this is greater than or equal to 1 (i.e. the
+     * shape is invalid for use as a Bloom filter).
      *
-     * @param numberOfItems         Number of items to be placed in the filter
-     * @param numberOfBits          The number of bits in the filter.
+     * @param numberOfItems Number of items to be placed in the filter
+     * @param numberOfBits The number of bits in the filter.
      * @param numberOfHashFunctions The number of hash functions in the filter
      * @return a valid Shape.
-     * @throws IllegalArgumentException if {@code numberOfItems < 1},
-     *                                  {@code numberOfBits < 1},
-     *                                  {@code numberOfHashFunctions < 1}, or if the
-     *                                  actual probability is {@code >= 1.0}.
+     * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
+     * {@code numberOfHashFunctions < 1}, or if the actual probability is {@code >= 1.0}.
      */
     public static Shape fromNMK(final int numberOfItems, final int numberOfBits, final int numberOfHashFunctions) {
         checkNumberOfItems(numberOfItems);
@@ -510,8 +433,7 @@ public final class Shape {
      *
      * @param numberOfHashFunctions the number of hash functions
      * @return the number of hash functions
-     * @throws IllegalArgumentException if the number of hash functions is
-     *                                  {@code < 1}.
+     * @throws IllegalArgumentException if the number of hash functions is {@code < 1}.
      */
     private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
         if (numberOfHashFunctions < 1) {
@@ -525,8 +447,7 @@ public final class Shape {
      * Check the probability is in the range 0.0, exclusive, to 1.0, exclusive.
      *
      * @param probability the probability
-     * @throws IllegalArgumentException if the probability is not in the range
-     *                                  {@code (0, 1)}
+     * @throws IllegalArgumentException if the probability is not in the range {@code (0, 1)}
      */
     private static void checkProbability(final double probability) {
         // Using the negation of within the desired range will catch NaN
@@ -538,10 +459,9 @@ public final class Shape {
     /**
      * Check the calculated probability is {@code < 1.0}.
      *
-     * <p>
-     * This function is used to verify that the dynamically calculated probability
-     * for the Shape is in the valid range 0 to 1 exclusive. This need only be
-     * performed once upon construction.
+     * <p>This function is used to verify that the dynamically calculated probability for the
+     * Shape is in the valid range 0 to 1 exclusive. This need only be performed once upon
+     * construction.
      *
      * @param probability the probability
      * @throws IllegalArgumentException if the probability is {@code >= 1.0}.
@@ -559,14 +479,12 @@ public final class Shape {
 
     /**
      * Calculates the number of hash functions given numberOfItems and numberOfBits.
-     * This is a method so that the calculation is consistent across all
-     * constructors.
+     * This is a method so that the calculation is consistent across all constructors.
      *
      * @param numberOfItems the number of items in the filter.
-     * @param numberOfBits  the number of bits in the filter.
+     * @param numberOfBits the number of bits in the filter.
      * @return the optimal number of hash functions.
-     * @throws IllegalArgumentException if the calculated number of hash function is
-     *                                  {@code < 1}
+     * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
      */
     private static int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
         // k = round((m / n) * ln(2)) We change order so that we use real math rather
