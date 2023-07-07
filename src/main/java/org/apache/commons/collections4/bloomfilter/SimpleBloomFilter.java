@@ -22,16 +22,14 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**
- * A bloom filter using an array of bit maps to track enabled bits. This is a
- * standard implementation and should work well for most Bloom filters.
- *
+ * A bloom filter using an array of bit maps to track enabled bits. This is a standard
+ * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
 public final class SimpleBloomFilter implements BloomFilter {
 
     /**
-     * The array of bit map longs that defines this Bloom filter. Will be null if
-     * the filter is empty.
+     * The array of bit map longs that defines this Bloom filter. Will be null if the filter is empty.
      */
     private final long[] bitMap;
 
@@ -59,7 +57,6 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     /**
      * Copy constructor for {@code copy()} use.
-     *
      * @param source
      */
     private SimpleBloomFilter(final SimpleBloomFilter source) {
@@ -95,8 +92,8 @@ public final class SimpleBloomFilter implements BloomFilter {
         Objects.requireNonNull(indexProducer, "indexProducer");
         indexProducer.forEachIndex(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String
-                        .format("IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
+                throw new IllegalArgumentException(String.format(
+                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
             BitMap.set(bitMap, idx);
             return true;
