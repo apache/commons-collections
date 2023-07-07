@@ -59,6 +59,7 @@ import java.util.function.Predicate;
  * removes them. It also checks it a new layer should be added, and if so adds
  * it and sets the {@code target} before the operation.</li>
  * </ul>
+ * @Since 4.5
  */
 public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     private final Shape shape;

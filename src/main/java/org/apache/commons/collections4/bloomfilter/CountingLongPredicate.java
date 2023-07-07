@@ -19,10 +19,11 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.function.LongPredicate;
 
 /**
- * A long predicate that applies the test func to each member of the @{code ary} in sequence for each call to @{code test()}.
- * if the @{code ary} is exhausted, the subsequent calls to @{code test} are executed with a zero value.
- * If the calls to @{code test} do not exhaust the @{code ary} the @{code forEachRemaining} method can be called to
- * execute the @code{text} with a zero value for each remaining @{code idx} value.
+ * A long predicate that applies the test func to each member of the {@code ary} in sequence for each call to {@code test()}.
+ * if the {@code ary} is exhausted, the subsequent calls to {@code test} are executed with a zero value.
+ * If the calls to {@code test} do not exhaust the {@code ary} the {@code forEachRemaining} method can be called to
+ * execute the @code{text} with a zero value for each remaining {@code idx} value.
+ * @Since 4.5
  */
 class CountingLongPredicate implements LongPredicate {
     private int idx = 0;
@@ -30,9 +31,9 @@ class CountingLongPredicate implements LongPredicate {
     private final LongBiPredicate func;
 
     /**
-     * Constructs an instance that will compare the elements in @{code ary} with the elements returned by @{code func}.
-     * function is called as @{code func.test( idxValue, otherValue )}. If there are more @{code otherValue} values than
-     * @{code idxValues} then @{code func} is called as @{code func.test( 0, otherValue )}.
+     * Constructs an instance that will compare the elements in {@code ary} with the elements returned by {@code func}.
+     * function is called as {@code func.test( idxValue, otherValue )}. If there are more {@code otherValue} values than
+     * {@code idxValues} then {@code func} is called as {@code func.test( 0, otherValue )}.
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.
      */

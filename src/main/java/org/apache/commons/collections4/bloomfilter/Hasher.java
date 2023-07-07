@@ -29,7 +29,7 @@ public interface Hasher {
     /**
      * Creates an IndexProducer for this hasher based on the Shape.
      *
-     * <p>The @{code IndexProducer} will create indices within the range defined by the number of bits in
+     * <p>The {@code IndexProducer} will create indices within the range defined by the number of bits in
      * the shape. The total number of indices will respect the number of hash functions per item
      * defined by the shape. However the count of indices may not be a multiple of the number of
      * hash functions if the implementation has removed duplicates.</p>

@@ -68,6 +68,7 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * Advances the target once a merge has been performed.
+         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static final Predicate<LayerManager> advanceOnPopulated() {
             return ADVANCE_ON_POPULATED;
@@ -76,6 +77,7 @@ public class LayerManager implements BloomFilterProducer {
         /**
          * Does not automatically advance the target. next() must be called directly to
          * perform the advance.
+         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static final Predicate<LayerManager> neverAdvance() {
             return NEVER_ADVANCE;
@@ -88,7 +90,7 @@ public class LayerManager implements BloomFilterProducer {
          * created.
          *
          * @param shape The shape of the filters in the LayerManager.
-         * @return A Predicate suitable for the LayerManager extendCheck parameter.
+         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static final Predicate<LayerManager> advanceOnCalculatedSaturation(Shape shape) {
             return advanceOnSaturation(shape.estimateMaxN());
@@ -99,7 +101,7 @@ public class LayerManager implements BloomFilterProducer {
          * the current target.
          *
          * @param breakAt the number of filters to merge into each filter in the list.
-         * @return A Predicate suitable for the LayerManager extendCheck parameter.
+         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if breakAt is &lt;= 0
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
@@ -122,7 +124,7 @@ public class LayerManager implements BloomFilterProducer {
          * maxN specified.
          *
          * @param maxN the maximum number of estimated items in the filter.
-         * @return A Predicate suitable for the LayerManager extendCheck parameter.
+         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if maxN is &lt;= 0
          */
         public static final Predicate<LayerManager> advanceOnSaturation(double maxN) {
@@ -138,7 +140,7 @@ public class LayerManager implements BloomFilterProducer {
 
     /**
      * Static methods to create a Consumer of a LinkedList of BloomFilter perform
-     * tests on whether to reduce the collecton of Bloom filters.
+     * tests on whether to reduce the collection of Bloom filters.
      *
      */
     public static class Cleanup {
@@ -156,6 +158,7 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * A Cleanup that never removes anything.
+         * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
         public static final Consumer<LinkedList<BloomFilter>> noCleanup() {
             return NO_CLEANUP;
@@ -167,7 +170,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param maxSize the maximum number of filters for the list. Must be greater
          *                than 0
-         * @return A Consumer for the LayerManager filterCleanup constructor argument.
+         * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          * @throws IllegalArgumentException if maxSize is &lt;= 0
          */
         public static final Consumer<LinkedList<BloomFilter>> onMaxSize(int maxSize) {
@@ -184,7 +187,7 @@ public class LayerManager implements BloomFilterProducer {
         /**
          * Removes the last added target if it is empty.
          *
-         * @return A Consumer for the LayerManager filterCleanup constructor argument.
+         * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
         public static final Consumer<LinkedList<BloomFilter>> removeEmptyTarget() {
             return REMOVE_EMPTY_TARGET;

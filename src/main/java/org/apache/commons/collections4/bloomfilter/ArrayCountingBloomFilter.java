@@ -62,7 +62,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     private final int[] counts;
 
     /**
-     * The state flag. This is a bitwise @{code OR} of the entire history of all updated
+     * The state flag. This is a bitwise {@code OR} of the entire history of all updated
      * counts. If negative then a negative count or integer overflow has occurred on
      * one or more counts in the history of the filter and the state is invalid.
      *
