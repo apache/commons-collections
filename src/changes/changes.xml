@@ -267,6 +267,9 @@
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
     </action>
+    <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add PropertiesFactory.
+    </action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
       Bump org.easymock:easymock from 4.0.2 to 5.1.0 #352, #355, #375.
