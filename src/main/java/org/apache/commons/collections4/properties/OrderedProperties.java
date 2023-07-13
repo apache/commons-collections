@@ -19,6 +19,7 @@ package org.apache.commons.collections4.properties;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -144,5 +145,29 @@ public class OrderedProperties extends Properties {
             orderedKeys.remove(key);
         }
         return remove;
+    }
+
+    @Override
+    public synchronized String toString() {
+        // Must override for Java 17 to maintain order since the implementation is based on a map
+        final int max = size() - 1;
+        if (max == -1) {
+            return "{}";
+        }
+        final StringBuilder sb = new StringBuilder();
+        final Iterator<Map.Entry<Object, Object>> it = entrySet().iterator();
+        sb.append('{');
+        for (int i = 0;; i++) {
+            final Map.Entry<Object, Object> e = it.next();
+            final Object key = e.getKey();
+            final Object value = e.getValue();
+            sb.append(key == this ? "(this Map)" : key.toString());
+            sb.append('=');
+            sb.append(value == this ? "(this Map)" : value.toString());
+            if (i == max) {
+                return sb.append('}').toString();
+            }
+            sb.append(", ");
+        }
     }
 }
