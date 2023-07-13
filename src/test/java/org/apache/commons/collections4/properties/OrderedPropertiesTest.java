@@ -288,7 +288,6 @@ public class OrderedPropertiesTest {
         assertFalse(Collections.list(props.propertyNames()).contains(k));
     }
 
-    @Disabled("Fails on GHA?")
     @Test
     public void testToString() {
         final OrderedProperties orderedProperties = new OrderedProperties();
