@@ -16,14 +16,18 @@
  */
 package org.apache.commons.collections4.properties;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A drop-in replacement for {@link Properties} for ordered keys.
@@ -50,8 +54,8 @@ public class OrderedProperties extends Properties {
     }
 
     @Override
-    public synchronized Object compute(Object key, BiFunction<? super Object, ? super Object, ? extends Object> remappingFunction) {
-        Object compute = super.compute(key, remappingFunction);
+    public synchronized Object compute(final Object key, final BiFunction<? super Object, ? super Object, ? extends Object> remappingFunction) {
+        final Object compute = super.compute(key, remappingFunction);
         if (compute != null) {
             orderedKeys.add(key);
         }
@@ -59,12 +63,23 @@ public class OrderedProperties extends Properties {
     }
 
     @Override
-    public synchronized Object computeIfAbsent(Object key, Function<? super Object, ? extends Object> mappingFunction) {
-        Object computeIfAbsent = super.computeIfAbsent(key, mappingFunction);
+    public synchronized Object computeIfAbsent(final Object key, final Function<? super Object, ? extends Object> mappingFunction) {
+        final Object computeIfAbsent = super.computeIfAbsent(key, mappingFunction);
         if (computeIfAbsent != null) {
             orderedKeys.add(key);
         }
         return computeIfAbsent;
+    }
+
+    @Override
+    public Set<Map.Entry<Object, Object>> entrySet() {
+        return orderedKeys.stream().map(k -> new SimpleEntry<>(k, get(k))).collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    @Override
+    public synchronized void forEach(final BiConsumer<? super Object, ? super Object> action) {
+        Objects.requireNonNull(action);
+        orderedKeys.forEach(k -> action.accept(k, get(k)));
     }
 
     @Override
@@ -91,7 +106,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public synchronized Object put(final Object key, final Object value) {
-        Object put = super.put(key, value);
+        final Object put = super.put(key, value);
         if (put == null) {
             orderedKeys.add(key);
         }
@@ -106,7 +121,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public synchronized Object putIfAbsent(final Object key, final Object value) {
-        Object putIfAbsent = super.putIfAbsent(key, value);
+        final Object putIfAbsent = super.putIfAbsent(key, value);
         if (putIfAbsent == null) {
             orderedKeys.add(key);
         }
@@ -115,7 +130,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public synchronized Object remove(final Object key) {
-        Object remove = super.remove(key);
+        final Object remove = super.remove(key);
         if (remove != null) {
             orderedKeys.remove(key);
         }
@@ -124,7 +139,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public synchronized boolean remove(final Object key, final Object value) {
-        boolean remove = super.remove(key, value);
+        final boolean remove = super.remove(key, value);
         if (remove) {
             orderedKeys.remove(key);
         }
