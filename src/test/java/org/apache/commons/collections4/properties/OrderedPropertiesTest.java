@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,12 @@ public class OrderedPropertiesTest {
         for (int i = first; i <= last; i++) {
             assertEquals("key" + i, iterSet.next());
         }
+        final Iterator<Entry<Object, Object>> iterEntrySet = orderedProperties.entrySet().iterator();
+        for (int i = first; i <= last; i++) {
+            final Entry<Object, Object> next = iterEntrySet.next();
+            assertEquals("key" + i, next.getKey());
+            assertEquals("value" + i, next.getValue());
+        }
         final Enumeration<?> propertyNames = orderedProperties.propertyNames();
         for (int i = first; i <= last; i++) {
             assertEquals("key" + i, propertyNames.nextElement());
@@ -62,6 +69,12 @@ public class OrderedPropertiesTest {
         final Iterator<Object> iterSet = orderedProperties.keySet().iterator();
         for (int i = first; i <= last; i--) {
             assertEquals("key" + i, iterSet.next());
+        }
+        final Iterator<Entry<Object, Object>> iterEntrySet = orderedProperties.entrySet().iterator();
+        for (int i = first; i <= last; i--) {
+            final Entry<Object, Object> next = iterEntrySet.next();
+            assertEquals("key" + i, next.getKey());
+            assertEquals("value" + i, next.getValue());
         }
         final Enumeration<?> propertyNames = orderedProperties.propertyNames();
         for (int i = first; i <= last; i--) {
@@ -121,11 +134,13 @@ public class OrderedPropertiesTest {
     @Test
     public void testEntrySet() {
         final OrderedProperties orderedProperties = new OrderedProperties();
-        for (char ch = 'Z'; ch >= 'A'; ch--) {
+        final char first = 'Z';
+        final char last = 'A';
+        for (char ch = first; ch >= last; ch--) {
             orderedProperties.put(String.valueOf(ch), "Value" + ch);
         }
         final Iterator<Map.Entry<Object, Object>> entries = orderedProperties.entrySet().iterator();
-        for (char ch = 'Z'; ch <= 'A'; ch++) {
+        for (char ch = first; ch <= last; ch++) {
             final Map.Entry<Object, Object> entry = entries.next();
             assertEquals(String.valueOf(ch), entry.getKey());
             assertEquals("Value" + ch, entry.getValue());
@@ -133,19 +148,37 @@ public class OrderedPropertiesTest {
     }
 
     @Test
+    public void testForEach() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        final char first = 'Z';
+        final char last = 'A';
+        for (char ch = first; ch >= last; ch--) {
+            orderedProperties.put(String.valueOf(ch), "Value" + ch);
+        }
+        final AtomicInteger aCh = new AtomicInteger(first);
+        orderedProperties.forEach((k, v) -> {
+            final char ch = (char) aCh.getAndDecrement();
+            assertEquals(String.valueOf(ch), k);
+            assertEquals("Value" + ch, v);
+        });
+    }
+
+    @Test
     public void testKeys() {
         final OrderedProperties orderedProperties = new OrderedProperties();
-        for (char ch = 'Z'; ch >= 'A'; ch--) {
+        final char first = 'Z';
+        final char last = 'A';
+        for (char ch = first; ch >= last; ch--) {
             orderedProperties.put(String.valueOf(ch), "Value" + ch);
         }
         final Enumeration<Object> keys = orderedProperties.keys();
-        for (char ch = 'Z'; ch <= 'A'; ch++) {
+        for (char ch = first; ch <= last; ch++) {
             assertEquals(String.valueOf(ch), keys.nextElement());
         }
     }
 
     @Test
-    public void testLoadOrderedKeys() throws FileNotFoundException, IOException {
+    public void testLoadOrderedKeys() throws IOException {
         final OrderedProperties orderedProperties = new OrderedProperties();
         try (FileReader reader = new FileReader("src/test/resources/org/apache/commons/collections4/properties/test.properties")) {
             orderedProperties.load(reader);
@@ -154,7 +187,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testLoadOrderedKeysReverse() throws FileNotFoundException, IOException {
+    public void testLoadOrderedKeysReverse() throws IOException {
         loadOrderedKeysReverse();
     }
 
@@ -252,5 +285,18 @@ public class OrderedPropertiesTest {
         assertFalse(props.containsKey(k));
         assertFalse(Collections.list(props.keys()).contains(k));
         assertFalse(Collections.list(props.propertyNames()).contains(k));
+    }
+
+    @Test
+    public void testToString() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        final char first = 'Z';
+        final char last = 'A';
+        for (char ch = first; ch >= last; ch--) {
+            orderedProperties.put(String.valueOf(ch), "Value" + ch);
+        }
+        assertEquals(
+                "{Z=ValueZ, Y=ValueY, X=ValueX, W=ValueW, V=ValueV, U=ValueU, T=ValueT, S=ValueS, R=ValueR, Q=ValueQ, P=ValueP, O=ValueO, N=ValueN, M=ValueM, L=ValueL, K=ValueK, J=ValueJ, I=ValueI, H=ValueH, G=ValueG, F=ValueF, E=ValueE, D=ValueD, C=ValueC, B=ValueB, A=ValueA}",
+                orderedProperties.toString());
     }
 }
