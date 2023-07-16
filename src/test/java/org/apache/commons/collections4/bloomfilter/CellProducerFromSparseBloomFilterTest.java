@@ -16,38 +16,33 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromArrayCountingBloomFilterTest extends AbstractBitCountProducerTest {
+public class CellProducerFromSparseBloomFilterTest extends AbstractCellProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitCountProducer createProducer() {
-        final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
-        filter.merge(new IncrementingHasher(0, 1));
-        filter.merge(new IncrementingHasher(5, 1));
-        return filter;
+    protected CellProducer createProducer() {
+        final Hasher hasher = new IncrementingHasher(4, 7);
+        final BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge(hasher);
+        return CellProducer.from(bf);
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(new SparseBloomFilter(shape));
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // CountingBloomFilter based on an array will be distinct and ordered
+        // A sparse BloomFilter will be distinct but it may not be ordered.
+        // Currently the ordered behavior is asserted as the implementation uses
+        // an ordered TreeSet. This may change in the future.
         return DISTINCT | ORDERED;
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][] {{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 2}, {6, 2}, {7, 2},
-            {8, 2}, {9, 2}, {10, 2}, {11, 2}, {12, 2}, {13, 2}, {14, 2}, {15, 2}, {16, 2},
-            {17, 1}, {18, 1}, {19, 1}, {20, 1}, {21, 1}};
-    }
-
-    @Override
     protected int[] getExpectedIndices() {
-        return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+        return new int[] {2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
     }
 }

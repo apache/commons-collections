@@ -16,21 +16,21 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromSimpleBloomFilterTest extends AbstractBitCountProducerTest {
+public class CellProducerFromSimpleBloomFilterTest extends AbstractCellProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitCountProducer createProducer() {
+    protected CellProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(3, 2);
         final BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);
-        return BitCountProducer.from(bf);
+        return CellProducer.from(bf);
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(new SimpleBloomFilter(shape));
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(new SimpleBloomFilter(shape));
     }
 
     @Override

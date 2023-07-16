@@ -16,17 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromUniqueHasherTest extends AbstractBitCountProducerTest {
+public class CellProducerFromUniqueHasherTest extends AbstractCellProducerTest {
 
     @Override
-    protected BitCountProducer createProducer() {
+    protected CellProducer createProducer() {
         // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72)));
+        return CellProducer.from(new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72)));
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
     }
 
     @Override

@@ -16,18 +16,18 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromDefaultIndexProducerTest extends AbstractBitCountProducerTest {
+public class CellProducerFromDefaultIndexProducerTest extends AbstractCellProducerTest {
 
     int[] data = {0, 63, 1, 1, 64, 127, 128};
 
     @Override
-    protected BitCountProducer createProducer() {
-        return BitCountProducer.from(IndexProducer.fromIndexArray(data));
+    protected CellProducer createProducer() {
+        return CellProducer.from(IndexProducer.fromIndexArray(data));
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[0]));
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
     }
 
     @Override

@@ -94,9 +94,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         return bf;
     }
 
-    /**
-     *
-     */
     @Test
     public void testMergeWithBadHasher() {
         // value too large

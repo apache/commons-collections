@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.Objects;
 
 /**
- * The interface that describes a Bloom filter that associates a count with each
+ * The interface that describes a Bloom filter that associates a cell with each
  * bit index to allow reversal of merge operations with remove operations.
  *
  * <p>A counting Bloom filter is expected to function identically to a standard
@@ -30,29 +30,29 @@ import java.util.Objects;
  * remove order, is expected to be the same.</p>
  *
  * <p>Removal of a filter that has not previously been merged results in an
- * invalid state where the counts no longer represent a sum of merged Bloom
+ * invalid state where the cells no longer represent a sum of merged Bloom
  * filters. It is impossible to validate merge and remove exactly without
  * explicitly storing all filters. Consequently such an operation may go
  * undetected. The CountingBloomFilter maintains a state flag that is used as a
- * warning that an operation was performed that resulted in invalid counts and
- * thus an invalid state. For example this may occur if a count for an index was
+ * warning that an operation was performed that resulted in invalid cells and
+ * thus an invalid state. For example this may occur if a cell for an index was
  * set to negative following a remove operation.</p>
  *
  * <p>Implementations should document the expected state of the filter after an
- * operation that generates invalid counts, and any potential recovery options.
+ * operation that generates invalid cells, and any potential recovery options.
  * An implementation may support a reversal of the operation to restore the
- * state to that prior to the operation. In the event that invalid counts are
+ * state to that prior to the operation. In the event that invalid cells are
  * adjusted to a valid range then it should be documented if there has been
  * irreversible information loss.</p>
  *
  * <p>Implementations may choose to throw an exception during an operation that
- * generates invalid counts. Implementations should document the expected state
- * of the filter after such an operation. For example are the counts not updated,
+ * generates invalid cells. Implementations should document the expected state
+ * of the filter after such an operation. For example are the cells not updated,
  * partially updated or updated entirely before the exception is raised.</p>
  *
  * @since 4.5
  */
-public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
+public interface CountingBloomFilter extends BloomFilter, CellProducer {
 
     // Query Operations
 
@@ -60,9 +60,9 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * Returns {@code true} if the internal state is valid.
      *
      * <p>This flag is a warning that an addition or
-     * subtraction of counts from this filter resulted in an invalid count for one or more
-     * indexes. For example this may occur if a count for an index was
-     * set to negative following a subtraction operation, or overflows an {@code int} following an
+     * subtraction of cells from this filter resulted in an invalid cell for one or more
+     * indexes. For example this may occur if a cell for an index was
+     * set to negative following a subtraction operation, or overflows the value specified by {@code getMaxCell()} following an
      * addition operation.</p>
      *
      * <p>A counting Bloom filter that has an invalid state is no longer ensured to function
@@ -77,14 +77,71 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      */
     boolean isValid();
 
+    /**
+     * Returns maximum value for a cell in this Counting filter.
+     * @return the maximum value for a cell in this Counting filter.
+     */
+    int getMaxCell();
+
+    /**
+     * Determines the maximum number of times the Bloom filter could have been inserted
+     * into this counting filter.
+     * @param bloomFilter the Bloom filter the check for.
+     * @return the maximum number of times the Bloom filter could have been inserted.
+     */
+    default int getMaxInsert(BloomFilter bloomFilter) {
+        return getMaxInsert((BitMapProducer) bloomFilter);
+    }
+
+    /**
+     * Determines the maximum number of times the IndexProducer could have been inserted
+     * into this counting filter.
+     * @param idxProducer the producer to drive the count check.
+     * @return the maximum number of times the IndexProducer could have been inserted.
+     */
+    default int getMaxInsert(IndexProducer idxProducer) {
+        return getMaxInsert( BitMapProducer.fromIndexProducer(idxProducer, getShape().getNumberOfBits()));
+    }
+
+    /**
+     * Determines the maximum number of times the Hasher could have been inserted into this
+     * counting filter.
+     * @param hasher the Hasher to provide the indices.
+     * @return the maximum number of times the hasher could have been inserted.
+     */
+    default int getMaxInsert(Hasher hasher) {
+        return getMaxInsert(hasher.indices(getShape()));
+    }
+
+    /**
+     * Determines the maximum number of times the BitMapProducer could hvae been insert into this
+     * counting filter.
+     * @param bitMapProducer the BitMapProducer to provide the indices.
+     * @return the maximum number of times the BitMapProducer could have been inserted.
+     */
+    default int getMaxInsert(BitMapProducer bitMapProducer) {
+        if (!contains(bitMapProducer)) {
+            return 0;
+        }
+        long[] bitMaps = bitMapProducer.asBitMapArray();
+        int[] max = { Integer.MAX_VALUE };
+        forEachCell((x, y) -> {
+            if ((bitMaps[BitMap.getLongIndex(x)] & BitMap.getLongBit(x)) != 0) {
+                max[0] = max[0] <= y ? max[0] : y;
+            }
+            return true;
+        });
+        return max[0];
+    }
+
     // Modification Operations
 
     /**
      * Merges the specified Bloom filter into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be incremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code other} filter will be incremented by 1.</p>
      *
-     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored and it is treated as an
+     * <p>Note: If the other filter is a counting Bloom filter the other filter's cells are ignored and it is treated as an
      * IndexProducer.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
@@ -92,7 +149,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param other the other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(BitCountProducer)
+     * @see #add(CellProducer)
      */
     @Override
     default boolean merge(final BloomFilter other) {
@@ -103,14 +160,14 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified Hasher into this Bloom filter.
      *
-     * <p>Specifically: all counts for the unique indexes identified by the {@code hasher} will be incremented by 1.</p>
+     * <p>Specifically: all cells for the unique indexes identified by the {@code hasher} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param hasher the hasher
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(BitCountProducer)
+     * @see #add(CellProducer)
      */
     @Override
     default boolean merge(final Hasher hasher) {
@@ -121,7 +178,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified index producer into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code indexProducer} will be incremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code indexProducer} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
@@ -130,13 +187,13 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param indexProducer the IndexProducer
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(BitCountProducer)
+     * @see #add(CellProducer)
      */
     @Override
     default boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            return add(BitCountProducer.from(indexProducer));
+            return add(CellProducer.from(indexProducer));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
@@ -146,14 +203,14 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Merges the specified BitMap producer into this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param bitMapProducer the BitMapProducer
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(BitCountProducer)
+     * @see #add(CellProducer)
      */
     @Override
     default boolean merge(final BitMapProducer bitMapProducer) {
@@ -164,9 +221,9 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the specified Bloom filter from this Bloom filter.
      *
-     * <p>Specifically: all counts for the indexes identified by the {@code other} filter will be decremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code other} filter will be decremented by 1.</p>
      *
-     * <p>Note: If the other filter is a counting Bloom filter the index counts are ignored and it is treated as an
+     * <p>Note: If the other filter is a counting Bloom filter the othre filter's cells are ignored and it is treated as an
      * IndexProducer.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
@@ -174,7 +231,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param other the other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(BitCountProducer)
+     * @see #subtract(CellProducer)
      */
     default boolean remove(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
@@ -184,7 +241,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the unique values from the specified hasher from this Bloom filter.
      *
-     * <p>Specifically all counts for the unique indices produced by the {@code hasher} will be
+     * <p>Specifically all cells for the unique indices produced by the {@code hasher} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
@@ -192,7 +249,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param hasher the hasher to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(BitCountProducer)
+     * @see #subtract(CellProducer)
      */
     default boolean remove(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
@@ -202,7 +259,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the values from the specified IndexProducer from the Bloom filter from this Bloom filter.
      *
-     * <p>Specifically all counts for the unique indices produced by the {@code hasher} will be
+     * <p>Specifically all cells for the unique indices produced by the {@code hasher} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
@@ -212,12 +269,12 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param indexProducer the IndexProducer to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(BitCountProducer)
+     * @see #subtract(CellProducer)
      */
     default boolean remove(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            return subtract(BitCountProducer.from(indexProducer));
+            return subtract(CellProducer.from(indexProducer));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
@@ -227,7 +284,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     /**
      * Removes the specified BitMapProducer from this Bloom filter.
      *
-     * <p>Specifically all counts for the indices produced by the {@code bitMapProducer} will be
+     * <p>Specifically all cells for the indices produced by the {@code bitMapProducer} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
@@ -235,7 +292,7 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
      * @param bitMapProducer the BitMapProducer to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(BitCountProducer)
+     * @see #subtract(CellProducer)
      */
     default boolean remove(final BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
@@ -243,36 +300,36 @@ public interface CountingBloomFilter extends BloomFilter, BitCountProducer {
     }
 
     /**
-     * Adds the specified BitCountProducer to this Bloom filter.
+     * Adds the specified CellProducer to this Bloom filter.
      *
      * <p>Specifically
-     * all counts for the indexes identified by the {@code other} will be incremented
+     * all cells for the indexes identified by the {@code other} will be incremented
      * by their corresponding values in the {@code other}.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param other the BitCountProducer to add.
+     * @param other the CellProducer to add.
      * @return {@code true} if the addition was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(BitCountProducer)
+     * @see #subtract(CellProducer)
      */
-    boolean add(BitCountProducer other);
+    boolean add(CellProducer other);
 
     /**
-     * Adds the specified BitCountProducer to this Bloom filter.
+     * Adds the specified CellProducer to this Bloom filter.
      *
      * <p>Specifically
-     * all counts for the indexes identified by the {@code other} will be decremented
+     * all cells for the indexes identified by the {@code other} will be decremented
      * by their corresponding values in the {@code other}.</p>
      *
      * <p>This method will return true if the filter is valid after the operation.</p>
      *
-     * @param other the BitCountProducer to subtract.
+     * @param other the CellProducer to subtract.
      * @return {@code true} if the subtraction was successful and the state is valid
      * @see #isValid()
-     * @see #add(BitCountProducer)
+     * @see #add(CellProducer)
      */
-    boolean subtract(BitCountProducer other);
+    boolean subtract(CellProducer other);
 
 
     /**

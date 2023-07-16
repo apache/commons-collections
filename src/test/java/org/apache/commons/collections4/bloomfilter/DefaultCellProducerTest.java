@@ -16,32 +16,48 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest {
+public class DefaultCellProducerTest extends AbstractCellProducerTest {
+
+    /** Make forEachIndex unordered and contain duplicates. */
+    private final int[] values = {10, 1, 10, 1};
 
     @Override
-    protected BitCountProducer createProducer() {
-        // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
+    protected int[] getExpectedIndices() {
+        return values;
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
+    protected CellProducer createProducer() {
+        return consumer -> {
+            for (final int i : values) {
+                if (!consumer.test(i, 1)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
+    @Override
+    protected CellProducer createEmptyProducer() {
+        return consumer -> true;
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // Hasher allows duplicates and may be unordered
+        // The default method streams a BitSet so is distinct and ordered.
+        return ORDERED | DISTINCT;
+    }
+
+    @Override
+    protected int getForEachIndexBehaviour() {
+        // The default method has the same behavior as the forEachCount() method.
         return 0;
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
-    }
-
-    @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][] {{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
+    protected int getForEachCellBehaviour() {
+        // The implemented method returns unordered duplicates.
+        return 0;
     }
 }

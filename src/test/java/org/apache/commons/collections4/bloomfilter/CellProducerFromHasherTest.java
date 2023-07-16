@@ -16,33 +16,32 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromSparseBloomFilterTest extends AbstractBitCountProducerTest {
-
-    protected Shape shape = Shape.fromKM(17, 72);
+public class CellProducerFromHasherTest extends AbstractCellProducerTest {
 
     @Override
-    protected BitCountProducer createProducer() {
-        final Hasher hasher = new IncrementingHasher(4, 7);
-        final BloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(hasher);
-        return BitCountProducer.from(bf);
+    protected CellProducer createProducer() {
+        // hasher has collisions and wraps
+        return CellProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(new SparseBloomFilter(shape));
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // A sparse BloomFilter will be distinct but it may not be ordered.
-        // Currently the ordered behavior is asserted as the implementation uses
-        // an ordered TreeSet. This may change in the future.
-        return DISTINCT | ORDERED;
+        // Hasher allows duplicates and may be unordered
+        return 0;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[] {2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+    }
+
+    @Override
+    protected int[][] getExpectedCells() {
+        return new int[][] {{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
     }
 }
