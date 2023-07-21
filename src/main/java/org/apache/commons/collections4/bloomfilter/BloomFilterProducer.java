@@ -42,7 +42,7 @@ public interface BloomFilterProducer {
     /**
      * Return an array of the Bloom filters in the collection.
      * <p><em>Implementations should specify if the array contains deep copies, immutable instances,
-     * or references to the filters in the collection.<?em></p>
+     * or references to the filters in the collection.</em></p>
      *
      * @return An array of Bloom filters.
      */
@@ -60,7 +60,7 @@ public interface BloomFilterProducer {
      *
      * <p><em>This implementation returns references to the Bloom filter.  Other implementations
      * should specify if the array contains deep copies, immutable instances,
-     * or references to the filters in the collection.<?em></p>
+     * or references to the filters in the collection.</em></p>
      *
      * @param other The other BloomFilterProducer that provides the y values in the
      *              (x,y) pair.
