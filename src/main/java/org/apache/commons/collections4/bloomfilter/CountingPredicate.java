@@ -20,7 +20,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * A predicate that applies the test func to each member of the {@code ary} in
+ * A predicate that applies the test {@code func} to each member of the {@code ary} in
  * sequence for each call to {@code test()}. if the {@code ary} is exhausted,
  * the subsequent calls to {@code test} are executed with a {@code null} value.
  * If the calls to {@code test} do not exhaust the {@code ary} the {@code
@@ -55,10 +55,10 @@ class CountingPredicate<T> implements Predicate<T> {
     }
 
     /**
-     * Call the T-T consuming bi-predicate for each remaining unpaired T in the
+     * Call BiPredicate&lt;T,T&gt; for each remaining unpaired &lt;T&gt; in the
      * input array. This method should be invoked after the predicate has been
-     * passed to a {@code TProducer#forEachT(BiPredicate(T,T))} to consume any
-     * unpaired Ts. The second argument to the bi-predicate will be {@code null}.
+     * passed to a &lt;T&gt;Producer#forEach&lt;T&gt;(BiPredicate&lt;T,T&gt;) to consume any
+     * unpaired &lt;T&gt;s. The second argument to the BiPredicate will be {@code null}.
      *
      * @return true if all calls the predicate were successful
      */

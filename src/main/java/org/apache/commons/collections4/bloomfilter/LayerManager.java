@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Implementation of the methods to manage the Layers in a Layered Bloom filter.
+ * Implementation of the methods to manage the layers in a layered Bloom filter.
  * <p>
  * The manager comprises a list of Bloom filters that are managed based on
  * various rules. The last filter in the list is known as the {@code target} and
@@ -35,14 +35,13 @@ import java.util.function.Supplier;
  * created as the new target.</li>
  * <li>FilterSupplier - A Supplier that produces empty Bloom filters to be used
  * as a new target.</li>
- * <li>Cleanup - A Consumer of a LinkedList of BloomFilter that removes any
+ * <li>Cleanup - A Consumer of a {@code LinkedList} of BloomFilter that removes any
  * expired or out dated filters from the list.</li>
  * </ul>
  * <p>
  * When extendCheck returns {@code true} the following steps are taken:
  * </p>
  * <ol>
- * <li>If the current target is empty it is removed.</li>
  * <li>{@code Cleanup} is called</li>
  * <li>{@code FilterSuplier} is executed and the new filter added to the list as
  * the {@code target} filter.</li>
@@ -75,7 +74,7 @@ public class LayerManager implements BloomFilterProducer {
         }
 
         /**
-         * Does not automatically advance the target. next() must be called directly to
+         * Does not automatically advance the target. @{code next()} must be called directly to
          * perform the advance.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
@@ -86,11 +85,12 @@ public class LayerManager implements BloomFilterProducer {
         /**
          * Calculates the estimated number of Bloom filters (n) that have been merged
          * into the target and compares that with the estimated maximum expected
-         * {@code n} based on the shape. If the target is saturated then a new target is
-         * created.
+         * {@code n} based on the shape. If the target is saturated (Bloom filter {@code n} &gt;= Shape {@code n})
+         * a new target is created.
          *
          * @param shape The shape of the filters in the LayerManager.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
+         * @see ExtendCheck#advanceOnSaturation(double)
          */
         public static final Predicate<LayerManager> advanceOnCalculatedSaturation(Shape shape) {
             return advanceOnSaturation(shape.estimateMaxN());
@@ -102,7 +102,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param breakAt the number of filters to merge into each filter in the list.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
-         * @throws IllegalArgumentException if breakAt is &lt;= 0
+         * @throws IllegalArgumentException if {@code breakAt} is &lt;= 0
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
             if (breakAt <= 0) {
@@ -141,7 +141,6 @@ public class LayerManager implements BloomFilterProducer {
     /**
      * Static methods to create a Consumer of a LinkedList of BloomFilter perform
      * tests on whether to reduce the collection of Bloom filters.
-     *
      */
     public static class Cleanup {
         private Cleanup() {
@@ -185,7 +184,8 @@ public class LayerManager implements BloomFilterProducer {
         }
 
         /**
-         * Removes the last added target if it is empty.
+         * Removes the last added target if it is empty.  Useful as the first in a chain
+         * of cleanup consumers.  (e.g. {@code Cleanup.removeEmptyTarget.andThen( otherConsumer )})
          *
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
@@ -200,9 +200,12 @@ public class LayerManager implements BloomFilterProducer {
     private final Supplier<BloomFilter> filterSupplier;
 
     /**
-     * Creates a new Builder with defaults of NEVER_ADVANCE and NO_CLEANUP
+     * Creates a new Builder with defaults of {@code ExtendCheck.neverAdvance()} and
+     * {@code Cleanup.noCleanup()}.
      *
      * @return A builder.
+     * @see ExtendCheck#neverAdvance()
+     * @see Cleanup#noCleanup()
      */
     public static Builder builder() {
         return new Builder();
@@ -242,12 +245,13 @@ public class LayerManager implements BloomFilterProducer {
 
     /**
      * Creates a deep copy of this LayerManager.
+     * <p><em>Filters in the copy are deep copies, not references, so changes in the copy
+     * are NOT reflected in the original.</em></p>
      *
      * @return a copy of this layer Manager.
      */
     public LayerManager copy() {
         LayerManager newMgr = new LayerManager(filterSupplier, extendCheck, filterCleanup, false);
-        newMgr.filters.clear();
         for (BloomFilter bf : filters) {
             newMgr.filters.add(bf.copy());
         }
@@ -256,7 +260,8 @@ public class LayerManager implements BloomFilterProducer {
 
     /**
      * Forces an advance to the next depth. This method will clean-up the current
-     * layers and generate a new filter layer.
+     * layers and generate a new filter layer. In most cases is it unnecessary to
+     * call this method directly.
      * <p>
      * Ths method is used within the {@link #getTarget()} when the configured
      * {@code ExtendCheck} returns {@code true}.
@@ -268,7 +273,8 @@ public class LayerManager implements BloomFilterProducer {
     }
 
     /**
-     * Returns the number of filters in the LayerManager.
+     * Returns the number of filters in the LayerManager.  In the default LayerManager implementation
+     * there is alwasy at least one layer.
      *
      * @return the current depth.
      */
@@ -296,7 +302,7 @@ public class LayerManager implements BloomFilterProducer {
      * Returns the current target filter. If a new filter should be created based on
      * {@code extendCheck} it will be created before this method returns.
      *
-     * @return the current target filter.
+     * @return the current target filter after any extension.
      */
     public final BloomFilter getTarget() {
         if (extendCheck.test(this)) {
@@ -306,7 +312,7 @@ public class LayerManager implements BloomFilterProducer {
     }
 
     /**
-     * Clear all the filters in the layer manager, and set up a new one as the
+     * Removes all the filters from the layer manager, and sets up a new one as the
      * target.
      */
     public final void clear() {
@@ -319,7 +325,7 @@ public class LayerManager implements BloomFilterProducer {
      * depth order. Oldest filter first.
      *
      * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
-     * @return {@code false} when the first filter fails the predicate test. Returns
+     * @return {@code false} when the a filter fails the predicate test. Returns
      *         {@code true} if all filters pass the test.
      */
     @Override
@@ -341,8 +347,8 @@ public class LayerManager implements BloomFilterProducer {
         private Consumer<LinkedList<BloomFilter>> cleanup;
 
         private Builder() {
-            extendCheck = ExtendCheck.NEVER_ADVANCE;
-            cleanup = Cleanup.NO_CLEANUP;
+            extendCheck = ExtendCheck.neverAdvance();
+            cleanup = Cleanup.noCleanup();
         }
 
         /**
@@ -371,7 +377,7 @@ public class LayerManager implements BloomFilterProducer {
          *                    created.
          * @return this for chaining.
          */
-        public Builder extendCheck(Predicate<LayerManager> extendCheck) {
+        public Builder setExtendCheck(Predicate<LayerManager> extendCheck) {
             this.extendCheck = extendCheck;
             return this;
         }
@@ -383,19 +389,19 @@ public class LayerManager implements BloomFilterProducer {
          * @param supplier The supplier of new Bloom filter instances.
          * @return this for chaining.
          */
-        public Builder supplier(Supplier<BloomFilter> supplier) {
+        public Builder setSupplier(Supplier<BloomFilter> supplier) {
             this.supplier = supplier;
             return this;
         }
 
         /**
-         * Sest the Consumer that cleans the list of Bloom filters.
+         * Sets the Consumer that cleans the list of Bloom filters.
          *
          * @param cleanup the Consumer that will modify the list of filters removing out
          *                dated or stale filters.
          * @return this for chaining.
          */
-        public Builder cleanup(Consumer<LinkedList<BloomFilter>> cleanup) {
+        public Builder setCleanup(Consumer<LinkedList<BloomFilter>> cleanup) {
             this.cleanup = cleanup;
             return this;
         }

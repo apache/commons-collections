@@ -40,7 +40,9 @@ public interface BloomFilterProducer {
     boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate);
 
     /**
-     * Return a deep copy of the BloomFilterProducer data as a Bloom filter array.
+     * Return an array of the Bloom filters in the collection.
+     * <p><em>Implementations should specify if the array contains deep copies, immutable instances,
+     * or references to the filters in the collection.<?em></p>
      *
      * @return An array of Bloom filters.
      */
@@ -53,13 +55,17 @@ public interface BloomFilterProducer {
     /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
      * of the Bloom filters from the other BloomFilterProducer to this producer. If
-     * this producer does not have as many BloomFilters it will provide {@code null}
-     * for all excess calls to the BiPredicate.
+     * either {@code this} producer or {@code other} producer has fewer BloomFilters
+     * ths method will provide {@code null} for all excess calls to the {@code func}.
+     *
+     * <p><em>This implementation returns references to the Bloom filter.  Other implementations
+     * should specify if the array contains deep copies, immutable instances,
+     * or references to the filters in the collection.<?em></p>
      *
      * @param other The other BloomFilterProducer that provides the y values in the
      *              (x,y) pair.
      * @param func  The function to apply.
-     * @return {@code true} if the func returned {@code true} for every pair,
+     * @return {@code true} if the {@code func} returned {@code true} for every pair,
      *         {@code false} otherwise.
      */
     default boolean forEachBloomFilterPair(final BloomFilterProducer other,
@@ -88,6 +94,13 @@ public interface BloomFilterProducer {
     /**
      * Creates a BloomFilterProducer from an array of Bloom filters.
      *
+     * <ul>
+     * <li>The asBloomFilterArray() method returns a copy of the original array
+     * with references to the original filters.</li>
+     * <li>The forEachBloomFilterPair() method uses references to the original filters.</li>
+     * </ul>
+     * <p><em>All modifications to the Bloom filters are reflected in the original filters</em></p>
+     *
      * @param filters The filters to be returned by the producer.
      * @return THe BloomFilterProducer containing the filters.
      */
@@ -103,11 +116,20 @@ public interface BloomFilterProducer {
                 return true;
             }
 
+            /**
+             * This implementation returns a copy the original array, the contained Bloom filters
+             * are references to the originals, any modifications to them are reflected in the original
+             * filters.
+             */
             @Override
             public BloomFilter[] asBloomFilterArray() {
                 return Arrays.copyOf(filters, filters.length);
             }
 
+            /**
+             * This implementation uses references to the original filters.  Any modifications to the
+             * filters are reflected in the originals.
+             */
             @Override
             public boolean forEachBloomFilterPair(final BloomFilterProducer other,
                     final BiPredicate<BloomFilter, BloomFilter> func) {
