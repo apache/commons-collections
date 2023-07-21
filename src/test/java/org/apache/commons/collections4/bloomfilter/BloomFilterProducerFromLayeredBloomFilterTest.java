@@ -21,9 +21,9 @@ public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloom
     @Override
     protected BloomFilterProducer createUnderTest(BloomFilter... filters) {
         Shape shape = filters[0].getShape();
-        LayerManager layerManager = LayerManager.builder().supplier( () -> new SimpleBloomFilter(shape) )
-                .extendCheck( LayerManager.ExtendCheck.advanceOnPopulated())
-                .cleanup(LayerManager.Cleanup.noCleanup()).build();
+        LayerManager layerManager = LayerManager.builder().setSupplier( () -> new SimpleBloomFilter(shape) )
+                .setExtendCheck( LayerManager.ExtendCheck.advanceOnPopulated())
+                .setCleanup(LayerManager.Cleanup.noCleanup()).build();
         LayeredBloomFilter underTest = new LayeredBloomFilter(shape, layerManager);
         for (BloomFilter bf : filters) {
             underTest.merge(bf);

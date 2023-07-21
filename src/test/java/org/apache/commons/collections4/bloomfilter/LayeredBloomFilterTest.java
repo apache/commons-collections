@@ -155,7 +155,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public final void testNext() {
-        LayerManager layerManager = LayerManager.builder().supplier(() -> new SimpleBloomFilter(getTestShape()))
+        LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(getTestShape()))
                 .build();
 
         LayeredBloomFilter filter = new LayeredBloomFilter(getTestShape(), layerManager);
@@ -176,8 +176,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Override
     @Test
     public void testCardinalityAndIsEmpty() {
-        LayerManager layerManager = LayerManager.builder().extendCheck(ExtendCheck.neverAdvance())
-                .supplier(() -> new SimpleBloomFilter(getTestShape())).build();
+        LayerManager layerManager = LayerManager.builder().setExtendCheck(ExtendCheck.neverAdvance())
+                .setSupplier(() -> new SimpleBloomFilter(getTestShape())).build();
         testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(), layerManager));
     }
 
@@ -211,9 +211,9 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     static LayeredBloomFilter createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
             TimeUnit qUnit) {
         LayerManager layerManager = LayerManager.builder()
-                .supplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
-                .cleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
-                .extendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
+                .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
+                .setCleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
+                .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
                         .or(LayerManager.ExtendCheck.advanceOnCalculatedSaturation(shape)))
                 .build();
         return new LayeredBloomFilter(shape, layerManager);

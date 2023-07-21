@@ -75,8 +75,8 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
     public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
-        LayerManager manager = LayerManager.builder().extendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
-                .cleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).supplier(() -> new SimpleBloomFilter(shape)).build();
+        LayerManager manager = LayerManager.builder().setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
+                .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(() -> new SimpleBloomFilter(shape)).build();
         return new LayeredBloomFilter(shape, manager);
     }
 
