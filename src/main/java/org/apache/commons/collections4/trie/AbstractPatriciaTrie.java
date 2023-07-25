@@ -41,7 +41,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
  *
  * @since 4.0
  */
-abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
+public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 
