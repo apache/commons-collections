@@ -34,11 +34,14 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.apache.commons.collections4.Trie;
 
 /**
  * This class implements the base PATRICIA algorithm and everything that
  * is related to the {@link Map} interface.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.0
  */
 public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
@@ -66,6 +69,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      */
     protected transient int modCount;
 
+    /**
+     * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
+     *
+     * @param keyAnalyzer  the {@link KeyAnalyzer} to use
+     */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         super(keyAnalyzer);
     }
