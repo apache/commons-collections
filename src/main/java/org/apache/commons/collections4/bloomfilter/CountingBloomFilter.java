@@ -19,8 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.Objects;
 
 /**
- * The interface that describes a Bloom filter that associates a cell with each
- * bit index to allow reversal of merge operations with remove operations.
+ * The interface that describes a Bloom filter that associates a count with each
+ * bit index rather than a bit.  This allows reversal of merge operations with
+ * remove operations.
  *
  * <p>A counting Bloom filter is expected to function identically to a standard
  * Bloom filter that is the merge of all the Bloom filters that have been added
@@ -79,8 +80,8 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     boolean isValid();
 
     /**
-     * Returns maximum value for a cell in this Counting filter.
-     * @return the maximum value for a cell in this Counting filter.
+     * Returns the maximum allowable value for a cell count in this Counting filter.
+     * @return the maximum allowable value for a cell count in this Counting filter.
      */
     int getMaxCell();
 

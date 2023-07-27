@@ -21,21 +21,21 @@ import java.util.function.IntPredicate;
 
 
 /**
- * Some Bloom filter implementations use a count rather than a bit flag.  The term {@code Cell} is used to
- * refer to these counts.  This class is the equivalent of the index producer except that it produces a cell
- * value associated with each index.
+ * Some Bloom filter implementations use a count rather than a bit flag. The term {@code Cell} is used to
+ * refer to these counts and their associated index.  This class is the equivalent of the index producer except
+ * that it produces cells.
  *
  * <p>Note that a CellProducer must not return duplicate indices and must be ordered.</p>
  *
  * <p>Implementations must guarantee that:</p>
  *
  * <ul>
- * <li>the IndexProducer implementation returns unique ordered indices.</li>
+ * <li>The IndexProducer implementation returns unique ordered indices.</li>
  * <li>The cells are produced in IndexProducer order.</li>
  * <li>For every value produced by the IndexProducer there will be only one matching
- * index and cell produced by the CellProducer.</li>
- * <li>The CellProducer will not generate indices that are not output by the IndexProducer.</li>
- * <li>The IndexProducer will not generate indices that have a zero value for the cell.</li>
+ * cell produced by the CellProducer.</li>
+ * <li>The CellProducer will not generate cells with indices that are not output by the IndexProducer.</li>
+ * <li>The IndexProducer will not generate indices that have a zero count for the cell.</li>
  * </ul>
  *
  * @since 4.5
@@ -44,13 +44,13 @@ import java.util.function.IntPredicate;
 public interface CellProducer extends IndexProducer {
 
     /**
-     * Performs the given action for each {@code <index, cell>} pair where the cell is non-zero.
+     * Performs the given action for each {@code cell}  where the cell count is non-zero.
      *
      * <p>Some Bloom filter implementations use a count rather than a bit flag.  The term {@code Cell} is used to
      * refer to these counts.</p>
      *
      * <p>Any exceptions thrown by the action are relayed to the caller. The consumer is applied to each
-     * index-cell pair, if the consumer returns {@code false} the execution is stopped, {@code false}
+     * cell. If the consumer returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further pairs are processed.</p>
      *
      * @param consumer the action to be performed for each non-zero cell.
@@ -60,7 +60,7 @@ public interface CellProducer extends IndexProducer {
     boolean forEachCell(CellConsumer consumer);
 
     /**
-     * The default implementation returns indices with ordering and uniqueness of {@code forEachCell()}.
+     * The default implementation returns distinct and ordered indices for all cells with a non-zero count.
      */
     @Override
     default boolean forEachIndex(final IntPredicate predicate) {
@@ -157,9 +157,9 @@ public interface CellProducer extends IndexProducer {
          * Performs an operation on the given {@code <index, count>} pair.
          *
          * @param index the bit index.
-         * @param cell the cell value at the specified bit index.
+         * @param count the cell value at the specified bit index.
          * @return {@code true} if processing should continue, {@code false} if processing should stop.
          */
-        boolean test(int index, int cell);
+        boolean test(int index, int count);
     }
 }
