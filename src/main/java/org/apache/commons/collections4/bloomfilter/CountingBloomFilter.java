@@ -232,7 +232,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      *
      * <p>Specifically: all cells for the indexes identified by the {@code other} filter will be decremented by 1.</p>
      *
-     * <p>Note: If the other filter is a counting Bloom filter the othre filter's cells are ignored and it is treated as an
+     * <p>Note: If the other filter is a counting Bloom filter the other filter's cells are ignored and it is treated as an
      * IndexProducer.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
