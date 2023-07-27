@@ -19,22 +19,23 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.TreeMap;
 import java.util.function.IntPredicate;
 
+
 /**
  * Some Bloom filter implementations use a count rather than a bit flag.  The term {@code Cell} is used to
  * refer to these counts.  This class is the equivalent of the index producer except that it produces a cell
  * value associated with each index.
  *
- * <p>Note that a CellProducer must not return duplicate indices and must be ordered.
+ * <p>Note that a CellProducer must not return duplicate indices and must be ordered.</p>
  *
- * <p>Implementations must guarantee that:
+ * <p>Implementations must guarantee that:</p>
  *
  * <ul>
  * <li>the IndexProducer implementation returns unique ordered indices.</li>
  * <li>The cells are produced in IndexProducer order.</li>
  * <li>For every value produced by the IndexProducer there will be only one matching
- * index and cell produced by the CellProducer.
- * <li>The CellProducer will not generate indices that are not output by the IndexProducer.
- * <li>The IndexProducer will not generate indices that have a zero value for the cell.
+ * index and cell produced by the CellProducer</li>.
+ * <li>The CellProducer will not generate indices that are not output by the IndexProducer.</li>
+ * <li>The IndexProducer will not generate indices that have a zero value for the cell.</li>
  * </ul>
  *
  * @since 4.5
