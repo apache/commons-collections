@@ -21,12 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Arrays;
 import java.util.BitSet;
 
-import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.bloomfilter.CellProducer.CellConsumer;
 import org.junit.jupiter.api.Test;
 
@@ -42,14 +40,15 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     private static final CellConsumer FALSE_CONSUMER = (i, j) -> false;
 
     /**
-     * Creates an array of integer pairs comprising the index and the expected cell for the index.
-     * The order of the cells for each index is dependent upon the producer created by the {@code createProducer()}
-     * method.
-     * By default returns the each {@code getExpectedIndices()} value paired with 1 (one).
-     * @return an array of integer pairs comprising the index and the expected cell for the index.
+     * Creates an array of expected values that alignes with the expected indices entries.
+     * @return an array of expected values.
+     * @see AbstractIndexProducerTest#getExpectedIndices()
      */
-    protected int[][] getExpectedCells() {
-        return Arrays.stream(getExpectedIndices()).mapToObj(x -> new int[] {x, 1}).toArray(int[][]::new);
+    protected abstract int[] getExpectedValues();
+
+    @Override
+    protected final int getAsIndexArrayBehaviour() {
+        return ORDERED | DISTINCT;
     }
 
     /**
@@ -65,15 +64,6 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
      */
     @Override
     protected abstract CellProducer createEmptyProducer();
-
-    /**
-     * Gets the behavior of the {@link CellProducer#forEachCell(CellConsumer)} method.
-     * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
-     * @return the behavior.
-     */
-    protected int getForEachCellBehaviour() {
-        return getAsIndexArrayBehaviour();
-    }
 
     @Test
     public final void testForEachCellPredicates() {
@@ -116,16 +106,16 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
 
     @Test
     public void testForEachCellValues() {
-        // Assumes the collections bag works. Could be replaced with Map<Integer,Integer> with more work.
-        final TreeBag<Integer> expected = new TreeBag<>();
-        Arrays.stream(getExpectedCells()).forEach(c -> expected.add(c[0], c[1]));
-        final TreeBag<Integer> actual = new TreeBag<>();
-        // can not return actual.add as it returns false on duplicate 'i'
+        int[] expectedIdx = getExpectedIndices();
+        int[] expectedValue = getExpectedValues();
+        assertEquals( expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
+        int[] idx = {0};
         createProducer().forEachCell((i, j) -> {
-            actual.add(i, j);
+            assertEquals(expectedIdx[idx[0]], i, "bad index at "+idx[0]);
+            assertEquals(expectedValue[idx[0]], j, "bad value at "+idx[0]);
+            idx[0]++;
             return true;
         });
-        assertEquals(expected, actual);
     }
 
     /**
@@ -135,19 +125,15 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
      */
     @Test
     public final void testBehaviourForEachCell() {
-        final int flags = getForEachCellBehaviour();
-        assumeTrue((flags & (ORDERED | DISTINCT)) != 0);
         final IntList list = new IntList();
         createProducer().forEachCell((i, j) -> list.add(i));
         final int[] actual = list.toArray();
-        if ((flags & ORDERED) != 0) {
-            final int[] expected = Arrays.stream(actual).sorted().toArray();
-            assertArrayEquals(expected, actual);
-        }
-        if ((flags & DISTINCT) != 0) {
-            final long count = Arrays.stream(actual).distinct().count();
-            assertEquals(count, actual.length);
-        }
+        // check order
+        final int[] expected = Arrays.stream(actual).sorted().toArray();
+        assertArrayEquals(expected, actual);
+        // check distinct
+        final long count = Arrays.stream(actual).distinct().count();
+        assertEquals(count, actual.length);
     }
 
     @Test

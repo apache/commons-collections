@@ -46,6 +46,7 @@ import java.util.stream.IntStream;
  * consumption of approximately 8 GB.
  *
  * @see Shape
+ * @see CellProducer
  * @since 4.5
  */
 public final class ArrayCountingBloomFilter implements CountingBloomFilter {
@@ -258,5 +259,18 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public int[] asIndexArray() {
         return IntStream.range(0, cells.length).filter(i -> cells[i] > 0).toArray();
+    }
+
+    @Override
+    public int getMaxInsert(CellProducer cellProducer) {
+        int[] max = {Integer.MAX_VALUE};
+        cellProducer.forEachCell( (x, y) -> {
+            int count = cells[x] / y;
+            if (count < max[0]) {
+                max[0] = count;
+            }
+            return max[0] > 0;
+        });
+        return max[0];
     }
 }

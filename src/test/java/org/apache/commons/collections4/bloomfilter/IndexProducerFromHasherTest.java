@@ -16,19 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromIntArrayTest extends AbstractCellProducerTest {
-
-    int[] data = {6, 8, 1, 2, 4, 4, 5};
-
-    @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
-    }
-
-    @Override
-    protected CellProducer createProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(data));
-    }
+public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
     protected int getAsIndexArrayBehaviour() {
@@ -36,7 +24,18 @@ public class CellProducerFromIntArrayTest extends AbstractCellProducerTest {
     }
 
     @Override
+    protected IndexProducer createProducer() {
+        // hasher has collisions and wraps
+        return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72));
+    }
+
+    @Override
+    protected IndexProducer createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    }
+
+    @Override
     protected int[] getExpectedIndices() {
-        return data;
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
     }
 }
