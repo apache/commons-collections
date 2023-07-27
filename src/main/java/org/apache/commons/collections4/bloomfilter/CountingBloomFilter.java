@@ -100,8 +100,15 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @return the maximum number of times the IndexProducer could have been inserted.
      */
     default int getMaxInsert(IndexProducer idxProducer) {
-        return getMaxInsert( BitMapProducer.fromIndexProducer(idxProducer, getShape().getNumberOfBits()));
+        return getMaxInsert(CellProducer.from(idxProducer) );
     }
+
+    /**
+     * Determines the maximum number of times the Cell Producer could have been inserted (added).
+     * @param cellProducer the producer of cells.
+     * @return the maximum number of times the CellProducer could have been inserted.
+     */
+    int getMaxInsert(CellProducer cellProducer);
 
     /**
      * Determines the maximum number of times the Hasher could have been inserted into this
@@ -110,7 +117,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @return the maximum number of times the hasher could have been inserted.
      */
     default int getMaxInsert(Hasher hasher) {
-        return getMaxInsert(hasher.indices(getShape()));
+        return getMaxInsert(BitMapProducer.fromIndexProducer(hasher.uniqueIndices(getShape()), getShape().getNumberOfBits()));
     }
 
     /**

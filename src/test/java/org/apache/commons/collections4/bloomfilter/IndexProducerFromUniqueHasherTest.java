@@ -16,27 +16,26 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromUniqueHasherTest extends AbstractCellProducerTest {
+public class IndexProducerFromUniqueHasherTest extends AbstractIndexProducerTest {
 
     @Override
-    protected CellProducer createProducer() {
+    protected IndexProducer createProducer() {
         // hasher has collisions and wraps
-        return CellProducer.from(new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72)));
+        return new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72));
     }
 
     @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        // Hasher may be unordered
-        return DISTINCT;
+    protected IndexProducer createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
 
     @Override
     protected int[] getExpectedIndices() {
         return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
+    }
+
+    @Override
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT;
     }
 }

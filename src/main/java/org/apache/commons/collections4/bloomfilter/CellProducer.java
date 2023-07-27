@@ -16,20 +16,22 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.TreeMap;
 import java.util.function.IntPredicate;
+
 
 /**
  * Some Bloom filter implementations use a count rather than a bit flag.  The term {@code Cell} is used to
  * refer to these counts.  This class is the equivalent of the index producer except that it produces a cell
  * value associated with each index.
  *
- * <p>Note that a CellProducer may return duplicate indices and may be unordered.
+ * <p>Note that a CellProducer must not return duplicate indices and must be ordered.
  *
  * <p>Implementations must guarantee that:
  *
  * <ul>
  * <li>The mapping of index to cells is the combined sum of cells at each index.
- * <li>For every unique value produced by the IndexProducer there will be at least one matching
+ * <li>For every unique value produced by the IndexProducer there will be at only one matching
  * index and cell produced by the CellProducer.
  * <li>The CellProducer will not generate indices that are not output by the IndexProducer.
  * </ul>
@@ -76,32 +78,65 @@ public interface CellProducer extends IndexProducer {
     }
 
     /**
-     * Creates a CellProducer from an IndexProducer. The resulting
-     * producer will return every index from the IndexProducer with a cell value of 1.
+     * Creates a CellProducer from an IndexProducer.
      *
-     * <p>Note that the CellProducer does not remove duplicates. Any use of the
-     * CellProducer to create an aggregate mapping of index to counts, such as a
-     * CountingBloomFilter, should use the same CellProducer in both add and
-     * subtract operations to maintain consistency.
-     * </p>
-     * @param idx An index producer.
+     * <p>Note that the CellProducer aggregates duplicate indices.</p>
+     *
+     * @param producer An index producer.
      * @return A CellProducer with the same indices as the IndexProducer.
      */
-    static CellProducer from(final IndexProducer idx) {
+    static CellProducer from(final IndexProducer producer) {
         return new CellProducer() {
-            @Override
-            public boolean forEachCell(final CellConsumer consumer) {
-                return idx.forEachIndex(i -> consumer.test(i, 1));
+            TreeMap<CounterCell, CounterCell> counterCells = new TreeMap<>();
+
+            private void populate() {
+                if (counterCells.isEmpty()) {
+                    producer.forEachIndex( idx -> {
+                        CounterCell cell = new CounterCell(idx, 1);
+                        CounterCell counter = counterCells.get(cell);
+                        if (counter == null) {
+                            counterCells.put(cell, cell);
+                        } else {
+                            counter.count++;
+                        }
+                        return true;
+                    });
+                }
             }
 
             @Override
             public int[] asIndexArray() {
-                return idx.asIndexArray();
+                populate();
+                return counterCells.keySet().stream().mapToInt( c -> c.idx ).toArray();
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
-                return idx.forEachIndex(predicate);
+            public boolean forEachCell(CellConsumer consumer) {
+                populate();
+                for (CounterCell cell : counterCells.values()) {
+                    if (!consumer.test(cell.idx, cell.count) ) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            /**
+             * Class to track cell values in the TreeMap.
+             */
+            final class CounterCell implements Comparable<CounterCell> {
+                final int idx;
+                int count;
+
+                CounterCell(int idx, int count) {
+                    this.idx = idx;
+                    this.count = count;
+                }
+
+                @Override
+                public int compareTo(CounterCell other) {
+                    return Integer.compare( idx,  other.idx);
+                }
             }
         };
     }

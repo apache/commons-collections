@@ -16,12 +16,12 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromArrayCountingBloomFilterTest extends AbstractCellProducerTest {
+public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndexProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected CellProducer createProducer() {
+    protected IndexProducer createProducer() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
         filter.merge(new IncrementingHasher(5, 1));
@@ -29,7 +29,7 @@ public class CellProducerFromArrayCountingBloomFilterTest extends AbstractCellPr
     }
 
     @Override
-    protected CellProducer createEmptyProducer() {
+    protected IndexProducer createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
     }
 
@@ -39,7 +39,8 @@ public class CellProducerFromArrayCountingBloomFilterTest extends AbstractCellPr
     }
 
     @Override
-    protected int[] getExpectedValues() {
-        return new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1};
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT | ORDERED;
     }
+
 }
