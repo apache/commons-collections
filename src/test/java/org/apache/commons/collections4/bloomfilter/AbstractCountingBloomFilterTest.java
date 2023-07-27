@@ -302,20 +302,20 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         BloomFilter bfFrom11 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
         bfFrom11.merge(TestingHashers.FROM11);
 
-        assertEquals( 0, bf.getMaxInsert(new IncrementingHasher(0, 1)));
-        assertEquals( 0, bf.getMaxInsert(bfFrom0));
-        assertEquals( 0, bf.getMaxInsert((BitMapProducer) bfFrom0));
-        assertEquals( 0, bf.getMaxInsert((IndexProducer) bfFrom0));
+        assertEquals(0, bf.getMaxInsert(new IncrementingHasher(0, 1)));
+        assertEquals(0, bf.getMaxInsert(bfFrom0));
+        assertEquals(0, bf.getMaxInsert((BitMapProducer) bfFrom0));
+        assertEquals(0, bf.getMaxInsert((IndexProducer) bfFrom0));
 
-        assertEquals( from1, bf.getMaxInsert(TestingHashers.FROM1));
-        assertEquals( from1, bf.getMaxInsert(bfFrom1));
-        assertEquals( from1, bf.getMaxInsert((BitMapProducer) bfFrom1));
-        assertEquals( from1, bf.getMaxInsert((IndexProducer) bfFrom1));
+        assertEquals(from1, bf.getMaxInsert(TestingHashers.FROM1));
+        assertEquals(from1, bf.getMaxInsert(bfFrom1));
+        assertEquals(from1, bf.getMaxInsert((BitMapProducer) bfFrom1));
+        assertEquals(from1, bf.getMaxInsert((IndexProducer) bfFrom1));
 
-        assertEquals( from11, bf.getMaxInsert(TestingHashers.FROM11));
-        assertEquals( from11, bf.getMaxInsert(bfFrom11));
-        assertEquals( from11, bf.getMaxInsert((BitMapProducer) bfFrom11));
-        assertEquals( from11, bf.getMaxInsert((IndexProducer) bfFrom11));
+        assertEquals(from11, bf.getMaxInsert(TestingHashers.FROM11));
+        assertEquals(from11, bf.getMaxInsert(bfFrom11));
+        assertEquals(from11, bf.getMaxInsert((BitMapProducer) bfFrom11));
+        assertEquals(from11, bf.getMaxInsert((IndexProducer) bfFrom11));
     }
 
     @Test
@@ -332,9 +332,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         verifyMaxInsert(bf, 1, 1);
         // verify remove false positive works
         // Incrementing hasher 5,1 spans the single count cells for both FROM1 and FROM11
-        assertEquals( 1, bf.getMaxInsert(new IncrementingHasher(5, 1)));
+        assertEquals(1, bf.getMaxInsert(new IncrementingHasher(5, 1)));
         bf.remove(new IncrementingHasher(5, 1));
         verifyMaxInsert(bf, 0, 0);
-        assertEquals( 0, bf.getMaxInsert(new IncrementingHasher(5, 1)));
+        assertEquals(0, bf.getMaxInsert(new IncrementingHasher(5, 1)));
     }
 }
