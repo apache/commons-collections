@@ -33,7 +33,7 @@ import java.util.function.IntPredicate;
  * <li>the IndexProducer implementation returns unique ordered indices.</li>
  * <li>The cells are produced in IndexProducer order.</li>
  * <li>For every value produced by the IndexProducer there will be only one matching
- * index and cell produced by the CellProducer</li>.
+ * index and cell produced by the CellProducer.</li>
  * <li>The CellProducer will not generate indices that are not output by the IndexProducer.</li>
  * <li>The IndexProducer will not generate indices that have a zero value for the cell.</li>
  * </ul>
