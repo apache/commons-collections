@@ -344,7 +344,7 @@
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump commons-lang3 from 3.11 to 3.13.0 #219.
+      Bump commons-lang3 from 3.11 to 3.13.0.
     </action>
     <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
       Add new variables to oac.collections4.CollectionUtils and use them in the code base.
