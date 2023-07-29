@@ -120,7 +120,7 @@ public interface MultiValuedMap<K, V> {
      * Adds a key-value mapping to this multivalued map.
      * <p>
      * Unlike a normal {@code Map} the previous value is not replaced.
-     * Instead the new value is added to the collection stored against the key.
+     * Instead, the new value is added to the collection stored against the key.
      * Depending on the collection type used, duplicate key-value mappings may
      * be allowed.
      * <p>

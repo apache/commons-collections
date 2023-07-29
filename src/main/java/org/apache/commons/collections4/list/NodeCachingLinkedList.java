@@ -154,7 +154,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
 
     /**
      * Adds a node to the cache, if the cache isn't full.
-     * The node's contents are cleared so they can be garbage collected.
+     * The node's contents are cleared, so they can be garbage collected.
      *
      * @param node  the node to add to the cache
      */

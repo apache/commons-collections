@@ -228,7 +228,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Removes from the underlying collection the last element returned.
      * <p>
-     * This method calls remove() on the underlying Iterator and it may
+     * This method calls remove() on the underlying Iterator, and it may
      * throw an UnsupportedOperationException if the underlying Iterator
      * does not support this method.
      *

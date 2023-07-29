@@ -56,7 +56,7 @@
  * to perform the transformation, of course, or to retrieve the longest
  * common subsequence for example.
  * <p>
- * If the user needs a very fine-grained access to the comparison result,
+ * If the user needs very fine-grained access to the comparison result,
  * he needs to go through this script by providing a visitor implementing
  * the {@link org.apache.commons.collections4.sequence.CommandVisitor} interface.
  * <p>
