@@ -33,6 +33,8 @@ import java.util.function.LongPredicate;
 @FunctionalInterface
 public interface IndexProducer {
 
+    int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
     /**
      * Each index is passed to the predicate. The predicate is applied to each
      * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
@@ -124,11 +126,7 @@ public interface IndexProducer {
 
             boolean add(final int index) {
                 if (size == data.length) {
-                    // This will throw an out-of-memory error if there are too many bits.
-                    // Since bits are addressed using 32-bit signed integer indices
-                    // the maximum length should be ~2^31 / 2^6 = ~2^25.
-                    // Any more is a broken implementation.
-                    data = Arrays.copyOf(data, size * 2);
+                    data = Arrays.copyOf(data, (int) Math.min(MAX_ARRAY_SIZE, size * 2L));
                 }
                 data[size++] = index;
                 return true;
