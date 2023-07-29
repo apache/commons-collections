@@ -435,7 +435,7 @@ public class ListOrderedMap<K, V>
      * The remove may change the effect of the index. The index is
      * always calculated relative to the original state of the map.
      * <p>
-     * Thus the steps are: (1) remove the existing key-value mapping,
+     * Thus, the steps are: (1) remove the existing key-value mapping,
      * then (2) insert the new key-value mapping at the position it
      * would have been inserted had the remove not occurred.
      *

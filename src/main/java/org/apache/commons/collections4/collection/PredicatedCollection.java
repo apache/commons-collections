@@ -180,7 +180,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * Create a Builder with a predicate to validate elements against, then add any elements
      * to the builder. Elements that fail the predicate will be added to a rejected list.
-     * Finally create or decorate a collection using the createPredicated[List,Set,Bag,Queue] methods.
+     * Finally, create or decorate a collection using the createPredicated[List,Set,Bag,Queue] methods.
      * <p>
      * An example:
      * <pre>
@@ -193,7 +193,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * </pre>
      * <p>
      * At the end of the code fragment above predicatedList is protected by the predicate supplied
-     * to the builder and it contains item1 and item2.
+     * to the builder, and it contains item1 and item2.
      * <p>
      * More elements can be added to the builder once a predicated collection has been created,
      * but these elements will not be reflected in already created collections.

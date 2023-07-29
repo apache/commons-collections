@@ -112,7 +112,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Adds an element to the list if it is not already present.
      * <p>
      * <i>(Violation)</i> The {@code List} interface requires that this
-     * method returns {@code true} always. However this class may return
+     * method returns {@code true} always. However, this class may return
      * {@code false} because of the {@code Set} behavior.
      *
      * @param object  the object to add

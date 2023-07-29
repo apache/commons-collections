@@ -447,8 +447,8 @@ public class PredicateUtils {
 
     /**
      * Create a new Predicate that wraps a Transformer. The Transformer must
-     * return either Boolean.TRUE or Boolean.FALSE otherwise a PredicateException
-     * will be thrown.
+     * return either {@link Boolean#TRUE} or {@link Boolean#FALSE} otherwise a
+     * PredicateException will be thrown.
      *
      * @param <T>  the type that the predicate queries
      * @param transformer  the transformer to wrap, may not be null
