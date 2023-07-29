@@ -200,6 +200,9 @@
     <action dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">
       [StepSecurity] ci: Harden GitHub Actions #401.
     </action>
+    <action dev="ggregory" type="fix" due-to="Martin Wiesner, Bruno P. Kinoshita, Gary Gregory">
+      Fix punctuation and minor Javadoc issues #409.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-748" dev="ggregory" type="add" due-to="Gary Gregory">
       Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
