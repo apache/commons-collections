@@ -187,11 +187,12 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     /**
      * Merges the specified index producer into this Bloom filter.
      *
-     * <p>Specifically: all cells for the indexes identified by the {@code indexProducer} will be incremented by 1.</p>
+     * <p>Specifically: all unique cells for the indices identified by the {@code indexProducer} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: Indices that are returned multiple times will be incremented multiple times.</p>
+     * <p>Note: If indices that are returned multiple times should be incremented multiple times convert the IndexProducer
+     * to a CellProducer and add that.</p>
      *
      * @param indexProducer the IndexProducer
      * @return {@code true} if the removal was successful and the state is valid
@@ -202,7 +203,11 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     default boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            return add(CellProducer.from(indexProducer));
+            IndexProducer distinct = consumer -> {
+                Objects.requireNonNull(consumer, "consumer");
+                return indexProducer.forEachIndex(IndexFilter.create(getShape(), consumer));
+            };
+            return add(CellProducer.from(distinct));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
@@ -273,7 +278,8 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Node: This method expects index producers that produce unique values.</p>
+     * <p>Note: If indices that are returned multiple times should be decremented multiple times convert the IndexProducer
+     * to a CellProducer and subtract that.</p>
      *
      * @param indexProducer the IndexProducer to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
@@ -283,7 +289,11 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     default boolean remove(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            return subtract(CellProducer.from(indexProducer));
+            IndexProducer distinct = consumer -> {
+                Objects.requireNonNull(consumer, "consumer");
+                return indexProducer.forEachIndex(IndexFilter.create(getShape(), consumer));
+            };
+            return subtract(CellProducer.from(distinct));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));

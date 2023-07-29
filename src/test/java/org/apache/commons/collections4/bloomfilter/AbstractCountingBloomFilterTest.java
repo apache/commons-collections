@@ -337,4 +337,67 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         verifyMaxInsert(bf, 0, 0);
         assertEquals(0, bf.getMaxInsert(new IncrementingHasher(5, 1)));
     }
+    
+    private void assertCell3(CountingBloomFilter bf, int value) {
+        bf.forEachCell((k, v) -> {
+            if (k == 3) {
+                assertEquals(value, v, "Mismatch at position (3) "+k);
+            } else {
+                assertEquals(0, v, "Mismatch at position "+k);
+            }
+            return true;
+        });
+    }
+
+    @Test
+    public void mergeIncrementsAllCellsTest() {
+        CountingBloomFilter bf = createEmptyFilter(getTestShape());
+        ArrayCountingBloomFilter f1 = new ArrayCountingBloomFilter(Shape.fromKM(1, 10));
+        ArrayCountingBloomFilter f2 = f1.copy();
+        ArrayCountingBloomFilter f3 = f1.copy();
+        // index producer produces 3 two times.
+        IndexProducer ip = p -> {
+            p.test(3);
+            p.test(3);
+            return true;
+        };
+        // The merge should increment cell 3 by 1
+        f1.merge(ip);
+        assertCell3(f1, 1);
+
+        // The add should increment cells 3 by 2
+        f2.add(CellProducer.from(ip));
+        assertCell3(f2, 2);
+
+        // This merge will increment by 1 as the round-trip makes the indices unique
+        f3.merge(IndexProducer.fromIndexArray(ip.asIndexArray()));
+        assertCell3(f3, 1);
+    }
+    
+    @Test
+    public void removeDecrementsAllCellsTest() {
+        CountingBloomFilter bf = createEmptyFilter(getTestShape());
+        ArrayCountingBloomFilter f1 = new ArrayCountingBloomFilter(Shape.fromKM(1, 10));
+        CellProducer cp = p -> { p.test(3, 3); return true; };
+        f1.add(cp);
+        ArrayCountingBloomFilter f2 = f1.copy();
+        ArrayCountingBloomFilter f3 = f1.copy();
+        // index producer produces 3 two times.
+        IndexProducer ip = p -> {
+            p.test(3);
+            p.test(3);
+            return true;
+        };
+        // The merge should decrement cell 3 by 1
+        f1.remove(ip);
+        assertCell3(f1, 2);
+
+        // The add should decrement cells 3 by 2
+        f2.subtract(CellProducer.from(ip));
+        assertCell3(f2, 1);
+
+        // This merge will decrement by 1 as the round-trip makes the indices unique
+        f3.remove(IndexProducer.fromIndexArray(ip.asIndexArray()));
+        assertCell3(f3, 2);
+    }
 }
