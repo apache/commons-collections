@@ -143,7 +143,6 @@ public interface IndexProducer {
         forEachIndex(indices::add);
         return indices.toArray();
     }
-    
 
     /**
      * Creates an IndexProducer of unique indices for this index.
@@ -152,9 +151,8 @@ public interface IndexProducer {
      * duplicate values will be returned. The indices produced are equivalent to those returned
      * from by a Bloom filter created from this hasher.</p>
      *
-     * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
-     * @throws IndexOutOfBoundsException if any index is less than 0 
+     * @throws IndexOutOfBoundsException if any index is less than 0
      */
     default IndexProducer uniqueIndices() {
         final BitSet bitSet = new BitSet();
@@ -162,7 +160,7 @@ public interface IndexProducer {
             bitSet.set(i);
             return true;
         });
-        
+
         return new IndexProducer() {
             @Override
             public boolean forEachIndex(IntPredicate predicate) {
@@ -178,7 +176,6 @@ public interface IndexProducer {
             public IndexProducer uniqueIndices() {
                 return this;
             }
-            
         };
     }
 }

@@ -192,6 +192,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertFalse(bf3.contains(bf4), "Should not contain");
 
         assertCounts(bf3, new int[] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0});
+
+        assertThrows(IllegalArgumentException.class, () -> bf3.remove( new BadHasher(-1)));
+        assertThrows(IllegalArgumentException.class, () -> bf3.remove( new BadHasher(getTestShape().getNumberOfBits())));;
     }
 
     /**
@@ -262,6 +265,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         final CountingBloomFilter bf7 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BitMapProducer bmp2 = BitMapProducer.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
         assertThrows(IllegalArgumentException.class, () -> bf7.remove(bmp2));
+        assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(-1)));
+        assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(getTestShape().getNumberOfBits())));;
     }
 
     @Test
@@ -337,7 +342,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         verifyMaxInsert(bf, 0, 0);
         assertEquals(0, bf.getMaxInsert(new IncrementingHasher(5, 1)));
     }
-    
+
     private void assertCell3(CountingBloomFilter bf, int value) {
         bf.forEachCell((k, v) -> {
             if (k == 3) {
@@ -351,10 +356,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
     @Test
     public void mergeIncrementsAllCellsTest() {
-        CountingBloomFilter bf = createEmptyFilter(getTestShape());
-        ArrayCountingBloomFilter f1 = new ArrayCountingBloomFilter(Shape.fromKM(1, 10));
-        ArrayCountingBloomFilter f2 = f1.copy();
-        ArrayCountingBloomFilter f3 = f1.copy();
+        CountingBloomFilter f1 = createEmptyFilter(Shape.fromKM(1, 10));
+        CountingBloomFilter f2 = f1.copy();
+        CountingBloomFilter f3 = f1.copy();
         // index producer produces 3 two times.
         IndexProducer ip = p -> {
             p.test(3);
@@ -373,15 +377,17 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         f3.merge(IndexProducer.fromIndexArray(ip.asIndexArray()));
         assertCell3(f3, 1);
     }
-    
+
     @Test
     public void removeDecrementsAllCellsTest() {
-        CountingBloomFilter bf = createEmptyFilter(getTestShape());
-        ArrayCountingBloomFilter f1 = new ArrayCountingBloomFilter(Shape.fromKM(1, 10));
-        CellProducer cp = p -> { p.test(3, 3); return true; };
+        CountingBloomFilter f1 = createEmptyFilter(Shape.fromKM(1, 10));
+        CellProducer cp = p -> {
+            p.test(3, 3);
+            return true;
+        };
         f1.add(cp);
-        ArrayCountingBloomFilter f2 = f1.copy();
-        ArrayCountingBloomFilter f3 = f1.copy();
+        CountingBloomFilter f2 = f1.copy();
+        CountingBloomFilter f3 = f1.copy();
         // index producer produces 3 two times.
         IndexProducer ip = p -> {
             p.test(3);

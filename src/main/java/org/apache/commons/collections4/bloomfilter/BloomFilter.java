@@ -317,6 +317,4 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     default IndexProducer uniqueIndices() {
         return this;
     }
-
-    
 }
