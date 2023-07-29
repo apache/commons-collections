@@ -63,7 +63,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Adds one copy of the specified object to the MultiSet.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
-     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as 1.
      *
      * @param object  the object to add
@@ -77,7 +77,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Adds a number of occurrences of the specified object to the MultiSet.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
-     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as {@code occurrences}.
      *
      * @param object  the object to add

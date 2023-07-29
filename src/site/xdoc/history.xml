@@ -56,7 +56,7 @@ behave like the unmodifiable or synchronized JDK decorators.
 </p>
 <p>
 As the size of the component increased, the iterators were broken out into their own subpackage.
-Thus there were now three packages, main, comparator and iterator.
+Thus, there were now three packages, main, comparator and iterator.
 </p>
 
 <p>
@@ -85,7 +85,7 @@ Of course, backwards compatibility has been retained during all transitions usin
 <p>
 <b>Collections 2.1.1</b> was a patch release to version 2.1.
 Unfortunately, version 3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
-This patch was created as a work around, enabling 2.1.1 to be compatible with 3.1.
+This patch was created as a workaround, enabling 2.1.1 to be compatible with 3.1.
 </p>
 
 <p>
