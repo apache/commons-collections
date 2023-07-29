@@ -86,7 +86,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     int getMaxCell();
 
     /**
-     * Determines the maximum number of times the Bloom filter could have been inserted
+     * Determines the maximum number of times the Bloom filter could have been merged
      * into this counting filter.
      * @param bloomFilter the Bloom filter the check for.
      * @return the maximum number of times the Bloom filter could have been inserted.
@@ -96,34 +96,37 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     }
 
     /**
-     * Determines the maximum number of times the IndexProducer could have been inserted
+     * Determines the maximum number of times the IndexProducer could have been merged
      * into this counting filter.
+     * <p>To determine how many times an indxProducer could have been added create a CellProducer
+     * from the indexProducer and check that</p>
      * @param idxProducer the producer to drive the count check.
      * @return the maximum number of times the IndexProducer could have been inserted.
+     * @see #getMaxInsert(CellProducer)
      */
     default int getMaxInsert(IndexProducer idxProducer) {
-        return getMaxInsert(CellProducer.from(idxProducer) );
+        return getMaxInsert(CellProducer.from(idxProducer.uniqueIndices()) );
     }
 
     /**
-     * Determines the maximum number of times the Cell Producer could have been inserted (added).
+     * Determines the maximum number of times the Cell Producer could have been add.
      * @param cellProducer the producer of cells.
      * @return the maximum number of times the CellProducer could have been inserted.
      */
     int getMaxInsert(CellProducer cellProducer);
 
     /**
-     * Determines the maximum number of times the Hasher could have been inserted into this
+     * Determines the maximum number of times the Hasher could have been merged into this
      * counting filter.
      * @param hasher the Hasher to provide the indices.
      * @return the maximum number of times the hasher could have been inserted.
      */
     default int getMaxInsert(Hasher hasher) {
-        return getMaxInsert(BitMapProducer.fromIndexProducer(hasher.uniqueIndices(getShape()), getShape().getNumberOfBits()));
+        return getMaxInsert(hasher.indices(getShape()));
     }
 
     /**
-     * Determines the maximum number of times the BitMapProducer could hvae been insert into this
+     * Determines the maximum number of times the BitMapProducer could have been merged into this
      * counting filter.
      * @param bitMapProducer the BitMapProducer to provide the indices.
      * @return the maximum number of times the BitMapProducer could have been inserted.
@@ -181,7 +184,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     @Override
     default boolean merge(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return merge(hasher.uniqueIndices(getShape()));
+        return merge(hasher.indices(getShape()));
     }
 
     /**
@@ -203,11 +206,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     default boolean merge(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            IndexProducer distinct = consumer -> {
-                Objects.requireNonNull(consumer, "consumer");
-                return indexProducer.forEachIndex(IndexFilter.create(getShape(), consumer));
-            };
-            return add(CellProducer.from(distinct));
+            return add(CellProducer.from(indexProducer.uniqueIndices()));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
@@ -267,7 +266,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      */
     default boolean remove(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
-        return remove(hasher.uniqueIndices(getShape()));
+        return remove(hasher.indices(getShape()));
     }
 
     /**
@@ -289,11 +288,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     default boolean remove(final IndexProducer indexProducer) {
         Objects.requireNonNull(indexProducer, "indexProducer");
         try {
-            IndexProducer distinct = consumer -> {
-                Objects.requireNonNull(consumer, "consumer");
-                return indexProducer.forEachIndex(IndexFilter.create(getShape(), consumer));
-            };
-            return subtract(CellProducer.from(distinct));
+            return subtract(CellProducer.from(indexProducer.uniqueIndices()));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
@@ -357,4 +352,9 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      */
     @Override
     CountingBloomFilter copy();
+
+    @Override
+    default IndexProducer uniqueIndices() {
+        return this;
+    }
 }

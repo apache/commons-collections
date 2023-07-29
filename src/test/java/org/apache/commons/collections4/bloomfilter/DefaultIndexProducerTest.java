@@ -58,8 +58,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // The default method streams a BitSet so is distinct and ordered.
-        return DISTINCT | ORDERED;
+        return 0;
     }
 
     @Override

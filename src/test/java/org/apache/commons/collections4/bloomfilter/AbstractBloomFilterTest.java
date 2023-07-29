@@ -448,10 +448,5 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         public IndexProducer indices(final Shape shape) {
             return producer;
         }
-
-        @Override
-        public IndexProducer uniqueIndices(final Shape shape) {
-            return producer;
-        }
     }
 }

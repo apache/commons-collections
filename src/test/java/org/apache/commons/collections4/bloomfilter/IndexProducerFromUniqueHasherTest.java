@@ -21,7 +21,7 @@ public class IndexProducerFromUniqueHasherTest extends AbstractIndexProducerTest
     @Override
     protected IndexProducer createProducer() {
         // hasher has collisions and wraps
-        return new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72));
+        return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)).uniqueIndices();
     }
 
     @Override

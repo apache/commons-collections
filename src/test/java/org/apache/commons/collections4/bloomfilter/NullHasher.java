@@ -53,10 +53,4 @@ final class NullHasher implements Hasher {
         Objects.requireNonNull(shape, "shape");
         return PRODUCER;
     }
-
-    @Override
-    public IndexProducer uniqueIndices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
-    }
 }

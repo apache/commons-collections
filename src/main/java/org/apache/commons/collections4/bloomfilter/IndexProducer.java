@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.IntPredicate;
@@ -117,11 +118,67 @@ public interface IndexProducer {
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        final BitSet result = new BitSet();
+        class Indices {
+            private int[] data = new int[32];
+            private int size;
+
+            boolean add(final int index) {
+                if (size == data.length) {
+                    // This will throw an out-of-memory error if there are too many bits.
+                    // Since bits are addressed using 32-bit signed integer indices
+                    // the maximum length should be ~2^31 / 2^6 = ~2^25.
+                    // Any more is a broken implementation.
+                    data = Arrays.copyOf(data, size * 2);
+                }
+                data[size++] = index;
+                return true;
+            }
+
+            int[] toArray() {
+                // Edge case to avoid a large array copy
+                return size == data.length ? data : Arrays.copyOf(data, size);
+            }
+        }
+        Indices indices = new Indices();
+        forEachIndex(indices::add);
+        return indices.toArray();
+    }
+    
+
+    /**
+     * Creates an IndexProducer of unique indices for this index.
+     *
+     * <p>This is like the `indices(Shape)` method except that it adds the guarantee that no
+     * duplicate values will be returned. The indices produced are equivalent to those returned
+     * from by a Bloom filter created from this hasher.</p>
+     *
+     * @param shape the shape of the desired Bloom filter.
+     * @return the iterator of integers
+     * @throws IndexOutOfBoundsException if any index is less than 0 
+     */
+    default IndexProducer uniqueIndices() {
+        final BitSet bitSet = new BitSet();
         forEachIndex(i -> {
-            result.set(i);
+            bitSet.set(i);
             return true;
         });
-        return result.stream().toArray();
+        
+        return new IndexProducer() {
+            @Override
+            public boolean forEachIndex(IntPredicate predicate) {
+                for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx+1)) {
+                    if (!predicate.test(idx)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public IndexProducer uniqueIndices() {
+                return this;
+            }
+            
+        };
     }
 }

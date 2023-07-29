@@ -221,10 +221,15 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @return {@code true} always.
      */
     private boolean add(final int idx, final int addend) {
-        final int updated = cells[idx] + addend;
-        state |= updated;
-        cells[idx] = updated;
-        return true;
+        try {
+            final int updated = cells[idx] + addend;
+            state |= updated;
+            cells[idx] = updated;
+            return true;
+        } catch (final IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+        }
     }
 
     /**
@@ -235,10 +240,15 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * @return {@code true} always.
      */
     private boolean subtract(final int idx, final int subtrahend) {
-        final int updated = cells[idx] - subtrahend;
-        state |= updated;
-        cells[idx] = updated;
-        return true;
+        try {
+            final int updated = cells[idx] - subtrahend;
+            state |= updated;
+            cells[idx] = updated;
+            return true;
+        } catch (final IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+        }
     }
 
     @Override
