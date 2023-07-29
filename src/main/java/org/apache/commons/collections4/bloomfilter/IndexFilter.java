@@ -27,9 +27,9 @@ import java.util.function.IntPredicate;
  * @since 4.5
  */
 public final class IndexFilter {
-    private final IntPredicate tracker;
-    private final int size;
-    private final IntPredicate consumer;
+
+    // do not instantiate.
+    private IndexFilter() {}
 
     /**
      * Creates an instance optimized for the specified shape.
@@ -38,41 +38,20 @@ public final class IndexFilter {
      * @return an IndexFilter optimized for the specified shape.
      */
     public static IntPredicate create(final Shape shape, final IntPredicate consumer) {
-        return new IndexFilter(shape, consumer)::test;
-    }
-
-    /**
-     * Creates an instance optimized for the specified shape.
-     * @param shape The shape that is being generated.
-     * @param consumer The consumer to accept the values.
-     */
-    private IndexFilter(final Shape shape, final IntPredicate consumer) {
-        this.size = shape.getNumberOfBits();
-        this.consumer = consumer;
+        int size = shape.getNumberOfBits();
+        IntPredicate result = number -> {
+            if (number >= size) {
+                throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
+            }
+            return true;
+        };
         if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
                 * Integer.BYTES) {
-            this.tracker = new BitMapTracker(shape);
+            result = result.and(new BitMapTracker(shape).negate());
         } else {
-            this.tracker = new ArrayTracker(shape);
+            result = result.and(new ArrayTracker(shape).negate());
         }
-    }
-
-    /**
-     * Test if the number should be processed by the {@code consumer}.
-     *
-     * <p>If the number has <em>not</em> been seen before it is passed to the {@code consumer} and the result returned.
-     * If the number has been seen before the {@code consumer} is not called and {@code true} returned.</p>
-     *
-     * <p><em>If the input is not in the range [0,size) an IndexOutOfBoundsException exception is thrown.</em></p>
-     *
-     * @param number the number to check.
-     * @return {@code true} if processing should continue, {@code false} otherwise.
-     */
-    public boolean test(final int number) {
-        if (number >= size) {
-            throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
-        }
-        return !tracker.test(number) || consumer.test(number);
+        return result.or(consumer);
     }
 
     /**

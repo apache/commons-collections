@@ -118,4 +118,42 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
             assertArrayEquals(expected, ip.asIndexArray());
         }
     }
+
+    @Test
+    public void testMoreThan32Entries() {
+        int[] values = new int[33];
+        for (int i=0; i<33; i++) {
+            values[i] = i;
+        }
+        IndexProducer producer =  predicate -> {
+            Objects.requireNonNull(predicate);
+            for (final int i : values) {
+                if (!predicate.test(i)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        int[] other = producer.asIndexArray();
+        assertArrayEquals(values, other);
+    }
+
+    @Test
+    public void test32Entries() {
+        int[] values = new int[32];
+        for (int i=0; i<32; i++) {
+            values[i] = i;
+        }
+        IndexProducer producer =  predicate -> {
+            Objects.requireNonNull(predicate);
+            for (final int i : values) {
+                if (!predicate.test(i)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        int[] other = producer.asIndexArray();
+        assertArrayEquals(values, other);
+    }
 }
