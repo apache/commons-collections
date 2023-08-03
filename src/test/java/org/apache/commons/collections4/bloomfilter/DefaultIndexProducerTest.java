@@ -22,8 +22,11 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
@@ -119,31 +122,10 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         }
     }
 
-    @Test
-    public void testMoreThan32Entries() {
-        int[] values = new int[33];
-        for (int i=0; i<33; i++) {
-            values[i] = i;
-        }
-        IndexProducer producer =  predicate -> {
-            Objects.requireNonNull(predicate);
-            for (final int i : values) {
-                if (!predicate.test(i)) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        int[] other = producer.asIndexArray();
-        assertArrayEquals(values, other);
-    }
-
-    @Test
-    public void test32Entries() {
-        int[] values = new int[32];
-        for (int i=0; i<32; i++) {
-            values[i] = i;
-        }
+    @ParameterizedTest
+    @ValueSource(ints = {32, 33})
+    public void testEntries(int size) {
+        int[] values = IntStream.range(0, size).toArray();
         IndexProducer producer =  predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {

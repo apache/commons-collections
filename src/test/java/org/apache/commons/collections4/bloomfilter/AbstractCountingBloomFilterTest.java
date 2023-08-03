@@ -299,7 +299,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf1.forEachCell((x, y) -> false), "Hasher in removes results in value not equal to 0");
     }
 
-    private void verifyMaxInsert( CountingBloomFilter bf, int from1, int from11) {
+    private void verifyMaxInsert(CountingBloomFilter bf, int from1, int from11) {
         BloomFilter bfFrom0 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
         bfFrom0.merge(new IncrementingHasher(0, 1));
         BloomFilter bfFrom1 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
@@ -346,9 +346,9 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     private void assertCell3(CountingBloomFilter bf, int value) {
         bf.forEachCell((k, v) -> {
             if (k == 3) {
-                assertEquals(value, v, "Mismatch at position (3) "+k);
+                assertEquals(value, v, "Mismatch at position 3");
             } else {
-                assertEquals(0, v, "Mismatch at position "+k);
+                assertEquals(0, v, "Mismatch at position " + k);
             }
             return true;
         });
@@ -372,10 +372,6 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         // The add should increment cells 3 by 2
         f2.add(CellProducer.from(ip));
         assertCell3(f2, 2);
-
-        // This merge will increment by 1 as the round-trip makes the indices unique
-        f3.merge(IndexProducer.fromIndexArray(ip.asIndexArray()));
-        assertCell3(f3, 1);
     }
 
     @Test

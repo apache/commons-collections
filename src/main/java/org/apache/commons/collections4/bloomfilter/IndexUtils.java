@@ -16,30 +16,25 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromDefaultIndexProducerTest extends AbstractCellProducerTest {
+import java.util.Arrays;
 
-    int[] data = {0, 63, 1, 64, 128, 1, 127};
-    int[] indices = {0, 1, 63, 64, 127, 128};
-    int[] values = {1, 2, 1, 1, 1, 1 };
+public class IndexUtils {
 
-    @Override
-    protected CellProducer createProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(data));
+    public static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+    // do not instantiate
+    private IndexUtils() {}
+
+    /**
+     * Ensure the array can add an element at the specified index.
+     * @param array the array to check.
+     * @param index the index to add at.
+     * @return the array or a newly allocated copy of the array.
+     */
+    static int[] ensureCapacityForAdd(int[] array, int index) {
+        if (index >= array.length) {
+            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max( array.length * 2L, index+1)));
+        }
+        return array;
     }
-
-    @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
-    }
-
-    @Override
-    protected int[] getExpectedIndices() {
-        return indices;
-    }
-
-    @Override
-    protected int[] getExpectedValues() {
-        return values;
-    }
-
 }

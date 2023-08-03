@@ -40,7 +40,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     private static final CellConsumer FALSE_CONSUMER = (i, j) -> false;
 
     /**
-     * Creates an array of expected values that alignes with the expected indices entries.
+     * Creates an array of expected values that aligns with the expected indices entries.
      * @return an array of expected values.
      * @see AbstractIndexProducerTest#getExpectedIndices()
      */
@@ -108,11 +108,11 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     public void testForEachCellValues() {
         int[] expectedIdx = getExpectedIndices();
         int[] expectedValue = getExpectedValues();
-        assertEquals( expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
+        assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
         int[] idx = {0};
         createProducer().forEachCell((i, j) -> {
-            assertEquals(expectedIdx[idx[0]], i, "bad index at "+idx[0]);
-            assertEquals(expectedValue[idx[0]], j, "bad value at "+idx[0]);
+            assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
+            assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);
             idx[0]++;
             return true;
         });

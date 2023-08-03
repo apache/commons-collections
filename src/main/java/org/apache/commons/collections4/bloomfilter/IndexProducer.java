@@ -33,8 +33,6 @@ import java.util.function.LongPredicate;
 @FunctionalInterface
 public interface IndexProducer {
 
-    int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
     /**
      * Each index is passed to the predicate. The predicate is applied to each
      * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
@@ -110,13 +108,11 @@ public interface IndexProducer {
      * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
      * <p><em>
-     * The default implementation of this method is slow. It is recommended
-     * that implementing classes reimplement this method.
+     * The default implementation of this method creates an array and populates
+     * it.  Implementations that have access to an index array should consider
+     * returning a copy of that array if possible.
      * </em></p>
      *
-     * <p><em>
-     * The default implementation of this method returns unique values in order.
-     * </em></p>
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
@@ -125,9 +121,7 @@ public interface IndexProducer {
             private int size;
 
             boolean add(final int index) {
-                if (size == data.length) {
-                    data = Arrays.copyOf(data, (int) Math.min(MAX_ARRAY_SIZE, size * 2L));
-                }
+                data = IndexUtils.ensureCapacityForAdd(data, index);
                 data[size++] = index;
                 return true;
             }
@@ -143,14 +137,17 @@ public interface IndexProducer {
     }
 
     /**
-     * Creates an IndexProducer of unique indices for this index.
+     * Creates an IndexProducer comprising the unique indices for this producer.
      *
-     * <p>This is like the `indices(Shape)` method except that it adds the guarantee that no
-     * duplicate values will be returned. The indices produced are equivalent to those returned
-     * from by a Bloom filter created from this hasher.</p>
+     * <p>By default creates a new producer with some overhead to remove
+     * duplicates.  IndexProducers that return unique indices by default
+     * should override this to return {@code this}.</p>
      *
-     * @return the iterator of integers
-     * @throws IndexOutOfBoundsException if any index is less than 0
+     * <p>The default implementation will filter the indices from this instance
+     * and return them in ascending order.</p>
+     *
+     * @return the IndexProducer of unique values.
+     * @throws IndexOutOfBoundsException if any index is less than zero.
      */
     default IndexProducer uniqueIndices() {
         final BitSet bitSet = new BitSet();
@@ -162,7 +159,7 @@ public interface IndexProducer {
         return new IndexProducer() {
             @Override
             public boolean forEachIndex(IntPredicate predicate) {
-                for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx+1)) {
+                for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx + 1)) {
                     if (!predicate.test(idx)) {
                         return false;
                     }

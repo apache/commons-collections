@@ -311,7 +311,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     }
 
     /**
-     * Most Bloom filter's create unique IndexProducers.
+     * Most Bloom filters create unique IndexProducers.
      */
     @Override
     default IndexProducer uniqueIndices() {

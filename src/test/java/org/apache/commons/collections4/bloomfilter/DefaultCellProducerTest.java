@@ -35,7 +35,7 @@ public class DefaultCellProducerTest extends AbstractCellProducerTest {
     @Override
     protected CellProducer createProducer() {
         return consumer -> {
-            for (int i=0; i<indices.length; i++) {
+            for (int i = 0; i < indices.length; i++) {
                 if (!consumer.test(indices[i], values[i] )) {
                     return false;
                 }

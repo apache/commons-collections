@@ -110,14 +110,14 @@ public interface CellProducer extends IndexProducer {
             @Override
             public int[] asIndexArray() {
                 populate();
-                return counterCells.keySet().stream().mapToInt( c -> c.idx ).toArray();
+                return counterCells.keySet().stream().mapToInt(c -> c.idx ).toArray();
             }
 
             @Override
             public boolean forEachCell(CellConsumer consumer) {
                 populate();
                 for (CounterCell cell : counterCells.values()) {
-                    if (!consumer.test(cell.idx, cell.count) ) {
+                    if (!consumer.test(cell.idx, cell.count)) {
                         return false;
                     }
                 }
@@ -138,14 +138,14 @@ public interface CellProducer extends IndexProducer {
 
                 @Override
                 public int compareTo(CounterCell other) {
-                    return Integer.compare( idx,  other.idx);
+                    return Integer.compare(idx,  other.idx);
                 }
             }
         };
     }
 
     /**
-     * Represents an operation that accepts an {@code <index, cell>} pair.
+     * Represents an operation that accepts an {@code <index, count>} pair.
      * Returns {@code true} if processing should continue, {@code false} otherwise.
      *
      * <p>Note: This is a functional interface as a specialization of
