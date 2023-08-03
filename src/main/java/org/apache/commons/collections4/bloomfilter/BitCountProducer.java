@@ -16,111 +16,151 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.TreeMap;
 import java.util.function.IntPredicate;
 
+
 /**
- * Defines a mapping of index to counts.
+ * Some Bloom filter implementations use a count rather than a bit flag. The term {@code Cell} is used to
+ * refer to these counts and their associated index.  This class is the equivalent of the index producer except
+ * that it produces cells.
  *
- * <p>Note that a BitCountProducer may return duplicate indices and may be unordered.
+ * <p>Note that a CellProducer must not return duplicate indices and must be ordered.</p>
  *
- * <p>Implementations must guarantee that:
+ * <p>Implementations must guarantee that:</p>
  *
  * <ul>
- * <li>The mapping of index to counts is the combined sum of counts at each index.
- * <li>For every unique value produced by the IndexProducer there will be at least one matching
- * index and count produced by the BitCountProducer.
- * <li>The BitCountProducer will not generate indices that are not output by the IndexProducer.
+ * <li>The IndexProducer implementation returns unique ordered indices.</li>
+ * <li>The cells are produced in IndexProducer order.</li>
+ * <li>For every value produced by the IndexProducer there will be only one matching
+ * cell produced by the CellProducer.</li>
+ * <li>The CellProducer will not generate cells with indices that are not output by the IndexProducer.</li>
+ * <li>The IndexProducer will not generate indices that have a zero count for the cell.</li>
  * </ul>
- *
- * <p>Note that implementations that do not output duplicate indices for BitCountProducer and
- * do for IndexProducer, or vice versa, are consistent if the distinct indices from each are
- * the same.
- *
- * <p>For example the mapping [(1,2),(2,3),(3,1)] can be output with many combinations including:
- * <pre>
- * [(1,2),(2,3),(3,1)]
- * [(1,1),(1,1),(2,1),(2,1),(2,1),(3,1)]
- * [(1,1),(3,1),(1,1),(2,1),(2,1),(2,1)]
- * [(3,1),(1,1),(2,2),(1,1),(2,1)]
- * ...
- * </pre>
  *
  * @since 4.5
  */
 @FunctionalInterface
-public interface BitCountProducer extends IndexProducer {
+public interface CellProducer extends IndexProducer {
 
     /**
-     * Performs the given action for each {@code <index, count>} pair where the count is non-zero.
-     * Any exceptions thrown by the action are relayed to the caller. The consumer is applied to each
-     * index-count pair, if the consumer returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further pairs are processed.
+     * Performs the given action for each {@code cell}  where the cell count is non-zero.
      *
-     * Duplicate indices are not required to be aggregated. Duplicates may be output by the producer as
-     * noted in the class javadoc.
+     * <p>Some Bloom filter implementations use a count rather than a bit flag.  The term {@code Cell} is used to
+     * refer to these counts.</p>
      *
-     * @param consumer the action to be performed for each non-zero bit count
-     * @return {@code true} if all count pairs return true from consumer, {@code false} otherwise.
+     * <p>Any exceptions thrown by the action are relayed to the caller. The consumer is applied to each
+     * cell. If the consumer returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further pairs are processed.</p>
+     *
+     * @param consumer the action to be performed for each non-zero cell.
+     * @return {@code true} if all cells return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
-    boolean forEachCount(BitCountConsumer consumer);
+    boolean forEachCell(CellConsumer consumer);
 
     /**
-     * The default implementation returns indices with ordering and uniqueness of {@code forEachCount()}.
+     * The default implementation returns distinct and ordered indices for all cells with a non-zero count.
      */
     @Override
     default boolean forEachIndex(final IntPredicate predicate) {
-        return forEachCount((i, v) -> predicate.test(i));
+        return forEachCell((i, v) -> predicate.test(i));
     }
 
     /**
-     * Creates a BitCountProducer from an IndexProducer. The resulting
-     * producer will return every index from the IndexProducer with a count of 1.
+     * Creates a CellProducer from an IndexProducer.
      *
-     * <p>Note that the BitCountProducer does not remove duplicates. Any use of the
-     * BitCountProducer to create an aggregate mapping of index to counts, such as a
-     * CountingBloomFilter, should use the same BitCountProducer in both add and
-     * subtract operations to maintain consistency.
-     * </p>
-     * @param idx An index producer.
-     * @return A BitCountProducer with the same indices as the IndexProducer.
+     * <p>Note the following properties:
+     * <ul>
+     * <li>Each index returned from the IndexProducer is assumed to have a cell value of 1.</li>
+     * <li>The CellProducer aggregates duplicate indices from the IndexProducer.</li>
+     * </ul>
+     *
+     * <p>A CellProducer that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
+     * of indices including:
+     * <pre>
+     * [1, 1, 2, 2, 2, 3]
+     * [1, 3, 1, 2, 2, 2]
+     * [3, 2, 1, 2, 1, 2]
+     * ...
+     * </pre>
+     *
+     * @param producer An index producer.
+     * @return A CellProducer with the same indices as the IndexProducer.
      */
-    static BitCountProducer from(final IndexProducer idx) {
-        return new BitCountProducer() {
-            @Override
-            public boolean forEachCount(final BitCountConsumer consumer) {
-                return idx.forEachIndex(i -> consumer.test(i, 1));
+    static CellProducer from(final IndexProducer producer) {
+        return new CellProducer() {
+            TreeMap<CounterCell, CounterCell> counterCells = new TreeMap<>();
+
+            private void populate() {
+                if (counterCells.isEmpty()) {
+                    producer.forEachIndex( idx -> {
+                        CounterCell cell = new CounterCell(idx, 1);
+                        CounterCell counter = counterCells.get(cell);
+                        if (counter == null) {
+                            counterCells.put(cell, cell);
+                        } else {
+                            counter.count++;
+                        }
+                        return true;
+                    });
+                }
             }
 
             @Override
             public int[] asIndexArray() {
-                return idx.asIndexArray();
+                populate();
+                return counterCells.keySet().stream().mapToInt( c -> c.idx ).toArray();
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
-                return idx.forEachIndex(predicate);
+            public boolean forEachCell(CellConsumer consumer) {
+                populate();
+                for (CounterCell cell : counterCells.values()) {
+                    if (!consumer.test(cell.idx, cell.count) ) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            /**
+             * Class to track cell values in the TreeMap.
+             */
+            final class CounterCell implements Comparable<CounterCell> {
+                final int idx;
+                int count;
+
+                CounterCell(int idx, int count) {
+                    this.idx = idx;
+                    this.count = count;
+                }
+
+                @Override
+                public int compareTo(CounterCell other) {
+                    return Integer.compare( idx,  other.idx);
+                }
             }
         };
     }
 
     /**
-     * Represents an operation that accepts an {@code <index, count>} pair representing
-     * the count for a bit index. Returns {@code true}
-     * if processing should continue, {@code false} otherwise.
+     * Represents an operation that accepts an {@code <index, cell>} pair.
+     * Returns {@code true} if processing should continue, {@code false} otherwise.
      *
      * <p>Note: This is a functional interface as a specialization of
      * {@link java.util.function.BiPredicate} for {@code int}.</p>
      */
     @FunctionalInterface
-    interface BitCountConsumer {
+    interface CellConsumer {
         /**
          * Performs an operation on the given {@code <index, count>} pair.
          *
          * @param index the bit index.
-         * @param count the count at the specified bit index.
+         * @param count the cell value at the specified bit index.
          * @return {@code true} if processing should continue, {@code false} if processing should stop.
          */
         boolean test(int index, int count);
     }
 }
+
