@@ -90,7 +90,6 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -114,7 +113,6 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
         return (SortedSet<E>) decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public E first() {
         return getSortedSet().first();
@@ -130,7 +128,6 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
         return getSortedSet().comparator();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);

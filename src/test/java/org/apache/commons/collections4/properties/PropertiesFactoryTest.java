@@ -17,20 +17,22 @@
 
 package org.apache.commons.collections4.properties;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Properties;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
 
-    public PropertiesFactoryTest(final String fileExtension) {
-        super(PropertiesFactory.INSTANCE, fileExtension);
+    public PropertiesFactoryTest() {
+        super(PropertiesFactory.INSTANCE);
     }
 
-    @Override
     @Test
+    @Override
     public void testInstance() {
-        Assert.assertNotNull(PropertiesFactory.INSTANCE);
+        assertNotNull(PropertiesFactory.INSTANCE);
     }
+
 }

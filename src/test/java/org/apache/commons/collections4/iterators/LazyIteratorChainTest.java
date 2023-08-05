@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,10 +29,11 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the LazyIteratorChain class.
- *
  */
 public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 
@@ -38,11 +45,11 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     protected List<String> list2 = null;
     protected List<String> list3 = null;
 
-    public LazyIteratorChainTest(final String testName) {
-        super(testName);
+    public LazyIteratorChainTest() {
+        super(LazyIteratorChainTest.class.getSimpleName());
     }
 
-    @Override
+    @BeforeEach
     public void setUp() {
         list1 = new ArrayList<>();
         list1.add("One");
@@ -85,24 +92,25 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         return chain;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<String> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
 
-            assertEquals( "Iteration value is correct", testValue, iterValue );
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                       e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 
+    @Test
     public void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
@@ -127,32 +135,30 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals(1, list2.size());
     }
 
+    @Test
     @Override
     public void testRemove() {
         final Iterator<String> iter = makeObject();
 
-        try {
-            iter.remove();
-            fail("Calling remove before the first call to next() should throw an exception");
-        } catch (final IllegalStateException e) {
-
-        }
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "Calling remove before the first call to next() should throw an exception");
 
         for (final String testValue : testArray) {
             final String iterValue = iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
 
             if (!iterValue.equals("Four")) {
                 iter.remove();
             }
         }
 
-        assertTrue("List is empty", list1.isEmpty());
-        assertTrue("List is empty", list2.size() == 1);
-        assertTrue("List is empty", list3.isEmpty());
+        assertTrue(list1.isEmpty(), "List is empty");
+        assertEquals(1, list2.size(), "List is empty");
+        assertTrue(list3.isEmpty(), "List is empty");
     }
 
+    @Test
     public void testFirstIteratorIsEmptyBug() {
         final List<String> empty = new ArrayList<>();
         final List<String> notEmpty = new ArrayList<>();
@@ -171,25 +177,23 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
                 return null;
             }
         };
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("A", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("B", chain.next());
-        assertTrue("should have next", chain.hasNext());
+        assertTrue(chain.hasNext(), "should have next");
         assertEquals("C", chain.next());
-        assertTrue("should not have next", !chain.hasNext());
+        assertFalse(chain.hasNext(), "should not have next");
     }
 
+    @Test
     public void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
-        assertEquals(false, chain.hasNext());
-        try {
-            chain.next();
-            fail();
-        } catch (final NoSuchElementException ex) {}
-        try {
-            chain.remove();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertFalse(chain.hasNext());
+        assertAll(
+                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
+                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
+        );
     }
+
 }

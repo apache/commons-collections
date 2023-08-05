@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for testing the Comparator interface.
@@ -44,7 +48,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Implement this method to return a list of sorted objects.
@@ -53,7 +56,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      */
     public abstract List<T> getComparableObjectsOrdered();
 
-    //-----------------------------------------------------------------------
     /**
      * Implements the abstract superclass method to return the comparator.
      *
@@ -78,7 +80,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Reverse the list.
      */
@@ -100,7 +101,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         list.sort(comparator);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test sorting an empty list
      */
@@ -111,7 +111,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> list2 = new LinkedList<>();
 
-        assertEquals("Comparator cannot sort empty lists", list2, list);
+        assertEquals(list2, list, "Comparator cannot sort empty lists");
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         }
         */
 
-        assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
     }
 
     /**
@@ -159,8 +159,8 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
-        assertTrue("This comparator should be Serializable.",
-                   comparator instanceof Serializable);
+        assertTrue(comparator instanceof Serializable,
+                   "This comparator should be Serializable.");
     }
 
     public String getCanonicalComparatorName(final Object object) {
@@ -179,8 +179,8 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Compare the current serialized form of the Comparator
      * against the canonical version in SCM.
      */
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
@@ -213,7 +213,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
             final List<T> orderedList = getComparableObjectsOrdered();
 
-            assertEquals("Comparator did not reorder the List correctly", orderedList, randomList);
+            assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
         }
     }
 }

@@ -40,7 +40,6 @@ public class MultiSetUtils {
      */
     private MultiSetUtils() {}
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) multiset backed by the given multiset.
      * In order to guarantee serial access, it is critical that all access to the

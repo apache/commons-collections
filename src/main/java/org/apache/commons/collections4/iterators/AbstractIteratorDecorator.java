@@ -27,7 +27,6 @@ import java.util.Iterator;
  */
 public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIteratorDecorator<E, E> {
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that decorates the specified iterator.
      *

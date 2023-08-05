@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link TransformedSet}
@@ -32,8 +37,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
-    public TransformedSetTest(final String testName) {
-        super(testName);
+    public TransformedSetTest() {
+        super(TransformedSetTest.class.getSimpleName());
     }
 
     @Override
@@ -61,6 +66,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         final Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
@@ -70,33 +76,39 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
-            assertEquals(true, set.contains(Integer.valueOf((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
+            assertTrue(set.contains(Integer.valueOf((String) els[i])));
+            assertFalse(set.contains(els[i]));
         }
 
-        assertEquals(false, set.remove(els[0]));
-        assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
+        assertFalse(set.remove(els[0]));
+        assertTrue(set.remove(Integer.valueOf((String) els[0])));
 
     }
 
+    @Test
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new HashSet<>();
-        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (final Object el : els) {
-            assertEquals(true, set.contains(Integer.valueOf((String) el)));
-            assertEquals(false, set.contains(el));
+            assertTrue(set.contains(Integer.valueOf((String) el)));
+            assertFalse(set.contains(el));
         }
 
-        assertEquals(false, set.remove(els[0]));
-        assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
+        assertFalse(set.remove(els[0]));
+        assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

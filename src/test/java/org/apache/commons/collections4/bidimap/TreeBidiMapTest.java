@@ -18,22 +18,15 @@ package org.apache.commons.collections4.bidimap;
 
 import java.util.TreeMap;
 
-import junit.framework.Test;
 import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.BulkTest;
 
 /**
  * JUnit tests.
- *
  */
 public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(TreeBidiMapTest.class);
-    }
-
-    public TreeBidiMapTest(final String testName) {
-        super(testName);
+    public TreeBidiMapTest() {
+        super(TreeBidiMapTest.class.getSimpleName());
     }
 
     @Override

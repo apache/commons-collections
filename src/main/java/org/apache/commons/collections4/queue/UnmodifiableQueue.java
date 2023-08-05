@@ -62,7 +62,6 @@ public final class UnmodifiableQueue<E>
         return new UnmodifiableQueue<>(queue);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -74,7 +73,6 @@ public final class UnmodifiableQueue<E>
         super((Queue<E>) queue);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *
@@ -99,7 +97,6 @@ public final class UnmodifiableQueue<E>
         setCollection((Collection<E>) in.readObject());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
@@ -143,7 +140,6 @@ public final class UnmodifiableQueue<E>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean offer(final E obj) {

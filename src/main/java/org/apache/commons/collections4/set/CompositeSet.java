@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -85,7 +85,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         addComposited(sets);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the size of this composite set.
      * <p>
@@ -112,7 +111,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     @Override
     public boolean isEmpty() {
         for (final Set<E> item : all) {
-            if (item.isEmpty() == false) {
+            if (!item.isEmpty()) {
                 return false;
             }
         }
@@ -153,9 +152,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<>();
-        for (final Set<E> item : all) {
-            chain.addIterator(item.iterator());
-        }
+        all.forEach(item -> chain.addIterator(item.iterator()));
         return chain;
     }
 
@@ -257,7 +254,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             return false;
         }
         for (final Object item : coll) {
-            if (contains(item) == false) {
+            if (!contains(item)) {
                 return false;
             }
         }
@@ -353,7 +350,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify a SetMutator strategy instance to handle changes.
      *
@@ -425,7 +421,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         all.remove(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a new Set containing all of the elements.
      *

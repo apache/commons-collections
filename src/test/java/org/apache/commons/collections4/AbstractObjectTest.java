@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,6 +31,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link java.lang.Object} methods and contracts.
@@ -52,7 +58,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement this method to return the object to test.
      *
@@ -98,37 +103,38 @@ public abstract class AbstractObjectTest extends BulkTest {
         return true;
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testObjectEqualsSelf() {
         final Object obj = makeObject();
-        assertEquals("A Object should equal itself", obj, obj);
+        assertEquals(obj, obj, "A Object should equal itself");
     }
 
+    @Test
     public void testEqualsNull() {
         final Object obj = makeObject();
-        assertEquals(false, obj.equals(null)); // make sure this doesn't throw NPE either
+        assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
+    @Test
     public void testObjectHashCodeEqualsSelfHashCode() {
         final Object obj = makeObject();
-        assertEquals("hashCode should be repeatable", obj.hashCode(), obj.hashCode());
+        assertEquals(obj.hashCode(), obj.hashCode(), "hashCode should be repeatable");
     }
 
+    @Test
     public void testObjectHashCodeEqualsContract() {
         final Object obj1 = makeObject();
         if (obj1.equals(obj1)) {
             assertEquals(
-                "[1] When two objects are equal, their hashCodes should be also.",
-                obj1.hashCode(), obj1.hashCode());
+                    obj1.hashCode(), obj1.hashCode(),
+                    "[1] When two objects are equal, their hashCodes should be also.");
         }
         final Object obj2 = makeObject();
         if (obj1.equals(obj2)) {
             assertEquals(
-                "[2] When two objects are equal, their hashCodes should be also.",
-                obj1.hashCode(), obj2.hashCode());
-            assertTrue(
-                "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true",
-                obj2.equals(obj1));
+                    obj1.hashCode(), obj2.hashCode(),
+                    "[2] When two objects are equal, their hashCodes should be also.");
+            assertEquals(obj2, obj1, "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true");
         }
     }
 
@@ -145,12 +151,13 @@ public abstract class AbstractObjectTest extends BulkTest {
         return dest;
     }
 
+    @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
             final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
-                assertEquals("obj != deserialize(serialize(obj))", obj, dest);
+                assertEquals(obj, dest, "obj != deserialize(serialize(obj))");
             }
         }
     }
@@ -163,11 +170,12 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @Test
     public void testSimpleSerialization() throws Exception {
         final Object o = makeObject();
         if (o instanceof Serializable && isTestSerialization()) {
-            final byte[] objekt = writeExternalFormToBytes((Serializable) o);
-            readExternalFormFromBytes(objekt);
+            final byte[] object = writeExternalFormToBytes((Serializable) o);
+            readExternalFormFromBytes(object);
         }
     }
 
@@ -175,14 +183,15 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
+    @Test
     public void testCanonicalEmptyCollectionExists() {
         if (supportsEmptyCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();
             if (object instanceof Serializable) {
                 final String name = getCanonicalEmptyCollectionName(object);
                 assertTrue(
-                    "Canonical empty collection (" + name + ") is not in SCM",
-                    new File(name).exists());
+                        new File(name).exists(),
+                        "Canonical empty collection (" + name + ") is not in SCM");
             }
         }
     }
@@ -191,20 +200,20 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Tests serialization by comparing against a previously stored version in SCM.
      * If the test object is serializable, confirm that a canonical form exists.
      */
+    @Test
     public void testCanonicalFullCollectionExists() {
         if (supportsFullCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             final Object object = makeObject();
             if (object instanceof Serializable) {
                 final String name = getCanonicalFullCollectionName(object);
                 assertTrue(
-                    "Canonical full collection (" + name + ") is not in SCM",
-                    new File(name).exists());
+                        new File(name).exists(),
+                        "Canonical full collection (" + name + ") is not in SCM");
             }
         }
     }
 
     // protected implementation
-    //-----------------------------------------------------------------------
     /**
      * Get the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to
@@ -315,7 +324,6 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     // private implementation
-    //-----------------------------------------------------------------------
     private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
         final ObjectInputStream oStream = new ObjectInputStream(stream);
         return oStream.readObject();

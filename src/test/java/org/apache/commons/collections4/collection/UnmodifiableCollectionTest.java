@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -31,11 +36,10 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableCollectionTest(final String testName) {
-        super(testName);
+    public UnmodifiableCollectionTest() {
+        super(UnmodifiableCollectionTest.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
         return UnmodifiableCollection.unmodifiableCollection(new ArrayList<E>());
@@ -67,24 +71,19 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final Collection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));
 
-        try {
-            UnmodifiableCollection.unmodifiableCollection(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableCollection.unmodifiableCollection(null));
     }
-
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

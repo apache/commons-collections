@@ -17,14 +17,14 @@
 package org.apache.commons.collections4.map;
 
 import java.io.Serializable;
-
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.CompositeSet;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.CompositeCollection;
+import org.apache.commons.collections4.set.CompositeSet;
 
 /**
  * Decorates a map of other maps to provide a single unified view.
@@ -47,7 +47,7 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  */
 public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {
 
-    private static final Map[] EMPTY_MAP_ARRAY = new Map[0];
+    private static final Map[] EMPTY_MAP_ARRAY = {};
 
     /** Serialization version */
     private static final long serialVersionUID = -6096931280583808322L;
@@ -117,7 +117,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify the MapMutator to be used by mutation operations.
      *
@@ -134,7 +133,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws IllegalArgumentException if there is a key collision and there is no
      *         MapMutator set to handle it.
      */
-    @SuppressWarnings("unchecked")
     public synchronized void addComposited(final Map<K, V> map) throws IllegalArgumentException {
         if (map != null) {
             for (int i = composite.length - 1; i >= 0; --i) {
@@ -146,8 +144,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
                     this.mutator.resolveCollision(this, this.composite[i], map, intersect);
                 }
             }
-            final Map<K, V>[] temp = new Map[this.composite.length + 1];
-            System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
+            final Map<K, V>[] temp = Arrays.copyOf(this.composite, this.composite.length + 1);
             temp[temp.length - 1] = map;
             this.composite = temp;
         }
@@ -174,7 +171,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Calls {@code clear()} on all composited Maps.
      *
@@ -201,7 +197,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map (optional).
      * @throws NullPointerException if the key is {@code null} and this map
-     *            does not not permit {@code null} keys (optional).
+     *            does not permit {@code null} keys (optional).
      */
     @Override
     public boolean containsKey(final Object key) {
@@ -227,7 +223,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the value is of an inappropriate type for
      *         this map (optional).
      * @throws NullPointerException if the value is {@code null} and this map
-     *            does not not permit {@code null} values (optional).
+     *            does not permit {@code null} values (optional).
      */
     @Override
     public boolean containsValue(final Object value) {
@@ -284,7 +280,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map (optional).
-     * @throws NullPointerException key is {@code null} and this map does not
+     * @throws NullPointerException key is {@code null} and this map does
      *         not permit {@code null} keys (optional).
      *
      * @see #containsKey(Object)
@@ -422,7 +418,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws ClassCastException if the key is of an inappropriate type for
      *         the composited map (optional).
      * @throws NullPointerException if the key is {@code null} and the composited map
-     *            does not not permit {@code null} keys (optional).
+     *            does not permit {@code null} keys (optional).
      * @throws UnsupportedOperationException if the {@code remove} method is
      *         not supported by the composited map containing the key
      */

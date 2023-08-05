@@ -35,7 +35,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     /** The iterator being decorated */
     private final ListIterator<? extends E> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -44,7 +43,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @return a new unmodifiable list iterator
      * @throws NullPointerException if the iterator is null
      */
-    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
+    public static <E> ListIterator<E> unmodifiableListIterator(final ListIterator<? extends E> iterator) {
         Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast
@@ -54,7 +53,20 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         return new UnmodifiableListIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
+    /**
+     * Decorates the specified iterator such that it cannot be modified.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @return a new unmodifiable list iterator
+     * @throws NullPointerException if the iterator is null
+     * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
+     */
+    @Deprecated
+    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
+        return unmodifiableListIterator(iterator);
+    }
+
     /**
      * Constructor.
      *
@@ -64,7 +76,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         return iterator.hasNext();

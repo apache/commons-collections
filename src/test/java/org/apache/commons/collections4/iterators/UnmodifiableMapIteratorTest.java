@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,15 +28,15 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableMapIterator.
- *
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
-    public UnmodifiableMapIteratorTest(final String testName) {
-        super(testName);
+    public UnmodifiableMapIteratorTest() {
+        super(UnmodifiableMapIteratorTest.class.getSimpleName());
     }
 
     @Override
@@ -74,22 +79,20 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         return false;
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         MapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         it = getMap().mapIterator();
-        assertTrue(it != UnmodifiableMapIterator.unmodifiableMapIterator(it));
+        assertNotSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
-        try {
-            UnmodifiableMapIterator.unmodifiableMapIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableMapIterator.unmodifiableMapIterator(null));
     }
 
 }

@@ -18,12 +18,10 @@ package org.apache.commons.collections4.iterators;
 
 /**
  * Test the ArrayListIterator class with primitives.
- *
  */
 public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
-    public ArrayListIterator2Test(final String testName) {
-        super(testName);
+    public ArrayListIterator2Test() {
     }
 
     @Override

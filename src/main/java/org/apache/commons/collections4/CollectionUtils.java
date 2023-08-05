@@ -432,7 +432,6 @@ public class CollectionUtils {
         if (coll2.isEmpty()) {
             return true;
         }
-        final Iterator<?> it = coll1.iterator();
         final Set<Object> elementsAlreadySeen = new HashSet<>();
         for (final Object nextElement : coll2) {
             if (elementsAlreadySeen.contains(nextElement)) {
@@ -440,10 +439,9 @@ public class CollectionUtils {
             }
 
             boolean foundCurrentElement = false;
-            while (it.hasNext()) {
-                final Object p = it.next();
+            for (final Object p : coll1) {
                 elementsAlreadySeen.add(p);
-                if (nextElement == null ? p == null : nextElement.equals(p)) {
+                if (Objects.equals(nextElement, p)) {
                     foundCurrentElement = true;
                     break;
                 }
@@ -1189,7 +1187,7 @@ public class CollectionUtils {
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
                                                final Transformer<? super I, ? extends O> transformer) {
-        return collect(inputIterator, transformer, new ArrayList<O>());
+        return collect(inputIterator, transformer, new ArrayList<>());
     }
 
     /**
@@ -1250,7 +1248,6 @@ public class CollectionUtils {
         return outputCollection;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds an element to the collection unless the element is null.
      *
@@ -1568,10 +1565,10 @@ public class CollectionUtils {
             return ((Object[]) object).length == 0;
         }
         if (object instanceof Iterator<?>) {
-            return ((Iterator<?>) object).hasNext() == false;
+            return !((Iterator<?>) object).hasNext();
         }
         if (object instanceof Enumeration<?>) {
-            return ((Enumeration<?>) object).hasMoreElements() == false;
+            return !((Enumeration<?>) object).hasMoreElements();
         }
         try {
             return Array.getLength(object) == 0;
@@ -1580,7 +1577,6 @@ public class CollectionUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Null-safe check if the specified collection is empty.
      * <p>
@@ -1609,7 +1605,6 @@ public class CollectionUtils {
         return !isEmpty(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Reverses the order of the given array.
      *
@@ -1692,7 +1687,6 @@ public class CollectionUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Merges two sorted Collections, a and b, into a single, sorted List
      * such that the natural ordering of the elements is retained.
@@ -1801,7 +1795,6 @@ public class CollectionUtils {
         return mergedList;
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Returns a {@link Collection} of all the permutations of the input collection.
@@ -1833,7 +1826,6 @@ public class CollectionUtils {
         return result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a collection containing all the elements in {@code collection}
      * that are also in {@code retain}. The cardinality of an element {@code e}
@@ -1898,7 +1890,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
-                collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(retain, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
@@ -2037,7 +2029,7 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
-                collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
+                collect(remove, transformer, new HashSet<>());
 
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
@@ -2048,7 +2040,6 @@ public class CollectionUtils {
         return list;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized collection backed by the given collection.
      * <p>

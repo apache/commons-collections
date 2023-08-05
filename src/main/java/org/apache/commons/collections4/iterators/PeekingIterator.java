@@ -44,7 +44,6 @@ public class PeekingIterator<E> implements Iterator<E> {
     /** The current slot for lookahead. */
     private E slot;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
@@ -65,7 +64,6 @@ public class PeekingIterator<E> implements Iterator<E> {
         return new PeekingIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Constructor.
@@ -90,7 +88,6 @@ public class PeekingIterator<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         if (exhausted) {

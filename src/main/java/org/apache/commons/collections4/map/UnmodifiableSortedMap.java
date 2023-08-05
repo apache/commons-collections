@@ -69,7 +69,6 @@ public final class UnmodifiableSortedMap<K, V>
         return new UnmodifiableSortedMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -81,7 +80,6 @@ public final class UnmodifiableSortedMap<K, V>
         super((SortedMap<K, V>) map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -108,7 +106,6 @@ public final class UnmodifiableSortedMap<K, V>
         map = (Map<K, V>) in.readObject();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -144,7 +141,6 @@ public final class UnmodifiableSortedMap<K, V>
         return UnmodifiableCollection.unmodifiableCollection(super.values());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K firstKey() {
         return decorated().firstKey();

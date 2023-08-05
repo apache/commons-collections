@@ -45,7 +45,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      **/
     private final boolean nullsAreHigh;
 
-    //-----------------------------------------------------------------------
     /**
      *  Construct an instance that sorts {@code null} higher than any
      *  non-{@code null} object it is compared with. When comparing two
@@ -113,7 +112,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
         this.nullsAreHigh = nullsAreHigh;
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Perform a comparison between two objects.  If both objects are
      *  {@code null}, a {@code 0} value is returned.  If one object
@@ -144,7 +142,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
         return this.nonNullComparator.compare(o1, o2);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Implement a hash code for this comparator that is consistent with
      *  {@link #equals(Object)}.

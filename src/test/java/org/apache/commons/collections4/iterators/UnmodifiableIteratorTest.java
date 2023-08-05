@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,27 +28,27 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableIterator.
- *
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
     protected List<E> testList;
 
-    public UnmodifiableIteratorTest(final String testName) {
-        super(testName);
+    public UnmodifiableIteratorTest() {
+        super(UnmodifiableIteratorTest.class.getSimpleName());
     }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
         testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
@@ -62,22 +67,20 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         it = testList.iterator();
-        assertTrue(it != UnmodifiableIterator.unmodifiableIterator(it));
+        assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
-        try {
-            UnmodifiableIterator.unmodifiableIterator(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
     }
 
 }

@@ -42,7 +42,6 @@ public class QueueUtils {
      */
     private QueueUtils() {}
 
-    //-----------------------------------------------------------------------
 
     /**
      * Returns a synchronized (thread-safe) queue backed by the given queue.

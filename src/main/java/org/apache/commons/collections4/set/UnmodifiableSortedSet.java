@@ -62,7 +62,6 @@ public final class UnmodifiableSortedSet<E>
         return new UnmodifiableSortedSet<>(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -73,7 +72,6 @@ public final class UnmodifiableSortedSet<E>
         super(set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
@@ -117,7 +115,6 @@ public final class UnmodifiableSortedSet<E>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
@@ -136,7 +133,6 @@ public final class UnmodifiableSortedSet<E>
         return unmodifiableSortedSet(tail);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *

@@ -43,7 +43,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * <p>
  * This class implements the comparison algorithm, which is the very efficient
  * algorithm from Eugene W. Myers
- * <a href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
+ * <a href="https://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
  * An O(ND) Difference Algorithm and Its Variations</a>. This algorithm produces
  * the shortest possible
  * {@link EditScript edit script}
@@ -156,15 +156,15 @@ public class SequencesComparator<T> {
      * Get the middle snake corresponding to two subsequences of the
      * main sequences.
      * <p>
-     * The snake is found using the MYERS Algorithm (this algorithms has
+     * The snake is found using the MYERS Algorithm (this algorithm has
      * also been implemented in the GNU diff program). This algorithm is
      * explained in Eugene Myers article:
-     * <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
+     * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
      * An O(ND) Difference Algorithm and Its Variations</a>.
      *
-     * @param start1  the begin of the first sequence to be compared
+     * @param start1  the start of the first sequence to be compared
      * @param end1  the end of the first sequence to be compared
-     * @param start2  the begin of the second sequence to be compared
+     * @param start2  the start of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @return the middle snake
      */
@@ -203,7 +203,7 @@ public class SequencesComparator<T> {
                     ++y;
                 }
                 // Second step
-                if ((delta % 2 != 0 && delta - d <= k && k <= delta + d) && (vUp[i-delta] <= vDown[i])) { // NOPMD
+                if (delta % 2 != 0 && delta - d <= k && k <= delta + d && vUp[i-delta] <= vDown[i]) { // NOPMD
                     return buildSnake(vUp[i-delta], k + start1 - start2, end1, end2);
                 }
             }
@@ -227,23 +227,23 @@ public class SequencesComparator<T> {
                     y--;
                 }
                 // Second step
-                if ((delta % 2 == 0 && -d <= k && k <= d) && (vUp[i] <= vDown[i + delta])) { // NOPMD
+                if (delta % 2 == 0 && -d <= k && k <= d && vUp[i] <= vDown[i + delta]) { // NOPMD
                     return buildSnake(vUp[i], k + start1 - start2, end1, end2);
                 }
             }
         }
 
         // this should not happen
-        throw new RuntimeException("Internal Error");
+        throw new IllegalStateException("Internal Error");
     }
 
 
     /**
      * Build an edit script.
      *
-     * @param start1  the begin of the first sequence to be compared
+     * @param start1  the start of the first sequence to be compared
      * @param end1  the end of the first sequence to be compared
-     * @param start2  the begin of the second sequence to be compared
+     * @param start2  the start of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @param script the edited script
      */

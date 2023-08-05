@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.Predicate;
@@ -86,7 +85,6 @@ public class PredicatedMap<K, V>
         return new PredicatedMap<>(map, keyPredicate, valuePredicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -100,15 +98,9 @@ public class PredicatedMap<K, V>
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
-
-        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            final Map.Entry<K, V> entry = it.next();
-            validate(entry.getKey(), entry.getValue());
-        }
+        map.forEach(this::validate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -135,7 +127,6 @@ public class PredicatedMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Validates a key value pair.
      *
@@ -144,10 +135,10 @@ public class PredicatedMap<K, V>
      * @throws IllegalArgumentException if invalid
      */
     protected void validate(final K key, final V value) {
-        if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
+        if (keyPredicate != null && !keyPredicate.evaluate(key)) {
             throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
         }
-        if (valuePredicate != null && valuePredicate.evaluate(value) == false) {
+        if (valuePredicate != null && !valuePredicate.evaluate(value)) {
             throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
         }
     }
@@ -162,7 +153,7 @@ public class PredicatedMap<K, V>
      */
     @Override
     protected V checkSetValue(final V value) {
-        if (valuePredicate.evaluate(value) == false) {
+        if (!valuePredicate.evaluate(value)) {
             throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
         }
         return value;
@@ -179,7 +170,6 @@ public class PredicatedMap<K, V>
         return valuePredicate != null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final K key, final V value) {
         validate(key, value);

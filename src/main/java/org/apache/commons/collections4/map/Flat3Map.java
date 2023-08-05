@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -123,7 +124,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         putAll(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      *
@@ -197,7 +197,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         return size() == 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
      *
@@ -291,7 +290,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map.
      *
@@ -610,7 +608,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the map.
      * Changes made to the iterator affect this map.
@@ -652,7 +649,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public K next() {
-            if (hasNext() == false) {
+            if (!hasNext()) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
             canRemove = true;
@@ -662,7 +659,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
             parent.remove(getKey());
@@ -672,7 +669,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public K getKey() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             switch (nextIndex) {
@@ -688,7 +685,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public V getValue() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             switch (nextIndex) {
@@ -704,7 +701,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public V setValue(final V value) {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             final V old = getValue();
@@ -779,7 +776,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
@@ -884,7 +881,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             if (removed) {
                 return false;
             }
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
             final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
@@ -1108,7 +1105,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -1143,7 +1139,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *
@@ -1160,7 +1155,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             }
             return cloned;
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 
@@ -1178,7 +1173,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         if (delegateMap != null) {
             return delegateMap.equals(obj);
         }
-        if (obj instanceof Map == false) {
+        if (!(obj instanceof Map)) {
             return false;
         }
         final Map<?, ?> other = (Map<?, ?>) obj;
@@ -1189,27 +1184,27 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             Object otherValue = null;
             switch (size) {  // drop through
             case 3:
-                if (other.containsKey(key3) == false) {
+                if (!other.containsKey(key3)) {
                     return false;
                 }
                 otherValue = other.get(key3);
-                if (value3 == null ? otherValue != null : !value3.equals(otherValue)) {
+                if (!Objects.equals(value3, otherValue)) {
                     return false;
                 }
             case 2:
-                if (other.containsKey(key2) == false) {
+                if (!other.containsKey(key2)) {
                     return false;
                 }
                 otherValue = other.get(key2);
-                if (value2 == null ? otherValue != null : !value2.equals(otherValue)) {
+                if (!Objects.equals(value2, otherValue)) {
                     return false;
                 }
             case 1:
-                if (other.containsKey(key1) == false) {
+                if (!other.containsKey(key1)) {
                     return false;
                 }
                 otherValue = other.get(key1);
-                if (value1 == null ? otherValue != null : !value1.equals(otherValue)) {
+                if (!Objects.equals(value1, otherValue)) {
                     return false;
                 }
             }

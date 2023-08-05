@@ -62,7 +62,6 @@ public final class UnmodifiableList<E>
         return new UnmodifiableList<>(list);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -74,7 +73,6 @@ public final class UnmodifiableList<E>
         super((List<E>) list);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
@@ -118,15 +116,14 @@ public final class UnmodifiableList<E>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public ListIterator<E> listIterator() {
-        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator());
+        return UnmodifiableListIterator.unmodifiableListIterator(decorated().listIterator());
     }
 
     @Override
     public ListIterator<E> listIterator(final int index) {
-        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator(index));
+        return UnmodifiableListIterator.unmodifiableListIterator(decorated().listIterator(index));
     }
 
     @Override

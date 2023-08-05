@@ -46,8 +46,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /** The current iterator index */
     int index;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array.
@@ -123,7 +121,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     // Iterator interface
-    //-----------------------------------------------------------------------
     /**
      * Returns true if there are more elements to return from the array.
      *
@@ -144,7 +141,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     @Override
     @SuppressWarnings("unchecked")
     public E next() {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         return (E) Array.get(array, index++);
@@ -161,7 +158,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     // Properties
-    //-----------------------------------------------------------------------
     /**
      * Gets the array that this iterator is iterating over.
      *

@@ -84,7 +84,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
         if (collection.isEmpty()) {
             throw new NoSuchElementException("There are no elements for this iterator to loop on");
         }
-        if (iterator.hasNext() == false) {
+        if (!iterator.hasNext()) {
             reset();
         }
         return iterator.next();

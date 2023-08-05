@@ -71,7 +71,6 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         return map;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         decorated().clear();

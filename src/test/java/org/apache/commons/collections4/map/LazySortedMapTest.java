@@ -16,7 +16,13 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.apache.commons.collections4.map.LazySortedMap.*;
+import static org.apache.commons.collections4.map.LazySortedMap.lazySortedMap;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -28,7 +34,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link LazyMapTest} for exercising the
@@ -39,19 +45,21 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    private class ReverseStringComparator implements Comparator<String> {
+    private static class ReverseStringComparator implements Comparator<String> {
+
         @Override
         public int compare(final String arg0, final String arg1) {
             return arg1.compareTo(arg0);
         }
+
     }
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
     protected final Comparator<String> reverseStringComparator = new ReverseStringComparator();
 
-    public LazySortedMapTest(final String testName) {
-        super(testName);
+    public LazySortedMapTest() {
+        super(LazySortedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -65,7 +73,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     // from LazyMapTest
-    //-----------------------------------------------------------------------
+    @Test
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
@@ -81,66 +89,60 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
         map = lazySortedMap(new TreeMap<Integer, Number>(), FactoryUtils.<Number>nullFactory());
         final Number o = map.get(5);
-        assertEquals(null, o);
+        assertNull(o);
         assertEquals(1, map.size());
 
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String, Number>(), oneFactory);
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("First key should be A", "A", map.firstKey());
-        assertEquals("Last key should be C", "C", map.lastKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("C").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("A", "C").lastKey());
+        assertEquals("A", map.firstKey(), "First key should be A");
+        assertEquals("C", map.lastKey(), "Last key should be C");
+        assertEquals("B", map.tailMap("B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap("C").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap("A", "C").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == null);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
+    @Test
     public void testReverseSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new ConcurrentSkipListMap<String, Number>(reverseStringComparator), oneFactory);
-        map.put("A",  5);
+        map.put("A", 5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
-        assertEquals("Last key should be A", "A", map.lastKey());
-        assertEquals("First key should be C", "C", map.firstKey());
-        assertEquals("First key in tail map should be B",
-            "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B",
-            "B", map.headMap("A").lastKey());
-        assertEquals("Last key in submap should be B",
-            "B", map.subMap("C", "A").lastKey());
+        assertEquals("A", map.lastKey(), "Last key should be A");
+        assertEquals("C", map.firstKey(), "First key should be C");
+        assertEquals("B", map.tailMap("B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap("A").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap("C", "A").lastKey(),
+                "Last key in submap should be B");
 
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null",
-            c == reverseStringComparator);
+        assertSame(c, reverseStringComparator, "natural order, so comparator should be null");
     }
 
+    @Test
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
-        SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
+        final SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
         assertTrue(map instanceof LazySortedMap);
-        try {
-            map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
-            fail("Expecting NullPointerException for null transformer");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            map = lazySortedMap((SortedMap<Integer, Number>) null, transformer);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null),
+                        "Expecting NullPointerException for null transformer"),
+                () -> assertThrows(NullPointerException.class, () -> lazySortedMap((SortedMap<Integer, Number>) null, transformer),
+                        "Expecting NullPointerException for null map")
+        );
     }
 
     @Override
@@ -158,4 +160,5 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/LazySortedMap.fullCollection.version4.obj");
 //    }
+
 }

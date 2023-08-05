@@ -62,7 +62,6 @@ public final class UnmodifiableCollection<E>
         return new UnmodifiableCollection<>(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -74,7 +73,6 @@ public final class UnmodifiableCollection<E>
         super((Collection<E>) coll);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());

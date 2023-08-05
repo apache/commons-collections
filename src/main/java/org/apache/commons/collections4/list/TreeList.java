@@ -73,7 +73,6 @@ public class TreeList<E> extends AbstractList<E> {
     /** The current size of the list */
     private int size;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs a new empty list.
      */
@@ -93,7 +92,6 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the element at the specified index.
      *
@@ -193,7 +191,6 @@ public class TreeList<E> extends AbstractList<E> {
         return array;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds a new element to the list.
      *
@@ -213,7 +210,7 @@ public class TreeList<E> extends AbstractList<E> {
     }
 
     /**
-     * Appends all of the elements in the specified collection to the end of this list,
+     * Appends all the elements in the specified collection to the end of this list,
      * in the order that they are returned by the specified collection's Iterator.
      * <p>
      * This method runs in O(n + log m) time, where m is
@@ -278,7 +275,6 @@ public class TreeList<E> extends AbstractList<E> {
         size = 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the index is valid.
      *
@@ -293,7 +289,6 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implements an AVLNode which keeps the offset updated.
      * <p>
@@ -532,16 +527,15 @@ public class TreeList<E> extends AbstractList<E> {
             return ret;
         }
 
-        //-----------------------------------------------------------------------
         /**
-         * Gets the left node, returning null if its a faedelung.
+         * Gets the left node, returning null if it's a faedelung.
          */
         private AVLNode<E> getLeftSubTree() {
             return leftIsPrevious ? null : left;
         }
 
         /**
-         * Gets the right node, returning null if its a faedelung.
+         * Gets the right node, returning null if it's a faedelung.
          */
         private AVLNode<E> getRightSubTree() {
             return rightIsNext ? null : right;
@@ -672,7 +666,6 @@ public class TreeList<E> extends AbstractList<E> {
             return this;
         }
 
-        //-----------------------------------------------------------------------
         /**
          * Balances according to the AVL algorithm.
          */
@@ -693,7 +686,7 @@ public class TreeList<E> extends AbstractList<E> {
                 }
                 return rotateLeft();
             default :
-                throw new RuntimeException("tree inconsistent!");
+                throw new IllegalStateException("tree inconsistent!");
             }
         }
 

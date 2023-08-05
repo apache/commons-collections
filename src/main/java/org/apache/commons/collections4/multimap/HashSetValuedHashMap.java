@@ -112,13 +112,11 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
         super.putAll(map);
     }
 
-    // -----------------------------------------------------------------------
     @Override
     protected HashSet<V> createCollection() {
         return new HashSet<>(initialSetCapacity);
     }
 
-    // -----------------------------------------------------------------------
     private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         doWriteObject(oos);

@@ -85,7 +85,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         this.map = map;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements in this multiset.
      *
@@ -122,7 +121,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Determines if the multiset contains the given element by checking if the
      * underlying map contains the element as a key.
@@ -135,7 +133,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return map.containsKey(object);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the multiset elements. Elements present in the
      * MultiSet more than once will be returned repeatedly.
@@ -198,7 +195,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
             }
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException();
             }
             final MutableInteger mut = current.getValue();
@@ -212,7 +209,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public int add(final E object, final int occurrences) {
         if (occurrences < 0) {
@@ -234,7 +230,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return oldCount;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clears the multiset by clearing the underlying map.
      */
@@ -270,7 +265,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return oldCount;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Mutable integer class for storing the data.
      */
@@ -288,7 +282,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof MutableInteger == false) {
+            if (!(obj instanceof MutableInteger)) {
                 return false;
             }
             return ((MutableInteger) obj).value == value;
@@ -300,7 +294,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     protected Iterator<E> createUniqueSetIterator() {
         return new UniqueSetIterator<>(getMap().keySet().iterator(), this);
@@ -316,7 +309,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return new EntrySetIterator<>(map.entrySet().iterator(), this);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class UniqueSetIterator.
      */
@@ -350,7 +342,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             final int count = parent.getCount(lastElement);
@@ -402,7 +394,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             decorated.remove();
@@ -437,7 +429,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the multiset out using a custom routine.
      * @param out the output stream
@@ -472,7 +463,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an array of all of this multiset's elements.
      *
@@ -530,13 +520,12 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         return array;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }
-        if (object instanceof MultiSet == false) {
+        if (!(object instanceof MultiSet)) {
             return false;
         }
         final MultiSet<?> other = (MultiSet<?>) object;

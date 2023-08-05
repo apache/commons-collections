@@ -17,7 +17,6 @@
 package org.apache.commons.collections4;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -117,7 +116,6 @@ public class IteratorUtils {
     private IteratorUtils() {}
 
     // Empty
-    //-----------------------------------------------------------------------
     /**
      * Gets an empty iterator.
      * <p>
@@ -185,7 +183,6 @@ public class IteratorUtils {
     }
 
     // Singleton
-    //-----------------------------------------------------------------------
     /**
      * Gets a singleton iterator.
      * <p>
@@ -215,7 +212,6 @@ public class IteratorUtils {
     }
 
     // Arrays
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over an object array.
      *
@@ -313,7 +309,6 @@ public class IteratorUtils {
         return new ArrayIterator<>(array, start, end);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets a list iterator over an object array.
      *
@@ -410,7 +405,6 @@ public class IteratorUtils {
     }
 
     // Bounded
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator to return at most the given number
      * of elements.
@@ -450,7 +444,6 @@ public class IteratorUtils {
     }
 
     // Unmodifiable
-    //-----------------------------------------------------------------------
     /**
      * Gets an immutable version of an {@link Iterator}. The returned object
      * will always throw an {@link UnsupportedOperationException} for
@@ -475,7 +468,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static <E> ListIterator<E> unmodifiableListIterator(final ListIterator<E> listIterator) {
-        return UnmodifiableListIterator.umodifiableListIterator(listIterator);
+        return UnmodifiableListIterator.unmodifiableListIterator(listIterator);
     }
 
     /**
@@ -493,7 +486,6 @@ public class IteratorUtils {
     }
 
     // Chained
-    //-----------------------------------------------------------------------
 
     /**
      * Gets an iterator that iterates through two {@link Iterator}s
@@ -540,7 +532,6 @@ public class IteratorUtils {
     }
 
     // Collated
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in a collection of ordered {@link Iterator}s.
@@ -617,7 +608,6 @@ public class IteratorUtils {
     }
 
     // Object Graph
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that operates over an object graph.
      * <p>
@@ -678,7 +668,6 @@ public class IteratorUtils {
     }
 
     // Transformed
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that transforms the elements of another iterator.
      * <p>
@@ -701,7 +690,6 @@ public class IteratorUtils {
     }
 
     // Filtered
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that filters another iterator.
      * <p>
@@ -742,7 +730,6 @@ public class IteratorUtils {
     }
 
     // Looping
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that loops continuously over the supplied collection.
      * <p>
@@ -776,7 +763,6 @@ public class IteratorUtils {
     }
 
     // org.w3c.dom.NodeList iterators
-    //-----------------------------------------------------------------------
     /**
      * Gets an {@link Iterator} that wraps the specified {@link NodeList}.
      * The returned {@link Iterator} can be used for a single iteration.
@@ -812,7 +798,6 @@ public class IteratorUtils {
     }
 
     // Peeking
-    //-----------------------------------------------------------------------
 
     /**
      * Gets an iterator that supports one-element lookahead.
@@ -828,7 +813,6 @@ public class IteratorUtils {
     }
 
     // Pushback
-    //-----------------------------------------------------------------------
 
     /**
      * Gets an iterator that supports pushback of elements.
@@ -844,7 +828,6 @@ public class IteratorUtils {
     }
 
     // Skipping
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator to skip the first N elements.
      *
@@ -861,7 +844,6 @@ public class IteratorUtils {
     }
 
     // Zipping
-    //-----------------------------------------------------------------------
     /**
      * Returns an iterator that interleaves elements from the decorated iterators.
      *
@@ -908,7 +890,6 @@ public class IteratorUtils {
     }
 
     // Views
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that provides an iterator view of the given enumeration.
      *
@@ -1131,15 +1112,13 @@ public class IteratorUtils {
                     return it;
                 }
             }
-        } catch (final RuntimeException | NoSuchMethodException | IllegalAccessException |
-            InvocationTargetException e) { // NOPMD
+        } catch (final RuntimeException | ReflectiveOperationException ignore) { // NOPMD
             // ignore
         }
         return singletonIterator(obj);
     }
 
     // Utility methods
-    //-----------------------------------------------------------------------
 
     /**
      * Applies the closure to each element of the provided iterator.

@@ -63,7 +63,6 @@ public final class UnmodifiableBidiMap<K, V>
         return new UnmodifiableBidiMap<>(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -75,7 +74,6 @@ public final class UnmodifiableBidiMap<K, V>
         super((BidiMap<K, V>) map);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -114,7 +112,6 @@ public final class UnmodifiableBidiMap<K, V>
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K removeValue(final Object value) {
         throw new UnsupportedOperationException();

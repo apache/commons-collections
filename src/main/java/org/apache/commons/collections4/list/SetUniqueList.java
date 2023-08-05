@@ -76,16 +76,15 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
         Objects.requireNonNull(list, "list");
         if (list.isEmpty()) {
-            return new SetUniqueList<>(list, new HashSet<E>());
+            return new SetUniqueList<>(list, new HashSet<>());
         }
         final List<E> temp = new ArrayList<>(list);
         list.clear();
-        final SetUniqueList<E> sl = new SetUniqueList<>(list, new HashSet<E>());
+        final SetUniqueList<E> sl = new SetUniqueList<>(list, new HashSet<>());
         sl.addAll(temp);
         return sl;
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
@@ -100,7 +99,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         this.set = Objects.requireNonNull(set, "set");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view as a Set.
      *
@@ -110,12 +108,11 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Adds an element to the list if it is not already present.
      * <p>
      * <i>(Violation)</i> The {@code List} interface requires that this
-     * method returns {@code true} always. However this class may return
+     * method returns {@code true} always. However, this class may return
      * {@code false} because of the {@code Set} behavior.
      *
      * @param object  the object to add
@@ -147,7 +144,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public void add(final int index, final E object) {
         // adds element if it is not contained already
-        if (set.contains(object) == false) {
+        if (!set.contains(object)) {
             set.add(object);
             super.add(index, object);
         }
@@ -197,7 +194,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return super.addAll(index, temp);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Sets the value at the specified index avoiding duplicates.
      * <p>
@@ -273,7 +269,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public boolean retainAll(final Collection<?> coll) {
         final boolean result = set.retainAll(coll);
-        if (result == false) {
+        if (!result) {
             return false;
         }
         if (set.isEmpty()) {
@@ -352,10 +348,10 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
                 subSet = new HashSet<>();
             }
         }
+        subSet.addAll(list);
         return subSet;
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Inner class iterator.
      */
@@ -418,7 +414,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
         @Override
         public void add(final E object) {
-            if (set.contains(object) == false) {
+            if (!set.contains(object)) {
                 super.add(object);
                 set.add(object);
             }

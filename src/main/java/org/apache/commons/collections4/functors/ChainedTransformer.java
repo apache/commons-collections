@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Transformer;
  */
 public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
-    private static final Transformer[] EMPTY_TRANSFORMER_ARRAY = new Transformer[0];
+    private static final Transformer[] EMPTY_TRANSFORMER_ARRAY = {};
 
     /** Serial version UID */
     private static final long serialVersionUID = 3514945074733160196L;

@@ -61,7 +61,6 @@ public final class UnmodifiableSet<E>
         return new UnmodifiableSet<>(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -73,7 +72,6 @@ public final class UnmodifiableSet<E>
         super((Set<E>) set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());

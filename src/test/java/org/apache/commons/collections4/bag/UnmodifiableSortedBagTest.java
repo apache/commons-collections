@@ -16,14 +16,16 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -33,15 +35,10 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  */
 public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 
-    public UnmodifiableSortedBagTest(final String testName) {
-        super(testName);
+    public UnmodifiableSortedBagTest() {
+        super(UnmodifiableSortedBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedBagTest.class);
-    }
-
-    //-----------------------------------------------------------------------
     @Override
     public SortedBag<E> makeObject() {
         return UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<E>());
@@ -74,24 +71,19 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final SortedBag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableSortedBag.unmodifiableSortedBag(queue));
 
-        try {
-            UnmodifiableSortedBag.unmodifiableSortedBag(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedBag.unmodifiableSortedBag(null));
     }
-
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

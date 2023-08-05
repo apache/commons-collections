@@ -16,12 +16,17 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link Set} methods and contracts.
@@ -50,7 +55,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         super(name);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Provides additional verifications for sets.
      */
@@ -58,16 +62,15 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     public void verify() {
         super.verify();
 
-        assertEquals("Sets should be equal", getConfirmed(), getCollection());
-        assertEquals("Sets should have equal hashCodes",
-                     getConfirmed().hashCode(), getCollection().hashCode());
+        assertEquals(getConfirmed(), getCollection(), "Sets should be equal");
+        assertEquals(getConfirmed().hashCode(), getCollection().hashCode(),
+                     "Sets should have equal hashCodes");
         final Collection<E> set = makeConfirmedCollection();
         for (final E element : getCollection()) {
-            assertTrue("Set.iterator should only return unique elements", set.add(element));
+            assertTrue(set.add(element), "Set.iterator should only return unique elements");
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Set equals method is defined.
      */
@@ -121,7 +124,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         return set;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Return the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
      */
@@ -138,40 +140,41 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         return (Set<E>) super.getConfirmed();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests {@link Set#equals(Object)}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetEquals() {
         resetEmpty();
-        assertEquals("Empty sets should be equal", getCollection(), getConfirmed());
+        assertEquals(getCollection(), getConfirmed(), "Empty sets should be equal");
         verify();
 
         final Collection<E> set2 = makeConfirmedCollection();
         set2.add((E) "foo");
-        assertTrue("Empty set shouldn't equal nonempty set", !getCollection().equals(set2));
+        assertFalse(getCollection().equals(set2), "Empty set shouldn't equal nonempty set");
 
         resetFull();
-        assertEquals("Full sets should be equal", getCollection(), getConfirmed());
+        assertEquals(getCollection(), getConfirmed(), "Full sets should be equal");
         verify();
 
         set2.clear();
         set2.addAll(Arrays.asList(getOtherElements()));
-        assertTrue("Sets with different contents shouldn't be equal", !getCollection().equals(set2));
+        assertFalse(getCollection().equals(set2), "Sets with different contents shouldn't be equal");
     }
 
     /**
      * Tests {@link Set#hashCode()}.
      */
+    @Test
     public void testSetHashCode() {
         resetEmpty();
-        assertEquals("Empty sets have equal hashCodes",
-                getCollection().hashCode(), getConfirmed().hashCode());
+        assertEquals(getCollection().hashCode(), getConfirmed().hashCode(),
+                "Empty sets have equal hashCodes");
 
         resetFull();
-        assertEquals("Equal sets have equal hashCodes",
-                getCollection().hashCode(), getConfirmed().hashCode());
+        assertEquals(getCollection().hashCode(), getConfirmed().hashCode(),
+                "Equal sets have equal hashCodes");
     }
 
 }

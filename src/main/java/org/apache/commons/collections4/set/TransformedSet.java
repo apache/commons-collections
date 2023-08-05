@@ -88,7 +88,6 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>

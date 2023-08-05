@@ -25,7 +25,6 @@ import org.apache.commons.collections4.map.Flat3Map;
 
 /**
  * {@code MapPerformanceTest} is designed to perform basic Map performance tests.
- *
  */
 public class MapPerformance {
 
@@ -127,8 +126,6 @@ public class MapPerformance {
         endMillis = System.currentTimeMillis();
         System.out.println(name + (endMillis - startMillis));
     }
-
-    // ----------------------------------------------------------------------
 
     private static class DummyMap<K, V> implements Map<K, V> {
         @Override

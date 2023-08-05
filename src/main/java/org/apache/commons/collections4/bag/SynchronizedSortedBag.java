@@ -23,7 +23,7 @@ import org.apache.commons.collections4.SortedBag;
 
 /**
  * Decorates another {@link SortedBag} to synchronize its behavior
- * for a multi-threaded environment.
+ * for a multithreaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
  * Iterators must be separately synchronized around the loop.
@@ -53,7 +53,6 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
         return new SynchronizedSortedBag<>(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -84,7 +83,6 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
         return (SortedBag<E>) decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public synchronized E first() {

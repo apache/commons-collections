@@ -16,27 +16,17 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
  * implementation.
- *
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 
-    public HashBagTest(final String testName) {
-        super(testName);
+    public HashBagTest() {
+        super(HashBagTest.class.getSimpleName());
     }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(HashBagTest.class);
-    }
-
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {
@@ -46,6 +36,11 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

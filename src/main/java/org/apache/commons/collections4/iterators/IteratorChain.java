@@ -41,7 +41,7 @@ import java.util.Queue;
  * this case the class will function as an empty iterator.
  * <p>
  * NOTE: As from version 4.0, the IteratorChain stores the iterators in a queue
- * and removes any reference to them as soon as they are not used anymore. Thus
+ * and removes any reference to them as soon as they are not used anymore. Thus,
  * the methods {@code setIterator(Iterator)} and {@code getIterators()} have been
  * removed and {@link #size()} will return the number of remaining iterators in
  * the queue.
@@ -68,7 +68,6 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     private boolean isLocked;
 
-    //-----------------------------------------------------------------------
     /**
      * Construct an IteratorChain with no Iterators.
      * <p>
@@ -143,7 +142,6 @@ public class IteratorChain<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Add an Iterator to the end of the chain
      *
@@ -180,7 +178,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * Checks whether the iterator chain is now locked and in use.
      */
     private void checkLocked() {
-        if (isLocked == true) {
+        if (isLocked) {
             throw new UnsupportedOperationException(
                     "IteratorChain cannot be changed after the first use of a method from the Iterator interface");
         }
@@ -191,7 +189,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * from all Iterator interface methods.
      */
     private void lockChain() {
-        if (isLocked == false) {
+        if (!isLocked) {
             isLocked = true;
         }
     }
@@ -212,12 +210,11 @@ public class IteratorChain<E> implements Iterator<E> {
             lastUsedIterator = currentIterator;
         }
 
-        while (currentIterator.hasNext() == false && !iteratorChain.isEmpty()) {
+        while (!currentIterator.hasNext() && !iteratorChain.isEmpty()) {
             currentIterator = iteratorChain.remove();
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Return true if any Iterator in the IteratorChain has a remaining element.
      *

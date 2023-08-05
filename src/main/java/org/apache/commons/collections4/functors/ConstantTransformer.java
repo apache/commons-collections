@@ -107,7 +107,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
         if (obj == this) {
             return true;
         }
-        if (obj instanceof ConstantTransformer == false) {
+        if (!(obj instanceof ConstantTransformer)) {
             return false;
         }
         final Object otherConstant = ((ConstantTransformer<?, ?>) obj).getConstant();

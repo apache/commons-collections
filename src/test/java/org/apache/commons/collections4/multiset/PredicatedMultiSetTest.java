@@ -16,14 +16,17 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Set;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -33,15 +36,9 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public PredicatedMultiSetTest(final String testName) {
-        super(testName);
+    public PredicatedMultiSetTest() {
+        super(PredicatedMultiSetTest.class.getSimpleName());
     }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(PredicatedMultiSetTest.class);
-    }
-
-    //--------------------------------------------------------------------------
 
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
@@ -62,8 +59,12 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return decorateMultiSet(new HashMultiSet<T>(), stringPredicate());
     }
 
-    //--------------------------------------------------------------------------
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testLegalAddRemove() {
         final MultiSet<T> multiset = makeTestMultiSet();
@@ -72,30 +73,27 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         for (int i = 0; i < els.length; i++) {
             multiset.add(els[i]);
             assertEquals(i + 1, multiset.size());
-            assertEquals(true, multiset.contains(els[i]));
+            assertTrue(multiset.contains(els[i]));
         }
         Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set contains the first element", set.contains(els[0]));
-        assertEquals(true, multiset.remove(els[0]));
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
+        assertTrue(multiset.remove(els[0]));
         set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue("Unique set does not contain anymore the first element",
-            set.contains(els[0]));
+        assertTrue(set.contains(els[0]),
+            "Unique set does not contain anymore the first element");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final MultiSet<T> multiset = makeTestMultiSet();
         final Integer i = Integer.valueOf(3);
-        try {
-            multiset.add((T) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element",
-                   !multiset.contains(i));
+        assertThrows(IllegalArgumentException.class, () -> multiset.add((T) i),
+                "Integer should fail string predicate.");
+        assertFalse(multiset.contains(i), "Collection shouldn't contain illegal element");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
         final HashMultiSet<Object> elements = new HashMultiSet<>();
@@ -103,18 +101,10 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         elements.add("two");
         elements.add(Integer.valueOf(3));
         elements.add("four");
-        try {
-            decorateMultiSet((HashMultiSet<T>) elements, stringPredicate());
-            fail("MultiSet contains an element that should fail the predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        try {
-            decorateMultiSet(new HashMultiSet<T>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(IllegalArgumentException.class, () -> decorateMultiSet((HashMultiSet<T>) elements, stringPredicate()),
+                "MultiSet contains an element that should fail the predicate.");
+        assertThrows(NullPointerException.class, () -> decorateMultiSet(new HashMultiSet<T>(), null),
+                "Expecting NullPointerException for null predicate.");
     }
 
     @Override

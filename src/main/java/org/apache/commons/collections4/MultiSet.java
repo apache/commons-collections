@@ -63,7 +63,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Adds one copy of the specified object to the MultiSet.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
-     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as 1.
      *
      * @param object  the object to add
@@ -77,7 +77,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Adds a number of occurrences of the specified object to the MultiSet.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
-     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as {@code occurrences}.
      *
      * @param object  the object to add
@@ -92,7 +92,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Removes one occurrence of the given object from the MultiSet.
      * <p>
-     * If the number of occurrences after this operations is reduced
+     * If the number of occurrences after this operation is reduced
      * to zero, the object will be removed from the {@link #uniqueSet()}.
      *
      * @param object  the object to remove
@@ -215,7 +215,7 @@ public interface MultiSet<E> extends Collection<E> {
      * An unmodifiable entry for an element and its occurrence as contained in a MultiSet.
      * <p>
      * The {@link MultiSet#entrySet()} method returns a view of the multiset whose elements
-     * implements this interface.
+     * implement this interface.
      *
      * @param <E>  the element type
      */

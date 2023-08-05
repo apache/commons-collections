@@ -99,7 +99,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
         return new TransformedSplitMap<>(map, keyTransformer, valueTransformer);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -118,7 +117,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
         this.valueTransformer = Objects.requireNonNull(valueTransformer, "valueTransformer");
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -144,7 +142,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Transforms a key.
      * <p>
@@ -200,7 +197,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
         return valueTransformer.transform(value);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(final J key, final U value) {
         return decorated().put(transformKey(key), transformValue(value));

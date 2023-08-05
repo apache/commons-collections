@@ -130,8 +130,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
                              final Transformer<? super I, ? extends O> defaultTransformer) {
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
-        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ?
-                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
+        iDefault = defaultTransformer == null ?
+                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer;
     }
 
     /**
@@ -158,7 +158,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     @Override
     public O transform(final I input) {
         for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(input) == true) {
+            if (iPredicates[i].evaluate(input)) {
                 return iTransformers[i].transform(input);
             }
         }

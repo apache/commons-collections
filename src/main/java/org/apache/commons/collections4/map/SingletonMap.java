@@ -126,7 +126,6 @@ public class SingletonMap<K, V>
     }
 
     // KeyValue
-    //-----------------------------------------------------------------------
     /**
      * Gets the key.
      *
@@ -160,7 +159,6 @@ public class SingletonMap<K, V>
     }
 
     // BoundedMap
-    //-----------------------------------------------------------------------
     /**
      * Is the map currently full, always true.
      *
@@ -182,7 +180,6 @@ public class SingletonMap<K, V>
     }
 
     // Map
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      *
@@ -217,7 +214,6 @@ public class SingletonMap<K, V>
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
      *
@@ -240,7 +236,6 @@ public class SingletonMap<K, V>
         return isEqualValue(value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map where the key must match the existing key.
      * <p>
@@ -307,7 +302,6 @@ public class SingletonMap<K, V>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the entrySet view of the map.
      * Changes made via {@code setValue} affect this map.
@@ -395,7 +389,6 @@ public class SingletonMap<K, V>
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares the specified key to the stored key.
      *
@@ -416,7 +409,6 @@ public class SingletonMap<K, V>
         return value == null ? getValue() == null : value.equals(getValue());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * SingletonMapIterator.
      */
@@ -436,7 +428,7 @@ public class SingletonMap<K, V>
 
         @Override
         public K next() {
-            if (hasNext == false) {
+            if (!hasNext) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
             hasNext = false;
@@ -446,12 +438,12 @@ public class SingletonMap<K, V>
 
         @Override
         public boolean hasPrevious() {
-            return hasNext == false;
+            return !hasNext;
         }
 
         @Override
         public K previous() {
-            if (hasNext == true) {
+            if (hasNext) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }
             hasNext = true;
@@ -465,7 +457,7 @@ public class SingletonMap<K, V>
 
         @Override
         public K getKey() {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return parent.getKey();
@@ -473,7 +465,7 @@ public class SingletonMap<K, V>
 
         @Override
         public V getValue() {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return parent.getValue();
@@ -481,7 +473,7 @@ public class SingletonMap<K, V>
 
         @Override
         public V setValue(final V value) {
-            if (canGetSet == false) {
+            if (!canGetSet) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return parent.setValue(value);
@@ -535,7 +527,6 @@ public class SingletonMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the key or value.
      *
@@ -547,7 +538,7 @@ public class SingletonMap<K, V>
         try {
             return (SingletonMap<K, V>) super.clone();
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 
@@ -562,7 +553,7 @@ public class SingletonMap<K, V>
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map == false) {
+        if (!(obj instanceof Map)) {
             return false;
         }
         final Map<?, ?> other = (Map<?, ?>) obj;

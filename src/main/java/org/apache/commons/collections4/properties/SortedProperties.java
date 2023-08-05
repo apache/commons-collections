@@ -17,12 +17,15 @@
 
 package org.apache.commons.collections4.properties;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 
@@ -32,6 +35,7 @@ import org.apache.commons.collections4.iterators.IteratorEnumeration;
  * Overrides {@link Properties#keys()} to sort keys. Allows other methods on the superclass to work with sorted keys.
  * </p>
  *
+ * @see SortedPropertiesFactory#INSTANCE
  * @since 4.2
  */
 public class SortedProperties extends Properties {
@@ -39,13 +43,17 @@ public class SortedProperties extends Properties {
     private static final long serialVersionUID = 1L;
 
     @Override
+    public Set<Map.Entry<Object, Object>> entrySet() {
+        final Stream<SimpleEntry<Object, Object>> stream = sortedKeys().map(k -> new AbstractMap.SimpleEntry<>(k, getProperty(k)));
+        return stream.collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    @Override
     public synchronized Enumeration<Object> keys() {
-        final Set<Object> keySet = keySet();
-        final List<String> keys = new ArrayList<>(keySet.size());
-        for (final Object key : keySet) {
-            keys.add(key.toString());
-        }
-        Collections.sort(keys);
-        return new IteratorEnumeration<>(keys.iterator());
+        return new IteratorEnumeration<>(sortedKeys().collect(Collectors.toList()).iterator());
+    }
+
+    private Stream<String> sortedKeys() {
+        return keySet().stream().map(Object::toString).sorted();
     }
 }

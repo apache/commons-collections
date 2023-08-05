@@ -16,9 +16,17 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the ListIterator interface.
@@ -41,7 +49,6 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implements the abstract superclass method to return the list iterator.
      *
@@ -86,10 +93,10 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     public void testEmptyListIteratorIsIndeedEmpty() {
         if (!supportsEmptyIterator()) {
             return;
@@ -97,29 +104,24 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
 
         final ListIterator<E> it = makeEmptyIterator();
 
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
         assertEquals(0, it.nextIndex());
-        assertEquals(false, it.hasPrevious());
+        assertFalse(it.hasPrevious());
         assertEquals(-1, it.previousIndex());
 
         // next() should throw a NoSuchElementException
-        try {
-            it.next();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown from empty ListIterator");
 
         // previous() should throw a NoSuchElementException
-        try {
-            it.previous();
-            fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from empty ListIterator");
     }
 
     /**
      * Test navigation through the iterator.
      */
+    @Test
     public void testWalkForwardAndBack() {
         final ArrayList<E> list = new ArrayList<>();
         final ListIterator<E> it = makeObject();
@@ -128,13 +130,10 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         }
 
         // check state at end
-        assertEquals(false, it.hasNext());
-        assertEquals(true, it.hasPrevious());
-        try {
-            it.next();
-            fail("NoSuchElementException must be thrown from next at end of ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown from next at end of ListIterator");
 
         // loop back through comparing
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -146,28 +145,25 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         }
 
         // check state at start
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
-        try {
-            it.previous();
-            fail("NoSuchElementException must be thrown from previous at start of ListIterator");
-        } catch (final NoSuchElementException e) {
-        }
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
     /**
      * Test add behavior.
      */
+    @Test
     public void testAdd() {
         ListIterator<E> it = makeObject();
 
         final E addValue = addSetValue();
         if (!supportsAdd()) {
             // check for UnsupportedOperationException if not supported
-            try {
-                it.add(addValue);
-                fail("UnsupportedOperationException must be thrown from add of " + it.getClass().getSimpleName());
-            } catch (final UnsupportedOperationException ex) {}
+            final ListIterator<E> finalIt0 = it;
+            assertThrows(UnsupportedOperationException.class, () -> finalIt0.add(addValue),
+                    "UnsupportedOperationException must be thrown from add of " + it.getClass().getSimpleName());
             return;
         }
 
@@ -179,7 +175,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         // add at start should be OK, added should not be next
         it = makeObject();
         it.add(addValue);
-        assertTrue(addValue != it.next());
+        assertNotSame(addValue, it.next());
 
         // add in middle and at end should be OK
         it = makeObject();
@@ -195,23 +191,19 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Test set behavior.
      */
+    @Test
     public void testSet() {
         final ListIterator<E> it = makeObject();
 
         if (!supportsSet()) {
             // check for UnsupportedOperationException if not supported
-            try {
-                it.set(addSetValue());
-                fail("UnsupportedOperationException must be thrown from set in " + it.getClass().getSimpleName());
-            } catch (final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> it.set(addSetValue()),
+                    "UnsupportedOperationException must be thrown from set in " + it.getClass().getSimpleName());
             return;
         }
 
         // should throw IllegalStateException before next() called
-        try {
-            it.set(addSetValue());
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.set(addSetValue()));
 
         // set after next should be fine
         it.next();
@@ -222,36 +214,33 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
 
     }
 
+    @Test
     public void testRemoveThenSet() {
         final ListIterator<E> it = makeObject();
         if (supportsRemove() && supportsSet()) {
             it.next();
             it.remove();
-            try {
-                it.set(addSetValue());
-                fail("IllegalStateException must be thrown from set after remove");
-            } catch (final IllegalStateException e) {
-            }
+            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
+                    "IllegalStateException must be thrown from set after remove");
         }
     }
 
+    @Test
     public void testAddThenSet() {
         final ListIterator<E> it = makeObject();
         // add then set
         if (supportsAdd() && supportsSet()) {
             it.next();
             it.add(addSetValue());
-            try {
-                it.set(addSetValue());
-                fail("IllegalStateException must be thrown from set after add");
-            } catch (final IllegalStateException e) {
-            }
+            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
+                    "IllegalStateException must be thrown from set after add");
         }
     }
 
     /**
      * Test remove after add behavior.
      */
+    @Test
     public void testAddThenRemove() {
         final ListIterator<E> it = makeObject();
 
@@ -259,11 +248,8 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         if (supportsAdd() && supportsRemove()) {
             it.next();
             it.add(addSetValue());
-            try {
-                it.remove();
-                fail("IllegalStateException must be thrown from remove after add");
-            } catch (final IllegalStateException e) {
-            }
+            assertThrows(IllegalStateException.class, () -> it.remove(),
+                    "IllegalStateException must be thrown from remove after add");
         }
     }
 

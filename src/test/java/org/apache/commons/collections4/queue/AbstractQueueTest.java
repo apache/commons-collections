@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +32,7 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link java.util.Queue} methods and contracts.
@@ -51,7 +58,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
@@ -63,7 +69,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return true;
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Verifies that the test queue implementation matches the confirmed queue
      *  implementation.
@@ -80,7 +85,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link ArrayList}.
      */
@@ -116,7 +120,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return queue;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link Queue}.
      *
@@ -127,10 +130,10 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         return (Queue<E>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
     /**
      *  Tests {@link Queue#offer(Object)}.
      */
+    @Test
     public void testQueueOffer() {
         if (!isAddSupported()) {
             return;
@@ -142,8 +145,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             final boolean r = getCollection().offer(element);
             getConfirmed().add(element);
             verify();
-            assertTrue("Empty queue changed after add", r);
-            assertEquals("Queue size is 1 after first add", 1, getCollection().size());
+            assertTrue(r, "Empty queue changed after add");
+            assertEquals(1, getCollection().size(), "Queue size is 1 after first add");
         }
 
         resetEmpty();
@@ -155,23 +158,20 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             if (r) {
                 size++;
             }
-            assertEquals("Queue size should grow after add", size, getCollection().size());
-            assertTrue("Queue should contain added element", getCollection().contains(element));
+            assertEquals(size, getCollection().size(), "Queue size should grow after add");
+            assertTrue(getCollection().contains(element), "Queue should contain added element");
         }
     }
 
     /**
      *  Tests {@link Queue#element()}.
      */
+    @Test
     public void testQueueElement() {
         resetEmpty();
 
-        try {
-            getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.element should throw NoSuchElementException");
 
         resetFull();
 
@@ -197,17 +197,14 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             verify();
         }
 
-        try {
-            getCollection().element();
-            fail("Queue.element should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.element should throw NoSuchElementException");
     }
 
     /**
      *  Tests {@link Queue#peek()}.
      */
+    @Test
     public void testQueuePeek() {
         if (!isRemoveSupported()) {
             return;
@@ -243,6 +240,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Queue#remove()}.
      */
+    @Test
     public void testQueueRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -250,12 +248,8 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
         resetEmpty();
 
-        try {
-            getCollection().remove();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().remove(),
+                "Queue.remove should throw NoSuchElementException");
 
         resetFull();
 
@@ -263,21 +257,18 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < max; i++) {
             final E element = getCollection().remove();
             final boolean success = getConfirmed().remove(element);
-            assertTrue("remove should return correct element", success);
+            assertTrue(success, "remove should return correct element");
             verify();
         }
 
-        try {
-            getCollection().element();
-            fail("Queue.remove should throw NoSuchElementException");
-        } catch (final NoSuchElementException e) {
-            // expected
-        }
+        assertThrows(NoSuchElementException.class, () -> getCollection().element(),
+                "Queue.remove should throw NoSuchElementException");
     }
 
     /**
      *  Tests {@link Queue#poll()}.
      */
+    @Test
     public void testQueuePoll() {
         if (!isRemoveSupported()) {
             return;
@@ -294,7 +285,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < max; i++) {
             element = getCollection().poll();
             final boolean success = getConfirmed().remove(element);
-            assertTrue("poll should return correct element", success);
+            assertTrue(success, "poll should return correct element");
             verify();
         }
 
@@ -302,7 +293,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         assertNull(element);
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();
@@ -313,10 +304,11 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) queue);
         final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both queues are empty", 0, queue.size());
-        assertEquals("Both queues are empty", 0, queue2.size());
+        assertEquals(0, queue.size(), "Both queues are empty");
+        assertEquals(0, queue2.size(), "Both queues are empty");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeFullCollection();
@@ -328,14 +320,15 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final byte[] object = writeExternalFormToBytes((Serializable) queue);
         final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
 
-        assertEquals("Both queues are same size", size, queue.size());
-        assertEquals("Both queues are same size", size, queue2.size());
+        assertEquals(size, queue.size(), "Both queues are same size");
+        assertEquals(size, queue2.size(), "Both queues are same size");
     }
 
     /**
      * Compare the current serialized form of the Queue
      * against the canonical version in SCM.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
@@ -351,7 +344,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         if (queue instanceof Serializable && !skipSerializedCanonicalTests()
                 && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue));
-            assertEquals("Queue is empty", 0, queue2.size());
+            assertEquals(0, queue2.size(), "Queue is empty");
         }
     }
 
@@ -359,6 +352,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      * Compare the current serialized form of the Queue
      * against the canonical version in SCM.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
@@ -373,7 +367,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final Queue<E> queue = makeFullCollection();
         if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
-            assertEquals("Queues are not the right size", queue.size(), queue2.size());
+            assertEquals(queue.size(), queue2.size(), "Queues are not the right size");
         }
     }
 

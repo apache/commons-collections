@@ -51,18 +51,18 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * </p>
  * <p>
  * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
- * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
+ * length &amp; fixed length keys. Some methods, such as {@link org.apache.commons.collections4.Trie#prefixMap(Object)}
  * are suited only to variable length keys.
  * </p>
  *
- * @param <E> the type of the values in this map
+ * @param <V> the type of the values in this map
  *
- * @see <a href="http://en.wikipedia.org/wiki/Radix_tree">Radix Tree</a>
- * @see <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/PATRICIA">PATRICIA</a>
- * @see <a href="http://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Radix_tree">Radix Tree</a>
+ * @see <a href="https://users.monash.edu/~lloyd/tildeAlgDS/Tree/PATRICIA/">PATRICIA</a>
+ * @see <a href="https://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>
  * @since 4.0
  */
-public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> {
+public class PatriciaTrie<V> extends AbstractPatriciaTrie<String, V> {
 
     private static final long serialVersionUID = 4446367780901817838L;
 
@@ -70,7 +70,7 @@ public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> {
         super(new StringKeyAnalyzer());
     }
 
-    public PatriciaTrie(final Map<? extends String, ? extends E> m) {
+    public PatriciaTrie(final Map<? extends String, ? extends V> m) {
         super(new StringKeyAnalyzer(), m);
     }
 

@@ -59,7 +59,6 @@ public final class UnmodifiableNavigableSet<E>
         return new UnmodifiableNavigableSet<>(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -70,7 +69,6 @@ public final class UnmodifiableNavigableSet<E>
         super(set);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
@@ -109,13 +107,28 @@ public final class UnmodifiableNavigableSet<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.5
+     */
+    @Override
+    public E pollFirst() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.5
+     */
+    @Override
+    public E pollLast() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     // SortedSet
-    //-----------------------------------------------------------------------
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
@@ -135,7 +148,6 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     // NavigableSet
-    //-----------------------------------------------------------------------
     @Override
     public NavigableSet<E> descendingSet() {
         return unmodifiableNavigableSet(decorated().descendingSet());
@@ -165,7 +177,6 @@ public final class UnmodifiableNavigableSet<E>
         return unmodifiableNavigableSet(tail);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *

@@ -20,7 +20,7 @@
  * {@link org.apache.commons.collections4.Get Get} interfaces,
  * with <i>differing</i> generic types. This is like a pre-generics
  * {@link java.util.Map Map} whose input key/value constraints are
- * different than its output key/value constraints.  While it would
+ * different from its output key/value constraints.  While it would
  * be possible to declare a "split map" with matching input/output
  * key/value constraints, this would be a {@link java.util.Map Map}
  * and would therefore make little sense (any Commons Collections
@@ -33,6 +33,5 @@
  * <ul>
  *   <li>Transformed - transforms each element added
  * </ul>
- *
  */
 package org.apache.commons.collections4.splitmap;

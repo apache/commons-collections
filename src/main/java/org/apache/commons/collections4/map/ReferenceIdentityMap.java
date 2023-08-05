@@ -169,7 +169,6 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the hash code for the key specified.
      * <p>
@@ -228,7 +227,6 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
         return value1 == value2;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *

@@ -119,7 +119,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
                           final Closure<? super E>[] closures, final Closure<? super E> defaultClosure) {
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
-        iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
+        iDefault = defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure;
     }
 
     /**
@@ -143,7 +143,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     @Override
     public void execute(final E input) {
         for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(input) == true) {
+            if (iPredicates[i].evaluate(input)) {
                 iClosures[i].execute(input);
                 return;
             }

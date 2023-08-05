@@ -16,11 +16,16 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Abstract tests that can be extended to test any Map.Entry implementation.
@@ -36,7 +41,6 @@ public abstract class AbstractMapEntryTest<K, V> {
     protected final String key = "name";
     protected final String value = "duke";
 
-    //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.
      * This implementation simply calls {@link #makeMapEntry(Object, Object)}
@@ -70,23 +74,22 @@ public abstract class AbstractMapEntryTest<K, V> {
         return entry;
     }
 
-    //-----------------------------------------------------------------------
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
 
-        assertTrue(entry.getKey() == key);
+        assertSame(key, entry.getKey());
 
         entry.setValue((V) value);
-        assertTrue(entry.getValue() == value);
+        assertSame(value, entry.getValue());
 
         // check that null doesn't do anything funny
         entry = makeMapEntry(null, null);
-        assertTrue(entry.getKey() == null);
+        assertNull(entry.getKey());
 
         entry.setValue(null);
-        assertTrue(entry.getValue() == null);
+        assertNull(entry.getValue());
     }
 
     /**
@@ -96,8 +99,8 @@ public abstract class AbstractMapEntryTest<K, V> {
      *
      */
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         // test that #setValue does not permit
         //  the MapEntry to contain itself (and thus cause infinite recursion
@@ -105,15 +108,10 @@ public abstract class AbstractMapEntryTest<K, V> {
 
         final Map.Entry<K, V> entry = makeMapEntry();
 
-        try {
-            entry.setValue((V) entry);
-            fail("Should throw an IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected to happen...
+        assertThrows(IllegalArgumentException.class, () -> entry.setValue((V) entry));
 
-            // check that the KVP's state has not changed
-            assertTrue(entry.getKey() == null && entry.getValue() == null);
-        }
+        // check that the KVP's state has not changed
+        assertTrue(entry.getKey() == null && entry.getValue() == null);
     }
 
     /**
@@ -122,37 +120,37 @@ public abstract class AbstractMapEntryTest<K, V> {
      */
     public abstract void testConstructors();
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         // 1. test with object data
         Map.Entry<K, V> e1 = makeMapEntry((K) key, (V) value);
         Map.Entry<K, V> e2 = makeKnownMapEntry((K) key, (V) value);
 
-        assertTrue(e1.equals(e1));
-        assertTrue(e2.equals(e1));
-        assertTrue(e1.equals(e2));
-        assertTrue(e1.hashCode() == e2.hashCode());
+        assertEquals(e1, e1);
+        assertEquals(e2, e1);
+        assertEquals(e1, e2);
+        assertEquals(e1.hashCode(), e2.hashCode());
 
         // 2. test with nulls
         e1 = makeMapEntry();
         e2 = makeKnownMapEntry();
 
-        assertTrue(e1.equals(e1));
-        assertTrue(e2.equals(e1));
-        assertTrue(e1.equals(e2));
-        assertTrue(e1.hashCode() == e2.hashCode());
+        assertEquals(e1, e1);
+        assertEquals(e2, e1);
+        assertEquals(e1, e2);
+        assertEquals(e1.hashCode(), e2.hashCode());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testToString() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
-        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
+        assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());
 
         // test with nulls
         entry = makeMapEntry();
-        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
+        assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());
     }
 
 }

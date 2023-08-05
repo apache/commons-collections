@@ -28,11 +28,10 @@ import java.util.Collection;
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public SynchronizedCollectionTest(final String testName) {
-        super(testName);
+    public SynchronizedCollectionTest() {
+        super(SynchronizedCollectionTest.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
         return SynchronizedCollection.synchronizedCollection(new ArrayList<E>());

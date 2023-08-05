@@ -66,7 +66,6 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
         return new PredicatedBag<>(bag, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -102,7 +101,6 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object, final int count) {

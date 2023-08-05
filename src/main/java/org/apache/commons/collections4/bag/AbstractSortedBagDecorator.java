@@ -62,7 +62,6 @@ public abstract class AbstractSortedBagDecorator<E>
         return (SortedBag<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E first() {

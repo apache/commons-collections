@@ -43,7 +43,7 @@ public class NodeListIterator implements Iterator<Node> {
      * Convenience constructor, which creates a new NodeListIterator from
      * the specified node's childNodes.
      *
-     * @param node Node, who's child nodes are wrapped by this class. Must not be null
+     * @param node Node, whose child nodes are wrapped by this class. Must not be null
      * @throws NullPointerException if node is null
      */
     public NodeListIterator(final Node node) {

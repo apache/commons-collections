@@ -100,7 +100,6 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
         return new LazySortedMap<>(map, factory);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -123,7 +122,6 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
         super(map, factory);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
      *
@@ -133,7 +131,6 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
         return (SortedMap<K, V>) map;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public K firstKey() {
         return getSortedMap().firstKey();

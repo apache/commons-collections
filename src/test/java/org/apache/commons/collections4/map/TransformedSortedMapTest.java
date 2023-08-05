@@ -16,17 +16,20 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link TransformedSortedMap}
@@ -36,12 +39,8 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public TransformedSortedMapTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(TransformedSortedMapTest.class);
+    public TransformedSortedMapTest() {
+        super(TransformedSortedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -49,7 +48,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         return null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public SortedMap<K, V> makeObject() {
@@ -64,10 +62,10 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         return false;
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         SortedMap<K, V> map = TransformedSortedMap
                 .transformingSortedMap(
@@ -78,19 +76,16 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
-            try {
-                map.containsKey(els[i]);
-                fail();
-            } catch (final ClassCastException ex) {}
-            assertEquals(true, map.containsValue(els[i]));
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
+            final SortedMap<K, V> finalMap1 = map;
+            final int finalI = i;
+            assertThrows(ClassCastException.class, () -> finalMap1.containsKey(els[finalI]));
+            assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
-        try {
-            map.remove(els[0]);
-            fail();
-        } catch (final ClassCastException ex) {}
+        final SortedMap<K, V> finalMap = map;
+        assertThrows(ClassCastException.class, () -> finalMap.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 
         map = TransformedSortedMap
@@ -102,9 +97,9 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsValue(els[i]));
-            assertEquals(true, map.containsKey(els[i]));
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
             assertEquals(Integer.valueOf((String) els[i]), map.get(els[i]));
         }
 
@@ -122,7 +117,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final SortedMap<K, V> base = new TreeMap<>();
@@ -143,6 +138,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final SortedMap<K, V> base = new TreeMap<>();
@@ -163,7 +159,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

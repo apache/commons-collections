@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections4.trie;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.map.AbstractOrderedMapTest;
 
@@ -29,12 +26,8 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 
-    public PatriciaTrie2Test(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(PatriciaTrie2Test.class);
+    public PatriciaTrie2Test() {
+        super(PatriciaTrie2Test.class.getSimpleName());
     }
 
     @Override
@@ -47,7 +40,6 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

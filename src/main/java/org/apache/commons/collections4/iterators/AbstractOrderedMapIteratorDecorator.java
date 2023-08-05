@@ -34,7 +34,6 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
     /** The iterator being decorated */
     private final OrderedMapIterator<K, V> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that decorates the specified iterator.
      *
@@ -54,7 +53,6 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
         return iterator;
     }
 
-    //-----------------------------------------------------------------------
 
     /** {@inheritDoc} */
     @Override

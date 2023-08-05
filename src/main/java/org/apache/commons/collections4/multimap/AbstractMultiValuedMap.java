@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -91,7 +91,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         this.map = (Map<K, Collection<V>>) Objects.requireNonNull(map, "map");
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Gets the map being wrapped.
      *
@@ -115,7 +114,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     protected abstract Collection<V> createCollection();
 
-    // -----------------------------------------------------------------------
     @Override
     public boolean containsKey(final Object key) {
         return getMap().containsKey(key);
@@ -168,7 +166,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     /**
-     * Removes a specific key/value mapping from the multi-valued map.
+     * Removes a specific key/value mapping from the multivalued map.
      * <p>
      * The value is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
@@ -207,7 +205,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * {@inheritDoc}
      * <p>
      * This implementation does <b>not</b> cache the total size
-     * of the multi-valued map, but rather calculates it by iterating
+     * of the multivalued map, but rather calculates it by iterating
      * over the entries of the underlying map.
      */
     @Override
@@ -380,8 +378,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     public String toString() {
         return getMap().toString();
     }
-
-    // -----------------------------------------------------------------------
 
     /**
      * Wrapped collection to handle add and remove on the collection returned
@@ -883,7 +879,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      * @param out the output stream
