@@ -18,8 +18,15 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.Arrays;
 
+/**
+ * Provides functions to assist in IndexProducer creation and manipulation.
+ * @see IndexProducer
+ */
 public class IndexUtils {
 
+    /**
+     * The maximum array size for the methods in this class.
+     */
     public static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     // do not instantiate
