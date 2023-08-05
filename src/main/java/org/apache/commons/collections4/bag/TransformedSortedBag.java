@@ -89,7 +89,6 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -113,7 +112,6 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         return (SortedBag<E>) decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E first() {

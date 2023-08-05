@@ -16,22 +16,15 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
  * JUnit tests.
- *
  */
 public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(DualHashBidiMapTest.class);
-    }
-
-    public DualHashBidiMapTest(final String testName) {
-        super(testName);
+    public DualHashBidiMapTest() {
+        super(DualHashBidiMapTest.class.getSimpleName());
     }
 
     /**
@@ -50,10 +43,16 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return new String[] { "DualHashBidiMapTest.bulkTestInverseMap.bulkTestInverseMap" };
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualHashBidiMap.emptyCollection.version4.obj");
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualHashBidiMap.fullCollection.version4.obj");
 //    }
+
 }

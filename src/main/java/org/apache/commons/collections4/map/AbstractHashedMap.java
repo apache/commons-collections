@@ -169,7 +169,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         // noop
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
      *
@@ -210,7 +209,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return size == 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
      *
@@ -263,7 +261,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return false;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map.
      *
@@ -365,7 +362,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         size = 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Converts input keys to another object for storage in the map.
      * This implementation masks nulls.
@@ -438,7 +434,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return hashCode & dataSize - 1;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the entry mapped to the key specified.
      * <p>
@@ -462,7 +457,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Updates an existing key-value mapping to change the value.
      * <p>
@@ -496,7 +490,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         entry.value = value;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Adds a new key-value mapping into this map.
      * <p>
@@ -548,7 +541,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         data[hashIndex] = entry;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Removes a mapping from the map.
      * <p>
@@ -600,7 +592,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         entry.value = null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks the capacity of the map and enlarges it if necessary.
      * <p>
@@ -630,8 +621,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             threshold = calculateThreshold(newCapacity, loadFactor);
             data = new HashEntry[newCapacity];
         } else {
-            final HashEntry<K, V> oldEntries[] = data;
-            final HashEntry<K, V> newEntries[] = new HashEntry[newCapacity];
+            final HashEntry<K, V>[] oldEntries = data;
+            final HashEntry<K, V>[] newEntries = new HashEntry[newCapacity];
 
             modCount++;
             for (int i = oldCapacity - 1; i >= 0; i--) {
@@ -686,7 +677,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return (int) (newCapacity * factor);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the {@code next} field from a {@code HashEntry}.
      * Used in subclasses that have no visibility of the field.
@@ -739,7 +729,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         return entry.getValue();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the map.
      * Changes made to the iterator affect this map.
@@ -804,7 +793,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the entrySet view of the map.
      * Changes made to the view affect this map.
@@ -869,10 +857,10 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            if (contains(obj) == false) {
+            if (!contains(obj)) {
                 return false;
             }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
@@ -904,7 +892,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the keySet view of the map.
      * Changes made to the view affect this map.
@@ -992,7 +979,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the values view of the map.
      * Changes made to the view affect this map.
@@ -1073,7 +1059,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * HashEntry used to store the data.
      * <p>
@@ -1130,7 +1115,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
             final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
@@ -1232,7 +1217,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Writes the map data to the stream. This method must be overridden if a
      * subclass must be setup before {@code put()} is used.
@@ -1298,7 +1282,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      * <p>
@@ -1323,7 +1306,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             cloned.putAll(this);
             return cloned;
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 
@@ -1338,7 +1321,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map == false) {
+        if (!(obj instanceof Map)) {
             return false;
         }
         final Map<?, ?> map = (Map<?, ?>) obj;
@@ -1351,11 +1334,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
                 final Object key = it.next();
                 final Object value = it.getValue();
                 if (value == null) {
-                    if (map.get(key) != null || map.containsKey(key) == false) {
+                    if (map.get(key) != null || !map.containsKey(key)) {
                         return false;
                     }
                 } else {
-                    if (value.equals(map.get(key)) == false) {
+                    if (!value.equals(map.get(key))) {
                         return false;
                     }
                 }

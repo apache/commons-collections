@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.splitmap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,6 +31,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -41,17 +47,17 @@ public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
-    public TransformedSplitMapTest(final String testName) {
-        super(testName);
+    public TransformedSplitMapTest() {
+        super(TransformedSplitMapTest.class.getSimpleName());
     }
 
-    // -----------------------------------------------------------------------
+    @Test
     public void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
 
-        final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
-        final Object[] v = new Object[] { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
+        final Integer[] k = { 0, 1, 2, 3, 4, 5, 6 };
+        final Object[] v = { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
             new Object[0] };
 
         assertEquals(0, map.size());
@@ -66,7 +72,7 @@ public class TransformedSplitMapTest extends BulkTest {
         }
 
         int sz = map.size();
-        assertEquals(null, map.remove(k[0]));
+        assertNull(map.remove(k[0]));
         assertEquals(sz, map.size());
         assertEquals(objectToClass.transform(v[0]), map.remove(intToString.transform(k[0])));
         assertEquals(--sz, map.size());
@@ -88,8 +94,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(--sz2, map2.size());
     }
 
-    // -----------------------------------------------------------------------
-
+    @Test
     public void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
@@ -106,6 +111,7 @@ public class TransformedSplitMapTest extends BulkTest {
         }
     }
 
+    @Test
     public void testEmptyMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map =
                 TransformedSplitMap.transformingMap(new HashMap<String, String>(),
@@ -118,10 +124,11 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertTrue( "Map should be empty", readMap.isEmpty() );
-        assertEquals( map.entrySet(), readMap.entrySet() );
+        assertTrue(readMap.isEmpty(), "Map should be empty");
+        assertEquals(map.entrySet(), readMap.entrySet());
     }
 
+    @Test
     public void testFullMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, String>(),
@@ -138,7 +145,7 @@ public class TransformedSplitMapTest extends BulkTest {
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
-        assertFalse( "Map should not be empty", readMap.isEmpty() );
+        assertFalse(readMap.isEmpty(), "Map should not be empty");
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 

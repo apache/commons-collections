@@ -14,15 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.collections4.properties;
 
-import java.util.Enumeration;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 public class SortedPropertiesTest {
+
+    @Test
+    public void testEntrySet() {
+        final SortedProperties sortedProperties = new SortedProperties();
+        for (char ch = 'Z'; ch >= 'A'; ch--) {
+            sortedProperties.put(String.valueOf(ch), "Value" + ch);
+        }
+        final Iterator<Map.Entry<Object, Object>> entries = sortedProperties.entrySet().iterator();
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            final Map.Entry<Object, Object> entry = entries.next();
+            assertEquals(String.valueOf(ch), entry.getKey());
+            assertEquals("Value" + ch, entry.getValue());
+        }
+    }
 
     @Test
     public void testKeys() {
@@ -32,7 +48,8 @@ public class SortedPropertiesTest {
         }
         final Enumeration<Object> keys = sortedProperties.keys();
         for (char ch = 'A'; ch <= 'Z'; ch++) {
-            Assert.assertEquals(String.valueOf(ch), keys.nextElement());
+            assertEquals(String.valueOf(ch), keys.nextElement());
         }
     }
+
 }

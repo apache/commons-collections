@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +29,7 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
@@ -33,21 +39,20 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public TransformedMapTest(final String testName) {
-        super(testName);
+    public TransformedMapTest() {
+        super(TransformedMapTest.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public IterableMap<K, V> makeObject() {
         return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K>nopTransformer(),
                 TransformerUtils.<V>nopTransformer());
     }
 
-    //-----------------------------------------------------------------------
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testTransformedMap() {
-        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap
                 .transformingMap(
@@ -58,13 +63,13 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsKey(els[i]));
-            assertEquals(true, map.containsValue(els[i]));
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsKey(els[i]));
+            assertTrue(map.containsValue(els[i]));
             assertEquals(els[i], map.get(Integer.valueOf((String) els[i])));
         }
 
-        assertEquals(null, map.remove(els[0]));
+        assertNull(map.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 
         map = TransformedMap.transformingMap(new HashMap(), null,
@@ -74,9 +79,9 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
-            assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
-            assertEquals(false, map.containsValue(els[i]));
-            assertEquals(true, map.containsKey(els[i]));
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
             assertEquals(Integer.valueOf((String) els[i]), map.get(els[i]));
         }
 
@@ -94,7 +99,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
@@ -115,6 +120,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
         final Map<K, V> base = new HashMap<>();
@@ -135,7 +141,6 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(4), trans.get("d"));
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
         return "4";

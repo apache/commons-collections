@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.functors;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.apache.commons.collections4.Closure;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public abstract class AbstractClosureTest {
 

@@ -17,6 +17,9 @@
 package org.apache.commons.collections4.map;
 
 import static org.apache.commons.collections4.map.LazyMap.lazyMap;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +27,7 @@ import java.util.Map;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the
@@ -37,8 +40,8 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
-    public LazyMapTest(final String testName) {
-        super(testName);
+    public LazyMapTest() {
+        super(LazyMapTest.class.getSimpleName());
     }
 
     @Override
@@ -46,7 +49,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return lazyMap(new HashMap<K, V>(), FactoryUtils.<V>nullFactory());
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @Override
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
@@ -66,7 +69,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         map = lazyMap(new HashMap<Integer, Number>(), FactoryUtils.<Long>nullFactory());
         final Object o = map.get("Five");
-        assertEquals(null, o);
+        assertNull(o);
         assertEquals(1, map.size());
     }
 

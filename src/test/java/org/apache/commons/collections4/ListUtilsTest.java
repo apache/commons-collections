@@ -16,7 +16,14 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +39,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ListUtils.
- *
  */
 public class ListUtilsTest {
 
@@ -43,7 +49,9 @@ public class ListUtilsTest {
     private static final String e = "e";
     private static final String x = "x";
 
+    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
     private String[] fullArray;
+
     private List<String> fullList;
 
     @BeforeEach
@@ -52,13 +60,83 @@ public class ListUtilsTest {
         fullList = new ArrayList<>(Arrays.asList(fullArray));
     }
 
+    @Test
+    public void testGetFirst() {
+        assertEquals(a, ListUtils.getFirst(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
+    }
+
+    @Test
+    public void testGetLast() {
+        assertEquals(e, ListUtils.getLast(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
+    }
+
+    @Test
+    public void testDefaultIfNull() {
+        assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
+
+        final List<Long> list = new ArrayList<>();
+        assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
+    }
+
+    @Test
+    public void testEmptyIfNull() {
+        assertTrue(ListUtils.emptyIfNull(null).isEmpty());
+
+        final List<Long> list = new ArrayList<>();
+        assertSame(list, ListUtils.emptyIfNull(list));
+    }
+
+    @Test
+    public void testEquals() {
+        final Collection<String> data = Arrays.asList("a", "b", "c");
+
+        final List<String> a = new ArrayList<>( data );
+        final List<String> b = new ArrayList<>( data );
+
+        assertEquals(a, b);
+        assertTrue(ListUtils.isEqualList(a, b));
+        a.clear();
+        assertFalse(ListUtils.isEqualList(a, b));
+        assertFalse(ListUtils.isEqualList(a, null));
+        assertFalse(ListUtils.isEqualList(null, b));
+        assertTrue(ListUtils.isEqualList(null, null));
+    }
+
+    @Test
+    public void testHashCode() {
+        final Collection<String> data = Arrays.asList("a", "b", "c");
+
+        final List<String> a = new ArrayList<>(data);
+        final List<String> b = new ArrayList<>(data);
+
+        assertEquals(a.hashCode(), b.hashCode());
+        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
+        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
+        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        a.clear();
+        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        assertEquals(0, ListUtils.hashCodeForList(null));
+    }
+
     /**
-     * Tests intersecting a non-empty list with an empty list.
+     * Tests the {@code indexOf} method in {@code ListUtils} class.
      */
     @Test
-    public void testIntersectNonEmptyWithEmptyList() {
-        final List<String> empty = Collections.<String>emptyList();
-        assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
+    public void testIndexOf() {
+        Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
+        int index = ListUtils.indexOf(fullList, testPredicate);
+        assertEquals(d, fullList.get(index));
+
+        testPredicate = EqualPredicate.equalPredicate("de");
+        index = ListUtils.indexOf(fullList, testPredicate);
+        assertEquals(index, -1);
+
+        assertEquals(ListUtils.indexOf(null, testPredicate), -1);
+        assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 
     /**
@@ -68,40 +146,6 @@ public class ListUtilsTest {
     public void testIntersectEmptyWithEmptyList() {
         final List<?> empty = Collections.EMPTY_LIST;
         assertTrue(ListUtils.intersection(empty, empty).isEmpty(), "result not empty");
-    }
-
-    /**
-     * Tests intersecting a non-empty list with an subset of itself.
-     */
-    @Test
-    public void testIntersectNonEmptySubset() {
-        // create a copy
-        final List<String> other = new ArrayList<>(fullList);
-
-        // remove a few items
-        assertNotNull(other.remove(0));
-        assertNotNull(other.remove(1));
-
-        // make sure the intersection is equal to the copy
-        assertEquals(other, ListUtils.intersection(fullList, other));
-    }
-
-    /**
-     * Tests intersecting a non-empty list with an subset of itself.
-     */
-    @Test
-    public void testIntersectListWithNoOverlapAndDifferentTypes() {
-        @SuppressWarnings("boxing")
-        final List<Integer> other = Arrays.asList(1, 23);
-        assertTrue(ListUtils.intersection(fullList, other).isEmpty());
-    }
-
-    /**
-     * Tests intersecting a non-empty list with itself.
-     */
-    @Test
-    public void testIntersectListWithSelf() {
-        assertEquals(fullList, ListUtils.intersection(fullList, fullList));
     }
 
     /**
@@ -120,23 +164,47 @@ public class ListUtilsTest {
         assertEquals(ListUtils.intersection(one, two), ListUtils.intersection(two, one));
     }
 
+    /**
+     * Tests intersecting a non-empty list with a subset of itself.
+     */
     @Test
-    public void testPredicatedList() {
-        final Predicate<Object> predicate = o -> o instanceof String;
-        final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
-        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
-        try {
-            ListUtils.predicatedList(new ArrayList<>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            ListUtils.predicatedList(null, predicate);
-            fail("Expecting IllegalArgumentException for null list.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
+    public void testIntersectListWithNoOverlapAndDifferentTypes() {
+        @SuppressWarnings("boxing")
+        final List<Integer> other = Arrays.asList(1, 23);
+        assertTrue(ListUtils.intersection(fullList, other).isEmpty());
+    }
+
+    /**
+     * Tests intersecting a non-empty list with itself.
+     */
+    @Test
+    public void testIntersectListWithSelf() {
+        assertEquals(fullList, ListUtils.intersection(fullList, fullList));
+    }
+
+    /**
+     * Tests intersecting a non-empty list with a subset of itself.
+     */
+    @Test
+    public void testIntersectNonEmptySubset() {
+        // create a copy
+        final List<String> other = new ArrayList<>(fullList);
+
+        // remove a few items
+        assertNotNull(other.remove(0));
+        assertNotNull(other.remove(1));
+
+        // make sure the intersection is equal to the copy
+        assertEquals(other, ListUtils.intersection(fullList, other));
+    }
+
+    /**
+     * Tests intersecting a non-empty list with an empty list.
+     */
+    @Test
+    public void testIntersectNonEmptyWithEmptyList() {
+        final List<String> empty = Collections.<String>emptyList();
+        assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
     }
 
     @Test
@@ -181,175 +249,16 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testEmptyIfNull() {
-        assertTrue(ListUtils.emptyIfNull(null).isEmpty());
-
-        final List<Long> list = new ArrayList<>();
-        assertSame(list, ListUtils.emptyIfNull(list));
-    }
-
-    @Test
-    public void testDefaultIfNull() {
-        assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
-
-        final List<Long> list = new ArrayList<>();
-        assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
-    }
-
-    @Test
-    public void testEquals() {
-        final Collection<String> data = Arrays.asList("a", "b", "c");
-
-        final List<String> a = new ArrayList<>( data );
-        final List<String> b = new ArrayList<>( data );
-
-        assertEquals(a, b);
-        assertTrue(ListUtils.isEqualList(a, b));
-        a.clear();
-        assertFalse(ListUtils.isEqualList(a, b));
-        assertFalse(ListUtils.isEqualList(a, null));
-        assertFalse(ListUtils.isEqualList(null, b));
-        assertTrue(ListUtils.isEqualList(null, null));
-    }
-
-    @Test
-    public void testHashCode() {
-        final Collection<String> data = Arrays.asList("a", "b", "c");
-
-        final List<String> a = new ArrayList<>(data);
-        final List<String> b = new ArrayList<>(data);
-
-        assertEquals(a.hashCode(), b.hashCode());
-        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
-        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
-        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        a.clear();
-        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        assertEquals(0, ListUtils.hashCodeForList(null));
-    }
-
-    @Test
-    public void testRetainAll() {
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-        sub.add(b);
-        sub.add(x);
-
-        final List<String> retained = ListUtils.retainAll(fullList, sub);
-        assertEquals(2, retained.size());
-        sub.remove(x);
-        assertEquals(retained, sub);
-        fullList.retainAll(sub);
-        assertEquals(retained, fullList);
-
-        try {
-            ListUtils.retainAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe){} // this is what we want
-    }
-
-    @Test
-    public void testRemoveAll() {
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-        sub.add(b);
-        sub.add(x);
-
-        final List<String> remainder = ListUtils.removeAll(fullList, sub);
-        assertEquals(3, remainder.size());
-        fullList.removeAll(sub);
-        assertEquals(remainder, fullList);
-
-        try {
-            ListUtils.removeAll(null, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
-    }
-
-    @Test
-    public void testSubtract() {
-        final List<String> list = new ArrayList<>();
-        list.add(a);
-        list.add(b);
-        list.add(a);
-        list.add(x);
-
-        final List<String> sub = new ArrayList<>();
-        sub.add(a);
-
-        final List<String> result = ListUtils.subtract(list, sub);
-        assertEquals(3, result.size());
-
-        final List<String> expected = new ArrayList<>();
-        expected.add(b);
-        expected.add(a);
-        expected.add(x);
-
-        assertEquals(expected, result);
-
-        try {
-            ListUtils.subtract(list, null);
-            fail("expecting NullPointerException");
-        } catch(final NullPointerException npe) {} // this is what we want
-    }
-
-    @Test
-    public void testSubtractNullElement() {
-        final List<String> list = new ArrayList<>();
-        list.add(a);
-        list.add(null);
-        list.add(null);
-        list.add(x);
-
-        final List<String> sub = new ArrayList<>();
-        sub.add(null);
-
-        final List<String> result = ListUtils.subtract(list, sub);
-        assertEquals(3, result.size());
-
-        final List<String> expected = new ArrayList<>();
-        expected.add(a);
-        expected.add(null);
-        expected.add(x);
-
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Tests the {@code indexOf} method in {@code ListUtils} class..
-     */
-    @Test
-    public void testIndexOf() {
-        Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
-        int index = ListUtils.indexOf(fullList, testPredicate);
-        assertEquals(d, fullList.get(index));
-
-        testPredicate = EqualPredicate.equalPredicate("de");
-        index = ListUtils.indexOf(fullList, testPredicate);
-        assertEquals(index, -1);
-
-        assertEquals(ListUtils.indexOf(null, testPredicate), -1);
-        assertEquals(ListUtils.indexOf(fullList, null), -1);
-    }
-
-    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testLongestCommonSubsequence() {
-
-        try {
-            ListUtils.longestCommonSubsequence((List<?>) null, null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
-
-        try {
-            ListUtils.longestCommonSubsequence(Arrays.asList('A'), null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
-
-        try {
-            ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence((List<?>) null, null),
+                        "failed to check for null argument"),
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(Arrays.asList('A'), null),
+                        "failed to check for null argument"),
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(null, Arrays.asList('A')),
+                        "failed to check for null argument")
+        );
 
         @SuppressWarnings("unchecked")
         List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
@@ -376,21 +285,14 @@ public class ListUtilsTest {
 
     @Test
     public void testLongestCommonSubsequenceWithString() {
-
-        try {
-            ListUtils.longestCommonSubsequence((String) null, null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
-
-        try {
-            ListUtils.longestCommonSubsequence("A", null);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
-
-        try {
-            ListUtils.longestCommonSubsequence(null, "A");
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence((String) null, null),
+                        "failed to check for null argument"),
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence("A", null),
+                        "failed to check for null argument"),
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(null, "A"),
+                        "failed to check for null argument")
+        );
 
         String lcs = ListUtils.longestCommonSubsequence("", "");
         assertEquals(0, lcs.length());
@@ -425,21 +327,14 @@ public class ListUtilsTest {
         assertNotNull(partition);
         assertEquals(3, partition.size());
         assertEquals(1, partition.get(2).size());
-
-        try {
-            ListUtils.partition(null, 3);
-            fail("failed to check for null argument");
-        } catch (final NullPointerException e) {}
-
-        try {
-            ListUtils.partition(strings, 0);
-            fail("failed to check for size argument");
-        } catch (final IllegalArgumentException e) {}
-
-        try {
-            ListUtils.partition(strings, -10);
-            fail("failed to check for size argument");
-        } catch (final IllegalArgumentException e) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.partition(null, 3),
+                        "failed to check for null argument"),
+                () -> assertThrows(IllegalArgumentException.class, () -> ListUtils.partition(strings, 0),
+                        "failed to check for size argument"),
+                () -> assertThrows(IllegalArgumentException.class, () -> ListUtils.partition(strings, -10),
+                        "failed to check for size argument")
+        );
 
         final List<List<Integer>> partitionMax = ListUtils.partition(strings, Integer.MAX_VALUE);
         assertEquals(1, partitionMax.size());
@@ -447,7 +342,58 @@ public class ListUtilsTest {
         assertEquals(strings, partitionMax.get(0));
     }
 
-    private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
+    @Test
+    public void testPredicatedList() {
+        final Predicate<Object> predicate = o -> o instanceof String;
+        final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
+        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.predicatedList(new ArrayList<>(), null),
+                        "Expecting IllegalArgumentException for null predicate."),
+                () -> assertThrows(NullPointerException.class, () -> ListUtils.predicatedList(null, predicate),
+                        "Expecting IllegalArgumentException for null list.")
+        );
+    }
+
+    @Test
+    public void testRemoveAll() {
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+        sub.add(b);
+        sub.add(x);
+
+        final List<String> remainder = ListUtils.removeAll(fullList, sub);
+        assertEquals(3, remainder.size());
+        fullList.removeAll(sub);
+        assertEquals(remainder, fullList);
+
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, null),
+                "expecting NullPointerException");
+
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(null, new ArrayList<>()),
+                "expecting NullPointerException");
+
+        assertThrows(NullPointerException.class, () -> ListUtils.removeAll(new ArrayList<>(), null),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testRetainAll() {
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+        sub.add(b);
+        sub.add(x);
+
+        final List<String> retained = ListUtils.retainAll(fullList, sub);
+        assertEquals(2, retained.size());
+        sub.remove(x);
+        assertEquals(retained, sub);
+        fullList.retainAll(sub);
+        assertEquals(retained, fullList);
+
+        assertThrows(NullPointerException.class, () -> ListUtils.retainAll(null, null),
+                "expecting NullPointerException");
+    }
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
@@ -486,4 +432,52 @@ public class ListUtilsTest {
         assertTrue(output1.contains(3L));
         assertTrue(output1.contains(4L));
     }
+
+    @Test
+    public void testSubtract() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        list.add(a);
+        list.add(x);
+
+        final List<String> sub = new ArrayList<>();
+        sub.add(a);
+
+        final List<String> result = ListUtils.subtract(list, sub);
+        assertEquals(3, result.size());
+
+        final List<String> expected = new ArrayList<>();
+        expected.add(b);
+        expected.add(a);
+        expected.add(x);
+
+        assertEquals(expected, result);
+
+        assertThrows(NullPointerException.class, () -> ListUtils.subtract(list, null),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testSubtractNullElement() {
+        final List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(null);
+        list.add(null);
+        list.add(x);
+
+        final List<String> sub = new ArrayList<>();
+        sub.add(null);
+
+        final List<String> result = ListUtils.subtract(list, sub);
+        assertEquals(3, result.size());
+
+        final List<String> expected = new ArrayList<>();
+        expected.add(a);
+        expected.add(null);
+        expected.add(x);
+
+        assertEquals(expected, result);
+    }
+
 }

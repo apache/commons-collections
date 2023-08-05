@@ -45,13 +45,11 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     /**
      * Holds the index of the last item returned by a call to {@code next()}
      * or {@code previous()}. This is set to {@code -1} if neither method
-     * has yet been invoked. {@code lastItemIndex} is used to to implement
+     * has yet been invoked. {@code lastItemIndex} is used to implement
      * the {@link #set} method.
      */
     private int lastItemIndex = -1;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs an ArrayListIterator that will iterate over the values in the
      * specified array.
@@ -95,7 +93,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     // ListIterator interface
-    //-----------------------------------------------------------------------
     /**
      * Returns true if there are previous elements to return from the array.
      *
@@ -115,7 +112,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     @SuppressWarnings("unchecked")
     public E previous() {
-        if (hasPrevious() == false) {
+        if (!hasPrevious()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = --this.index;
@@ -131,7 +128,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     @SuppressWarnings("unchecked")
     public E next() {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = this.index;

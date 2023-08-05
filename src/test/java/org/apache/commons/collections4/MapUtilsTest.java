@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -34,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
@@ -43,6 +43,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
@@ -57,6 +58,7 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("boxing")
 public class MapUtilsTest {
+
     private static final String THREE = "Three";
     private static final String TWO = "Two";
 
@@ -69,12 +71,9 @@ public class MapUtilsTest {
         final Predicate<Object> p = getPredicate();
         final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertTrue(map instanceof PredicatedMap);
-        try {
-            MapUtils.predicatedMap(null, p, p);
-            fail("Expecting NullPointerException for null map.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+
+        assertThrows(NullPointerException.class, () -> MapUtils.predicatedMap(null, p, p),
+                "Expecting NullPointerException for null map.");
     }
 
     @Test
@@ -82,33 +81,22 @@ public class MapUtilsTest {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertTrue(map instanceof LazyMap);
-        try {
-            MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null);
-            fail("Expecting NullPointerException for null factory");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            MapUtils.lazyMap((Map<Object, Object>) null, factory);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null),
+                        "Expecting NullPointerException for null factory"),
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, factory),
+                        "Expecting NullPointerException for null map")
+        );
+
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
         map = MapUtils.lazyMap(new HashMap<>(), transformer);
         assertTrue(map instanceof LazyMap);
-        try {
-            MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null);
-            fail("Expecting NullPointerException for null transformer");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-        try {
-            MapUtils.lazyMap((Map<Object, Object>) null, transformer);
-            fail("Expecting NullPointerException for null map");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null),
+                        "Expecting NullPointerException for null transformer"),
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, transformer),
+                        "Expecting NullPointerException for null map")
+        );
     }
 
     @Test
@@ -167,25 +155,19 @@ public class MapUtilsTest {
     @Test
     public void testInvertMapNull() {
         final Map<String, String> nullMap = null;
-        final Exception exception = assertThrows(NullPointerException.class, () -> {
-            MapUtils.invertMap(nullMap);
-        });
+        final Exception exception = assertThrows(NullPointerException.class, () -> MapUtils.invertMap(nullMap));
         final String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("map"));
     }
 
     @Test
     public void testPutAll_Map_array() {
-        try {
-            MapUtils.putAll(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            MapUtils.putAll(null, new Object[0]);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]))
+        );
 
-        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), new String[0]);
+        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY);
         assertEquals(0, test.size());
 
         // sub array
@@ -201,33 +183,23 @@ public class MapUtilsTest {
         assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-
-        try {
-            MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                {"RED", "#FF0000"},
-                null,
-                {"BLUE", "#0000FF"}
-            });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
-
-        try {
-            MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                {"RED", "#FF0000"},
-                {"GREEN"},
-                {"BLUE", "#0000FF"}
-            });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
-
-        try {
-            MapUtils.putAll(new HashMap<String, String>(), new String[][] {
-                {"RED", "#FF0000"},
-                {},
-                {"BLUE", "#0000FF"}
-            });
-            fail();
-        } catch (final IllegalArgumentException ex) {}
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                        {"RED", "#FF0000"},
+                    null,
+                        {"BLUE", "#0000FF"}
+                })),
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                        {"RED", "#FF0000"},
+                        {"GREEN"},
+                        {"BLUE", "#0000FF"}
+                })),
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                        {"RED", "#FF0000"},
+                        {},
+                        {"BLUE", "#0000FF"}
+                }))
+        );
 
         // flat array
         test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
@@ -302,10 +274,8 @@ public class MapUtilsTest {
             @Override
             public Object[][] getContents() {
                 final Object[][] contents = new Object[in.size()][2];
-                final Iterator<String> i = in.keySet().iterator();
                 int n = 0;
-                while (i.hasNext()) {
-                    final Object key = i.next();
+                for (final Object key : in.keySet()) {
                     final Object val = in.get(key);
                     contents[n][0] = key;
                     contents[n][1] = val;
@@ -436,20 +406,14 @@ public class MapUtilsTest {
 
     @Test
     public void testVerbosePrintNullStream() {
-        try {
-            MapUtils.verbosePrint(null, "Map", new HashMap<>());
-            fail("Should generate NullPointerException");
-        } catch (final NullPointerException expected) {
-        }
+        assertThrows(NullPointerException.class, () -> MapUtils.verbosePrint(null, "Map", new HashMap<>()),
+                "Should generate NullPointerException");
     }
 
     @Test
     public void testDebugPrintNullStream() {
-        try {
-            MapUtils.debugPrint(null, "Map", new HashMap<>());
-            fail("Should generate NullPointerException");
-        } catch (final NullPointerException expected) {
-        }
+        assertThrows(NullPointerException.class, () -> MapUtils.debugPrint(null, "Map", new HashMap<>()),
+                "Should generate NullPointerException");
     }
 
     @Test
@@ -748,8 +712,6 @@ public class MapUtilsTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
-    //-----------------------------------------------------------------------
-
     @Test
     public void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
@@ -837,6 +799,7 @@ public class MapUtilsTest {
      * Test class for populateMap(MultiMap).
      */
     static class X implements Comparable<X> {
+
         int key;
         String name;
 
@@ -849,6 +812,7 @@ public class MapUtilsTest {
         public int compareTo(final X o) {
             return key - o.key | name.compareTo(o.name);
         }
+
     }
 
     @Test
@@ -874,11 +838,9 @@ public class MapUtilsTest {
 
     @Test
     public void testIterableMap() {
-        try {
-            MapUtils.iterableMap(null);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException e) {
-        }
+        assertThrows(NullPointerException.class, () -> MapUtils.iterableMap(null),
+                "Should throw NullPointerException");
+
         final HashMap<String, String> map = new HashMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");
@@ -892,11 +854,9 @@ public class MapUtilsTest {
 
     @Test
     public void testIterableSortedMap() {
-        try {
-            MapUtils.iterableSortedMap(null);
-            fail("Should throw NullPointerException");
-        } catch (final NullPointerException e) {
-        }
+        assertThrows(NullPointerException.class, () -> MapUtils.iterableSortedMap(null),
+                "Should throw NullPointerException");
+
         final TreeMap<String, String> map = new TreeMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");
@@ -1016,30 +976,22 @@ public class MapUtilsTest {
 
     @Test
     public void testUnmodifiableMap() {
-        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
-            MapUtils.unmodifiableMap(new HashMap<>()).clear();
-        });
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> MapUtils.unmodifiableMap(new HashMap<>()).clear());
     }
 
     @Test
     public void testUnmodifiableSortedMap() {
-        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
-            MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear();
-        });
+        final Exception exception = assertThrows(UnsupportedOperationException.class, () -> MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear());
     }
 
     @Test
     public void testFixedSizeMap() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object());
-        });
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object()));
     }
 
     @Test
     public void testFixedSizeSortedMap() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L);
-        });
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L));
     }
 
     @Test
@@ -1118,7 +1070,6 @@ public class MapUtilsTest {
 
         assertEquals(MapUtils.getLongValue(inStr, "str1", 0L), 2, 0);
         assertEquals(MapUtils.getLong(inStr, "str1", 1L), 2, 0);
-
     }
 
     @Test
@@ -1198,7 +1149,6 @@ public class MapUtilsTest {
             }
             return null;
         }).intValue(), 0);
-
     }
 
     @Test
@@ -1314,4 +1264,5 @@ public class MapUtilsTest {
         }
         return '.';
     }
+
 }

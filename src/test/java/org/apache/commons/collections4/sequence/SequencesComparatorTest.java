@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.sequence;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,9 +27,6 @@ import java.util.Random;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SequencesComparatorTest {
 
@@ -57,7 +57,7 @@ public class SequencesComparatorTest {
 
     @Test
     public void testMinimal() {
-        final String[] shadokAlph = new String[] {
+        final String[] shadokAlph = {
             "GA",
             "BU",
             "ZO",
@@ -109,7 +109,7 @@ public class SequencesComparatorTest {
     @Test
     public void testShadok() {
         final int lgMax = 5;
-        final String[] shadokAlph = new String[] {
+        final String[] shadokAlph = {
             "GA",
             "BU",
             "ZO",
@@ -154,7 +154,7 @@ public class SequencesComparatorTest {
         return list;
     }
 
-    private class ExecutionVisitor<T> implements CommandVisitor<T> {
+    private static class ExecutionVisitor<T> implements CommandVisitor<T> {
 
         private List<T> v;
         private int index;

@@ -16,10 +16,7 @@
  */
 package org.apache.commons.collections4.bag;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
@@ -29,15 +26,10 @@ import org.apache.commons.collections4.BulkTest;
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
-    public SynchronizedBagTest(final String testName) {
-        super(testName);
+    public SynchronizedBagTest() {
+        super(SynchronizedBagTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(SynchronizedBagTest.class);
-    }
-
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {
@@ -47,6 +39,11 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour(){
+        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

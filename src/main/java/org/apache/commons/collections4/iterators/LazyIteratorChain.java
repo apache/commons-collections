@@ -27,7 +27,7 @@ import java.util.Iterator;
  * in sequence until all Iterators are exhausted.
  * <p>
  * The Iterators are provided by {@link #nextIterator(int)} which has to be overridden by
- * sub-classes and allows to lazily create the Iterators as they are accessed:
+ * subclasses and allows to lazily create the Iterators as they are accessed:
  * <pre>
  * return new LazyIteratorChain&lt;String&gt;() {
  *     protected Iterator&lt;String&gt; nextIterator(int count) {
@@ -62,7 +62,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      */
     private Iterator<? extends E> lastUsedIterator;
 
-    //-----------------------------------------------------------------------
 
     /**
      * Gets the next iterator after the previous one has been exhausted.
@@ -90,7 +89,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
             lastUsedIterator = currentIterator;
         }
 
-        while (currentIterator.hasNext() == false && !chainExhausted) {
+        while (!currentIterator.hasNext() && !chainExhausted) {
             final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
             if (nextIterator != null) {
                 currentIterator = nextIterator;
@@ -100,7 +99,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Return true if any Iterator in the chain has a remaining element.

@@ -44,7 +44,6 @@ public abstract class AbstractSerializableSetDecorator<E>
         super(set);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the set out using a custom routine.
      *

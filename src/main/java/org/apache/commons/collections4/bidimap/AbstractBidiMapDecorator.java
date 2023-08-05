@@ -63,7 +63,6 @@ public abstract class AbstractBidiMapDecorator<K, V>
         return (BidiMap<K, V>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public MapIterator<K, V> mapIterator() {
         return decorated().mapIterator();

@@ -59,8 +59,6 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     private int lastReturned = -1;
 
-    // Constructors
-    // ----------------------------------------------------------------------
     /**
      * Constructs a new {@code CollatingIterator}. A comparator must be
      * set by calling {@link #setComparator(Comparator)} before invoking
@@ -73,7 +71,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new {@code CollatingIterator} that will used the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
      *
@@ -85,7 +83,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new {@code CollatingIterator} that will used the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator for ordering and have the specified initial
      * capacity. Child iterators will have to be manually added using the
      * {@link #addIterator(Iterator)} method.
@@ -154,8 +152,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         }
     }
 
-    // Public Methods
-    // ----------------------------------------------------------------------
     /**
      * Adds the given {@link Iterator} to the iterators being collated.
      *
@@ -206,7 +202,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Sets the {@link Comparator} by which collation occurs. If you
      * would like to use the natural sort order (or, in other words,
      * if the elements in the iterators are implementing the
-     * {@link java.lang.Comparable} interface), then use the
+     * {@link Comparable} interface), then use the
      * {@link org.apache.commons.collections4.comparators.ComparableComparator}.
      *
      * @param comp the {@link Comparator} to set
@@ -217,8 +213,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         comparator = comp;
     }
 
-    // Iterator Methods
-    // -------------------------------------------------------------------
     /**
      * Returns {@code true} if any child iterator has remaining elements.
      *
@@ -238,7 +232,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     @Override
     public E next() throws NoSuchElementException {
-        if (hasNext() == false) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
         final int leastIndex = least();
@@ -279,8 +273,6 @@ public class CollatingIterator<E> implements Iterator<E> {
         return lastReturned;
     }
 
-    // Private Methods
-    // -------------------------------------------------------------------
     /**
      * Initializes the collating state if it hasn't been already.
      */
@@ -346,7 +338,7 @@ public class CollatingIterator<E> implements Iterator<E> {
         int leastIndex = -1;
         E leastObject = null;
         for (int i = 0; i < values.size(); i++) {
-            if (valueSet.get(i) == false) {
+            if (!valueSet.get(i)) {
                 set(i);
             }
             if (valueSet.get(i)) {

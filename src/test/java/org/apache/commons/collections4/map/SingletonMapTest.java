@@ -16,17 +16,18 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 
-import junit.framework.Test;
 import org.apache.commons.collections4.BoundedMap;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
@@ -34,18 +35,13 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     private static final Integer TWO = Integer.valueOf(2);
     private static final String TEN = "10";
 
-    public SingletonMapTest(final String testName) {
-        super(testName);
+    public SingletonMapTest() {
+        super(SingletonMapTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(SingletonMapTest.class);
-    }
-
-    //-----------------------------------------------------------------------
     @Override
     public OrderedMap<K, V> makeObject() {
-        // need an empty singleton map, but thats not possible
+        // need an empty singleton map, but that's not possible
         // use a ridiculous fake instead to make the tests pass
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<K, V>()));
     }
@@ -53,7 +49,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     public String[] ignoredTests() {
         // the ridiculous map above still doesn't pass these tests
-        // but its not relevant, so we ignore them
+        // but it's not relevant, so we ignore them
         return new String[] {
             "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
             "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
@@ -94,16 +90,17 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (V[]) new Object[] { TEN };
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testClone() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         final SingletonMap<K, V> cloned = map.clone();
         assertEquals(1, cloned.size());
-        assertEquals(true, cloned.containsKey(ONE));
-        assertEquals(true, cloned.containsValue(TWO));
+        assertTrue(cloned.containsKey(ONE));
+        assertTrue(cloned.containsValue(TWO));
     }
 
+    @Test
     public void testKeyValue() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
@@ -112,15 +109,15 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertTrue(map instanceof KeyValue);
     }
 
+    @Test
     public void testBoundedMap() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
-        assertEquals(true, map.isFull());
+        assertTrue(map.isFull());
         assertEquals(1, map.maxSize());
         assertTrue(map instanceof BoundedMap);
     }
 
-    //-----------------------------------------------------------------------
 //    public BulkTest bulkTestMapIterator() {
 //        return new TestFlatMapIterator();
 //    }

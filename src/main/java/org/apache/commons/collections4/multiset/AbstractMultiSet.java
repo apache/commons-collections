@@ -23,6 +23,7 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
@@ -49,7 +50,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     protected AbstractMultiSet() {
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements in this multiset.
      *
@@ -75,8 +75,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     public int getCount(final Object object) {
         for (final Entry<E> entry : entrySet()) {
             final E element = entry.getElement();
-            if (element == object ||
-                element != null && element.equals(object)) {
+            if (Objects.equals(element, object)) {
                 return entry.getCount();
             }
         }
@@ -98,7 +97,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return oldCount;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Determines if the multiset contains the given element.
      *
@@ -110,7 +108,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return getCount(object) > 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over the multiset elements. Elements present in the
      * MultiSet more than once will be returned repeatedly.
@@ -165,7 +162,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         /** {@inheritDoc} */
         @Override
         public void remove() {
-            if (canRemove == false) {
+            if (!canRemove) {
                 throw new IllegalStateException();
             }
             final int count = current.getCount();
@@ -178,7 +175,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object) {
         add(object, 1);
@@ -190,7 +186,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clears the multiset removing all elements from the entrySet.
      */
@@ -216,16 +211,13 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
-        final Iterator<?> i = coll.iterator();
-        while (i.hasNext()) {
-            final Object obj = i.next();
+        for (final Object obj : coll) {
             final boolean changed = remove(obj, getCount(obj)) != 0;
             result = result || changed;
         }
         return result;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a view of the unique elements of this multiset.
      *
@@ -296,7 +288,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     protected abstract Iterator<Entry<E>> createEntrySetIterator();
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class UniqueSet.
      */
@@ -345,7 +336,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Inner class EntrySet.
      */
@@ -374,7 +364,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
 
         @Override
         public boolean contains(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
+            if (!(obj instanceof Entry<?>)) {
                 return false;
             }
             final Entry<?> entry = (Entry<?>) obj;
@@ -384,7 +374,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
+            if (!(obj instanceof Entry<?>)) {
                 return false;
             }
             final Entry<?> entry = (Entry<?>) obj;
@@ -413,8 +403,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
                 final Object otherElement = other.getElement();
 
                 return this.getCount() == other.getCount() &&
-                       (element == otherElement ||
-                        element != null && element.equals(otherElement));
+                       Objects.equals(element, otherElement);
             }
             return false;
         }
@@ -422,7 +411,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         @Override
         public int hashCode() {
             final E element = getElement();
-            return ((element == null) ? 0 : element.hashCode()) ^ getCount();
+            return (element == null ? 0 : element.hashCode()) ^ getCount();
         }
 
         @Override
@@ -431,7 +420,6 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the multiset out using a custom routine.
      * @param out the output stream
@@ -463,13 +451,12 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }
-        if (object instanceof MultiSet == false) {
+        if (!(object instanceof MultiSet)) {
             return false;
         }
         final MultiSet<?> other = (MultiSet<?>) object;

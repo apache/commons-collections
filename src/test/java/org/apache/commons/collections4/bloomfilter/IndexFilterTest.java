@@ -16,91 +16,84 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentityImpl;
-import org.apache.commons.collections4.bloomfilter.hasher.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.function.IntConsumer;
-import java.util.stream.Collectors;
+import java.util.BitSet;
+import java.util.List;
+import java.util.SplittableRandom;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.IntPredicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
- * Tests for the {@link IndexFilters}.
+ * Tests the Filter class.
  */
 public class IndexFilterTest {
 
-    /**
-     * The shape of the dummy Bloom filter.
-     * This is used as an argument to a Hasher that just returns fixed indexes
-     * so the parameters do not matter.
-     */
-    private final Shape shape = new Shape(new HashFunctionIdentityImpl(
-        "Apache Commons Collections", "Dummy", Signedness.SIGNED, ProcessType.CYCLIC, 0L),
-        50, 3000, 4);
-
     @Test
-    public void testApplyThrowsWithNullArguments() {
-        final FixedIndexesTestHasher hasher = new FixedIndexesTestHasher(shape, 1, 2, 3);
-        final Shape shape = this.shape;
-        final ArrayList<Integer> actual = new ArrayList<>();
-        final IntConsumer consumer = actual::add;
+    public void testFiltering() {
+        final Shape shape = Shape.fromKM(3, 12);
+        final List<Integer> consumer = new ArrayList<>();
+        final IntPredicate filter = IndexFilter.create(shape, consumer::add);
 
-        try {
-            IndexFilters.distinctIndexes(null, shape, consumer);
-            fail("null hasher");
-        } catch (final NullPointerException expected) {
-            // Ignore
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
         }
+        assertEquals(12, consumer.size());
 
-        try {
-            IndexFilters.distinctIndexes(hasher, null, consumer);
-            fail("null shape");
-        } catch (final NullPointerException expected) {
-            // Ignore
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
         }
-
-        try {
-            IndexFilters.distinctIndexes(hasher, shape, null);
-            fail("null consumer");
-        } catch (final NullPointerException expected) {
-            // Ignore
-        }
-
-        // All OK together
-        IndexFilters.distinctIndexes(hasher, shape, consumer);
+        assertEquals(12, consumer.size());
     }
 
-    @Test
-    public void testApply() {
-        assertFilter(1, 4, 6, 7, 9);
-    }
+    @ParameterizedTest
+    @CsvSource({
+        "1, 64",
+        "2, 64",
+        "3, 64",
+        "7, 357",
+        "7, 17",
+    })
+    void testFilter(final int k, final int m) {
+        final Shape shape = Shape.fromKM(k, m);
+        final BitSet used = new BitSet(m);
+        for (int n = 0; n < 10; n++) {
+            used.clear();
+            final List<Integer> consumer = new ArrayList<>();
+            final IntPredicate filter = IndexFilter.create(shape, consumer::add);
 
-    @Test
-    public void testApplyWithDuplicates() {
-        assertFilter(1, 4, 4, 6, 7, 7, 7, 7, 7, 9);
-    }
+            // Make random indices; these may be duplicates
+            final long seed = ThreadLocalRandom.current().nextLong();
+            final SplittableRandom rng = new SplittableRandom(seed);
+            for (int i = Math.min(k, m / 2); i-- > 0;) {
+                final int bit = rng.nextInt(m);
+                // duplicates should not alter the list size
+                final int newSize = consumer.size() + (used.get(bit) ? 0 : 1);
+                assertTrue(filter.test(bit));
+                assertEquals(newSize, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+                used.set(bit);
+            }
 
-    private void assertFilter(final int... indexes) {
-        final FixedIndexesTestHasher hasher = new FixedIndexesTestHasher(shape, indexes);
-        final Set<Integer> expected = Arrays.stream(indexes).boxed().collect(Collectors.toSet());
-        final ArrayList<Integer> actual = new ArrayList<>();
+            // The list should have unique entries
+            assertArrayEquals(used.stream().toArray(), consumer.stream().mapToInt(i -> (int) i).sorted().toArray());
+            final int size = consumer.size();
 
-        IndexFilters.distinctIndexes(hasher, shape, actual::add);
+            // Second observations do not change the list size
+            used.stream().forEach(bit -> {
+                assertTrue(filter.test(bit));
+                assertEquals(size, consumer.size(), () -> String.format("Bad filter. Seed=%d, bit=%d", seed, bit));
+            });
 
-        assertEquals(expected.size(), actual.size());
-        // Check the array has all the values.
-        // We do not currently check the order of indexes from the
-        // hasher.iterator() function.
-        for (final Integer index : actual) {
-            assertTrue(expected.contains(index));
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(m));
+            assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
         }
     }
 }

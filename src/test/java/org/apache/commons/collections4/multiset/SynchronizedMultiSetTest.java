@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections4.multiset;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiSet;
 
 /**
@@ -29,15 +26,9 @@ import org.apache.commons.collections4.MultiSet;
  */
 public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public SynchronizedMultiSetTest(final String testName) {
-        super(testName);
+    public SynchronizedMultiSetTest() {
+        super(SynchronizedMultiSetTest.class.getSimpleName());
     }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(SynchronizedMultiSetTest.class);
-    }
-
-    //-----------------------------------------------------------------------
 
     @Override
     public MultiSet<T> makeObject() {
@@ -47,6 +38,11 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     public String getCompatibilityVersion() {
         return "4.1";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

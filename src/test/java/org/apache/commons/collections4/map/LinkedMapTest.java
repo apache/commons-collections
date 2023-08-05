@@ -16,31 +16,29 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public LinkedMapTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(LinkedMapTest.class);
+    public LinkedMapTest() {
+        super(LinkedMapTest.class.getSimpleName());
     }
 
     @Override
@@ -61,7 +59,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return "4";
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testReset() {
         resetEmpty();
@@ -78,7 +76,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(list.get(0), it.next());
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testInsertionOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -126,7 +124,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[2], valueIter.next());
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testGetByIndex() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();
@@ -152,6 +150,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testGetValueByIndex() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();
@@ -178,6 +177,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testIndexOf() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();
@@ -194,6 +194,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     public void testRemoveByIndex() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();
@@ -222,7 +223,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             final Object value = lm.get(key);
             assertEquals(value, lm.remove(i));
             list.remove(i);
-            assertEquals(false, lm.containsKey(key));
+            assertFalse(lm.containsKey(key));
         }
     }
 
@@ -272,6 +273,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone() {
         final LinkedMap<K, V> map = new LinkedMap<>(10);
@@ -299,6 +301,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     /**
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
+    @Test
     public void testInitialCapacityZero() {
         final LinkedMap<String, String> map = new LinkedMap<>(0);
         assertEquals(1, map.data.length);

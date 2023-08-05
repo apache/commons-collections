@@ -98,7 +98,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
             }
         }
 
-        if (collection instanceof BoundedCollection == false) {
+        if (!(collection instanceof BoundedCollection)) {
             throw new IllegalArgumentException("Collection is not a bounded collection.");
         }
         return new UnmodifiableBoundedCollection<>((BoundedCollection<E>) collection);
@@ -115,7 +115,6 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         super((BoundedCollection<E>) coll);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
@@ -159,7 +158,6 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean isFull() {
         return decorated().isFull();

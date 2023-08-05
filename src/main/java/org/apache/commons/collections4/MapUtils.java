@@ -25,10 +25,9 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
@@ -167,7 +166,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is {@code null}
      */
     public static void debugPrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), true);
+        verbosePrintInternal(out, label, map, new ArrayDeque<>(), true);
     }
 
     /**
@@ -274,8 +273,6 @@ public class MapUtils {
         return applyDefaultFunction(map, key, MapUtils::getBoolean, defaultFunction);
     }
 
-    // Type safe primitive getters
-    // -------------------------------------------------------------------------
     /**
      * Gets a boolean from a Map in a null-safe manner.
      * <p>
@@ -294,8 +291,6 @@ public class MapUtils {
         return Boolean.TRUE.equals(getBoolean(map, key));
     }
 
-    // Type safe primitive getters with default values
-    // -------------------------------------------------------------------------
     /**
      * Gets a boolean from a Map in a null-safe manner, using the default value if the conversion fails.
      * <p>
@@ -653,7 +648,7 @@ public class MapUtils {
     }
 
     /**
-     * Gets a Integer from a Map in a null-safe manner.
+     * Gets an Integer from a Map in a null-safe manner.
      * <p>
      * The Integer is obtained from the results of {@link #getNumber(Map,Object)}.
      * </p>
@@ -661,7 +656,7 @@ public class MapUtils {
      * @param <K> the key type
      * @param map the map to use
      * @param key the key to look up
-     * @return the value in the Map as a Integer, {@code null} if null map input
+     * @return the value in the Map as an Integer, {@code null} if null map input
      */
     public static <K> Integer getInteger(final Map<? super K, ?> map, final K key) {
         final Number answer = getNumber(map, key);
@@ -979,7 +974,6 @@ public class MapUtils {
         return applyDefaultValue(map, key, MapUtils::getNumber, defaultValue);
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Gets from a Map in a null-safe manner.
      *
@@ -996,7 +990,6 @@ public class MapUtils {
         return null;
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Looks up the given key in the given map, converting null into the given default value.
      *
@@ -1175,8 +1168,6 @@ public class MapUtils {
         return applyDefaultValue(map, key, MapUtils::getString, defaultValue);
     }
 
-    // Misc
-    // -----------------------------------------------------------------------
     /**
      * Inverts the supplied map returning a new HashMap such that the keys of the input are swapped with the values.
      * <p>
@@ -1298,8 +1289,6 @@ public class MapUtils {
         return LazyMap.lazyMap(map, factory);
     }
 
-    // -----------------------------------------------------------------------
-
     /**
      * Returns a "lazy" map whose values will be created on demand.
      * <p>
@@ -1420,7 +1409,7 @@ public class MapUtils {
     }
 
     /**
-     * Creates a mult-value map backed by the given map which returns collections of type ArrayList.
+     * Creates a multi-value map backed by the given map which returns collections of type ArrayList.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1507,9 +1496,7 @@ public class MapUtils {
      */
     public static <K, V, E> void populateMap(final Map<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = elements.iterator();
-        while (iter.hasNext()) {
-            final E temp = iter.next();
+        for (final E temp : elements) {
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
         }
     }
@@ -1544,9 +1531,7 @@ public class MapUtils {
      */
     public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = elements.iterator();
-        while (iter.hasNext()) {
-            final E temp = iter.next();
+        for (final E temp : elements) {
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
         }
     }
@@ -1623,7 +1608,6 @@ public class MapUtils {
         }
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Puts all the keys and values from the specified array into the map.
      * <p>
@@ -1745,7 +1729,6 @@ public class MapUtils {
         return map == null ? 0 : map.size();
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Returns a synchronized map backed by the given map.
      * <p>
@@ -1776,7 +1759,6 @@ public class MapUtils {
         return Collections.synchronizedMap(map);
     }
 
-    // -----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted map backed by the given sorted map.
      * <p>
@@ -1829,7 +1811,6 @@ public class MapUtils {
         return map;
     }
 
-    // -------------------------------------------------------------------------
     /**
      * Gets a new Properties object initialized with the values from a Map. A null input will return an empty properties
      * object.
@@ -1947,8 +1928,6 @@ public class MapUtils {
         return UnmodifiableSortedMap.unmodifiableSortedMap(map);
     }
 
-    // Printing methods
-    // -------------------------------------------------------------------------
     /**
      * Prints the given map with nice line breaks.
      * <p>
@@ -1967,16 +1946,16 @@ public class MapUtils {
      * @throws NullPointerException if the stream is {@code null}
      */
     public static void verbosePrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), false);
+        verbosePrintInternal(out, label, map, new ArrayDeque<>(), false);
     }
 
     /**
      * Implementation providing functionality for {@link #debugPrint} and for {@link #verbosePrint}. This prints the
      * given map with nice line breaks. If the debug flag is true, it additionally prints the type of the object value.
      * If the contents of a map include the map itself, then the text <em>(this Map)</em> is printed out. If the
-     * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where i actually
+     * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where it actually
      * indicates the number of levels which must be traversed in the sequential list of ancestors (e.g. father,
-     * grandfather, great-grandfather, etc).
+     * grandfather, great-grandfather, etc.).
      *
      * @param out the stream to print to
      * @param label the label to be used, may be {@code null}. If {@code null}, the label is not output. It

@@ -103,7 +103,6 @@ public abstract class AbstractCollectionDecorator<E>
         this.collection = coll;
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object) {

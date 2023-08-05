@@ -20,24 +20,13 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Test the NullComparator.
- *
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 
     public AbstractNullComparatorTest(final String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        final TestSuite suite = new TestSuite(AbstractNullComparatorTest.class.getName());
-        suite.addTest(new TestSuite(TestNullComparator1.class));
-        suite.addTest(new TestSuite(TestNullComparator2.class));
-        return suite;
     }
 
     /**

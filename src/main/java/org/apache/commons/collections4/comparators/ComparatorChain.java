@@ -22,6 +22,7 @@ import java.util.BitSet;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A ComparatorChain is a Comparator that wraps one or more Comparators in
@@ -62,7 +63,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
    /** Whether the chain has been "locked". */
     private boolean isLocked;
 
-    //-----------------------------------------------------------------------
     /**
      * Construct a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
@@ -70,7 +70,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * UnsupportedOperationException is thrown
      */
     public ComparatorChain() {
-        this(new ArrayList<Comparator<E>>(), new BitSet());
+        this(new ArrayList<>(), new BitSet());
     }
 
     /**
@@ -94,7 +94,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         comparatorChain = new ArrayList<>(1);
         comparatorChain.add(comparator);
         orderingBits = new BitSet(1);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(0);
         }
     }
@@ -131,7 +131,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         orderingBits = bits;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Add a Comparator to the end of the chain using the
      * forward sort order
@@ -153,7 +152,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         checkLocked();
 
         comparatorChain.add(comparator);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(comparatorChain.size() - 1);
         }
     }
@@ -183,7 +182,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         checkLocked();
 
         comparatorChain.set(index, comparator);
-        if (reverse == true) {
+        if (reverse) {
             orderingBits.set(index);
         } else {
             orderingBits.clear(index);
@@ -239,7 +238,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
      */
     private void checkLocked() {
-        if (isLocked == true) {
+        if (isLocked) {
             throw new UnsupportedOperationException(
                     "Comparator ordering cannot be changed after the first comparison is performed");
         }
@@ -256,7 +255,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Perform comparisons on the Objects as per
      * Comparator.compare(o1,o2).
@@ -268,7 +266,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      */
     @Override
     public int compare(final E o1, final E o2) throws UnsupportedOperationException {
-        if (isLocked == false) {
+        if (!isLocked) {
             checkChainIntegrity();
             isLocked = true;
         }
@@ -281,7 +279,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
             int retval = comparator.compare(o1, o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort
-                if (orderingBits.get(comparatorIndex) == true) {
+                if (orderingBits.get(comparatorIndex)) {
                     if (retval > 0) {
                         retval = -1;
                     } else {
@@ -296,7 +294,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         return 0;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
@@ -318,7 +315,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Returns {@code true} iff <i>that</i> Object is
-     * is a {@link Comparator} whose ordering is known to be
+     * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
@@ -342,9 +339,8 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             final ComparatorChain<?> chain = (ComparatorChain<?>) object;
-            return (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits)) &&
-                   (null == comparatorChain ? null == chain.comparatorChain :
-                                              comparatorChain.equals(chain.comparatorChain));
+            return Objects.equals(orderingBits, chain.orderingBits) &&
+                   Objects.equals(comparatorChain, chain.comparatorChain);
         }
         return false;
     }

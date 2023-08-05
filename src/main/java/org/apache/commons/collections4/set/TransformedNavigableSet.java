@@ -85,7 +85,6 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -111,7 +110,6 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
         return (NavigableSet<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E lower(final E e) {

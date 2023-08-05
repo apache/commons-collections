@@ -23,7 +23,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 
 /**
  * Decorates another {@link MultiSet} to synchronize its behavior
- * for a multi-threaded environment.
+ * for a multithreaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated multiset.
  * Iterators must be separately synchronized around the loop.
@@ -49,7 +49,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         return new SynchronizedMultiSet<>(multiset);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -98,7 +97,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int add(final E object, final int count) {
@@ -144,7 +142,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Synchronized Set for the MultiSet class.
      */

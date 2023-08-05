@@ -16,11 +16,16 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -30,11 +35,9 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
-    public PredicatedSetTest(final String testName) {
-        super(testName);
+    public PredicatedSetTest() {
+        super(PredicatedSetTest.class.getSimpleName());
     }
-
- //-------------------------------------------------------------------
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
@@ -53,8 +56,6 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         return (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
 
-//--------------------------------------------------------------------
-
     protected Predicate<E> testPredicate =
         o -> o instanceof String;
 
@@ -62,24 +63,23 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         return decorateSet(new HashSet<E>(), testPredicate);
     }
 
+    @Test
     public void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
-        assertTrue("returned set should not be null", set.decorated() != null);
+        assertNotNull(set.decorated(), "returned set should not be null");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
         final Integer i = Integer.valueOf(3);
-        try {
-            set.add((E) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element", !set.contains(i));
+        assertThrows(IllegalArgumentException.class, () -> set.add((E) i),
+                "Integer should fail string predicate.");
+        assertFalse(set.contains(i), "Collection shouldn't contain illegal element");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Set<E> set = makeTestSet();
@@ -88,21 +88,22 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-        try {
-            set.addAll(elements);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Set shouldn't contain illegal element", !set.contains("one"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("two"));
-        assertTrue("Set shouldn't contain illegal element", !set.contains(Integer.valueOf(3)));
-        assertTrue("Set shouldn't contain illegal element", !set.contains("four"));
+        assertThrows(IllegalArgumentException.class, () -> set.addAll(elements),
+                "Integer should fail string predicate.");
+        assertFalse(set.contains("one"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("two"), "Set shouldn't contain illegal element");
+        assertFalse(set.contains(Integer.valueOf(3)), "Set shouldn't contain illegal element");
+        assertFalse(set.contains("four"), "Set shouldn't contain illegal element");
     }
 
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

@@ -66,7 +66,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /** A list of the cursor currently open on this list */
     private transient List<WeakReference<Cursor<E>>> cursors;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that creates.
      */
@@ -93,7 +92,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         cursors = new ArrayList<>();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an iterator that does <b>not</b> support concurrent modification.
      * <p>
@@ -209,7 +207,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         return cursor;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Updates the node with a new value.
      * This implementation sets the value on the node.
@@ -264,7 +261,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Registers a cursor to be notified of changes to this list.
      *
@@ -289,7 +285,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
             if (cur == null) {
                 // some other unrelated cursor object has been
                 // garbage-collected; let's take the opportunity to
-                // clean up the cursors list anyway..
+                // clean up the cursors list anyway.
                 it.remove();
             } else if (cur == cursor) {
                 ref.clear();
@@ -299,7 +295,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Informs all of my registered cursors that the specified
      * element was changed.
@@ -357,7 +352,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Serializes the data held in this object to the stream specified.
      *
@@ -381,7 +375,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         doReadObject(in);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a list iterator for the sublist.
      *
@@ -396,7 +389,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         return cursor;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * An extended {@code ListIterator} that allows concurrent changes to
      * the underlying list.
@@ -438,7 +430,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
             if (current == null && currentRemovedByAnother) { // NOPMD
                 // quietly ignore, as the last returned node was removed
                 // by the list or some other iterator
-                // by ignoring it, we keep this iterator independent from
+                // by ignoring it, we keep this iterator independent of
                 // other changes as much as possible
             } else {
                 checkModCount();
@@ -474,7 +466,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          */
         @Override
         public int nextIndex() {
-            if (nextIndexValid == false) {
+            if (!nextIndexValid) {
                 if (next == parent.header) {
                     nextIndex = parent.size();
                 } else {
@@ -534,7 +526,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * @param node  the node that was added
          */
         protected void nodeInserted(final Node<E> node) {
-            if ((node.previous == current) || (next.previous == node)) {
+            if (node.previous == current || next.previous == node) {
                 next = node;
             } else {
                 nextIndexValid = false;
@@ -567,7 +559,6 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A cursor for the sublist based on LinkedSubListIterator.
      *

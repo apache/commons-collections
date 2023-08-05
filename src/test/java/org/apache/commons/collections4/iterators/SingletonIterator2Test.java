@@ -16,25 +16,28 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
- *
  */
 public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonIterator2Test(final String testName) {
-        super(testName);
+    public SingletonIterator2Test() {
+        super(SingletonIterator2Test.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeEmptyIterator() {
@@ -61,42 +64,41 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
-        assertTrue("Iterator has a first item", iter.hasNext());
+        assertTrue(iter.hasNext(), "Iterator has a first item");
 
         final E iterValue = iter.next();
-        assertEquals("Iteration value is correct", testValue, iterValue);
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 
+    @Test
     public void testReset() {
         final ResettableIterator<E> it = makeObject();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(testValue, it.next());
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
 
         it.reset();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals(testValue, it.next());
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
 
         it.reset();
         it.reset();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
     }
 
 }

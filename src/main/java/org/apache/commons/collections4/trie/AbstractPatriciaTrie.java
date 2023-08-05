@@ -34,14 +34,17 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.apache.commons.collections4.Trie;
 
 /**
  * This class implements the base PATRICIA algorithm and everything that
  * is related to the {@link Map} interface.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.0
  */
-abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
+public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 
@@ -66,6 +69,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      */
     protected transient int modCount;
 
+    /**
+     * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
+     *
+     * @param keyAnalyzer  the {@link KeyAnalyzer} to use
+     */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         super(keyAnalyzer);
     }
@@ -81,7 +89,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         putAll(map);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public void clear() {
         root.key = null;
@@ -538,8 +545,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             final TrieEntry<K, V> child = p.left == h ? p.right : p.left;
 
             // if it was looping to itself previously,
-            // it will now be pointed from it's parent
-            // (if we aren't removing it's parent --
+            // it will now be pointed from its parent
+            // (if we aren't removing its parent --
             //  in that case, it remains looping to itself).
             // otherwise, it will continue to have the same
             // predecessor.
@@ -762,7 +769,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Comparator<? super K> comparator() {
@@ -1383,7 +1389,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
 
     /**
-     * This is a entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
+     * This is an entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
      */
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
@@ -1404,10 +1410,10 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         @Override
         public boolean remove(final Object obj) {
-            if (obj instanceof Map.Entry == false) {
+            if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            if (contains(obj) == false) {
+            if (!contains(obj)) {
                 return false;
             }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
@@ -2412,7 +2418,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Reads the content of the stream.

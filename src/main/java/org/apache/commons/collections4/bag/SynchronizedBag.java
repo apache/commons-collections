@@ -23,7 +23,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 
 /**
  * Decorates another {@link Bag} to synchronize its behavior
- * for a multi-threaded environment.
+ * for a multithreaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
  * Iterators must be separately synchronized around the loop.
@@ -53,7 +53,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         return new SynchronizedBag<>(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -101,7 +100,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public boolean add(final E object, final int count) {
@@ -132,7 +130,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Synchronized Set for the Bag class.
      */

@@ -19,8 +19,8 @@ package org.apache.commons.collections4.multimap;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.MapIterator;
@@ -59,9 +59,8 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
         this.map = Objects.requireNonNull(map, "map");
     }
 
-    // -----------------------------------------------------------------------
     /**
-     * The decorated multi-valued map.
+     * The decorated multivalued map.
      *
      * @return the map to decorate
      */
@@ -69,7 +68,6 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
         return map;
     }
 
-    // -----------------------------------------------------------------------
     @Override
     public int size() {
         return decorated().size();

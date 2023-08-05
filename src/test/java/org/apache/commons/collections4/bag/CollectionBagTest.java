@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for {@link CollectionBag}.
@@ -37,14 +41,11 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * JUnit constructor.
-     *
-     * @param testName  the test class name
      */
-    public CollectionBagTest(final String testName) {
-        super(testName);
+    public CollectionBagTest() {
+        super(CollectionBagTest.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {
@@ -78,6 +79,11 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
@@ -85,18 +91,18 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
 //    }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
-            assertTrue("Bag is empty", bag2.isEmpty());
+            assertTrue(bag2.isEmpty(), "Bag is empty");
             assertEquals(bag, bag2);
         }
     }
@@ -105,12 +111,13 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * Compares the current serialized form of the Bag
      * against the canonical version in SCM.
      */
+    @Test
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = (Bag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
-            assertEquals("Bag is the right size", bag.size(), bag2.size());
+            assertEquals(bag.size(), bag2.size(), "Bag is the right size");
             assertEquals(bag, bag2);
         }
     }

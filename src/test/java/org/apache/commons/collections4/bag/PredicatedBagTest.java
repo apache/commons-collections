@@ -16,14 +16,17 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
@@ -33,15 +36,9 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
-    public PredicatedBagTest(final String testName) {
-        super(testName);
+    public PredicatedBagTest() {
+        super(PredicatedBagTest.class.getSimpleName());
     }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(PredicatedBagTest.class);
-    }
-
-    //--------------------------------------------------------------------------
 
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
@@ -62,10 +59,14 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         return decorateBag(new HashBag<T>(), stringPredicate());
     }
 
-    //--------------------------------------------------------------------------
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
 
+    @Test
     @SuppressWarnings("unchecked")
-    public void testlegalAddRemove() {
+    public void testLegalAddRemove() {
         final Bag<T> bag = makeTestBag();
         assertEquals(0, bag.size());
         final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
@@ -75,25 +76,24 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
             assertTrue(bag.contains(els[i]));
         }
         Set<T> set = bag.uniqueSet();
-        assertTrue("Unique set contains the first element", set.contains(els[0]));
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
         assertTrue(bag.remove(els[0]));
         set = bag.uniqueSet();
-        assertFalse("Unique set now does not contain the first element", set.contains(els[0]));
+        assertFalse(set.contains(els[0]), "Unique set now does not contain the first element");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
         final Integer i = 3;
-        try {
-            bag.add((T) i);
-            fail("Integer should fail string predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        assertFalse("Collection shouldn't contain illegal element", bag.contains(i));
+
+        assertThrows(IllegalArgumentException.class, () -> bag.add((T) i));
+
+        assertFalse(bag.contains(i), "Collection shouldn't contain illegal element");
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
         final HashBag<Object> elements = new HashBag<>();
@@ -101,18 +101,10 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         elements.add("two");
         elements.add(3);
         elements.add("four");
-        try {
-            decorateBag((HashBag<T>) elements, stringPredicate());
-            fail("Bag contains an element that should fail the predicate.");
-        } catch (final IllegalArgumentException e) {
-            // expected
-        }
-        try {
-            decorateBag(new HashBag<T>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+
+        assertThrows(IllegalArgumentException.class, () -> decorateBag((HashBag<T>) elements, stringPredicate()));
+
+        assertThrows(NullPointerException.class, () -> decorateBag(new HashBag<T>(), null));
     }
 
     @Override

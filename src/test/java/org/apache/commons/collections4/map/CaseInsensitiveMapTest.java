@@ -16,27 +16,24 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
- *
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(CaseInsensitiveMapTest.class);
-    }
-
-    public CaseInsensitiveMapTest(final String testName) {
-        super(testName);
+    public CaseInsensitiveMapTest() {
+        super(CaseInsensitiveMapTest.class.getSimpleName());
     }
 
     @Override
@@ -49,6 +46,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         return new CaseInsensitiveMap<>();
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testCaseInsensitive() {
         final Map<K, V> map = makeObject();
@@ -60,6 +58,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertEquals("Three", map.get("Two"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testClone() {
         final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
@@ -72,12 +71,14 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     /**
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
+    @Test
     public void testInitialCapacityZero() {
         final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
         assertEquals(1, map.data.length);
     }
 
     // COLLECTIONS-294
+    @Test
     public void testLocaleIndependence() {
         final Locale orig = Locale.getDefault();
 
@@ -94,10 +95,10 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
             for (final Locale locale : locales) {
                 Locale.setDefault(locale);
                 for (int j = 0; j < data.length; j++) {
-                    assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
+                    assertTrue(data[j][0].equalsIgnoreCase(data[j][1]), "Test data corrupt: " + j);
                     final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
                     map.put(data[j][0], "value");
-                    assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
+                    assertEquals("value", map.get(data[j][1]), Locale.getDefault() + ": " + j);
                 }
             }
         } finally {
@@ -112,6 +113,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.fullCollection.version4.obj");
 //    }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         final Map<K, V> map = makeObject();
@@ -128,6 +130,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertEquals(3, keys.size());
     }
 
+    @Test
     public void testPutAll() {
         final Map<Object, String> map = new HashMap<>();
         map.put("One", "One");

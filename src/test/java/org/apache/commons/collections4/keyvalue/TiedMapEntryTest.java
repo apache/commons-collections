@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.HashMap;
 import java.util.Map;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the TiedMapEntry class.
@@ -29,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the instance to test
      */
@@ -40,12 +40,11 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         return new TiedMapEntry<>(map, key);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Tests the constructors.
      */
-    @Override
     @Test
+    @Override
     public void testConstructors() {
         // ignore
     }
@@ -53,8 +52,8 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     /**
      * Tests the constructors.
      */
-    @SuppressWarnings("unchecked")
     @Test
+    @SuppressWarnings("unchecked")
     public void testSetValue() {
         final Map<K, V> map = new HashMap<>();
         map.put((K) "A", (V) "a");

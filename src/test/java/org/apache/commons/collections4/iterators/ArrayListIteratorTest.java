@@ -16,18 +16,22 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Test the ArrayListIterator class.
- *
  */
 public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 
-    public ArrayListIteratorTest(final String testName) {
-        super(testName);
+    public ArrayListIteratorTest() {
     }
 
     @Override
@@ -53,6 +57,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
      * Test the basic ListIterator functionality - going backwards using
      * {@code previous()}.
      */
+    @Test
     public void testListIterator() {
         final ListIterator<E> iter = makeObject();
 
@@ -68,17 +73,15 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
             final Object testValue = testArray[x];
             final Object iterValue = iter.previous();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasPrevious());
+        assertFalse(iter.hasPrevious(), "Iterator should now be empty");
 
         try {
             iter.previous();
         } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
 
     }
@@ -86,11 +89,12 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     /**
      * Tests the {@link java.util.ListIterator#set} operation.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
-        final String[] testData = new String[] { "a", "b", "c" };
+        final String[] testData = { "a", "b", "c" };
 
-        final String[] result = new String[] { "0", "1", "2" };
+        final String[] result = { "0", "1", "2" };
 
         ListIterator<E> iter = makeArrayListIterator(testData);
         int x = 0;
@@ -101,20 +105,13 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
             x++;
         }
 
-        assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
+        assertArrayEquals(testData, result, "The two arrays should have the same value, i.e. {0,1,2}");
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
         iter = makeArrayListIterator(testArray);
 
-        try {
-            iter.set((E) "should fail");
-            fail("ListIterator#set should fail if next() or previous() have not yet been called.");
-        } catch (final IllegalStateException e) {
-            // expected
-        } catch (final Throwable t) { // should never happen
-            fail(t.toString());
-        }
-
+        final ListIterator<E> finalIter = iter;
+        assertThrows(IllegalStateException.class, () -> finalIter.set((E) "should fail"), "ListIterator#set should fail if next() or previous() have not yet been called.");
     }
 
 }

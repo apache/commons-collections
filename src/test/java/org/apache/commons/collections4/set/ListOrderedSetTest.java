@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -42,8 +49,8 @@ public class ListOrderedSetTest<E>
 
     private static final Integer THREE = Integer.valueOf(3);
 
-    public ListOrderedSetTest(final String testName) {
-        super(testName);
+    public ListOrderedSetTest() {
+        super(ListOrderedSetTest.class.getSimpleName());
     }
 
     @Override
@@ -61,41 +68,43 @@ public class ListOrderedSetTest<E>
         return set;
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testOrdering() {
         final ListOrderedSet<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
 
         for (int i = 0; i < 10; i += 2) {
-            assertTrue("Must be able to remove int",
-                       set.remove(Integer.toString(i)));
+            assertTrue(set.remove(Integer.toString(i)),
+                       "Must be able to remove int");
         }
 
         it = set.iterator();
         for (int i = 1; i < 10; i += 2) {
-            assertEquals("Sequence is wrong after remove ",
-                         Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(),
+                         "Sequence is wrong after remove ");
         }
 
         for (int i = 0; i < 10; i++) {
             set.add((E) Integer.toString(i));
         }
 
-        assertEquals("Size of set is wrong!", 10, set.size());
+        assertEquals(10, set.size(), "Size of set is wrong!");
 
         it = set.iterator();
         for (int i = 1; i < 10; i += 2) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
         for (int i = 0; i < 10; i += 2) {
-            assertEquals("Sequence is wrong", Integer.toString(i), it.next());
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddRemove() {
         final ListOrderedSet<E> set = makeObject();
@@ -126,6 +135,7 @@ public class ListOrderedSetTest<E>
         assertSame(TWO, view.get(1));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
         final ListOrderedSet<E> set = makeObject();
@@ -164,6 +174,7 @@ public class ListOrderedSetTest<E>
         assertSame(ONE, set.get(3));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testListAddReplacing() {
         final ListOrderedSet<E> set = makeObject();
@@ -179,6 +190,7 @@ public class ListOrderedSetTest<E>
         assertSame(a, set.asList().get(0));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testRetainAll() {
         final List<E> list = new ArrayList<>(10);
@@ -203,6 +215,7 @@ public class ListOrderedSetTest<E>
         assertEquals(Integer.valueOf(0), orderedSet.get(4));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testDuplicates() {
         final List<E> list = new ArrayList<>(10);
@@ -248,32 +261,15 @@ public class ListOrderedSetTest<E>
         }
     }
 
+    @Test
     public void testDecorator() {
-        try {
-            ListOrderedSet.listOrderedSet((List<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet((Set<E>) null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
-            fail();
-        } catch (final NullPointerException ex) {
-        }
-        try {
-            ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
-            fail();
-        } catch (final NullPointerException ex) {
-        }
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<E>(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<E>()))
+        );
     }
 
     @Override

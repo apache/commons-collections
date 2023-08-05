@@ -90,7 +90,6 @@ public class IdentityMap<K, V>
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the hash code for the key specified.
      * This implementation uses the identity hash code.
@@ -145,7 +144,6 @@ public class IdentityMap<K, V>
         return new IdentityEntry<>(next, hashCode, key, value);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * HashEntry
      */
@@ -176,7 +174,6 @@ public class IdentityMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *

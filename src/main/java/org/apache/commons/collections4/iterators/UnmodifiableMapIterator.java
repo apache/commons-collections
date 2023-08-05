@@ -36,7 +36,6 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
     /** The iterator being decorated */
     private final MapIterator<? extends K, ? extends V> iterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -57,7 +56,6 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
         return new UnmodifiableMapIterator<>(iterator);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
@@ -67,7 +65,6 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
         this.iterator = iterator;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean hasNext() {
         return iterator.hasNext();

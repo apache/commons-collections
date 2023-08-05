@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,9 +28,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
@@ -37,15 +40,10 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableSortedSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableSortedSetTest() {
+        super(UnmodifiableSortedSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedSetTest.class);
-    }
-
-    //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {
         return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<E>());
@@ -67,7 +65,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return false;
     }
 
-    //--------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
@@ -78,6 +75,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     /**
      * Verify that base set and subsets are not modifiable
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiable() {
         setupSet();
@@ -87,14 +85,12 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), (E) Integer.valueOf(3)));
     }
 
+    @Test
     public void testDecorateFactory() {
         final SortedSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSortedSet.unmodifiableSortedSet(set));
 
-        try {
-            UnmodifiableSortedSet.unmodifiableSortedSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedSet.unmodifiableSortedSet(null));
     }
 
     /**
@@ -102,51 +98,29 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void verifyUnmodifiable(final Set<E> set) {
-        try {
-            set.add((E) "value");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.addAll(new TreeSet<E>());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.remove("x");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
+        assertAll(
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<E>()),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.clear(),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.remove("x"),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.removeAll(array),
+                        "Expecting UnsupportedOperationException."),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array),
+                        "Expecting UnsupportedOperationException.")
+        );
     }
 
+    @Test
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

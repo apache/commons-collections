@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -43,7 +45,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         super(name);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * {@inheritDoc}
      */
@@ -58,7 +59,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return (NavigableSet<E>) super.makeFullCollection();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns an empty {@link TreeSet} for use in modification testing.
      *
@@ -69,7 +69,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return new TreeSet<>();
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Verification extension, will check the order of elements,
@@ -81,28 +80,27 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         // Check that descending iterator returns elements in order and higher(), lower(),
         // floor() and ceiling() are consistent
-        final Iterator<E> colliter = getCollection().descendingIterator();
-        final Iterator<E> confiter = getConfirmed().descendingIterator();
-        while (colliter.hasNext()) {
-            final E element = colliter.next();
-            final E confelement = confiter.next();
-            assertEquals("Element appears to be out of order.", confelement, element);
+        final Iterator<E> collIter = getCollection().descendingIterator();
+        final Iterator<E> confIter = getConfirmed().descendingIterator();
+        while (collIter.hasNext()) {
+            final E element = collIter.next();
+            final E confElement = confIter.next();
+            assertEquals(confElement, element, "Element appears to be out of order.");
 
-            assertEquals("Incorrect element returned by higher().", getConfirmed().higher(element),
-                                                                    getCollection().higher(element));
+            assertEquals(getConfirmed().higher(element),
+                    getCollection().higher(element), "Incorrect element returned by higher().");
 
-            assertEquals("Incorrect element returned by lower().", getConfirmed().lower(element),
-                                                                   getCollection().lower(element));
+            assertEquals(getConfirmed().lower(element),
+                    getCollection().lower(element), "Incorrect element returned by lower().");
 
-            assertEquals("Incorrect element returned by floor().", getConfirmed().floor(element),
-                                                                   getCollection().floor(element));
+            assertEquals(getConfirmed().floor(element),
+                    getCollection().floor(element), "Incorrect element returned by floor().");
 
-            assertEquals("Incorrect element returned by ceiling().", getConfirmed().ceiling(element),
-                                                                     getCollection().ceiling(element));
+            assertEquals(getConfirmed().ceiling(element),
+                    getCollection().ceiling(element), "Incorrect element returned by ceiling().");
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to return comparable objects.
      */
@@ -130,7 +128,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return (E[]) elements;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Bulk test {@link NavigableSet#subSet(Object, boolean, Object, boolean)}.
      * This method runs through all of the tests in {@link AbstractNavigableSetTest}.
@@ -142,9 +139,9 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
     public BulkTest bulkTestNavigableSetSubSet() {
         final int length = getFullElements().length;
 
-        final int lobound = length / 3;
-        final int hibound = lobound * 2;
-        return new TestNavigableSetSubSet(lobound, hibound, false);
+        final int loBound = length / 3;
+        final int hiBound = loBound * 2;
+        return new TestNavigableSetSubSet(loBound, hiBound, false);
     }
 
     /**
@@ -158,9 +155,9 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
     public BulkTest bulkTestNavigableSetHeadSet() {
         final int length = getFullElements().length;
 
-        final int lobound = length / 3;
-        final int hibound = lobound * 2;
-        return new TestNavigableSetSubSet(hibound, true, true);
+        final int loBound = length / 3;
+        final int hiBound = loBound * 2;
+        return new TestNavigableSetSubSet(hiBound, true, true);
     }
 
     /**
@@ -173,8 +170,8 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      */
     public BulkTest bulkTestNavigableSetTailSet() {
         final int length = getFullElements().length;
-        final int lobound = length / 3;
-        return new TestNavigableSetSubSet(lobound, false, false);
+        final int loBound = length / 3;
+        return new TestNavigableSetSubSet(loBound, false, false);
     }
 
     public class TestNavigableSetSubSet extends AbstractNavigableSetTest<E> {
@@ -204,33 +201,33 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
                 type = TYPE_TAILSET;
                 m_Inclusive = inclusive;
                 lowBound = bound;
-                final Object[] allelements = AbstractNavigableSetTest.this.getFullElements();
+                final Object[] allElements = AbstractNavigableSetTest.this.getFullElements();
                 final int realBound = inclusive ? bound : bound + 1;
-                fullElements = (E[]) new Object[allelements.length - realBound];
-                System.arraycopy(allelements, realBound, fullElements, 0, allelements.length - realBound);
-                otherElements = (E[]) new Object[allelements.length - bound - 1];
+                fullElements = (E[]) new Object[allElements.length - realBound];
+                System.arraycopy(allElements, realBound, fullElements, 0, allElements.length - realBound);
+                otherElements = (E[]) new Object[allElements.length - bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                    AbstractNavigableSetTest.this.getOtherElements(), bound, otherElements, 0, allelements.length - bound - 1);
+                    AbstractNavigableSetTest.this.getOtherElements(), bound, otherElements, 0, allElements.length - bound - 1);
             }
 
         } //type
 
         @SuppressWarnings("unchecked")
-        public TestNavigableSetSubSet(final int lobound, final int hibound, final boolean inclusive) {
+        public TestNavigableSetSubSet(final int loBound, final int hiBound, final boolean inclusive) {
             super("TestNavigableSetSubSet");
             type = TYPE_SUBSET;
-            lowBound = lobound;
-            highBound = hibound;
+            lowBound = loBound;
+            highBound = hiBound;
             m_Inclusive = inclusive;
 
-            final int fullLoBound = inclusive ? lobound : lobound + 1;
-            final int length = hibound - lobound + 1 - (inclusive ? 0 : 2);
+            final int fullLoBound = inclusive ? loBound : loBound + 1;
+            final int length = hiBound - loBound + 1 - (inclusive ? 0 : 2);
             fullElements = (E[]) new Object[length];
             System.arraycopy(AbstractNavigableSetTest.this.getFullElements(), fullLoBound, fullElements, 0, length);
-            final int otherLength = hibound - lobound;
+            final int otherLength = hiBound - loBound;
             otherElements = (E[]) new Object[otherLength - 1];
             System.arraycopy(//src src_pos dst dst_pos length
-                AbstractNavigableSetTest.this.getOtherElements(), lobound, otherElements, 0, otherLength - 1);
+                AbstractNavigableSetTest.this.getOtherElements(), loBound, otherElements, 0, otherLength - 1);
         }
 
         @Override

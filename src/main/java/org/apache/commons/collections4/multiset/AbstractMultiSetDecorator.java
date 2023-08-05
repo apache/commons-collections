@@ -22,7 +22,7 @@ import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
 
 /**
- * Decorates another {@code MultSet} to provide additional behavior.
+ * Decorates another {@code MultiSet} to provide additional behavior.
  * <p>
  * Methods are forwarded directly to the decorated multiset.
  * </p>
@@ -72,7 +72,6 @@ public abstract class AbstractMultiSetDecorator<E>
         return decorated().hashCode();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public int getCount(final Object object) {

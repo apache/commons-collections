@@ -16,22 +16,25 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ComparatorChain.
- *
  */
 public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
-    public ComparatorChainTest(final String testName) {
-        super(testName);
+    public ComparatorChainTest() {
+        super(ComparatorChainTest.class.getSimpleName());
     }
 
     @Override
@@ -59,7 +62,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         chain.addComparator(new ComparableComparator<>());
 
         final int correctValue = i1.compareTo(i2);
-        assertEquals("Comparison returns the right order", chain.compare(i1, i2), correctValue);
+        assertEquals(chain.compare(i1, i2), correctValue, "Comparison returns the right order");
     }
 
     @Test
@@ -67,11 +70,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
-            chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> chain.compare(i1, i2), "An exception should be thrown when a chain contains zero comparators.");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final Integer i2 = 6;
 
         final int correctValue = i1.compareTo(i2);
-        assertEquals("Comparison returns the right order", chain.compare(i1, i2), correctValue);
+        assertEquals(chain.compare(i1, i2), correctValue, "Comparison returns the right order");
     }
 
     @Test
@@ -92,15 +92,12 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
         final Integer i1 = 4;
         final Integer i2 = 6;
-        try {
-            chain.compare(i1, i2);
-            fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (final UnsupportedOperationException e) {
-        }
+
+        assertThrows(UnsupportedOperationException.class, () -> chain.compare(i1, i2));
     }
 
     @Test
-    public void testComparatorChainOnMinvaluedCompatator() {
+    public void testComparatorChainOnMinValuedComparator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
@@ -188,4 +185,5 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
             return that instanceof ColumnComparator && colIndex == ((ColumnComparator) that).colIndex;
         }
     }
+
 }

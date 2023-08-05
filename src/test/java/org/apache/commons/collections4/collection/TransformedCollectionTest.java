@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.collection;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +28,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the {@link TransformedCollection}
@@ -51,11 +56,10 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
     public static final Transformer<Object, Object> TO_LOWER_CASE_TRANSFORMER = new ToLowerCase();
 
-    public TransformedCollectionTest(final String testName) {
-        super(testName);
+    public TransformedCollectionTest() {
+        super(TransformedCollectionTest.class.getSimpleName());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Collection<Object> makeConfirmedCollection() {
         return new ArrayList<>();
@@ -77,7 +81,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
@@ -88,7 +91,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testTransformedCollection() {
         final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
@@ -103,6 +106,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         assertTrue(coll.remove(Integer.valueOf((String) elements[0])));
     }
 
+    @Test
     public void testTransformedCollection_decorateTransform() {
         final Collection<Object> originalCollection = new ArrayList<>();
         final Object[] elements = getFullElements();

@@ -67,7 +67,6 @@ public final class UnmodifiableBag<E>
         return new UnmodifiableBag<>(bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
@@ -79,7 +78,6 @@ public final class UnmodifiableBag<E>
         super((Bag<E>) bag);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
      *
@@ -105,7 +103,6 @@ public final class UnmodifiableBag<E>
         setCollection((Collection<E>) in.readObject());
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
@@ -149,7 +146,6 @@ public final class UnmodifiableBag<E>
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object, final int count) {
         throw new UnsupportedOperationException();

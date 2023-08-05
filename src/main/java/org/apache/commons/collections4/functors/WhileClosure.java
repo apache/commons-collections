@@ -47,7 +47,7 @@ public class WhileClosure<E> implements Closure<E> {
      *
      * @param <E> the type that the closure acts on
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
-     * @param closure  the closure the execute, not null
+     * @param closure  the closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      * @return the {@code while} closure
      * @throws NullPointerException if the predicate or closure is null
@@ -63,7 +63,7 @@ public class WhileClosure<E> implements Closure<E> {
      * Use {@code whileClosure} if you want that.
      *
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
-     * @param closure  the closure the execute, not null
+     * @param closure  the closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
     public WhileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure, final boolean doLoop) {

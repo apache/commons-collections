@@ -22,6 +22,13 @@ import java.util.Comparator;
 
 public final class ObjectToStringComparator implements Comparator<Object>, Serializable {
 
+    /**
+     * Singleton instance.
+     *
+     * @since 4.5
+     */
+    public static final ObjectToStringComparator INSTANCE = new ObjectToStringComparator();
+
     private static final long serialVersionUID = 1L;
 
     @Override

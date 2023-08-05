@@ -42,7 +42,7 @@
  * <p>
  * The package uses a very efficient comparison algorithm designed by
  * Eugene W. Myers and described in his paper: <a
- * href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An O(ND)
+ * href="https://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An O(ND)
  * Difference Algorithm and Its Variations</a>. This algorithm produces
  * the shortest possible
  * {@link org.apache.commons.collections4.sequence.EditScript edit script} containing
@@ -56,7 +56,7 @@
  * to perform the transformation, of course, or to retrieve the longest
  * common subsequence for example.
  * <p>
- * If the user needs a very fine grained access to the comparison result,
+ * If the user needs very fine-grained access to the comparison result,
  * he needs to go through this script by providing a visitor implementing
  * the {@link org.apache.commons.collections4.sequence.CommandVisitor} interface.
  * <p>
@@ -71,6 +71,5 @@
  * {@link org.apache.commons.collections4.sequence.ReplacementsHandler#handleReplacement handleReplacement}
  * method is also provided. This allows the user to keep track of the current index in
  * both arrays if he needs so.
- *
  */
 package org.apache.commons.collections4.sequence;

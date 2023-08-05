@@ -27,9 +27,8 @@
  * The following decorators are provided in the package:
  * <ul>
  *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added
- *   <li>Synchronized - synchronizes method access for multi-threaded environments
+ *   <li>Synchronized - synchronizes method access for multithreaded environments
  *   <li>Unmodifiable - ensures the multiset cannot be altered
  * </ul>
- *
  */
 package org.apache.commons.collections4.multiset;

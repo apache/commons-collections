@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Iterator;
 
 import org.apache.commons.collections4.SortedBag;
@@ -33,7 +35,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.
@@ -44,28 +45,27 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
         // Check that iterator returns elements in order and first() and last()
         // are consistent
-        final Iterator<T> colliter = getCollection().iterator();
-        final Iterator<T> confiter = getConfirmed().iterator();
+        final Iterator<T> collIter = getCollection().iterator();
+        final Iterator<T> confIter = getConfirmed().iterator();
         T first = null;
         T last = null;
-        while (colliter.hasNext()) {
+        while (collIter.hasNext()) {
             if (first == null) {
-                first = colliter.next();
+                first = collIter.next();
                 last = first;
             } else {
-                last = colliter.next();
+                last = collIter.next();
             }
-            assertEquals("Element appears to be out of order.", last, confiter.next());
+            assertEquals(last, confIter.next(), "Element appears to be out of order.");
         }
         if (!getCollection().isEmpty()) {
-            assertEquals("Incorrect element returned by first().", first,
-                getCollection().first());
-            assertEquals("Incorrect element returned by last().", last,
-                getCollection().last());
+            assertEquals(first, getCollection().first(),
+                "Incorrect element returned by first().");
+            assertEquals(last, getCollection().last(),
+                "Incorrect element returned by last().");
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Overridden because SortedBags don't allow null elements (normally).
      * @return false
@@ -99,7 +99,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return new TreeBag<>();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public void resetEmpty() {
@@ -113,7 +112,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         this.setConfirmed(makeConfirmedFullCollection());
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to return comparable objects.
      */
@@ -141,7 +139,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return (T[]) elements;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link SortedBag}.
      *
@@ -152,7 +149,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return (SortedBag<T>) super.getCollection();
     }
 
-    //-----------------------------------------------------------------------
 
     // TODO: Add the SortedBag tests!
 }

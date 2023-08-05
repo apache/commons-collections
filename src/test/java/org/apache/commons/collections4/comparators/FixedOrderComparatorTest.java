@@ -16,24 +16,29 @@
  */
 package org.apache.commons.collections4.comparators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Test;
+import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for FixedOrderComparator.
- *
  */
 public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
     /**
      * Top cities of the world, by population including metro areas.
      */
-    private static final String topCities[] = new String[] {
+    private static final String topCities[] = {
         "Tokyo",
         "Mexico City",
         "Mumbai",
@@ -50,8 +55,8 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     // Initialization and busywork
     //
 
-    public FixedOrderComparatorTest(final String name) {
-        super(name);
+    public FixedOrderComparatorTest() {
+        super(FixedOrderComparatorTest.class.getSimpleName());
     }
 
     //
@@ -143,36 +148,25 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertFalse(comparator.isLocked());
         comparator.compare("New York", "Tokyo");
         assertTrue(comparator.isLocked());
-        try {
-            comparator.add("Minneapolis");
-            fail("Should have thrown an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // success -- ignore
-        }
 
-        try {
-            comparator.addAsEqual("New York", "Minneapolis");
-            fail("Should have thrown an UnsupportedOperationException");
-        } catch (final UnsupportedOperationException e) {
-            // success -- ignore
-        }
+        assertThrows(UnsupportedOperationException.class, () -> comparator.add("Minneapolis"),
+                "Should have thrown an UnsupportedOperationException");
+
+        assertThrows(UnsupportedOperationException.class, () -> comparator.addAsEqual("New York", "Minneapolis"),
+                "Should have thrown an UnsupportedOperationException");
     }
 
     @Test
     public void testUnknownObjectBehavior() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
-        try {
-            comparator.compare("New York", "Minneapolis");
-            fail("Should have thrown a IllegalArgumentException");
-        } catch (final IllegalArgumentException e) {
-            // success-- ignore
-        }
-        try {
-            comparator.compare("Minneapolis", "New York");
-            fail("Should have thrown a IllegalArgumentException");
-        } catch (final IllegalArgumentException e) {
-            // success-- ignore
-        }
+
+        final FixedOrderComparator<String> finalComparator = comparator;
+        assertThrows(IllegalArgumentException.class, () -> finalComparator.compare("New York", "Minneapolis"),
+                "Should have thrown a IllegalArgumentException");
+
+        assertThrows(IllegalArgumentException.class, () -> finalComparator.compare("Minneapolis", "New York"),
+                "Should have thrown a IllegalArgumentException");
+
         assertEquals(FixedOrderComparator.UnknownObjectBehavior.EXCEPTION, comparator.getUnknownObjectBehavior());
 
         comparator = new FixedOrderComparator<>(topCities);
@@ -180,7 +174,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertEquals(FixedOrderComparator.UnknownObjectBehavior.BEFORE, comparator.getUnknownObjectBehavior());
         LinkedList<String> keys = new LinkedList<>(Arrays.asList(topCities));
         keys.addFirst("Minneapolis");
-        assertComparatorYieldsOrder(keys.toArray(new String[0]), comparator);
+        assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
         assertEquals(-1, comparator.compare("Minneapolis", "New York"));
         assertEquals( 1, comparator.compare("New York", "Minneapolis"));
@@ -190,12 +184,11 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         comparator.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.AFTER);
         keys = new LinkedList<>(Arrays.asList(topCities));
         keys.add("Minneapolis");
-        assertComparatorYieldsOrder(keys.toArray(new String[0]), comparator);
+        assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
         assertEquals( 1, comparator.compare("Minneapolis", "New York"));
         assertEquals(-1, comparator.compare("New York", "Minneapolis"));
         assertEquals( 0, comparator.compare("Minneapolis", "St Paul"));
-
     }
 
     //
@@ -240,4 +233,5 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             assertEquals(orderedObjects[i], keys[i]);
         }
     }
+
 }

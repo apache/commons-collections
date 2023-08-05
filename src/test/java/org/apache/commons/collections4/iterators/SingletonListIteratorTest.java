@@ -16,21 +16,25 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
- *
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonListIteratorTest(final String testName) {
-        super(testName);
+    public SingletonListIteratorTest() {
+        super(SingletonListIteratorTest.class.getSimpleName());
     }
 
     /**
@@ -67,73 +71,73 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         return true;
     }
 
+    @Test
     public void testIterator() {
         final ListIterator<E> iter = makeObject();
-        assertTrue( "Iterator should have next item", iter.hasNext() );
-        assertTrue( "Iterator should have no previous item", !iter.hasPrevious() );
-        assertEquals( "Iteration next index", 0, iter.nextIndex() );
-        assertEquals( "Iteration previous index", -1, iter.previousIndex() );
+        assertTrue(iter.hasNext(), "Iterator should have next item");
+        assertFalse(iter.hasPrevious(), "Iterator should have no previous item");
+        assertEquals(0, iter.nextIndex(), "Iteration next index");
+        assertEquals(-1, iter.previousIndex(), "Iteration previous index");
 
         Object iterValue = iter.next();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertTrue( "Iterator should have no next item", !iter.hasNext() );
-        assertTrue( "Iterator should have previous item", iter.hasPrevious() );
-        assertEquals( "Iteration next index", 1, iter.nextIndex() );
-        assertEquals( "Iteration previous index", 0, iter.previousIndex() );
+        assertFalse(iter.hasNext(), "Iterator should have no next item");
+        assertTrue(iter.hasPrevious(), "Iterator should have previous item");
+        assertEquals(1, iter.nextIndex(), "Iteration next index");
+        assertEquals(0, iter.previousIndex(), "Iteration previous index");
 
         iterValue = iter.previous();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertTrue( "Iterator should have next item", iter.hasNext() );
-        assertTrue( "Iterator should have no previous item", !iter.hasPrevious() );
-        assertEquals( "Iteration next index", 0, iter.nextIndex() );
-        assertEquals( "Iteration previous index", -1, iter.previousIndex() );
+        assertTrue(iter.hasNext(), "Iterator should have next item");
+        assertFalse(iter.hasPrevious(), "Iterator should have no previous item");
+        assertEquals(0, iter.nextIndex(), "Iteration next index");
+        assertEquals(-1, iter.previousIndex(), "Iteration previous index");
 
         iterValue = iter.next();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
+        assertEquals(testValue, iterValue, "Iteration value is correct");
 
-        assertTrue( "Iterator should have no next item", !iter.hasNext() );
-        assertTrue( "Iterator should have previous item", iter.hasPrevious() );
-        assertEquals( "Iteration next index", 1, iter.nextIndex() );
-        assertEquals( "Iteration previous index", 0, iter.previousIndex() );
+        assertFalse(iter.hasNext(), "Iterator should have no next item");
+        assertTrue(iter.hasPrevious(), "Iterator should have previous item");
+        assertEquals(1, iter.nextIndex(), "Iteration next index");
+        assertEquals(0, iter.previousIndex(), "Iteration previous index");
 
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
         iter.previous();
         try {
             iter.previous();
         } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 
+    @Test
     public void testReset() {
         final ResettableListIterator<E> it = makeObject();
 
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
         assertEquals(testValue, it.next());
-        assertEquals(false, it.hasNext());
-        assertEquals(true, it.hasPrevious());
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
 
         it.reset();
 
-        assertEquals(true, it.hasNext());
-        assertEquals(false, it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
         assertEquals(testValue, it.next());
-        assertEquals(false, it.hasNext());
-        assertEquals(true, it.hasPrevious());
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
 
         it.reset();
         it.reset();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
     }
 
 }

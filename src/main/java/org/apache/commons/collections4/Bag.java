@@ -32,7 +32,7 @@ import java.util.Set;
  * <i>NOTE: This interface violates the {@link Collection} contract.</i>
  * The behavior specified in many of these methods is <i>not</i> the same
  * as the behavior specified by {@code Collection}.
- * The noncompliant methods are clearly marked with "(Violation)".
+ * The non-compliant methods are clearly marked with "(Violation)".
  * Exercise caution when using a bag as a {@code Collection}.
  * </p>
  * <p>

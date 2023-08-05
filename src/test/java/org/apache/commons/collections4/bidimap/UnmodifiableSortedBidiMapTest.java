@@ -16,30 +16,26 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.Unmodifiable;
+import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(UnmodifiableSortedBidiMapTest.class);
+    public UnmodifiableSortedBidiMapTest() {
+        super(UnmodifiableSortedBidiMapTest.class.getSimpleName());
     }
 
-    public UnmodifiableSortedBidiMapTest(final String testName) {
-        super(testName);
-    }
-
-    //-----------------------------------------------------------------------
     @Override
     public SortedBidiMap<K, V> makeObject() {
         return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<K, V>());
@@ -69,7 +65,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         return new String[] {"UnmodifiableSortedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean isAllowNullKey() {
         return false;
@@ -95,21 +90,18 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         return false;
     }
 
-    //-----------------------------------------------------------------------
-
+    @Test
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
     public void testDecorateFactory() {
         final SortedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(map));
 
-        try {
-            UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null));
     }
 
 }

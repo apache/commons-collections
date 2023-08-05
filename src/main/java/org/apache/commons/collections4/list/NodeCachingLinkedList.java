@@ -68,7 +68,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      */
     private int maximumCacheSize;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that creates.
      */
@@ -96,7 +95,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         init();  // must call init() as use super();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the maximum size of the cache.
      *
@@ -156,7 +154,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
 
     /**
      * Adds a node to the cache, if the cache isn't full.
-     * The node's contents are cleared to so they can be garbage collected.
+     * The node's contents are cleared, so they can be garbage collected.
      *
      * @param node  the node to add to the cache
      */
@@ -174,7 +172,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         cacheSize++;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Creates a new node, either by reusing one from the cache or creating
      * a new one.
@@ -225,7 +222,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         super.removeAllNodes();
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Serializes the data held in this object to the stream specified.
      *

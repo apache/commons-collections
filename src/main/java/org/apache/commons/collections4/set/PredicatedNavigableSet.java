@@ -65,7 +65,6 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
         return new PredicatedNavigableSet<>(set, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -91,7 +90,6 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
         return (NavigableSet<E>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E lower(final E e) {

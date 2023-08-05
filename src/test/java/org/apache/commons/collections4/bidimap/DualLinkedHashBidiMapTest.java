@@ -16,22 +16,13 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
-
 /**
  * JUnit tests.
- *
  */
 public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(DualLinkedHashBidiMapTest.class);
-    }
-
-    public DualLinkedHashBidiMapTest(final String testName) {
-        super(testName);
+    public DualLinkedHashBidiMapTest() {
+        super(DualLinkedHashBidiMapTest.class.getSimpleName());
     }
 
     /**

@@ -44,7 +44,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
      * Constructs an empty {@link HashMultiSet}.
      */
     public HashMultiSet() {
-        super(new HashMap<E, MutableInteger>());
+        super(new HashMap<>());
     }
 
     /**
@@ -57,7 +57,6 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
         addAll(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the multiset out using a custom routine.
      *
@@ -78,7 +77,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        setMap(new HashMap<E, MutableInteger>());
+        setMap(new HashMap<>());
         super.doReadObject(in);
     }
 

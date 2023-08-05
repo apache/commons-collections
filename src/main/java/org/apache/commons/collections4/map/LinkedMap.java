@@ -113,7 +113,6 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
      *
@@ -147,7 +146,6 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         doReadObject(in);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
      *
@@ -309,12 +307,12 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
         @Override
         public ListIterator<K> listIterator() {
-            return UnmodifiableListIterator.umodifiableListIterator(super.listIterator());
+            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator());
         }
 
         @Override
         public ListIterator<K> listIterator(final int fromIndex) {
-            return UnmodifiableListIterator.umodifiableListIterator(super.listIterator(fromIndex));
+            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator(fromIndex));
         }
 
         @Override

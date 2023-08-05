@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.set;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,9 +27,7 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
@@ -37,18 +39,13 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     protected UnmodifiableNavigableSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableNavigableSetTest(final String testName) {
-        super(testName);
+    public UnmodifiableNavigableSetTest() {
+        super(UnmodifiableNavigableSetTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(UnmodifiableNavigableSetTest.class);
-    }
-
-    //-------------------------------------------------------------------
     @Override
     public NavigableSet<E> makeObject() {
-        return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<E>());
+        return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<>());
     }
 
     @Override
@@ -67,7 +64,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         return false;
     }
 
-    //--------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
@@ -78,6 +74,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     /**
      * Verify that base set and subsets are not modifiable
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testUnmodifiable() {
         setupSet();
@@ -92,14 +89,11 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), true, (E) Integer.valueOf(3), true));
     }
 
+    @Test
     public void testDecorateFactory() {
         final NavigableSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
-
-        try {
-            UnmodifiableNavigableSet.unmodifiableNavigableSet(null);
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertThrows(NullPointerException.class, () -> UnmodifiableNavigableSet.unmodifiableNavigableSet(null));
     }
 
     /**
@@ -107,51 +101,29 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
      */
     @SuppressWarnings("unchecked")
     public void verifyUnmodifiable(final Set<E> set) {
-        try {
-            set.add((E) "value");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.addAll(new TreeSet<E>());
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.clear();
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.remove("x");
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.removeAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            set.retainAll(array);
-            fail("Expecting UnsupportedOperationException.");
-        } catch (final UnsupportedOperationException e) {
-            // expected
+        assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"));
+        assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<>()));
+        assertThrows(UnsupportedOperationException.class, () -> set.clear());
+        assertThrows(UnsupportedOperationException.class, () -> set.iterator().remove());
+        assertThrows(UnsupportedOperationException.class, () -> set.remove("x"));
+        assertThrows(UnsupportedOperationException.class, () -> set.removeAll(array));
+        assertThrows(UnsupportedOperationException.class, () -> set.removeIf(element -> true));
+        assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array));
+
+        if (set instanceof NavigableSet) {
+            final NavigableSet<E> navigableSet = (NavigableSet<E>) set;
+            assertThrows(UnsupportedOperationException.class, () -> navigableSet.pollFirst());
+            assertThrows(UnsupportedOperationException.class, () -> navigableSet.pollLast());
         }
     }
 
+    @Test
     public void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
-        assertTrue("natural order, so comparator should be null", c == null);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

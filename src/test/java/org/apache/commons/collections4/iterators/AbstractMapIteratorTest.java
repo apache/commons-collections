@@ -16,12 +16,20 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections4.MapIterator;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract class for testing the MapIterator interface.
@@ -44,7 +52,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Implement this method to return a map iterator over an empty map.
      *
@@ -106,35 +113,26 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         return (V[]) new Object[] { "A", "B" };
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Test
     public void testEmptyMapIterator() {
         if (!supportsEmptyIterator()) {
             return;
         }
 
         final MapIterator<K, V> it = makeEmptyIterator();
-        assertEquals(false, it.hasNext());
+        assertFalse(it.hasNext());
 
         // next() should throw a NoSuchElementException
-        try {
-            it.next();
-            fail();
-        } catch (final NoSuchElementException ex) {}
+        assertThrows(NoSuchElementException.class, () -> it.next());
 
         // getKey() should throw an IllegalStateException
-        try {
-            it.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getKey());
 
         // getValue() should throw an IllegalStateException
-        try {
-            it.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getValue());
 
         if (!supportsSetValue()) {
             // setValue() should throw an UnsupportedOperationException/IllegalStateException
@@ -146,17 +144,14 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             }
         } else {
             // setValue() should throw an IllegalStateException
-            try {
-                it.setValue(addSetValues()[0]);
-                fail();
-            } catch (final IllegalStateException ex) {}
+            assertThrows(IllegalStateException.class, () -> it.setValue(addSetValues()[0]));
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Test that the full list iterator contract is correct.
      */
+    @Test
     public void testFullMapIterator() {
         if (!supportsFullIterator()) {
             return;
@@ -164,29 +159,29 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
 
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
             final K key = it.next();
-            assertSame("it.next() should equals getKey()", key, it.getKey());
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Key must be unique", set.add(key));
+            assertSame(key, it.getKey(), "it.next() should equals getKey()");
+            assertTrue(map.containsKey(key),  "Key must be in map");
+            assertTrue(set.add(key), "Key must be unique");
 
             // getValue
             final V value = it.getValue();
             if (!isGetStructuralModify()) {
-                assertSame("Value must be mapped to key", map.get(key), value);
+                assertSame(map.get(key), value, "Value must be mapped to key");
             }
-            assertTrue("Value must be in map",  map.containsValue(value));
+            assertTrue(map.containsValue(value),  "Value must be in map");
 
             verify();
         }
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testMapIteratorSet() {
         if (!supportsFullIterator()) {
             return;
@@ -197,63 +192,56 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
         final Map<K, V> confirmed = getConfirmedMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
         final V value = it.getValue();
 
         if (!supportsSetValue()) {
-            try {
-                it.setValue(newValue);
-                fail();
-            } catch (final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, () -> it.setValue(newValue));
             return;
         }
         final V old = it.setValue(newValue);
         confirmed.put(key, newValue);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("setValue must return old value", value, old);
-        assertEquals("Map must contain key", true, map.containsKey(key));
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue, it.getValue(), "Value must be changed after setValue");
+        assertSame(value, old, "setValue must return old value");
+        assertTrue(map.containsKey(key), "Map must contain key");
         // test against confirmed, as map may contain value twice
-        assertEquals("Map must not contain old value",
-            confirmed.containsValue(old), map.containsValue(old));
-        assertEquals("Map must contain new value", true, map.containsValue(newValue));
+        assertEquals(confirmed.containsValue(old), map.containsValue(old),
+            "Map must not contain old value");
+        assertTrue(map.containsValue(newValue), "Map must contain new value");
         verify();
 
         it.setValue(newValue);  // same value - should be OK
         confirmed.put(key, newValue);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue, it.getValue(), "Value must be changed after setValue");
         verify();
 
         it.setValue(newValue2);  // new value
         confirmed.put(key, newValue2);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Value must be changed after setValue", newValue2, it.getValue());
+        assertSame(key, it.getKey(), "Key must not change after setValue");
+        assertSame(newValue2, it.getValue(), "Value must be changed after setValue");
         verify();
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     @Override
     public void testRemove() { // override
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
         final Map<K, V> confirmed = getConfirmedMap();
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         if (!supportsRemove()) {
-            try {
-                it.remove();
-                fail();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> it.remove());
             return;
         }
 
         it.remove();
         confirmed.remove(key);
-        assertEquals(false, map.containsKey(key));
+        assertFalse(map.containsKey(key));
         verify();
 
         try {
@@ -263,7 +251,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         verify();
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testMapIteratorSetRemoveSet() {
         if (!supportsSetValue() || !supportsRemove()) {
             return;
@@ -272,7 +260,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.setValue(newValue);
@@ -280,14 +268,11 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         confirmed.remove(key);
         verify();
 
-        try {
-            it.setValue(newValue);
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.setValue(newValue));
         verify();
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testMapIteratorRemoveGetKey() {
         if (!supportsRemove()) {
             return;
@@ -295,21 +280,18 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.remove();
         confirmed.remove(key);
         verify();
 
-        try {
-            it.getKey();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getKey());
         verify();
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testMapIteratorRemoveGetValue() {
         if (!supportsRemove()) {
             return;
@@ -317,17 +299,14 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         final MapIterator<K, V> it = makeObject();
         final Map<K, V> confirmed = getConfirmedMap();
 
-        assertEquals(true, it.hasNext());
+        assertTrue(it.hasNext());
         final K key = it.next();
 
         it.remove();
         confirmed.remove(key);
         verify();
 
-        try {
-            it.getValue();
-            fail();
-        } catch (final IllegalStateException ex) {}
+        assertThrows(IllegalStateException.class, () -> it.getValue());
         verify();
     }
 

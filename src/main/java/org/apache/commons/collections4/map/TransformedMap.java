@@ -112,7 +112,6 @@ public class TransformedMap<K, V>
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -131,7 +130,6 @@ public class TransformedMap<K, V>
         this.valueTransformer = valueTransformer;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
      *
@@ -158,7 +156,6 @@ public class TransformedMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Transforms a key.
      * <p>
@@ -233,7 +230,6 @@ public class TransformedMap<K, V>
         return valueTransformer != null;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public V put(K key, V value) {
         key = transformKey(key);

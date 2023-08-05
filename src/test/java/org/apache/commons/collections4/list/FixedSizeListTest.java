@@ -16,11 +16,16 @@
  */
 package org.apache.commons.collections4.list;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
@@ -30,8 +35,8 @@ import java.util.List;
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
-    public FixedSizeListTest(final String testName) {
-        super(testName);
+    public FixedSizeListTest() {
+        super(FixedSizeListTest.class.getSimpleName());
     }
 
     @Override
@@ -67,6 +72,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.fullCollection.version4.obj");
 //    }
 
+    @Test
     public void testListAllowsMutationOfUnderlyingCollection() {
 
         final List<String> decoratedList = new ArrayList<>();
@@ -77,10 +83,10 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final int sizeBefore = fixedSizeList.size();
         //
         final boolean changed = decoratedList.add("New Value");
-        Assert.assertTrue(changed);
+        assertTrue(changed);
         //
-        Assert.assertEquals("Modifying an the underlying list is allowed",
-                sizeBefore + 1, fixedSizeList.size());
+        assertEquals(sizeBefore + 1, fixedSizeList.size(),
+                "Modifying an the underlying list is allowed");
     }
 
     private FixedSizeList<String> initFixedSizeList() {
@@ -91,16 +97,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         return FixedSizeList.fixedSizeList(decoratedList);
     }
 
+    @Test
     public void testAdd() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
-            fixedSizeList.add(2, "New Value");
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.add(2, "New Value"));
     }
 
-
+    @Test
     public void testAddAll() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
@@ -108,38 +112,37 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         addList.add("item 3");
         addList.add("item 4");
 
-        try {
-            fixedSizeList.addAll(2, addList);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.addAll(2, addList));
     }
 
+    @Test
     public void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        try {
-            fixedSizeList.remove(1);
-            fail();
-        } catch (final UnsupportedOperationException ex) {}
+        assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.remove(1));
     }
 
+    @Test
     public void testSubList() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
-        Assert.assertNotNull(subFixedSizeList);
-        Assert.assertEquals(0, subFixedSizeList.size());
+        assertNotNull(subFixedSizeList);
+        assertEquals(0, subFixedSizeList.size());
     }
 
+    @Test
     public void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertTrue(fixedSizeList.isFull());
+        assertTrue(fixedSizeList.isFull());
     }
 
+    @Test
     public void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
-        Assert.assertEquals(2, fixedSizeList.maxSize());
+        assertEquals(2, fixedSizeList.maxSize());
     }
+
 }

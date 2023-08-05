@@ -86,7 +86,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         addComposited(compositeCollections);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the size of this composite collection.
      * <p>
@@ -113,7 +112,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     @Override
     public boolean isEmpty() {
         for (final Collection<E> item : all) {
-            if (item.isEmpty() == false) {
+            if (!item.isEmpty()) {
                 return false;
             }
         }
@@ -154,9 +153,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<>();
-        for (final Collection<E> item : all) {
-            chain.addIterator(item.iterator());
-        }
+        all.forEach(item -> chain.addIterator(item.iterator()));
         return chain;
     }
 
@@ -262,7 +259,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return false;
         }
         for (final Object item : coll) {
-            if (contains(item) == false) {
+            if (!contains(item)) {
                 return false;
             }
         }
@@ -368,7 +365,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Specify a CollectionMutator strategy instance to handle changes.
      *
@@ -427,7 +423,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         all.remove(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns a new collection containing all of the elements
      *
@@ -455,7 +450,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         return mutator;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Pluggable strategy to handle changes to the composite.
      *

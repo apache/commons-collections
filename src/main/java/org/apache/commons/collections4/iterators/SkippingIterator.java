@@ -37,7 +37,6 @@ public class SkippingIterator<E> extends AbstractIteratorDecorator<E> {
     /** The position of the current element */
     private long pos;
 
-    //-----------------------------------------------------------------------
 
     /**
      * Decorates the specified iterator to skip all elements until the iterator
@@ -72,7 +71,6 @@ public class SkippingIterator<E> extends AbstractIteratorDecorator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
 
     @Override
     public E next() {

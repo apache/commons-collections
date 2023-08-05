@@ -16,6 +16,14 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,29 +32,23 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
-
-import junit.framework.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReferenceMap.
- *
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public ReferenceMapTest(final String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(ReferenceMapTest.class);
+    public ReferenceMapTest() {
+        super(ReferenceMapTest.class.getSimpleName());
     }
 
     @Override
@@ -80,35 +82,26 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            "src/test/resources/data/test/ReferenceMap.fullCollection.version4.obj");
 //    }
 
-    //-----------------------------------------------------------------------
+    @Test
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
-        assertEquals(null, map.get(null));
-        assertEquals(false, map.containsKey(null));
-        assertEquals(false, map.containsValue(null));
-        assertEquals(null, map.remove(null));
-        assertEquals(false, map.entrySet().contains(null));
-        assertEquals(false, map.keySet().contains(null));
-        assertEquals(false, map.values().contains(null));
-        try {
-            map.put(null, null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            map.put((K) new Object(), null);
-            fail();
-        } catch (final NullPointerException ex) {}
-        try {
-            map.put(null, (V) new Object());
-            fail();
-        } catch (final NullPointerException ex) {}
+        assertNull(map.get(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertNull(map.remove(null));
+        assertFalse(map.entrySet().contains(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertThrows(NullPointerException.class, () -> map.put(null, null));
+        assertThrows(NullPointerException.class, () -> map.put((K) new Object(), null));
+        assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
 
-    //-----------------------------------------------------------------------
 /*
     // Tests often fail because gc is uncontrollable
 
+    @Test
     public void testPurge() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -134,7 +127,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
-
+    @Test
     public void testGetAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         for (int i = 0; i < 10; i++) {
@@ -149,7 +142,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
-
+    @Test
     public void testEntrySetIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -171,6 +164,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     }
 
+    @Test
     public void testMapIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -193,6 +187,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     }
 
+    @Test
     public void testMapIteratorAfterGC2() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -230,13 +225,14 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> testMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
-        assertEquals("In map", value, testMap.get(key));
-        assertNotNull("Weak reference released early (1)", keyReference.get());
-        assertNotNull("Weak reference released early (2)", valueReference.get());
+        assertEquals(value, testMap.get(key), "In map");
+        assertNotNull(keyReference.get(), "Weak reference released early (1)");
+        assertNotNull(valueReference.get(), "Weak reference released early (2)");
         return testMap;
     }
 
     /** Tests whether purge values setting works */
+    @Test
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();
@@ -260,10 +256,11 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
+    @Test
     public void testCustomPurge() {
         final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
-        final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) v -> expiredValues.add(v);
+        final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) expiredValues::add;
         final Map<Integer, Integer> map = new ReferenceMap<Integer, Integer>(ReferenceStrength.WEAK, ReferenceStrength.HARD, false) {
             private static final long serialVersionUID = 1L;
 
@@ -291,7 +288,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             final byte[] b = new byte[bytz];
             bytz = bytz * 2;
         }
-        assertFalse("Value should be stored", expiredValues.isEmpty());
+        assertFalse(expiredValues.isEmpty(), "Value should be stored");
     }
 
     /**
@@ -299,6 +296,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      *
      * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-599">COLLECTIONS-599: HashEntry array object naming data initialized with double the size during deserialization</a>
      */
+    @Test
     public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
 
         final ReferenceMap<String, String> serializeMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
@@ -317,6 +315,24 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             assertEquals(serializeMap.data.length, deserializedMap.data.length);
         }
 
+    }
+
+    /**
+     * Test whether remove is not removing last entry after calling hasNext.
+     * <p>
+     * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-802">COLLECTIONS-802: ReferenceMap iterator remove violates contract</a>
+     */
+    @Test
+    public void testIteratorLastEntryCanBeRemovedAfterHasNext() {
+        final ReferenceMap<Integer, Integer> map = new ReferenceMap<>();
+        map.put(1, 2);
+        final Iterator<Map.Entry<Integer, Integer>> iter = map.entrySet().iterator();
+        assertTrue(iter.hasNext());
+        iter.next();
+        // below line should not affect remove
+        assertFalse(iter.hasNext());
+        iter.remove();
+        assertTrue(map.isEmpty(), "Expect empty but have entry: " + map);
     }
 
     @SuppressWarnings("unused")
@@ -347,4 +363,5 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             }
         }
     }
+
 }

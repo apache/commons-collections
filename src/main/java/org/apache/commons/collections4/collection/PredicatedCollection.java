@@ -109,7 +109,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         return new PredicatedCollection<>(coll, predicate);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -139,13 +138,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if the add is invalid
      */
     protected void validate(final E object) {
-        if (predicate.evaluate(object) == false) {
+        if (!predicate.evaluate(object)) {
             throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
                                                predicate + "' rejected it");
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.
@@ -162,7 +160,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 
     /**
      * Override to validate the objects being added to ensure they match
-     * the predicate. If any one fails, no update is made to the underlying
+     * the predicate. If anyone fails, no update is made to the underlying
      * collection.
      *
      * @param coll  the collection being added
@@ -182,7 +180,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * Create a Builder with a predicate to validate elements against, then add any elements
      * to the builder. Elements that fail the predicate will be added to a rejected list.
-     * Finally create or decorate a collection using the createPredicated[List,Set,Bag,Queue] methods.
+     * Finally, create or decorate a collection using the createPredicated[List,Set,Bag,Queue] methods.
      * <p>
      * An example:
      * <pre>
@@ -195,7 +193,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * </pre>
      * <p>
      * At the end of the code fragment above predicatedList is protected by the predicate supplied
-     * to the builder and it contains item1 and item2.
+     * to the builder, and it contains item1 and item2.
      * <p>
      * More elements can be added to the builder once a predicated collection has been created,
      * but these elements will not be reflected in already created collections.
@@ -214,7 +212,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         /** The buffer containing rejected elements. */
         private final List<E> rejected = new ArrayList<>();
 
-        // -----------------------------------------------------------------------
         /**
          * Constructs a PredicatedCollectionBuilder with the specified Predicate.
          *
@@ -270,7 +267,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated list.
          */
         public List<E> createPredicatedList() {
-            return createPredicatedList(new ArrayList<E>());
+            return createPredicatedList(new ArrayList<>());
         }
 
         /**
@@ -301,7 +298,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated set.
          */
         public Set<E> createPredicatedSet() {
-            return createPredicatedSet(new HashSet<E>());
+            return createPredicatedSet(new HashSet<>());
         }
 
         /**
@@ -332,7 +329,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated multiset.
          */
         public MultiSet<E> createPredicatedMultiSet() {
-            return createPredicatedMultiSet(new HashMultiSet<E>());
+            return createPredicatedMultiSet(new HashMultiSet<>());
         }
 
         /**
@@ -364,7 +361,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated bag.
          */
         public Bag<E> createPredicatedBag() {
-            return createPredicatedBag(new HashBag<E>());
+            return createPredicatedBag(new HashBag<>());
         }
 
         /**
@@ -395,7 +392,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return a new predicated queue.
          */
         public Queue<E> createPredicatedQueue() {
-            return createPredicatedQueue(new LinkedList<E>());
+            return createPredicatedQueue(new LinkedList<>());
         }
 
         /**

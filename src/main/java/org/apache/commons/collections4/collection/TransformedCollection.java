@@ -96,7 +96,6 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
         return decorated;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
@@ -140,7 +139,6 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
         return list;
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object) {
         return decorated().add(transform(object));

@@ -92,7 +92,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /** The last used iterator, needed for remove() */
     private Iterator<? extends E> lastUsedIterator;
 
-    //-----------------------------------------------------------------------
     /**
      * Constructs an ObjectGraphIterator using a root object and transformer.
      * <p>
@@ -127,7 +126,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
         this.transformer = null;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Loops around the iterators to find the next value to return.
      */
@@ -182,7 +180,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             currentIterator = iterator;
         }
 
-        while (currentIterator.hasNext() && hasNext == false) {
+        while (currentIterator.hasNext() && !hasNext) {
             E next = currentIterator.next();
             if (transformer != null) {
                 next = transformer.transform(next);
@@ -197,7 +195,6 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Checks whether there are any more elements in the iteration to obtain.
      *
@@ -218,7 +215,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         updateCurrentIterator();
-        if (hasNext == false) {
+        if (!hasNext) {
             throw new NoSuchElementException("No more elements in the iteration");
         }
         lastUsedIterator = currentIterator;
@@ -231,7 +228,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Removes from the underlying collection the last element returned.
      * <p>
-     * This method calls remove() on the underlying Iterator and it may
+     * This method calls remove() on the underlying Iterator, and it may
      * throw an UnsupportedOperationException if the underlying Iterator
      * does not support this method.
      *

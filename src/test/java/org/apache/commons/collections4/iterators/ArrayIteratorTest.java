@@ -16,21 +16,26 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
- *
  */
 public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ArrayIteratorTest(final String testName) {
-        super(testName);
+    public ArrayIteratorTest() {
+        super(ArrayIteratorTest.class.getSimpleName());
     }
 
     @Override
@@ -48,34 +53,26 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return false;
     }
 
+    @Test
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final E iterValue = iter.next();
 
-            assertEquals("Iteration value is correct", testValue, iterValue);
+            assertEquals(testValue, iterValue, "Iteration value is correct");
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
 
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertTrue(
-                "NoSuchElementException must be thrown",
-                e.getClass().equals(new NoSuchElementException().getClass()));
-        }
+        assertThrows(NoSuchElementException.class, iter::next, "NoSuchElementException must be thrown");
     }
 
+    @Test
     public void testNullArray() {
-        try {
-            new ArrayIterator<>(null);
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (final NullPointerException e) {
-            // expected
-        }
+        assertThrows(NullPointerException.class, () -> new ArrayIterator<>(null));
     }
 
+    @Test
     public void testReset() {
         final ArrayIterator<E> it = makeObject();
         it.next();

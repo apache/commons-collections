@@ -16,16 +16,20 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.SetValuedMap;
+import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test HashSetValuedHashMap
@@ -34,15 +38,10 @@ import org.apache.commons.collections4.SetValuedMap;
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public HashSetValuedHashMapTest(final String testName) {
-        super(testName);
+    public HashSetValuedHashMapTest() {
+        super(HashSetValuedHashMapTest.class.getSimpleName());
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(HashSetValuedHashMapTest.class);
-    }
-
-    // -----------------------------------------------------------------------
     @Override
     public SetValuedMap<K, V> makeObject() {
         return new HashSetValuedHashMap<>();
@@ -58,7 +57,12 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         return true;
     }
 
-    // -----------------------------------------------------------------------
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();
@@ -72,6 +76,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertTrue(setMap.containsKey("A"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = makeObject();
@@ -92,6 +97,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertFalse(setMap.containsKey("A"));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = makeObject();
@@ -112,6 +118,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
     public void testSetValuedMapEqualsHashCodeContract() {
         final SetValuedMap map1 = makeObject();
         final SetValuedMap map2 = makeObject();
@@ -132,6 +139,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
+    @Test
     public void testHashSetValueHashMap() {
         final SetValuedMap<K, V> setMap = new HashSetValuedHashMap<>(4);
         assertEquals(0, setMap.get((K) "whatever").size());
@@ -143,6 +151,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertEquals(3, setMap.get((K) "A").size());
     }
 
+    @Test
     public void testHashSetValueHashMap_1() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         final SetValuedMap<K, V> map1;
@@ -165,6 +174,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertEquals("{}", map3.toString());
     }
 
+    @Test
     public void testHashSetValuedHashMap_2(){
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;

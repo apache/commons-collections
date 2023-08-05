@@ -111,7 +111,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         addAll(coll);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Write the queue out using a custom routine.
      *
@@ -150,7 +149,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements stored in the queue.
      *
@@ -274,7 +272,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         return elements[idx];
     }
 
-    //-----------------------------------------------------------------------
 
     /**
      * Adds the given element to this queue. If the queue is full, the least recently added
@@ -331,7 +328,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         return element;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Increments the internal index.
      *

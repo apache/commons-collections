@@ -47,7 +47,7 @@ import java.util.Objects;
  * @since 3.0
  */
 public class MultiKey<K> implements Serializable {
-    // This class could implement List, but that would confuse it's purpose
+    // This class could implement List, but that would confuse its purpose
 
     /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
@@ -198,8 +198,8 @@ public class MultiKey<K> implements Serializable {
      * <b>If the array is not cloned, then it must not be modified.</b>
      * <p>
      * This method is public for performance reasons only, to avoid a clone.
-     * The hashcode is calculated once here in this method.
-     * Therefore, changing the array passed in would not change the hashcode but
+     * The hash code is calculated once here in this method.
+     * Therefore, changing the array passed in would not change the hash code but
      * would change the equals method, which is a bug.
      * <p>
      * This is the only fully safe usage of this constructor, as the object array
@@ -236,7 +236,6 @@ public class MultiKey<K> implements Serializable {
         hashCode = total;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Compares this object to another.
      * <p>
@@ -273,7 +272,6 @@ public class MultiKey<K> implements Serializable {
         return keys[index];
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets a clone of the array of keys.
      * <p>
@@ -292,7 +290,7 @@ public class MultiKey<K> implements Serializable {
      * This value is computed once and then cached, so elements should not
      * change their hash codes once created (note that this is the same
      * constraint that would be used if the individual keys elements were
-     * themselves {@link java.util.Map Map} keys.
+     * themselves {@link java.util.Map Map} keys).
      *
      * @return the hash code
      */

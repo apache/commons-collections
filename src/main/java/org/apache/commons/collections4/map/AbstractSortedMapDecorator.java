@@ -75,7 +75,6 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
         return (SortedMap<K, V>) super.decorated();
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public Comparator<? super K> comparator() {
         return decorated().comparator();

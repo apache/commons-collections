@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,10 +26,10 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
- *
  */
 public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V> {
 
@@ -54,7 +56,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         return (IterableMap<K, V>) super.makeFullMap();
     }
 
-    //-----------------------------------------------------------------------
+    @Test
     public void testFailFastEntrySet() {
         if (!isRemoveSupported()) {
             return;
@@ -66,21 +68,18 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
         final Map.Entry<K, V> val = it.next();
         getMap().remove(val.getKey());
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<Map.Entry<K, V>> finalIt0 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().entrySet().iterator();
         it.next();
         getMap().clear();
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<Map.Entry<K, V>> finalIt1 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
+    @Test
     public void testFailFastKeySet() {
         if (!isRemoveSupported()) {
             return;
@@ -92,21 +91,18 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<K> it = getMap().keySet().iterator();
         final K val = it.next();
         getMap().remove(val);
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<K> finalIt0 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().keySet().iterator();
         it.next();
         getMap().clear();
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<K> finalIt1 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
+    @Test
     public void testFailFastValues() {
         if (!isRemoveSupported()) {
             return;
@@ -118,22 +114,17 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         Iterator<V> it = getMap().values().iterator();
         it.next();
         getMap().remove(getMap().keySet().iterator().next());
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<V> finalIt0 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt0.next());
 
         resetFull();
         it = getMap().values().iterator();
         it.next();
         getMap().clear();
-        try {
-            it.next();
-            fail();
-        } catch (final ConcurrentModificationException ex) {}
+        final Iterator<V> finalIt1 = it;
+        assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestMapIterator() {
         return new InnerTestMapIterator();
     }
@@ -208,4 +199,5 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
     public IterableMap<K, V> getMap() {
         return (IterableMap<K, V>) super.getMap();
     }
+
 }

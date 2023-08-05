@@ -16,14 +16,16 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Comparator;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
@@ -35,15 +37,9 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     private final SortedBag<T> nullBag = null;
 
-    public PredicatedSortedBagTest(final String testName) {
-        super(testName);
+    public PredicatedSortedBagTest() {
+        super(PredicatedSortedBagTest.class.getSimpleName());
     }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(PredicatedSortedBagTest.class);
-    }
-
-    //--------------------------------------------------------------------------
 
     protected Predicate<T> stringPredicate() {
         return o -> o instanceof String;
@@ -64,21 +60,17 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         return decorateBag(new TreeBag<T>(), stringPredicate());
     }
 
-    //--------------------------------------------------------------------------
-
+    @Test
     public void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
-        try {
-            decorateBag(new TreeBag<T>(), null);
-            fail("Expecting NullPointerException for null predicate");
-        } catch (final NullPointerException e) {}
-        try {
-            decorateBag(nullBag, stringPredicate());
-            fail("Expecting NullPointerException for null bag");
-        } catch (final NullPointerException e) {}
+
+        assertThrows(NullPointerException.class, () -> decorateBag(new TreeBag<T>(), null));
+
+        assertThrows(NullPointerException.class, () -> decorateBag(nullBag, stringPredicate()));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
         final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
@@ -88,10 +80,10 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         bag.add((T) one);
         bag.add((T) two);
         bag.add((T) three);
-        assertEquals("first element", bag.first(), one);
-        assertEquals("last element", bag.last(), two);
+        assertEquals(bag.first(), one, "first element");
+        assertEquals(bag.last(), two, "last element");
         final Comparator<? super T> c = bag.comparator();
-        assertNull("natural order, so comparator should be null", c);
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Override
