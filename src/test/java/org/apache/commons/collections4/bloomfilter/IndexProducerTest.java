@@ -61,7 +61,6 @@ public class IndexProducerTest {
             this.values = values;
         }
 
-        
         @Override
         public boolean forEachBitMap(final LongPredicate consumer) {
             for (final long l : values) {
