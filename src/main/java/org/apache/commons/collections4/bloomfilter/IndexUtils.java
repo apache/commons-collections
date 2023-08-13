@@ -22,12 +22,12 @@ import java.util.Arrays;
  * Provides functions to assist in IndexProducer creation and manipulation.
  * @see IndexProducer
  */
-public class IndexUtils {
+final class IndexUtils {
 
     /**
      * The maximum array size for the methods in this class.
      */
-    public static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     // do not instantiate
     private IndexUtils() {}
@@ -40,7 +40,7 @@ public class IndexUtils {
      */
     static int[] ensureCapacityForAdd(int[] array, int index) {
         if (index >= array.length) {
-            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max( array.length * 2L, index+1)));
+            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
         }
         return array;
     }

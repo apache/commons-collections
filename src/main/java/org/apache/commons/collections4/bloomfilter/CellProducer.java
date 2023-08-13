@@ -110,7 +110,7 @@ public interface CellProducer extends IndexProducer {
             @Override
             public int[] asIndexArray() {
                 populate();
-                return counterCells.keySet().stream().mapToInt(c -> c.idx ).toArray();
+                return counterCells.keySet().stream().mapToInt(c -> c.idx).toArray();
             }
 
             @Override
@@ -138,7 +138,7 @@ public interface CellProducer extends IndexProducer {
 
                 @Override
                 public int compareTo(CounterCell other) {
-                    return Integer.compare(idx,  other.idx);
+                    return Integer.compare(idx, other.idx);
                 }
             }
         };

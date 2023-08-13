@@ -121,7 +121,7 @@ public interface IndexProducer {
             private int size;
 
             boolean add(final int index) {
-                data = IndexUtils.ensureCapacityForAdd(data, index);
+                data = IndexUtils.ensureCapacityForAdd(data, size);
                 data[size++] = index;
                 return true;
             }

@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.LongPredicate;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class IndexProducerTest {
 
@@ -58,6 +61,7 @@ public class IndexProducerTest {
             this.values = values;
         }
 
+        
         @Override
         public boolean forEachBitMap(final LongPredicate consumer) {
             for (final long l : values) {
@@ -67,5 +71,18 @@ public class IndexProducerTest {
             }
             return true;
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {32, 33})
+    void testAsIndexArray(int n) {
+        IndexProducer ip = i -> {
+            for (int j = 0; j < n; j++) {
+                // Always test index zero
+                i.test(0);
+            }
+            return true;
+        };
+        Assertions.assertArrayEquals(new int[n], ip.asIndexArray());
     }
 }
