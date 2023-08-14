@@ -46,16 +46,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Vector;
 
-import org.apache.commons.collections4.iterators.ArrayIterator;
-import org.apache.commons.collections4.iterators.EmptyIterator;
-import org.apache.commons.collections4.iterators.EmptyListIterator;
-import org.apache.commons.collections4.iterators.EmptyMapIterator;
-import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
-import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
-import org.apache.commons.collections4.iterators.EnumerationIterator;
-import org.apache.commons.collections4.iterators.NodeListIterator;
-import org.apache.commons.collections4.iterators.ObjectArrayIterator;
-import org.apache.commons.collections4.iterators.ZippingIterator;
+import org.apache.commons.collections4.iterators.*;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -1116,4 +1107,11 @@ public class IteratorUtilsTest {
         assertTrue(IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator, "create instance fail");
     }
 
+    @Test
+    public void testPairedIterator() {
+        final ArrayList<String> stringList = new ArrayList<>();
+        final ArrayList<Integer> integerList = new ArrayList<>();
+
+        assertTrue(IteratorUtils.pairedIterator(stringList.iterator(), integerList.iterator()) instanceof PairedIterator, "create instance failed");
+    }
 }
