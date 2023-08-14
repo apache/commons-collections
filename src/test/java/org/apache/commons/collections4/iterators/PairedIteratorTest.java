@@ -16,8 +16,14 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.iterators.PairedIterator.PairedItem;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,9 +35,7 @@ import java.util.UUID;
 public final class PairedIteratorTest
     extends AbstractIteratorTest<PairedItem<String, Integer>> {
 
-    public PairedIteratorTest(String testName) {
-        super(testName);
-    }
+    public PairedIteratorTest() { super(ObjectArrayIteratorTest.class.getSimpleName()); }
 
     private ArrayList<String> smallStringsList;
     private ArrayList<String> largeStringsList;
@@ -41,9 +45,9 @@ public final class PairedIteratorTest
     private static final int SMALL_LIST_SIZE = 20;
     private static final int LARGE_LIST_SIZE = 40;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+
+    @BeforeEach
+    public void setUp() throws Exception {
 
         smallStringsList = new ArrayList<>();
         largeStringsList = new ArrayList<>();
@@ -78,6 +82,7 @@ public final class PairedIteratorTest
         return PairedIterator.of(smallStringsList.iterator(), smallIntsList.iterator());
     }
 
+    @Test
     public void testLeftIteratorLargerThanRight() {
         Iterator<PairedItem<String, Integer>> zipPairIterator =
             PairedIterator.ofIterables(largeStringsList, smallIntsList);
@@ -94,6 +99,7 @@ public final class PairedIteratorTest
         assertFalse(zipPairIterator.hasNext());
     }
 
+    @Test
     public void testRightIteratorLargerThanLeft() {
         Iterator<PairedItem<String, Integer>> zipPairIterator =
             PairedIterator.ofIterables(smallStringsList, largeIntsList);
@@ -110,6 +116,7 @@ public final class PairedIteratorTest
         assertFalse(zipPairIterator.hasNext());
     }
 
+    @Test
     public void testEmptyLeftIterator() {
         Iterator<PairedItem<String, Integer>> zipPairIterator =
             PairedIterator.of(IteratorUtils.emptyIterator(), largeIntsList.iterator());
@@ -117,6 +124,7 @@ public final class PairedIteratorTest
         assertFalse(zipPairIterator.hasNext());
     }
 
+    @Test
     public void testEmptyRightIterator() {
         Iterator<PairedItem<String, Integer>> zipPairIterator =
             PairedIterator.of(largeStringsList.iterator(), IteratorUtils.emptyIterator());
@@ -124,7 +132,7 @@ public final class PairedIteratorTest
         assertFalse(zipPairIterator.hasNext());
     }
 
-
+    @Test
     public void testValidTupleString() {
         Iterator<PairedItem<String, Integer>> zipPairIterator =
             PairedIterator.ofIterables(smallStringsList, largeIntsList);
