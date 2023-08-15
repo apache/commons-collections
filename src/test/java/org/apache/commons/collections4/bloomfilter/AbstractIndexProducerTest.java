@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -244,5 +245,11 @@ public abstract class AbstractIndexProducerTest {
             return false;
         }));
         assertEquals(0, passes[0]);
+    }
+
+    @Test
+    public void testUniqueReturnsSelf() {
+        IndexProducer expected = createProducer().uniqueIndices();
+        assertSame(expected, expected.uniqueIndices());
     }
 }

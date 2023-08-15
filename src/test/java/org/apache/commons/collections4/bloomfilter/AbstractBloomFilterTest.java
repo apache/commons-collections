@@ -94,9 +94,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         return bf;
     }
 
-    /**
-     *
-     */
     @Test
     public void testMergeWithBadHasher() {
         // value too large
@@ -480,11 +477,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         @Override
         public IndexProducer indices(final Shape shape) {
-            return producer;
-        }
-
-        @Override
-        public IndexProducer uniqueIndices(final Shape shape) {
             return producer;
         }
     }

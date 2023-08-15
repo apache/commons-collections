@@ -16,32 +16,30 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromHasherTest extends AbstractBitCountProducerTest {
+public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProducerTest {
+
+    protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitCountProducer createProducer() {
-        // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)));
+    protected IndexProducer createProducer() {
+        final Hasher hasher = new IncrementingHasher(3, 2);
+        final BloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(hasher);
+        return bf;
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        // Hasher allows duplicates and may be unordered
-        return 0;
+    protected IndexProducer createEmptyProducer() {
+        return new SimpleBloomFilter(shape);
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68, 4, 12, 20, 28, 36, 44, 52, 60};
+        return new int[] {3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35};
     }
 
     @Override
-    protected int[][] getExpectedBitCount() {
-        return new int[][] {{4, 2}, {12, 2}, {20, 2}, {28, 2}, {36, 2}, {44, 2}, {52, 2}, {60, 2}, {68, 1}};
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT | ORDERED;
     }
 }

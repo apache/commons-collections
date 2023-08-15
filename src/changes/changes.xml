@@ -200,6 +200,9 @@
     <action dev="ggregory" type="fix" due-to="step-security-bot, Gary Gregory">
       [StepSecurity] ci: Harden GitHub Actions #401.
     </action>
+    <action dev="ggregory" type="fix" due-to="Martin Wiesner, Bruno P. Kinoshita, Gary Gregory">
+      Fix punctuation and minor Javadoc issues #409.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-748" dev="ggregory" type="add" due-to="Gary Gregory">
       Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
@@ -267,6 +270,15 @@
     <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.properties.PropertiesFactory.EMPTY_PROPERTIES.
     </action>
+    <action issue="COLLECTIONS-746" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add PropertiesFactory.
+    </action>
+    <action dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.properties.OrderedProperties and OrderedPropertiesFactory.
+    </action>
+    <action dev="ggregory" type="add" due-to="Vadim, Claude Warren, Gary Gregory, Alex Herbert">
+      Make AbstractPatriciaTrie public #407.
+    </action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
       Bump org.easymock:easymock from 4.0.2 to 5.1.0 #352, #355, #375.
@@ -284,7 +296,7 @@
       Bump codecov/codecov-action from 2 to 3 #297.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump Apache commons-parent from 48 to 58, #339.
+      Bump Apache commons-parent from 48 to 59, #339.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.
@@ -334,8 +346,8 @@
     <action issue="COLLECTIONS-781" type="update" dev="ggregory" due-to="Arturo Bernal, Gary Gregory">
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
     </action>
-    <action type="update" dev="kinow" due-to="Dependabot">
-      Bump commons-lang3 from 3.11 to 3.12.0 #219.
+    <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
+      Bump commons-lang3 from 3.11 to 3.13.0.
     </action>
     <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
       Add new variables to oac.collections4.CollectionUtils and use them in the code base.
@@ -356,7 +368,7 @@
       Bump pmd from 6.46.0 to 6.52.0 #318, #327, #333, #347.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump guava-testlib from 31.1-jre to 32.1.0-jre #394, #395, #404.
+      Bump guava-testlib from 31.1-jre to 32.1.2-jre #394, #395, #404, #405, #411.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

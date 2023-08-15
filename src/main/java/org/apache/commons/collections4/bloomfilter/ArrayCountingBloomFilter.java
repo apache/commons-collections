@@ -23,17 +23,16 @@ import java.util.function.LongPredicate;
 import java.util.stream.IntStream;
 
 /**
- * A counting Bloom filter using an int array to track counts for each enabled bit
- * index.
+ * A counting Bloom filter using an int array to track cells for each enabled bit.
  *
  * <p>Any operation that results in negative counts or integer overflow of
  * counts will mark this filter as invalid. This transition is not reversible.
  * The operation is completed in full, no exception is raised and the state is
- * set to invalid. This allows the counts for the filter immediately prior to the
+ * set to invalid. This allows the cells for the filter immediately prior to the
  * operation that created the invalid state to be recovered. See the documentation
  * in {@link #isValid()} for details.</p>
  *
- * <p>All the operations in the filter assume the counts are currently valid,
+ * <p>All the operations in the filter assume the cells are currently valid,
  * for example {@code cardinality} or {@code contains} operations. Behavior of an invalid
  * filter is undefined. It will no longer function identically to a standard
  * Bloom filter that is the merge of all the Bloom filters that have been added
@@ -47,6 +46,7 @@ import java.util.stream.IntStream;
  * consumption of approximately 8 GB.
  *
  * @see Shape
+ * @see CellProducer
  * @since 4.5
  */
 public final class ArrayCountingBloomFilter implements CountingBloomFilter {
@@ -57,30 +57,30 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     private final Shape shape;
 
     /**
-     * The count of each bit index in the filter.
+     * The cell for each bit index in the filter.
      */
-    private final int[] counts;
+    private final int[] cells;
 
     /**
-     * The state flag. This is a bitwise {@code OR} of the entire history of all updated
-     * counts. If negative then a negative count or integer overflow has occurred on
-     * one or more counts in the history of the filter and the state is invalid.
+     * The state flag. This is a bitwise @{code OR} of the entire history of all updated
+     * cells. If negative then a negative cell or integer overflow has occurred on
+     * one or more cells in the history of the filter and the state is invalid.
      *
      * <p>Maintenance of this state flag is branch-free for improved performance. It
-     * eliminates a conditional check for a negative count during remove/subtract
+     * eliminates a conditional check for a negative cell during remove/subtract
      * operations and a conditional check for integer overflow during merge/add
      * operations.</p>
      *
-     * <p>Note: Integer overflow is unlikely in realistic usage scenarios. A count
+     * <p>Note: Integer overflow is unlikely in realistic usage scenarios. A cell
      * that overflows indicates that the number of items in the filter exceeds the
      * maximum possible size (number of bits) of any Bloom filter constrained by
      * integer indices. At this point the filter is most likely full (all bits are
      * non-zero) and thus useless.</p>
      *
-     * <p>Negative counts are a concern if the filter is used incorrectly by
+     * <p>Negative cells are a concern if the filter is used incorrectly by
      * removing an item that was never added. It is expected that a user of a
      * counting Bloom filter will not perform this action as it is a mistake.
-     * Enabling an explicit recovery path for negative or overflow counts is a major
+     * Enabling an explicit recovery path for negative or overflow cells is a major
      * performance burden not deemed necessary for the unlikely scenarios when an
      * invalid state is created. Maintenance of the state flag is a concession to
      * flag improper use that should not have a major performance impact.</p>
@@ -96,18 +96,23 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     public ArrayCountingBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
-        counts = new int[shape.getNumberOfBits()];
+        cells = new int[shape.getNumberOfBits()];
     }
 
     private ArrayCountingBloomFilter(final ArrayCountingBloomFilter source) {
         this.shape = source.shape;
         this.state = source.state;
-        this.counts = source.counts.clone();
+        this.cells = source.cells.clone();
     }
 
     @Override
     public void clear() {
-        Arrays.fill(counts, 0);
+        Arrays.fill(cells, 0);
+    }
+
+    @Override
+    public int getMaxCell() {
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -131,16 +136,16 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean add(final BitCountProducer other) {
+    public boolean add(final CellProducer other) {
         Objects.requireNonNull(other, "other");
-        other.forEachCount(this::add);
+        other.forEachCell(this::add);
         return isValid();
     }
 
     @Override
-    public boolean subtract(final BitCountProducer other) {
+    public boolean subtract(final CellProducer other) {
         Objects.requireNonNull(other, "other");
-        other.forEachCount(this::subtract);
+        other.forEachCell(this::subtract);
         return isValid();
     }
 
@@ -151,12 +156,12 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      *
      * <p>The state transition to invalid is permanent.</p>
      *
-     * <p>This implementation does not correct negative counts to zero or integer
-     * overflow counts to {@link Integer#MAX_VALUE}. Thus the operation that
-     * generated invalid counts can be reversed by using the complement of the
-     * original operation with the same Bloom filter. This will restore the counts
-     * to the state prior to the invalid operation. Counts can then be extracted
-     * using {@link #forEachCount(BitCountConsumer)}.</p>
+     * <p>This implementation does not correct negative cells to zero or integer
+     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
+     * generated invalid cells can be reversed by using the complement of the
+     * original operation with the same Bloom filter. This will restore the cells
+     * to the state prior to the invalid operation. Cells can then be extracted
+     * using {@link #forEachCell(CellConsumer)}.</p>
      */
     @Override
     public boolean isValid() {
@@ -164,10 +169,10 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean forEachCount(final BitCountProducer.BitCountConsumer consumer) {
+    public boolean forEachCell(final CellProducer.CellConsumer consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0 && !consumer.test(i, counts[i])) {
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != 0 && !consumer.test(i, cells[i])) {
                 return false;
             }
         }
@@ -177,8 +182,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] != 0 && !consumer.test(i)) {
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != 0 && !consumer.test(i)) {
                 return false;
             }
         }
@@ -188,14 +193,14 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean forEachBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        final int blocksm1 = BitMap.numberOfBitMaps(counts.length) - 1;
+        final int blocksm1 = BitMap.numberOfBitMaps(cells.length) - 1;
         int i = 0;
         long value;
         // must break final block separate as the number of bits may not fall on the long boundary
         for (int j = 0; j < blocksm1; j++) {
             value = 0;
             for (int k = 0; k < Long.SIZE; k++) {
-                if (counts[i++] != 0) {
+                if (cells[i++] != 0) {
                     value |= BitMap.getLongBit(k);
                 }
             }
@@ -205,8 +210,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         }
         // Final block
         value = 0;
-        for (int k = 0; i < counts.length; k++) {
-            if (counts[i++] != 0) {
+        for (int k = 0; i < cells.length; k++) {
+            if (cells[i++] != 0) {
                 value |= BitMap.getLongBit(k);
             }
         }
@@ -214,31 +219,41 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     /**
-     * Add to the count for the bit index.
+     * Add to the cell for the bit index.
      *
      * @param idx the index
      * @param addend the amount to add
      * @return {@code true} always.
      */
     private boolean add(final int idx, final int addend) {
-        final int updated = counts[idx] + addend;
-        state |= updated;
-        counts[idx] = updated;
-        return true;
+        try {
+            final int updated = cells[idx] + addend;
+            state |= updated;
+            cells[idx] = updated;
+            return true;
+        } catch (final IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+        }
     }
 
     /**
-     * Subtract from the count for the bit index.
+     * Subtract from the cell for the bit index.
      *
      * @param idx the index
      * @param subtrahend the amount to subtract
      * @return {@code true} always.
      */
     private boolean subtract(final int idx, final int subtrahend) {
-        final int updated = counts[idx] - subtrahend;
-        state |= updated;
-        counts[idx] = updated;
-        return true;
+        try {
+            final int updated = cells[idx] - subtrahend;
+            state |= updated;
+            cells[idx] = updated;
+            return true;
+        } catch (final IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+        }
     }
 
     @Override
@@ -248,7 +263,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> this.counts[idx] != 0);
+        return indexProducer.forEachIndex(idx -> this.cells[idx] != 0);
     }
 
     @Override
@@ -258,6 +273,19 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public int[] asIndexArray() {
-        return IntStream.range(0, counts.length).filter(i -> counts[i] > 0).toArray();
+        return IntStream.range(0, cells.length).filter(i -> cells[i] > 0).toArray();
+    }
+
+    @Override
+    public int getMaxInsert(CellProducer cellProducer) {
+        int[] max = {Integer.MAX_VALUE};
+        cellProducer.forEachCell( (x, y) -> {
+            int count = cells[x] / y;
+            if (count < max[0]) {
+                max[0] = count;
+            }
+            return max[0] > 0;
+        });
+        return max[0];
     }
 }

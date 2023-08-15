@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>58</version>
+    <version>59</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
@@ -494,7 +494,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.12.0</version>
+      <version>3.13.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -512,7 +512,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
-      <version>32.1.0-jre</version>
+      <version>32.1.2-jre</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -647,7 +647,7 @@
           <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
           <enableRulesSummary>false</enableRulesSummary>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/test.properties,**/resolver-status.properties</resourceExcludes>
+          <resourceExcludes>NOTICE.txt,LICENSE.txt,**/pom.properties,**/test*.properties,**/resolver-status.properties</resourceExcludes>
         </configuration>
       </plugin>
       <plugin>

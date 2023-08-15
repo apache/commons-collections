@@ -162,9 +162,9 @@ public class SequencesComparator<T> {
      * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
      * An O(ND) Difference Algorithm and Its Variations</a>.
      *
-     * @param start1  the begin of the first sequence to be compared
+     * @param start1  the start of the first sequence to be compared
      * @param end1  the end of the first sequence to be compared
-     * @param start2  the begin of the second sequence to be compared
+     * @param start2  the start of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @return the middle snake
      */
@@ -234,16 +234,16 @@ public class SequencesComparator<T> {
         }
 
         // this should not happen
-        throw new RuntimeException("Internal Error");
+        throw new IllegalStateException("Internal Error");
     }
 
 
     /**
      * Build an edit script.
      *
-     * @param start1  the begin of the first sequence to be compared
+     * @param start1  the start of the first sequence to be compared
      * @param end1  the end of the first sequence to be compared
-     * @param start2  the begin of the second sequence to be compared
+     * @param start2  the start of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @param script the edited script
      */

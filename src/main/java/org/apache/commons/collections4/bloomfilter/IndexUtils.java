@@ -16,41 +16,32 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-import java.util.function.IntPredicate;
+import java.util.Arrays;
 
 /**
- * A Hasher that returns no values.
- *
- * <p>To be used for testing only.</p>
+ * Provides functions to assist in IndexProducer creation and manipulation.
+ * @see IndexProducer
  */
-final class NullHasher implements Hasher {
+final class IndexUtils {
 
     /**
-     * The instance of the Null Hasher.
+     * The maximum array size for the methods in this class.
      */
-    static final NullHasher INSTANCE = new NullHasher();
+    static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
-    private static final IndexProducer PRODUCER = new IndexProducer() {
-        @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            Objects.requireNonNull(consumer, "consumer");
-            return true;
+    // do not instantiate
+    private IndexUtils() {}
+
+    /**
+     * Ensure the array can add an element at the specified index.
+     * @param array the array to check.
+     * @param index the index to add at.
+     * @return the array or a newly allocated copy of the array.
+     */
+    static int[] ensureCapacityForAdd(int[] array, int index) {
+        if (index >= array.length) {
+            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
         }
-
-        @Override
-        public int[] asIndexArray() {
-            return new int[0];
-        }
-    };
-
-    private NullHasher() {
-        // No instances
-    }
-
-    @Override
-    public IndexProducer indices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
+        return array;
     }
 }

@@ -1955,7 +1955,7 @@ public class MapUtils {
      * If the contents of a map include the map itself, then the text <em>(this Map)</em> is printed out. If the
      * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where it actually
      * indicates the number of levels which must be traversed in the sequential list of ancestors (e.g. father,
-     * grandfather, great-grandfather, etc).
+     * grandfather, great-grandfather, etc.).
      *
      * @param out the stream to print to
      * @param label the label to be used, may be {@code null}. If {@code null}, the label is not output. It

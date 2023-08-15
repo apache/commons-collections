@@ -538,7 +538,7 @@ public class SingletonMap<K, V>
         try {
             return (SingletonMap<K, V>) super.clone();
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 
