@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromLayeredBloomFilterTest extends AbstractCellProducerTest {
+public class CellProducerFromLayeredBloomFilterTest extends AbstractCellProducerTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
