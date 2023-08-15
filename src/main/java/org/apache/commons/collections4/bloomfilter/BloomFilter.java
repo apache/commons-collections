@@ -309,4 +309,12 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         }
         return estimate>Integer.MAX_VALUE?Integer.MAX_VALUE:(int) estimate;
     }
+
+    /**
+     * Most Bloom filters create unique IndexProducers.
+     */
+    @Override
+    default IndexProducer uniqueIndices() {
+        return this;
+    }
 }

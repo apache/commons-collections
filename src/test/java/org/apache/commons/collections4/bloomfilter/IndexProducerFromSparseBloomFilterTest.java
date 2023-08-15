@@ -16,41 +16,30 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-import java.util.function.IntPredicate;
+public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProducerTest {
 
-/**
- * A Hasher that returns no values.
- *
- * <p>To be used for testing only.</p>
- */
-final class NullHasher implements Hasher {
+    protected Shape shape = Shape.fromKM(17, 72);
 
-    /**
-     * The instance of the Null Hasher.
-     */
-    static final NullHasher INSTANCE = new NullHasher();
-
-    private static final IndexProducer PRODUCER = new IndexProducer() {
-        @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            Objects.requireNonNull(consumer, "consumer");
-            return true;
-        }
-
-        @Override
-        public int[] asIndexArray() {
-            return new int[0];
-        }
-    };
-
-    private NullHasher() {
-        // No instances
+    @Override
+    protected IndexProducer createProducer() {
+        final Hasher hasher = new IncrementingHasher(4, 7);
+        final BloomFilter bf = new SparseBloomFilter(shape);
+        bf.merge(hasher);
+        return bf;
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
+    protected IndexProducer createEmptyProducer() {
+        return new SparseBloomFilter(shape);
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[] {2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
+    }
+
+    @Override
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT |ORDERED;
     }
 }

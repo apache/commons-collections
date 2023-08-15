@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-
 /**
  * A Hasher creates IndexProducer based on the hash implementation and the
  * provided Shape.
@@ -44,21 +42,4 @@ public interface Hasher {
      * @return the iterator of integers
      */
     IndexProducer indices(Shape shape);
-
-    /**
-     * Creates an IndexProducer of unique indices for this hasher based on the Shape.
-     *
-     * <p>This is like the `indices(Shape)` method except that it adds the guarantee that no
-     * duplicate values will be returned. The indices produced are equivalent to those returned
-     * from by a Bloom filter created from this hasher.</p>
-     *
-     * @param shape the shape of the desired Bloom filter.
-     * @return the iterator of integers
-     */
-    default IndexProducer uniqueIndices(final Shape shape) {
-        return consumer -> {
-            Objects.requireNonNull(consumer, "consumer");
-            return indices(shape).forEachIndex(IndexFilter.create(shape, consumer));
-        };
-    }
 }

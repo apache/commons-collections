@@ -32,6 +32,9 @@
  * list. There are lots of other uses, and in most cases the reason is to perform a fast check as a gateway for a longer
  * operation.</p>
  *
+ * <p>Some Bloom filters (e.g. CountingBloomFilter) use counters rather than bits. In this case each counter
+ * is called a {@code cell}.</p>
+ *
  * <h3>BloomFilter</h3>
  *
  * <p>The Bloom filter architecture here is designed for speed of execution, so some methods like {@code merge}, {@code remove},

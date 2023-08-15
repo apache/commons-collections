@@ -16,21 +16,27 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
+public class DefaultCellProducerTest extends AbstractCellProducerTest {
 
     /** Make forEachIndex unordered and contain duplicates. */
-    private final int[] values = {10, 1, 10, 1};
+    private final int[] indices = {1, 2, 3, 5};
+    private final int[] values = {1, 4, 9, 25};
 
     @Override
     protected int[] getExpectedIndices() {
+        return indices;
+    }
+
+    @Override
+    protected int[] getExpectedValues() {
         return values;
     }
 
     @Override
-    protected BitCountProducer createProducer() {
+    protected CellProducer createProducer() {
         return consumer -> {
-            for (final int i : values) {
-                if (!consumer.test(i, 1)) {
+            for (int i = 0; i < indices.length; i++) {
+                if (!consumer.test(indices[i], values[i] )) {
                     return false;
                 }
             }
@@ -39,25 +45,13 @@ public class DefaultBitCountProducerTest extends AbstractBitCountProducerTest {
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
+    protected CellProducer createEmptyProducer() {
         return consumer -> true;
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        // The default method streams a BitSet so is distinct and ordered.
-        return ORDERED | DISTINCT;
     }
 
     @Override
     protected int getForEachIndexBehaviour() {
         // The default method has the same behavior as the forEachCount() method.
-        return 0;
-    }
-
-    @Override
-    protected int getForEachCountBehaviour() {
-        // The implemented method returns unordered duplicates.
         return 0;
     }
 }
