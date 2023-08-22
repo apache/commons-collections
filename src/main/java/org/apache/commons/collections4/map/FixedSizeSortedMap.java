@@ -133,7 +133,7 @@ public class FixedSizeSortedMap<K, V>
 
     @Override
     public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
-        if (CollectionUtils.isSubCollection(mapToCopy.keySet(), keySet())) {
+        if (!CollectionUtils.isSubCollection(mapToCopy.keySet(), keySet())) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         map.putAll(mapToCopy);
