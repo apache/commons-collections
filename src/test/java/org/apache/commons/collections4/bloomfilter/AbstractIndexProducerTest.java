@@ -152,7 +152,7 @@ public abstract class AbstractIndexProducerTest {
     @Test
     public final void testEmptyProducer() {
         final IndexProducer empty = createEmptyProducer();
-        final int ary[] = empty.asIndexArray();
+        final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachIndex(i -> {
             throw new AssertionError("forEach predictate should not be called");

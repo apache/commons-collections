@@ -80,7 +80,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     @Test
     public final void testEmptyCellProducer() {
         final CellProducer empty = createEmptyProducer();
-        final int ary[] = empty.asIndexArray();
+        final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachCell((i, j) -> {
             fail("forEachCell consumer should not be called");
