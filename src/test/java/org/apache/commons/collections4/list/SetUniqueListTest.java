@@ -91,13 +91,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeObject() {
-        return new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
+        return new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testAdd() {
-        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
+        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         // Duplicate element
         final E obj = (E) Integer.valueOf(1);
@@ -113,7 +113,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testAddAll() {
-        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
+        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         lset.addAll(
             Arrays.asList((E[]) new Integer[] { Integer.valueOf(1), Integer.valueOf(1)}));
@@ -210,7 +210,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // repeat the test with a different class than HashSet;
         // which means subclassing SetUniqueList below
         list = new ArrayList<>();
-        uniqueList = new SetUniqueList307(list, new TreeSet<E>());
+        uniqueList = new SetUniqueList307(list, new TreeSet<>());
 
         uniqueList.add((E) hello);
         uniqueList.add((E) world);
@@ -269,7 +269,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     public void testIntCollectionAddAll() {
         // make a SetUniqueList with one element
-        final List<Integer> list = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
+        final List<Integer> list = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
         final Integer existingElement = Integer.valueOf(1);
         list.add(existingElement);
 
@@ -295,7 +295,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testListIterator() {
-        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
+        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         final E obj1 = (E) Integer.valueOf(1);
         final E obj2 = (E) Integer.valueOf(2);
@@ -424,7 +424,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testSet() {
-        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<E>(), new HashSet<E>());
+        final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         // Duplicate element
         final E obj1 = (E) Integer.valueOf(1);
@@ -463,7 +463,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @Test
     public void testSetCollections444() {
-        final SetUniqueList<Integer> lset = new SetUniqueList<>(new ArrayList<Integer>(), new HashSet<Integer>());
+        final SetUniqueList<Integer> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         // Duplicate element
         final Integer obj1 = Integer.valueOf(1);
@@ -594,7 +594,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testUniqueListDoubleInsert() {
-        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
+        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<>());
         l.add((E) new Object());
         l.add((E) new Object());
 
@@ -610,7 +610,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testUniqueListReInsert() {
-        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
+        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<>());
         l.add((E) new Object());
         l.add((E) new Object());
 

@@ -44,7 +44,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     @Override
     public ListIterator<E> makeEmptyIterator() {
-        return new ReverseListIterator<>(new ArrayList<E>());
+        return new ReverseListIterator<>(new ArrayList<>());
     }
 
     @Override

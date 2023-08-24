@@ -41,7 +41,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeObject() {
-        return UnmodifiableSet.unmodifiableSet(new HashSet<E>());
+        return UnmodifiableSet.unmodifiableSet(new HashSet<>());
     }
 
     @Override

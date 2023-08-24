@@ -54,7 +54,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeObject() {
-        return TransformedSet.transformingSet(new HashSet<E>(),
+        return TransformedSet.transformingSet(new HashSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
@@ -69,7 +69,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        final Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
+        final Set<E> set = TransformedSet.transformingSet(new HashSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         final E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };

@@ -134,7 +134,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public MultiValueMap() {
-        this(new HashMap<K, V>(), new ReflectionFactory(ArrayList.class));
+        this(new HashMap<>(), new ReflectionFactory(ArrayList.class));
     }
 
     /**

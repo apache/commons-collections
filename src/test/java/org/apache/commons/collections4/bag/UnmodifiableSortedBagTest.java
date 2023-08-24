@@ -41,7 +41,7 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 
     @Override
     public SortedBag<E> makeObject() {
-        return UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<E>());
+        return UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<>());
     }
 
     @Override

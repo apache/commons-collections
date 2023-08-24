@@ -209,7 +209,7 @@ public class ListUtilsTest {
 
     @Test
     public void testLazyFactoryList() {
-        final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
+        final List<Integer> list = ListUtils.lazyList(new ArrayList<>(), new Factory<Integer>() {
 
             private int index;
 
@@ -406,7 +406,7 @@ public class ListUtilsTest {
         // Ensure that the collection is the input type or a super type
         final List<Integer> output1 = ListUtils.select(list, EQUALS_TWO);
         final List<Number> output2 = ListUtils.<Number>select(list, EQUALS_TWO);
-        final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
+        final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());
         assertEquals(1, output1.size());
@@ -423,7 +423,7 @@ public class ListUtilsTest {
         list.add(4L);
         final List<Long> output1 = ListUtils.selectRejected(list, EQUALS_TWO);
         final List<? extends Number> output2 = ListUtils.selectRejected(list, EQUALS_TWO);
-        final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
+        final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output2));
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());

@@ -660,7 +660,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertTrue(map.containsMapping("A", "Y"));
         assertTrue(map.containsMapping("A", "Z"));
 
-        assertFalse(map.putAll((K) "A", new ArrayList<V>()));
+        assertFalse(map.putAll((K) "A", new ArrayList<>()));
         assertEquals(3, map.get((K) "A").size());
         assertTrue(map.containsMapping("A", "X"));
         assertTrue(map.containsMapping("A", "Y"));

@@ -51,7 +51,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
     @Override
     @SuppressWarnings("unchecked")
     public SortedMap<K, V> makeObject() {
-        return TransformedSortedMap.transformingSortedMap(new TreeMap<K, V>(),
+        return TransformedSortedMap.transformingSortedMap(new TreeMap<>(),
                 (Transformer<? super K, ? extends K>) TransformerUtils.nopTransformer(),
                 (Transformer<? super V, ? extends V>) TransformerUtils.nopTransformer());
     }
@@ -69,7 +69,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
         SortedMap<K, V> map = TransformedSortedMap
                 .transformingSortedMap(
-                        new TreeMap<K, V>(),
+                        new TreeMap<>(),
                         (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                         null);
         assertEquals(0, map.size());
@@ -90,7 +90,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
         map = TransformedSortedMap
                 .transformingSortedMap(
-                        new TreeMap<K, V>(),
+                        new TreeMap<>(),
                         null,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());

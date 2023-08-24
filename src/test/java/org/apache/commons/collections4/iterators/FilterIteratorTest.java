@@ -75,7 +75,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Override
     public FilterIterator<E> makeEmptyIterator() {
-        return makeBlockAllFilter(new ArrayIterator<E>(array));
+        return makeBlockAllFilter(new ArrayIterator<>(array));
     }
 
     /**

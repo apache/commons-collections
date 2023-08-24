@@ -432,7 +432,7 @@ public class IterableUtilsTest {
         String result = IterableUtils.toString(iterableA);
         assertEquals("[1, 2, 2, 3, 3, 3, 4, 4, 4, 4]", result);
 
-        result = IterableUtils.toString(new ArrayList<Integer>());
+        result = IterableUtils.toString(new ArrayList<>());
         assertEquals("[]", result);
 
         result = IterableUtils.toString(null);
@@ -441,7 +441,7 @@ public class IterableUtilsTest {
         result = IterableUtils.toString(iterableA, input -> Integer.toString(input * 2));
         assertEquals("[2, 4, 4, 6, 6, 6, 8, 8, 8, 8]", result);
 
-        result = IterableUtils.toString(new ArrayList<Integer>(), input -> {
+        result = IterableUtils.toString(new ArrayList<>(), input -> {
             fail("not supposed to reach here");
             return "";
         });
@@ -480,10 +480,10 @@ public class IterableUtilsTest {
         result = IterableUtils.toString(iterableA, transformer, ",,", "((", "))");
         assertEquals("((2,,4,,4,,6,,6,,6,,8,,8,,8,,8))", result);
 
-        result = IterableUtils.toString(new ArrayList<Integer>(), transformer, "", "(", ")");
+        result = IterableUtils.toString(new ArrayList<>(), transformer, "", "(", ")");
         assertEquals("()", result);
 
-        result = IterableUtils.toString(new ArrayList<Integer>(), transformer, "", "", "");
+        result = IterableUtils.toString(new ArrayList<>(), transformer, "", "", "");
         assertEquals("", result);
     }
 
@@ -495,20 +495,20 @@ public class IterableUtilsTest {
         }, "", "(", ")");
         assertEquals("()", result);
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<Integer>(), null, "", "(", ")"),
+                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), null, "", "(", ")"),
                         "expecting NullPointerException"),
                 () -> assertThrows(NullPointerException.class, () ->
-                                IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                                IterableUtils.toString(new ArrayList<>(), input -> {
                                     fail("not supposed to reach here");
                                     return "";
                                 }, null, "(", ")"),
                         "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
                     fail("not supposed to reach here");
                     return "";
                 }, "", null, ")"),
                         "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
                     fail("not supposed to reach here");
                     return "";
                 }, "", "(", null),

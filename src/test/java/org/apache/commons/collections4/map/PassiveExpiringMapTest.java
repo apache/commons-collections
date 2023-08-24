@@ -191,12 +191,12 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
     @Test
     public void testExpiration() {
-        validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
-        validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
+        validateExpiration(new PassiveExpiringMap<>(500), 500);
+        validateExpiration(new PassiveExpiringMap<>(1000), 1000);
         validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(500)), 500);
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(500)), 500);
         validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(1, TimeUnit.SECONDS)), 1000);
     }
 
     @Test

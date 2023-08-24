@@ -400,15 +400,15 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     public void testPrefixMapClearNothing() {
         final Trie<String, Integer> trie = new PatriciaTrie<>();
         final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
-        assertEquals(new HashSet<String>(), prefixMap.keySet());
-        assertEquals(new ArrayList<Integer>(0), new ArrayList<>(prefixMap.values()));
+        assertEquals(new HashSet<>(), prefixMap.keySet());
+        assertEquals(new ArrayList<>(0), new ArrayList<>(prefixMap.values()));
 
         prefixMap.clear();
         assertTrue(prefixMap.isEmpty());
         assertTrue(prefixMap.isEmpty());
         assertTrue(prefixMap.isEmpty());
-        assertEquals(new HashSet<String>(), trie.keySet());
-        assertEquals(new ArrayList<Integer>(0), new ArrayList<>(trie.values()));
+        assertEquals(new HashSet<>(), trie.keySet());
+        assertEquals(new ArrayList<>(0), new ArrayList<>(trie.values()));
     }
 
     @Test

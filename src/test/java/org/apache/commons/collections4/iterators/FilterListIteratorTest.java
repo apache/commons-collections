@@ -185,7 +185,7 @@ public class FilterListIteratorTest {
     @Test
     public void testFalsePredicate() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), falsePred);
-        walkLists(new ArrayList<Integer>(), filtered);
+        walkLists(new ArrayList<>(), filtered);
     }
 
     @Test

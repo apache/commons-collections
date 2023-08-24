@@ -52,11 +52,11 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return decorateBag(new HashBag<T>(), truePredicate);
+        return decorateBag(new HashBag<>(), truePredicate);
     }
 
     protected Bag<T> makeTestBag() {
-        return decorateBag(new HashBag<T>(), stringPredicate());
+        return decorateBag(new HashBag<>(), stringPredicate());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
         assertThrows(IllegalArgumentException.class, () -> decorateBag((HashBag<T>) elements, stringPredicate()));
 
-        assertThrows(NullPointerException.class, () -> decorateBag(new HashBag<T>(), null));
+        assertThrows(NullPointerException.class, () -> decorateBag(new HashBag<>(), null));
     }
 
     @Override

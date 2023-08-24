@@ -47,7 +47,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public SortedSet<E> makeObject() {
-        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), truePredicate);
+        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<>(), truePredicate);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         o -> o instanceof String && ((String) o).startsWith("A");
 
     protected PredicatedSortedSet<E> makeTestSet() {
-        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), testPredicate);
+        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<>(), testPredicate);
     }
 
     @Test

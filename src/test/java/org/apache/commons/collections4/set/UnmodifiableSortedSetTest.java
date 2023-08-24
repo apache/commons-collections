@@ -46,7 +46,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public SortedSet<E> makeObject() {
-        return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<E>());
+        return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertAll(
                 () -> assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"),
                         "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<E>()),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<>()),
                         "Expecting UnsupportedOperationException."),
                 () -> assertThrows(UnsupportedOperationException.class, () -> set.clear(),
                         "Expecting UnsupportedOperationException."),

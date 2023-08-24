@@ -49,7 +49,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return CollectionBag.collectionBag(new HashBag<T>());
+        return CollectionBag.collectionBag(new HashBag<>());
     }
 
     /**

@@ -313,12 +313,12 @@ public class CollectionUtilsTest extends MockTestCase {
         assertCollectResult(collection);
 
         ArrayList<Number> list;
-        list = CollectionUtils.collect(collectionA, transformer, new ArrayList<Number>());
+        list = CollectionUtils.collect(collectionA, transformer, new ArrayList<>());
         assertEquals(list.size(), collectionA.size());
         assertCollectResult(list);
 
         Iterator<Integer> iterator = null;
-        list = CollectionUtils.collect(iterator, transformer, new ArrayList<Number>());
+        list = CollectionUtils.collect(iterator, transformer, new ArrayList<>());
 
         iterator = iterableA.iterator();
         list = CollectionUtils.collect(iterator, transformer, list);
@@ -1023,7 +1023,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void predicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
-        final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<Number>(), predicate);
+        final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<>(), predicate);
         assertTrue(collection instanceof PredicatedCollection, "returned object should be a PredicatedCollection");
     }
 
@@ -1047,7 +1047,7 @@ public class CollectionUtilsTest extends MockTestCase {
         // Ensure that the collection is the input type or a super type
         final Collection<Integer> output1 = CollectionUtils.select(list, EQUALS_TWO);
         final Collection<Number> output2 = CollectionUtils.<Number>select(list, EQUALS_TWO);
-        final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
+        final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());
         assertEquals(1, output1.size());
@@ -1063,7 +1063,7 @@ public class CollectionUtilsTest extends MockTestCase {
         list.add(4L);
         final Collection<Long> output1 = CollectionUtils.selectRejected(list, EQUALS_TWO);
         final Collection<? extends Number> output2 = CollectionUtils.selectRejected(list, EQUALS_TWO);
-        final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
+        final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output2));
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());

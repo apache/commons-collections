@@ -70,7 +70,7 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
         private TestOrderedBidiMap<V, K> inverse = null;
 
         TestOrderedBidiMap() {
-            super(new DualTreeBidiMap<K, V>());
+            super(new DualTreeBidiMap<>());
         }
 
         TestOrderedBidiMap(final OrderedBidiMap<K, V> map) {

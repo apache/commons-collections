@@ -36,7 +36,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     @Test
     public void compareEquals() {
         final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<Integer>());
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>());
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateTrue(p, Integer.valueOf(value.intValue()));
         assertPredicateFalse(p, Integer.valueOf(value.intValue() + 1));
@@ -45,7 +45,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     @Test
     public void compareGreater() {
         final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<Integer>(), Criterion.GREATER);
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateFalse(p, Integer.valueOf(value.intValue()));
         assertPredicateFalse(p, Integer.valueOf(value.intValue() + 1));
@@ -54,7 +54,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     @Test
     public void compareLess() {
         final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<Integer>(), Criterion.LESS);
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateFalse(p, Integer.valueOf(value.intValue()));
         assertPredicateTrue(p, Integer.valueOf(value.intValue() + 1));
@@ -63,7 +63,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     @Test
     public void compareGreaterOrEqual() {
         final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<Integer>(), Criterion.GREATER_OR_EQUAL);
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER_OR_EQUAL);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateTrue(p, Integer.valueOf(value.intValue()));
         assertPredicateFalse(p, Integer.valueOf(value.intValue() + 1));
@@ -72,7 +72,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     @Test
     public void compareLessOrEqual() {
         final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<Integer>(), Criterion.LESS_OR_EQUAL);
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS_OR_EQUAL);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateTrue(p, Integer.valueOf(value.intValue()));
         assertPredicateTrue(p, Integer.valueOf(value.intValue() + 1));
@@ -80,6 +80,6 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
 
     @Override
     protected Predicate<?> generatePredicate() {
-        return comparatorPredicate(Integer.valueOf(10), new TestComparator<Integer>());
+        return comparatorPredicate(Integer.valueOf(10), new TestComparator<>());
     }
 }

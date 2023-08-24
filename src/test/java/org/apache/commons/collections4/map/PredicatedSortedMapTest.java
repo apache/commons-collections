@@ -67,15 +67,15 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Override
     public SortedMap<K, V> makeObject() {
-        return decorateMap(new TreeMap<K, V>(), truePredicate, truePredicate);
+        return decorateMap(new TreeMap<>(), truePredicate, truePredicate);
     }
 
     public SortedMap<K, V> makeTestMap() {
-        return decorateMap(new TreeMap<K, V>(), testPredicate, testPredicate);
+        return decorateMap(new TreeMap<>(), testPredicate, testPredicate);
     }
 
     public SortedMap<K, V> makeTestMapWithComparator() {
-        return decorateMap(new ConcurrentSkipListMap<K, V>(reverseStringComparator), testPredicate, testPredicate);
+        return decorateMap(new ConcurrentSkipListMap<>(reverseStringComparator), testPredicate, testPredicate);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     public void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
         assertNotNull(map.entrySet(), "returned entryset should not be null");
-        map = decorateMap(new TreeMap<K, V>(), null, null);
+        map = decorateMap(new TreeMap<>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
         assertEquals(1, map.entrySet().size(), "returned entryset should contain one entry");
         map = decorateMap(map, null, null);

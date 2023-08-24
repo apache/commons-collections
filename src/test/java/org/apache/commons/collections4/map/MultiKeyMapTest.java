@@ -128,7 +128,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
         assertThrows(NullPointerException.class, () -> map.put(null, null));
 
-        assertNull(map.put(new MultiKey<K>(null, null), null));
+        assertNull(map.put(new MultiKey<>(null, null), null));
 
         assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
@@ -437,7 +437,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     @Test
     @SuppressWarnings("unchecked")
     public void testLRUMultiKeyMap() {
-        final MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<MultiKey<? extends K>, V>(2));
+        final MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<>(2));
         map.put((K) I1, (K) I2, (V) "1-2");
         map.put((K) I1, (K) I3, (V) "1-1");
         assertEquals(2, map.size());

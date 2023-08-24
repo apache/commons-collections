@@ -54,7 +54,7 @@ public class TransformedSplitMapTest extends BulkTest {
     @Test
     public void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
-                new HashMap<String, Class<?>>(), intToString, objectToClass);
+                new HashMap<>(), intToString, objectToClass);
 
         final Integer[] k = { 0, 1, 2, 3, 4, 5, 6 };
         final Object[] v = { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
@@ -78,7 +78,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(--sz, map.size());
 
         final TransformedSplitMap<String, String, String, Integer> map2 = TransformedSplitMap.transformingMap(
-                new HashMap<String, Integer>(), NOPTransformer.<String>nopTransformer(), stringToInt);
+                new HashMap<>(), NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map2.size());
         for (int i = 0; i < 6; i++) {
             map2.put(String.valueOf(i), String.valueOf(i));
@@ -97,7 +97,7 @@ public class TransformedSplitMapTest extends BulkTest {
     @Test
     public void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
-                TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
+                TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(), stringToInt);
         assertEquals(0, map.size());
         for (int i = 0; i < 6; i++) {
@@ -114,7 +114,7 @@ public class TransformedSplitMapTest extends BulkTest {
     @Test
     public void testEmptyMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map =
-                TransformedSplitMap.transformingMap(new HashMap<String, String>(),
+                TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(),
                                                     NOPTransformer.<String>nopTransformer() );
 
@@ -131,7 +131,7 @@ public class TransformedSplitMapTest extends BulkTest {
     @Test
     public void testFullMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
-                new HashMap<String, String>(),
+                new HashMap<>(),
                 NOPTransformer.<String>nopTransformer(),
                 NOPTransformer.<String>nopTransformer() );
         map.put( "a", "b" );

@@ -42,7 +42,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeObject() {
-        return UnmodifiableCollection.unmodifiableCollection(new ArrayList<E>());
+        return UnmodifiableCollection.unmodifiableCollection(new ArrayList<>());
     }
 
     @Override

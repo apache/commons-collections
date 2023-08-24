@@ -41,7 +41,7 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
     @Override
     public Bag<E> makeObject() {
-        return UnmodifiableBag.unmodifiableBag(new HashBag<E>());
+        return UnmodifiableBag.unmodifiableBag(new HashBag<>());
     }
 
     @Override

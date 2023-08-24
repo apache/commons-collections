@@ -35,7 +35,7 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeObject() {
-        return FixedSizeMap.fixedSizeMap(new HashMap<K, V>());
+        return FixedSizeMap.fixedSizeMap(new HashMap<>());
     }
 
     @Override

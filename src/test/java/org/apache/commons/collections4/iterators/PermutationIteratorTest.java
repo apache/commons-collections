@@ -66,7 +66,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     @Override
     public PermutationIterator<Character> makeEmptyIterator() {
-        return new PermutationIterator<>(new ArrayList<Character>());
+        return new PermutationIterator<>(new ArrayList<>());
     }
 
     @Override

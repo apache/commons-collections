@@ -45,7 +45,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeObject() {
-        return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K>nopTransformer(),
+        return TransformedMap.transformingMap(new HashMap<>(), TransformerUtils.<K>nopTransformer(),
                 TransformerUtils.<V>nopTransformer());
     }
 
@@ -56,7 +56,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         Map<K, V> map = TransformedMap
                 .transformingMap(
-                        new HashMap<K, V>(),
+                        new HashMap<>(),
                         (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                         null);
         assertEquals(0, map.size());

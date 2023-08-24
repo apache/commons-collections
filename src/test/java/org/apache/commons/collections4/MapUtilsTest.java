@@ -32,7 +32,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -167,11 +166,11 @@ public class MapUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]))
         );
 
-        Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY);
+        Map<String, String> test = MapUtils.putAll(new HashMap<>(), org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY);
         assertEquals(0, test.size());
 
         // sub array
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[][] {
+        test = MapUtils.putAll(new HashMap<>(), new String[][] {
                 {"RED", "#FF0000"},
                 {"GREEN", "#00FF00"},
                 {"BLUE", "#0000FF"}
@@ -184,17 +183,17 @@ public class MapUtilsTest {
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
         assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
                         {"RED", "#FF0000"},
                     null,
                         {"BLUE", "#0000FF"}
                 })),
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
                         {"RED", "#FF0000"},
                         {"GREEN"},
                         {"BLUE", "#0000FF"}
                 })),
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<String, String>(), new String[][]{
+                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
                         {"RED", "#FF0000"},
                         {},
                         {"BLUE", "#0000FF"}
@@ -202,7 +201,7 @@ public class MapUtilsTest {
         );
 
         // flat array
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
+        test = MapUtils.putAll(new HashMap<>(), new String[] {
             "RED", "#FF0000",
             "GREEN", "#00FF00",
             "BLUE", "#0000FF"
@@ -215,7 +214,7 @@ public class MapUtilsTest {
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
-        test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
+        test = MapUtils.putAll(new HashMap<>(), new String[] {
             "RED", "#FF0000",
             "GREEN", "#00FF00",
             "BLUE", "#0000FF",
@@ -229,11 +228,11 @@ public class MapUtilsTest {
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
 
-        test = MapUtils.putAll(new HashMap<String, String>(), null);
+        test = MapUtils.putAll(new HashMap<>(), null);
         assertEquals(0, test.size());
 
         // map entry
-        test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
+        test = MapUtils.putAll(new HashMap<>(), new Object[] {
             new DefaultMapEntry<>("RED", "#FF0000"),
             new DefaultMapEntry<>("GREEN", "#00FF00"),
             new DefaultMapEntry<>("BLUE", "#0000FF")
@@ -247,7 +246,7 @@ public class MapUtilsTest {
         assertEquals(3, test.size());
 
         // key value
-        test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
+        test = MapUtils.putAll(new HashMap<>(), new Object[] {
             new DefaultKeyValue<>("RED", "#FF0000"),
             new DefaultKeyValue<>("GREEN", "#00FF00"),
             new DefaultKeyValue<>("BLUE", "#0000FF")
@@ -826,7 +825,7 @@ public class MapUtilsTest {
         list.add(new X(5, "x5"));
 
         // Now test key transform population
-        final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<Integer, Collection<X>>());
+        final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<>());
         MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
         assertEquals(list.size(), map.totalSize());
 
@@ -991,7 +990,7 @@ public class MapUtilsTest {
 
     @Test
     public void testFixedSizeSortedMap() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<Long, Long>()).put(1L, 1L));
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<>()).put(1L, 1L));
     }
 
     @Test

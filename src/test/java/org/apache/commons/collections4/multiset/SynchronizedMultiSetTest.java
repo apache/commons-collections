@@ -32,7 +32,7 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Override
     public MultiSet<T> makeObject() {
-        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<T>());
+        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
     }
 
     @Override

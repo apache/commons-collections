@@ -51,8 +51,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Override
     public CompositeMap<K, V> makeObject() {
         final CompositeMap<K, V> map = new CompositeMap<>();
-        map.addComposited(new HashMap<K, V>());
-        map.setMutator( new EmptyMapMutator<K, V>() );
+        map.addComposited(new HashMap<>());
+        map.setMutator( new EmptyMapMutator<>() );
         return map;
     }
 

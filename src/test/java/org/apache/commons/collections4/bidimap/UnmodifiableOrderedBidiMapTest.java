@@ -38,7 +38,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
 
     @Override
     public OrderedBidiMap<K, V> makeObject() {
-        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<K, V>());
+        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<>());
     }
 
     @Override

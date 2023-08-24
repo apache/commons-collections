@@ -88,7 +88,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
      * @param initialSetCapacity  the initial capacity used for value collections
      */
     public HashSetValuedHashMap(final int initialMapCapacity, final int initialSetCapacity) {
-        super(new HashMap<K, HashSet<V>>(initialMapCapacity));
+        super(new HashMap<>(initialMapCapacity));
         this.initialSetCapacity = initialSetCapacity;
     }
 
@@ -124,7 +124,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
 
     private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
-        setMap(new HashMap<K, HashSet<V>>());
+        setMap(new HashMap<>());
         doReadObject(ois);
     }
 

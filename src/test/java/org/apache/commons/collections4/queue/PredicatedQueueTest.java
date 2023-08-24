@@ -50,7 +50,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Queue<E> makeObject() {
-        return decorateCollection(new LinkedList<E>(), truePredicate);
+        return decorateCollection(new LinkedList<>(), truePredicate);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
     protected Predicate<E> testPredicate = o -> o instanceof String;
 
     public Queue<E> makeTestQueue() {
-        return decorateCollection(new LinkedList<E>(), testPredicate);
+        return decorateCollection(new LinkedList<>(), testPredicate);
     }
 
     @Test

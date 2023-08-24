@@ -41,7 +41,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
     @Override
     public UnmodifiableList<E> makeObject() {
-        return new UnmodifiableList<>(new ArrayList<E>());
+        return new UnmodifiableList<>(new ArrayList<>());
     }
 
     @Override

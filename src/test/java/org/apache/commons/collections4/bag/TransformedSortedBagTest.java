@@ -39,13 +39,13 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedBag<T> makeObject() {
-        return TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
+        return TransformedSortedBag.transformingSortedBag(new TreeBag<>(), (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {

@@ -43,7 +43,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Queue<E> makeObject() {
-        return UnmodifiableQueue.unmodifiableQueue(new LinkedList<E>());
+        return UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
     }
 
     @Override

@@ -40,7 +40,7 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
 
     @Override
     public OrderedMap<K, V> makeObject() {
-        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<K, V>()));
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
 
     @Override
     public OrderedMap<K, V> makeFullMap() {
-        final OrderedMap<K, V> m = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
+        final OrderedMap<K, V> m = ListOrderedMap.listOrderedMap(new HashMap<>());
         addSampleMappings(m);
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }

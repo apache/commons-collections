@@ -47,7 +47,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     @Override
     public NavigableSet<E> makeObject() {
-        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<E>(), truePredicate);
+        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<>(), truePredicate);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         o -> o instanceof String && ((String) o).startsWith("A");
 
     protected PredicatedNavigableSet<E> makeTestSet() {
-        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<E>(), testPredicate);
+        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<>(), testPredicate);
     }
 
     @Test
