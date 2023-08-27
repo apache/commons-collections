@@ -66,7 +66,7 @@ public interface CellProducer extends IndexProducer {
     default boolean forEachIndex(final IntPredicate predicate) {
         return forEachCell((i, v) -> predicate.test(i));
     }
-    
+
     @Override
     default IndexProducer uniqueIndices() {
         return this;
