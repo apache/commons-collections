@@ -24,7 +24,11 @@ import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.unmodifiableList;
@@ -47,14 +51,12 @@ public final class PairedIterableTest {
 
     @RunWith(Parameterized.class)
     public static final class ParameterizedTests<L, R> {
-        private final String testCondition;
         private final List<L> leftList;
         private final List<R> rightList;
         private final int expectedIterableSize;
 
         public ParameterizedTests(
                 String testCondition, List<L> leftList, List<R> rightList, int expectedIterableSize) {
-            this.testCondition = testCondition;
             this.leftList = leftList;
             this.rightList = rightList;
             this.expectedIterableSize = expectedIterableSize;
