@@ -43,6 +43,7 @@ import java.util.Iterator;
  * NOTE: The LazyIteratorChain may contain no iterators. In this case the class will
  * function as an empty iterator.
  *
+ * @param <E> the type of elements in this iterator.
  * @since 4.0
  */
 public abstract class LazyIteratorChain<E> implements Iterator<E> {

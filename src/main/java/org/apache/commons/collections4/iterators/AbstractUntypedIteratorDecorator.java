@@ -20,10 +20,13 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * Provides basic behavior for decorating an iterator with extra functionality
- * without committing the generic type of the Iterator implementation.
+ * Provides basic behavior for decorating an iterator with extra functionality without committing the generic type of the Iterator implementation.
  * <p>
  * All methods are forwarded to the decorated iterator.
+ * </p>
+ *
+ * @param <I> the type of the iterator being decorated.
+ * @param <O> the type of elements returned by this iterator.
  *
  * @since 4.0
  */

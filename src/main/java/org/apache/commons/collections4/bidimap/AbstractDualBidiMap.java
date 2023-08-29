@@ -332,6 +332,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class View.
+     *
+     * @param <K> the type of the keys in the map.
+     * @param <V> the type of the values in the map.
+     * @param <E> the type of the elements in the collection.
      */
     protected abstract static class View<K, V, E> extends AbstractCollectionDecorator<E> {
 
@@ -432,6 +436,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class KeySet.
+     *
+     * @param <K> the type of elements maintained by this set
      */
     protected static class KeySet<K> extends View<K, Object, K> implements Set<K> {
 
@@ -471,6 +477,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class KeySetIterator.
+     *
+     * @param <K> the key type.
      */
     protected static class KeySetIterator<K> extends AbstractIteratorDecorator<K> {
 
@@ -515,6 +523,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class Values.
+     *
+     * @param <V> the type of the values.
      */
     protected static class Values<V> extends View<Object, V, V> implements Set<V> {
 
@@ -554,6 +564,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class ValuesIterator.
+     *
+     * @param <V> the value type.
      */
     protected static class ValuesIterator<V> extends AbstractIteratorDecorator<V> {
 
@@ -598,6 +610,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class EntrySet.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class EntrySet<K, V> extends View<K, V, Map.Entry<K, V>> implements Set<Map.Entry<K, V>> {
 
@@ -639,6 +654,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class EntrySetIterator.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class EntrySetIterator<K, V> extends AbstractIteratorDecorator<Map.Entry<K, V>> {
 
@@ -684,6 +702,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class MapEntry.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class MapEntry<K, V> extends AbstractMapEntryDecorator<K, V> {
 
@@ -715,6 +736,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     /**
      * Inner class MapIterator.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class BidiMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
 

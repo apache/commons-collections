@@ -22,7 +22,9 @@ import java.util.Iterator;
  * Provides basic behavior for decorating an iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated iterator.
+ * </p>
  *
+ * @param <E> the type of the iterator being decorated.
  * @since 3.0
  */
 public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIteratorDecorator<E, E> {

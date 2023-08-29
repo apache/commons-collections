@@ -41,6 +41,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * is here.
  * </p>
  *
+ * @param <E> the type of elements in this list
  * @since 3.0
  */
 public abstract class AbstractLinkedList<E> implements List<E> {
@@ -745,6 +746,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * A list iterator over the linked list.
+     *
+     * @param <E> the type of elements in this iterator.
      */
     protected static class LinkedListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
 
@@ -904,6 +907,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * A list iterator over the linked sub list.
+     *
+     * @param <E> the type of elements in this iterator.
      */
     protected static class LinkedSubListIterator<E> extends LinkedListIterator<E> {
 
@@ -947,6 +952,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * The sublist implementation for AbstractLinkedList.
+     *
+     * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
         /** The main list */
