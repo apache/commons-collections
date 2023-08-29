@@ -124,7 +124,6 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param transformers  matching array of transformers, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
      */
-    @SuppressWarnings("unchecked")
     private SwitchTransformer(final boolean clone, final Predicate<? super I>[] predicates,
                              final Transformer<? super I, ? extends O>[] transformers,
                              final Transformer<? super I, ? extends O> defaultTransformer) {
