@@ -43,9 +43,9 @@ public final class PairedIterableTest {
     private static final int LARGE_LIST_SIZE = 40;
 
     private static final List<String> SMALL_STRINGS_LIST =
-            unmodifiableList(stringsList(SMALL_LIST_SIZE));
+        unmodifiableList(stringsList(SMALL_LIST_SIZE));
     private static final List<String> LARGE_STRINGS_LIST =
-            unmodifiableList(stringsList(LARGE_LIST_SIZE));
+        unmodifiableList(stringsList(LARGE_LIST_SIZE));
     private static final List<Integer> SMALL_INTS_LIST = unmodifiableList(intsList(SMALL_LIST_SIZE));
     private static final List<Integer> LARGE_INTS_LIST = unmodifiableList(intsList(LARGE_LIST_SIZE));
 
@@ -56,7 +56,7 @@ public final class PairedIterableTest {
         private final int expectedIterableSize;
 
         public ParameterizedTests(
-                String testCondition, List<L> leftList, List<R> rightList, int expectedIterableSize) {
+            String testCondition, List<L> leftList, List<R> rightList, int expectedIterableSize) {
             this.leftList = leftList;
             this.rightList = rightList;
             this.expectedIterableSize = expectedIterableSize;
@@ -83,49 +83,49 @@ public final class PairedIterableTest {
             PairedIterable<L, R> testIterable = PairedIterable.of(leftList, rightList);
 
             assertEquals(
-                    leftList.subList(0, expectedIterableSize),
-                    testIterable.stream().map(PairedItem::getLeftItem).collect(toList()));
+                leftList.subList(0, expectedIterableSize),
+                testIterable.stream().map(PairedItem::getLeftItem).collect(toList()));
             assertEquals(
-                    rightList.subList(0, expectedIterableSize),
-                    testIterable.stream().map(PairedItem::getRightItem).collect(toList()));
+                rightList.subList(0, expectedIterableSize),
+                testIterable.stream().map(PairedItem::getRightItem).collect(toList()));
         }
 
         @Parameters(name = "{0}")
         public static Object[][] testingParameters() {
-            return new Object[][] {
-                    new Object[] {
-                            "left iterable (int) larger than right iterable (string)",
-                            LARGE_INTS_LIST,
-                            SMALL_STRINGS_LIST,
-                            SMALL_LIST_SIZE
-                    },
-                    new Object[] {
-                            "left iterable (string) larger than right iterable (int)",
-                            LARGE_STRINGS_LIST,
-                            SMALL_INTS_LIST,
-                            SMALL_LIST_SIZE
-                    },
-                    new Object[] {
-                            "equal sized left and right (int, string)",
-                            LARGE_INTS_LIST,
-                            LARGE_STRINGS_LIST,
-                            LARGE_LIST_SIZE
-                    },
-                    new Object[] {
-                            "equal sized left and right (string, int)",
-                            SMALL_STRINGS_LIST,
-                            SMALL_INTS_LIST,
-                            SMALL_LIST_SIZE
-                    },
-                    new Object[] {
-                            "Left empty, right small list", Collections.<Integer>emptyList(), LARGE_STRINGS_LIST, 0
-                    },
-                    new Object[] {
-                            "Right empty, left small list", LARGE_STRINGS_LIST, Collections.<Integer>emptyList(), 0
-                    },
-                    new Object[] {
-                            "Right and left both empty lists", Collections.emptyList(), Collections.emptyList(), 0
-                    },
+            return new Object[][]{
+                new Object[]{
+                    "left iterable (int) larger than right iterable (string)",
+                    LARGE_INTS_LIST,
+                    SMALL_STRINGS_LIST,
+                    SMALL_LIST_SIZE
+                },
+                new Object[]{
+                    "left iterable (string) larger than right iterable (int)",
+                    LARGE_STRINGS_LIST,
+                    SMALL_INTS_LIST,
+                    SMALL_LIST_SIZE
+                },
+                new Object[]{
+                    "equal sized left and right (int, string)",
+                    LARGE_INTS_LIST,
+                    LARGE_STRINGS_LIST,
+                    LARGE_LIST_SIZE
+                },
+                new Object[]{
+                    "equal sized left and right (string, int)",
+                    SMALL_STRINGS_LIST,
+                    SMALL_INTS_LIST,
+                    SMALL_LIST_SIZE
+                },
+                new Object[]{
+                    "Left empty, right small list", Collections.<Integer>emptyList(), LARGE_STRINGS_LIST, 0
+                },
+                new Object[]{
+                    "Right empty, left small list", LARGE_STRINGS_LIST, Collections.<Integer>emptyList(), 0
+                },
+                new Object[]{
+                    "Right and left both empty lists", Collections.emptyList(), Collections.emptyList(), 0
+                },
             };
         }
     }
@@ -146,9 +146,9 @@ public final class PairedIterableTest {
 
     private static List<String> stringsList(int size) {
         return IntStream.range(0, size)
-                .boxed()
-                .map(x -> UUID.randomUUID().toString())
-                .collect(toList());
+            .boxed()
+            .map(x -> UUID.randomUUID().toString())
+            .collect(toList());
     }
 
     private static List<Integer> intsList(int size) {
