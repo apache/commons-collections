@@ -281,7 +281,7 @@
     </action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump org.easymock:easymock from 4.0.2 to 5.1.0 #352, #355, #375.
+      Bump org.easymock:easymock from 4.0.2 to 5.2.0 #352, #355, #375, #414.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/cache from 2 to 3.0.10 #214 #225 #239 #266 #294, #342, #345.
