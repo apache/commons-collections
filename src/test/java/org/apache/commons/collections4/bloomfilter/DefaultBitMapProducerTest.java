@@ -91,16 +91,13 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
     @Test
     public void testAsBitMapArrayLargeArray() {
         final long[] expected = generateLongArray(32);
-        BitMapProducer producer = new BitMapProducer() {
-            @Override
-            public boolean forEachBitMap(LongPredicate predicate) {
-                for (long l : expected) {
-                    if (!predicate.test(l)) {
-                        return false;
-                    }
+        final BitMapProducer producer = predicate -> {
+            for (final long l : expected) {
+                if (!predicate.test(l)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
         final long[] ary = producer.asBitMapArray();
         assertArrayEquals(expected, ary);

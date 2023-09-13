@@ -208,7 +208,7 @@ public class SetUtilsTest {
 
     @Test
     public void testpredicatedSet() {
-        final Predicate<Object> predicate = o -> o instanceof String;
+        final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertTrue(set instanceof PredicatedSet, "returned object should be a PredicatedSet");
         assertAll(

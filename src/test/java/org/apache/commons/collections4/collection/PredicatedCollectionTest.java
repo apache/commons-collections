@@ -75,7 +75,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     public Collection<E> makeTestCollection() {
         return decorateCollection(new ArrayList<>(), testPredicate);

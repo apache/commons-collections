@@ -249,7 +249,7 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public void testUniqueReturnsSelf() {
-        IndexProducer expected = createProducer().uniqueIndices();
+        final IndexProducer expected = createProducer().uniqueIndices();
         assertSame(expected, expected.uniqueIndices());
     }
 }

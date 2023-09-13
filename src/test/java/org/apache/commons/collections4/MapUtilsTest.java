@@ -62,7 +62,7 @@ public class MapUtilsTest {
     private static final String TWO = "Two";
 
     public Predicate<Object> getPredicate() {
-        return o -> o instanceof String;
+        return String.class::isInstance;
     }
 
     @Test

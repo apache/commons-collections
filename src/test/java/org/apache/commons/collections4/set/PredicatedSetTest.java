@@ -57,7 +57,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     protected PredicatedSet<E> makeTestSet() {
         return decorateSet(new HashSet<>(), testPredicate);

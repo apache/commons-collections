@@ -128,7 +128,7 @@ public class BitMapTest {
      * @param dividend the dividend
      * @param divisor the divisor
      */
-    private void assertMod(long dividend, int divisor) {
+    private void assertMod(final long dividend, final int divisor) {
         assertTrue(divisor > 0 && divisor <= Integer.MAX_VALUE,
             "Incorrect usage. Divisor must be strictly positive.");
         assertEquals((int) Long.remainderUnsigned(dividend, divisor), BitMap.mod(dividend, divisor),

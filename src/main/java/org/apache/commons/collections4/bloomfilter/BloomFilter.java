@@ -231,14 +231,14 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @see Shape
      */
     default int estimateN() {
-        double d = getShape().estimateN(cardinality());
+        final double d = getShape().estimateN(cardinality());
         if (Double.isInfinite(d)) {
             return Integer.MAX_VALUE;
         }
         if (Double.isNaN(d)) {
             throw new IllegalArgumentException("Cardinality too large: " + cardinality());
         }
-        long l = Math.round(d);
+        final long l = Math.round(d);
         return l > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) l;
     }
 
@@ -283,8 +283,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default int estimateIntersection(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        double eThis = getShape().estimateN(cardinality());
-        double eOther = getShape().estimateN(other.cardinality());
+        final double eThis = getShape().estimateN(cardinality());
+        final double eOther = getShape().estimateN(other.cardinality());
         if (Double.isInfinite(eThis) && Double.isInfinite(eOther)) {
             // if both are infinite the union is infinite and we return Integer.MAX_VALUE
             return Integer.MAX_VALUE;
@@ -296,9 +296,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         } else if (Double.isInfinite(eOther)) {
             estimate = Math.round(eThis);
         } else {
-            BloomFilter union = this.copy();
+            final BloomFilter union = this.copy();
             union.merge(other);
-            double eUnion = getShape().estimateN(union.cardinality());
+            final double eUnion = getShape().estimateN(union.cardinality());
             if (Double.isInfinite(eUnion)) {
                 throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
             }

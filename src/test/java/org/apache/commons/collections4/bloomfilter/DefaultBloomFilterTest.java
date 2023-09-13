@@ -71,15 +71,15 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     @Test
     public void testEstimateNWithBrokenCardinality() {
         // build a filter
-        BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
+        final BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
         assertThrows(IllegalArgumentException.class, () -> filter1.estimateN());
     }
 
     @Test
     public void testEstimateLargeN() {
-        Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
+        final Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bits set.
-        BloomFilter bf1 = new SimpleBloomFilter(s);
+        final BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge((BitMapProducer) predicate -> {
             int limit = Integer.MAX_VALUE - 1;
             while (limit > 64) {
@@ -100,9 +100,9 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     @Test
     public void testIntersectionLimit() {
-        Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
+        final Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bit set.
-        BloomFilter bf1 = new SimpleBloomFilter(s);
+        final BloomFilter bf1 = new SimpleBloomFilter(s);
         bf1.merge((BitMapProducer) predicate -> {
             int limit = Integer.MAX_VALUE - 1;
             while (limit > 64) {
@@ -122,9 +122,9 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     @Test
     public void testSparseNonSparseMerging() {
-        BloomFilter bf1 = new SparseDefaultBloomFilter(getTestShape());
+        final BloomFilter bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.merge(TestingHashers.FROM1);
-        BloomFilter bf2 = new NonSparseDefaultBloomFilter(getTestShape());
+        final BloomFilter bf2 = new NonSparseDefaultBloomFilter(getTestShape());
         bf2.merge(TestingHashers.FROM11);
 
         BloomFilter result = bf1.copy();
@@ -255,7 +255,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
     static class BrokenCardinality extends NonSparseDefaultBloomFilter {
 
-        BrokenCardinality(Shape shape) {
+        BrokenCardinality(final Shape shape) {
             super(shape);
         }
 

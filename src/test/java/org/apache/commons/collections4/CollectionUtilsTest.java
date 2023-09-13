@@ -689,8 +689,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.get((Object) collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
         // Test assumes a defined iteration order so convert to a LinkedHashMap
-        final Map<Integer, Integer> linkedMap = new LinkedHashMap<>();
-        linkedMap.putAll(map);
+        final Map<Integer, Integer> linkedMap = new LinkedHashMap<>(map);
         assertEquals(linkedMap.entrySet().iterator().next(), CollectionUtils.get((Object) linkedMap, 0));
     }
 

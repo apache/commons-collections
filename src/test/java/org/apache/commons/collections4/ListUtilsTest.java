@@ -344,7 +344,7 @@ public class ListUtilsTest {
 
     @Test
     public void testPredicatedList() {
-        final Predicate<Object> predicate = o -> o instanceof String;
+        final Predicate<Object> predicate = String.class::isInstance;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
         assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
         assertAll(

@@ -272,10 +272,10 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public int getMaxInsert(CellProducer cellProducer) {
-        int[] max = {Integer.MAX_VALUE};
+    public int getMaxInsert(final CellProducer cellProducer) {
+        final int[] max = {Integer.MAX_VALUE};
         cellProducer.forEachCell( (x, y) -> {
-            int count = cells[x] / y;
+            final int count = cells[x] / y;
             if (count < max[0]) {
                 max[0] = count;
             }

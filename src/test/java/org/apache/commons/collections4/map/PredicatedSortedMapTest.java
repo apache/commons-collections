@@ -52,7 +52,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
 
-    protected static final Predicate<Object> testPredicate = o -> o instanceof String;
+    protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
     protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 

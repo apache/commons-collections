@@ -70,7 +70,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         return list;
     }
 
-    protected Predicate<E> testPredicate = o -> o instanceof String;
+    protected Predicate<E> testPredicate = String.class::isInstance;
 
     public Queue<E> makeTestQueue() {
         return decorateCollection(new LinkedList<>(), testPredicate);

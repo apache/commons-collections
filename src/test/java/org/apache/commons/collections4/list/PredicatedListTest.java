@@ -59,7 +59,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     public List<E> makeTestList() {
         return decorateList(new ArrayList<>(), testPredicate);

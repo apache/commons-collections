@@ -106,10 +106,10 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
 
     @Test
     public void testForEachCellValues() {
-        int[] expectedIdx = getExpectedIndices();
-        int[] expectedValue = getExpectedValues();
+        final int[] expectedIdx = getExpectedIndices();
+        final int[] expectedValue = getExpectedValues();
         assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
-        int[] idx = {0};
+        final int[] idx = {0};
         createProducer().forEachCell((i, j) -> {
             assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
             assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);

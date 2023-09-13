@@ -131,7 +131,7 @@ public interface IndexProducer {
                 return size == data.length ? data : Arrays.copyOf(data, size);
             }
         }
-        Indices indices = new Indices();
+        final Indices indices = new Indices();
         forEachIndex(indices::add);
         return indices.toArray();
     }
@@ -158,7 +158,7 @@ public interface IndexProducer {
 
         return new IndexProducer() {
             @Override
-            public boolean forEachIndex(IntPredicate predicate) {
+            public boolean forEachIndex(final IntPredicate predicate) {
                 for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx + 1)) {
                     if (!predicate.test(idx)) {
                         return false;

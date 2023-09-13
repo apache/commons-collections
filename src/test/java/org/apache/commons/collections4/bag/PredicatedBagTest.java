@@ -41,7 +41,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
     }
 
     protected Predicate<T> stringPredicate() {
-        return o -> o instanceof String;
+        return String.class::isInstance;
     }
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();

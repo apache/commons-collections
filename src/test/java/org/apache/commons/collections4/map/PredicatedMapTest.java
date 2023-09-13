@@ -40,7 +40,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> truePredicate = TruePredicate.<Object>truePredicate();
 
-    protected static final Predicate<Object> testPredicate = o -> o instanceof String;
+    protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
     public PredicatedMapTest() {
         super(PredicatedMapTest.class.getSimpleName());

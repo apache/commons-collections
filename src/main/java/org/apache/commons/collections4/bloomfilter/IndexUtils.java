@@ -38,7 +38,7 @@ final class IndexUtils {
      * @param index the index to add at.
      * @return the array or a newly allocated copy of the array.
      */
-    static int[] ensureCapacityForAdd(int[] array, int index) {
+    static int[] ensureCapacityForAdd(final int[] array, final int index) {
         if (index >= array.length) {
             return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
         }
