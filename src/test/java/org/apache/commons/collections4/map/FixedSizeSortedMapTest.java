@@ -39,7 +39,7 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractIterableSortedMapTest<
     }
 
     @Override
-    public SortedMap<K, V> makeFullMap() {
+    public IterableSortedMap<K, V> makeFullMap() {
         final SortedMap<K, V> map = new TreeMap<>();
         addSampleMappings(map);
         return FixedSizeSortedMap.fixedSizeSortedMap(map);
