@@ -16,22 +16,22 @@
  */
 package org.apache.commons.collections4.trie;
 
-import org.apache.commons.collections4.OrderedMap;
-import org.apache.commons.collections4.map.AbstractOrderedMapTest;
+import org.apache.commons.collections4.IterableSortedMap;
+import org.apache.commons.collections4.map.AbstractIterableSortedMapTest;
 
 /**
  * JUnit test of the OrderedMap interface of a PatriciaTrie.
  *
  * @since 4.0
  */
-public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
+public class PatriciaTrie2Test<V> extends AbstractIterableSortedMapTest<String, V> {
 
     public PatriciaTrie2Test() {
         super(PatriciaTrie2Test.class.getSimpleName());
     }
 
     @Override
-    public OrderedMap<String, V> makeObject() {
+    public IterableSortedMap<String, V> makeObject() {
         return new PatriciaTrie<>();
     }
 

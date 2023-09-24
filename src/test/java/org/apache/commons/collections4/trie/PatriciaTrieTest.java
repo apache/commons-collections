@@ -34,8 +34,9 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
 
+import org.apache.commons.collections4.IterableSortedMap;
 import org.apache.commons.collections4.Trie;
-import org.apache.commons.collections4.map.AbstractSortedMapTest;
+import org.apache.commons.collections4.map.AbstractIterableSortedMapTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -43,14 +44,14 @@ import org.junit.jupiter.api.Test;
  *
  * @since 4.0
  */
-public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
+public class PatriciaTrieTest<V> extends AbstractIterableSortedMapTest<String, V> {
 
     public PatriciaTrieTest() {
         super(PatriciaTrieTest.class.getSimpleName());
     }
 
     @Override
-    public SortedMap<String, V> makeObject() {
+    public IterableSortedMap<String, V> makeObject() {
         return new PatriciaTrie<>();
     }
 

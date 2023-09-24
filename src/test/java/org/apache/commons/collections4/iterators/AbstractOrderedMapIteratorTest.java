@@ -166,4 +166,131 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         assertEquals(0, list.size());
     }
 
+    @Test
+    public void testMapIteratorDirectionChangeMiddle() {
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        if (keys.length < 6) {
+            return;
+        }
+
+        final int pivotA = keys.length / 3;
+        final int pivotB = 2 * pivotA;
+
+        int nextIndex = 0;
+
+        // from start to second pivot
+        while (nextIndex <= pivotB) {
+            final K key = it.next();
+            assertEquals(keys[nextIndex], key);
+            nextIndex++;
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        while (nextIndex > pivotA) {
+            nextIndex--;
+            final K key = it.previous();
+            assertEquals(keys[nextIndex], key);
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        while (it.hasNext()) {
+            final K key = it.next();
+            assertEquals(keys[nextIndex], key);
+            nextIndex++;
+        }
+    }
+
+    @Test
+    public void testMapIteratorDirectionChangeRepeated() {
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        if (keys.length < 3) {
+            return;
+        }
+
+        final int pivot = keys.length / 2;
+        final Object pivotKey = keys[pivot];
+        final Object pivotValue = getMap().get(pivotKey);
+
+        // from start to pivot
+        for (int i = 0; i < pivot; ++i) {
+            final K key = it.next();
+            assertEquals(keys[i], key);
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        // repeatedly go previous and next
+        for (int i = 0; i < 10; ++i) {
+            assertEquals(pivotKey, it.next());
+            assertEquals(pivotKey, it.getKey());
+            assertEquals(pivotValue, it.getValue());
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+
+            assertEquals(pivotKey, it.previous());
+            assertEquals(pivotKey, it.getKey());
+            assertEquals(pivotValue, it.getValue());
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+    }
+
+    @Test
+    public void testMapIteratorDirectionChangeFirst() {
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // get next, position now between first and second
+        K key = it.next();
+        assertEquals(key, it.getKey());
+        assertEquals(keys[0], key);
+        assertTrue(it.hasPrevious());
+        // get previous, position back to before first
+        key = it.previous();
+        assertEquals(key, it.getKey());
+        assertEquals(keys[0], key);
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // check next again
+        key = it.next();
+        assertEquals(key, it.getKey());
+        assertEquals(keys[0], key);
+        assertTrue(it.hasPrevious());
+    }
+
+
+    @Test
+    public void testMapIteratorDirectionChangeLast() {
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        final Object last = keys[keys.length - 1];
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        // move past end
+        while (it.hasNext()) {
+            it.next();
+        }
+        // get previous, position now before last
+        K key = it.previous();
+        assertEquals(key, it.getKey());
+        assertEquals(last, key);
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
+        // get next, now past end again
+        key = it.next();
+        assertEquals(key, it.getKey());
+        assertEquals(last, key);
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::next);
+    }
 }
