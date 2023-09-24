@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the ListIteratorWrapper to ensure that it behaves as expected when wrapping a ListIterator.
  */
-public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
+public class ListIteratorWrapper2Test<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"

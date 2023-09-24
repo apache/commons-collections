@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -111,4 +112,55 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         assertThrows(IllegalStateException.class, () -> finalIter.set((E) "should fail"), "ListIterator#set should fail if next() or previous() have not yet been called.");
     }
 
+    @Nested
+    public class TestAsListIterator extends AbstractListIteratorTest<E> {
+        public TestAsListIterator(final String testName) {
+            super("TestAsListIterator");
+        }
+
+        @Override
+        public ListIterator<E> makeEmptyIterator() {
+            return ObjectArrayListIteratorTest.this.makeEmptyIterator();
+        }
+
+        @Override
+        public ListIterator<E> makeObject() {
+            return ObjectArrayListIteratorTest.this.makeObject();
+        }
+
+        @Override
+        public boolean supportsEmptyCollections() {
+            return ObjectArrayListIteratorTest.this.supportsEmptyCollections();
+        }
+
+        @Override
+        public boolean supportsFullCollections() {
+            return ObjectArrayListIteratorTest.this.supportsFullCollections();
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return ObjectArrayListIteratorTest.this.isTestSerialization();
+        }
+
+        @Override
+        public boolean isEqualsCheckable() {
+            return ObjectArrayListIteratorTest.this.isEqualsCheckable();
+        }
+
+        @Override
+        public boolean supportsEmptyIterator() {
+            return ObjectArrayListIteratorTest.this.supportsEmptyIterator();
+        }
+
+        @Override
+        public boolean supportsFullIterator() {
+            return ObjectArrayListIteratorTest.this.supportsFullIterator();
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return ObjectArrayListIteratorTest.this.supportsRemove();
+        }
+    }
 }

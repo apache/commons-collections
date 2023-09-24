@@ -205,6 +205,10 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
     @Test
     public void testMapIteratorDirectionChangeRepeated() {
+        if (isGetStructuralModify()) {
+            return;
+        }
+
         final OrderedMapIterator<K, V> it = makeObject();
         final Object[] keys = getMap().keySet().toArray(new Object[0]);
         if (keys.length < 3) {

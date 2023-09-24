@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -149,6 +150,171 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         assertFalse(it.hasPrevious());
         assertThrows(NoSuchElementException.class, () -> it.previous(),
                 "NoSuchElementException must be thrown from previous at start of ListIterator");
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeMiddle() {
+        final ListIterator<E> it = makeObject();
+        final List<E> elements = listElements();
+
+        if (elements.size() < 6) {
+            return;
+        }
+
+        final int pivotA = elements.size() / 3;
+        final int pivotB = 2 * pivotA;
+
+        int nextIndex = 0;
+
+        // from start to second pivot
+        while (nextIndex <= pivotB) {
+            final E e = it.next();
+            assertEquals(elements.get(nextIndex), e);
+            nextIndex++;
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        while (nextIndex > pivotA) {
+            nextIndex--;
+            final E e = it.previous();
+            assertEquals(elements.get(nextIndex), e);
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        while (it.hasNext()) {
+            final E e = it.next();
+            assertEquals(elements.get(nextIndex), e);
+            nextIndex++;
+        }
+    }
+
+    private List<E> listElements() {
+        final ListIterator<E> it = makeObject();
+        final List<E> list = new ArrayList<>();
+        while (it.hasNext()) {
+            list.add(it.next());
+        }
+        return list;
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeRepeated() {
+        final ListIterator<E> it = makeObject();
+        final List<E> elements = listElements();
+        if (elements.size() < 3) {
+            return;
+        }
+
+        final int pivot = elements.size() / 2;
+        final E pivotElement = elements.get(pivot);
+
+        // from start to pivot
+        for (int i = 0; i < pivot; ++i) {
+            final E e = it.next();
+            assertEquals(elements.get(i), e);
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+
+        // repeatedly go previous and next
+        for (int i = 0; i < 10; ++i) {
+            assertEquals(pivotElement, it.next());
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+
+            assertEquals(pivotElement, it.previous());
+            assertTrue(it.hasNext());
+            assertTrue(it.hasPrevious());
+        }
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeFirst() {
+        final ListIterator<E> it = makeObject();
+        final List<E> elements = listElements();
+        if (elements.size() < 2) {
+            return;
+        }
+
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // get next, position now between first and second
+        E e = it.next();
+        assertEquals(elements.get(0), e);
+        assertTrue(it.hasPrevious());
+        // get previous, position back to before first
+        e = it.previous();
+        assertEquals(elements.get(0), e);
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // check next again
+        e = it.next();
+        assertEquals(elements.get(0), e);
+        assertTrue(it.hasPrevious());
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeLast() {
+        final ListIterator<E> it = makeObject();
+        final List<E> elements = listElements();
+        if (elements.size() < 2) {
+            return;
+        }
+
+        final Object last = elements.get(elements.size() - 1);
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        // move past end
+        while (it.hasNext()) {
+            it.next();
+        }
+        // get previous, position now before last
+        E e = it.previous();
+        assertEquals(last, e);
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
+        // get next, now past end again
+        e = it.next();
+        assertEquals(last, e);
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::next);
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeSingle() {
+        final ListIterator<E> it = makeObject();
+        final List<E> elements = listElements();
+        if (elements.size() == 1) {
+            return;
+        }
+
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // get next, position now at end
+        E e = it.next();
+        assertEquals(elements.get(0), e);
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::next);
+        // get previous, position back to before first
+        e = it.previous();
+        assertEquals(elements.get(0), e);
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // check next again
+        e = it.next();
+        assertEquals(elements.get(0), e);
+        assertTrue(it.hasPrevious());
     }
 
     /**

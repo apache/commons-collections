@@ -31,6 +31,7 @@ import org.apache.commons.collections4.PredicateUtils;
 import org.apache.commons.collections4.list.GrowthList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -424,4 +425,36 @@ public class FilterListIteratorTest {
 
     }
 
+
+    @Nested
+    public class TestAsListIterator extends AbstractListIteratorTest<Integer> {
+        public TestAsListIterator() {
+            super("TestAsListIterator");
+        }
+
+        @Override
+        public ListIterator<Integer> makeEmptyIterator() {
+            return new FilterListIterator<>(new ArrayList<Integer>().listIterator(), evenPred);
+        }
+
+        @Override
+        public ListIterator<Integer> makeObject() {
+            return new FilterListIterator<>(list.listIterator(), evenPred);
+        }
+
+        @Override
+        public boolean supportsAdd() {
+            return false;
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return false;
+        }
+
+        @Override
+        public boolean supportsSet() {
+            return false;
+        }
+    }
 }

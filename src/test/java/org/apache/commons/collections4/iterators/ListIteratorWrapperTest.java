@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * Tests the ListIteratorWrapper to ensure that it simulates
  * a ListIterator correctly.
  */
-public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
+public class ListIteratorWrapperTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -66,6 +66,16 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     @Override
     public ResettableListIterator<E> makeObject() {
         return new ListIteratorWrapper<>(list1.iterator());
+    }
+
+    @Override
+    public boolean supportsAdd() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSet() {
+        return false;
     }
 
     @Test
