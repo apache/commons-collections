@@ -37,13 +37,10 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.OverridableNested;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
-import org.junit.jupiter.api.condition.EnabledIf;
 
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
@@ -1205,8 +1202,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 
-    @Nested
-    @DisabledIf("skipDefaultListIteratorTests")
+    @OverridableNested
     public class TestListIterator extends AbstractListIteratorTest<E> {
         public TestListIterator() {
             super("TestListIterator");
