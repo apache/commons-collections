@@ -39,8 +39,11 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
@@ -74,6 +77,16 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     public boolean isSetSupported() {
         return true;
     }
+
+    /**
+     *  Returns true if the collections produced by
+     *  {@link #makeObject()} and {@link #makeFullCollection()}
+     *  have a {@link List#listIterator()} that should not be subjected to the standard
+     *  tests in {@link AbstractListIteratorTest}.
+     *  Default implementation returns false.  Override if your collection
+     *  class has non-standard behaviour that you will test separately.
+     */
+    public boolean skipDefaultListIteratorTests() { return false; }
 
     /**
      *  Verifies that the test list implementation matches the confirmed list
@@ -1193,6 +1206,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Nested
+    @DisabledIf("skipDefaultListIteratorTests")
     public class TestListIterator extends AbstractListIteratorTest<E> {
         public TestListIterator() {
             super("TestListIterator");

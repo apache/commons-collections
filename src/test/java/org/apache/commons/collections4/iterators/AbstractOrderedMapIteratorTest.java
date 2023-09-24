@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -247,6 +248,10 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     public void testMapIteratorDirectionChangeFirst() {
         final OrderedMapIterator<K, V> it = makeObject();
         final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        if (keys.length < 2) {
+            return;
+        }
+
         // initial state before first element
         assertTrue(it.hasNext());
         assertFalse(it.hasPrevious());
@@ -275,6 +280,10 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
     public void testMapIteratorDirectionChangeLast() {
         final OrderedMapIterator<K, V> it = makeObject();
         final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        if (keys.length < 2) {
+            return;
+        }
+
         final Object last = keys[keys.length - 1];
         // initial state before first element
         assertTrue(it.hasNext());
@@ -296,5 +305,35 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         assertFalse(it.hasNext());
         assertTrue(it.hasPrevious());
         assertThrows(NoSuchElementException.class, it::next);
+    }
+
+    @Test
+    public void testListIteratorDirectionChangeSingle() {
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Object[] keys = getMap().keySet().toArray(new Object[0]);
+        if (keys.length != 1) {
+            return;
+        }
+
+        // initial state before first element
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // get next, position now at end
+        K key = it.next();
+        assertEquals(keys[0], key);
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::next);
+        // get previous, position back to before first
+        key = it.previous();
+        assertEquals(keys[0], key);
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, it::previous);
+        // check next again
+        key = it.next();
+        assertEquals(keys[0], key);
+        assertTrue(it.hasPrevious());
     }
 }

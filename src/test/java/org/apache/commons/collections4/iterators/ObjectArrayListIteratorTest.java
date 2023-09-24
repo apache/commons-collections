@@ -114,7 +114,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
     @Nested
     public class TestAsListIterator extends AbstractListIteratorTest<E> {
-        public TestAsListIterator(final String testName) {
+        public TestAsListIterator() {
             super("TestAsListIterator");
         }
 
@@ -129,38 +129,8 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         }
 
         @Override
-        public boolean supportsEmptyCollections() {
-            return ObjectArrayListIteratorTest.this.supportsEmptyCollections();
-        }
-
-        @Override
-        public boolean supportsFullCollections() {
-            return ObjectArrayListIteratorTest.this.supportsFullCollections();
-        }
-
-        @Override
-        public boolean isTestSerialization() {
-            return ObjectArrayListIteratorTest.this.isTestSerialization();
-        }
-
-        @Override
-        public boolean isEqualsCheckable() {
-            return ObjectArrayListIteratorTest.this.isEqualsCheckable();
-        }
-
-        @Override
-        public boolean supportsEmptyIterator() {
-            return ObjectArrayListIteratorTest.this.supportsEmptyIterator();
-        }
-
-        @Override
-        public boolean supportsFullIterator() {
-            return ObjectArrayListIteratorTest.this.supportsFullIterator();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return ObjectArrayListIteratorTest.this.supportsRemove();
+        public boolean supportsAdd() {
+            return false;
         }
     }
 }

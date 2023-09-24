@@ -64,6 +64,15 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         return "4";
     }
 
+    /**
+     * {@link SetUniqueList#listIterator()} does not follow the usual contract of {@link ListIterator#add} in
+     * that add may not be completed if already present in unique set.
+     */
+    @Override
+    public boolean skipDefaultListIteratorTests() {
+        return true;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {

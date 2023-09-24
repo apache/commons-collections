@@ -291,7 +291,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     public void testListIteratorDirectionChangeSingle() {
         final ListIterator<E> it = makeObject();
         final List<E> elements = listElements();
-        if (elements.size() == 1) {
+        if (elements.size() != 1) {
             return;
         }
 
