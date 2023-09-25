@@ -1715,6 +1715,49 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             verify();
         }
 
+        @Test
+        public void testMapEntrySetIteratorEntrySetValueClonedKeysValues() throws Exception {
+            K key1 = getSampleKeys()[0];
+            V newValue1 = getNewSampleValues()[0];
+            V newValue2 = getNewSampleValues().length == 1 ? getNewSampleValues()[0] : getNewSampleValues()[1];
+
+            resetFull();
+            final Iterator<Map.Entry<K, V>> it = TestMapEntrySet.this.getCollection().iterator();
+            final Map.Entry<K, V> entry1 = getEntry(it, key1);
+            final Iterator<Map.Entry<K, V>> itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
+            final Map.Entry<K, V> entryConfirmed1 = getEntry(itConfirmed, key1);
+
+            if (isSetValueSupported()) {
+                // set new value using put
+                key1 = cloneObject(key1);
+                newValue1 = cloneObject(newValue1);
+                map.put(key1, newValue1);
+                confirmed.put(key1, newValue1);
+                verify();
+
+                // set same value using setValue, should be noop
+                newValue1 = cloneObject(newValue1);
+                entry1.setValue(newValue1);
+                entryConfirmed1.setValue(newValue1);
+                verify();
+
+                // set another new value using put
+                key1 = cloneObject(key1);
+                newValue2 = cloneObject(newValue2);
+                map.put(key1, newValue2);
+                confirmed.put(key1, newValue2);
+                verify();
+
+                // set back to first value using setValue
+                newValue1 = cloneObject(newValue1);
+                entry1.setValue(newValue1);
+                entryConfirmed1.setValue(newValue1);
+                verify();
+            } else {
+                assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(getNewSampleValues()[0]));
+            }
+        }
+
         public Map.Entry<K, V> getEntry(final Iterator<Map.Entry<K, V>> itConfirmed, final K key) {
             Map.Entry<K, V> entry = null;
             while (itConfirmed.hasNext()) {
