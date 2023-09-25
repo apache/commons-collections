@@ -17,8 +17,10 @@
 package org.apache.commons.collections4.bidimap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,10 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedBidiMap;
-import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.apache.commons.collections4.OrderedMapIterator;
+import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -144,10 +146,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         }
     }
 
-    public BulkTest bulkTestOrderedMapIterator() {
-        return new TestBidiOrderedMapIterator();
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -156,7 +154,8 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
+    @Nested
+    public class TestBidiOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
 
         public TestBidiOrderedMapIterator() {
             super("TestBidiOrderedMapIterator");
@@ -178,13 +177,13 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         }
 
         @Override
-        public MapIterator<K, V> makeEmptyIterator() {
+        public OrderedMapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
         }
 
         @Override
-        public MapIterator<K, V> makeObject() {
+        public OrderedMapIterator<K, V> makeObject() {
             resetFull();
             return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
         }

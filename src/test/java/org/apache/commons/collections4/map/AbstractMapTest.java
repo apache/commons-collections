@@ -39,12 +39,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1553,13 +1553,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
-    public BulkTest bulkTestMapEntrySet() {
-        return new TestMapEntrySet();
-    }
-
+    @Nested
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
             super("MapEntrySet");
@@ -1799,13 +1794,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
      */
-    public BulkTest bulkTestMapKeySet() {
-        return new TestMapKeySet();
-    }
-
+    @Nested
     public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
             super("");
@@ -1883,14 +1873,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractCollectionTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
-     *    values collection
      */
-    public BulkTest bulkTestMapValues() {
-        return new TestMapValues();
-    }
-
+    @Nested
     public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
             super("");

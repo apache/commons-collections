@@ -22,10 +22,10 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -125,10 +125,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
-    public BulkTest bulkTestMapIterator() {
-        return new InnerTestMapIterator();
-    }
-
+    @Nested
     public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
         public InnerTestMapIterator() {
             super("InnerTestMapIterator");
