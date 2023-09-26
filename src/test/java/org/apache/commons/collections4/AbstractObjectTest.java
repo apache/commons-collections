@@ -140,6 +140,11 @@ public abstract class AbstractObjectTest extends BulkTest {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    protected <T> T cloneObject(final T obj) throws Exception {
+        return (T) serializeDeserialize(obj);
+    }
+
     protected Object serializeDeserialize(final Object obj) throws Exception {
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(buffer);

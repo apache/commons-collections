@@ -39,12 +39,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.AbstractObjectTest;
-import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1656,13 +1656,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
-    public BulkTest bulkTestMapEntrySet() {
-        return new TestMapEntrySet();
-    }
-
+    @Nested
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
             super("MapEntrySet");
@@ -1815,6 +1810,49 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             verify();
         }
 
+        @Test
+        public void testMapEntrySetIteratorEntrySetValueClonedKeysValues() throws Exception {
+            K key1 = getSampleKeys()[0];
+            V newValue1 = getNewSampleValues()[0];
+            V newValue2 = getNewSampleValues().length == 1 ? getNewSampleValues()[0] : getNewSampleValues()[1];
+
+            resetFull();
+            final Iterator<Map.Entry<K, V>> it = TestMapEntrySet.this.getCollection().iterator();
+            final Map.Entry<K, V> entry1 = getEntry(it, key1);
+            final Iterator<Map.Entry<K, V>> itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
+            final Map.Entry<K, V> entryConfirmed1 = getEntry(itConfirmed, key1);
+
+            if (isSetValueSupported()) {
+                // set new value using put
+                key1 = cloneObject(key1);
+                newValue1 = cloneObject(newValue1);
+                map.put(key1, newValue1);
+                confirmed.put(key1, newValue1);
+                verify();
+
+                // set same value using setValue, should be noop
+                newValue1 = cloneObject(newValue1);
+                entry1.setValue(newValue1);
+                entryConfirmed1.setValue(newValue1);
+                verify();
+
+                // set another new value using put
+                key1 = cloneObject(key1);
+                newValue2 = cloneObject(newValue2);
+                map.put(key1, newValue2);
+                confirmed.put(key1, newValue2);
+                verify();
+
+                // set back to first value using setValue
+                newValue1 = cloneObject(newValue1);
+                entry1.setValue(newValue1);
+                entryConfirmed1.setValue(newValue1);
+                verify();
+            } else {
+                assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(getNewSampleValues()[0]));
+            }
+        }
+
         public Map.Entry<K, V> getEntry(final Iterator<Map.Entry<K, V>> itConfirmed, final K key) {
             Map.Entry<K, V> entry = null;
             while (itConfirmed.hasNext()) {
@@ -1856,13 +1894,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
      */
-    public BulkTest bulkTestMapKeySet() {
-        return new TestMapKeySet();
-    }
-
+    @Nested
     public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
             super("");
@@ -1940,14 +1973,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the tests in {@link AbstractCollectionTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
-     *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
-     *    values collection
      */
-    public BulkTest bulkTestMapValues() {
-        return new TestMapValues();
-    }
-
+    @Nested
     public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
             super("");

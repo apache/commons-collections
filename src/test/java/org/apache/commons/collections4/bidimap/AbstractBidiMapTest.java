@@ -37,6 +37,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -337,11 +338,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         return (BidiMap<K, V>) super.getMap();
     }
 
-    @Override
-    public BulkTest bulkTestMapEntrySet() {
-        return new TestBidiMapEntrySet();
-    }
-
+    @Nested
     public class TestBidiMapEntrySet extends TestMapEntrySet {
 
         public TestBidiMapEntrySet() {
