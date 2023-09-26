@@ -24,6 +24,9 @@ import java.util.HashMap;
 import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
+import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,14 +49,12 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
-    @Override
-    public String[] ignoredTests() {
-        // the ridiculous map above still doesn't pass these tests
-        // but it's not relevant, so we ignore them
-        return new String[] {
-            "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
-            "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
-        };
+    @OverridableNested(baseName = "InnerTestMapIterator")
+    public class InnerTestSingletonMapIterator extends AbstractOrderedMapTest<K, V>.InnerTestOrderedMapIterator {
+        @Override
+        public void testEmptyMapIterator() {
+            // ignore
+        }
     }
 
     @Override

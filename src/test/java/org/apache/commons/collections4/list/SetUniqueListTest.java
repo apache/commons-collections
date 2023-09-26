@@ -18,6 +18,7 @@ package org.apache.commons.collections4.list;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,6 +33,7 @@ import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.collections4.OverridableNested;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.junit.jupiter.api.Test;
 
@@ -62,15 +64,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
-    }
-
-    /**
-     * {@link SetUniqueList#listIterator()} does not follow the usual contract of {@link ListIterator#add} in
-     * that add may not be completed if already present in unique set.
-     */
-    @Override
-    public boolean skipDefaultListIteratorTests() {
-        return true;
     }
 
     @Override
@@ -678,6 +671,49 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // provide null values as Parameter
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
+    }
+
+    @OverridableNested(baseName = "TestListIterator")
+    public class TestSetUniqueListIterator extends AbstractListTest<E>.TestListIterator {
+        @Override
+        public boolean supportsSet() {
+            // set completely unsupported via iterator, as opposed to main class which just has behaviour change
+            return false;
+        }
+
+        /**
+         * Iterator does not follow the usual contract of {@link ListIterator#add} in
+         * that add may not be completed if already present in unique set.
+         */
+        @Test
+        @Override
+        public void testAdd() {
+            final E addValue = addSetValue();
+
+            // add at start should be OK, added should be previous
+            ListIterator<E> it = makeObject();
+            it.add(addValue);
+            assertEquals(addValue, it.previous());
+
+            // add at start should be OK, added should not be next
+            it = makeObject();
+            it.add(addValue);
+            assertNotEquals(addValue, it.next());
+
+            // add in middle when already exists should be ignored
+            it = makeObject();
+            it.add(addValue);
+            while (it.hasNext()) {
+                final E value = it.next();
+                assertNotEquals(addValue, value);
+                final int nextIndex = it.nextIndex(), prevIndex = it.previousIndex();
+                it.add(addValue);
+                assertEquals(nextIndex, it.nextIndex(), "index should be unchanged");
+                assertEquals(prevIndex, it.previousIndex(), "index should be unchanged");
+                assertNotEquals(addValue, it.previous());
+                assertEquals(value, it.next());
+            }
+        }
     }
 
 }
