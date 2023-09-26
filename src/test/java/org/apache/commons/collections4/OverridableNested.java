@@ -17,12 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Custom version of {@code @Nested} that is used to signal that the annotated class is a nested,
+ * Custom version of {@link @Nested} that is used to signal that the annotated class is a nested,
  * non-static test class (i.e., an <em>inner class</em>).
  * <p>
  * However in this version subclasses of the containing class can override the nested class
- * such that only the most derived version is run. Each member of the hierachy should have the same name and
- * also have the OverridableNestedTests annotation.
+ * such that only the most derived version is run.
+ * Each member of the hierarchy must have the OverridableNested annotation.
+ * They should either use the exact same inner class name or preferably reference the most base version using {@link #baseName()}.
  *
  * {@see Nested}
  */
