@@ -26,7 +26,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,22 +37,20 @@ public class ListIteratorWrapper2Test<E> extends AbstractListIteratorTest<E> {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List<E> list1 = null;
-
     public ListIteratorWrapper2Test() {
         super(ListIteratorWrapper2Test.class.getSimpleName());
     }
 
-    @BeforeEach
     @SuppressWarnings("unchecked")
-    public void setUp() {
-        list1 = new ArrayList<>();
-        list1.add((E) "One");
-        list1.add((E) "Two");
-        list1.add((E) "Three");
-        list1.add((E) "Four");
-        list1.add((E) "Five");
-        list1.add((E) "Six");
+    private List<E> makeList() {
+        final List<E> list = new ArrayList<>();
+        list.add((E) "One");
+        list.add((E) "Two");
+        list.add((E) "Three");
+        list.add((E) "Four");
+        list.add((E) "Five");
+        list.add((E) "Six");
+        return list;
     }
 
     @Override
@@ -64,7 +61,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractListIteratorTest<E> {
 
     @Override
     public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<>(list1.listIterator());
+        return new ListIteratorWrapper<>(makeList().listIterator());
     }
 
     @Test
@@ -110,7 +107,8 @@ public class ListIteratorWrapper2Test<E> extends AbstractListIteratorTest<E> {
     @Test
     @Override
     public void testRemove() {
-        final ListIterator<E> iter = makeObject();
+        final List<E> list1 = makeList();
+        final ListIterator<E> iter = new ListIteratorWrapper<>(list1.listIterator());
 
         //initial state:
         assertEquals(-1, iter.previousIndex());

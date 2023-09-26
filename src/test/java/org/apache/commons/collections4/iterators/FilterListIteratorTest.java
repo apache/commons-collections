@@ -439,7 +439,7 @@ public class FilterListIteratorTest {
 
         @Override
         public ListIterator<Integer> makeObject() {
-            return new FilterListIterator<>(list.listIterator(), evenPred);
+            return new FilterListIterator<>(new ArrayList<>(list).listIterator(), evenPred);
         }
 
         @Override

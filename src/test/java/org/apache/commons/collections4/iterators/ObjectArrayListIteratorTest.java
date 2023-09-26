@@ -132,5 +132,10 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         public boolean supportsAdd() {
             return false;
         }
+
+        @Override
+        public boolean supportsRemove() {
+            return false;
+        }
     }
 }
