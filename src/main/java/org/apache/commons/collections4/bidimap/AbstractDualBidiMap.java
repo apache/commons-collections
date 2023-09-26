@@ -725,7 +725,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         public V setValue(final V value) {
             final K key = getKey();
             if (parent.reverseMap.containsKey(value) &&
-                parent.reverseMap.get(value) != key) {
+                    !Objects.equals(parent.reverseMap.get(value), key)) {
                 throw new IllegalArgumentException(
                         "Cannot use setValue() when the object being set is already in the map");
             }
@@ -812,12 +812,13 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 throw new IllegalStateException(
                         "Iterator setValue() can only be called after next() and before remove()");
             }
+            final K key = last.getKey();
             if (parent.reverseMap.containsKey(value) &&
-                parent.reverseMap.get(value) != last.getKey()) {
+                    !Objects.equals(parent.reverseMap.get(value), key)) {
                 throw new IllegalArgumentException(
                         "Cannot use setValue() when the object being set is already in the map");
             }
-            return parent.put(last.getKey(), value);
+            return parent.put(key, value);
         }
 
         @Override
