@@ -117,52 +117,17 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertTrue(map instanceof BoundedMap);
     }
 
-//    public BulkTest bulkTestMapIterator() {
-//        return new TestFlatMapIterator();
-//    }
-//
-//    public class TestFlatMapIterator extends AbstractTestOrderedMapIterator {
-//        public TestFlatMapIterator() {
-//            super("TestFlatMapIterator");
-//        }
-//
-//        public Object[] addSetValues() {
-//            return TestSingletonMap.this.getNewSampleValues();
-//        }
-//
-//        public boolean supportsRemove() {
-//            return TestSingletonMap.this.isRemoveSupported();
-//        }
-//
-//        public boolean supportsSetValue() {
-//            return TestSingletonMap.this.isSetValueSupported();
-//        }
-//
-//        public MapIterator makeEmptyMapIterator() {
-//            resetEmpty();
-//            return ((Flat3Map) TestSingletonMap.this.map).mapIterator();
-//        }
-//
-//        public MapIterator makeFullMapIterator() {
-//            resetFull();
-//            return ((Flat3Map) TestSingletonMap.this.map).mapIterator();
-//        }
-//
-//        public Map getMap() {
-//            // assumes makeFullMapIterator() called first
-//            return TestSingletonMap.this.map;
-//        }
-//
-//        public Map getConfirmedMap() {
-//            // assumes makeFullMapIterator() called first
-//            return TestSingletonMap.this.confirmed;
-//        }
-//
-//        public void verify() {
-//            super.verify();
-//            TestSingletonMap.this.verify();
-//        }
-//    }
+    @Test
+    @Override
+    public void testMapPutAllNoChangeOnEmpty() {
+        // skip since doesn't make sense to test an empty singleton
+    }
+
+    @Test
+    @Override
+    public void testMapPutAllAddingKeysOnEmpty() {
+        // skip since doesn't make sense to test an empty singleton
+    }
 
     @Override
     public String getCompatibilityVersion() {

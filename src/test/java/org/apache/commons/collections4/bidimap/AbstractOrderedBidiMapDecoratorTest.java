@@ -30,8 +30,8 @@ import org.apache.commons.collections4.OrderedBidiMap;
 public class AbstractOrderedBidiMapDecoratorTest<K, V>
         extends AbstractOrderedBidiMapTest<K, V> {
 
-    public AbstractOrderedBidiMapDecoratorTest(final String testName) {
-        super(testName);
+    public AbstractOrderedBidiMapDecoratorTest() {
+        super("AbstractOrderedBidiMapDecoratorTest");
     }
 
     /**
