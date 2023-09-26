@@ -25,8 +25,6 @@ import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OverridableNested;
-import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
-import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**

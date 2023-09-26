@@ -31,8 +31,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.apache.commons.collections4.OverridableNested;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -154,7 +154,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    @Nested
+    @OverridableNested(baseName = "InnerTestMapIterator")
     public class TestBidiOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
 
         public TestBidiOrderedMapIterator() {

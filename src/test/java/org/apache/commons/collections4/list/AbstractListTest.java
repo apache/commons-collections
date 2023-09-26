@@ -76,16 +76,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     *  Returns true if the collections produced by
-     *  {@link #makeObject()} and {@link #makeFullCollection()}
-     *  have a {@link List#listIterator()} that should not be subjected to the standard
-     *  tests in {@link AbstractListIteratorTest}.
-     *  Default implementation returns false.  Override if your collection
-     *  class has non-standard behaviour that you will test separately.
-     */
-    public boolean skipDefaultListIteratorTests() { return false; }
-
-    /**
      *  Verifies that the test list implementation matches the confirmed list
      *  implementation.
      */

@@ -41,15 +41,15 @@ public @interface OverridableNested {
             if (extensionContext.getTestInstances().isPresent()) {
                 return checkInstances(annotatedType, extensionContext.getTestInstances().get());
             } else {
+                final OverridableNested annotation = annotatedType.getAnnotation(OverridableNested.class);
                 if (annotatedType.isAnnotationPresent(Nested.class)) {
                     throw new ExtensionConfigurationException("@OverridableNested on " + annotatedType.getName()
                             + " but found conflicting @Nested annotation");
                 } else if (annotatedType.getEnclosingClass() == null) {
                     return ConditionEvaluationResult.disabled("@OverridableNested on " + extensionContext.getDisplayName()
                             + " but no enclosing class found");
-                } else {
-                    return ConditionEvaluationResult.enabled("allow until we have instance of a runtime type to check");
                 }
+                return ConditionEvaluationResult.enabled("allow until we have instance of a runtime type to check");
             }
         }
 
@@ -62,9 +62,6 @@ public @interface OverridableNested {
 
             final Object immediateEnclosingInstance = enclosingInstanceList.get(enclosingInstanceList.size() - 1);
             final List<Class<?>> similarClasses = findSimilarNestedClasses(immediateEnclosingInstance.getClass(), annotatedType);
-            if (similarClasses.isEmpty()) {
-                throw new ExtensionConfigurationException("@OverridableNested on " + annotatedType.getName() + " found no matching classes");
-            }
 
             if (annotatedType.equals(similarClasses.get(0))) {
                 return ConditionEvaluationResult.enabled("allow");
@@ -91,6 +88,18 @@ public @interface OverridableNested {
                 }
                 currentType = currentType.getSuperclass();
             } while (currentType != null);
+
+            if (list.isEmpty()) {
+                throw new ExtensionConfigurationException("@OverridableNested on " + annotatedType.getName() + " found no matching classes");
+            }
+
+            final Class<?> last = list.get(list.size() - 1);
+            if (!last.getSimpleName().equals(compareName)) {
+                throw new ExtensionConfigurationException("@OverridableNested on " + annotatedType.getName()
+                        + " suggests base class should be called " + compareName
+                        + " but base class found was " + last.getSimpleName());
+            }
+
             return list;
         }
 
