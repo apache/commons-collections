@@ -30,10 +30,11 @@ import java.lang.annotation.Target;
  * <p>
  * However in this version subclasses of the containing class can override the nested class
  * such that only the most derived version is run.
- * Each member of the hierarchy must have the NestedOverridable annotation.
- * They are linked via parent reference to a class annotated NestedOverridable or NestedOverride.
+ * The primary implementation must have the {@link NestedOverridable} annotation,
+ * while subclasses need to reference it using {@link NestedOverride}.
  *
  * @see Nested
+ * @see NestedOverride
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

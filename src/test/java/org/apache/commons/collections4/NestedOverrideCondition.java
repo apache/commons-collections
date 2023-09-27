@@ -43,10 +43,8 @@ public class NestedOverrideCondition implements ExecutionCondition {
         if (extensionContext.getTestInstances().isPresent()) {
             final Class<?> mostDerived = findMostDerived(extensionContext.getTestInstances().get(), baseRef, checkName);
             if (annotatedType.equals(mostDerived)) {
-                System.out.println(annotatedType.getSimpleName() + " = allow");
                 return ConditionEvaluationResult.enabled("allow");
             } else {
-                System.out.println(annotatedType.getSimpleName() + " = nope");
                 return ConditionEvaluationResult.disabled("overridden by " + mostDerived.getName());
             }
         } else {
@@ -77,33 +75,19 @@ public class NestedOverrideCondition implements ExecutionCondition {
         return similarClasses.get(0);
     }
 
-    private static List<Class<?>> findSimilarNestedClasses(final Class<?> instanceType, final Class<?> firstTargetRef) {
+    private static List<Class<?>> findSimilarNestedClasses(final Class<?> instanceType, final Class<?> targetRef) {
         final List<Class<?>> nestedAlternates = new ArrayList<>();
-        final Set<Class<?>> targets = new HashSet<>();
-        targets.add(firstTargetRef);
 
-        boolean targetsAdded;
-        do {
-            targetsAdded = false;
-            Class<?> currentType = instanceType;
-            do {
-                for (final Class<?> innerClass : currentType.getDeclaredClasses()) {
-                    if (targets.contains(innerClass)) {
-                        final Class<?> innerRef = getBaseReference(innerClass, false);
-                        targets.add(innerRef);
-                        nestedAlternates.add(innerClass);
-                        targetsAdded = true;
-                    } else {
-                        final Class<?> innerRef = getBaseReference(innerClass, true);
-                        if (targets.contains(innerRef)) {
-                            targets.add(innerClass);
-                            nestedAlternates.add(innerClass);
-                        }
-                    }
+        Class<?> currentType = instanceType;
+        while (currentType != null) {
+            for (final Class<?> innerClass : currentType.getDeclaredClasses()) {
+                final Class<?> innerRef = getBaseReference(innerClass, true);
+                if (targetRef.equals(innerRef)) {
+                    nestedAlternates.add(innerClass);
                 }
-                currentType = currentType.getSuperclass();
-            } while (currentType != null);
-        } while (!targetsAdded);
+            }
+            currentType = currentType.getSuperclass();
+        }
 
         return nestedAlternates;
     }
@@ -125,6 +109,8 @@ public class NestedOverrideCondition implements ExecutionCondition {
             return type;
         } else if (override.value() == null) {
             throw new ExtensionConfigurationException("for @NestedOverride on " + type.getName() + " base reference is not optional");
+        } else if (!override.value().isAnnotationPresent(NestedOverridable.class)) {
+            throw new ExtensionConfigurationException("@NestedOverride on " + type.getName() + " points to " + override.value() + " which is missing required @NestedOverridable");
         } else {
             return override.value();
         }

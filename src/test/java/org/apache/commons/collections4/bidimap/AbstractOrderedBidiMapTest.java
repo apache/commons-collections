@@ -155,7 +155,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    @NestedOverride(TestBidiMapIterator.class)
+    @NestedOverride(InnerTestMapIterator.class)
     public class TestBidiOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
 
         public TestBidiOrderedMapIterator() {
