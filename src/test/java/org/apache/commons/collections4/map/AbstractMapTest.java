@@ -41,7 +41,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
@@ -1667,7 +1667,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @OverridableNested
+    @NestedOverridable
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
             super("MapEntrySet");
@@ -1909,7 +1909,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @OverridableNested
+    @NestedOverridable
     public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
             super("");
@@ -1988,7 +1988,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @OverridableNested
+    @NestedOverridable
     public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
             super("");

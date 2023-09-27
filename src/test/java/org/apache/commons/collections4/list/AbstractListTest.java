@@ -37,7 +37,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
 import org.junit.jupiter.api.Test;
@@ -1192,7 +1192,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 
-    @OverridableNested
+    @NestedOverridable
     public class TestListIterator extends AbstractListIteratorTest<E> {
         public TestListIterator() {
             super("TestListIterator");

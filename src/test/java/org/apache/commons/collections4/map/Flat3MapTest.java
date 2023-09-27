@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
@@ -373,7 +373,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(map.get("C"));
     }
 
-    @OverridableNested(baseName = "InnerTestMapIterator")
+    @NestedOverridable
     public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
         public TestFlatMapIterator() {
             super("TestFlatMapIterator");

@@ -30,7 +30,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
+import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -328,7 +329,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @OverridableNested(baseName = "InnerTestMapIterator")
+    @NestedOverride(InnerTestMapIterator.class)
     public class ReferenceMapTestMapIterator extends InnerTestMapIterator {
         @Test
         @Override
@@ -338,7 +339,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @OverridableNested(baseName = "TestMapEntrySet")
+    @NestedOverride(TestMapEntrySet.class)
     public class TestReferenceIdentityMapEntrySet extends TestMapEntrySet {
         @Test
         @Override

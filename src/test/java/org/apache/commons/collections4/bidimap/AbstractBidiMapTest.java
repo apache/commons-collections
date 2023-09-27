@@ -32,7 +32,8 @@ import java.util.Set;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
+import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
@@ -338,7 +339,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         return (BidiMap<K, V>) super.getMap();
     }
 
-    @Nested
+    @NestedOverride(TestMapEntrySet.class)
     public class TestBidiMapEntrySet extends TestMapEntrySet {
 
         public TestBidiMapEntrySet() {
@@ -477,7 +478,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         }
     }
 
-    @OverridableNested(baseName = "InnerTestMapIterator")
+    @NestedOverride(InnerTestMapIterator.class)
     public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
 
         public TestBidiMapIterator() {

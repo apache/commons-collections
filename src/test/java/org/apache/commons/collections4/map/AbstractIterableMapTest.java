@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
@@ -125,7 +125,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
-    @OverridableNested
+    @NestedOverridable
     public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
         public InnerTestMapIterator() {
             super("InnerTestMapIterator");

@@ -29,9 +29,10 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
+import org.apache.commons.collections4.NestedOverridable;
+import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
-import org.apache.commons.collections4.OverridableNested;
 import org.apache.commons.collections4.comparators.NullComparator;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
 import org.junit.jupiter.api.Test;
@@ -183,7 +184,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
-    @OverridableNested(baseName = "InnerTestMapIterator")
+    @NestedOverride(InnerTestMapIterator.class)
     public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
         public InnerTestOrderedMapIterator() {
             super("InnerTestOrderedMapIterator");

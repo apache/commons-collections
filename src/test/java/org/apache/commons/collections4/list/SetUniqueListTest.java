@@ -33,7 +33,8 @@ import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.OverridableNested;
+import org.apache.commons.collections4.NestedOverridable;
+import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.junit.jupiter.api.Test;
 
@@ -673,7 +674,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
     }
 
-    @OverridableNested(baseName = "TestListIterator")
+    @NestedOverride(TestListIterator.class)
     public class TestSetUniqueListIterator extends AbstractListTest<E>.TestListIterator {
         @Override
         public boolean supportsSet() {
