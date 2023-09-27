@@ -124,10 +124,8 @@ public class FixedSizeMap<K, V>
 
     @Override
     public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
-        for (final K key : mapToCopy.keySet()) {
-            if (!containsKey(key)) {
-                throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
-            }
+        if (!keySet().containsAll(mapToCopy.keySet())) {
+            throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         map.putAll(mapToCopy);
     }
