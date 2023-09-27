@@ -19,6 +19,7 @@ package org.apache.commons.collections4.map;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -464,10 +465,38 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     @Override
     public Collection<V> values() {
         final CompositeCollection<V> values = new CompositeCollection<>();
+        values.setMutator(new ValueCollectionMutator<>());
         for (int i = composite.length - 1; i >= 0; --i) {
             values.addComposited(composite[i].values());
         }
         return values;
+    }
+
+    /**
+     * Define mutator for values collection to give it behaviour similar to {@link CompositeMap#remove}.
+     */
+    private static class ValueCollectionMutator<V> implements CompositeCollection.CollectionMutator<V> {
+        private static final long serialVersionUID = -956301213490377859L;
+
+        @Override
+        public boolean add(final CompositeCollection<V> composite, final List<Collection<V>> collections, final V obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean addAll(final CompositeCollection<V> composite, final List<Collection<V>> collections, final Collection<? extends V> coll) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean remove(final CompositeCollection<V> composite, final List<Collection<V>> collections, final Object obj) {
+            for (int i = collections.size() - 1; i >= 0; --i) {
+                if (collections.get(i).remove(obj)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /**
