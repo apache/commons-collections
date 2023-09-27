@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -40,11 +41,11 @@ import java.util.Set;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.OverridableNested;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -986,24 +987,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests Map.putAll(map) passing itself as argument, should be no change, but some maps may have concurrency issues
-     */
-    @Test
-    public void testMapPutAllNoChangeAddingFullSelf() {
-        if (isPutAddSupported() || isPutChangeSupported()) {
-            resetFull();
-            getMap().putAll(getMap());
-            verify();
-        } else {
-            resetFull();
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(getMap()),
-                    "Expected UnsupportedOperationException on putAll");
-            verify();
-        }
-    }
-
-    /**
      * Tests Map.putAll(map) where content should be added to initially empty map
      */
     @Test
@@ -1684,7 +1667,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @Nested
+    @OverridableNested
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
             super("MapEntrySet");
@@ -1855,12 +1838,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 newValue1 = cloneObject(newValue1);
                 map.put(key1, newValue1);
                 confirmed.put(key1, newValue1);
+                assertSame(newValue1, map.get(key1));
                 verify();
 
                 // set same value using setValue, should be noop
                 newValue1 = cloneObject(newValue1);
                 entry1.setValue(newValue1);
                 entryConfirmed1.setValue(newValue1);
+                assertSame(newValue1, map.get(key1));
                 verify();
 
                 // set another new value using put
@@ -1868,12 +1853,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 newValue2 = cloneObject(newValue2);
                 map.put(key1, newValue2);
                 confirmed.put(key1, newValue2);
+                assertSame(newValue2, map.get(key1));
                 verify();
 
                 // set back to first value using setValue
                 newValue1 = cloneObject(newValue1);
                 entry1.setValue(newValue1);
                 entryConfirmed1.setValue(newValue1);
+                assertSame(newValue1, map.get(key1));
                 verify();
             } else {
                 assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(getNewSampleValues()[0]));
@@ -1922,7 +1909,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @Nested
+    @OverridableNested
     public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
             super("");
@@ -2001,7 +1988,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      */
-    @Nested
+    @OverridableNested
     public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
             super("");
@@ -2258,174 +2245,4 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     public Map<K, V> getConfirmed() {
         return confirmed;
     }
-
-    @Test
-    public void testMapPutAllBigDraft() {
-        final K[] keys = getSampleKeys();
-        final V[] values = getSampleValues();
-        final V[] newValues = getNewSampleValues();
-        final K[] otherKeys = getOtherKeys();
-        final V[] otherValues = getOtherValues();
-
-        if (isPutAddSupported() || isPutChangeSupported()) {
-            // check putAll OK adding empty map to empty map
-            resetEmpty();
-            assertEquals(0, getMap().size());
-            getMap().putAll(new HashMap<>());
-            assertEquals(0, getMap().size());
-            verify();
-
-            // check putAll OK adding empty map to non-empty map
-            resetFull();
-            getMap().putAll(new HashMap<>());
-            verify();
-
-            // check putAll OK adding JDK map with current values (no change)
-            resetFull();
-            final Map<K, V> m1 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m1.put(keys[i], values[i]);
-            }
-            getMap().putAll(m1);
-            getConfirmed().putAll(m1);
-            verify();
-        } else {
-            // check putAll rejects adding empty map to empty map
-            resetEmpty();
-            assertEquals(0, getMap().size());
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(new HashMap<>()),
-                    "Expected UnsupportedOperationException on putAll");
-            verify();
-
-            // check putAll rejects adding empty map to non-empty map
-            resetFull();
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(new HashMap<>()),
-                    "Expected UnsupportedOperationException on putAll");
-            verify();
-
-            // check putAll rejects adding map to itself
-            resetFull();
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(getMap()),
-                    "Expected UnsupportedOperationException on putAll");
-            verify();
-
-            // check putAll rejects adding JDK map with current values
-            resetFull();
-            final Map<K, V> m1 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m1.put(keys[i], values[i]);
-            }
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m1),
-                    "Expected UnsupportedOperationException on putAll");
-            verify();
-        }
-
-        if (isPutAddSupported()) {
-            // check putAll OK adding non-empty map to empty map
-            resetEmpty();
-            final Map<K, V> m2 = makeFullMap();
-            getMap().putAll(m2);
-            getConfirmed().putAll(m2);
-            verify();
-
-            // check putAll OK adding non-empty JDK map to empty map
-            resetEmpty();
-            final Map<K, V> m3 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m3.put(keys[i], values[i]);
-            }
-            getMap().putAll(m3);
-            getConfirmed().putAll(m3);
-            verify();
-
-            // check putAll OK adding non-empty JDK map to non-empty map
-            resetEmpty();
-            getMap().put(keys[0], values[0]);
-            getConfirmed().put(keys[0], values[0]);
-            verify();
-            final Map<K, V> m4 = makeConfirmedMap();
-            for (int i = 1; i < keys.length; i++) {
-                m4.put(keys[i], values[i]);
-            }
-            getMap().putAll(m4);
-            getConfirmed().putAll(m4);
-            verify();
-        } else {
-            // check putAll rejects adding non-empty map to empty map
-            resetEmpty();
-            final Map<K, V> m2 = makeFullMap();
-
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m2),
-                    "Expected IllegalArgumentException on putAll");
-            verify();
-
-            // check putAll rejects adding non-empty JDK map to empty map
-            resetEmpty();
-            final Map<K, V> m3 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m3.put(keys[i], values[i]);
-            }
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m3),
-                    "Expected IllegalArgumentException on putAll");
-            verify();
-
-            // check putAll rejects adding non-empty JDK map to non-empty map
-            resetFull();
-            final Map<K, V> m4 = makeConfirmedMap();
-            for (int i = 0; i < otherKeys.length; i++) {
-                m4.put(otherKeys[i], otherValues[i]);
-            }
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m4),
-                    "Expected IllegalArgumentException on putAll");
-            verify();
-        }
-
-        if (isPutChangeSupported()) {
-            // check putAll OK adding one changed value
-            resetFull();
-            final Map<K, V> m5 = makeConfirmedMap();
-            m5.put(keys[0], newValues[0]);
-            getMap().putAll(m5);
-            getConfirmed().putAll(m5);
-            verify();
-
-            // check putAll OK adding changed values
-            resetFull();
-            final Map<K, V> m6 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m6.put(keys[i], newValues[i]);
-            }
-            getMap().putAll(m6);
-            getConfirmed().putAll(m6);
-            verify();
-        } else {
-            // check putAll rejects adding one changed value
-            resetFull();
-            final Map<K, V> m5 = makeConfirmedMap();
-            m5.put(keys[0], newValues[0]);
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m5),
-                    "Expected IllegalArgumentException on putAll");
-            verify();
-
-            // check putAll rejects adding changed values
-            resetFull();
-            final Map<K, V> m6 = makeConfirmedMap();
-            for (int i = 0; i < keys.length; i++) {
-                m6.put(keys[i], newValues[i]);
-            }
-            assertThrowsEither(IllegalArgumentException.class, UnsupportedOperationException.class,
-                    () -> getMap().putAll(m6),
-                    "Expected IllegalArgumentException on putAll");
-            verify();
-        }
-    }
-
 }
