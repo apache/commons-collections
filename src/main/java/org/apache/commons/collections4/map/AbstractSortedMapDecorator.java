@@ -114,8 +114,9 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     @Override
     public K nextKey(final K key) {
         final Iterator<K> it = tailMap(key).keySet().iterator();
-        if (!it.hasNext())
+        if (!it.hasNext()) {
             return null;
+        }
         it.next();
         return it.hasNext() ? it.next() : null;
     }

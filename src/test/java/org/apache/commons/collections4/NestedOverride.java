@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import org.apache.commons.collections4.map.AbstractIterableMapTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.extension.ExtendWith;
 

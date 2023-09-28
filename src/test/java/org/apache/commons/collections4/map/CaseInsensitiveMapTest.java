@@ -50,7 +50,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     @Override
     public Object[] getOtherNonNullStringElements() {
         return Arrays.stream(super.getOtherNonNullStringElements())
-                     .map(e -> ((String)e).toLowerCase())
+                     .map(e -> ((String) e).toLowerCase())
                      .toArray();
     }
 
