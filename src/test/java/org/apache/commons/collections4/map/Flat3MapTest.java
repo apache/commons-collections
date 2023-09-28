@@ -374,7 +374,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(map.get("C"));
     }
 
-    @NestedOverride(InnerTestMapIterator.class)
+    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
     public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
         public TestFlatMapIterator() {
             super("TestFlatMapIterator");

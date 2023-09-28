@@ -329,7 +329,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @NestedOverride(InnerTestMapIterator.class)
+    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
     public class ReferenceMapTestMapIterator extends InnerTestMapIterator {
         @Test
         @Override
@@ -339,7 +339,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @NestedOverride(TestMapEntrySet.class)
+    @NestedOverride(AbstractMapTest.TestMapEntrySet.class)
     public class TestReferenceIdentityMapEntrySet extends TestMapEntrySet {
         @Test
         @Override

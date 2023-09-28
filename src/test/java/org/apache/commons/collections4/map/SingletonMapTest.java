@@ -48,7 +48,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
-    @NestedOverride(InnerTestMapIterator.class)
+    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
     public class InnerTestSingletonMapIterator extends InnerTestOrderedMapIterator {
         @Override
         public void testEmptyMapIterator() {

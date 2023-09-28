@@ -674,7 +674,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
     }
 
-    @NestedOverride(TestListIterator.class)
+    @NestedOverride(AbstractListTest.TestListIterator.class)
     public class TestSetUniqueListIterator extends AbstractListTest<E>.TestListIterator {
         @Override
         public boolean supportsSet() {

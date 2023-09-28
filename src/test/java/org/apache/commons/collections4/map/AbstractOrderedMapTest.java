@@ -184,7 +184,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
-    @NestedOverride(InnerTestMapIterator.class)
+    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
     public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
         public InnerTestOrderedMapIterator() {
             super("InnerTestOrderedMapIterator");
