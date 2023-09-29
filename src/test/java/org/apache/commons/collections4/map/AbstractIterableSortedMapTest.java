@@ -20,7 +20,6 @@ import org.apache.commons.collections4.IterableSortedMap;
 import org.apache.commons.collections4.OrderedMap;
 import org.junit.jupiter.api.Nested;
 
-import java.util.Map;
 import java.util.SortedMap;
 
 /**

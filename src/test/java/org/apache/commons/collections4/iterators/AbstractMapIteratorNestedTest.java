@@ -18,10 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.OrderedMap;
-import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
-import org.apache.commons.collections4.map.Flat3MapTest;
 
 import java.util.Map;
 

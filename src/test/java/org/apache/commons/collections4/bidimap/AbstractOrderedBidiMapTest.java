@@ -31,7 +31,6 @@ import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorNeste
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
 import org.apache.commons.collections4.map.AbstractMapTest;
 import org.apache.commons.collections4.map.AbstractOrderedMapNestedTest;
-import org.apache.commons.collections4.map.AbstractOrderedMapTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -156,7 +155,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
 
     @SuppressWarnings("ClassNameSameAsAncestorName")
     @Nested
-    public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K,V> {
+    public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K, V> {
         @Override
         protected AbstractIterableMapTest<K, V> getEnclosing() {
             return AbstractOrderedBidiMapTest.this;

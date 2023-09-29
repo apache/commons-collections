@@ -23,9 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorNestedTest;
-import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

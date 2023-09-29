@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.OrderedMap;
 
 import java.util.Map;
@@ -30,7 +29,7 @@ public abstract class AbstractOrderedMapNestedTest<K, V> extends AbstractOrdered
     }
 
     protected abstract AbstractMapTest<K, V> getEnclosing();
-    
+
     @Override
     public OrderedMap<K, V> makeObject() {
         return (OrderedMap<K, V>) getEnclosing().makeObject();
