@@ -182,7 +182,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
-    @SuppressWarnings("ClassNameSameAsAncestorName")
     @Nested
     public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K, V> {
         @Override

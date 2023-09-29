@@ -153,7 +153,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    @SuppressWarnings("ClassNameSameAsAncestorName")
     @Nested
     public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K, V> {
         @Override
