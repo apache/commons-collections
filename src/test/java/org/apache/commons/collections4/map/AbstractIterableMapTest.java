@@ -24,8 +24,9 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.NestedOverridable;
+import org.apache.commons.collections4.iterators.AbstractMapIteratorNestedTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -125,60 +126,11 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         assertThrows(ConcurrentModificationException.class, () -> finalIt1.next());
     }
 
-    @NestedOverridable
-    public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
-        public InnerTestMapIterator() {
-            super("InnerTestMapIterator");
-        }
-
+    @Nested
+    public class TestMapIterator extends AbstractMapIteratorNestedTest<K, V> {
         @Override
-        public V[] addSetValues() {
-            return AbstractIterableMapTest.this.getNewSampleValues();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return AbstractIterableMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean isGetStructuralModify() {
-            return AbstractIterableMapTest.this.isGetStructuralModify();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractIterableMapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractIterableMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractIterableMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public Map<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractIterableMapTest.this.getMap();
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractIterableMapTest.this.getConfirmed();
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractIterableMapTest.this.verify();
+        protected AbstractIterableMapTest<K, V> getEnclosing() {
+            return AbstractIterableMapTest.this;
         }
     }
 

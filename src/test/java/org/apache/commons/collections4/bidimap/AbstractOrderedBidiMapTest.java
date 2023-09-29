@@ -24,14 +24,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.OrderedBidiMap;
-import org.apache.commons.collections4.OrderedMapIterator;
-import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorNestedTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
+import org.apache.commons.collections4.map.AbstractMapTest;
+import org.apache.commons.collections4.map.AbstractOrderedMapNestedTest;
+import org.apache.commons.collections4.map.AbstractOrderedMapTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -153,58 +154,20 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class TestBidiOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
-
-        public TestBidiOrderedMapIterator() {
-            super("TestBidiOrderedMapIterator");
-        }
-
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K,V> {
         @Override
-        public V[] addSetValues() {
-            return AbstractOrderedBidiMapTest.this.getNewSampleValues();
+        protected AbstractIterableMapTest<K, V> getEnclosing() {
+            return AbstractOrderedBidiMapTest.this;
         }
-
-        @Override
-        public boolean supportsRemove() {
-            return AbstractOrderedBidiMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractOrderedBidiMapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public OrderedMapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public OrderedMapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public Map<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedBidiMapTest.this.map;
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedBidiMapTest.this.confirmed;
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractOrderedBidiMapTest.this.verify();
-        }
-
     }
 
+    @Nested
+    public class TestAsOrderedMap extends AbstractOrderedMapNestedTest<K, V> {
+        @Override
+        protected AbstractMapTest<K, V> getEnclosing() {
+            return AbstractOrderedBidiMapTest.this;
+        }
+    }
 }

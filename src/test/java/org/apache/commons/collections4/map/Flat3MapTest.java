@@ -33,10 +33,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.NestedOverride;
-import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -371,58 +368,6 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("one", map.get("A"));
         assertEquals("two", map.get("B"));
         assertNull(map.get("C"));
-    }
-
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
-        public TestFlatMapIterator() {
-            super("TestFlatMapIterator");
-        }
-
-        @Override
-        public V[] addSetValues() {
-            return Flat3MapTest.this.getNewSampleValues();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return Flat3MapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return Flat3MapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return Flat3MapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return Flat3MapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public IterableMap<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return Flat3MapTest.this.getMap();
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return Flat3MapTest.this.getConfirmed();
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            Flat3MapTest.this.verify();
-        }
     }
 
     @Override

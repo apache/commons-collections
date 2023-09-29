@@ -32,12 +32,11 @@ import java.util.Set;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
-import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
 import org.apache.commons.collections4.map.AbstractMapTest;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -338,12 +337,9 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         return (BidiMap<K, V>) super.getMap();
     }
 
-    @NestedOverride(AbstractMapTest.TestMapEntrySet.class)
-    public class TestBidiMapEntrySet extends TestMapEntrySet {
-
-        public TestBidiMapEntrySet() {
-        }
-
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapEntrySet extends AbstractMapTest<K, V>.TestMapEntrySet {
         @Test
         public void testMapEntrySetIteratorEntrySetValueCrossCheck() {
             final K key1 = getSampleKeys()[0];
@@ -354,15 +350,15 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             resetFull();
             // explicitly get entries as sample values/keys are connected for some maps
             // such as BeanMap
-            Iterator<Map.Entry<K, V>> it = TestBidiMapEntrySet.this.getCollection().iterator();
+            Iterator<Map.Entry<K, V>> it = TestMapEntrySet.this.getCollection().iterator();
             final Map.Entry<K, V> entry1 = getEntry(it, key1);
-            it = TestBidiMapEntrySet.this.getCollection().iterator();
+            it = TestMapEntrySet.this.getCollection().iterator();
             final Map.Entry<K, V> entry2 = getEntry(it, key2);
-            Iterator<Map.Entry<K, V>> itConfirmed = TestBidiMapEntrySet.this.getConfirmed().iterator();
+            Iterator<Map.Entry<K, V>> itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed1 = getEntry(itConfirmed, key1);
-            itConfirmed = TestBidiMapEntrySet.this.getConfirmed().iterator();
+            itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed2 = getEntry(itConfirmed, key2);
-            TestBidiMapEntrySet.this.verify();
+            TestMapEntrySet.this.verify();
 
             if (!isSetValueSupported()) {
                 try {
@@ -393,7 +389,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             assertEquals(newValue1, AbstractBidiMapTest.this.getMap().get(entry2.getKey()));
             assertFalse(AbstractBidiMapTest.this.getMap().containsKey(key1));
             assertFalse(AbstractBidiMapTest.this.getMap().containsValue(newValue2));
-            TestBidiMapEntrySet.this.verify();
+            TestMapEntrySet.this.verify();
 
             // check for ConcurrentModification
             it.next();  // if you fail here, maybe you should be throwing an IAE, see above
@@ -475,60 +471,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         protected int getIterationBehaviour() {
             return main.getIterationBehaviour();
         }
-    }
-
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
-
-        public TestBidiMapIterator() {
-            super("TestBidiMapIterator");
-        }
-
-        @Override
-        public V[] addSetValues() {
-            return AbstractBidiMapTest.this.getNewSampleValues();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return AbstractBidiMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractBidiMapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public BidiMap<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractBidiMapTest.this.getMap();
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractBidiMapTest.this.getConfirmed();
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractBidiMapTest.this.verify();
-        }
-
     }
 
     @Test

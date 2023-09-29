@@ -23,8 +23,8 @@ import java.util.HashMap;
 
 import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.KeyValue;
-import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.OrderedMap;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -47,8 +47,9 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class InnerTestSingletonMapIterator extends InnerTestOrderedMapIterator {
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractOrderedMapTest<K, V>.TestMapIterator {
         @Override
         public void testEmptyMapIterator() {
             // ignore

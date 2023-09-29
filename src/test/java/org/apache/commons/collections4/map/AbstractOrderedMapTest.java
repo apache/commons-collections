@@ -29,11 +29,10 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
-import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.OrderedMap;
-import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.comparators.NullComparator;
-import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorNestedTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -183,55 +182,12 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
     }
 
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
-        public InnerTestOrderedMapIterator() {
-            super("InnerTestOrderedMapIterator");
-        }
-
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractOrderedMapIteratorNestedTest<K, V> {
         @Override
-        public boolean supportsRemove() {
-            return AbstractOrderedMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean isGetStructuralModify() {
-            return AbstractOrderedMapTest.this.isGetStructuralModify();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractOrderedMapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public OrderedMapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractOrderedMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public OrderedMapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractOrderedMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public OrderedMap<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedMapTest.this.getMap();
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedMapTest.this.getConfirmed();
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractOrderedMapTest.this.verify();
+        protected AbstractIterableMapTest<K, V> getEnclosing() {
+            return AbstractOrderedMapTest.this;
         }
     }
 

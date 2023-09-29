@@ -30,8 +30,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.NestedOverride;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
@@ -328,8 +328,9 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @NestedOverride(AbstractIterableMapTest.InnerTestMapIterator.class)
-    public class ReferenceMapTestMapIterator extends InnerTestMapIterator {
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractIterableMapTest<K, V>.TestMapIterator {
         @Test
         @Override
         public void testMapIteratorSetClonedValues() {
@@ -338,8 +339,9 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         }
     }
 
-    @NestedOverride(AbstractMapTest.TestMapEntrySet.class)
-    public class TestReferenceIdentityMapEntrySet extends TestMapEntrySet {
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapEntrySet extends AbstractMapTest<K, V>.TestMapEntrySet {
         @Test
         @Override
         public void testMapEntrySetIteratorEntrySetValueClonedKeysValues() {
