@@ -218,7 +218,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * are encouraged to implement faster checks if possible.
      * </p>
      *
-     * @return {@code true} if no bites are enabled, {@code false} otherwise.
+     * @return {@code true} if no bits are enabled, {@code false} otherwise.
      */
     default boolean isEmpty() {
         return forEachBitMap(y -> y == 0);

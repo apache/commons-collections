@@ -152,6 +152,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      *
      * @return the merged bloom filter.
      */
+    @Override
     public BloomFilter flatten() {
         BloomFilter bf = new SimpleBloomFilter(shape);
         forEachBloomFilter(bf::merge);

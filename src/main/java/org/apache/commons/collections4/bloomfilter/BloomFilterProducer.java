@@ -17,8 +17,8 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -43,13 +43,14 @@ public interface BloomFilterProducer {
      * Return an array of the Bloom filters in the collection.
      * <p><em>Implementations should specify if the array contains deep copies, immutable instances,
      * or references to the filters in the collection.</em></p>
+     * <p>The default method returns a deep copy of the enclosed filters.</p>
      *
      * @return An array of Bloom filters.
      */
     default BloomFilter[] asBloomFilterArray() {
         final List<BloomFilter> filters = new ArrayList<>();
         forEachBloomFilter(f -> filters.add(f.copy()));
-        return filters.toArray(new BloomFilter[filters.size()]);
+        return filters.toArray(new BloomFilter[0]);
     }
 
     /**
@@ -81,9 +82,9 @@ public interface BloomFilterProducer {
      * @return the merged bloom filter.
      */
     default BloomFilter flatten() {
-        BloomFilter bf[] = {null};
+        BloomFilter[] bf = {null};
         forEachBloomFilter( x -> {
-            if (bf[0]==null) {
+            if (bf[0] == null) {
                 bf[0] = new SimpleBloomFilter( x.getShape());
             }
             return bf[0].merge( x );
@@ -105,6 +106,7 @@ public interface BloomFilterProducer {
      * @return THe BloomFilterProducer containing the filters.
      */
     static BloomFilterProducer fromBloomFilterArray(BloomFilter... filters) {
+        Objects.requireNonNull(filters, "filters");
         return new BloomFilterProducer() {
             @Override
             public boolean forEachBloomFilter(final Predicate<BloomFilter> predicate) {
@@ -123,7 +125,7 @@ public interface BloomFilterProducer {
              */
             @Override
             public BloomFilter[] asBloomFilterArray() {
-                return Arrays.copyOf(filters, filters.length);
+                return filters.clone();
             }
 
             /**

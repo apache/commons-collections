@@ -86,7 +86,7 @@ public class LayerManagerTest {
     @Test
     public void testAdvanceOnCalculatedFull() {
         Double maxN = shape.estimateMaxN();
-        Predicate<LayerManager> underTest = LayerManager.ExtendCheck.advanceOnCalculatedSaturation(shape);
+        Predicate<LayerManager> underTest = LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN());
         LayerManager layerManager = testingBuilder().build();
         while (layerManager.getTarget().getShape().estimateN(layerManager.getTarget().cardinality()) < maxN) {
             assertFalse(underTest.test(layerManager));

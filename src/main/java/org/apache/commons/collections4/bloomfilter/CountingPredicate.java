@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  * sequence for each call to {@code test()}. if the {@code ary} is exhausted,
  * the subsequent calls to {@code test} are executed with a {@code null} value.
  * If the calls to {@code test} do not exhaust the {@code ary} the {@code
- * forEachRemaining} method can be called to execute the @code{text} with a
+ * forEachRemaining} method can be called to execute the @{code test} with a
  * {@code null} value for each remaining {@code idx} value.
  *
  * @param <T> the type of object being compared.
@@ -55,10 +55,10 @@ class CountingPredicate<T> implements Predicate<T> {
     }
 
     /**
-     * Call BiPredicate&lt;T,T&gt; for each remaining unpaired &lt;T&gt; in the
+     * Call {@code BiPredicate<T, T>} for each remaining unpaired {@code <T>} in the
      * input array. This method should be invoked after the predicate has been
-     * passed to a &lt;T&gt;Producer#forEach&lt;T&gt;(BiPredicate&lt;T,T&gt;) to consume any
-     * unpaired &lt;T&gt;s. The second argument to the BiPredicate will be {@code null}.
+     * passed to a {@code Producer.forEach<T>(BiPredicate<T, T>)} to consume any
+     * unpaired {@code <T>}s. The second argument to the BiPredicate will be {@code null}.
      *
      * @return true if all calls the predicate were successful
      */

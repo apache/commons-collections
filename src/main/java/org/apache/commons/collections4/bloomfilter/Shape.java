@@ -232,15 +232,11 @@ public final class Shape {
      * this shape before the false positive rate exceeds the desired rate. <p> The
      * formula for deriving {@code k} when {@code m} and {@code n} are known is:
      *
-     * <pre>
-     * k = ln2 * m / n
-     * </pre>
+     * <p>{@code k = ln2 * m / n}</p>
      *
-     * solving for {@code n} yields:
+     * <p>Solving for {@code n} yields:</p>
      *
-     * <pre>
-     * n = ln2 * m / k
-     * </pre>
+     * <p>{@code n = ln2 * m / k}</p>
      *
      * @return An estimate of max N.
      */

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -55,22 +56,16 @@ public class LayerManager implements BloomFilterProducer {
      * A collection of common ExtendCheck implementations to test whether to extend
      * the depth of a LayerManager.
      */
-    public static class ExtendCheck {
+    public static final class ExtendCheck {
         private ExtendCheck() {
         }
-
-        private static final Predicate<LayerManager> ADVANCE_ON_POPULATED = lm -> {
-            return !lm.filters.peekLast().isEmpty();
-        };
-
-        private static final Predicate<LayerManager> NEVER_ADVANCE = x -> false;
 
         /**
          * Advances the target once a merge has been performed.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
-        public static final Predicate<LayerManager> advanceOnPopulated() {
-            return ADVANCE_ON_POPULATED;
+        public static Predicate<LayerManager> advanceOnPopulated() {
+            return lm -> !lm.filters.peekLast().isEmpty();
         }
 
         /**
@@ -78,22 +73,8 @@ public class LayerManager implements BloomFilterProducer {
          * perform the advance.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
-        public static final Predicate<LayerManager> neverAdvance() {
-            return NEVER_ADVANCE;
-        }
-
-        /**
-         * Calculates the estimated number of Bloom filters (n) that have been merged
-         * into the target and compares that with the estimated maximum expected
-         * {@code n} based on the shape. If the target is saturated (Bloom filter {@code n} &gt;= Shape {@code n})
-         * a new target is created.
-         *
-         * @param shape The shape of the filters in the LayerManager.
-         * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
-         * @see ExtendCheck#advanceOnSaturation(double)
-         */
-        public static final Predicate<LayerManager> advanceOnCalculatedSaturation(Shape shape) {
-            return advanceOnSaturation(shape.estimateMaxN());
+        public static Predicate<LayerManager> neverAdvance() {
+            return x -> false;
         }
 
         /**
@@ -102,7 +83,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param breakAt the number of filters to merge into each filter in the list.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
-         * @throws IllegalArgumentException if {@code breakAt} is &lt;= 0
+         * @throws IllegalArgumentException if {@code breakAt <= 0}
          */
         public static Predicate<LayerManager> advanceOnCount(int breakAt) {
             if (breakAt <= 0) {
@@ -120,14 +101,16 @@ public class LayerManager implements BloomFilterProducer {
 
         /**
          * Creates a new target after the current target is saturated. Saturation is
-         * defined as the estimated N of the target Bloom filter being greater than the
-         * maxN specified.
+         * defined as the {@code Bloom filter estimated N >= maxN}.
+         *
+         * <p>An example usage is advancing on a calculated saturation by calling:
+         * {@code ExtendCheck.advanceOnSaturation(shape.estimateMaxN()) }</p>
          *
          * @param maxN the maximum number of estimated items in the filter.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
-         * @throws IllegalArgumentException if maxN is &lt;= 0
+         * @throws IllegalArgumentException if {@code maxN <= 0}
          */
-        public static final Predicate<LayerManager> advanceOnSaturation(double maxN) {
+        public static Predicate<LayerManager> advanceOnSaturation(double maxN) {
             if (maxN <= 0) {
                 throw new IllegalArgumentException("'maxN' must be greater than 0");
             }
@@ -142,25 +125,16 @@ public class LayerManager implements BloomFilterProducer {
      * Static methods to create a Consumer of a LinkedList of BloomFilter perform
      * tests on whether to reduce the collection of Bloom filters.
      */
-    public static class Cleanup {
+    public static final class Cleanup {
         private Cleanup() {
         }
-
-        private static final Consumer<LinkedList<BloomFilter>> NO_CLEANUP = x -> {
-        };
-
-        private static final Consumer<LinkedList<BloomFilter>> REMOVE_EMPTY_TARGET = x -> {
-            if (x.getLast().cardinality() == 0) {
-                x.removeLast();
-            }
-        };
 
         /**
          * A Cleanup that never removes anything.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static final Consumer<LinkedList<BloomFilter>> noCleanup() {
-            return NO_CLEANUP;
+        public static Consumer<LinkedList<BloomFilter>> noCleanup() {
+            return x -> {};
         }
 
         /**
@@ -170,9 +144,9 @@ public class LayerManager implements BloomFilterProducer {
          * @param maxSize the maximum number of filters for the list. Must be greater
          *                than 0
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
-         * @throws IllegalArgumentException if maxSize is &lt;= 0
+         * @throws IllegalArgumentException if {@code maxSize <= 0}.
          */
-        public static final Consumer<LinkedList<BloomFilter>> onMaxSize(int maxSize) {
+        public static Consumer<LinkedList<BloomFilter>> onMaxSize(int maxSize) {
             if (maxSize <= 0) {
                 throw new IllegalArgumentException("'maxSize' must be greater than 0");
             }
@@ -189,8 +163,12 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static final Consumer<LinkedList<BloomFilter>> removeEmptyTarget() {
-            return REMOVE_EMPTY_TARGET;
+        public static Consumer<LinkedList<BloomFilter>> removeEmptyTarget() {
+            return x -> {
+                if (x.getLast().cardinality() == 0) {
+                    x.removeLast();
+                }
+            };
         }
     }
 
@@ -247,6 +225,8 @@ public class LayerManager implements BloomFilterProducer {
      * Creates a deep copy of this LayerManager.
      * <p><em>Filters in the copy are deep copies, not references, so changes in the copy
      * are NOT reflected in the original.</em></p>
+     * <p>The {@code filterSupplier}, {@code extendCheck}, and the {@code filterCleanup} are shared between
+     * the copy and this instance.</p>
      *
      * @return a copy of this layer Manager.
      */
@@ -263,7 +243,7 @@ public class LayerManager implements BloomFilterProducer {
      * layers and generate a new filter layer. In most cases is it unnecessary to
      * call this method directly.
      * <p>
-     * Ths method is used within the {@link #getTarget()} when the configured
+     * Ths method is used within {@link #getTarget()} when the configured
      * {@code ExtendCheck} returns {@code true}.
      * </p>
      */
@@ -357,15 +337,9 @@ public class LayerManager implements BloomFilterProducer {
          * @return a new LayerManager.
          */
         public LayerManager build() {
-            if (supplier == null) {
-                throw new NullPointerException("Supplier must not be null");
-            }
-            if (extendCheck == null) {
-                throw new NullPointerException("ExtendCheck must not be null");
-            }
-            if (cleanup == null) {
-                throw new NullPointerException("Cleanup must not be null");
-            }
+            Objects.requireNonNull(supplier, "Supplier must not be null");
+            Objects.requireNonNull(extendCheck, "ExtendCheck must not be null");
+            Objects.requireNonNull(cleanup, "Cleanup must not be null");
             return new LayerManager(supplier, extendCheck, cleanup, true);
         }
 

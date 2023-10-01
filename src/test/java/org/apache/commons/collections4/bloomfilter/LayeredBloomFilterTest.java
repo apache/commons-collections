@@ -214,7 +214,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
                 .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
                 .setCleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
                 .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
-                        .or(LayerManager.ExtendCheck.advanceOnCalculatedSaturation(shape)))
+                        .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
                 .build();
         return new LayeredBloomFilter(shape, layerManager);
     }
