@@ -123,7 +123,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Adds the value to the collection associated with the specified key.
      * <p>
      * Unlike a normal {@code Map} the previous value is not replaced.
-     * Instead the new value is added to the collection stored against the key.
+     * Instead, the new value is added to the collection stored against the key.
      * The collection may be a {@code List}, {@code Set} or other
      * collection dependent on implementation.
      *

@@ -16,41 +16,26 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.Objects;
-import java.util.function.IntPredicate;
+public class IndexProducerFromUniqueHasherTest extends AbstractIndexProducerTest {
 
-/**
- * A Hasher that returns no values.
- *
- * <p>To be used for testing only.</p>
- */
-final class NullHasher implements Hasher {
-
-    /**
-     * The instance of the Null Hasher.
-     */
-    static final NullHasher INSTANCE = new NullHasher();
-
-    private static final IndexProducer PRODUCER = new IndexProducer() {
-        @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            Objects.requireNonNull(consumer, "consumer");
-            return true;
-        }
-
-        @Override
-        public int[] asIndexArray() {
-            return new int[0];
-        }
-    };
-
-    private NullHasher() {
-        // No instances
+    @Override
+    protected IndexProducer createProducer() {
+        // hasher has collisions and wraps
+        return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)).uniqueIndices();
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
+    protected IndexProducer createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
+    }
+
+    @Override
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT;
     }
 }

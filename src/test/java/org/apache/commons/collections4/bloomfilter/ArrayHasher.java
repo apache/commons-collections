@@ -37,12 +37,6 @@ public final class ArrayHasher implements Hasher {
         return new Producer(shape);
     }
 
-    @Override
-    public IndexProducer uniqueIndices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return new Producer(shape);
-    }
-
     private class Producer implements IndexProducer {
         Shape shape;
 

@@ -16,30 +16,32 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromLayeredBloomFilterTest extends AbstractBitCountProducerTest {
+import java.util.Arrays;
 
-    protected Shape shape = Shape.fromKM(17, 72);
+/**
+ * Provides functions to assist in IndexProducer creation and manipulation.
+ * @see IndexProducer
+ */
+final class IndexUtils {
 
-    @Override
-    protected BitCountProducer createProducer() {
-        final Hasher hasher = new IncrementingHasher(3, 2);
-        final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
-        bf.merge(hasher);
-        return BitCountProducer.from(bf);
-    }
+    /**
+     * The maximum array size for the methods in this class.
+     */
+    static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
-    @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(LayeredBloomFilter.fixed(shape, 10));
-    }
+    // do not instantiate
+    private IndexUtils() {}
 
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
-    }
-
-    @Override
-    protected int[] getExpectedIndices() {
-        return new int[] { 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35 };
+    /**
+     * Ensure the array can add an element at the specified index.
+     * @param array the array to check.
+     * @param index the index to add at.
+     * @return the array or a newly allocated copy of the array.
+     */
+    static int[] ensureCapacityForAdd(int[] array, int index) {
+        if (index >= array.length) {
+            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
+        }
+        return array;
     }
 }

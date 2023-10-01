@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.IntPredicate;
@@ -107,21 +108,69 @@ public interface IndexProducer {
      * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
      * <p><em>
-     * The default implementation of this method is slow. It is recommended
-     * that implementing classes reimplement this method.
+     * The default implementation of this method creates an array and populates
+     * it.  Implementations that have access to an index array should consider
+     * returning a copy of that array if possible.
      * </em></p>
      *
-     * <p><em>
-     * The default implementation of this method returns unique values in order.
-     * </em></p>
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        final BitSet result = new BitSet();
+        class Indices {
+            private int[] data = new int[32];
+            private int size;
+
+            boolean add(final int index) {
+                data = IndexUtils.ensureCapacityForAdd(data, size);
+                data[size++] = index;
+                return true;
+            }
+
+            int[] toArray() {
+                // Edge case to avoid a large array copy
+                return size == data.length ? data : Arrays.copyOf(data, size);
+            }
+        }
+        Indices indices = new Indices();
+        forEachIndex(indices::add);
+        return indices.toArray();
+    }
+
+    /**
+     * Creates an IndexProducer comprising the unique indices for this producer.
+     *
+     * <p>By default creates a new producer with some overhead to remove
+     * duplicates.  IndexProducers that return unique indices by default
+     * should override this to return {@code this}.</p>
+     *
+     * <p>The default implementation will filter the indices from this instance
+     * and return them in ascending order.</p>
+     *
+     * @return the IndexProducer of unique values.
+     * @throws IndexOutOfBoundsException if any index is less than zero.
+     */
+    default IndexProducer uniqueIndices() {
+        final BitSet bitSet = new BitSet();
         forEachIndex(i -> {
-            result.set(i);
+            bitSet.set(i);
             return true;
         });
-        return result.stream().toArray();
+
+        return new IndexProducer() {
+            @Override
+            public boolean forEachIndex(IntPredicate predicate) {
+                for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx + 1)) {
+                    if (!predicate.test(idx)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public IndexProducer uniqueIndices() {
+                return this;
+            }
+        };
     }
 }

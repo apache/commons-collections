@@ -64,12 +64,12 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         assertEquals("value11", properties.getProperty("key11"));
     }
 
-    private boolean isXmlTest(final String fileExtension) {
-        return ".xml".equals(fileExtension);
-    }
-
     private String getPathString(final String fileExtension) {
         return BulkTest.TEST_PROPERTIES_PATH + "test" + fileExtension;
+    }
+
+    private boolean isXmlTest(final String fileExtension) {
+        return ".xml".equals(fileExtension);
     }
 
     @Test

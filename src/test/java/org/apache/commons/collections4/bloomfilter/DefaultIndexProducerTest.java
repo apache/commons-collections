@@ -22,8 +22,11 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
@@ -58,8 +61,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        // The default method streams a BitSet so is distinct and ordered.
-        return DISTINCT | ORDERED;
+        return 0;
     }
 
     @Override
@@ -118,5 +120,22 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
             final IndexProducer ip = IndexProducer.fromIndexArray(expected);
             assertArrayEquals(expected, ip.asIndexArray());
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {32, 33})
+    public void testEntries(int size) {
+        int[] values = IntStream.range(0, size).toArray();
+        IndexProducer producer =  predicate -> {
+            Objects.requireNonNull(predicate);
+            for (final int i : values) {
+                if (!predicate.test(i)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        int[] other = producer.asIndexArray();
+        assertArrayEquals(values, other);
     }
 }

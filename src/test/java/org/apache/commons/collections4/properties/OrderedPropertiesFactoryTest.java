@@ -14,29 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
+package org.apache.commons.collections4.properties;
 
-public class BitCountProducerFromIntArrayTest extends AbstractBitCountProducerTest {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-    int[] data = {6, 8, 1, 2, 4, 4, 5};
+import org.junit.jupiter.api.Test;
 
-    @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(IndexProducer.fromIndexArray(new int[0]));
+/**
+ * Tests {@link OrderedPropertiesFactory}.
+ */
+public class OrderedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<OrderedProperties> {
+
+    public OrderedPropertiesFactoryTest() {
+        super(OrderedPropertiesFactory.INSTANCE);
     }
 
+    @Test
     @Override
-    protected BitCountProducer createProducer() {
-        return BitCountProducer.from(IndexProducer.fromIndexArray(data));
+    public void testInstance() {
+        assertNotNull(OrderedPropertiesFactory.INSTANCE);
     }
 
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
-    }
-
-    @Override
-    protected int[] getExpectedIndices() {
-        return data;
-    }
 }

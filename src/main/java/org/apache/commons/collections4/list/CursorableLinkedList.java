@@ -285,7 +285,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
             if (cur == null) {
                 // some other unrelated cursor object has been
                 // garbage-collected; let's take the opportunity to
-                // clean up the cursors list anyway..
+                // clean up the cursors list anyway.
                 it.remove();
             } else if (cur == cursor) {
                 ref.clear();

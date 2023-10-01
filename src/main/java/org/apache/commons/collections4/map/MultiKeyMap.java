@@ -828,7 +828,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         try {
             return (MultiKeyMap<K, V>) super.clone();
         } catch (final CloneNotSupportedException e) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(e);
         }
     }
 

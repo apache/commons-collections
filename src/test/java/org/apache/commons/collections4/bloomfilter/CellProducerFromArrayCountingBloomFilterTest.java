@@ -16,27 +16,30 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitCountProducerFromUniqueHasherTest extends AbstractBitCountProducerTest {
+public class CellProducerFromArrayCountingBloomFilterTest extends AbstractCellProducerTest {
+
+    protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitCountProducer createProducer() {
-        // hasher has collisions and wraps
-        return BitCountProducer.from(new IncrementingHasher(4, 8).uniqueIndices(Shape.fromKM(17, 72)));
+    protected CellProducer createProducer() {
+        final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
+        filter.merge(new IncrementingHasher(0, 1));
+        filter.merge(new IncrementingHasher(5, 1));
+        return filter;
     }
 
     @Override
-    protected BitCountProducer createEmptyProducer() {
-        return BitCountProducer.from(NullHasher.INSTANCE.indices(Shape.fromKM(17, 72)));
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        // Hasher may be unordered
-        return DISTINCT;
+    protected CellProducer createEmptyProducer() {
+        return new ArrayCountingBloomFilter(shape);
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
+        return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
+    }
+
+    @Override
+    protected int[] getExpectedValues() {
+        return new int[] {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1};
     }
 }

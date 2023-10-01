@@ -1155,7 +1155,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             }
             return cloned;
         } catch (final CloneNotSupportedException ex) {
-            throw new InternalError();
+            throw new UnsupportedOperationException(ex);
         }
     }
 

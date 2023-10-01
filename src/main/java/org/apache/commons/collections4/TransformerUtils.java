@@ -161,7 +161,7 @@ public class TransformerUtils {
 
     /**
      * Creates a Transformer that calls a Predicate each time the transformer is used.
-     * The transformer will return either Boolean.TRUE or Boolean.FALSE.
+     * The transformer will return either {@link Boolean#TRUE} or {@link Boolean#FALSE}.
      *
      * @param <T>  the input type
      * @param predicate  the predicate to run each time in the transformer, not null
