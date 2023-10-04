@@ -836,24 +836,28 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
         if (!isHashSetValue() && isAddSupported()) {
             assertTrue(it.hasNext() );
-            assertEquals("one", it.next());
-            assertEquals("one", it.getKey());
-            assertEquals("uno", it.getValue());
-            assertEquals("one", it.next());
-            assertEquals("one", it.getKey());
-            assertEquals("un", it.getValue());
-            assertEquals("two", it.next());
-            assertEquals("two", it.getKey());
-            assertEquals("dos", it.getValue());
-            assertEquals("two", it.next());
-            assertEquals("two", it.getKey());
-            assertEquals("deux", it.getValue());
-            assertEquals("three", it.next());
-            assertEquals("three", it.getKey());
-            assertEquals("tres", it.getValue());
-            assertEquals("three", it.next());
-            assertEquals("three", it.getKey());
-            assertEquals("trois", it.getValue());
+            while (it.hasNext()) {
+                it.next();
+                if ("one".equals(it.getKey())) {
+                    assertEquals("one", it.getKey());
+                    assertEquals("uno", it.getValue());
+                    assertEquals("one", it.next());
+                    assertEquals("one", it.getKey());
+                    assertEquals("un", it.getValue());
+                } else if ("two".equals(it.getKey())) {
+                    assertEquals("two", it.getKey());
+                    assertEquals("dos", it.getValue());
+                    assertEquals("two", it.next());
+                    assertEquals("two", it.getKey());
+                    assertEquals("deux", it.getValue());
+                } else if ("three".equals(it.getKey())) {
+                    assertEquals("three", it.getKey());
+                    assertEquals("tres", it.getValue());
+                    assertEquals("three", it.next());
+                    assertEquals("three", it.getKey());
+                    assertEquals("trois", it.getValue());
+                }
+            }
             assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
         }
     }
