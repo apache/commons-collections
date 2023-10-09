@@ -63,5 +63,11 @@ limitations under the License.
       <!-- Indentation style recommended by Oracle -->
       <property name="caseIndent" value="0"/>
     </module>
+    <module name="ImportOrder">
+      <property name="option" value="top"/>
+      <property name="groups" value="java,javax,junit,org,com"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+    </module>
  </module>
 </module>
