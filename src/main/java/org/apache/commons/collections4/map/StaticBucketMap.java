@@ -177,7 +177,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         int cnt = 0;
 
         for (int i = 0; i < buckets.length; i++) {
-            synchronized(locks[i]) {
+            synchronized (locks[i]) {
                 cnt += locks[i].size;
             }
         }
