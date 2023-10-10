@@ -42,7 +42,7 @@ public class TestingHashers {
      * @param hashers The hashers to merge
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T mergeHashers(final T filter, final Hasher...hashers) {
+    public static <T extends BloomFilter> T mergeHashers(final T filter, final Hasher... hashers) {
         for (final Hasher h : hashers) {
             filter.merge(h);
         }
