@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  */
 public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
-    private static class TestExpirationPolicy
+    private static final class TestExpirationPolicy
         implements ExpirationPolicy<Integer, String> {
 
         private static final long serialVersionUID = 1L;

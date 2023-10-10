@@ -147,7 +147,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Inner class iterator for the MultiSet.
      */
-    private static class MapBasedMultiSetIterator<E> implements Iterator<E> {
+    private static final class MapBasedMultiSetIterator<E> implements Iterator<E> {
         private final AbstractMapMultiSet<E> parent;
         private final Iterator<Map.Entry<E, MutableInteger>> entryIterator;
         private Map.Entry<E, MutableInteger> current;

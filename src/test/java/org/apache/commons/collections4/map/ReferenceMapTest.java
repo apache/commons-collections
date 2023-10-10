@@ -346,7 +346,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
-    private static class AccessibleEntry<K, V> extends ReferenceEntry<K, V> {
+    private static final class AccessibleEntry<K, V> extends ReferenceEntry<K, V> {
         final AbstractReferenceMap<K, V> parent;
         final Consumer<V> consumer;
 

@@ -161,7 +161,7 @@ public class CollectionUtils {
      * Helper class for set-related operations, e.g. union, subtract, intersection.
      * @param <O>  the element type
      */
-    private static class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
+    private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
 
         /** Contains the unique elements of the two collections. */
         private final Set<O> elements;
@@ -712,7 +712,7 @@ public class CollectionUtils {
      * @param <O>  the element type
      * @since 4.0
      */
-    private static class EquatorWrapper<O> {
+    private static final class EquatorWrapper<O> {
         private final Equator<? super O> equator;
         private final O object;
 

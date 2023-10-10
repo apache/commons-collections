@@ -292,7 +292,7 @@ public class SequencesComparator<T> {
      * This class is a simple placeholder to hold the end part of a path
      * under construction in a {@link SequencesComparator SequencesComparator}.
      */
-    private static class Snake {
+    private static final class Snake {
 
         /** Start index. */
         private final int start;
