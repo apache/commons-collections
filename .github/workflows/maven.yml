@@ -50,4 +50,4 @@ jobs:
         java-version: ${{ matrix.java }}
     - name: Build with Maven
       # Use the default goal
-      run: mvn -V --file pom.xml --no-transfer-progress
+      run: mvn --show-version --batch-mode --no-transfer-progress
