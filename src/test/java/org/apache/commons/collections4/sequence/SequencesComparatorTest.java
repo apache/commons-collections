@@ -154,7 +154,7 @@ public class SequencesComparatorTest {
         return list;
     }
 
-    private static class ExecutionVisitor<T> implements CommandVisitor<T> {
+    private static final class ExecutionVisitor<T> implements CommandVisitor<T> {
 
         private List<T> v;
         private int index;

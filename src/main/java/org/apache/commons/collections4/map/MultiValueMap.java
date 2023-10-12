@@ -541,7 +541,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides a simple reflection factory.
      */
-    private static class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
+    private static final class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
 
         /** Serialization version */
         private static final long serialVersionUID = 2986114157496788874L;

@@ -43,7 +43,7 @@ import java.util.function.Function;
  */
 public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
 
-    private static class EmptyProperties extends Properties {
+    private static final class EmptyProperties extends Properties {
 
         private static final long serialVersionUID = 1L;
 

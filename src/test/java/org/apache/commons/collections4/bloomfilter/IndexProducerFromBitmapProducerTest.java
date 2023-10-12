@@ -84,7 +84,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         }
     }
 
-    private static class TestingBitMapProducer implements BitMapProducer {
+    private static final class TestingBitMapProducer implements BitMapProducer {
         long[] values;
 
         TestingBitMapProducer(final long[] values) {

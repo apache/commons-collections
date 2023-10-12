@@ -34,7 +34,7 @@ jobs:
 #            experimental: true
         
     steps:
-    - uses: actions/checkout@v4.0.0
+    - uses: actions/checkout@v4.1.0
       with:
         persist-credentials: false
     - uses: actions/cache@v3.3.2
@@ -50,4 +50,4 @@ jobs:
         java-version: ${{ matrix.java }}
     - name: Build with Maven
       # Use the default goal
-      run: mvn -V --file pom.xml --no-transfer-progress
+      run: mvn --show-version --batch-mode --no-transfer-progress

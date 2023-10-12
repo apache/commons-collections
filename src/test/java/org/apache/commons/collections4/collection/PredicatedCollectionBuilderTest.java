@@ -129,7 +129,7 @@ public class PredicatedCollectionBuilderTest {
         assertEquals(3, collection.size());
     }
 
-    private static class OddPredicate implements Predicate<Integer> {
+    private static final class OddPredicate implements Predicate<Integer> {
         @Override
         public boolean evaluate(final Integer value) {
             return value % 2 == 1;

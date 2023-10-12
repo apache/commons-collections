@@ -122,7 +122,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Inner class iterator for the MultiSet.
      */
-    private static class MultiSetIterator<E> implements Iterator<E> {
+    private static final class MultiSetIterator<E> implements Iterator<E> {
         private final AbstractMultiSet<E> parent;
         private final Iterator<Entry<E>> entryIterator;
         private Entry<E> current;

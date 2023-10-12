@@ -1257,7 +1257,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * wise there's no difference (except for the need to load the
      * {@link Reference} Class but that happens only once).
      */
-    private static class Reference<E> {
+    private static final class Reference<E> {
 
         private E item;
 

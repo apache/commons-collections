@@ -97,7 +97,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         }
     }
 
-    private static class IntegerComparator implements Comparator<Integer>, Serializable{
+    private static final class IntegerComparator implements Comparator<Integer>, Serializable{
         private static final long serialVersionUID = 1L;
         @Override
         public int compare(final Integer o1, final Integer o2) {

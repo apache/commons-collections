@@ -45,7 +45,7 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    private static class ReverseStringComparator implements Comparator<String> {
+    private static final class ReverseStringComparator implements Comparator<String> {
 
         @Override
         public int compare(final String arg0, final String arg1) {

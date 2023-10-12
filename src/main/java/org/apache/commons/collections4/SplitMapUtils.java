@@ -44,7 +44,7 @@ public class SplitMapUtils {
     private SplitMapUtils() {}
 
 
-    private static class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
+    private static final class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
         private final Get<K, V> get;
 
         private WrappedGet(final Get<K, V> get) {
@@ -136,7 +136,7 @@ public class SplitMapUtils {
         }
     }
 
-    private static class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
+    private static final class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
         private final Put<K, V> put;
 
         private WrappedPut(final Put<K, V> put) {
