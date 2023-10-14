@@ -27,7 +27,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        java: [ 8, 11, 17 ]
+        java: [ 8, 11, 17, 21 ]
         experimental: [false]
 #        include:
 #          - java: 18-ea
