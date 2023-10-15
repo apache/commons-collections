@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import java.util.SortedMap;
+
 import org.apache.commons.collections4.IterableSortedMap;
 import org.apache.commons.collections4.OrderedMap;
 import org.junit.jupiter.api.Nested;
-
-import java.util.SortedMap;
 
 /**
  * Abstract test class to apply tests for both {@link SortedMap} and {@link OrderedMap} contracts.

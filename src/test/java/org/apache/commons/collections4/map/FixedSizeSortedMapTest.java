@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.map;
 
-import org.apache.commons.collections4.IterableSortedMap;
-
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import org.apache.commons.collections4.IterableSortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}

@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Map;
+
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
-
-import java.util.Map;
 
 /**
  * Abstract class for testing the MapIterator interface to simplify nesting inside AbstractMapTest types
