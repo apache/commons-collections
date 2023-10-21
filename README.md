@@ -43,11 +43,11 @@
 Apache Commons Collections
 ===================
 
-[![GitHub Actions Status](https://github.com/apache/commons-collections/workflows/Java%20CI/badge.svg)](https://github.com/apache/commons-collections/actions)
+[![Java CI](https://github.com/apache/commons-collections/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/maven.yml)
 [![Coverage Status](https://codecov.io/gh/apache/commons-collections/branch/master/graph/badge.svg)](https://app.codecov.io/gh/apache/commons-collections/branch/master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/?gav=true)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.4.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.4)
-[![CodeQL](https://github.com/apache/commons-collections/workflows/CodeQL/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
+[![CodeQL](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml)
 [![OpenSSF
 Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
 
