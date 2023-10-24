@@ -152,7 +152,7 @@ public class MapUtils {
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map. Each map entry will be printed with key, value
-     * and value classname. When the value is a Map, recursive behavior occurs.
+     * and value class name. When the value is a Map, recursive behavior occurs.
      * </p>
      * <p>
      * This method is NOT thread-safe in any special way. You must manually synchronize on either this class or the
