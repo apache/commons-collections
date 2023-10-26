@@ -24,6 +24,7 @@ import java.util.HashMap;
 import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,14 +47,13 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
-    @Override
-    public String[] ignoredTests() {
-        // the ridiculous map above still doesn't pass these tests
-        // but it's not relevant, so we ignore them
-        return new String[] {
-            "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
-            "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
-        };
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractOrderedMapTest<K, V>.TestMapIterator {
+        @Override
+        public void testEmptyMapIterator() {
+            // ignore
+        }
     }
 
     @Override
@@ -118,52 +118,17 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertTrue(map instanceof BoundedMap);
     }
 
-//    public BulkTest bulkTestMapIterator() {
-//        return new TestFlatMapIterator();
-//    }
-//
-//    public class TestFlatMapIterator extends AbstractTestOrderedMapIterator {
-//        public TestFlatMapIterator() {
-//            super("TestFlatMapIterator");
-//        }
-//
-//        public Object[] addSetValues() {
-//            return TestSingletonMap.this.getNewSampleValues();
-//        }
-//
-//        public boolean supportsRemove() {
-//            return TestSingletonMap.this.isRemoveSupported();
-//        }
-//
-//        public boolean supportsSetValue() {
-//            return TestSingletonMap.this.isSetValueSupported();
-//        }
-//
-//        public MapIterator makeEmptyMapIterator() {
-//            resetEmpty();
-//            return ((Flat3Map) TestSingletonMap.this.map).mapIterator();
-//        }
-//
-//        public MapIterator makeFullMapIterator() {
-//            resetFull();
-//            return ((Flat3Map) TestSingletonMap.this.map).mapIterator();
-//        }
-//
-//        public Map getMap() {
-//            // assumes makeFullMapIterator() called first
-//            return TestSingletonMap.this.map;
-//        }
-//
-//        public Map getConfirmedMap() {
-//            // assumes makeFullMapIterator() called first
-//            return TestSingletonMap.this.confirmed;
-//        }
-//
-//        public void verify() {
-//            super.verify();
-//            TestSingletonMap.this.verify();
-//        }
-//    }
+    @Test
+    @Override
+    public void testMapPutAllNoChangeOnEmpty() {
+        // skip since doesn't make sense to test an empty singleton
+    }
+
+    @Test
+    @Override
+    public void testMapPutAllAddingKeysOnEmpty() {
+        // skip since doesn't make sense to test an empty singleton
+    }
 
     @Override
     public String getCompatibilityVersion() {

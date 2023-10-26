@@ -226,6 +226,53 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
+    public void testMapIteratorSetClonedValues() throws Exception {
+        if (!supportsFullIterator() || !supportsSetValue()) {
+            return;
+        }
+
+        V newValue = addSetValues()[0];
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
+        final Map<K, V> confirmed = getConfirmedMap();
+        assertTrue(it.hasNext());
+        final K key = it.next();
+        final V initialValue = it.getValue();
+
+        // regular test of new value but using a new instance for each step
+        newValue = cloneObject(newValue);
+        V old = it.setValue(newValue);
+        newValue = cloneObject(newValue);
+        confirmed.put(key, newValue);
+        assertEquals(key, it.getKey(), "Key must not change after setValue");
+        newValue = cloneObject(newValue);
+        assertEquals(newValue, it.getValue(), "Value must be changed after setValue");
+        assertEquals(initialValue, old, "setValue must return old value");
+        assertTrue(map.containsKey(key), "Map must contain key");
+        // test against confirmed, as map may contain value twice
+        assertEquals(confirmed.containsValue(old), map.containsValue(old),
+                "Map value contains should match confirmed");
+        newValue = cloneObject(newValue);
+        assertTrue(map.containsValue(newValue), "Map must contain new value");
+        verify();
+
+        // mix in a put with cloned key too in order to check for bug in bidimaps at the time
+        map.put(cloneObject(key), cloneObject(newValue));
+        verify();
+
+        // go back and set the same value again with a new instance, should be no-op
+        newValue = cloneObject(newValue);
+        old = it.setValue(newValue);
+        newValue = cloneObject(newValue);
+        confirmed.put(key, newValue);
+        newValue = cloneObject(newValue);
+        assertEquals(key, it.getKey(), "Key must not change after setValue");
+        assertEquals(newValue, old, "setValue must return old value");
+        assertEquals(newValue, it.getValue(), "Value must be changed after setValue");
+        verify();
+    }
+
+    @Test
     @Override
     public void testRemove() { // override
         final MapIterator<K, V> it = makeObject();

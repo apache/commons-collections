@@ -14,36 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.map;
+
+import java.util.SortedMap;
 
 import org.apache.commons.collections4.IterableSortedMap;
-import org.apache.commons.collections4.map.AbstractIterableSortedMapTest;
+import org.apache.commons.collections4.OrderedMap;
+import org.junit.jupiter.api.Nested;
 
 /**
- * JUnit test of the OrderedMap interface of a PatriciaTrie.
- *
- * @since 4.0
+ * Abstract test class to apply tests for both {@link SortedMap} and {@link OrderedMap} contracts.
  */
-public class PatriciaTrie2Test<V> extends AbstractIterableSortedMapTest<String, V> {
-
-    public PatriciaTrie2Test() {
-        super(PatriciaTrie2Test.class.getSimpleName());
+public abstract class AbstractIterableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
+    protected AbstractIterableSortedMapTest(final String testName) {
+        super(testName);
     }
 
     @Override
-    public IterableSortedMap<String, V> makeObject() {
-        return new PatriciaTrie<>();
-    }
+    public abstract IterableSortedMap<K, V> makeObject();
 
     @Override
-    public boolean isAllowNullKey() {
-        return false;
+    public IterableSortedMap<K, V> makeFullMap() {
+        return (IterableSortedMap<K, V>) super.makeFullMap();
     }
 
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Nested
+    public class TestAsOrderedMap extends AbstractOrderedMapNestedTest<K, V> {
+        @Override
+        protected AbstractMapTest<K, V> getEnclosing() {
+            return AbstractIterableSortedMapTest.this;
+        }
     }
-
 }

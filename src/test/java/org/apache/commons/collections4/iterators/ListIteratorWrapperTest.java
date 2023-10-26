@@ -26,35 +26,32 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ListIteratorWrapper to ensure that it simulates
  * a ListIterator correctly.
  */
-public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
+public class ListIteratorWrapperTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List<E> list1 = null;
-
     public ListIteratorWrapperTest() {
         super(ListIteratorWrapperTest.class.getSimpleName());
     }
 
-    @BeforeEach
     @SuppressWarnings("unchecked")
-    public void setUp() {
-        list1 = new ArrayList<>();
-        list1.add((E) "One");
-        list1.add((E) "Two");
-        list1.add((E) "Three");
-        list1.add((E) "Four");
-        list1.add((E) "Five");
-        list1.add((E) "Six");
+    private List<E> makeList() {
+        final List<E> list = new ArrayList<>();
+        list.add((E) "One");
+        list.add((E) "Two");
+        list.add((E) "Three");
+        list.add((E) "Four");
+        list.add((E) "Five");
+        list.add((E) "Six");
+        return list;
     }
 
     @Override
@@ -65,7 +62,17 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<>(list1.iterator());
+        return new ListIteratorWrapper<>(makeList().iterator());
+    }
+
+    @Override
+    public boolean supportsAdd() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSet() {
+        return false;
     }
 
     @Test
@@ -111,7 +118,8 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     @Test
     @Override
     public void testRemove() {
-        final ListIterator<E> iter = makeObject();
+        final List<E> list1 = makeList();
+        final ListIterator<E> iter = new ListIteratorWrapper<>(list1.iterator());
 
         //initial state:
         assertEquals(-1, iter.previousIndex());

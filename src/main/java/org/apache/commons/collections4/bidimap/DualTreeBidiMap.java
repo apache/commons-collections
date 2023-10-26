@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -373,12 +374,13 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
                 throw new IllegalStateException(
                         "Iterator setValue() can only be called after next() and before remove()");
             }
+            final K key = last.getKey();
             if (parent.reverseMap.containsKey(value) &&
-                parent.reverseMap.get(value) != last.getKey()) {
+                    !Objects.equals(parent.reverseMap.get(value), key)) {
                 throw new IllegalArgumentException(
                         "Cannot use setValue() when the object being set is already in the map");
             }
-            final V oldValue = parent.put(last.getKey(), value);
+            final V oldValue = parent.put(key, value);
             // Map.Entry specifies that the behavior is undefined when the backing map
             // has been modified (as we did with the put), so we also set the value
             last.setValue(value);

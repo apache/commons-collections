@@ -19,25 +19,27 @@ package org.apache.commons.collections4.map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.collections4.IterableSortedMap;
+
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}
  * implementation.
  *
  * @since 3.0
  */
-public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
+public class FixedSizeSortedMapTest<K, V> extends AbstractIterableSortedMapTest<K, V> {
 
     public FixedSizeSortedMapTest() {
         super(FixedSizeSortedMapTest.class.getSimpleName());
     }
 
     @Override
-    public SortedMap<K, V> makeObject() {
+    public IterableSortedMap<K, V> makeObject() {
         return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
     }
 
     @Override
-    public SortedMap<K, V> makeFullMap() {
+    public IterableSortedMap<K, V> makeFullMap() {
         final SortedMap<K, V> map = new TreeMap<>();
         addSampleMappings(map);
         return FixedSizeSortedMap.fixedSizeSortedMap(map);

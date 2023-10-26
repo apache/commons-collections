@@ -39,6 +39,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1191,10 +1192,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 m.getName() + " raised unexpected " + thrown.getTargetException());
     }
 
-    public BulkTest bulkTestListIterator() {
-        return new TestListIterator();
-    }
-
+    @Nested
     public class TestListIterator extends AbstractListIteratorTest<E> {
         public TestListIterator() {
             super("TestListIterator");

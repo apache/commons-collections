@@ -31,7 +31,9 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 
 /**
  * Tests for ReferenceIdentityMap.
@@ -323,6 +325,28 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
             @SuppressWarnings("unused")
             final byte[] b =  new byte[bytz];
             bytz = bytz * 2;
+        }
+    }
+
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapIterator extends AbstractIterableMapTest<K, V>.TestMapIterator {
+        @Test
+        @Override
+        public void testMapIteratorSetClonedValues() {
+            // specifically expect the opposite behaviour to most collections
+            assertThrows(AssertionFailedError.class, super::testMapIteratorSetClonedValues);
+        }
+    }
+
+    @SuppressWarnings("ClassNameSameAsAncestorName")
+    @Nested
+    public class TestMapEntrySet extends AbstractMapTest<K, V>.TestMapEntrySet {
+        @Test
+        @Override
+        public void testMapEntrySetIteratorEntrySetValueClonedKeysValues() {
+            // specifically expect the opposite behaviour to most collections
+            assertThrows(AssertionFailedError.class, super::testMapEntrySetIteratorEntrySetValueClonedKeysValues);
         }
     }
 

@@ -1670,9 +1670,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             }
 
             previous = AbstractPatriciaTrie.this.previousEntry(e);
-            next = current;
+            next = e;
             current = e;
-            return current;
+            return e;
         }
 
     }

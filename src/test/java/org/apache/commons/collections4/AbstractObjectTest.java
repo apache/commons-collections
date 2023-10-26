@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,6 +34,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Abstract test class for {@link java.lang.Object} methods and contracts.
@@ -136,6 +138,11 @@ public abstract class AbstractObjectTest extends BulkTest {
                     "[2] When two objects are equal, their hashCodes should be also.");
             assertEquals(obj2, obj1, "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true");
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> T cloneObject(final T obj) throws Exception {
+        return (T) serializeDeserialize(obj);
     }
 
     protected Object serializeDeserialize(final Object obj) throws Exception {
@@ -334,4 +341,17 @@ public abstract class AbstractObjectTest extends BulkTest {
         oStream.writeObject(o);
     }
 
+    protected static <E1, E2> void assertThrowsEither(final Class<E1> e1, final Class<E2> e2, final Executable executable, final String message) {
+        try {
+            executable.execute();
+        } catch (final Throwable throwable) {
+            if (e1.isInstance(throwable) || e2.isInstance(throwable)) {
+                return;
+            }
+
+            fail(message + " ==> Unexpected exception type thrown. " + message, throwable);
+        }
+
+        fail(message + " ==> Expected exception to be thrown, but nothing was thrown.");
+    }
 }

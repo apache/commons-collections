@@ -1688,12 +1688,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (modifications != expectedModifications) {
                 throw new ConcurrentModificationException();
             }
-            nextNode = lastReturnedNode;
-            if (nextNode == null) {
-                nextNode = nextGreater(previousNode, orderType);
-            }
             lastReturnedNode = previousNode;
-            previousNode = nextSmaller(previousNode, orderType);
+            nextNode = previousNode;
+            previousNode = nextSmaller(lastReturnedNode, orderType);
             return lastReturnedNode;
         }
 
@@ -1706,12 +1703,22 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             }
             doRedBlackDelete(lastReturnedNode);
             expectedModifications++;
-            lastReturnedNode = null;
-            if (nextNode == null) {
-                previousNode = greatestNode(rootNode[orderType.ordinal()], orderType);
+            if (lastReturnedNode == previousNode) {
+                // most recent was navigateNext
+                if (nextNode == null) {
+                    previousNode = greatestNode(rootNode[orderType.ordinal()], orderType);
+                } else {
+                    previousNode = nextSmaller(nextNode, orderType);
+                }
             } else {
-                previousNode = nextSmaller(nextNode, orderType);
+                // most recent was navigatePrevious
+                if (previousNode == null) {
+                    nextNode = leastNode(rootNode[orderType.ordinal()], orderType);
+                } else {
+                    nextNode = nextGreater(previousNode, orderType);
+                }
             }
+            lastReturnedNode = null;
         }
     }
 
