@@ -46,6 +46,18 @@ public abstract class AbstractBloomFilterProducerTest {
         return true;
     };
 
+    /**
+     * The shape of the Bloom filters for testing.
+     * <ul>
+     *  <li>Hash functions (k) = 17
+     *  <li>Number of bits (m) = 72
+     * </ul>
+     * @return the testing shape.
+     */
+    protected Shape getTestShape() {
+        return shape;
+    }
+
     @BeforeEach
     public void setup() {
         one.clear();

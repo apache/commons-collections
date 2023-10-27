@@ -18,7 +18,8 @@ package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloomFilter> {
 
@@ -28,15 +29,17 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
         };
     }
 
-    @Test
-    public void testCharacteristics() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 34})
+    public void testCharacteristics(int characteristics) {
         Shape shape = getTestShape();
-        BloomFilter inner = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-        WrappedBloomFilter underTest = createEmptyFilter(getTestShape());
-        assertEquals(inner.characteristics(), underTest.characteristics());
-
-        inner = new DefaultBloomFilterTest.NonSparseDefaultBloomFilter(shape);
-        underTest = createEmptyFilter(getTestShape());
-        assertEquals(inner.characteristics(), underTest.characteristics());
+        BloomFilter inner = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape) {
+            @Override
+            public int characteristics() {
+                return characteristics;
+            }
+        };
+        WrappedBloomFilter underTest = new WrappedBloomFilter(inner) {};
+        assertEquals(characteristics, underTest.characteristics());
     }
 }

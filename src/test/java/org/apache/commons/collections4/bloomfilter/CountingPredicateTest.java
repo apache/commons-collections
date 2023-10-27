@@ -16,31 +16,103 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiPredicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 public class CountingPredicateTest {
+    private List<Pair<Integer, Integer>> expected = new ArrayList<>();
+    private List<Pair<Integer, Integer>> result = new ArrayList<>();
+    private Integer[] ary = {Integer.valueOf(1), Integer.valueOf(2)};
 
-    @Test
-    public void testAryShort() {
-        CountingPredicate<Integer> cp = new CountingPredicate<>(new Integer[0], (x, y) -> x == null);
-        assertTrue(cp.test(Integer.valueOf(1)));
+    private BiPredicate<Integer, Integer> makeFunc(BiPredicate<Integer, Integer> inner) {
+        return (x, y) -> {
+            if (inner.test(x, y)) {
+                result.add(Pair.of(x, y));
+                return true;
+            }
+            return false;
+        };
     }
 
+    /**
+     * Test when the predicate array is shorter than other array as determined by the number
+     * of times cp.test() is called and all other values result in a true statement.
+     */
     @Test
-    public void testAryLong() {
-        Integer[] ary = { Integer.valueOf(1), Integer.valueOf(2) };
-        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, (x, y) -> y == null);
+    public void testPredicateShorter() {
+        Integer[] shortAry = {Integer.valueOf(3)};
+        expected.clear();
+        expected.add(Pair.of(3, 1));
+        expected.add(Pair.of(null, 2));
+        result.clear();
+        CountingPredicate<Integer> cp = new CountingPredicate<>(shortAry, makeFunc((x, y) -> true));
+        for (Integer i : ary) {
+            assertTrue(cp.test(i));
+        }
+        assertEquals(expected, result);
         assertTrue(cp.forEachRemaining());
+        assertEquals(expected, result);
+    }
 
-        // test last item not checked
-        cp = new CountingPredicate<>(ary, (x, y) -> y == Integer.valueOf(2));
-        assertFalse(cp.forEachRemaining());
+    /**
+     * Test when the predicate array is shorter than other array as determined by the number
+     * of times cp.test() is called and all other values result in a true statement.
+     */
+    @Test
+    public void testPredicateSameLength() {
+        expected.clear();
+        expected.add( Pair.of(1, 3));
+        expected.add( Pair.of(2, 3));
+        result.clear();
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true));
+        assertTrue(cp.test(3));
+        assertTrue(cp.test(3));
+        assertEquals(expected, result);
+        assertTrue(cp.forEachRemaining());
+        assertEquals(expected, result);
+    }
 
-        // test last item fails
-        cp = new CountingPredicate<>(ary, (x, y) -> y == Integer.valueOf(1));
+    /**
+     * Test when the predicate array is longer than other array as determined by the number
+     * of times cp.test() is called and all other values result in a true statement.
+     */
+    @Test
+    public void testPredicateLonger() {
+        expected.clear();
+        expected.add(Pair.of(1, 3));
+        result.clear();
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null));
+        assertTrue(cp.test(Integer.valueOf(3)));
+        assertEquals(expected, result);
+        expected.add(Pair.of(2, null));
+        assertTrue(cp.forEachRemaining());
+        assertEquals(expected, result);
+
+        // if the other array is zero length then cp.test() will not be called so
+        // we can just call cp.forEachRemaining() here.
+        expected.clear();
+        expected.add(Pair.of(1, null));
+        expected.add(Pair.of(2, null));
+        result.clear();
+        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null));
+        assertTrue(cp.forEachRemaining());
+        assertEquals( expected, result);
+
+        // If a test fails then the result should be false and the rest of the list should
+        // not be processed.
+        expected.clear();
+        expected.add(Pair.of(1, null));
+        result.clear();
+        cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1)));
         assertFalse(cp.forEachRemaining());
+        assertEquals(expected, result);
     }
 }

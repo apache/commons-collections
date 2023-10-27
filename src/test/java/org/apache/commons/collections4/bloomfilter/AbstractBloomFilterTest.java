@@ -464,6 +464,15 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         testCardinalityAndIsEmpty(createEmptyFilter(getTestShape()));
     }
 
+    @Test
+    public void testEmptyAfterMergeWithNothing() {
+        // test the case where is empty after merge
+        // in this case the internal cardinality == -1
+        BloomFilter bf = createEmptyFilter(getTestShape());
+        bf.merge(IndexProducer.fromIndexArray());
+        assertTrue(bf.isEmpty());
+    }
+
     /**
      * Testing class returns the value as the only value.
      */

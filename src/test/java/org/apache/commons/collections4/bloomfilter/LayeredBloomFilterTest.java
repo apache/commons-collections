@@ -81,14 +81,12 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Test
     public void testFindBloomFilter() {
         LayeredBloomFilter filter = setupFindTest();
+        int[] expected = {0, 3};
         int[] result = filter.find(TestingHashers.FROM1);
-        assertEquals(2, result.length);
-        assertEquals(0, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
+        expected = new int[] {1, 3};
         result = filter.find(TestingHashers.FROM11);
-        assertEquals(2, result.length);
-        assertEquals(1, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -98,17 +96,15 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         IndexProducer idxProducer = TestingHashers.FROM1.indices(getTestShape());
         BitMapProducer producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
 
+        int[] expected = {0, 3};
         int[] result = filter.find(producer);
-        assertEquals(2, result.length);
-        assertEquals(0, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
 
+        expected = new int[]{1, 3};
         idxProducer = TestingHashers.FROM11.indices(getTestShape());
         producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
         result = filter.find(producer);
-        assertEquals(2, result.length);
-        assertEquals(1, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
     }
 
     @Test
@@ -116,16 +112,14 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         IndexProducer producer = TestingHashers.FROM1.indices(getTestShape());
         LayeredBloomFilter filter = setupFindTest();
 
+        int[] expected = {0, 3};
         int[] result = filter.find(producer);
-        assertEquals(2, result.length);
-        assertEquals(0, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
 
+        expected = new int[] {1, 3};
         producer = TestingHashers.FROM11.indices(getTestShape());
         result = filter.find(producer);
-        assertEquals(2, result.length);
-        assertEquals(1, result[0]);
-        assertEquals(3, result[1]);
+        assertArrayEquals(expected, result);
     }
 
     /**
