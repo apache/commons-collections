@@ -70,21 +70,21 @@ public class IteratorUtilsTest {
     /**
      * Collection of {@link Integer}s
      */
-    private List<Integer> collectionA = null;
+    private List<Integer> collectionA;
 
     /**
      * Collection of even {@link Integer}s
      */
-    private List<Integer> collectionEven = null;
+    private List<Integer> collectionEven;
 
     /**
      * Collection of odd {@link Integer}s
      */
-    private List<Integer> collectionOdd = null;
+    private List<Integer> collectionOdd;
 
     private final Collection<Integer> emptyCollection = new ArrayList<>(1);
 
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
     /**
      * Creates a NodeList containing the specified nodes.

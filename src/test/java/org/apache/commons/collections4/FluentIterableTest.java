@@ -47,27 +47,27 @@ public class FluentIterableTest {
     /**
      * Iterable of {@link Integer}s
      */
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
     /**
      * Iterable of {@link Long}s
      */
-    private Iterable<Long> iterableB = null;
+    private Iterable<Long> iterableB;
 
     /**
      * Collection of even {@link Integer}s
      */
-    private Iterable<Integer> iterableEven = null;
+    private Iterable<Integer> iterableEven;
 
     /**
      * Collection of odd {@link Integer}s
      */
-    private Iterable<Integer> iterableOdd = null;
+    private Iterable<Integer> iterableOdd;
 
     /**
      * An empty Iterable.
      */
-    private Iterable<Integer> emptyIterable = null;
+    private Iterable<Integer> emptyIterable;
 
     @BeforeEach
     public void setUp() {

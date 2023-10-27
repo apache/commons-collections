@@ -168,7 +168,7 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock3 {
-        private static int cCounter = 0;
+        private static int cCounter;
         private final int iVal;
         public Mock3() {
             iVal = cCounter++;

@@ -82,7 +82,7 @@ public interface IndexProducer {
         Objects.requireNonNull(producer, "producer");
         return consumer -> {
             final LongPredicate longPredicate = new LongPredicate() {
-                int wordIdx = 0;
+                int wordIdx;
 
                 @Override
                 public boolean test(long word) {

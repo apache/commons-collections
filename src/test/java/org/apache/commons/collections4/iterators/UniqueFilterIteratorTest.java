@@ -36,7 +36,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List<E> list1 = null;
+    protected List<E> list1;
 
     public UniqueFilterIteratorTest() {
         super(UniqueFilterIteratorTest.class.getSimpleName());

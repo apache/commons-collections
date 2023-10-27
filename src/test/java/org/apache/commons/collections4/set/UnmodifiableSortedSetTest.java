@@ -37,8 +37,8 @@ import org.junit.jupiter.api.Test;
  * @since 3.0
  */
 public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
-    protected UnmodifiableSortedSet<E> set = null;
-    protected ArrayList<E> array = null;
+    protected UnmodifiableSortedSet<E> set;
+    protected ArrayList<E> array;
 
     public UnmodifiableSortedSetTest() {
         super(UnmodifiableSortedSetTest.class.getSimpleName());

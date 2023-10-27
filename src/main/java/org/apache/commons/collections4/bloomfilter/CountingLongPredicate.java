@@ -25,7 +25,7 @@ import java.util.function.LongPredicate;
  * execute the @code{text} with a zero value for each remaining @{code idx} value.
  */
 class CountingLongPredicate implements LongPredicate {
-    private int idx = 0;
+    private int idx;
     private final long[] ary;
     private final LongBiPredicate func;
 

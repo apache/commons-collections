@@ -42,6 +42,7 @@ limitations under the License.
     <property name="headerFile" value="${checkstyle.header.file}"/>
   </module>
   <module name="TreeWalker">
+    <module name="ExplicitInitializationCheck" />
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>

@@ -39,10 +39,10 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four", "Five", "Six" };
 
-    protected List<String> list1 = null;
-    protected List<String> list2 = null;
-    protected List<String> list3 = null;
-    protected List<Iterator<String>> iteratorList = null;
+    protected List<String> list1;
+    protected List<String> list2;
+    protected List<String> list3;
+    protected List<Iterator<String>> iteratorList;
 
     public ObjectGraphIteratorTest() {
         super(ObjectGraphIteratorTest.class.getSimpleName());

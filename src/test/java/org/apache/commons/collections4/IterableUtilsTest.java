@@ -50,17 +50,17 @@ public class IterableUtilsTest {
     /**
      * Iterable of {@link Integer}s
      */
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
     /**
      * Iterable of {@link Long}s
      */
-    private Iterable<Long> iterableB = null;
+    private Iterable<Long> iterableB;
 
     /**
      * An empty Iterable.
      */
-    private Iterable<Integer> emptyIterable = null;
+    private Iterable<Integer> emptyIterable;
 
     @BeforeEach
     public void setUp() {

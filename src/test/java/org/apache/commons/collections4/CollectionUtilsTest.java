@@ -69,54 +69,54 @@ public class CollectionUtilsTest extends MockTestCase {
     /**
      * Collection of {@link Integer}s
      */
-    private List<Integer> collectionA = null;
+    private List<Integer> collectionA;
 
     /**
      * Collection of {@link Long}s
      */
-    private List<Long> collectionB = null;
+    private List<Long> collectionB;
 
     /**
      * Collection of {@link Integer}s that are equivalent to the Longs in
      * collectionB.
      */
-    private Collection<Integer> collectionC = null;
+    private Collection<Integer> collectionC;
 
     /**
      * Sorted Collection of {@link Integer}s
      */
-    private Collection<Integer> collectionD = null;
+    private Collection<Integer> collectionD;
 
     /**
      * Sorted Collection of {@link Integer}s
      */
-    private Collection<Integer> collectionE = null;
+    private Collection<Integer> collectionE;
 
     /**
      * Collection of {@link Integer}s, bound as {@link Number}s
      */
-    private Collection<Number> collectionA2 = null;
+    private Collection<Number> collectionA2;
 
     /**
      * Collection of {@link Long}s, bound as {@link Number}s
      */
-    private Collection<Number> collectionB2 = null;
+    private Collection<Number> collectionB2;
 
     /**
      * Collection of {@link Integer}s (cast as {@link Number}s) that are
      * equivalent to the Longs in collectionB.
      */
-    private Collection<Number> collectionC2 = null;
+    private Collection<Number> collectionC2;
 
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
-    private Iterable<Long> iterableB = null;
+    private Iterable<Long> iterableB;
 
-    private Iterable<Integer> iterableC = null;
+    private Iterable<Integer> iterableC;
 
-    private Iterable<Number> iterableA2 = null;
+    private Iterable<Number> iterableA2;
 
-    private Iterable<Number> iterableB2 = null;
+    private Iterable<Number> iterableB2;
 
     private final Collection<Integer> emptyCollection = new ArrayList<>(1);
 

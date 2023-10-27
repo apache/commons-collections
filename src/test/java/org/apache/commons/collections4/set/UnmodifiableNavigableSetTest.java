@@ -36,8 +36,8 @@ import org.junit.jupiter.api.Test;
  * @since 4.1
  */
 public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
-    protected UnmodifiableNavigableSet<E> set = null;
-    protected ArrayList<E> array = null;
+    protected UnmodifiableNavigableSet<E> set;
+    protected ArrayList<E> array;
 
     public UnmodifiableNavigableSetTest() {
         super(UnmodifiableNavigableSetTest.class.getSimpleName());
