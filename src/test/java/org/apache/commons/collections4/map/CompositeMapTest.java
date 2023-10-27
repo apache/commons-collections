@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     /** used as a flag in MapMutator tests */
-    private boolean pass = false;
+    private boolean pass;
 
     public CompositeMapTest() {
         super(CompositeMapTest.class.getSimpleName());
