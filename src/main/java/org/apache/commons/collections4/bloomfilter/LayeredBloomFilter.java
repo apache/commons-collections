@@ -356,8 +356,8 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      */
     private class Finder implements Predicate<BloomFilter> {
         int[] result = new int[layerManager.getDepth()];
-        int bfIdx = 0;
-        int resultIdx = 0;
+        int bfIdx;
+        int resultIdx;
         BloomFilter bf;
 
         Finder(BloomFilter bf) {

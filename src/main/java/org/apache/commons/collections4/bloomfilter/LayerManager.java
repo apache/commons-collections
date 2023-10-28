@@ -90,7 +90,7 @@ public class LayerManager implements BloomFilterProducer {
                 throw new IllegalArgumentException("'breakAt' must be greater than 0");
             }
             return new Predicate<LayerManager>() {
-                int count = 0;
+                int count;
 
                 @Override
                 public boolean test(LayerManager filter) {

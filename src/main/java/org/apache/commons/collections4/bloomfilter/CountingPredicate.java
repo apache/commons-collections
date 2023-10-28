@@ -31,7 +31,7 @@ import java.util.function.Predicate;
  * @since 4.5
  */
 class CountingPredicate<T> implements Predicate<T> {
-    private int idx = 0;
+    private int idx;
     private final T[] ary;
     private final BiPredicate<T, T> func;
 
