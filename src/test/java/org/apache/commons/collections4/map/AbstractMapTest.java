@@ -2090,7 +2090,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Get the map.
+     * Gets the map.
      * @return Map<K, V>
      */
     public Map<K, V> getMap() {
@@ -2098,7 +2098,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Get the confirmed.
+     * Gets the confirmed.
      * @return Map<K, V>
      */
     public Map<K, V> getConfirmed() {

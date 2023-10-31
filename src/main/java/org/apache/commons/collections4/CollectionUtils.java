@@ -1657,7 +1657,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Get the maximum number of elements that the Collection can contain.
+     * Gets the maximum number of elements that the Collection can contain.
      * <p>
      * This method uses the {@link BoundedCollection} interface to determine the
      * maximum size. If the collection does not implement this interface then

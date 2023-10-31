@@ -220,7 +220,7 @@ public class SplitMapUtils {
 
 
     /**
-     * Get the specified {@link Get} as an instance of {@link IterableMap}.
+     * Gets the specified {@link Get} as an instance of {@link IterableMap}.
      * If {@code get} implements {@link IterableMap} directly, no conversion will take place.
      * If {@code get} implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise, an {@link Unmodifiable} {@link IterableMap} will be returned.
@@ -242,7 +242,7 @@ public class SplitMapUtils {
     }
 
     /**
-     * Get the specified {@link Put} as an instanceof {@link Map}.
+     * Gets the specified {@link Put} as an instanceof {@link Map}.
      * If {@code put} implements {@link Map} directly, no conversion will take place.
      * Otherwise, a <em>write-only</em> {@link Map} will be returned.  On such a {@link Map}
      * it is recommended that the result of #put(K, V) be discarded as it likely will not

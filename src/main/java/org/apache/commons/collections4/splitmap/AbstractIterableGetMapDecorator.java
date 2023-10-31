@@ -108,7 +108,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     }
 
     /**
-     * Get a MapIterator over this Get.
+     * Gets a MapIterator over this Get.
      * @return MapIterator&lt;K, V&gt;
      */
     @Override

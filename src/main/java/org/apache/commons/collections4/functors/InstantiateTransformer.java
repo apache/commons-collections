@@ -45,7 +45,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     private final Object[] iArgs;
 
     /**
-     * Get a typed no-arg instance.
+     * Gets a typed no-arg instance.
      *
      * @param <T>  the type of the objects to be created
      * @return Transformer&lt;Class&lt;? extends T&gt;, T&gt;

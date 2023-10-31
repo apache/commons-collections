@@ -43,7 +43,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     private final O iConstant;
 
     /**
-     * Get a typed null instance.
+     * Gets a typed null instance.
      *
      * @param <I>  the input type
      * @param <O>  the output type

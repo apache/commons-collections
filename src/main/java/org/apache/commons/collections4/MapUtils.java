@@ -1220,7 +1220,7 @@ public class MapUtils {
     }
 
     /**
-     * Get the specified {@link Map} as an {@link IterableMap}.
+     * Gets the specified {@link Map} as an {@link IterableMap}.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1237,7 +1237,7 @@ public class MapUtils {
     }
 
     /**
-     * Get the specified {@link SortedMap} as an {@link IterableSortedMap}.
+     * Gets the specified {@link SortedMap} as an {@link IterableSortedMap}.
      *
      * @param <K> the key type
      * @param <V> the value type

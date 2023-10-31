@@ -91,7 +91,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Get the next object from the iterator.
+     * Gets the next object from the iterator.
      * <p>
      * This returns the single object if it hasn't been returned yet.
      *
@@ -110,7 +110,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Get the previous object from the iterator.
+     * Gets the previous object from the iterator.
      * <p>
      * This returns the single object if it has been returned.
      *

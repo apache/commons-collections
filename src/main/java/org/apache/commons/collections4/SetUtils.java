@@ -200,7 +200,7 @@ public class SetUtils {
 
 
     /**
-     * Get a typed empty unmodifiable Set.
+     * Gets a typed empty unmodifiable Set.
      * @param <E> the element type
      * @return an empty Set
      */
@@ -209,7 +209,7 @@ public class SetUtils {
     }
 
     /**
-     * Get a typed empty unmodifiable sorted set.
+     * Gets a typed empty unmodifiable sorted set.
      * @param <E> the element type
      * @return an empty sorted Set
      */

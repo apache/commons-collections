@@ -104,7 +104,7 @@ public class MultiSetUtils {
     }
 
     /**
-     * Get an empty {@code MultiSet}.
+     * Gets an empty {@code MultiSet}.
      *
      * @param <E> the element type
      * @return an empty MultiSet
