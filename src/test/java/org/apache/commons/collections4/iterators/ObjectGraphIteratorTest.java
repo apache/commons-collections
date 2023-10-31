@@ -406,8 +406,8 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
             return color;
         }
 
-        void setColor(final String colour) {
-            this.color = colour;
+        void setColor(final String color) {
+            this.color = color;
         }
 
     }
