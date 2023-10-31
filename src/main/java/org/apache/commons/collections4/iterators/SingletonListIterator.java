@@ -155,7 +155,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Set sets the value of the singleton.
+     * Sets sets the value of the singleton.
      *
      * @param obj  the object to set
      * @throws IllegalStateException if {@code next} has not been called

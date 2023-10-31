@@ -435,7 +435,7 @@ public class SetUtils {
      * avoid non-deterministic behavior:
      *
      * <pre>
-     * Set s = SetUtils.synchronizedSet(mySet);
+     * Sets s = SetUtils.synchronizedSet(mySet);
      * synchronized (s) {
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {

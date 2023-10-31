@@ -1356,7 +1356,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Set the collection.
+     * Sets the collection.
      * @param collection the Collection<E> to set
      */
     public void setCollection(final Collection<E> collection) {
@@ -1368,7 +1368,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Set the confirmed.
+     * Sets the confirmed.
      * @param confirmed the Collection<E> to set
      */
     public void setConfirmed(final Collection<E> confirmed) {

@@ -160,7 +160,7 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Set nextObject to the next object. If there are no more
+     * Sets nextObject to the next object. If there are no more
      * objects, then return false. Otherwise, return true.
      */
     private boolean setNextObject() {

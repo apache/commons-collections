@@ -1737,7 +1737,7 @@ public class MapUtils {
      *
      * <pre>
      * Map m = MapUtils.synchronizedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
@@ -1767,7 +1767,7 @@ public class MapUtils {
      *
      * <pre>
      * Map m = MapUtils.synchronizedSortedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {

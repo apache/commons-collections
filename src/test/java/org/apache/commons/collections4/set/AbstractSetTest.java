@@ -72,7 +72,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Set equals method is defined.
+     * Sets equals method is defined.
      */
     @Override
     public boolean isEqualsCheckable() {

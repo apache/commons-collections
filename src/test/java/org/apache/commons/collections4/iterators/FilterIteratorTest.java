@@ -51,7 +51,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     private FilterIterator<E> iterator;
 
     /**
-     * Set up instance variables required by this test case.
+     * Sets up instance variables required by this test case.
      */
     @BeforeEach
     public void setUp() {
