@@ -400,14 +400,14 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     static class Leaf {
 
-        String colour;
+        String color;
 
-        String getColour() {
-            return colour;
+        String getColor() {
+            return color;
         }
 
-        void setColour(final String colour) {
-            this.colour = colour;
+        void setColor(final String colour) {
+            this.color = colour;
         }
 
     }
