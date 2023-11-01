@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,6 +31,9 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
@@ -2152,5 +2156,54 @@ public class CollectionUtils {
             throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
         }
         return collection.iterator().next();
+    }
+
+    /**
+     * Returns partitions of given {@code collection}, each of size
+     * {@code chunkSize} (the final partition may be smaller).
+     * <p>
+     * For example, partitioning a {@code collection} containing
+     * {@code [a, b, c, d, e, f, g]} with a {@code chunkSize} of 3 yields an outer
+     * {@link List} containing three collections of type {@code collection} where
+     * the first two collections will have three elements each and the final
+     * collection will have one element. Ordering of elements would be based on that
+     * of the Stream of the given {@code collection}.
+     * </p>
+     * <p>
+     * Passing an empty {@code collection} as input would return an empty
+     * {@link List}. Passing {@code chunkSize} greater than the size of input
+     * {@code collection} would return a {@link List} with just one element which
+     * would in-turn be the input {@code collection} itself.
+     * </p>
+     *
+     * @param            <E> the type of Collection
+     * @param collection the collection to be partitioned
+     * @param chunkSize  the desired size of each partition (the last may be
+     *                   smaller)
+     * @return a list of collections (type as that of given input collection)
+     * @throws NullPointerException     if the input collection is null
+     * @throws IllegalArgumentException if the input chunkSize is lesser than or
+     *                                  equal to 0
+     * @throws IllegalArgumentException if new instance of input collection cannot
+     *                                  be instantiated
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <E extends Collection> List<E> partitionByChunkSize(final E collection, int chunkSize) {
+        Objects.requireNonNull(collection, "input collection must not be null");
+        if (chunkSize <= 0) {
+            throw new IllegalArgumentException("input chunk size must be greater than 0");
+        }
+        Supplier<E> supplier = () -> {
+            try {
+                return (E) collection.getClass().getDeclaredConstructor().newInstance();
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException
+                    | InstantiationException e) {
+                throw new IllegalArgumentException("unable to get instance of given input collection");
+            }
+        };
+        final AtomicInteger counter = new AtomicInteger(0);
+        final Map<Integer, E> map = (Map<Integer, E>) collection.stream().collect(
+                Collectors.groupingBy((i -> counter.getAndIncrement() / chunkSize), Collectors.toCollection(supplier)));
+        return new ArrayList<>(map.values());
     }
 }
