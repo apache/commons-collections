@@ -72,15 +72,9 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         return false;
     }
 
-    // from LazyMapTest
-    @Test
     @Override
-    public void testMapGet() {
-        //TODO eliminate need for this via superclass - see svn history.
-    }
-
     @Test
-    public void mapGet() {
+    public void testMapGet() {
         Map<Integer, Number> map = lazySortedMap(new TreeMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get(5);

@@ -34,7 +34,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void compareEquals() {
+    public void testCompareEquals() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>());
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
@@ -43,7 +43,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void compareGreater() {
+    public void testCompareGreater() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
@@ -52,7 +52,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void compareLess() {
+    public void testCompareLess() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
@@ -61,7 +61,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void compareGreaterOrEqual() {
+    public void testCompareGreaterOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER_OR_EQUAL);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
@@ -70,7 +70,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void compareLessOrEqual() {
+    public void testCompareLessOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS_OR_EQUAL);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));

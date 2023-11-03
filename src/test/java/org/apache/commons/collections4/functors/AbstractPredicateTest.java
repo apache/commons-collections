@@ -38,7 +38,7 @@ public abstract class AbstractPredicateTest {
     }
 
     @Test
-    public void predicateSanityTests() throws Exception {
+    public void testPredicateSanityTests() throws Exception {
         final Predicate<?> predicate = generatePredicate();
         assertNotNull(predicate);
     }

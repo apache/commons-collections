@@ -98,7 +98,7 @@ public class IterableUtilsTest {
     private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
     @Test
-    public void forEach() {
+    public void testForEach() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -123,7 +123,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void forEachFailure() {
+    public void testForEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<>();
         col.add("x");
@@ -131,7 +131,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void forEachButLast() {
+    public void testForEachButLast() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -159,7 +159,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void containsWithEquator() {
+    public void testContainsWithEquator() {
         final List<String> base = new ArrayList<>();
         base.add("AC");
         base.add("BB");
@@ -190,7 +190,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void frequency() {
+    public void testFrequency() {
         // null iterable test
         assertEquals(0, IterableUtils.frequency(null, 1));
 
@@ -238,7 +238,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void frequencyOfNull() {
+    public void testFrequencyOfNull() {
         final List<String> list = new ArrayList<>();
         assertEquals(0, IterableUtils.frequency(list, null));
         list.add("A");
@@ -256,7 +256,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void find() {
+    public void testFind() {
         Predicate<Number> testPredicate = equalPredicate(4);
         Integer test = IterableUtils.find(iterableA, testPredicate);
         assertEquals(4, (int) test);
@@ -270,7 +270,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void indexOf() {
+    public void testIndexOf() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         int index = IterableUtils.indexOf(iterableA, testPredicate);
         assertEquals(6, index);
@@ -284,7 +284,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void countMatches() {
+    public void testCountMatches() {
         assertEquals(4, IterableUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, IterableUtils.countMatches(null, EQUALS_TWO));
         assertAll(
@@ -296,7 +296,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void matchesAny() {
+    public void testMatchesAny() {
         final List<Integer> list = new ArrayList<>();
 
         assertThrows(NullPointerException.class, () -> assertFalse(IterableUtils.matchesAny(null, null)),
@@ -317,7 +317,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void matchesAll() {
+    public void testMatchesAll() {
         assertThrows(NullPointerException.class, () -> assertFalse(IterableUtils.matchesAll(null, null)),
                 "predicate must not be null");
 
@@ -342,7 +342,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void getFromIterableIndexOutOfBoundsException() throws Exception {
+    public void testGetFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
@@ -358,7 +358,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void firstFromIterableIndexOutOfBoundsException() throws Exception {
+    public void testFirstFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         // Collection, non-existent entry
@@ -367,7 +367,7 @@ public class IterableUtilsTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void partition() {
+    public void testPartition() {
         final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
@@ -401,7 +401,7 @@ public class IterableUtilsTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void partitionMultiplePredicates() {
+    public void testPartitionMultiplePredicates() {
         final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
@@ -517,7 +517,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void size() {
+    public void testSize() {
         assertEquals(0, IterableUtils.size(null));
     }
 

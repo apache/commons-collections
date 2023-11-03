@@ -39,7 +39,7 @@ public class EnumerationUtilsTest {
     public static final String TO_LIST_FIXTURE = "this is a test";
 
     @Test
-    public void getFromEnumeration() throws Exception {
+    public void testGetFromEnumeration() throws Exception {
         // Enumeration, entry exists
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
