@@ -274,7 +274,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void transform() {
+    public void testTransform() {
         final Transformer<Integer, Integer> squared = object -> object * object;
         List<Integer> result = FluentIterable.of(iterableA).transform(squared).toList();
         assertEquals(10, result.size());
@@ -444,7 +444,7 @@ public class FluentIterableTest {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
-    public void toArray() {
+    public void testToArray() {
         final Long[] arr = {1L, 2L, 3L, 4L, 5L};
         final Long[] result = FluentIterable.of(arr).toArray(Long.class);
         assertNotNull(result);

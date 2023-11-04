@@ -2249,7 +2249,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
-    public void transform1() {
+    public void testTransform1() {
         List<Number> list = new ArrayList<>();
         list.add(1L);
         list.add(2L);
@@ -2273,7 +2273,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
-    public void transform2() {
+    public void testTransform2() {
         final Set<Number> set = new HashSet<>();
         set.add(1L);
         set.add(2L);

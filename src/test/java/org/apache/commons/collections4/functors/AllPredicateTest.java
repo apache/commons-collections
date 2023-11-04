@@ -118,7 +118,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * false predicate is actually evaluated
      */
     @Test
-    public void trueAndFalseCombined() {
+    public void testTrueAndFalseCombined() {
         assertFalse(getPredicateInstance(false, null).evaluate(getTestValue()),
                 "false predicate evaluated to true");
         assertFalse(getPredicateInstance(false, null, null).evaluate(getTestValue()),
