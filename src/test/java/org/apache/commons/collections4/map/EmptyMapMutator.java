@@ -24,7 +24,7 @@ import java.util.Map;
  * the class has to be separate of TestCompositeMap, else the test
  * class also has to be serialized.
  */
-class EmptyMapMutator<K, V> implements CompositeMap.MapMutator<K, V> {
+final class EmptyMapMutator<K, V> implements CompositeMap.MapMutator<K, V> {
     /** Serialization version */
     private static final long serialVersionUID = -2729718980002476794L;
 

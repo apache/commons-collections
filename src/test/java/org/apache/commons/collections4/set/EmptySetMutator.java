@@ -25,7 +25,7 @@ import java.util.Set;
  * the class has to be separate of CompositeSetTest, else the test
  * class also has to be serialized.
  */
-class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
+final class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 5321193666420238910L;

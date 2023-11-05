@@ -1496,7 +1496,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
     }
 
-    class KeyView extends AbstractView<K> {
+    final class KeyView extends AbstractView<K> {
 
         /**
          * Creates a new TreeBidiMap.KeyView.
@@ -1523,7 +1523,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
     }
 
-    class ValueView extends AbstractView<V> {
+    final class ValueView extends AbstractView<V> {
 
         /**
          * Creates a new TreeBidiMap.ValueView.
@@ -1553,7 +1553,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * A view of this map.
      */
-    class EntryView extends AbstractView<Map.Entry<K, V>> {
+    final class EntryView extends AbstractView<Map.Entry<K, V>> {
 
         EntryView() {
             super(KEY);
@@ -1594,7 +1594,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * A view of this map.
      */
-    class InverseEntryView extends AbstractView<Map.Entry<V, K>> {
+    final class InverseEntryView extends AbstractView<Map.Entry<V, K>> {
 
         InverseEntryView() {
             super(VALUE);
@@ -1718,7 +1718,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * An iterator over the map.
      */
-    class ViewMapIterator extends AbstractViewIterator implements OrderedMapIterator<K, V> {
+    final class ViewMapIterator extends AbstractViewIterator implements OrderedMapIterator<K, V> {
 
         /**
          * Constructor.
@@ -1764,7 +1764,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * An iterator over the map.
      */
-    class InverseViewMapIterator extends AbstractViewIterator implements OrderedMapIterator<V, K> {
+    final class InverseViewMapIterator extends AbstractViewIterator implements OrderedMapIterator<V, K> {
 
         /**
          * Creates a new TreeBidiMap.InverseViewMapIterator.
@@ -1810,7 +1810,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * An iterator over the map entries.
      */
-    class ViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<K, V>> {
+    final class ViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<K, V>> {
 
         /**
          * Constructor.
@@ -1833,7 +1833,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * An iterator over the inverse map entries.
      */
-    class InverseViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<V, K>> {
+    final class InverseViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<V, K>> {
 
         /**
          * Constructor.
@@ -2083,7 +2083,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * The inverse map implementation.
      */
-    class Inverse implements OrderedBidiMap<V, K> {
+    final class Inverse implements OrderedBidiMap<V, K> {
 
         /** Store the keySet once created. */
         private Set<V> inverseKeySet;

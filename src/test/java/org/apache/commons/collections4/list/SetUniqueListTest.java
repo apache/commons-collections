@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
-    class SetUniqueList307 extends SetUniqueList<E> {
+    final class SetUniqueList307 extends SetUniqueList<E> {
         /**
          * Generated serial version ID.
          */

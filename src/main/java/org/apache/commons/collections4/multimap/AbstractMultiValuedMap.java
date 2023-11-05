@@ -828,7 +828,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             AbstractMultiValuedMap.this.clear();
         }
 
-        class AsMapEntrySet extends AbstractSet<Map.Entry<K, Collection<V>>> {
+        final class AsMapEntrySet extends AbstractSet<Map.Entry<K, Collection<V>>> {
 
             @Override
             public Iterator<Map.Entry<K, Collection<V>>> iterator() {
@@ -864,7 +864,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         /**
          * EntrySet iterator for the asMap view.
          */
-        class AsMapEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, Collection<V>>> {
+        final class AsMapEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, Collection<V>>> {
 
             AsMapEntrySetIterator(final Iterator<Map.Entry<K, Collection<V>>> iterator) {
                 super(iterator);
