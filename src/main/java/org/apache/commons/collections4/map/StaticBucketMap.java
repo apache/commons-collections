@@ -498,7 +498,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         public int size;
     }
 
-    private class BaseIterator {
+    class BaseIterator {
         private final ArrayList<Map.Entry<K, V>> current = new ArrayList<>();
         private int bucket;
         private Map.Entry<K, V> last;
@@ -540,7 +540,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
     }
 
-    private class EntryIterator extends BaseIterator implements Iterator<Map.Entry<K, V>> {
+    private final class EntryIterator extends BaseIterator implements Iterator<Map.Entry<K, V>> {
 
         @Override
         public Map.Entry<K, V> next() {
@@ -549,7 +549,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     }
 
-    private class ValueIterator extends BaseIterator implements Iterator<V> {
+    private final class ValueIterator extends BaseIterator implements Iterator<V> {
 
         @Override
         public V next() {
@@ -558,7 +558,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     }
 
-    private class KeyIterator extends BaseIterator implements Iterator<K> {
+    private final class KeyIterator extends BaseIterator implements Iterator<K> {
 
         @Override
         public K next() {
@@ -567,7 +567,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     }
 
-    private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
+    private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
         @Override
         public int size() {
@@ -618,7 +618,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     }
 
-    private class KeySet extends AbstractSet<K> {
+    private final class KeySet extends AbstractSet<K> {
 
         @Override
         public int size() {
@@ -658,7 +658,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
 
-    private class Values extends AbstractCollection<V> {
+    private final class Values extends AbstractCollection<V> {
 
         @Override
         public int size() {

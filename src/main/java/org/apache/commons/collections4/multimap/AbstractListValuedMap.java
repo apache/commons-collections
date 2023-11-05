@@ -103,7 +103,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     /**
      * Wrapped list to handle add and remove on the list returned by get(object)
      */
-    private class WrappedList extends WrappedCollection implements List<V> {
+    private final class WrappedList extends WrappedCollection implements List<V> {
 
         WrappedList(final K key) {
             super(key);
@@ -210,7 +210,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     }
 
     /** Values ListIterator */
-    private class ValuesListIterator implements ListIterator<V> {
+    private final class ValuesListIterator implements ListIterator<V> {
 
         private final K key;
         private List<V> values;

@@ -155,7 +155,7 @@ public final class UnmodifiableEntrySet<K, V>
     /**
      * Implementation of an entry set iterator.
      */
-    private class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
+    private final class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
 
         protected UnmodifiableEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
             super(iterator);
@@ -175,7 +175,7 @@ public final class UnmodifiableEntrySet<K, V>
     /**
      * Implementation of a map entry that is unmodifiable.
      */
-    private class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
+    private final class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
 
         protected UnmodifiableEntry(final Map.Entry<K, V> entry) {
             super(entry);

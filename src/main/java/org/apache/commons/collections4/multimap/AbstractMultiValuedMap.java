@@ -538,7 +538,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides a MultiSet<K> keys view.
      */
-    private class KeysMultiSet extends AbstractMultiSet<K> {
+    private final class KeysMultiSet extends AbstractMultiSet<K> {
 
         @Override
         public boolean contains(final Object o) {
@@ -598,7 +598,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides the Entry<K, V> view
      */
-    private class EntryValues extends AbstractCollection<Entry<K, V>> {
+    private final class EntryValues extends AbstractCollection<Entry<K, V>> {
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
@@ -629,7 +629,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class for MultiValuedMap Entries.
      */
-    private class MultiValuedMapEntry extends AbstractMapEntry<K, V> {
+    private final class MultiValuedMapEntry extends AbstractMapEntry<K, V> {
 
         MultiValuedMapEntry(final K key, final V value) {
             super(key, value);
@@ -645,7 +645,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class for MapIterator.
      */
-    private class MultiValuedMapIterator implements MapIterator<K, V> {
+    private final class MultiValuedMapIterator implements MapIterator<K, V> {
 
         private final Iterator<Entry<K, V>> it;
 
@@ -700,7 +700,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides the values view.
      */
-    private class Values extends AbstractCollection<V> {
+    private final class Values extends AbstractCollection<V> {
         @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<>();
@@ -724,7 +724,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides the values iterator.
      */
-    private class ValuesIterator implements Iterator<V> {
+    private final class ValuesIterator implements Iterator<V> {
         private final Object key;
         private final Collection<V> values;
         private final Iterator<V> iterator;
@@ -757,7 +757,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides the AsMap view.
      */
-    private class AsMap extends AbstractMap<K, Collection<V>> {
+    private final class AsMap extends AbstractMap<K, Collection<V>> {
         final transient Map<K, Collection<V>> decoratedMap;
 
         AsMap(final Map<K, Collection<V>> map) {

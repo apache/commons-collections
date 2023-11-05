@@ -484,7 +484,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides the values view.
      */
-    private class Values extends AbstractCollection<V> {
+    private final class Values extends AbstractCollection<V> {
         @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<>();
@@ -508,7 +508,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides the values iterator.
      */
-    private class ValuesIterator implements Iterator<V> {
+    private final class ValuesIterator implements Iterator<V> {
         private final Object key;
         private final Collection<V> values;
         private final Iterator<V> iterator;
