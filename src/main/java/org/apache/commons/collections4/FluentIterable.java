@@ -107,7 +107,7 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Construct a new FluentIterable from the provided iterable. If the
+     * Constructs a new FluentIterable from the provided iterable. If the
      * iterable is already an instance of FluentIterable, the instance
      * will be returned instead.
      * <p>

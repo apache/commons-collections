@@ -91,7 +91,7 @@ public class PassiveExpiringMap<K, V>
         }
 
         /**
-         * Construct a policy with the given time-to-live constant measured in
+         * Constructs a policy with the given time-to-live constant measured in
          * milliseconds. A negative time-to-live value indicates entries never
          * expire. A zero time-to-live value indicates entries expire (nearly)
          * immediately.
@@ -106,7 +106,7 @@ public class PassiveExpiringMap<K, V>
         }
 
         /**
-         * Construct a policy with the given time-to-live constant measured in
+         * Constructs a policy with the given time-to-live constant measured in
          * the given time unit of measure.
          *
          * @param timeToLive the constant amount of time an entry is available
@@ -210,7 +210,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given expiration policy to determine
+     * Constructs a map decorator using the given expiration policy to determine
      * expiration times.
      *
      * @param expiringPolicy the policy used to determine expiration times of
@@ -222,7 +222,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map and uses the given
+     * Constructs a map decorator that decorates the given map and uses the given
      * expiration policy to determine expiration times. If there are any
      * elements already in the map being decorated, they will NEVER expire
      * unless they are replaced.
@@ -239,7 +239,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map using the given
+     * Constructs a map decorator that decorates the given map using the given
      * time-to-live value measured in milliseconds to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
      *
@@ -254,7 +254,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given time-to-live value measured in
+     * Constructs a map decorator using the given time-to-live value measured in
      * milliseconds to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy. If there
      * are any elements already in the map being decorated, they will NEVER
@@ -273,7 +273,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given time-to-live value measured in
+     * Constructs a map decorator using the given time-to-live value measured in
      * the given time units of measure to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
      *
@@ -289,7 +289,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map using the given
+     * Constructs a map decorator that decorates the given map using the given
      * time-to-live value measured in the given time units of measure to create
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy. This policy
      * is used to determine expiration times. If there are any elements already

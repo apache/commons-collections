@@ -70,7 +70,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private boolean isLocked;
 
     /**
-     * Construct an IteratorChain with no Iterators.
+     * Constructs an IteratorChain with no Iterators.
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some
      * iterators after using this constructor.
@@ -79,7 +79,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Construct an IteratorChain with a single Iterator.
+     * Constructs an IteratorChain with a single Iterator.
      * <p>
      * This method takes one iterator. The newly constructed iterator will
      * iterate through that iterator. Thus calling this constructor on its own

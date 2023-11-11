@@ -73,7 +73,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Construct an ArrayIterator that will iterate over a range of values
+     * Constructs an ArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over.

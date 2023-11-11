@@ -77,7 +77,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     /**
-     * Construct an ArrayListIterator that will iterate over a range of values
+     * Constructs an ArrayListIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over

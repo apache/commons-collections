@@ -72,7 +72,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     }
 
     /**
-     * Construct an ObjectArrayListIterator that will iterate over a range of values
+     * Constructs an ObjectArrayListIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
