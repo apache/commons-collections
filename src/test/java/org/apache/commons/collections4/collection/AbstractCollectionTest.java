@@ -53,7 +53,7 @@ import org.junit.jupiter.api.Test;
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to
- * implement the @{@link #makeObject()}, {@link #makeConfirmedCollection()}
+ * implement the {@link #makeObject()}, {@link #makeConfirmedCollection()}
  * and {@link #makeConfirmedFullCollection()} methods.
  * You might want to override some of the additional public methods as well:
  * <p>
