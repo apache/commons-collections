@@ -971,11 +971,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
                     if (getGrandParent(currentNode, dataElement) != null) {
-                            try{
-                                rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
-                            }catch (NullPointerException e){
-                                throw new NullPointerException("null element");
-                            }
+                        try {
+                            rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
+                        } catch (NullPointerException e) {
+                            throw new NullPointerException("null element");
+                        }
                     }
                 }
             }
@@ -2143,7 +2143,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            Node<K,V> leastNode = leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
+            Node<K, V> leastNode = leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
             if (leastNode != null && leastNode.getValue() != null) {
                 return leastNode.getValue();
             }
@@ -2156,7 +2156,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 throw new NoSuchElementException("Map is empty");
             }
 
-            Node<K,V> greatestNode = greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
+            Node<K, V> greatestNode = greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
             if (greatestNode != null && greatestNode.getValue() != null) {
                 return greatestNode.getValue();
             }
