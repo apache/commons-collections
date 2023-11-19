@@ -740,7 +740,7 @@ public class TreeList<E> extends AbstractList<E> {
             final AVLNode<E> movedNode = getRightSubTree().getLeftSubTree();
 
             final int newTopPosition = relativePosition + getOffset(newTop);
-            final int myNewPosition = -newTop.relativePosition;
+            final int myNewPosition = newTop != null ? -newTop.relativePosition : 0;
             final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setRight(movedNode, newTop);
