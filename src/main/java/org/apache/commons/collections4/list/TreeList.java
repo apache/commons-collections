@@ -776,6 +776,9 @@ public class TreeList<E> extends AbstractList<E> {
             final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setLeft(movedNode, newTop);
+            if (newTop == null) {
+                throw new NullPointerException("NewTop is null");
+            }
             newTop.setRight(this, null);
 
             setOffset(newTop, newTopPosition);
