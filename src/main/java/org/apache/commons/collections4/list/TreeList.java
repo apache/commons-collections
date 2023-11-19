@@ -739,13 +739,20 @@ public class TreeList<E> extends AbstractList<E> {
 
         private AVLNode<E> rotateLeft() {
             final AVLNode<E> newTop = right; // can't be faedelung!
-            final AVLNode<E> movedNode = getRightSubTree().getLeftSubTree();
+            AVLNode<E> right = getRightSubTree();
+            if (right == null) {
+                throw new NullPointerException("Right is  null");
+            }
+            final AVLNode<E> movedNode = right.getLeftSubTree();
 
             final int newTopPosition = relativePosition + getOffset(newTop);
             final int myNewPosition = newTop != null ? -newTop.relativePosition : 0;
             final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setRight(movedNode, newTop);
+            if (newTop == null) {
+                throw new NullPointerException("NewTop is null");
+            }
             newTop.setLeft(this, null);
 
             setOffset(newTop, newTopPosition);
@@ -765,7 +772,7 @@ public class TreeList<E> extends AbstractList<E> {
             final AVLNode<E> movedNode = rightSubTreeOfLeftSubTree;
 
             final int newTopPosition = relativePosition + getOffset(newTop);
-            final int myNewPosition = -newTop.relativePosition;
+            final int myNewPosition = newTop != null ? -newTop.relativePosition : 0;
             final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setLeft(movedNode, newTop);
