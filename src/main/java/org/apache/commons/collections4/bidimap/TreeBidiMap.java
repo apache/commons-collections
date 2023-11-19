@@ -2147,7 +2147,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
+
+            Node<K,V> greatestNode = greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
+            if (greatestNode != null && greatestNode.getValue() != null) {
+                return greatestNode.getValue();
+            }
+            throw new IllegalStateException("Unexpected null value");
         }
 
         @Override
