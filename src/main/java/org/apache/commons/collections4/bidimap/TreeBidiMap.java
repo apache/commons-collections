@@ -971,7 +971,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
                     if (getGrandParent(currentNode, dataElement) != null) {
-                        rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
+                            try{
+                                rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
+                            }catch (NullPointerException e){
+                                throw new NullPointerException("null element");
+                            }
                     }
                 }
             }
@@ -2139,7 +2143,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
+            Node<K,V> leastNode = leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
+            if (leastNode != null && leastNode.getValue() != null) {
+                return leastNode.getValue();
+            }
+            throw new IllegalStateException("Unexpected null value");
         }
 
         @Override
