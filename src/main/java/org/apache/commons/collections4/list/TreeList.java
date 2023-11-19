@@ -716,9 +716,11 @@ public class TreeList<E> extends AbstractList<E> {
          * Sets the height by calculation.
          */
         private void recalcHeight() {
-            height = Math.max(
-                getLeftSubTree() == null ? -1 : getLeftSubTree().height,
-                getRightSubTree() == null ? -1 : getRightSubTree().height) + 1;
+            AVLNode<E> leftSubTree = getLeftSubTree();
+            AVLNode<E> rightSubTree = getRightSubTree();
+            int leftHeight = (leftSubTree != null) ? leftSubTree.height : -1;
+            int rightHeight = (rightSubTree != null) ? rightSubTree.height : -1;
+            height = Math.max(leftHeight, rightHeight) + 1;
         }
 
         /**
@@ -754,7 +756,13 @@ public class TreeList<E> extends AbstractList<E> {
 
         private AVLNode<E> rotateRight() {
             final AVLNode<E> newTop = left; // can't be faedelung
-            final AVLNode<E> movedNode = getLeftSubTree().getRightSubTree();
+
+            AVLNode<E> left = getLeftSubTree();
+            if (left == null) {
+                throw new NullPointerException("Null element");
+            }
+            AVLNode<E> rightSubTreeOfLeftSubTree = left.getRightSubTree();
+            final AVLNode<E> movedNode = rightSubTreeOfLeftSubTree;
 
             final int newTopPosition = relativePosition + getOffset(newTop);
             final int myNewPosition = -newTop.relativePosition;
