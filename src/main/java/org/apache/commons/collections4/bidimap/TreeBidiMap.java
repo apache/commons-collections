@@ -945,7 +945,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
                     if (getGrandParent(currentNode, dataElement) != null) {
-                        rotateRight(getGrandParent(currentNode, dataElement), dataElement);
+                        try {
+                            rotateRight(getGrandParent(currentNode, dataElement), dataElement);
+                        }catch (NullPointerException e) {
+                            throw new NullPointerException();
+                        }
                     }
                 }
             } else {
