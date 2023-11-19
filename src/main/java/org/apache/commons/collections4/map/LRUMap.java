@@ -328,6 +328,7 @@ public class LRUMap<K, V>
                     reuse = reuse.after;
                 }
                 if (reuse == null) {
+                    assert header != null;
                     throw new IllegalStateException(
                         "Entry.after=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
