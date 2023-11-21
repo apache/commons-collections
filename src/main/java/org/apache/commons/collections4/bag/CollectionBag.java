@@ -32,7 +32,7 @@ import org.apache.commons.collections4.Bag;
  * are fully compliant with the Collection contract.
  * </p>
  * <p>
- * The method javadoc highlights the differences compared to the original Bag interface.
+ * The method Javadoc highlights the differences compared to the original Bag interface.
  * </p>
  *
  * @see Bag

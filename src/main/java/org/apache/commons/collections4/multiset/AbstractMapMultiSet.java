@@ -508,7 +508,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             final E current = entry.getKey();
             final MutableInteger count = entry.getValue();
             for (int index = count.value; index > 0; index--) {
-                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
+                // unsafe, will throw ArrayStoreException if types are not compatible, see Javadoc
                 @SuppressWarnings("unchecked")
                 final T unchecked = (T) current;
                 array[i++] = unchecked;

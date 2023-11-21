@@ -167,7 +167,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * <b>Note:</b> {@link java.util.ListIterator} implementations that support {@code add()}
      * and {@code remove()} only allow {@code set()} to be called once per call
      * to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
-     * javadoc for more details). Since this implementation does not support
+     * Javadoc for more details). Since this implementation does not support
      * {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
      *

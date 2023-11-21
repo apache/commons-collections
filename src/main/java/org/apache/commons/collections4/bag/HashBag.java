@@ -30,7 +30,7 @@ import java.util.HashMap;
  * A {@code Bag} stores each object in the collection together with a
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once. It is important to read the
- * interface javadoc carefully as several methods violate the
+ * interface Javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
  * </p>
  *

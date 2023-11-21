@@ -216,7 +216,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * shape and cardinality of this filter.</p>
      *
      * <p>This produces an estimate roughly equivalent to the number of Hashers that have been merged into the filter
-     * by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>Note:</em></p>
      * <ul>
@@ -246,7 +246,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Estimates the number of items in the union of this Bloom filter with the other bloom filter.
      *
      * <p>This produces an estimate roughly equivalent to the number of unique Hashers that have been merged into either
-     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>{@code estimateUnion} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}
@@ -269,7 +269,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
      *
      * <p>This method produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
-     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>{@code estimateIntersection} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}

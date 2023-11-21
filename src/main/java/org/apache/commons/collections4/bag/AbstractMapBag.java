@@ -468,7 +468,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         int i = 0;
         for (final E current : map.keySet()) {
             for (int index = getCount(current); index > 0; index--) {
-                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
+                // unsafe, will throw ArrayStoreException if types are not compatible, see Javadoc
                 @SuppressWarnings("unchecked")
                 final T unchecked = (T) current;
                 array[i++] = unchecked;
