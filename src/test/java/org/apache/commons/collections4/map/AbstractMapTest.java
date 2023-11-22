@@ -1644,7 +1644,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         @Override
         protected int getIterationBehaviour(){
-             return UNORDERED;
+            return UNORDERED;
         }
 
         @Test
