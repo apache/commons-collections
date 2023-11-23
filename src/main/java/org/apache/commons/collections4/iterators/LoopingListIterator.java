@@ -40,6 +40,8 @@ import org.apache.commons.collections4.ResettableListIterator;
  */
 public class LoopingListIterator<E> implements ResettableListIterator<E> {
 
+    private static final String NO_ELEMENT_TO_LOOP_ON = "There are no elements for this iterator to loop on";
+
     /** The list to base the iterator on */
     private final List<E> list;
     /** The current list iterator */
@@ -85,7 +87,8 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     public E next() {
         if (list.isEmpty()) {
             throw new NoSuchElementException(
-                "There are no elements for this iterator to loop on");
+                    NO_ELEMENT_TO_LOOP_ON
+                );
         }
         if (!iterator.hasNext()) {
             reset();
@@ -107,8 +110,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     @Override
     public int nextIndex() {
         if (list.isEmpty()) {
-            throw new NoSuchElementException(
-                "There are no elements for this iterator to loop on");
+            throw new NoSuchElementException(NO_ELEMENT_TO_LOOP_ON);
         }
         if (!iterator.hasNext()) {
             return 0;
@@ -141,8 +143,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     @Override
     public E previous() {
         if (list.isEmpty()) {
-            throw new NoSuchElementException(
-                "There are no elements for this iterator to loop on");
+            throw new NoSuchElementException(NO_ELEMENT_TO_LOOP_ON);
         }
         if (!iterator.hasPrevious()) {
             E result = null;
@@ -169,8 +170,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     @Override
     public int previousIndex() {
         if (list.isEmpty()) {
-            throw new NoSuchElementException(
-                "There are no elements for this iterator to loop on");
+            throw new NoSuchElementException(NO_ELEMENT_TO_LOOP_ON);
         }
         if (!iterator.hasPrevious()) {
             return list.size() - 1;

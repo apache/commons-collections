@@ -52,6 +52,7 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
      * Use {@code uniquePredicate} if you want that.
      */
     public UniquePredicate() {
+        // just empty constructor
     }
 
     /**

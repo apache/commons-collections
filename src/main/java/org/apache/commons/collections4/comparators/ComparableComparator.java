@@ -72,6 +72,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * Please use the {@link #comparableComparator()} method whenever possible.
      */
     public ComparableComparator() {
+        // just the empty constructor
     }
 
     /**

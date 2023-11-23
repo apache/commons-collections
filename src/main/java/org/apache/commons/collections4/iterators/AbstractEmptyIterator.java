@@ -25,6 +25,8 @@ import java.util.NoSuchElementException;
  */
 abstract class AbstractEmptyIterator<E> {
 
+    private static final String NO_ELEMENT = "Iterator contains no elements";
+
     /**
      * Constructor.
      */
@@ -36,7 +38,7 @@ abstract class AbstractEmptyIterator<E> {
     }
 
     public E next() {
-        throw new NoSuchElementException("Iterator contains no elements");
+        throw new NoSuchElementException(NO_ELEMENT);
     }
 
     public boolean hasPrevious() {
@@ -44,7 +46,7 @@ abstract class AbstractEmptyIterator<E> {
     }
 
     public E previous() {
-        throw new NoSuchElementException("Iterator contains no elements");
+        throw new NoSuchElementException(NO_ELEMENT);
     }
 
     public int nextIndex() {
@@ -60,11 +62,11 @@ abstract class AbstractEmptyIterator<E> {
     }
 
     public void set(final E obj) {
-        throw new IllegalStateException("Iterator contains no elements");
+        throw new IllegalStateException(NO_ELEMENT);
     }
 
     public void remove() {
-        throw new IllegalStateException("Iterator contains no elements");
+        throw new IllegalStateException(NO_ELEMENT);
     }
 
     public void reset() {

@@ -64,6 +64,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      */
     transient Node<E> header;
 
+    private static final String CANT_GET_NODE = "Couldn't get the node: ";
+
     /** The size of the list */
     transient int size;
 
@@ -551,15 +553,15 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     protected Node<E> getNode(final int index, final boolean endMarkerAllowed) throws IndexOutOfBoundsException {
         // Check the index is within the bounds
         if (index < 0) {
-            throw new IndexOutOfBoundsException("Couldn't get the node: " +
+            throw new IndexOutOfBoundsException(CANT_GET_NODE +
                     "index (" + index + ") less than zero.");
         }
         if (!endMarkerAllowed && index == size) {
-            throw new IndexOutOfBoundsException("Couldn't get the node: " +
+            throw new IndexOutOfBoundsException(CANT_GET_NODE +
                     "index (" + index + ") is the size of the list.");
         }
         if (index > size) {
-            throw new IndexOutOfBoundsException("Couldn't get the node: " +
+            throw new IndexOutOfBoundsException(CANT_GET_NODE +
                     "index (" + index + ") greater than the size of the " +
                     "list (" + size + ").");
         }

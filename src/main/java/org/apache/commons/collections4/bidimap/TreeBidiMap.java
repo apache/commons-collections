@@ -107,7 +107,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     private static final long serialVersionUID = 721969328361807L;
-
+    private static final  String MAP_EMPTY_EXCEPTION = "Map is empty";
+    private static final String KEY_NULL_EXCEPTION = "Key is null";
     private transient Node<K, V>[] rootNode;
     private transient int nodeCount;
     private transient int modifications;
@@ -324,8 +325,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      */
     @Override
     public K firstKey() {
+
         if (nodeCount == 0) {
-            throw new NoSuchElementException("Map is empty");
+            throw new NoSuchElementException(MAP_EMPTY_EXCEPTION);
         }
 
         Node<K, V> leastNode = leastNode(rootNode[KEY.ordinal()], KEY);
@@ -333,7 +335,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         if (leastNode != null && leastNode.getKey() != null) {
             return leastNode.getKey();
         }
-        throw new NullPointerException("Key is null");
+        throw new NullPointerException(KEY_NULL_EXCEPTION);
     }
 
     /**
@@ -345,7 +347,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     @Override
     public K lastKey() {
         if (nodeCount == 0) {
-            throw new NoSuchElementException("Map is empty");
+            throw new NoSuchElementException(MAP_EMPTY_EXCEPTION);
         }
 
         Node<K, V> greatestNode = greatestNode(rootNode[KEY.ordinal()], KEY);
@@ -353,7 +355,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         if (greatestNode != null && greatestNode.getKey() != null) {
             return greatestNode.getKey();
         }
-        throw new NullPointerException("Key is null");
+        throw new NullPointerException(KEY_NULL_EXCEPTION);
     }
 
     /**
@@ -2145,7 +2147,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         @Override
         public V firstKey() {
             if (TreeBidiMap.this.nodeCount == 0) {
-                throw new NoSuchElementException("Map is empty");
+                throw new NoSuchElementException(MAP_EMPTY_EXCEPTION);
             }
             Node<K, V> leastNode = leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);
             if (leastNode != null && leastNode.getValue() != null) {
@@ -2157,7 +2159,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         @Override
         public V lastKey() {
             if (TreeBidiMap.this.nodeCount == 0) {
-                throw new NoSuchElementException("Map is empty");
+                throw new NoSuchElementException(MAP_EMPTY_EXCEPTION);
             }
 
             Node<K, V> greatestNode = greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE);

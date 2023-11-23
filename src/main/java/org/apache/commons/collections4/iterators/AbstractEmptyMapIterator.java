@@ -25,6 +25,8 @@ package org.apache.commons.collections4.iterators;
  */
 public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterator<K> {
 
+    private static final String NO_ELEMENT = "Iterator contains no elements";
+
     /**
      * Create a new AbstractEmptyMapIterator.
      */
@@ -32,15 +34,15 @@ public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterat
     }
 
     public K getKey() {
-        throw new IllegalStateException("Iterator contains no elements");
+        throw new IllegalStateException(NO_ELEMENT);
     }
 
     public V getValue() {
-        throw new IllegalStateException("Iterator contains no elements");
+        throw new IllegalStateException(NO_ELEMENT);
     }
 
     public V setValue(final V value) {
-        throw new IllegalStateException("Iterator contains no elements");
+        throw new IllegalStateException(NO_ELEMENT);
     }
 
 }

@@ -55,6 +55,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * The shape of this Bloom filter.
      */
     private final Shape shape;
+    private static final String CONSUMER_CONST = "consumer";
 
     /**
      * The cell for each bit index in the filter.
@@ -165,7 +166,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean forEachCell(final CellProducer.CellConsumer consumer) {
-        Objects.requireNonNull(consumer, "consumer");
+        Objects.requireNonNull(consumer, CONSUMER_CONST);
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != 0 && !consumer.test(i, cells[i])) {
                 return false;
@@ -176,7 +177,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean forEachIndex(final IntPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
+        Objects.requireNonNull(consumer, CONSUMER_CONST);
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != 0 && !consumer.test(i)) {
                 return false;
@@ -187,7 +188,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean forEachBitMap(final LongPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
+        Objects.requireNonNull(consumer, CONSUMER_CONST);
         final int blocksm1 = BitMap.numberOfBitMaps(cells.length) - 1;
         int i = 0;
         long value;
