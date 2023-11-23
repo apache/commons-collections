@@ -70,5 +70,12 @@ limitations under the License.
       <property name="ordered" value="true"/>
       <property name="separated" value="true"/>
     </module>
- </module>
+  </module>
+  <!-- @author tags are deprecated -->
+  <module name="RegexpSingleline">
+    <property name="format" value="^\s+\*\s+@author\s" />
+    <property name="message" value="Deprecated @author tag" />
+    <property name="fileExtensions" value="java" />
+    <property name="severity" value="warning" />
+  </module>
 </module>
