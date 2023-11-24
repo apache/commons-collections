@@ -91,9 +91,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /** Entry set */
     transient EntrySet<K, V> entrySet;
     /** Key set */
-    transient KeySet<K> keySet;
+    transient KeySet<K> ks;
     /** Values */
-    transient Values<V> values;
+    transient Values<V> v;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -901,10 +901,10 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @Override
     public Set<K> keySet() {
-        if (keySet == null) {
-            keySet = new KeySet<>(this);
+        if (ks == null) {
+            ks = new KeySet<>(this);
         }
-        return keySet;
+        return ks;
     }
 
     /**
@@ -988,10 +988,10 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @Override
     public Collection<V> values() {
-        if (values == null) {
-            values = new Values<>(this);
+        if (v == null) {
+            v = new Values<>(this);
         }
-        return values;
+        return v;
     }
 
     /**
@@ -1298,8 +1298,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             final AbstractHashedMap<K, V> cloned = (AbstractHashedMap<K, V>) super.clone();
             cloned.data = new HashEntry[data.length];
             cloned.entrySet = null;
-            cloned.keySet = null;
-            cloned.values = null;
+            cloned.ks = null;
+            cloned.v = null;
             cloned.modCount = 0;
             cloned.size = 0;
             cloned.init();

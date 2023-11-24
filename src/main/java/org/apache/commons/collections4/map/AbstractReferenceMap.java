@@ -332,10 +332,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     public Set<K> keySet() {
-        if (keySet == null) {
-            keySet = new ReferenceKeySet<>(this);
+        if (ks == null) {
+            ks = new ReferenceKeySet<>(this);
         }
-        return keySet;
+        return ks;
     }
 
     /**
@@ -345,10 +345,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     public Collection<V> values() {
-        if (values == null) {
-            values = new ReferenceValues<>(this);
+        if (v == null) {
+            v = new ReferenceValues<>(this);
         }
-        return values;
+        return v;
     }
 
     /**
