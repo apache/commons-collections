@@ -28,7 +28,7 @@ import org.apache.commons.collections4.Transformer;
  *
  * @since 3.0
  */
-class FunctorUtils {
+final class FunctorUtils {
 
     /**
      * Restricted constructor.

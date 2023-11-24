@@ -26,7 +26,7 @@ import java.util.function.LongPredicate;
  * @since 4.5
  */
 class CountingLongPredicate implements LongPredicate {
-    private int idx = 0;
+    private int idx;
     private final long[] ary;
     private final LongBiPredicate func;
 

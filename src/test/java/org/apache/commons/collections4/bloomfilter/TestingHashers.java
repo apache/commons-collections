@@ -44,8 +44,8 @@ public class TestingHashers {
      * @param hashers The hashers to merge
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T mergeHashers(T filter, Hasher...hashers) {
-        for (Hasher h : hashers) {
+    public static <T extends BloomFilter> T mergeHashers(final T filter, final Hasher... hashers) {
+        for (final Hasher h : hashers) {
             filter.merge(h);
         }
         return filter;
@@ -57,7 +57,7 @@ public class TestingHashers {
      * @param filter The Bloom filter to populate
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(T filter) {
+    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(final T filter) {
         return mergeHashers(filter, FROM1, FROM11);
     }
 
@@ -67,7 +67,7 @@ public class TestingHashers {
      * @param filter the Bloom filter to populate
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T populateEntireFilter(T filter) {
+    public static <T extends BloomFilter> T populateEntireFilter(final T filter) {
         return populateRange(filter, 0, filter.getShape().getNumberOfBits() - 1);
     }
 
@@ -79,7 +79,7 @@ public class TestingHashers {
      * @param end the last bit to enable.
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
+    public static <T extends BloomFilter> T populateRange(final T filter, final int start, final int end) {
         filter.merge((IndexProducer) p -> {
             for (int i = start; i <= end; i++) {
                 if (!p.test(i)) {

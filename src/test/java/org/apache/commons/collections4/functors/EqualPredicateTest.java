@@ -39,7 +39,7 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void objectFactoryUsesEqualsForTest() throws Exception {
+    public void testObjectFactoryUsesEqualsForTest() throws Exception {
         final Predicate<EqualsTestObject> predicate = equalPredicate(FALSE_OBJECT);
         assertPredicateFalse(predicate, FALSE_OBJECT);
         assertPredicateTrue(equalPredicate(TRUE_OBJECT), TRUE_OBJECT);

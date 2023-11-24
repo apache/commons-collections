@@ -44,7 +44,7 @@ public class SetUtilsTest {
     private Set<Integer> setB;
 
     @Test
-    public void difference() {
+    public void testDifference() {
         final SetView<Integer> set = SetUtils.difference(setA, setB);
         assertEquals(2, set.size());
         assertTrue(set.contains(1));
@@ -64,7 +64,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void disjunction() {
+    public void testDisjunction() {
         final SetView<Integer> set = SetUtils.disjunction(setA, setB);
         assertEquals(4, set.size());
         assertTrue(set.contains(1));
@@ -86,7 +86,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void intersection() {
+    public void testIntersection() {
         final SetView<Integer> set = SetUtils.intersection(setA, setB);
         assertEquals(3, set.size());
         assertTrue(set.contains(3));
@@ -208,7 +208,7 @@ public class SetUtilsTest {
 
     @Test
     public void testpredicatedSet() {
-        final Predicate<Object> predicate = o -> o instanceof String;
+        final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertTrue(set instanceof PredicatedSet, "returned object should be a PredicatedSet");
         assertAll(
@@ -252,7 +252,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void union() {
+    public void testUnion() {
         final SetView<Integer> set = SetUtils.union(setA, setB);
         assertEquals(7, set.size());
         assertTrue(set.containsAll(setA));

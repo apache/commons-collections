@@ -100,8 +100,8 @@ public interface CellProducer extends IndexProducer {
             private void populate() {
                 if (counterCells.isEmpty()) {
                     producer.forEachIndex( idx -> {
-                        CounterCell cell = new CounterCell(idx, 1);
-                        CounterCell counter = counterCells.get(cell);
+                        final CounterCell cell = new CounterCell(idx, 1);
+                        final CounterCell counter = counterCells.get(cell);
                         if (counter == null) {
                             counterCells.put(cell, cell);
                         } else {
@@ -119,9 +119,9 @@ public interface CellProducer extends IndexProducer {
             }
 
             @Override
-            public boolean forEachCell(CellConsumer consumer) {
+            public boolean forEachCell(final CellConsumer consumer) {
                 populate();
-                for (CounterCell cell : counterCells.values()) {
+                for (final CounterCell cell : counterCells.values()) {
                     if (!consumer.test(cell.idx, cell.count)) {
                         return false;
                     }
@@ -136,13 +136,13 @@ public interface CellProducer extends IndexProducer {
                 final int idx;
                 int count;
 
-                CounterCell(int idx, int count) {
+                CounterCell(final int idx, final int count) {
                     this.idx = idx;
                     this.count = count;
                 }
 
                 @Override
-                public int compareTo(CounterCell other) {
+                public int compareTo(final CounterCell other) {
                     return Integer.compare(idx, other.idx);
                 }
             }

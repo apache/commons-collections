@@ -54,7 +54,7 @@ public class IndexProducerTest {
         }
     }
 
-    private static class TestingBitMapProducer implements BitMapProducer {
+    private static final class TestingBitMapProducer implements BitMapProducer {
         long[] values;
 
         TestingBitMapProducer(final long[] values) {
@@ -74,8 +74,8 @@ public class IndexProducerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {32, 33})
-    void testAsIndexArray(int n) {
-        IndexProducer ip = i -> {
+    void testAsIndexArray(final int n) {
+        final IndexProducer ip = i -> {
             for (int j = 0; j < n; j++) {
                 // Always test index zero
                 i.test(0);

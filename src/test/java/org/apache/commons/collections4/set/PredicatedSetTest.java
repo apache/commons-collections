@@ -47,7 +47,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public PredicatedSet<E> makeObject() {
-        return decorateSet(new HashSet<E>(), truePredicate);
+        return decorateSet(new HashSet<>(), truePredicate);
     }
 
     @Override
@@ -57,10 +57,10 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     protected PredicatedSet<E> makeTestSet() {
-        return decorateSet(new HashSet<E>(), testPredicate);
+        return decorateSet(new HashSet<>(), testPredicate);
     }
 
     @Test

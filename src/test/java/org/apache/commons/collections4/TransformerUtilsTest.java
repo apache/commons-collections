@@ -233,7 +233,7 @@ public class TransformerUtilsTest {
         assertEquals("C", TransformerUtils.switchTransformer(map).transform("WELL"));
 
         assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(new Predicate[0], new Transformer[0]));
-        assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(new HashMap<Predicate<Object>, Transformer<Object, Object>>()));
+        assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(new HashMap<>()));
         map = new HashMap<>();
         map.put(null, null);
         assertEquals(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchTransformer(map));
@@ -263,7 +263,7 @@ public class TransformerUtilsTest {
         map.put(null, c);
         assertEquals("C", TransformerUtils.switchMapTransformer(map).transform("WELL"));
 
-        assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchMapTransformer(new HashMap<Object, Transformer<Object, Object>>()));
+        assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchMapTransformer(new HashMap<>()));
         map = new HashMap<>();
         map.put(null, null);
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchMapTransformer(map));

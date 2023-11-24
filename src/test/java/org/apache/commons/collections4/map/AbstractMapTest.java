@@ -949,13 +949,13 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // check putAll OK adding empty map to empty map
         resetEmpty();
         assertEquals(0, getMap().size());
-        getMap().putAll(new HashMap<K, V>());
+        getMap().putAll(new HashMap<>());
         assertEquals(0, getMap().size());
 
         // check putAll OK adding empty map to non-empty map
         resetFull();
         final int size = getMap().size();
-        getMap().putAll(new HashMap<K, V>());
+        getMap().putAll(new HashMap<>());
         assertEquals(size, getMap().size());
 
         // check putAll OK adding non-empty map to empty map
@@ -2090,7 +2090,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Get the map.
+     * Gets the map.
      * @return Map<K, V>
      */
     public Map<K, V> getMap() {
@@ -2098,7 +2098,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Get the confirmed.
+     * Gets the confirmed.
      * @return Map<K, V>
      */
     public Map<K, V> getConfirmed() {

@@ -33,7 +33,7 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return SynchronizedBag.synchronizedBag(new HashBag<T>());
+        return SynchronizedBag.synchronizedBag(new HashBag<>());
     }
 
     @Override

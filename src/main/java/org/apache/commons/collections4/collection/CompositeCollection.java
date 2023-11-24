@@ -443,7 +443,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     }
 
     /**
-     * Get the collection mutator to be used for this CompositeCollection.
+     * Gets the collection mutator to be used for this CompositeCollection.
      * @return CollectionMutator&lt;E&gt;
      */
     protected CollectionMutator<E> getMutator() {

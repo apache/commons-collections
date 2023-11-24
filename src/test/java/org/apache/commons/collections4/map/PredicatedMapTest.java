@@ -40,7 +40,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> truePredicate = TruePredicate.<Object>truePredicate();
 
-    protected static final Predicate<Object> testPredicate = o -> o instanceof String;
+    protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
     public PredicatedMapTest() {
         super(PredicatedMapTest.class.getSimpleName());
@@ -53,11 +53,11 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeObject() {
-        return decorateMap(new HashMap<K, V>(), truePredicate, truePredicate);
+        return decorateMap(new HashMap<>(), truePredicate, truePredicate);
     }
 
     public IterableMap<K, V> makeTestMap() {
-        return decorateMap(new HashMap<K, V>(), testPredicate, testPredicate);
+        return decorateMap(new HashMap<>(), testPredicate, testPredicate);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testEntrySet() {
         Map<K, V> map = makeTestMap();
         assertNotNull(map.entrySet(), "returned entryset should not be null");
-        map = decorateMap(new HashMap<K, V>(), null, null);
+        map = decorateMap(new HashMap<>(), null, null);
         map.put((K) "oneKey", (V) "oneValue");
         assertEquals(1, map.entrySet().size(), "returned entryset should contain one entry");
         map = decorateMap(map, null, null);

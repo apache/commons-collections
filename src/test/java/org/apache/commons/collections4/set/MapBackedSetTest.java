@@ -33,7 +33,7 @@ public class MapBackedSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeObject() {
-        return MapBackedSet.mapBackedSet(new HashedMap<E, Object>());
+        return MapBackedSet.mapBackedSet(new HashedMap<>());
     }
 
     @Override

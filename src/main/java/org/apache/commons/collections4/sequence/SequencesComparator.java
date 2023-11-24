@@ -115,7 +115,7 @@ public class SequencesComparator<T> {
     }
 
     /**
-     * Get the {@link EditScript} object.
+     * Gets the {@link EditScript} object.
      * <p>
      * It is guaranteed that the objects embedded in the {@link InsertCommand
      * insert commands} come from the second sequence and that the objects
@@ -153,7 +153,7 @@ public class SequencesComparator<T> {
     }
 
     /**
-     * Get the middle snake corresponding to two subsequences of the
+     * Gets the middle snake corresponding to two subsequences of the
      * main sequences.
      * <p>
      * The snake is found using the MYERS Algorithm (this algorithm has
@@ -292,7 +292,7 @@ public class SequencesComparator<T> {
      * This class is a simple placeholder to hold the end part of a path
      * under construction in a {@link SequencesComparator SequencesComparator}.
      */
-    private static class Snake {
+    private static final class Snake {
 
         /** Start index. */
         private final int start;
@@ -317,7 +317,7 @@ public class SequencesComparator<T> {
         }
 
         /**
-         * Get the start index of the snake.
+         * Gets the start index of the snake.
          *
          * @return start index of the snake
          */
@@ -326,7 +326,7 @@ public class SequencesComparator<T> {
         }
 
         /**
-         * Get the end index of the snake.
+         * Gets the end index of the snake.
          *
          * @return end index of the snake
          */
@@ -335,7 +335,7 @@ public class SequencesComparator<T> {
         }
 
         /**
-         * Get the diagonal number of the snake.
+         * Gets the diagonal number of the snake.
          *
          * @return diagonal number of the snake
          */

@@ -40,7 +40,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
 
     @Override
     public SortedMap<K, V> makeObject() {
-        return UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<K, V>());
+        return UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<>());
     }
 
     @Override

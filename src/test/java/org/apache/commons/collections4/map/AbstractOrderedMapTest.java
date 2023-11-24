@@ -71,7 +71,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
      */
     @Override
     public Map<K, V> makeConfirmedMap() {
-        return new TreeMap<>(new NullComparator<K>());
+        return new TreeMap<>(new NullComparator<>());
     }
 
     /**
@@ -82,7 +82,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final List<K> list = new ArrayList<>(Arrays.asList(super.getSampleKeys()));
-        list.sort(new NullComparator<K>());
+        list.sort(new NullComparator<>());
         return (K[]) list.toArray();
     }
 

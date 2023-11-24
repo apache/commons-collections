@@ -48,7 +48,7 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
     public static final ListIterator INSTANCE = RESETTABLE_INSTANCE;
 
     /**
-     * Get a typed instance of the iterator.
+     * Gets a typed instance of the iterator.
      * @param <E> the element type
      * @return {@link ResettableListIterator}&lt;E&gt;
      */
@@ -57,7 +57,7 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
     }
 
     /**
-     * Get a typed instance of the iterator.
+     * Gets a typed instance of the iterator.
      * @param <E> the element type
      * @return {@link ListIterator}&lt;E&gt;
      */

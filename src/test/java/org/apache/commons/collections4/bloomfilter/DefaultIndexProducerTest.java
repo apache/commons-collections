@@ -124,9 +124,9 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {32, 33})
-    public void testEntries(int size) {
-        int[] values = IntStream.range(0, size).toArray();
-        IndexProducer producer =  predicate -> {
+    public void testEntries(final int size) {
+        final int[] values = IntStream.range(0, size).toArray();
+        final IndexProducer producer =  predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {
                 if (!predicate.test(i)) {
@@ -135,7 +135,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
             }
             return true;
         };
-        int[] other = producer.asIndexArray();
+        final int[] other = producer.asIndexArray();
         assertArrayEquals(values, other);
     }
 }

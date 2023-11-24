@@ -118,7 +118,7 @@ public class SequencesComparatorTest {
         List<List<String>> shadokSentences = new ArrayList<>();
         for (int lg=0; lg<lgMax; ++lg) {
             final List<List<String>> newTab = new ArrayList<>();
-            newTab.add(new ArrayList<String>());
+            newTab.add(new ArrayList<>());
             for (final String element : shadokAlph) {
                 for (final List<String> sentence : shadokSentences) {
                     final List<String> newSentence = new ArrayList<>(sentence);
@@ -154,7 +154,7 @@ public class SequencesComparatorTest {
         return list;
     }
 
-    private static class ExecutionVisitor<T> implements CommandVisitor<T> {
+    private static final class ExecutionVisitor<T> implements CommandVisitor<T> {
 
         private List<T> v;
         private int index;

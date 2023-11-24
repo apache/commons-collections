@@ -185,37 +185,37 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
     public class TestSortedSetSubSet extends AbstractSortedSetTest<E> {
 
-        private final int m_Type;
-        private int m_LowBound;
-        private int m_HighBound;
-        private final E[] m_FullElements;
-        private final E[] m_OtherElements;
+        private final int type;
+        private int lowBound;
+        private int highBound;
+        private final E[] fullElements;
+        private final E[] otherElements;
 
         @SuppressWarnings("unchecked")
         public TestSortedSetSubSet(final int bound, final boolean head) {
             super("TestSortedSetSubSet");
             if (head) {
                 //System.out.println("HEADSET");
-                m_Type = TYPE_HEADSET;
-                m_HighBound = bound;
-                m_FullElements = (E[]) new Object[bound];
-                System.arraycopy(AbstractSortedSetTest.this.getFullElements(), 0, m_FullElements, 0, bound);
-                m_OtherElements = (E[]) new Object[bound - 1];
+                this.type = TYPE_HEADSET;
+                this.highBound = bound;
+                this.fullElements = (E[]) new Object[bound];
+                System.arraycopy(AbstractSortedSetTest.this.getFullElements(), 0, fullElements, 0, bound);
+                this.otherElements = (E[]) new Object[bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                    AbstractSortedSetTest.this.getOtherElements(), 0, m_OtherElements, 0, bound - 1);
+                    AbstractSortedSetTest.this.getOtherElements(), 0, otherElements, 0, bound - 1);
                 //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
                 //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
             } else {
                 //System.out.println("TAILSET");
-                m_Type = TYPE_TAILSET;
-                m_LowBound = bound;
+                this.type = TYPE_TAILSET;
+                this.lowBound = bound;
                 final Object[] allElements = AbstractSortedSetTest.this.getFullElements();
                 //System.out.println("bound = "+bound +"::length="+allElements.length);
-                m_FullElements = (E[]) new Object[allElements.length - bound];
-                System.arraycopy(allElements, bound, m_FullElements, 0, allElements.length - bound);
-                m_OtherElements = (E[]) new Object[allElements.length - bound - 1];
+                this.fullElements = (E[]) new Object[allElements.length - bound];
+                System.arraycopy(allElements, bound, fullElements, 0, allElements.length - bound);
+                this.otherElements = (E[]) new Object[allElements.length - bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                    AbstractSortedSetTest.this.getOtherElements(), bound, m_OtherElements, 0, allElements.length - bound - 1);
+                    AbstractSortedSetTest.this.getOtherElements(), bound, otherElements, 0, allElements.length - bound - 1);
                 //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
                 //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
                 //resetFull();
@@ -230,16 +230,16 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         public TestSortedSetSubSet(final int loBound, final int hiBound) {
             super("TestSortedSetSubSet");
             //System.out.println("SUBSET");
-            m_Type = TYPE_SUBSET;
-            m_LowBound = loBound;
-            m_HighBound = hiBound;
+            this.type = TYPE_SUBSET;
+            this.lowBound = loBound;
+            this.highBound = hiBound;
             final int length = hiBound - loBound;
             //System.out.println("Low=" + loBound + "::High=" + hiBound + "::Length=" + length);
-            m_FullElements = (E[]) new Object[length];
-            System.arraycopy(AbstractSortedSetTest.this.getFullElements(), loBound, m_FullElements, 0, length);
-            m_OtherElements = (E[]) new Object[length - 1];
+            this.fullElements = (E[]) new Object[length];
+            System.arraycopy(AbstractSortedSetTest.this.getFullElements(), loBound, fullElements, 0, length);
+            this.otherElements = (E[]) new Object[length - 1];
             System.arraycopy(//src src_pos dst dst_pos length
-                AbstractSortedSetTest.this.getOtherElements(), loBound, m_OtherElements, 0, length - 1);
+                AbstractSortedSetTest.this.getOtherElements(), loBound, otherElements, 0, length - 1);
 
             //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
             //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
@@ -265,22 +265,22 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
         @Override
         public E[] getFullElements() {
-            return m_FullElements;
+            return fullElements;
         }
         @Override
         public E[] getOtherElements() {
-            return m_OtherElements;
+            return otherElements;
         }
 
         private SortedSet<E> getSubSet(final SortedSet<E> set) {
             final E[] elements = AbstractSortedSetTest.this.getFullElements();
-            switch (m_Type) {
+            switch (type) {
             case TYPE_SUBSET :
-                return set.subSet(elements[m_LowBound], elements[m_HighBound]);
+                return set.subSet(elements[lowBound], elements[highBound]);
             case TYPE_HEADSET :
-                return set.headSet(elements[m_HighBound]);
+                return set.headSet(elements[highBound]);
             case TYPE_TAILSET :
-                return set.tailSet(elements[m_LowBound]);
+                return set.tailSet(elements[lowBound]);
             default :
                 return null;
             }

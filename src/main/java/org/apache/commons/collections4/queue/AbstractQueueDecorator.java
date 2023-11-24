@@ -30,7 +30,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * to the backing object, but relies on Object's implementation. This is
  * necessary as some Queue implementations, e.g. LinkedList, have a custom
  * equals implementation for which symmetry can not be preserved.
- * See class javadoc of AbstractCollectionDecorator for more information.
+ * See class Javadoc of AbstractCollectionDecorator for more information.
  * </p>
  *
  * @param <E> the type of the elements in the queue

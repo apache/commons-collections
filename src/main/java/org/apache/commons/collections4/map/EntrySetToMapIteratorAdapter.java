@@ -110,7 +110,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     }
 
     /**
-     * Get the currently active entry.
+     * Gets the currently active entry.
      * @return Map.Entry&lt;K, V&gt;
      */
     protected synchronized Map.Entry<K, V> current() {

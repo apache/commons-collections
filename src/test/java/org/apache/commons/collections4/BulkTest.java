@@ -155,7 +155,7 @@ public class BulkTest implements Cloneable {
     /**
      *  the name of the simple test method
      */
-    private String name;
+    private final String name;
 
     /**
      *  Constructs a new {@code BulkTest} instance that will run the

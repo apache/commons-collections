@@ -61,7 +61,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     @Override
     public Collection<String> makeObject() {
-        return decorateCollection(new ArrayList<String>());
+        return decorateCollection(new ArrayList<>());
     }
 
     @Override
@@ -90,11 +90,11 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     public Collection<String> makeTestCollection() {
-        return decorateCollection(new ArrayList<String>());
+        return decorateCollection(new ArrayList<>());
     }
 
     public Collection<String> makeUniqueTestCollection() {
-        return decorateUniqueCollection(new ArrayList<String>());
+        return decorateUniqueCollection(new ArrayList<>());
     }
 
     @Override

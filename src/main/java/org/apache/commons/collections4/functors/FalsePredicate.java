@@ -35,7 +35,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
     public static final Predicate INSTANCE = new FalsePredicate<>();
 
     /**
-     * Get a typed instance.
+     * Gets a typed instance.
      *
      * @param <T> the type that the predicate queries
      * @return the singleton instance

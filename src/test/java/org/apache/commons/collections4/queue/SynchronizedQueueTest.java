@@ -41,7 +41,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
     @Override
     public Queue<T> makeObject() {
-        return SynchronizedQueue.synchronizedQueue(new LinkedList<T>());
+        return SynchronizedQueue.synchronizedQueue(new LinkedList<>());
     }
 
     @Test

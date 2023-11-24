@@ -208,16 +208,16 @@ public class SetOperationsTest {
     @Test
     public final void testOrCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(5, SetOperations::orCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(5, SetOperations::orCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(4, SetOperations::orCardinality, filter1, filter2);
     }
 
@@ -225,32 +225,32 @@ public class SetOperationsTest {
     public final void testOrCardinalityWithDifferentLengthFilters() {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(5, SetOperations::orCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(5, SetOperations::orCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(4, SetOperations::orCardinality, filter1, filter2);
     }
 
     @Test
     public final void testAndCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(1, SetOperations::andCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(0, SetOperations::andCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(1, SetOperations::andCardinality, filter1, filter2);
     }
 
@@ -258,37 +258,37 @@ public class SetOperationsTest {
     public final void testAndCardinalityWithDifferentLengthFilters() {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(1, SetOperations::andCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(0, SetOperations::andCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(1, SetOperations::andCardinality, filter1, filter2);
     }
 
     @Test
     public final void testXorCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(4, SetOperations::xorCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(5, SetOperations::xorCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 64, 69}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 64, 69));
         assertSymmetricOperation(3, SetOperations::xorCardinality, filter1, filter2);
 
         final Shape bigShape = Shape.fromKM(3, 192);
-        filter1 = createFilter(bigShape, IndexProducer.fromIndexArray(new int[] {1, 63, 185}));
-        filter2 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63, 69}));
+        filter1 = createFilter(bigShape, IndexProducer.fromIndexArray(1, 63, 185));
+        filter2 = createFilter(shape, IndexProducer.fromIndexArray(5, 63, 69));
         assertSymmetricOperation(4, SetOperations::xorCardinality, filter1, filter2);
     }
 
@@ -297,23 +297,23 @@ public class SetOperationsTest {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
 
-        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63, 64}));
-        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        BloomFilter filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63, 64));
+        BloomFilter filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(4, SetOperations::xorCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {1, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(1, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(5, SetOperations::xorCardinality, filter1, filter2);
 
-        filter1 = createFilter(shape, IndexProducer.fromIndexArray(new int[] {5, 63}));
-        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(new int[] {5, 64, 169}));
+        filter1 = createFilter(shape, IndexProducer.fromIndexArray(5, 63));
+        filter2 = createFilter(shape2, IndexProducer.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(3, SetOperations::xorCardinality, filter1, filter2);
     }
 
     @Test
     public final void testCommutativityOnMismatchedSizes() {
-        final BitMapProducer p1 = BitMapProducer.fromBitMapArray(new long[] {0x3L, 0x5L});
-        final BitMapProducer p2 = BitMapProducer.fromBitMapArray(new long[] {0x1L});
+        final BitMapProducer p1 = BitMapProducer.fromBitMapArray(0x3L, 0x5L);
+        final BitMapProducer p2 = BitMapProducer.fromBitMapArray(0x1L);
 
         assertEquals(SetOperations.orCardinality(p1, p2), SetOperations.orCardinality(p2, p1));
         assertEquals(SetOperations.xorCardinality(p1, p2), SetOperations.xorCardinality(p2, p1));

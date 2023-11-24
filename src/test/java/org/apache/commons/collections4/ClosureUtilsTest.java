@@ -45,7 +45,7 @@ public class ClosureUtilsTest {
     private static final Object cString = "Hello";
 
     static class MockClosure<T> implements Closure<T> {
-        int count = 0;
+        int count;
 
         @Override
         public void execute(final T object) {
@@ -58,7 +58,7 @@ public class ClosureUtilsTest {
     }
 
     static class MockTransformer<T> implements Transformer<T, T> {
-        int count = 0;
+        int count;
 
         @Override
         public T transform(final T object) {
@@ -262,7 +262,7 @@ public class ClosureUtilsTest {
         assertEquals(1, c.count);
 
         assertEquals(NOPClosure.INSTANCE, ClosureUtils.<String>switchClosure(new Predicate[0], new Closure[0]));
-        assertEquals(NOPClosure.INSTANCE, ClosureUtils.<String>switchClosure(new HashMap<Predicate<String>, Closure<String>>()));
+        assertEquals(NOPClosure.INSTANCE, ClosureUtils.<String>switchClosure(new HashMap<>()));
         map.clear();
         map.put(null, null);
         assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchClosure(map));
@@ -309,7 +309,7 @@ public class ClosureUtilsTest {
         assertEquals(0, b.count);
         assertEquals(1, c.count);
 
-        assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchMapClosure(new HashMap<String, Closure<String>>()));
+        assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchMapClosure(new HashMap<>()));
 
         assertThrows(NullPointerException.class, () -> ClosureUtils.switchMapClosure(null));
     }

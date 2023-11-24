@@ -43,7 +43,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Override
     public MultiValuedMap<K, V> makeObject() {
-        return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
+        return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<>(),
                 TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
@@ -58,7 +58,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new ArrayListValuedHashMap<K, V>(),
+                new ArrayListValuedHashMap<>(),
                 (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                 null);
         assertEquals(0, map.size());
@@ -83,7 +83,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new ArrayListValuedHashMap<K, V>(), null,
+                new ArrayListValuedHashMap<>(), null,
                 (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {

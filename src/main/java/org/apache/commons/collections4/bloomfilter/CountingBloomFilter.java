@@ -91,7 +91,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @param bloomFilter the Bloom filter the check for.
      * @return the maximum number of times the Bloom filter could have been inserted.
      */
-    default int getMaxInsert(BloomFilter bloomFilter) {
+    default int getMaxInsert(final BloomFilter bloomFilter) {
         return getMaxInsert((BitMapProducer) bloomFilter);
     }
 
@@ -104,7 +104,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @return the maximum number of times the IndexProducer could have been inserted.
      * @see #getMaxInsert(CellProducer)
      */
-    default int getMaxInsert(IndexProducer idxProducer) {
+    default int getMaxInsert(final IndexProducer idxProducer) {
         return getMaxInsert(CellProducer.from(idxProducer.uniqueIndices()) );
     }
 
@@ -121,7 +121,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @param hasher the Hasher to provide the indices.
      * @return the maximum number of times the hasher could have been inserted.
      */
-    default int getMaxInsert(Hasher hasher) {
+    default int getMaxInsert(final Hasher hasher) {
         return getMaxInsert(hasher.indices(getShape()));
     }
 
@@ -131,12 +131,12 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @param bitMapProducer the BitMapProducer to provide the indices.
      * @return the maximum number of times the BitMapProducer could have been inserted.
      */
-    default int getMaxInsert(BitMapProducer bitMapProducer) {
+    default int getMaxInsert(final BitMapProducer bitMapProducer) {
         if (!contains(bitMapProducer)) {
             return 0;
         }
-        long[] bitMaps = bitMapProducer.asBitMapArray();
-        int[] max = { Integer.MAX_VALUE };
+        final long[] bitMaps = bitMapProducer.asBitMapArray();
+        final int[] max = { Integer.MAX_VALUE };
         forEachCell((x, y) -> {
             if ((bitMaps[BitMap.getLongIndex(x)] & BitMap.getLongBit(x)) != 0) {
                 max[0] = max[0] <= y ? max[0] : y;

@@ -41,7 +41,7 @@ public class PredicatedCollectionBuilderTest {
      * Verify that passing the Predicate means ending up in the buffer.
      */
     @Test
-    public void addPass() {
+    public void testAddPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test");
         assertEquals(builder.createPredicatedList().size(), 1);
@@ -51,7 +51,7 @@ public class PredicatedCollectionBuilderTest {
      * Verify that failing the Predicate means NOT ending up in the buffer.
      */
     @Test
-    public void addFail() {
+    public void testAddFail() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
         assertTrue(builder.createPredicatedList().isEmpty());
@@ -63,14 +63,14 @@ public class PredicatedCollectionBuilderTest {
      * Verify that only items that pass the Predicate end up in the buffer.
      */
     @Test
-    public void addAllPass() {
+    public void testAddAllPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.addAll(Arrays.asList("test1", null, "test2"));
         assertEquals(builder.createPredicatedList().size(), 2);
     }
 
     @Test
-    public void createPredicatedCollectionWithNotNullPredicate() {
+    public void testCreatePredicatedCollectionWithNotNullPredicate() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test1");
         builder.add((String) null);
@@ -99,7 +99,7 @@ public class PredicatedCollectionBuilderTest {
     }
 
     @Test
-    public void createPredicatedCollectionWithPredicate() {
+    public void testCreatePredicatedCollectionWithPredicate() {
         final OddPredicate p = new OddPredicate();
         final PredicatedCollection.Builder<Integer> builder = PredicatedCollection.builder(p);
 
@@ -129,7 +129,7 @@ public class PredicatedCollectionBuilderTest {
         assertEquals(3, collection.size());
     }
 
-    private static class OddPredicate implements Predicate<Integer> {
+    private static final class OddPredicate implements Predicate<Integer> {
         @Override
         public boolean evaluate(final Integer value) {
             return value % 2 == 1;

@@ -55,7 +55,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Queue<E> makeObject() {
-        return TransformedQueue.transformingQueue(new LinkedList<E>(),
+        return TransformedQueue.transformingQueue(new LinkedList<>(),
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 

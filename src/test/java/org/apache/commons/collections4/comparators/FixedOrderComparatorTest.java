@@ -38,7 +38,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /**
      * Top cities of the world, by population including metro areas.
      */
-    private static final String topCities[] = {
+    private static final String[] topCities = {
         "Tokyo",
         "Mexico City",
         "Mumbai",

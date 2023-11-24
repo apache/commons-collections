@@ -113,7 +113,7 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Collections 4.4 (Requires Java 8 or later)">
+    <section name="Apache Commons Collections 4.4 (Requires Java 8 or above)">
       <subsection name="Binaries">
         <table>
           <tr>

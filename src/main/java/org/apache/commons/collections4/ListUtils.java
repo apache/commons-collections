@@ -98,7 +98,7 @@ public class ListUtils {
      * Provides a partition view on a {@link List}.
      * @since 4.0
      */
-    private static class Partition<T> extends AbstractList<List<T>> {
+    private static final class Partition<T> extends AbstractList<List<T>> {
         private final List<T> list;
         private final int size;
 

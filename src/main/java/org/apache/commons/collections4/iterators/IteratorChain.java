@@ -46,6 +46,7 @@ import java.util.Queue;
  * removed and {@link #size()} will return the number of remaining iterators in
  * the queue.
  *
+ * @param <E> the type of elements in this iterator.
  * @since 2.1
  */
 public class IteratorChain<E> implements Iterator<E> {
@@ -69,7 +70,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private boolean isLocked;
 
     /**
-     * Construct an IteratorChain with no Iterators.
+     * Constructs an IteratorChain with no Iterators.
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some
      * iterators after using this constructor.
@@ -78,7 +79,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Construct an IteratorChain with a single Iterator.
+     * Constructs an IteratorChain with a single Iterator.
      * <p>
      * This method takes one iterator. The newly constructed iterator will
      * iterate through that iterator. Thus calling this constructor on its own

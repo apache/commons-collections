@@ -62,7 +62,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     private final int[] cells;
 
     /**
-     * The state flag. This is a bitwise @{code OR} of the entire history of all updated
+     * The state flag. This is a bitwise {@code OR} of the entire history of all updated
      * cells. If negative then a negative cell or integer overflow has occurred on
      * one or more cells in the history of the filter and the state is invalid.
      *
@@ -272,10 +272,10 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public int getMaxInsert(CellProducer cellProducer) {
-        int[] max = {Integer.MAX_VALUE};
+    public int getMaxInsert(final CellProducer cellProducer) {
+        final int[] max = {Integer.MAX_VALUE};
         cellProducer.forEachCell( (x, y) -> {
-            int count = cells[x] / y;
+            final int count = cells[x] / y;
             if (count < max[0]) {
                 max[0] = count;
             }

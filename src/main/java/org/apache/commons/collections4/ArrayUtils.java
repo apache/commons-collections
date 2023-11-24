@@ -35,7 +35,7 @@ package org.apache.commons.collections4;
  *
  * @since 4.2 (Copied from Apache Commons Lang.)
  */
-class ArrayUtils {
+final class ArrayUtils {
 
 
     /**

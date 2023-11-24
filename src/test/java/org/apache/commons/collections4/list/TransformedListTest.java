@@ -56,7 +56,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public List<E> makeObject() {
-        return TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+        return TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformedList() {
-        final List<E> list = TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final List<E> list = TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, list.size());
         final E[] els = (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {

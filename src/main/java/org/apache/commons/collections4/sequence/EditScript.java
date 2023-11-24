@@ -110,7 +110,7 @@ public class EditScript<T> {
     }
 
     /**
-     * Get the length of the Longest Common Subsequence (LCS). The length of the
+     * Gets the length of the Longest Common Subsequence (LCS). The length of the
      * longest common subsequence is the number of {@link KeepCommand keep
      * commands} in the script.
      *
@@ -121,7 +121,7 @@ public class EditScript<T> {
     }
 
     /**
-     * Get the number of effective modifications. The number of effective
+     * Gets the number of effective modifications. The number of effective
      * modification is the number of {@link DeleteCommand delete} and
      * {@link InsertCommand insert} commands in the script.
      *

@@ -114,7 +114,6 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param closures  matching array of closures, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
      */
-    @SuppressWarnings("unchecked")
     private SwitchClosure(final boolean clone, final Predicate<? super E>[] predicates,
                           final Closure<? super E>[] closures, final Closure<? super E> defaultClosure) {
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;

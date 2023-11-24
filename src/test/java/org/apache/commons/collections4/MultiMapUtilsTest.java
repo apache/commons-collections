@@ -128,7 +128,7 @@ public class MultiMapUtilsTest {
     public void testGetValuesAsBag() {
         assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
 
-        final String values[] = { "v1", "v2", "v3" };
+        final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);

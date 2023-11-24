@@ -40,7 +40,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
     @Override
     public MultiSet<E> makeObject() {
-        return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<E>());
+        return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
     }
 
     @Override

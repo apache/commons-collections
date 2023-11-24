@@ -70,21 +70,21 @@ public class IteratorUtilsTest {
     /**
      * Collection of {@link Integer}s
      */
-    private List<Integer> collectionA = null;
+    private List<Integer> collectionA;
 
     /**
      * Collection of even {@link Integer}s
      */
-    private List<Integer> collectionEven = null;
+    private List<Integer> collectionEven;
 
     /**
      * Collection of odd {@link Integer}s
      */
-    private List<Integer> collectionOdd = null;
+    private List<Integer> collectionOdd;
 
     private final Collection<Integer> emptyCollection = new ArrayList<>(1);
 
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
     /**
      * Creates a NodeList containing the specified nodes.
@@ -437,8 +437,8 @@ public class IteratorUtilsTest {
     @Test
     public void testChainedIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
-        assertTrue(IteratorUtils.chainedIterator(ie) instanceof Iterator, "create instance fail");
+        final Iterator iterator = arrayList.iterator();
+        assertTrue(IteratorUtils.chainedIterator(iterator) instanceof Iterator, "create instance fail");
         final Collection<Iterator<?>> coll = new ArrayList();
         assertTrue(IteratorUtils.chainedIterator(coll) instanceof Iterator, "create instance fail");
     }
@@ -649,9 +649,9 @@ public class IteratorUtilsTest {
     @Test
     public void testFilteredIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
+        final Iterator iterator = arrayList.iterator();
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IteratorUtils.filteredIterator(ie, null)),
+                () -> assertThrows(NullPointerException.class, () -> IteratorUtils.filteredIterator(iterator, null)),
                 () -> assertThrows(NullPointerException.class, () -> IteratorUtils.filteredIterator(null, null))
         );
     }
@@ -805,7 +805,7 @@ public class IteratorUtilsTest {
         arrayList.add("test");
         final Collection coll = new ArrayList();
         coll.add("test");
-        final Iterator ie = arrayList.iterator();
+        final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.loopingIterator(coll) instanceof ResettableIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.loopingIterator(null));
     }
@@ -814,7 +814,7 @@ public class IteratorUtilsTest {
     public void testLoopingListIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
-        final Iterator ie = arrayList.iterator();
+        final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.loopingListIterator(arrayList) instanceof ResettableIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.loopingListIterator(null));
     }
@@ -880,16 +880,16 @@ public class IteratorUtilsTest {
     @Test
     public void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
-        assertTrue(IteratorUtils.peekingIterator(ie) instanceof Iterator, "create instance fail");
+        final Iterator iterator = arrayList.iterator();
+        assertTrue(IteratorUtils.peekingIterator(iterator) instanceof Iterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.peekingIterator(null));
     }
 
     @Test
     public void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
-        assertTrue(IteratorUtils.pushbackIterator(ie) instanceof Iterator, "create instance fail");
+        final Iterator iterator = arrayList.iterator();
+        assertTrue(IteratorUtils.pushbackIterator(iterator) instanceof Iterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.pushbackIterator(null));
     }
 
@@ -974,9 +974,9 @@ public class IteratorUtilsTest {
     @Test
     public void testTransformedIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
+        final Iterator iterator = arrayList.iterator();
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IteratorUtils.transformedIterator(ie, null)),
+                () -> assertThrows(NullPointerException.class, () -> IteratorUtils.transformedIterator(iterator, null)),
                 () -> assertThrows(NullPointerException.class, () -> IteratorUtils.transformedIterator(null, null))
         );
     }
@@ -1103,17 +1103,17 @@ public class IteratorUtilsTest {
     @Test
     public void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
-        final MapIterator ie = new EntrySetToMapIteratorAdapter(set);
-        assertTrue(IteratorUtils.unmodifiableMapIterator(ie) instanceof MapIterator, "create instance fail");
+        final MapIterator iterator = new EntrySetToMapIteratorAdapter(set);
+        assertTrue(IteratorUtils.unmodifiableMapIterator(iterator) instanceof MapIterator, "create instance fail");
         assertThrows(NullPointerException.class, () -> IteratorUtils.unmodifiableMapIterator(null));
     }
 
     @Test
     public void testZippingIterator() {
         final ArrayList arrayList = new ArrayList();
-        final Iterator ie = arrayList.iterator();
-        assertTrue(IteratorUtils.zippingIterator(ie, ie, ie) instanceof ZippingIterator, "create instance fail");
-        assertTrue(IteratorUtils.zippingIterator(ie, ie) instanceof ZippingIterator, "create instance fail");
+        final Iterator iterator = arrayList.iterator();
+        assertTrue(IteratorUtils.zippingIterator(iterator, iterator, iterator) instanceof ZippingIterator, "create instance fail");
+        assertTrue(IteratorUtils.zippingIterator(iterator, iterator) instanceof ZippingIterator, "create instance fail");
     }
 
 }

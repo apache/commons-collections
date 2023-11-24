@@ -231,6 +231,9 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     /**
      * Internal sorted map view.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
         /**
@@ -293,6 +296,9 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     /**
      * Inner class MapIterator.
+     *
+     * @param <K> the type of the keys.
+     * @param <V> the type of the values.
      */
     protected static class BidiOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
 

@@ -39,18 +39,18 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class FilterListIteratorTest {
 
-    private ArrayList<Integer> list = null;
-    private ArrayList<Integer> odds = null;
-    private ArrayList<Integer> evens = null;
-    private ArrayList<Integer> threes = null;
-    private ArrayList<Integer> fours = null;
-    private ArrayList<Integer> sixes = null;
-    private Predicate<Integer> truePred = null;
-    private Predicate<Integer> falsePred = null;
-    private Predicate<Integer> evenPred = null;
-    private Predicate<Integer> oddPred = null;
-    private Predicate<Integer> threePred = null;
-    private Predicate<Integer> fourPred = null;
+    private ArrayList<Integer> list;
+    private ArrayList<Integer> odds;
+    private ArrayList<Integer> evens;
+    private ArrayList<Integer> threes;
+    private ArrayList<Integer> fours;
+    private ArrayList<Integer> sixes;
+    private Predicate<Integer> truePred;
+    private Predicate<Integer> falsePred;
+    private Predicate<Integer> evenPred;
+    private Predicate<Integer> oddPred;
+    private Predicate<Integer> threePred;
+    private Predicate<Integer> fourPred;
     private final Random random = new Random();
 
     @BeforeEach
@@ -185,7 +185,7 @@ public class FilterListIteratorTest {
     @Test
     public void testFalsePredicate() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), falsePred);
-        walkLists(new ArrayList<Integer>(), filtered);
+        walkLists(new ArrayList<>(), filtered);
     }
 
     @Test

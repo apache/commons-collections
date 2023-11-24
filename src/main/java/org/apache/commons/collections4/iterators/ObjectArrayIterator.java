@@ -68,7 +68,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Construct an ObjectArrayIterator that will iterate over a range of values
+     * Constructs an ObjectArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over

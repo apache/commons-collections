@@ -64,7 +64,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     private boolean isLocked;
 
     /**
-     * Construct a ComparatorChain with no Comparators.
+     * Constructs a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
      * the compare(Object,Object) method, or an
      * UnsupportedOperationException is thrown
@@ -74,7 +74,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain with a single Comparator,
+     * Constructs a ComparatorChain with a single Comparator,
      * sorting in the forward order
      *
      * @param comparator First comparator in the Comparator chain
@@ -84,7 +84,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a Comparator chain with a single Comparator,
+     * Constructs a Comparator chain with a single Comparator,
      * sorting in the given order
      *
      * @param comparator First Comparator in the ComparatorChain
@@ -100,7 +100,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain from the Comparators in the
+     * Constructs a ComparatorChain from the Comparators in the
      * List.  All Comparators will default to the forward
      * sort order.
      *
@@ -112,7 +112,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain from the Comparators in the
+     * Constructs a ComparatorChain from the Comparators in the
      * given List.  The sort order of each column will be
      * drawn from the given BitSet.  When determining the sort
      * order for Comparator at index <i>i</i> in the List,

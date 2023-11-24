@@ -55,7 +55,7 @@ public class ListOrderedSetTest<E>
 
     @Override
     public ListOrderedSet<E> makeObject() {
-        return ListOrderedSet.listOrderedSet(new HashSet<E>());
+        return ListOrderedSet.listOrderedSet(new HashSet<>());
     }
 
     @SuppressWarnings("unchecked")
@@ -267,8 +267,8 @@ public class ListOrderedSetTest<E>
                 () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
                 () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
                 () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<E>(), null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<E>()))
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<>(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<>()))
         );
     }
 

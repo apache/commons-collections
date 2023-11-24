@@ -44,7 +44,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     @Override
     @SuppressWarnings("unchecked")
     public NavigableSet<E> makeObject() {
-        return TransformedNavigableSet.transformingNavigableSet(new TreeSet<E>(),
+        return TransformedNavigableSet.transformingNavigableSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
@@ -59,7 +59,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     @Test
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        final NavigableSet<E> set = TransformedNavigableSet.transformingNavigableSet(new TreeSet<E>(),
+        final NavigableSet<E> set = TransformedNavigableSet.transformingNavigableSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         final E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };

@@ -40,9 +40,9 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //--------------------------------------------------------------- Lifecycle
 
-    private ArrayList<Integer> evens = null;
-    private ArrayList<Integer> odds = null;
-    private ArrayList<Integer> fib = null;
+    private ArrayList<Integer> evens;
+    private ArrayList<Integer> odds;
+    private ArrayList<Integer> fib;
 
     @BeforeEach
     public void setUp() throws Exception {

@@ -41,7 +41,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     }
 
     protected Predicate<T> stringPredicate() {
-        return o -> o instanceof String;
+        return String.class::isInstance;
     }
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
@@ -52,11 +52,11 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Override
     public MultiSet<T> makeObject() {
-        return decorateMultiSet(new HashMultiSet<T>(), truePredicate);
+        return decorateMultiSet(new HashMultiSet<>(), truePredicate);
     }
 
     protected MultiSet<T> makeTestMultiSet() {
-        return decorateMultiSet(new HashMultiSet<T>(), stringPredicate());
+        return decorateMultiSet(new HashMultiSet<>(), stringPredicate());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         elements.add("four");
         assertThrows(IllegalArgumentException.class, () -> decorateMultiSet((HashMultiSet<T>) elements, stringPredicate()),
                 "MultiSet contains an element that should fail the predicate.");
-        assertThrows(NullPointerException.class, () -> decorateMultiSet(new HashMultiSet<T>(), null),
+        assertThrows(NullPointerException.class, () -> decorateMultiSet(new HashMultiSet<>(), null),
                 "Expecting NullPointerException for null predicate.");
     }
 

@@ -81,7 +81,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
     @Test
     @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
-        final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<String>());
+        final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<>());
 
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(buffer);

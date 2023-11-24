@@ -49,7 +49,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeObject() {
-        return decorateList(new ArrayList<E>(), truePredicate);
+        return decorateList(new ArrayList<>(), truePredicate);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     public List<E> makeTestList() {
-        return decorateList(new ArrayList<E>(), testPredicate);
+        return decorateList(new ArrayList<>(), testPredicate);
     }
 
     @Test

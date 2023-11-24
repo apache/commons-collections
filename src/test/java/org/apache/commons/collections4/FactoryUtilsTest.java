@@ -168,7 +168,7 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock3 {
-        private static int cCounter = 0;
+        private static int cCounter;
         private final int iVal;
         public Mock3() {
             iVal = cCounter++;
@@ -179,12 +179,12 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void instantiateFactoryNull() {
+    public void testInstantiateFactoryNull() {
         assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
     }
 
     @Test
-    public void instantiateFactorySimple() {
+    public void testInstantiateFactorySimple() {
         final Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
         assertNotNull(factory);
         Mock3 created = factory.create();
@@ -194,17 +194,17 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void instantiateFactoryMismatch() {
+    public void testInstantiateFactoryMismatch() {
         assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null}));
     }
 
     @Test
-    public void instantiateFactoryNoConstructor() {
+    public void testInstantiateFactoryNoConstructor() {
         assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null}));
     }
 
     @Test
-    public void instantiateFactoryComplex() {
+    public void testInstantiateFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
         final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,

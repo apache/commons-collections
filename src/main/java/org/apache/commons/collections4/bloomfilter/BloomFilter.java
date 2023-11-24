@@ -231,7 +231,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * shape and cardinality of this filter.</p>
      *
      * <p>This produces an estimate roughly equivalent to the number of Hashers that have been merged into the filter
-     * by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>Note:</em></p>
      * <ul>
@@ -246,14 +246,14 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @see Shape
      */
     default int estimateN() {
-        double d = getShape().estimateN(cardinality());
+        final double d = getShape().estimateN(cardinality());
         if (Double.isInfinite(d)) {
             return Integer.MAX_VALUE;
         }
         if (Double.isNaN(d)) {
             throw new IllegalArgumentException("Cardinality too large: " + cardinality());
         }
-        long l = Math.round(d);
+        final long l = Math.round(d);
         return l > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) l;
     }
 
@@ -261,7 +261,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Estimates the number of items in the union of this Bloom filter with the other bloom filter.
      *
      * <p>This produces an estimate roughly equivalent to the number of unique Hashers that have been merged into either
-     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>{@code estimateUnion} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}
@@ -284,7 +284,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
      *
      * <p>This method produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
-     * of the filters by rounding the value from the calculation described in the {@link Shape} class javadoc.</p>
+     * of the filters by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>{@code estimateIntersection} should only be called with Bloom filters of the same Shape.  If called on Bloom
      * filters of differing shape this method is not symmetric. If {@code other} has more bits an {@code IllegalArgumentException}
@@ -298,8 +298,8 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default int estimateIntersection(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        double eThis = getShape().estimateN(cardinality());
-        double eOther = getShape().estimateN(other.cardinality());
+        final double eThis = getShape().estimateN(cardinality());
+        final double eOther = getShape().estimateN(other.cardinality());
         if (Double.isInfinite(eThis) && Double.isInfinite(eOther)) {
             // if both are infinite the union is infinite and we return Integer.MAX_VALUE
             return Integer.MAX_VALUE;
@@ -311,9 +311,9 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
         } else if (Double.isInfinite(eOther)) {
             estimate = Math.round(eThis);
         } else {
-            BloomFilter union = this.copy();
+            final BloomFilter union = this.copy();
             union.merge(other);
-            double eUnion = getShape().estimateN(union.cardinality());
+            final double eUnion = getShape().estimateN(union.cardinality());
             if (Double.isInfinite(eUnion)) {
                 throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
             }

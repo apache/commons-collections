@@ -33,7 +33,7 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Override
     public SortedMap<K, V> makeObject() {
-        return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<K, V>());
+        return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
     }
 
     @Override

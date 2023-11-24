@@ -37,8 +37,8 @@ import org.junit.jupiter.api.Test;
  * @since 3.0
  */
 public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
-    protected UnmodifiableSortedSet<E> set = null;
-    protected ArrayList<E> array = null;
+    protected UnmodifiableSortedSet<E> set;
+    protected ArrayList<E> array;
 
     public UnmodifiableSortedSetTest() {
         super(UnmodifiableSortedSetTest.class.getSimpleName());
@@ -46,7 +46,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public SortedSet<E> makeObject() {
-        return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<E>());
+        return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertAll(
                 () -> assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"),
                         "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<E>()),
+                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<>()),
                         "Expecting UnsupportedOperationException."),
                 () -> assertThrows(UnsupportedOperationException.class, () -> set.clear(),
                         "Expecting UnsupportedOperationException."),

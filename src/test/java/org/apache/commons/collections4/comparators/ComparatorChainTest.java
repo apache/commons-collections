@@ -164,7 +164,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     public static class ColumnComparator implements Comparator<PseudoRow>, Serializable {
         private static final long serialVersionUID = -2284880866328872105L;
 
-        protected int colIndex = 0;
+        protected int colIndex;
 
         public ColumnComparator(final int colIndex) {
             this.colIndex = colIndex;

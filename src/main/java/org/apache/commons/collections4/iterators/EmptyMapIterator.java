@@ -37,7 +37,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
     public static final MapIterator INSTANCE = new EmptyMapIterator<>();
 
     /**
-     * Get a typed instance of the iterator.
+     * Gets a typed instance of the iterator.
      * @param <K> the key type
      * @param <V> the value type
      * @return {@link MapIterator}&lt;K, V&gt;

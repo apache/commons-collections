@@ -58,7 +58,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return CollectionSortedBag.collectionSortedBag(new TreeBag<T>());
+        return CollectionSortedBag.collectionSortedBag(new TreeBag<>());
     }
 
     /**

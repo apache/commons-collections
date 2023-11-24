@@ -45,10 +45,10 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //--------------------------------------------------------------- Lifecycle
 
-    private Comparator<Integer> comparator = null;
-    private ArrayList<Integer> evens = null;
-    private ArrayList<Integer> odds = null;
-    private ArrayList<Integer> fib = null;
+    private Comparator<Integer> comparator;
+    private ArrayList<Integer> evens;
+    private ArrayList<Integer> odds;
+    private ArrayList<Integer> fib;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -265,7 +265,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
         int i = 0;
         final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
-        collatingIterator2.setComparator(new ComparableComparator<Integer>());
+        collatingIterator2.setComparator(new ComparableComparator<>());
         for ( ; collatingIterator2.hasNext(); i++ ) {
             final Integer n = collatingIterator2.next();
             assertEquals((int) n, i + 1, "wrong order");

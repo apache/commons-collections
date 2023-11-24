@@ -126,7 +126,7 @@ public class QueueUtils {
     }
 
     /**
-     * Get an empty {@code Queue}.
+     * Gets an empty {@code Queue}.
      *
      * @param <E> the type of the elements in the queue
      * @return an empty {@link Queue}

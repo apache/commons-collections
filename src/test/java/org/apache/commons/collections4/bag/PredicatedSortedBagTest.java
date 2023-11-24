@@ -42,7 +42,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     protected Predicate<T> stringPredicate() {
-        return o -> o instanceof String;
+        return String.class::isInstance;
     }
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
@@ -53,19 +53,19 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     @Override
     public SortedBag<T> makeObject() {
-        return decorateBag(new TreeBag<T>(), truePredicate);
+        return decorateBag(new TreeBag<>(), truePredicate);
     }
 
     protected SortedBag<T> makeTestBag() {
-        return decorateBag(new TreeBag<T>(), stringPredicate());
+        return decorateBag(new TreeBag<>(), stringPredicate());
     }
 
     @Test
     public void testDecorate() {
-        final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
+        final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
 
-        assertThrows(NullPointerException.class, () -> decorateBag(new TreeBag<T>(), null));
+        assertThrows(NullPointerException.class, () -> decorateBag(new TreeBag<>(), null));
 
         assertThrows(NullPointerException.class, () -> decorateBag(nullBag, stringPredicate()));
     }
@@ -73,7 +73,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     @Test
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
-        final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
+        final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         final String one = "one";
         final String two = "two";
         final String three = "three";

@@ -147,7 +147,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Inner class iterator for the MultiSet.
      */
-    private static class MapBasedMultiSetIterator<E> implements Iterator<E> {
+    private static final class MapBasedMultiSetIterator<E> implements Iterator<E> {
         private final AbstractMapMultiSet<E> parent;
         private final Iterator<Map.Entry<E, MutableInteger>> entryIterator;
         private Map.Entry<E, MutableInteger> current;
@@ -508,7 +508,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             final E current = entry.getKey();
             final MutableInteger count = entry.getValue();
             for (int index = count.value; index > 0; index--) {
-                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
+                // unsafe, will throw ArrayStoreException if types are not compatible, see Javadoc
                 @SuppressWarnings("unchecked")
                 final T unchecked = (T) current;
                 array[i++] = unchecked;

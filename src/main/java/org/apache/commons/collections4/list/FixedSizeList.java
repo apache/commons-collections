@@ -172,7 +172,7 @@ public class FixedSizeList<E>
     /**
      * List iterator that only permits changes via set()
      */
-    private class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
+    private final class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
         protected FixedSizeListIterator(final ListIterator<E> iterator) {
             super(iterator);
         }

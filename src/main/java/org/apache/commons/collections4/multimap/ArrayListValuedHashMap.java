@@ -89,7 +89,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * @param initialListCapacity  the initial capacity used for value collections
      */
     public ArrayListValuedHashMap(final int initialMapCapacity, final int initialListCapacity) {
-        super(new HashMap<K, ArrayList<V>>(initialMapCapacity));
+        super(new HashMap<>(initialMapCapacity));
         this.initialListCapacity = initialListCapacity;
     }
 
@@ -135,7 +135,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
 
     private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
-        setMap(new HashMap<K, ArrayList<V>>());
+        setMap(new HashMap<>());
         doReadObject(ois);
     }
 

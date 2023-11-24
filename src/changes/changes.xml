@@ -281,7 +281,7 @@
     </action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump org.easymock:easymock from 4.0.2 to 5.1.0 #352, #355, #375.
+      Bump org.easymock:easymock from 4.0.2 to 5.2.0 #352, #355, #375, #414.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
       Bump actions/cache from 2 to 3.0.10 #214 #225 #239 #266 #294, #342, #345.
@@ -296,7 +296,7 @@
       Bump codecov/codecov-action from 2 to 3 #297.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump Apache commons-parent from 48 to 59, #339.
+      Bump Apache commons-parent from 48 to 64, #339.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.
@@ -323,7 +323,7 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump tests from commons-io:commons-io 2.6 to 2.13.0 #180.
+      Bump tests from commons-io:commons-io 2.6 to 2.15.0 #180.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
       Bump maven-pmd-plugin from 3.12.0 to 3.19.0 #167, #196, #253, #311, #334.
@@ -347,7 +347,7 @@
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump commons-lang3 from 3.11 to 3.13.0.
+      Bump commons-lang3 from 3.11 to 3.14.0.
     </action>
     <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
       Add new variables to oac.collections4.CollectionUtils and use them in the code base.
@@ -368,7 +368,7 @@
       Bump pmd from 6.46.0 to 6.52.0 #318, #327, #333, #347.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump guava-testlib from 31.1-jre to 32.1.2-jre #394, #395, #404, #405, #411.
+      Bump guava-testlib from 31.1-jre to 32.1.3-jre #394, #395, #404, #405, #411, #423.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

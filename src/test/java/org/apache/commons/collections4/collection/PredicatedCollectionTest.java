@@ -49,7 +49,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeObject() {
-        return decorateCollection(new ArrayList<E>(), truePredicate);
+        return decorateCollection(new ArrayList<>(), truePredicate);
     }
 
     @Override
@@ -75,10 +75,10 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+        String.class::isInstance;
 
     public Collection<E> makeTestCollection() {
-        return decorateCollection(new ArrayList<E>(), testPredicate);
+        return decorateCollection(new ArrayList<>(), testPredicate);
     }
 
     @Test

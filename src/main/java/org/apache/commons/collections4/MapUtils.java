@@ -152,7 +152,7 @@ public class MapUtils {
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map. Each map entry will be printed with key, value
-     * and value classname. When the value is a Map, recursive behavior occurs.
+     * and value class name. When the value is a Map, recursive behavior occurs.
      * </p>
      * <p>
      * This method is NOT thread-safe in any special way. You must manually synchronize on either this class or the
@@ -1220,7 +1220,7 @@ public class MapUtils {
     }
 
     /**
-     * Get the specified {@link Map} as an {@link IterableMap}.
+     * Gets the specified {@link Map} as an {@link IterableMap}.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1237,7 +1237,7 @@ public class MapUtils {
     }
 
     /**
-     * Get the specified {@link SortedMap} as an {@link IterableSortedMap}.
+     * Gets the specified {@link SortedMap} as an {@link IterableSortedMap}.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1737,7 +1737,7 @@ public class MapUtils {
      *
      * <pre>
      * Map m = MapUtils.synchronizedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
@@ -1767,7 +1767,7 @@ public class MapUtils {
      *
      * <pre>
      * Map m = MapUtils.synchronizedSortedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {

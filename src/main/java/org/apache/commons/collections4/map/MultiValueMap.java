@@ -134,7 +134,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public MultiValueMap() {
-        this(new HashMap<K, V>(), new ReflectionFactory(ArrayList.class));
+        this(new HashMap<>(), new ReflectionFactory(ArrayList.class));
     }
 
     /**
@@ -484,7 +484,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides the values view.
      */
-    private class Values extends AbstractCollection<V> {
+    private final class Values extends AbstractCollection<V> {
         @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<>();
@@ -508,7 +508,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides the values iterator.
      */
-    private class ValuesIterator implements Iterator<V> {
+    private final class ValuesIterator implements Iterator<V> {
         private final Object key;
         private final Collection<V> values;
         private final Iterator<V> iterator;
@@ -541,7 +541,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides a simple reflection factory.
      */
-    private static class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
+    private static final class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
 
         /** Serialization version */
         private static final long serialVersionUID = 2986114157496788874L;

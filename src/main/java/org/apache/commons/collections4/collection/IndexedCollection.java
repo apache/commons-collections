@@ -170,7 +170,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Get the element associated with the given key.
+     * Gets the element associated with the given key.
      * <p>
      * In case of a non-unique index, this method will return the first
      * value associated with the given key. To retrieve all elements associated
@@ -187,7 +187,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Get all elements associated with the given key.
+     * Gets all elements associated with the given key.
      *
      * @param key  key to look up
      * @return a collection of elements found, or null if {@code contains(key) == false}

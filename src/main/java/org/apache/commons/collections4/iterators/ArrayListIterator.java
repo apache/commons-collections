@@ -77,7 +77,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     /**
-     * Construct an ArrayListIterator that will iterate over a range of values
+     * Constructs an ArrayListIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
@@ -177,7 +177,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * <b>Note:</b> {@link java.util.ListIterator} implementations that support
      * {@code add()} and {@code remove()} only allow {@code set()} to be called
      * once per call to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
-     * javadoc for more details). Since this implementation does
+     * Javadoc for more details). Since this implementation does
      * not support {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
      *

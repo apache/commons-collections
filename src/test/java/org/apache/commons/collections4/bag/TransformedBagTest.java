@@ -40,7 +40,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @Override
     @SuppressWarnings("unchecked")
     public Bag<T> makeObject() {
-        return TransformedBag.transformingBag(new HashBag<T>(),
+        return TransformedBag.transformingBag(new HashBag<>(),
                 (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
@@ -53,7 +53,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
-        final Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
+        final Bag<T> bag = TransformedBag.transformingBag(new HashBag<>(),
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertTrue(bag.isEmpty());
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};

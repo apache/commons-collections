@@ -215,7 +215,7 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     // protected implementation
     /**
-     * Get the version of Collections that this object tries to
+     * Gets the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to
      * the package change to collections4 introduced in version 4.
      *

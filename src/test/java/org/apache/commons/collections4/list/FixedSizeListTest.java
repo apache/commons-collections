@@ -41,7 +41,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeObject() {
-        return FixedSizeList.fixedSizeList(new ArrayList<E>());
+        return FixedSizeList.fixedSizeList(new ArrayList<>());
     }
 
     @Override

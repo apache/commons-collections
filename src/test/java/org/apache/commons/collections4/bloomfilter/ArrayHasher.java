@@ -37,7 +37,7 @@ public final class ArrayHasher implements Hasher {
         return new Producer(shape);
     }
 
-    private class Producer implements IndexProducer {
+    private final class Producer implements IndexProducer {
         Shape shape;
 
         Producer(final Shape shape) {
