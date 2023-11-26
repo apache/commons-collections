@@ -681,7 +681,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         verify();
     }
 
-
     /**
      * Tests Map.equals(Object)
      */
@@ -1750,7 +1749,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
     }
 
-
     /**
      * Bulk test {@link Map#keySet()}.  This method runs through all of
      * the tests in {@link AbstractSetTest}.
@@ -1941,7 +1939,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // removes the proper mapping and not just any mapping that may have
         // the value equal to the value returned from the values iterator.
     }
-
 
     /**
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet},

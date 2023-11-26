@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
-
 public class EqualPredicateTest extends AbstractPredicateTest {
     private static final EqualsTestObject FALSE_OBJECT = new EqualsTestObject(false);
     private static final EqualsTestObject TRUE_OBJECT = new EqualsTestObject(true);

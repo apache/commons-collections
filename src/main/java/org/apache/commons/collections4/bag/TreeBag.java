@@ -95,7 +95,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         return super.add(object);
     }
 
-
     @Override
     public E first() {
         return getMap().firstKey();

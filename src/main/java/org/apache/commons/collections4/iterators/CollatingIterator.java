@@ -27,7 +27,6 @@ import java.util.Objects;
 
 import org.apache.commons.collections4.list.UnmodifiableList;
 
-
 /**
  * Provides an ordered iteration over the elements contained in a collection of
  * ordered Iterators.

@@ -124,7 +124,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return decorated().hashCode();
     }
 
-
     @Override
     public E get(final int index) {
         return getList().get(index);
@@ -144,7 +143,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     public E remove(final int index) {
         return getList().remove(index);
     }
-
 
     @Override
     public void add(final int index, E object) {

@@ -110,7 +110,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         return multiset;
     }
 
-
     @Override
     public void resetEmpty() {
         this.setCollection(makeObject());
@@ -615,7 +614,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(total, multiset2.hashCode());
     }
 
-
     /**
      * Bulk test {@link MultiSet#uniqueSet()}.  This method runs through all of
      * the tests in {@link AbstractSetTest}.
@@ -697,7 +695,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
             return AbstractMultiSetTest.this.getIterationBehaviour();
         }
     }
-
 
     /**
      * Compare the current serialized form of the MultiSet

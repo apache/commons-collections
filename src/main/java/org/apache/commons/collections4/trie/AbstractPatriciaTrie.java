@@ -769,7 +769,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
     }
 
-
     @Override
     public Comparator<? super K> comparator() {
         return getKeyAnalyzer();
@@ -1386,7 +1385,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             return buffer.toString();
         }
     }
-
 
     /**
      * This is an entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
@@ -2417,7 +2415,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             }
         }
     }
-
 
     /**
      * Reads the content of the stream.

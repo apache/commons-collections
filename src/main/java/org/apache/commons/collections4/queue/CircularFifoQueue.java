@@ -272,7 +272,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         return elements[idx];
     }
 
-
     /**
      * Adds the given element to this queue. If the queue is full, the least recently added
      * element is discarded so that a new element can be inserted.

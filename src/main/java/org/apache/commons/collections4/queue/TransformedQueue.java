@@ -109,7 +109,6 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
         return (Queue<E>) decorated();
     }
 
-
     @Override
     public boolean offer(final E obj) {
         return getQueue().offer(transform(obj));

@@ -48,7 +48,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         super(testName);
     }
 
-
     /**
      * Implement this method to return a list of sorted objects.
      *
@@ -203,7 +202,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
                             + "compatibility: " + exception.getMessage());
                 }
             }
-
 
             // make sure the canonical form produces the ordering we currently
             // expect

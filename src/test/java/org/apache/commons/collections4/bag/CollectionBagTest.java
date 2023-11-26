@@ -46,7 +46,6 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         super(CollectionBagTest.class.getSimpleName());
     }
 
-
     @Override
     public Bag<T> makeObject() {
         return CollectionBag.collectionBag(new HashBag<>());
@@ -90,7 +89,6 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
 //    }
-
 
     /**
      * Compares the current serialized form of the Bag

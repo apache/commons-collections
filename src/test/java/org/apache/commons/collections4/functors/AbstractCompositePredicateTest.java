@@ -124,7 +124,6 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
         assertThrows(NullPointerException.class, () -> getPredicateInstance(new Predicate[] { null, null }));
     }
 
-
     /**
      * Tests {@code getInstance} with a null predicate collection
      */

@@ -99,7 +99,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         return new TreeBag<>();
     }
 
-
     @Override
     public void resetEmpty() {
         this.setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
@@ -148,7 +147,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
     public SortedBag<T> getCollection() {
         return (SortedBag<T>) super.getCollection();
     }
-
 
     // TODO: Add the SortedBag tests!
 }

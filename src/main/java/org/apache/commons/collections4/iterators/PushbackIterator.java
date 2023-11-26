@@ -61,7 +61,6 @@ public class PushbackIterator<E> implements Iterator<E> {
         return new PushbackIterator<>(iterator);
     }
 
-
     /**
      * Constructor.
      *

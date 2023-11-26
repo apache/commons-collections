@@ -198,7 +198,6 @@ public class SetUtils {
         return set == null ? Collections.<T>emptySet() : set;
     }
 
-
     /**
      * Gets a typed empty unmodifiable Set.
      * @param <E> the element type

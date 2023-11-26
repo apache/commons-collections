@@ -829,7 +829,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
                 "Exhausted iterator should raise NoSuchElement");
     }
 
-
     /**
      *  Tests the {@link ListIterator#add(Object)} method of the list
      *  iterator.

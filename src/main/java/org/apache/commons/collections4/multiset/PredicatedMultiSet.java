@@ -101,7 +101,6 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
         return decorated().hashCode();
     }
 
-
     @Override
     public int add(final E object, final int count) {
         validate(object);

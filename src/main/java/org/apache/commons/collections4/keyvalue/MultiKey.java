@@ -131,7 +131,6 @@ public class MultiKey<K> implements Serializable {
         this(newArray(key1, key2), false);
     }
 
-
     /**
      * Constructor taking three keys.
      * <p>

@@ -46,7 +46,6 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
         super(CollectionSortedBagTest.class.getSimpleName());
     }
 
-
     /**
      * Overridden because SortedBags don't allow null elements (normally).
      * @return false
@@ -110,7 +109,6 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
         return (T[]) elements;
     }
 
-
     @Override
     public String getCompatibilityVersion() {
         return "4";
@@ -122,7 +120,6 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionSortedBag.fullCollection.version4.obj");
 //    }
-
 
     /**
      * Compare the current serialized form of the Bag

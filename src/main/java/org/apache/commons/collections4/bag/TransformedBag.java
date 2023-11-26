@@ -121,7 +121,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         return decorated().hashCode();
     }
 
-
     @Override
     public int getCount(final Object object) {
         return getBag().getCount(object);
@@ -131,7 +130,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     public boolean remove(final Object object, final int nCopies) {
         return getBag().remove(object, nCopies);
     }
-
 
     @Override
     public boolean add(final E object, final int nCopies) {

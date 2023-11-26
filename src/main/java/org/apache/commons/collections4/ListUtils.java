@@ -63,7 +63,6 @@ public class ListUtils {
         }
     }
 
-
     /**
      * A helper class used to construct the longest common subsequence.
      */

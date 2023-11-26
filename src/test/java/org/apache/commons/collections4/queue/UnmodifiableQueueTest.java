@@ -116,7 +116,6 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
 
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

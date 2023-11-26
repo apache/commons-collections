@@ -52,7 +52,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
         return iterator;
     }
 
-
     /** {@inheritDoc} */
     @Override
     public boolean hasNext() {

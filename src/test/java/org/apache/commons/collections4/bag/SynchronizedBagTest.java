@@ -30,7 +30,6 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
         super(SynchronizedBagTest.class.getSimpleName());
     }
 
-
     @Override
     public Bag<T> makeObject() {
         return SynchronizedBag.synchronizedBag(new HashBag<>());

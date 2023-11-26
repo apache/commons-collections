@@ -83,7 +83,6 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
         return (SortedBag<E>) decorated();
     }
 
-
     @Override
     public synchronized E first() {
         synchronized (lock) {

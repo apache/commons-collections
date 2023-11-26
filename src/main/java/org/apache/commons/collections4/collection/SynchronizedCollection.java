@@ -96,7 +96,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         return collection;
     }
 
-
     @Override
     public boolean add(final E object) {
         synchronized (lock) {

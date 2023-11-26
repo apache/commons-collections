@@ -65,7 +65,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     /** MultiValuedHashMap created by reset(). */
     protected MultiValuedMap<K, V> confirmed;
 
-
     public AbstractMultiValuedMapTest(final String testName) {
         super(testName);
     }

@@ -37,7 +37,6 @@ package org.apache.commons.collections4;
  */
 final class ArrayUtils {
 
-
     /**
      * Don't allow instances.
      */

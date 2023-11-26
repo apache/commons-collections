@@ -157,7 +157,6 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         return new String[] { recursiveTest };
     }
 
-
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualTreeBidiMap.emptyCollection.version4.Test2.obj");
