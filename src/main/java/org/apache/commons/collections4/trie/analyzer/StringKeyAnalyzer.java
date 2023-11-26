@@ -27,16 +27,24 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
     private static final long serialVersionUID = -7032449491269434877L;
 
-    /** A singleton instance of {@link StringKeyAnalyzer}. */
+    /**
+     * A singleton instance of {@link StringKeyAnalyzer}.
+     */
     public static final StringKeyAnalyzer INSTANCE = new StringKeyAnalyzer();
 
-    /** The number of bits per {@link Character}. */
+    /**
+     * The number of bits per {@link Character}.
+     */
     public static final int LENGTH = Character.SIZE;
 
-    /** A bit mask where the first bit is 1 and the others are zero. */
+    /**
+     * A bit mask where the first bit is 1 and the others are zero.
+     */
     private static final int MSB = 0x8000;
 
-    /** Returns a bit mask where the given bit is set. */
+    /**
+     * Returns a bit mask where the given bit is set.
+     */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
@@ -57,8 +65,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
         boolean allNull = true;
 
-        if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
-                || lengthInBits % LENGTH != 0 || otherLengthInBits % LENGTH != 0) {
+        if (checkCharacterBoundaries(offsetInBits, lengthInBits, otherOffsetInBits, otherLengthInBits)) {
             throw new IllegalArgumentException("The offsets and lengths must be at Character boundaries");
         }
 
@@ -107,6 +114,20 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
         // Both keys are equal
         return KeyAnalyzer.EQUAL_BIT_KEY;
+    }
+
+    /**
+     * Check the character boundaries.
+     *
+     * @param offsetInBits
+     * @param lengthInBits
+     * @param otherOffsetInBits
+     * @param otherLengthInBits
+     * @return
+     */
+    private static boolean checkCharacterBoundaries(int offsetInBits, int lengthInBits, int otherOffsetInBits, int otherLengthInBits) {
+        return offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
+                || lengthInBits % LENGTH != 0 || otherLengthInBits % LENGTH != 0;
     }
 
     @Override
