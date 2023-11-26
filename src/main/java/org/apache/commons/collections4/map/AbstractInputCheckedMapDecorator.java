@@ -86,7 +86,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * Hook method called to determine if {@code checkSetValue} has any effect.
      * <p>
      * An implementation should return false if the {@code checkSetValue} method
-     * has no effect as this optimises the implementation.
+     * has no effect as this optimizes the implementation.
      * <p>
      * This implementation returns {@code true}.
      *

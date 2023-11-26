@@ -30,7 +30,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.OrderedIterator;
 
 /**
- * A {@code List} implementation that is optimised for fast insertions and
+ * A {@code List} implementation that is optimized for fast insertions and
  * removals at any index in the list.
  * <p>
  * This list implementation utilises a tree structure internally to ensure that
