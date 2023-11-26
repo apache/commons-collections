@@ -50,6 +50,7 @@ public interface IndexProducer {
 
     /**
      * Creates an IndexProducer from an array of integers.
+     *
      * @param values the index values
      * @return an IndexProducer that uses the values.
      */
@@ -75,6 +76,7 @@ public interface IndexProducer {
 
     /**
      * Creates an IndexProducer from a {@code BitMapProducer}.
+     *
      * @param producer the {@code BitMapProducer}
      * @return a new {@code IndexProducer}.
      */
@@ -117,11 +119,15 @@ public interface IndexProducer {
      */
     default int[] asIndexArray() {
         class Indices {
+            /**
+             * The maximum array size for the methods in this class.
+             */
+            static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
             private int[] data = new int[32];
             private int size;
 
             boolean add(final int index) {
-                data = IndexUtils.ensureCapacityForAdd(data, size);
+                data = ensureCapacityForAdd(data, size);
                 data[size++] = index;
                 return true;
             }
@@ -129,6 +135,19 @@ public interface IndexProducer {
             int[] toArray() {
                 // Edge case to avoid a large array copy
                 return size == data.length ? data : Arrays.copyOf(data, size);
+            }
+
+            /**
+             * Ensure the array can add an element at the specified index.
+             * @param array the array to check.
+             * @param index the index to add at.
+             * @return the array or a newly allocated copy of the array.
+             */
+            int[] ensureCapacityForAdd(final int[] array, final int index) {
+                if (index >= array.length) {
+                    return Arrays.copyOf(array, (int) Math.min(MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
+                }
+                return array;
             }
         }
         final Indices indices = new Indices();
