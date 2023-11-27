@@ -16,13 +16,13 @@
  */
 package org.apache.commons.collections4.bag;
 
+import org.apache.commons.collections4.SortedBag;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.apache.commons.collections4.SortedBag;
 
 /**
  * Decorates another {@link SortedBag} to comply with the Collection contract.
@@ -32,14 +32,16 @@ import org.apache.commons.collections4.SortedBag;
  */
 public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> {
 
-    /** Serialization version */
+    /**
+     * Serialization version
+     */
     private static final long serialVersionUID = -2560033712679053143L;
 
     /**
      * Factory method to create a sorted bag that complies to the Collection contract.
      *
      * @param <E> the type of the elements in the bag
-     * @param bag  the sorted bag to decorate, must not be null
+     * @param bag the sorted bag to decorate, must not be null
      * @return a SortedBag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      */
@@ -50,7 +52,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the sorted bag to decorate, must not be null
+     * @param bag the sorted bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     public CollectionSortedBag(final SortedBag<E> bag) {
@@ -60,26 +62,26 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     /**
      * Write the collection out using a custom routine.
      *
-     * @param out  the output stream
+     * @param out the output stream
      * @throws IOException if an error occurs while writing to the stream
      */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    @Override
+    public void writeObject(final ObjectOutputStream out) throws IOException {
+        super.writeObject(out);
     }
 
     /**
      * Read the collection in using a custom routine.
      *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @param in the input stream
+     * @throws IOException            if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @throws ClassCastException if deserialized object has wrong type
+     * @throws ClassCastException     if deserialized object has wrong type
      */
-    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject());
+    @Override
+    // will throw CCE, see Javadoc
+    public void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        super.readObject(in);
     }
 
     // Collection interface

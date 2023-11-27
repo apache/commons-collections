@@ -16,9 +16,13 @@
  */
 package org.apache.commons.collections4.bag;
 
-import java.util.Comparator;
-
 import org.apache.commons.collections4.SortedBag;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * Decorates another {@code SortedBag} to provide additional behavior.
@@ -32,11 +36,14 @@ import org.apache.commons.collections4.SortedBag;
 public abstract class AbstractSortedBagDecorator<E>
         extends AbstractBagDecorator<E> implements SortedBag<E> {
 
-    /** Serialization version */
+    /**
+     * Serialization version
+     */
     private static final long serialVersionUID = -8223473624050467718L;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractSortedBagDecorator() {
@@ -45,7 +52,7 @@ public abstract class AbstractSortedBagDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag the bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     protected AbstractSortedBagDecorator(final SortedBag<E> bag) {
@@ -78,4 +85,28 @@ public abstract class AbstractSortedBagDecorator<E>
         return decorated().comparator();
     }
 
+    /**
+     * Write the collection out using a custom routine.
+     *
+     * @param out the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    public void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
+    }
+
+    /**
+     * Read the collection in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException            if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassCastException     if deserialized object has wrong type
+     */
+    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
+    public void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject());
+    }
 }
