@@ -16,25 +16,13 @@
  */
 package org.apache.commons.collections4;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
-import org.apache.commons.collections4.list.FixedSizeList;
-import org.apache.commons.collections4.list.LazyList;
-import org.apache.commons.collections4.list.PredicatedList;
-import org.apache.commons.collections4.list.TransformedList;
-import org.apache.commons.collections4.list.UnmodifiableList;
-import org.apache.commons.collections4.sequence.CommandVisitor;
+import org.apache.commons.collections4.list.*;
 import org.apache.commons.collections4.sequence.EditScript;
 import org.apache.commons.collections4.sequence.SequencesComparator;
+
+import java.util.*;
 
 /**
  * Provides utility methods and decorators for {@link List} instances.
@@ -42,104 +30,14 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
  * @since 1.0
  */
 public class ListUtils {
-    /**
-     * A simple wrapper to use a CharSequence as List.
-     */
-    private static final class CharSequenceAsList extends AbstractList<Character> {
-        private final CharSequence sequence;
-
-        CharSequenceAsList(final CharSequence sequence) {
-            this.sequence = sequence;
-        }
-
-        @Override
-        public Character get(final int index) {
-            return Character.valueOf(sequence.charAt(index));
-        }
-
-        @Override
-        public int size() {
-            return sequence.length();
-        }
-    }
-
-
-    /**
-     * A helper class used to construct the longest common subsequence.
-     */
-    private static final class LcsVisitor<E> implements CommandVisitor<E> {
-        private final ArrayList<E> sequence;
-
-        LcsVisitor() {
-            sequence = new ArrayList<>();
-        }
-
-        public List<E> getSubSequence() {
-            return sequence;
-        }
-
-        @Override
-        public void visitDeleteCommand(final E object) {
-            // noop
-        }
-
-        @Override
-        public void visitInsertCommand(final E object) {
-            // noop
-        }
-
-        @Override
-        public void visitKeepCommand(final E object) {
-            sequence.add(object);
-        }
-    }
-
-    /**
-     * Provides a partition view on a {@link List}.
-     * @since 4.0
-     */
-    private static final class Partition<T> extends AbstractList<List<T>> {
-        private final List<T> list;
-        private final int size;
-
-        private Partition(final List<T> list, final int size) {
-            this.list = list;
-            this.size = size;
-        }
-
-        @Override
-        public List<T> get(final int index) {
-            final int listSize = size();
-            if (index < 0) {
-                throw new IndexOutOfBoundsException("Index " + index + " must not be negative");
-            }
-            if (index >= listSize) {
-                throw new IndexOutOfBoundsException("Index " + index + " must be less than size " +
-                                                    listSize);
-            }
-            final int start = index * size;
-            final int end = Math.min(start + size, list.size());
-            return list.subList(start, end);
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return list.isEmpty();
-        }
-
-        @Override
-        public int size() {
-            return (int) Math.ceil((double) list.size() / (double) size);
-        }
-    }
 
     /**
      * Returns either the passed in list, or if the list is {@code null},
      * the value of {@code defaultList}.
      *
-     * @param <T> the element type
-     * @param list  the list, possibly {@code null}
-     * @param defaultList  the returned values if list is {@code null}
+     * @param <T>         the element type
+     * @param list        the list, possibly {@code null}
+     * @param defaultList the returned values if list is {@code null}
      * @return an empty list if the argument is {@code null}
      * @since 4.0
      */
@@ -151,7 +49,7 @@ public class ListUtils {
      * Returns an immutable empty list if the argument is {@code null},
      * or the argument itself otherwise.
      *
-     * @param <T> the element type
+     * @param <T>  the element type
      * @param list the list, possibly {@code null}
      * @return an empty list if the argument is {@code null}
      */
@@ -166,9 +64,9 @@ public class ListUtils {
      * {@link List#set(int, Object)} method).
      *
      * @param <E>  the element type
-     * @param list  the list whose size to fix, must not be null
+     * @param list the list whose size to fix, must not be null
      * @return a fixed-size list backed by that list
-     * @throws NullPointerException  if the List is null
+     * @throws NullPointerException if the List is null
      */
     public static <E> List<E> fixedSizeList(final List<E> list) {
         return FixedSizeList.fixedSizeList(list);
@@ -179,7 +77,8 @@ public class ListUtils {
      * <p>
      * Shorthand for {@code list.get(0)}
      * </p>
-     * @param <T> The list type.
+     *
+     * @param <T>  The list type.
      * @param list The list.
      * @return the first element of a list.
      * @see List#get(int)
@@ -194,7 +93,8 @@ public class ListUtils {
      * <p>
      * Shorthand for {@code list.get(list.size() - 1)}
      * </p>
-     * @param <T> The list type.
+     *
+     * @param <T>  The list type.
      * @param list The list.
      * @return the last element of a list.
      * @see List#get(int)
@@ -212,9 +112,9 @@ public class ListUtils {
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
      *
-     * @see java.util.List#hashCode()
-     * @param list  the list to generate the hashCode for, may be null
+     * @param list the list to generate the hashCode for, may be null
      * @return the hash code
+     * @see java.util.List#hashCode()
      */
     public static int hashCodeForList(final Collection<?> list) {
         if (list == null) {
@@ -234,9 +134,9 @@ public class ListUtils {
      * If the input List or predicate is null, or no element of the List
      * matches the predicate, -1 is returned.
      *
-     * @param <E>  the element type
-     * @param list the List to search, may be null
-     * @param predicate  the predicate to use, may be null
+     * @param <E>       the element type
+     * @param list      the List to search, may be null
+     * @param predicate the predicate to use, may be null
      * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
      */
     public static <E> int indexOf(final List<E> list, final Predicate<E> predicate) {
@@ -255,10 +155,10 @@ public class ListUtils {
      * Returns a new list containing all elements that are contained in
      * both given lists.
      *
-     * @param <E> the element type
-     * @param list1  the first list
-     * @param list2  the second list
-     * @return  the intersection of those two lists
+     * @param <E>   the element type
+     * @param list1 the first list
+     * @param list2 the second list
+     * @return the intersection of those two lists
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> intersection(final List<? extends E> list1, final List<? extends E> list2) {
@@ -306,10 +206,10 @@ public class ListUtils {
      * <b>Note:</b> The behavior of this method is undefined if the lists are
      * modified during the equals comparison.
      *
-     * @see java.util.List
-     * @param list1  the first list, may be null
-     * @param list2  the second list, may be null
+     * @param list1 the first list, may be null
+     * @param list2 the second list, may be null
      * @return whether the lists are equal by value comparison
+     * @see java.util.List
      */
     public static boolean isEqualList(final Collection<?> list1, final Collection<?> list2) {
         if (list1 == list2) {
@@ -352,15 +252,15 @@ public class ListUtils {
      * List&lt;Date&gt; lazy = ListUtils.lazyList(new ArrayList&lt;Date&gt;(), factory);
      * Date date = lazy.get(3);
      * </pre>
-     *
+     * <p>
      * After the above code is executed, {@code date} will refer to
      * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to {@code null}.
      *
-     * @param <E> the element type
-     * @param list  the list to make lazy, must not be null
-     * @param factory  the factory for creating new objects, must not be null
+     * @param <E>     the element type
+     * @param list    the list to make lazy, must not be null
+     * @param factory the factory for creating new objects, must not be null
      * @return a lazy list backed by the given list
      * @throws NullPointerException if the List or Factory is null
      */
@@ -383,15 +283,15 @@ public class ListUtils {
      * List&lt;LocalDateTime&gt; lazy = ListUtils.lazyList(new ArrayList&lt;LocalDateTime&gt;(), transformer);
      * Date date = lazy.get(3);
      * </pre>
-     *
+     * <p>
      * After the above code is executed, {@code date} will refer to
      * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to {@code null}.
      *
-     * @param <E> the element type
-     * @param list  the list to make lazy, must not be null
-     * @param transformer  the transformer for creating new objects, must not be null
+     * @param <E>         the element type
+     * @param list        the list to make lazy, must not be null
+     * @param transformer the transformer for creating new objects, must not be null
      * @return a lazy list backed by the given list
      * @throws NullPointerException if the List or Transformer is null
      */
@@ -405,8 +305,8 @@ public class ListUtils {
      * This is a convenience method for using {@link #longestCommonSubsequence(List, List)}
      * with {@link CharSequence} instances.
      *
-     * @param charSequenceA  the first sequence
-     * @param charSequenceB  the second sequence
+     * @param charSequenceA the first sequence
+     * @param charSequenceB the second sequence
      * @return the longest common subsequence as {@link String}
      * @throws NullPointerException if either sequence is {@code null}
      * @since 4.0
@@ -426,24 +326,24 @@ public class ListUtils {
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
      *
-     * @param <E>  the element type
-     * @param a  the first list
-     * @param b  the second list
+     * @param <E> the element type
+     * @param a   the first list
+     * @param b   the second list
      * @return the longest common subsequence
      * @throws NullPointerException if either list is {@code null}
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
-        return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
+        return longestCommonSubsequence(a, b, DefaultEquator.defaultEquator());
     }
 
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
      *
-     * @param <E>  the element type
-     * @param listA  the first list
-     * @param listB  the second list
-     * @param equator  the equator used to test object equality
+     * @param <E>     the element type
+     * @param listA   the first list
+     * @param listB   the second list
+     * @param equator the equator used to test object equality
      * @return the longest common subsequence
      * @throws NullPointerException if either list or the equator is {@code null}
      * @since 4.0
@@ -475,11 +375,11 @@ public class ListUtils {
      * <p>
      * Adapted from https://github.com/google/guava
      *
-     * @param <T> the element type
-     * @param list  the list to return consecutive sublists of
-     * @param size  the desired size of each sublist (the last may be smaller)
+     * @param <T>  the element type
+     * @param list the list to return consecutive sublists of
+     * @param size the desired size of each sublist (the last may be smaller)
      * @return a list of consecutive sublists
-     * @throws NullPointerException if list is null
+     * @throws NullPointerException     if list is null
      * @throws IllegalArgumentException if size is not strictly positive
      * @since 4.0
      */
@@ -499,9 +399,9 @@ public class ListUtils {
      * It is important not to use the original list after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
-     * @param <E> the element type
-     * @param list  the list to predicate, must not be null
-     * @param predicate  the predicate for the list, must not be null
+     * @param <E>       the element type
+     * @param list      the list to predicate, must not be null
+     * @param predicate the predicate for the list, must not be null
      * @return a predicated list backed by the given list
      * @throws NullPointerException if the List or Predicate is null
      */
@@ -524,9 +424,9 @@ public class ListUtils {
      * {@code remove} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      *
-     * @param <E>  the element type
-     * @param collection  the collection from which items are removed (in the returned collection)
-     * @param remove  the items to be removed from the returned {@code collection}
+     * @param <E>        the element type
+     * @param collection the collection from which items are removed (in the returned collection)
+     * @param remove     the items to be removed from the returned {@code collection}
      * @return a {@code List} containing all the elements of {@code c} except
      * any elements that also occur in {@code remove}.
      * @throws NullPointerException if either parameter is null
@@ -558,9 +458,9 @@ public class ListUtils {
      * {@code retain} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      *
-     * @param <E>  the element type
-     * @param collection  the collection whose contents are the target of the #retailAll operation
-     * @param retain  the collection containing the elements to be retained in the returned collection
+     * @param <E>        the element type
+     * @param collection the collection whose contents are the target of the #retailAll operation
+     * @param retain     the collection containing the elements to be retained in the returned collection
      * @return a {@code List} containing all the elements of {@code c}
      * that occur at least once in {@code retain}.
      * @throws NullPointerException if either parameter is null
@@ -583,17 +483,16 @@ public class ListUtils {
      * <p>
      * A {@code null} predicate matches no elements.
      *
-     * @param <E> the element type
-     * @param inputCollection  the collection to get the input from, may not be null
-     * @param predicate  the predicate to use, may be null
+     * @param <E>             the element type
+     * @param inputCollection the collection to get the input from, may not be null
+     * @param predicate       the predicate to use, may be null
      * @return the elements matching the predicate (new list)
      * @throws NullPointerException if the input list is null
-     *
-     * @since 4.0
      * @see CollectionUtils#select(Iterable, Predicate)
+     * @since 4.0
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
-            final Predicate<? super E> predicate) {
+                                     final Predicate<? super E> predicate) {
         return CollectionUtils.select(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
@@ -603,17 +502,16 @@ public class ListUtils {
      * <p>
      * If the input predicate is {@code null}, the result is an empty list.
      *
-     * @param <E> the element type
+     * @param <E>             the element type
      * @param inputCollection the collection to get the input from, may not be null
-     * @param predicate the predicate to use, may be null
+     * @param predicate       the predicate to use, may be null
      * @return the elements <b>not</b> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
-     *
-     * @since 4.0
      * @see CollectionUtils#selectRejected(Iterable, Predicate)
+     * @since 4.0
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
-            final Predicate<? super E> predicate) {
+                                             final Predicate<? super E> predicate) {
         return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<>(inputCollection.size()));
     }
 
@@ -627,9 +525,9 @@ public class ListUtils {
      * contains one occurrence, then the returned list will still contain
      * one occurrence.
      *
-     * @param <E> the element type
-     * @param list1  the list to subtract from
-     * @param list2  the list to subtract
+     * @param <E>   the element type
+     * @param list1 the list to subtract from
+     * @param list2 the list to subtract
      * @return a new list containing the results
      * @throws NullPointerException if either list is null
      */
@@ -648,10 +546,10 @@ public class ListUtils {
      * Returns the sum of the given lists.  This is their intersection
      * subtracted from their union.
      *
-     * @param <E> the element type
-     * @param list1  the first list
-     * @param list2  the second list
-     * @return  a new list containing the sum of those lists
+     * @param <E>   the element type
+     * @param list1 the first list
+     * @param list2 the second list
+     * @return a new list containing the sum of those lists
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> sum(final List<? extends E> list1, final List<? extends E> list2) {
@@ -673,11 +571,11 @@ public class ListUtils {
      *     }
      * }
      * </pre>
-     *
+     * <p>
      * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
      *
-     * @param <E> the element type
-     * @param list  the list to synchronize, must not be null
+     * @param <E>  the element type
+     * @param list the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
      * @throws NullPointerException if the list is null
      */
@@ -699,9 +597,9 @@ public class ListUtils {
      * Existing entries in the specified list will not be transformed.
      * If you want that behavior, see {@link TransformedList#transformedList}.
      *
-     * @param <E> the element type
-     * @param list  the list to predicate, must not be null
-     * @param transformer  the transformer for the list, must not be null
+     * @param <E>         the element type
+     * @param list        the list to predicate, must not be null
+     * @param transformer the transformer for the list, must not be null
      * @return a transformed list backed by the given list
      * @throws NullPointerException if the List or Transformer is null
      */
@@ -715,9 +613,9 @@ public class ListUtils {
      * first list.  The {@link List#addAll(Collection)} operation is
      * used to append the two given lists into a new list.
      *
-     * @param <E> the element type
-     * @param list1  the first list
-     * @param list2  the second list
+     * @param <E>   the element type
+     * @param list1 the first list
+     * @param list2 the second list
      * @return a new list containing the union of those lists
      * @throws NullPointerException if either list is null
      */
@@ -734,7 +632,7 @@ public class ListUtils {
      * This method uses the implementation in the decorators subpackage.
      *
      * @param <E>  the element type
-     * @param list  the list to make unmodifiable, must not be null
+     * @param list the list to make unmodifiable, must not be null
      * @return an unmodifiable list backed by the given list
      * @throws NullPointerException if the list is null
      */
@@ -745,5 +643,6 @@ public class ListUtils {
     /**
      * Don't allow instances.
      */
-    private ListUtils() {}
+    private ListUtils() {
+    }
 }
