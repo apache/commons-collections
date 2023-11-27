@@ -28,11 +28,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 public class CountingPredicateTest {
-    private List<Pair<Integer, Integer>> expected = new ArrayList<>();
-    private List<Pair<Integer, Integer>> result = new ArrayList<>();
+    //private List<Pair<Integer, Integer>> expected = new ArrayList<>();
+    //private List<Pair<Integer, Integer>> result = new ArrayList<>();
     private Integer[] ary = {Integer.valueOf(1), Integer.valueOf(2)};
 
-    private BiPredicate<Integer, Integer> makeFunc(BiPredicate<Integer, Integer> inner) {
+    private BiPredicate<Integer, Integer> makeFunc(BiPredicate<Integer, Integer> inner, List<Pair<Integer, Integer>> result) {
         return (x, y) -> {
             if (inner.test(x, y)) {
                 result.add(Pair.of(x, y));
@@ -48,12 +48,12 @@ public class CountingPredicateTest {
      */
     @Test
     public void testPredicateShorter() {
+        List<Pair<Integer, Integer>> expected = new ArrayList<>();
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
         Integer[] shortAry = {Integer.valueOf(3)};
-        expected.clear();
         expected.add(Pair.of(3, 1));
         expected.add(Pair.of(null, 2));
-        result.clear();
-        CountingPredicate<Integer> cp = new CountingPredicate<>(shortAry, makeFunc((x, y) -> true));
+        CountingPredicate<Integer> cp = new CountingPredicate<>(shortAry, makeFunc((x, y) -> true, result));
         for (Integer i : ary) {
             assertTrue(cp.test(i));
         }
@@ -68,11 +68,11 @@ public class CountingPredicateTest {
      */
     @Test
     public void testPredicateSameLength() {
-        expected.clear();
+        List<Pair<Integer, Integer>> expected = new ArrayList<>();
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add( Pair.of(1, 3));
         expected.add( Pair.of(2, 3));
-        result.clear();
-        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true));
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true, result));
         assertTrue(cp.test(3));
         assertTrue(cp.test(3));
         assertEquals(expected, result);
@@ -86,10 +86,11 @@ public class CountingPredicateTest {
      */
     @Test
     public void testPredicateLonger() {
-        expected.clear();
+        List<Pair<Integer, Integer>> expected = new ArrayList<>();
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
-        result.clear();
-        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null));
+
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null, result));
         assertTrue(cp.test(Integer.valueOf(3)));
         assertEquals(expected, result);
         expected.add(Pair.of(2, null));
@@ -102,16 +103,15 @@ public class CountingPredicateTest {
         expected.add(Pair.of(1, null));
         expected.add(Pair.of(2, null));
         result.clear();
-        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null));
+        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null, result));
         assertTrue(cp.forEachRemaining());
         assertEquals( expected, result);
 
         // If a test fails then the result should be false and the rest of the list should
         // not be processed.
-        expected.clear();
         expected.add(Pair.of(1, null));
         result.clear();
-        cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1)));
+        cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1), result));
         assertFalse(cp.forEachRemaining());
         assertEquals(expected, result);
     }
