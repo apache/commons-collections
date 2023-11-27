@@ -255,7 +255,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         return entry.getValue();
     }
 
-
     /**
      * Puts a key-value mapping into this map.
      * Neither the key nor the value may be null.

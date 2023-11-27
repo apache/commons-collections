@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.ComparatorPredicate.Criterion;
 import org.junit.jupiter.api.Test;
 
-
 public class ComparatorPredicateTest extends AbstractPredicateTest {
     private static final class TestComparator<T extends Comparable<T>> implements Comparator<T> {
         @Override

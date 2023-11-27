@@ -1016,7 +1016,6 @@ public class MapUtilsTest {
         assertEquals(1.0, MapUtils.getDouble(in, "noKey", 1.0), 0);
         assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> 1.0), 0);
 
-
         final Map<String, String> inStr = new HashMap<>();
         final char decimalSeparator = getDecimalSeparator();
         inStr.put("str1", "2" + decimalSeparator + "0");
@@ -1126,7 +1125,6 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getByte(in, "key", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", key -> val), 0);
-
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "100");

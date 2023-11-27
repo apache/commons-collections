@@ -74,7 +74,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = tmpTrie;
     }
 
-
     @Override
     public Set<Entry<K, V>> entrySet() {
         return Collections.unmodifiableSet(delegate.entrySet());

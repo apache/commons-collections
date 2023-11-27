@@ -112,7 +112,6 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         return (SortedBag<E>) decorated();
     }
 
-
     @Override
     public E first() {
         return getSortedBag().first();

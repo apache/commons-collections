@@ -672,7 +672,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         return rval;
     }
 
-
     /**
      * Compares two objects.
      *

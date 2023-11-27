@@ -105,7 +105,6 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         return decorated().hashCode();
     }
 
-
     @Override
     public E get(final int index) {
         return decorated().get(index);
@@ -125,7 +124,6 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     public E remove(final int index) {
         return decorated().remove(index);
     }
-
 
     @Override
     public void add(final int index, final E object) {

@@ -64,7 +64,6 @@ public class PeekingIterator<E> implements Iterator<E> {
         return new PeekingIterator<>(iterator);
     }
 
-
     /**
      * Constructor.
      *

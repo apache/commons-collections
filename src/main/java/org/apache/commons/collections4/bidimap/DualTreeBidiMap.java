@@ -130,7 +130,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return new DualTreeBidiMap<>(normalMap, reverseMap, inverseMap);
     }
 
-
     @Override
     public Comparator<? super K> comparator() {
         return ((SortedMap<K, V>) normalMap).comparator();
@@ -204,7 +203,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         return inverseBidiMap();
     }
-
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {

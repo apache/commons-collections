@@ -69,7 +69,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         return new TreeSet<>();
     }
 
-
     /**
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.

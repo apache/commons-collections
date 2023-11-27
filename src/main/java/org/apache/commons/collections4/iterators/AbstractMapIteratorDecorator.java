@@ -53,7 +53,6 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
         return iterator;
     }
 
-
     /** {@inheritDoc} */
     @Override
     public boolean hasNext() {

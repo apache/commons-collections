@@ -97,7 +97,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         }
     }
 
-
     @Override
     public int add(final E object, final int count) {
         synchronized (lock) {

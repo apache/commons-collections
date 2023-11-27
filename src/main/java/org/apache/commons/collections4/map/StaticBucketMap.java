@@ -657,7 +657,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     }
 
-
     private final class Values extends AbstractCollection<V> {
 
         @Override

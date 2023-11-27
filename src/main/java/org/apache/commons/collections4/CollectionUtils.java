@@ -1795,7 +1795,6 @@ public class CollectionUtils {
         return mergedList;
     }
 
-
     /**
      * Returns a {@link Collection} of all the permutations of the input collection.
      * <p>

@@ -100,7 +100,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
-
     @Override
     public boolean add(final E object, final int count) {
         synchronized (lock) {

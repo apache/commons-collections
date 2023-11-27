@@ -85,7 +85,6 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
         return (Queue<E>) super.decorated();
     }
 
-
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.

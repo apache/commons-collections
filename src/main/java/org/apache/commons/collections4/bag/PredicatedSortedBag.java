@@ -89,7 +89,6 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
         return (SortedBag<E>) super.decorated();
     }
 
-
     @Override
     public E first() {
         return decorated().first();

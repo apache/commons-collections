@@ -99,7 +99,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         header = createHeaderNode();
     }
 
-
     @Override
     public int size() {
         return size;
@@ -116,7 +115,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return node.getValue();
     }
 
-
     @Override
     public Iterator<E> iterator() {
         return listIterator();
@@ -131,7 +129,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     public ListIterator<E> listIterator(final int fromIndex) {
         return new LinkedListIterator<>(this, fromIndex);
     }
-
 
     @Override
     public int indexOf(final Object value) {
@@ -172,7 +169,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return true;
     }
 
-
     @Override
     public Object[] toArray() {
         return toArray(new Object[size]);
@@ -210,7 +206,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return new LinkedSubList<>(this, fromIndexInclusive, toIndexExclusive);
     }
 
-
     @Override
     public boolean add(final E value) {
         addLast(value);
@@ -236,7 +231,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
         return true;
     }
-
 
     @Override
     public E remove(final int index) {
@@ -279,7 +273,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return modified;
     }
 
-
     /**
      * {@inheritDoc}
      * <p>
@@ -314,7 +307,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     public void clear() {
         removeAllNodes();
     }
-
 
     public E getFirst() {
         final Node<E> node = header.next;

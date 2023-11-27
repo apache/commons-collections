@@ -83,7 +83,6 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.size());
     }
 
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

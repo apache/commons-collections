@@ -55,7 +55,6 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         // Default: use standard constr.
         createIteratorWithStandardConstr = true;
 
-
         // create mocked Node Instances and fill Node[] to be used by test cases
         final Node node1 = createMock(Element.class);
         final Node node2 = createMock(Element.class);

@@ -140,7 +140,6 @@ public final class UnmodifiableQueue<E>
         throw new UnsupportedOperationException();
     }
 
-
     @Override
     public boolean offer(final E obj) {
         throw new UnsupportedOperationException();

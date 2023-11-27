@@ -237,7 +237,6 @@ public class SequencesComparator<T> {
         throw new IllegalStateException("Internal Error");
     }
 
-
     /**
      * Build an edit script.
      *

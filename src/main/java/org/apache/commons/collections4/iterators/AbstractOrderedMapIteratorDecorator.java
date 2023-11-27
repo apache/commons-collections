@@ -53,7 +53,6 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
         return iterator;
     }
 
-
     /** {@inheritDoc} */
     @Override
     public boolean hasNext() {

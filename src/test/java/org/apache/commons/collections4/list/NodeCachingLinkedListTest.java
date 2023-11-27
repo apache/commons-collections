@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
+ * Test class for NodeCachingLinkedList, a performance optimized LinkedList.
  */
 public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 

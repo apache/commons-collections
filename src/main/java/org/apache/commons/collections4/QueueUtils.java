@@ -42,7 +42,6 @@ public class QueueUtils {
      */
     private QueueUtils() {}
 
-
     /**
      * Returns a synchronized (thread-safe) queue backed by the given queue.
      * In order to guarantee serial access, it is critical that all access to the
