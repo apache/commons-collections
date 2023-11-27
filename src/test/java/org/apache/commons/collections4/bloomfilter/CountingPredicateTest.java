@@ -109,6 +109,7 @@ public class CountingPredicateTest {
 
         // If a test fails then the result should be false and the rest of the list should
         // not be processed.
+        expected.clear();
         expected.add(Pair.of(1, null));
         result.clear();
         cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1), result));
