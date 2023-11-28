@@ -299,7 +299,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         resetFull();
         list = getCollection();
-        assertFalse(list.equals(""), "List shouldn't equal String");
+        assertFalse(list.isEmpty(), "List shouldn't equal String");
         verify();
 
         final List<E> listForC = Arrays.asList(getFullElements());
