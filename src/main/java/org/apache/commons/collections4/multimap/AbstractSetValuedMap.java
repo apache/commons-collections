@@ -62,7 +62,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
 
     /**
      * Creates a new value collection using the provided factory.
-     * @return a new list
+     * @return a new set
      */
     @Override
     protected abstract Set<V> createCollection();
