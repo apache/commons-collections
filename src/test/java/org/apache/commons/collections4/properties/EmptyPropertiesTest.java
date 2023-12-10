@@ -289,8 +289,8 @@ public class EmptyPropertiesTest {
             PropertiesFactory.INSTANCE.createProperties().store(expected, comments);
 
             // Properties.store stores the specified comment appended with current time stamp in the next line
-            final String expectedComment = getFirstLine(expected.toString("UTF-8"));
-            final String actualComment = getFirstLine(actual.toString("UTF-8"));
+            final String expectedComment = getFirstLine(expected.toString(StandardCharsets.UTF_8.name()));
+            final String actualComment = getFirstLine(actual.toString(StandardCharsets.UTF_8.name()));
             assertEquals(expectedComment, actualComment,
                 () -> String.format("Expected String '%s' with length '%s'", expectedComment, expectedComment.length()));
             expected.reset();
