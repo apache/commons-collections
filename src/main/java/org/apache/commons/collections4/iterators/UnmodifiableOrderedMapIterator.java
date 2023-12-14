@@ -58,7 +58,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */

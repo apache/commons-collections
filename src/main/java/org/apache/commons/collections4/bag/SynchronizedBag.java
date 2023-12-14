@@ -137,7 +137,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         private static final long serialVersionUID = 2990565892366827855L;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the bag
          */

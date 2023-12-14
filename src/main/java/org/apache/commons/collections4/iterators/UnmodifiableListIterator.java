@@ -68,7 +68,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */

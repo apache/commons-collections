@@ -346,7 +346,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<K, V> parent;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param coll  the collection view being decorated
          * @param parent  the parent BidiMap
@@ -445,7 +445,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = -7107935777385040694L;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent  the parent BidiMap
          */
@@ -492,7 +492,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -532,7 +532,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = 4023777119829639864L;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent  the parent BidiMap
          */
@@ -579,7 +579,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -620,7 +620,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         private static final long serialVersionUID = 4040410962603292348L;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent  the parent BidiMap
          */
@@ -670,7 +670,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -712,7 +712,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected final AbstractDualBidiMap<K, V> parent;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param entry  the entry to decorate
          * @param parent  the parent map
          */
@@ -755,7 +755,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         protected boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param parent  the parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {

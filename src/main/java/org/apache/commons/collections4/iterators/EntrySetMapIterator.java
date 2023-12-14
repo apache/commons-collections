@@ -46,7 +46,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     private boolean canRemove;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param map  the map to iterate over
      */

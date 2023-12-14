@@ -47,7 +47,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyMapIterator() {
     }

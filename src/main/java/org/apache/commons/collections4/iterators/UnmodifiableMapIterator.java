@@ -57,7 +57,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */

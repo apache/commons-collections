@@ -47,7 +47,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyOrderedMapIterator() {
     }

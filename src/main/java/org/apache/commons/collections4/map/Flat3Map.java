@@ -109,7 +109,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     private transient AbstractHashedMap<K, V> delegateMap;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     public Flat3Map() {
     }

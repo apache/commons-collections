@@ -46,7 +46,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     private NOPClosure() {
     }

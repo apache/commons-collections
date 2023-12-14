@@ -149,7 +149,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         private static final long serialVersionUID = 20150629L;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the multiset
          */

@@ -1477,7 +1477,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         final DataElement orderType;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractView(final DataElement orderType) {
@@ -1648,7 +1648,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         private int expectedModifications;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractViewIterator(final DataElement orderType) {
@@ -1720,7 +1720,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     final class ViewMapIterator extends AbstractViewIterator implements OrderedMapIterator<K, V> {
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          */
         ViewMapIterator(final DataElement orderType) {
             super(orderType);
@@ -1812,7 +1812,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     final class ViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<K, V>> {
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          */
         ViewMapEntryIterator() {
             super(KEY);
@@ -1835,7 +1835,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     final class InverseViewMapEntryIterator extends AbstractViewIterator implements OrderedIterator<Map.Entry<V, K>> {
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          */
         InverseViewMapEntryIterator() {
             super(VALUE);

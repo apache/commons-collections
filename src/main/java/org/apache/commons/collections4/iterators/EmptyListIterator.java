@@ -66,7 +66,7 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyListIterator() {
     }

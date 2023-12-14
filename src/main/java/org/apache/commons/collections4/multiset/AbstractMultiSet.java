@@ -130,7 +130,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         private boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent the parent multiset
          */

@@ -35,7 +35,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     private static final long serialVersionUID = 1229469966212206107L;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param set  the list to decorate, must not be null
      * @throws NullPointerException if set is null

@@ -45,7 +45,7 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyOrderedIterator() {
     }

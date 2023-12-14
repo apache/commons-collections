@@ -50,7 +50,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     private CloneTransformer() {
     }

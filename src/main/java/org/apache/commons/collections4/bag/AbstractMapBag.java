@@ -181,7 +181,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         private boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent the parent bag
          */
@@ -406,7 +406,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         protected int value;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          * @param value the initial value
          */
         MutableInteger(final int value) {

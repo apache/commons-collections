@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 abstract class AbstractEmptyIterator<E> {
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected AbstractEmptyIterator() {
     }

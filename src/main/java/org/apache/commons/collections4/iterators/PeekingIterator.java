@@ -65,7 +65,7 @@ public class PeekingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */
