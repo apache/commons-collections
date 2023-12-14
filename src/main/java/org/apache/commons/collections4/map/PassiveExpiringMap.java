@@ -195,7 +195,7 @@ public class PassiveExpiringMap<K, V>
         return TimeUnit.MILLISECONDS.convert(timeToLive, timeUnit);
     }
 
-    /** map used to manage expiration times for the actual map entries. */
+    /** Map used to manage expiration times for the actual map entries. */
     private final Map<Object, Long> expirationMap = new HashMap<>();
 
     /** The policy used to determine time-to-live values for map entries. */

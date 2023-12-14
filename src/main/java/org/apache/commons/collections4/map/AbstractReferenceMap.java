@@ -97,7 +97,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     public enum ReferenceStrength {
         HARD(0), SOFT(1), WEAK(2);
 
-        /** value */
+        /** Value */
         public final int value;
 
         /**
