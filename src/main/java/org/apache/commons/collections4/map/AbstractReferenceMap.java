@@ -956,7 +956,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A soft reference holder.
      */
     static class SoftRef<T> extends SoftReference<T> {
-        /** the hashCode of the key (even if the reference points to a value) */
+        /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
         SoftRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
@@ -989,7 +989,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A weak reference holder.
      */
     static class WeakRef<T> extends WeakReference<T> {
-        /** the hashCode of the key (even if the reference points to a value) */
+        /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
         WeakRef(final int hash, final T r, final ReferenceQueue<? super T> q) {
