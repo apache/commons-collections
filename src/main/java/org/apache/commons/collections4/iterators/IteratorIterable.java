@@ -91,10 +91,10 @@ public class IteratorIterable<E> implements Iterable<E> {
         };
     }
 
-    /** the iterator being adapted into an iterable. */
+    /** The iterator being adapted into an iterable. */
     private final Iterator<? extends E> iterator;
 
-    /** the iterator parameterized as the {@link #iterator()} return type. */
+    /** The iterator parameterized as the {@link #iterator()} return type. */
     private final Iterator<E> typeSafeIterator;
 
     /**
