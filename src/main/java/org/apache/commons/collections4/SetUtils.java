@@ -293,7 +293,7 @@ public class SetUtils {
 
     /**
      * Tests two sets for equality as per the {@code equals()} contract
-     * in {@link java.util.Set#equals(java.lang.Object)}.
+     * in {@link java.util.Set#equals(Object)}.
      * <p>
      * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other

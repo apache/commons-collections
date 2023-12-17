@@ -55,7 +55,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>Null - always returns null
  * <li>NOP - returns the input object, which should be immutable
  * <li>Exception - always throws an exception
- * <li>StringValue - returns a {@code java.lang.String} representation of the input object
+ * <li>StringValue - returns a {@link String} representation of the input object
  * </ul>
  * <p>
  * Since v4.1 only transformers which are considered to be safe are
@@ -470,7 +470,7 @@ public class TransformerUtils {
     }
 
     /**
-     * Gets a transformer that returns a {@code java.lang.String}
+     * Gets a transformer that returns a {@link String}
      * representation of the input object. This is achieved via the
      * {@code toString} method, {@code null} returns 'null'.
      *
