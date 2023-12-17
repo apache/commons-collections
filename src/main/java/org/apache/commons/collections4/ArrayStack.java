@@ -70,7 +70,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Return {@code true} if this stack is currently empty.
      * <p>
-     * This method exists for compatibility with {@code java.util.Stack}.
+     * This method exists for compatibility with {@link java.util.Stack}.
      * New users of this class should use {@code isEmpty} instead.
      *
      * @return true if the stack is currently empty
