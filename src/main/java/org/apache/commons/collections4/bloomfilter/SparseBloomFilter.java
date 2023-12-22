@@ -137,6 +137,11 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
+    public boolean isEmpty() {
+        return indices.isEmpty();
+    }
+
+    @Override
     public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (final int value : indices) {

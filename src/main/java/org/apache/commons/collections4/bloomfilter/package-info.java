@@ -46,7 +46,7 @@
  * representation of the internal structure. Additional methods are available in the {@code BitMap} to assist in
  * manipulation of the representations.</p>
  *
- * <p>The bloom filter code is an interface that requires implementation of 9 methods:</p>
+ * <p>The Bloom filter code is an interface that requires implementation of 9 methods:</p>
  * <ul>
  * <li>{@link BloomFilter#cardinality()} returns the number of bits enabled in the Bloom filter.</li>
  *
@@ -72,9 +72,14 @@
  *
  * <h3>CountingBloomFilter</h3>
  *
- * <p>The counting bloom filter extends the Bloom filter by counting the number of times a specific bit has been
+ * <p>The counting Bloom filter extends the Bloom filter by counting the number of times a specific bit has been
  * enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
  * overhead.</p>
+ *
+ * <h3>LayeredBloomFilter</h3>
+ *
+ * <p>The layered Bloom filter extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
+ * Filter or as a set of filters.  This adds the ability to perform windowing on streams of data.</p>
  *
  * <h3>Shape</h3>
  *

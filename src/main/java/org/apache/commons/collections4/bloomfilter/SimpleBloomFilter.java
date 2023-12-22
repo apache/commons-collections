@@ -168,6 +168,11 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
+    public boolean isEmpty() {
+        return cardinality == 0 || forEachBitMap(y -> y == 0);
+    }
+
+    @Override
     public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         return IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);

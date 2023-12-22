@@ -228,6 +228,23 @@ public final class Shape {
     }
 
     /**
+     * Estimates the maximum number of elements that can be merged into a filter of
+     * this shape before the false positive rate exceeds the desired rate. <p> The
+     * formula for deriving {@code k} when {@code m} and {@code n} are known is:
+     *
+     * <p>{@code k = ln2 * m / n}</p>
+     *
+     * <p>Solving for {@code n} yields:</p>
+     *
+     * <p>{@code n = ln2 * m / k}</p>
+     *
+     * @return An estimate of max N.
+     */
+    public double estimateMaxN() {
+        return numberOfBits * LN_2 / numberOfHashFunctions;
+    }
+
+    /**
      * Constructs a filter configuration with a desired false-positive probability ({@code p}) and the
      * specified number of bits ({@code m}) and hash functions ({@code k}).
      *
