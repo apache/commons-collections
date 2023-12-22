@@ -28,8 +28,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 public class CountingPredicateTest {
-    //private List<Pair<Integer, Integer>> expected = new ArrayList<>();
-    //private List<Pair<Integer, Integer>> result = new ArrayList<>();
+
     private Integer[] ary = {Integer.valueOf(1), Integer.valueOf(2)};
 
     private BiPredicate<Integer, Integer> makeFunc(BiPredicate<Integer, Integer> inner, List<Pair<Integer, Integer>> result) {
