@@ -578,8 +578,6 @@
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
 
-    <commons.clirr.version>2.8</commons.clirr.version>
-
     <!--Commons Release Plugin -->
     <commons.bc.version>4.4</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
