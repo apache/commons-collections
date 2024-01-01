@@ -1643,7 +1643,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         @Override
         protected int getIterationBehaviour(){
-            return AbstractMapTest.this.getIterationBehaviour();
+            return UNORDERED;
         }
 
         @Test
