@@ -51,7 +51,7 @@ public final class ArrayHasher implements Hasher {
             int pos = 0;
             for (int i = 0; i < shape.getNumberOfHashFunctions(); i++) {
                 final int result = values[pos++] % shape.getNumberOfBits();
-                pos = pos % values.length;
+                pos %= values.length;
                 if (!consumer.test(result)) {
                     return false;
                 }
