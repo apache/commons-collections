@@ -1953,11 +1953,11 @@ public class CollectionUtils {
         final Iterator<E> iterator = input.iterator();
         while (count > 0) {
             if (startIndex > 0) {
-                startIndex = startIndex - 1;
+                startIndex -= 1;
                 iterator.next();
                 continue;
             }
-            count = count - 1;
+            count -= 1;
             result.add(iterator.next());
             iterator.remove();
         }
