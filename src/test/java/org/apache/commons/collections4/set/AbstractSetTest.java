@@ -125,7 +125,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Return the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
+     * Gets the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
      */
     @Override
     public Set<E> getCollection() {
@@ -133,7 +133,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Return the {@link AbstractCollectionTest#confirmed} fixture, but cast as a Set.
+     * Gets the {@link AbstractCollectionTest#confirmed} fixture, but cast as a Set.
      */
     @Override
     public Set<E> getConfirmed() {
