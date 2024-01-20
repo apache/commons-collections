@@ -56,6 +56,7 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * Implementations would return the total size of the map which is the count
      * of the values from all keys.
+     * </p>
      *
      * @return the total size of the map
      */
@@ -106,6 +107,7 @@ public interface MultiValuedMap<K, V> {
      * This method will return an <b>empty</b> collection if {@link #containsKey(Object)}
      * returns {@code false}. Changes to the returned collection will update the underlying
      * {@code MultiValuedMap} and vice-versa.
+     * </p>
      *
      * @param key  the key to retrieve
      * @return the {@code Collection} of values, implementations should
@@ -123,9 +125,11 @@ public interface MultiValuedMap<K, V> {
      * Instead, the new value is added to the collection stored against the key.
      * Depending on the collection type used, duplicate key-value mappings may
      * be allowed.
+     * </p>
      * <p>
      * The method will return {@code true} if the size of the multivalued map
      * has been increased because of this operation.
+     * </p>
      *
      * @param key  the key to store against
      * @param value  the value to add to the collection at the key
@@ -159,9 +163,11 @@ public interface MultiValuedMap<K, V> {
      * The effect of this call is equivalent to that of calling
      * {@link #put(Object,Object) put(k, v)} on this map once for each mapping
      * from key {@code k} to value {@code v} in the specified map.
+     * </p>
      * <p>
      * The behavior of this operation is undefined if the specified map is modified
      * while the operation is in progress.
+     * </p>
      *
      * @param map  mappings to be stored in this map, may not be null
      * @return true if the map changed as a result of this operation
@@ -182,9 +188,11 @@ public interface MultiValuedMap<K, V> {
      * The effect of this call is equivalent to that of calling
      * {@link #put(Object,Object) put(k, v)} on this map once for each
      * mapping from key {@code k} to value {@code v} in the specified map.
+     * </p>
      * <p>
      * The behavior of this operation is undefined if the specified map is modified
      * while the operation is in progress.
+     * </p>
      *
      * @param map  mappings to be stored in this map, may not be null
      * @return true if the map changed as a result of this operation
@@ -204,6 +212,7 @@ public interface MultiValuedMap<K, V> {
      * The returned collection <i>may</i> be modifiable, but updates will not be propagated
      * to this multivalued map. In case no mapping was stored for the specified
      * key, an empty, unmodifiable collection will be returned.
+     * </p>
      *
      * @param key  the key to remove values from
      * @return the values that were removed
@@ -217,9 +226,11 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The item is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
+     * </p>
      * <p>
      * If the last value for a key is removed, implementations typically return
      * an empty collection from a subsequent {@code get(Object)}.
+     * </p>
      *
      * @param key  the key to remove from
      * @param item  the item to remove
@@ -233,6 +244,7 @@ public interface MultiValuedMap<K, V> {
      * Removes all of the mappings from this map (optional operation).
      * <p>
      * The map will be empty after this call returns.
+     * </p>
      *
      * @throws UnsupportedOperationException if the map is unmodifiable
      */
@@ -245,6 +257,7 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The collection is backed by the map, so changes to the map are reflected
      * in the collection, and vice-versa.
+     * </p>
      *
      * @return a set view of the mappings contained in this map
      */
@@ -255,9 +268,11 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The {@link MultiSet#getCount(Object)} method of the returned multiset will give
      * the same result a calling {@code get(Object).size()} for the same key.
+     * </p>
      * <p>
      * This multiset is backed by the map, so any changes in the map are reflected in
      * the multiset.
+     * </p>
      *
      * @return a multiset view of the keys contained in this map
      */
@@ -268,6 +283,7 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The set is backed by the map, so changes to the map are reflected
      * in the set, and vice-versa.
+     * </p>
      * <p>
      * If the map is modified while an iteration over the set is in
      * progress (except through the iterator's own {@code remove} operation),
@@ -276,6 +292,7 @@ public interface MultiValuedMap<K, V> {
      * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
      * {@code retainAll}, and {@code clear} operations. It does not support
      * the {@code add} or {@code addAll} operations.
+     * </p>
      *
      * @return a set view of the keys contained in this map
      */
@@ -286,6 +303,7 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * Implementations typically return a collection containing the combination
      * of values from all keys.
+     * </p>
      *
      * @return a collection view of the values contained in this multivalued map
      */
@@ -298,23 +316,24 @@ public interface MultiValuedMap<K, V> {
      * Note that {@code this.asMap().get(k)} is equivalent to {@code this.get(k)}
      * only when {@code k} is a key contained in the multivalued map; otherwise it
      * returns {@code null} as opposed to an empty collection.
+     * </p>
      * <p>
      * Changes to the returned map or the collections that serve as its values
      * will update the underlying multivalued map, and vice versa. The map does
      * not support {@code put} or {@code putAll}, nor do its entries support
      * {@link java.util.Map.Entry#setValue(Object) setValue}.
+     * </p>
      *
      * @return a map view of the mappings in this multivalued map
      */
     Map<K, Collection<V>> asMap();
-
-    // Iterators
 
     /**
      * Obtains a {@code MapIterator} over this multivalued map.
      * <p>
      * A map iterator is an efficient way of iterating over maps. There is no
      * need to access the entries collection or use {@code Map.Entry} objects.
+     * </p>
      *
      * @return a map iterator
      */
