@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSortedSetTest} for exercising the
  * {@link PredicatedSortedSet} implementation.
  *
- * @since 3.0
  */
 public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 

@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
  * {@link #testConstructors()} to test the constructors of the Map.Entry
  * type being tested.
  *
- * @since 3.0
  */
 public abstract class AbstractMapEntryTest<K, V> {
 

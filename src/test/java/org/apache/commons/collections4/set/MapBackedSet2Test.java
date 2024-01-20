@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit test.
  *
- * @since 3.1
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 

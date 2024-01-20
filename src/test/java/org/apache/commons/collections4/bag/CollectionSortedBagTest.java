@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Note: This test is mainly for serialization support, the CollectionSortedBag decorator
  * is extensively used and tested in AbstractSortedBagTest.
  *
- * @since 4.0
  */
 public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 

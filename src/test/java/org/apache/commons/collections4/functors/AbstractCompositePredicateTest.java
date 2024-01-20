@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Base class for tests of composite predicates.
  *
- * @since 3.0
  */
 public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPredicateTest<T> {
 

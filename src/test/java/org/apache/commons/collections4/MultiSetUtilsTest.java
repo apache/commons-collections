@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MultiSetUtils.
- * @since 4.2
  */
 public class MultiSetUtilsTest {
 

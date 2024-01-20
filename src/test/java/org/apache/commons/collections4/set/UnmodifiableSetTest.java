@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link UnmodifiableSet} implementation.
  *
- * @since 3.0
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 

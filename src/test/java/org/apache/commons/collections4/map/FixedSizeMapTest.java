@@ -25,7 +25,6 @@ import org.apache.commons.collections4.IterableMap;
  * Extension of {@link AbstractMapTest} for exercising the {@link FixedSizeMap}
  * implementation.
  *
- * @since 3.0
  */
 public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

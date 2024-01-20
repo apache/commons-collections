@@ -40,7 +40,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link LazyMapTest} for exercising the
  * {@link LazySortedMap} implementation.
  *
- * @since 3.0
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {

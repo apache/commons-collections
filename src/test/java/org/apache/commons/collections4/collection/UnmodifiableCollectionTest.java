@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableCollection} implementation.
  *
- * @since 3.0
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 

@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link TransformedSortedMap}
  * implementation.
  *
- * @since 3.0
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

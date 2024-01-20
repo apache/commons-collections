@@ -42,7 +42,6 @@ import org.junit.jupiter.api.Test;
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractCollectionTest} for more details.
  *
- * @since 3.0
  */
 public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 

@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableTrie} implementation.
  *
- * @since 4.0
  */
 public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 

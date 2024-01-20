@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit tests
  *
- * @since 3.1
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
 

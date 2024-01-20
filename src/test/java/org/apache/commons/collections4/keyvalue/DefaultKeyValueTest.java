@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the DefaultKeyValue class.
  *
- * @since 3.0
  */
 public class DefaultKeyValueTest<K, V> {
 

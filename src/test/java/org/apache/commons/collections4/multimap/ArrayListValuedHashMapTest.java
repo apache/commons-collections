@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test ArrayListValuedHashMap
  *
- * @since 4.1
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

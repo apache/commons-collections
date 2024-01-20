@@ -45,7 +45,6 @@ import org.junit.jupiter.api.Test;
  * test case (method) your {@link Queue} fails or override one of the
  * protected methods from AbstractCollectionTest.
  *
- * @since 4.0
  */
 public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 

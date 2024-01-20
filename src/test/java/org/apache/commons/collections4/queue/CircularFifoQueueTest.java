@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test cases for CircularFifoQueue.
  *
- * @since 4.0
  */
 public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 

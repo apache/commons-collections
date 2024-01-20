@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for {@link TransformedSplitMap}
  *
- * @since 4.0
  */
 @SuppressWarnings("boxing")
 public class TransformedSplitMapTest extends BulkTest {

@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
  * implementation.
  *
- * @since 3.0
  */
 public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 

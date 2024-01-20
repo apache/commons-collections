@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for TransformedMultiValuedMap
  *
- * @since 4.1
  */
 public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

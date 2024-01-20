@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections4.list.TreeList;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LRUMap;
@@ -38,16 +42,11 @@ import com.google.common.collect.testing.features.Feature;
 import com.google.common.collect.testing.features.ListFeature;
 import com.google.common.collect.testing.features.MapFeature;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 /**
  * This test uses Google's Guava Testlib testing libraries to validate the
  * contract of collection classes in Commons Collections. This was introduced
  * after COLLECTIONS-802, where the issue reported was found with Testlib.
  *
- * @since 4.5.0
  * @see <a href="https://github.com/google/guava/tree/master/guava-testlib">https://github.com/google/guava/tree/master/guava-testlib</a>
  * @see <a href="https://issues.apache.org/jira/browse/COLLECTIONS-802">https://issues.apache.org/jira/browse/COLLECTIONS-802</a>
  */

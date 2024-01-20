@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for MultiMapUtils
  *
- * @since 4.1
  */
 public class MultiMapUtilsTest {
 

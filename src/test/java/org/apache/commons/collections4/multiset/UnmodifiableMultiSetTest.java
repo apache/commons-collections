@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractMultiSetTest} for exercising the
  * {@link UnmodifiableMultiSet} implementation.
  *
- * @since 4.1
  */
 public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 

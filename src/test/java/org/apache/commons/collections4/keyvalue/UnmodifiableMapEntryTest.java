@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the UnmodifiableMapEntry class.
  *
- * @since 3.0
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

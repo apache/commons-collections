@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractListTest} for exercising the
  * {@link PredicatedList} implementation.
  *
- * @since 3.0
  */
 public class PredicatedListTest<E> extends AbstractListTest<E> {
 

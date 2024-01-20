@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link CompositeMap} implementation.
  *
- * @since 3.0
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

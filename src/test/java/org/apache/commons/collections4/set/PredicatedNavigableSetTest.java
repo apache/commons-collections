@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractNavigableSetTest} for exercising the
  * {@link PredicatedNavigableSet} implementation.
  *
- * @since 4.1
  */
 public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 

@@ -32,7 +32,6 @@ import org.apache.commons.collections4.BulkTest;
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractSetTest} for more details.
  *
- * @since 3.0
  */
 public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 

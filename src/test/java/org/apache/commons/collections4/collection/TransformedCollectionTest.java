@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractCollectionTest} for exercising the {@link TransformedCollection}
  * implementation.
  *
- * @since 3.0
  */
 public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 

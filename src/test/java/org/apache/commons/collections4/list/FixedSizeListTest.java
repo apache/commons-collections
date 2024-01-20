@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
  * implementation.
  *
- * @since 3.0
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 

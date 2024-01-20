@@ -24,7 +24,6 @@ import java.util.Collection;
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link SynchronizedCollection} implementation.
  *
- * @since 3.1
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 

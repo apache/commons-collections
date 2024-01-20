@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSetTest} for exercising the {@link ListOrderedSet}
  * implementation.
  *
- * @since 3.1
  */
 public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 

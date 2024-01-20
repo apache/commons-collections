@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test HashSetValuedHashMap
  *
- * @since 4.1
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

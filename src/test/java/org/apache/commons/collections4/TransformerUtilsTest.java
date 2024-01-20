@@ -43,7 +43,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the TransformerUtils class.
  *
- * @since 3.0
  */
 public class TransformerUtilsTest {
 

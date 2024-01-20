@@ -42,7 +42,6 @@ import java.util.Map;
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
- * @since 3.0
  */
 public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {

@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
  *
- * @since 3.0
  */
 @SuppressWarnings("boxing")
 public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {

@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
  * They must also specify certain details of how the iterator operates by
  * overriding the supportsXxx() methods if necessary.
  *
- * @since 3.0
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 

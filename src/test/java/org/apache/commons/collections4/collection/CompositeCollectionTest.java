@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
  *
- * @since 3.0
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
@@ -373,7 +372,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * @since 4.4
      */
     @Test
     @SuppressWarnings("unchecked")

@@ -22,7 +22,6 @@ import org.apache.commons.collections4.Bag;
  * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
  * implementation.
  *
- * @since 4.0
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 

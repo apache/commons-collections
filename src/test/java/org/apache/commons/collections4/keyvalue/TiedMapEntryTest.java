@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the TiedMapEntry class.
  *
- * @since 3.0
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.SortedBag;
  * {@link org.apache.commons.collections4.SortedBag SortedBag}
  * methods and contracts.
  *
- * @since 3.0
  */
 public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 

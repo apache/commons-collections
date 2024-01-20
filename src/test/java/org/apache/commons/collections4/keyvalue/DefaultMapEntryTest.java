@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the DefaultMapEntry class.
  *
- * @since 3.0
  */
 public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

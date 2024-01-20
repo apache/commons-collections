@@ -39,7 +39,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for UnmodifiableMultiValuedMap
  *
- * @since 4.1
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
