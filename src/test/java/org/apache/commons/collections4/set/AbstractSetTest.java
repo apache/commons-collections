@@ -41,7 +41,6 @@ import org.junit.jupiter.api.Test;
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractCollectionTest} for more details.
- *
  */
 public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 

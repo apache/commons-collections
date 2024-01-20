@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link TransformedQueue} implementation.
- *
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 

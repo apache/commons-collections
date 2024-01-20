@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
  * {@link UnmodifiableNavigableSet} implementation.
- *
  */
 public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     protected UnmodifiableNavigableSet<E> set;

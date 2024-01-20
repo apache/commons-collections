@@ -40,7 +40,6 @@ import org.junit.jupiter.api.Test;
  * Concrete subclasses must provide the list iterator to be tested.
  * They must also specify certain details of how the list iterator operates by
  * overriding the supportsXxx() methods if necessary.
- *
  */
 public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 

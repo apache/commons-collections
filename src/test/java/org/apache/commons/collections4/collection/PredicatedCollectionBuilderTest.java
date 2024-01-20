@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PredicatedCollection.Builder class.
- *
  */
 public class PredicatedCollectionBuilderTest {
 

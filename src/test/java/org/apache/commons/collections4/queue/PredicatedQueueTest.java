@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
  * {@link PredicatedQueue} implementation.
- *
  */
 public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 

@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ClosureUtils class.
- *
  */
 public class ClosureUtilsTest {
 

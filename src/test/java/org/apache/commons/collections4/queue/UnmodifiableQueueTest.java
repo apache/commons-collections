@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableQueue} implementation.
- *
  */
 public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 

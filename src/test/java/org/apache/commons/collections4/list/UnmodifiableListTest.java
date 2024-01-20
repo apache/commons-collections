@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractListTest} for exercising the
  * {@link UnmodifiableList} implementation.
- *
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 

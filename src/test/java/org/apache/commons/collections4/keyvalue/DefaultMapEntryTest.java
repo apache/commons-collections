@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test the DefaultMapEntry class.
- *
  */
 public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
@@ -51,7 +50,6 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
     /**
      * Subclasses should override this method.
-     *
      */
     @Test
     @Override

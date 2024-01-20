@@ -31,7 +31,6 @@ import org.apache.commons.collections4.BulkTest;
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractSetTest} for more details.
- *
  */
 public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<E> {
 

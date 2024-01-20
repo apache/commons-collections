@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link PredicatedMap} implementation.
- *
  */
 public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

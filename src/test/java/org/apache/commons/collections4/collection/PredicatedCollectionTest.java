@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link PredicatedCollection} implementation.
- *
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 

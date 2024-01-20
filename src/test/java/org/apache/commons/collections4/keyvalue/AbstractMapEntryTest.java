@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
  * a new Map.Entry of the type being tested. Subclasses must also implement
  * {@link #testConstructors()} to test the constructors of the Map.Entry
  * type being tested.
- *
  */
 public abstract class AbstractMapEntryTest<K, V> {
 
@@ -93,7 +92,6 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     /**
      * Subclasses should provide tests for their constructors.
-     *
      */
     public abstract void testConstructors();
 
@@ -123,7 +121,6 @@ public abstract class AbstractMapEntryTest<K, V> {
      * Subclasses should override this method to test the
      * desired behavior of the class with respect to
      * handling of self-references.
-     *
      */
 
     @Test

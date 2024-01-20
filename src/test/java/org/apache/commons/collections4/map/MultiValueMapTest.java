@@ -44,7 +44,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * TestMultiValueMap.
- *
  */
 @Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {

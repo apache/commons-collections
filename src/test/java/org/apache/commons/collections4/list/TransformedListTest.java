@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}
  * implementation.
- *
  */
 public class TransformedListTest<E> extends AbstractListTest<E> {
 

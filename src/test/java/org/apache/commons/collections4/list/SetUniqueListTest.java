@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class SetUniqueListTest<E> extends AbstractListTest<E> {
 

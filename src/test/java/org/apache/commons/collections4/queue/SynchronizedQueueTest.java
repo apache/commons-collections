@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractQueueTest} for exercising the {@link SynchronizedQueue} implementation.
- *
  */
 public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 

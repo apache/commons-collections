@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test the UnmodifiableMapEntry class.
- *
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
@@ -69,7 +68,6 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
     /**
      * Subclasses should override this method.
-     *
      */
     @Test
     @Override

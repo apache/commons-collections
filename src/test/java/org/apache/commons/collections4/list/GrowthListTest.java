@@ -33,7 +33,6 @@ import org.junit.jupiter.api.function.Executable;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
- *
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 

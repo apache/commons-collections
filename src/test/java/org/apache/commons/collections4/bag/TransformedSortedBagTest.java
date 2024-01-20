@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link TransformedSortedBag}
  * implementation.
- *
  */
 public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 

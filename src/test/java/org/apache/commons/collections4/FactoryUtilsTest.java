@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
- *
  */
 public class FactoryUtilsTest {
 

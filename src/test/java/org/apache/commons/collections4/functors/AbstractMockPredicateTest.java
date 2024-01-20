@@ -30,7 +30,6 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * Base class for tests of predicates which delegate to other predicates when evaluating an object.  This class
  * provides methods to create and verify mock predicates to which to delegate.
- *
  */
 public abstract class AbstractMockPredicateTest<T> {
     /**

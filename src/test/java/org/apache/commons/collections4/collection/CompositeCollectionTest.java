@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
- *
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 

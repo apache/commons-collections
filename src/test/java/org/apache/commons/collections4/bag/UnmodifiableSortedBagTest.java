@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableSortedBag} implementation.
- *
  */
 public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 

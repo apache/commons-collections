@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableSortedMap} implementation.
- *
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

@@ -59,7 +59,6 @@ import org.junit.jupiter.api.Test;
  * from AbstractCollectionTest, there are test methods that test the "normal" MultiSet
  * interface (prefix testMultiSet). For MultiSet specific tests use the {@link #makeObject()} and
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull().
- *
  */
 public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> {
 

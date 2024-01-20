@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
  * implementation.
- *
  */
 public class TransformedBagTest<T> extends AbstractBagTest<T> {
 

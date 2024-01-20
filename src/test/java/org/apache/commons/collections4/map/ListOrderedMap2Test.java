@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
  * implementation.
- *
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 

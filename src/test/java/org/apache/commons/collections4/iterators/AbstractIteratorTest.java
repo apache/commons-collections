@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
  * Concrete subclasses must provide the iterator to be tested.
  * They must also specify certain details of how the iterator operates by
  * overriding the supportsXxx() methods if necessary.
- *
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 

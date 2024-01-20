@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
  * implementation.
- *
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

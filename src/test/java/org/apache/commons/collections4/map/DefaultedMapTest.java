@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link DefaultedMap} implementation.
- *
  */
 public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

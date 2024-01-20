@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
  */
 public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 

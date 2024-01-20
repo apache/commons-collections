@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
  * {@link TransformedNavigableSet} implementation.
- *
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 

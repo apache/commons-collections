@@ -42,7 +42,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for IterableUtils.
- *
  */
 public class IterableUtilsTest {
 

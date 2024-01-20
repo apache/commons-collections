@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
  * {@link PredicatedMultiSet} implementation.
- *
  */
 public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 

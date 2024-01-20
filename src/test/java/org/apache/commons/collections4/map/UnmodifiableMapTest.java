@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link UnmodifiableMap} implementation.
- *
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

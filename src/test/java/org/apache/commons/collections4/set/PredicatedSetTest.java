@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link PredicatedSet} implementation.
- *
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 

@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link IndexedCollection} implementation.
- *
  */
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {

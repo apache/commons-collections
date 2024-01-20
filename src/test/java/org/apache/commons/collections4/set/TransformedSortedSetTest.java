@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the {@link TransformedSortedSet}
  * implementation.
- *
  */
 public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 

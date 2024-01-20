@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
- *
  */
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest {

@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for PermutationIterator.
- *
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 

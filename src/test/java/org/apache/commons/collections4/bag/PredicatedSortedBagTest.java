@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
  * implementation.
- *
  */
 public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 

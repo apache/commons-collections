@@ -39,7 +39,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for FluentIterable.
- *
  */
 public class FluentIterableTest {
 

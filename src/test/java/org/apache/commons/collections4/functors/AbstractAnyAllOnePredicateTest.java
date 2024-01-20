@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Base class for tests of AnyPredicate, AllPredicate, and OnePredicate.
- *
  */
 public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractCompositePredicateTest<T> {
 

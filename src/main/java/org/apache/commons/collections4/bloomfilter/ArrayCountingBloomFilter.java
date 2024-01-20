@@ -97,7 +97,6 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * Constructs an empty counting Bloom filter with the specified shape.
      *
      * @param shape the shape of the filter
-     *
      */
     public ArrayCountingBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");

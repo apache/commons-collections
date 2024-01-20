@@ -22,7 +22,6 @@ import java.util.TreeMap;
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}
  * implementation.
- *
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

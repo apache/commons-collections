@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
  * {@link UnmodifiableSortedSet} implementation.
- *
  */
 public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set;

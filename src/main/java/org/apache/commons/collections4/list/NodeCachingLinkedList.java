@@ -184,7 +184,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Removes all the nodes from the list, storing as many as required in the
      * cache for reuse.
-     *
      */
     @Override
     protected void removeAllNodes() {

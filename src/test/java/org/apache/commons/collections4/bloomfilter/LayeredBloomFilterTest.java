@@ -55,7 +55,6 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     /**
      * A Consumer that cleans the list based on how long each filters has been in
      * the list.
-     *
      */
     static class CleanByTime implements Consumer<LinkedList<BloomFilter>> {
         long elapsedTime;
