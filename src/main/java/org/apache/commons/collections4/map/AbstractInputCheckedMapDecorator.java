@@ -48,63 +48,6 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         extends AbstractMapDecorator<K, V> {
 
     /**
-     * Constructor only used in deserialization, do not use otherwise.
-     */
-    protected AbstractInputCheckedMapDecorator() {
-    }
-
-    /**
-     * Constructor that wraps (not copies).
-     *
-     * @param map  the map to decorate, must not be null
-     * @throws NullPointerException if map is null
-     */
-    protected AbstractInputCheckedMapDecorator(final Map<K, V> map) {
-        super(map);
-    }
-
-    /**
-     * Hook method called when a value is being set using {@code setValue}.
-     * <p>
-     * An implementation may validate the value and throw an exception
-     * or it may transform the value into another object.
-     * </p>
-     * <p>
-     * This implementation returns the input value.
-     * </p>
-     *
-     * @param value  the value to check
-     * @return the input value
-     * @throws UnsupportedOperationException if the map may not be changed by setValue
-     * @throws IllegalArgumentException if the specified value is invalid
-     * @throws ClassCastException if the class of the specified value is invalid
-     * @throws NullPointerException if the specified value is null and nulls are invalid
-     */
-    protected abstract V checkSetValue(V value);
-
-    /**
-     * Hook method called to determine if {@code checkSetValue} has any effect.
-     * <p>
-     * An implementation should return false if the {@code checkSetValue} method
-     * has no effect as this optimizes the implementation.
-     * <p>
-     * This implementation returns {@code true}.
-     *
-     * @return true always
-     */
-    protected boolean isSetValueChecking() {
-        return true;
-    }
-
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        if (isSetValueChecking()) {
-            return new EntrySet(map.entrySet(), this);
-        }
-        return map.entrySet();
-    }
-
-    /**
      * Implementation of an entry set that checks additions via setValue.
      */
     private final class EntrySet extends AbstractSetDecorator<Map.Entry<K, V>> {
@@ -202,6 +145,63 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             value = parent.checkSetValue(value);
             return getMapEntry().setValue(value);
         }
+    }
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     */
+    protected AbstractInputCheckedMapDecorator() {
+    }
+
+    /**
+     * Constructor that wraps (not copies).
+     *
+     * @param map  the map to decorate, must not be null
+     * @throws NullPointerException if map is null
+     */
+    protected AbstractInputCheckedMapDecorator(final Map<K, V> map) {
+        super(map);
+    }
+
+    /**
+     * Hook method called when a value is being set using {@code setValue}.
+     * <p>
+     * An implementation may validate the value and throw an exception
+     * or it may transform the value into another object.
+     * </p>
+     * <p>
+     * This implementation returns the input value.
+     * </p>
+     *
+     * @param value  the value to check
+     * @return the input value
+     * @throws UnsupportedOperationException if the map may not be changed by setValue
+     * @throws IllegalArgumentException if the specified value is invalid
+     * @throws ClassCastException if the class of the specified value is invalid
+     * @throws NullPointerException if the specified value is null and nulls are invalid
+     */
+    protected abstract V checkSetValue(V value);
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        if (isSetValueChecking()) {
+            return new EntrySet(map.entrySet(), this);
+        }
+        return map.entrySet();
+    }
+
+    /**
+     * Hook method called to determine if {@code checkSetValue} has any effect.
+     * <p>
+     * An implementation should return false if the {@code checkSetValue} method
+     * has no effect as this optimizes the implementation.
+     * <p>
+     * This implementation returns {@code true}.
+     *
+     * @return true always
+     */
+    protected boolean isSetValueChecking() {
+        return true;
     }
 
 }

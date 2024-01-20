@@ -71,6 +71,16 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
     }
 
     /**
+     * Add an object to the pending deletions set.
+     *
+     * @param object  object to delete
+     */
+    @Override
+    public void visitDeleteCommand(final T object) {
+        pendingDeletions.add(object);
+    }
+
+    /**
      * Add an object to the pending insertions set.
      *
      * @param object  object to insert
@@ -98,16 +108,6 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
             pendingInsertions.clear();
             skipped = 1;
         }
-    }
-
-    /**
-     * Add an object to the pending deletions set.
-     *
-     * @param object  object to delete
-     */
-    @Override
-    public void visitDeleteCommand(final T object) {
-        pendingDeletions.add(object);
     }
 
 }

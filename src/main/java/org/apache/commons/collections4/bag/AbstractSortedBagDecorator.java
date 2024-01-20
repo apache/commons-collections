@@ -52,6 +52,11 @@ public abstract class AbstractSortedBagDecorator<E>
         super(bag);
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return decorated().comparator();
+    }
+
     /**
      * Gets the bag being decorated.
      *
@@ -70,11 +75,6 @@ public abstract class AbstractSortedBagDecorator<E>
     @Override
     public E last() {
         return decorated().last();
-    }
-
-    @Override
-    public Comparator<? super E> comparator() {
-        return decorated().comparator();
     }
 
 }

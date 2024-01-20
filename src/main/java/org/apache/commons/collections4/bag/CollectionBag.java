@@ -67,31 +67,48 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * Write the collection out using a custom routine.
+     * <i>(Change)</i>
+     * Adds one copy of the specified object to the Bag.
+     * <p>
+     * Since this method always increases the size of the bag, it
+     * will always return {@code true}.
      *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param object  the object to add
+     * @return {@code true}, always
      */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    @Override
+    public boolean add(final E object) {
+        return add(object, 1);
     }
 
     /**
-     * Read the collection in using a custom routine.
+     * <i>(Change)</i>
+     * Adds {@code count} copies of the specified object to the Bag.
+     * <p>
+     * Since this method always increases the size of the bag, it
+     * will always return {@code true}.
      *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @throws ClassCastException if deserialized object has wrong type
+     * @param object  the object to add
+     * @param count  the number of copies to add
+     * @return {@code true}, always
      */
-    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject());
+    @Override
+    public boolean add(final E object, final int count) {
+        decorated().add(object, count);
+        return true;
     }
 
     // Collection interface
+
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        boolean changed = false;
+        for (final E current : coll) {
+            final boolean added = add(current, 1);
+            changed = changed || added;
+        }
+        return changed;
+    }
 
     /**
      * <i>(Change)</i>
@@ -109,28 +126,17 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
-     * Adds one copy of the specified object to the Bag.
-     * <p>
-     * Since this method always increases the size of the bag, it
-     * will always return {@code true}.
+     * Read the collection in using a custom routine.
      *
-     * @param object  the object to add
-     * @return {@code true}, always
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassCastException if deserialized object has wrong type
      */
-    @Override
-    public boolean add(final E object) {
-        return add(object, 1);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        boolean changed = false;
-        for (final E current : coll) {
-            final boolean added = add(current, 1);
-            changed = changed || added;
-        }
-        return changed;
+    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject());
     }
 
     /**
@@ -208,20 +214,14 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     // Bag interface
 
     /**
-     * <i>(Change)</i>
-     * Adds {@code count} copies of the specified object to the Bag.
-     * <p>
-     * Since this method always increases the size of the bag, it
-     * will always return {@code true}.
+     * Write the collection out using a custom routine.
      *
-     * @param object  the object to add
-     * @param count  the number of copies to add
-     * @return {@code true}, always
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
-    @Override
-    public boolean add(final E object, final int count) {
-        decorated().add(object, count);
-        return true;
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

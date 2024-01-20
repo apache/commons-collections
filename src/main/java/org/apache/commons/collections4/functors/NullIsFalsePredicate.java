@@ -31,9 +31,6 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
     /** Serial version UID */
     private static final long serialVersionUID = -2997501534564735525L;
 
-    /** The predicate to decorate */
-    private final Predicate<? super T> iPredicate;
-
     /**
      * Factory to create the null false predicate.
      *
@@ -45,6 +42,9 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
     public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate) {
         return new NullIsFalsePredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
+
+    /** The predicate to decorate */
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Constructor that performs no validation.

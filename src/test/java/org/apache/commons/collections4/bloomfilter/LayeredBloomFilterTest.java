@@ -34,185 +34,6 @@ import org.junit.jupiter.api.Test;
 
 public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter> {
 
-    @Override
-    protected LayeredBloomFilter createEmptyFilter(Shape shape) {
-        return LayeredBloomFilter.fixed(shape, 10);
-    }
-
-    protected BloomFilter makeFilter(int... values) {
-        return makeFilter(IndexProducer.fromIndexArray(values));
-    }
-
-    protected BloomFilter makeFilter(IndexProducer p) {
-        BloomFilter bf = new SparseBloomFilter(getTestShape());
-        bf.merge(p);
-        return bf;
-    }
-
-    protected BloomFilter makeFilter(Hasher h) {
-        BloomFilter bf = new SparseBloomFilter(getTestShape());
-        bf.merge(h);
-        return bf;
-    }
-
-    @Test
-    public void testMultipleFilters() {
-        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
-        filter.merge(TestingHashers.FROM1);
-        filter.merge(TestingHashers.FROM11);
-        assertEquals(2, filter.getDepth());
-        assertTrue(filter.contains(makeFilter(TestingHashers.FROM1)));
-        assertTrue(filter.contains(makeFilter(TestingHashers.FROM11)));
-        BloomFilter t1 = makeFilter(6, 7, 17, 18, 19);
-        assertFalse(filter.contains(t1));
-        assertFalse(filter.copy().contains(t1));
-        assertTrue(filter.flatten().contains(t1));
-    }
-
-    private LayeredBloomFilter setupFindTest() {
-        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
-        filter.merge(TestingHashers.FROM1);
-        filter.merge(TestingHashers.FROM11);
-        filter.merge(new IncrementingHasher(11, 2));
-        filter.merge(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape())));
-        return filter;
-    }
-
-    @Test
-    public void testFindBloomFilter() {
-        LayeredBloomFilter filter = setupFindTest();
-        int[] expected = {0, 3};
-        int[] result = filter.find(TestingHashers.FROM1);
-        assertArrayEquals(expected, result);
-        expected = new int[] {1, 3};
-        result = filter.find(TestingHashers.FROM11);
-        assertArrayEquals(expected, result);
-    }
-
-    @Test
-    public void testFindBitMapProducer() {
-        LayeredBloomFilter filter = setupFindTest();
-
-        IndexProducer idxProducer = TestingHashers.FROM1.indices(getTestShape());
-        BitMapProducer producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
-
-        int[] expected = {0, 3};
-        int[] result = filter.find(producer);
-        assertArrayEquals(expected, result);
-
-        expected = new int[]{1, 3};
-        idxProducer = TestingHashers.FROM11.indices(getTestShape());
-        producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
-        result = filter.find(producer);
-        assertArrayEquals(expected, result);
-    }
-
-    @Test
-    public void testFindIndexProducer() {
-        IndexProducer producer = TestingHashers.FROM1.indices(getTestShape());
-        LayeredBloomFilter filter = setupFindTest();
-
-        int[] expected = {0, 3};
-        int[] result = filter.find(producer);
-        assertArrayEquals(expected, result);
-
-        expected = new int[] {1, 3};
-        producer = TestingHashers.FROM11.indices(getTestShape());
-        result = filter.find(producer);
-        assertArrayEquals(expected, result);
-    }
-
-    /**
-     * Tests that the estimated union calculations are correct.
-     */
-    @Test
-    public final void testEstimateUnionCrossTypes() {
-        final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
-        final BloomFilter bf2 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
-        bf2.merge(TestingHashers.FROM11);
-
-        assertEquals(2, bf.estimateUnion(bf2));
-        assertEquals(2, bf2.estimateUnion(bf));
-    }
-
-    @Test
-    public final void testGetLayer() {
-        BloomFilter bf = new SimpleBloomFilter(getTestShape());
-        bf.merge(TestingHashers.FROM11);
-        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
-        filter.merge(TestingHashers.FROM1);
-        filter.merge(TestingHashers.FROM11);
-        filter.merge(new IncrementingHasher(11, 2));
-        filter.merge(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape())));
-        assertArrayEquals(bf.asBitMapArray(), filter.get(1).asBitMapArray());
-    }
-
-    @Test
-    public final void testNext() {
-        LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(getTestShape()))
-                .build();
-
-        LayeredBloomFilter filter = new LayeredBloomFilter(getTestShape(), layerManager);
-        filter.merge(TestingHashers.FROM1);
-        filter.merge(TestingHashers.FROM11);
-        assertEquals(1, filter.getDepth());
-        filter.next();
-        filter.merge(new IncrementingHasher(11, 2));
-        assertEquals(2, filter.getDepth());
-        assertTrue(filter.get(0).contains(TestingHashers.FROM1));
-        assertTrue(filter.get(0).contains(TestingHashers.FROM11));
-        assertFalse(filter.get(0).contains(new IncrementingHasher(11, 2)));
-        assertFalse(filter.get(1).contains(TestingHashers.FROM1));
-        assertFalse(filter.get(1).contains(TestingHashers.FROM11));
-        assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
-    }
-
-    @Override
-    @Test
-    public void testCardinalityAndIsEmpty() {
-        LayerManager layerManager = LayerManager.builder().setExtendCheck(ExtendCheck.neverAdvance())
-                .setSupplier(() -> new SimpleBloomFilter(getTestShape())).build();
-        testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(), layerManager));
-    }
-
-    // ***** TESTS THAT CHECK LAYERED PROCESSING ******
-
-    // ***example of instrumentation ***
-    private static List<String> dbgInstrument = new ArrayList<>();
-    // instrumentation to record timestamps in dbgInstrument list
-    private Predicate<BloomFilter> dbg = (bf) -> {
-        TimestampedBloomFilter tbf = (TimestampedBloomFilter) bf;
-        long ts = System.currentTimeMillis();
-        dbgInstrument.add(String.format("T:%s (Elapsed:%s)- EstN:%s (Card:%s)\n", tbf.timestamp, ts - tbf.timestamp,
-                tbf.estimateN(), tbf.cardinality()));
-        return true;
-    };
-    // *** end of instrumentation ***
-
-    /**
-     * Creates a LayeredBloomFilter that retains enclosed filters for
-     * {@code duration} and limits the contents of each enclosed filter to a time
-     * {@code quanta}. This filter uses the timestamped Bloom filter internally.
-     *
-     * @param shape    The shape of the Bloom filters.
-     * @param duration The length of time to keep filters in the list.
-     * @param dUnit    The unit of time to apply to duration.
-     * @param quanta   The quantization factor for each filter. Individual filters
-     *                 will span at most this much time.
-     * @param qUnit    the unit of time to apply to quanta.
-     * @return LayeredBloomFilter with the above properties.
-     */
-    static LayeredBloomFilter createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
-            TimeUnit qUnit) {
-        LayerManager layerManager = LayerManager.builder()
-                .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
-                .setCleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
-                .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
-                        .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
-                .build();
-        return new LayeredBloomFilter(shape, layerManager);
-    }
-
     /**
      * A Predicate that advances after a quantum of time.
      */
@@ -271,6 +92,96 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
     }
 
+    // ***example of instrumentation ***
+    private static List<String> dbgInstrument = new ArrayList<>();
+
+    /**
+     * Creates a LayeredBloomFilter that retains enclosed filters for
+     * {@code duration} and limits the contents of each enclosed filter to a time
+     * {@code quanta}. This filter uses the timestamped Bloom filter internally.
+     *
+     * @param shape    The shape of the Bloom filters.
+     * @param duration The length of time to keep filters in the list.
+     * @param dUnit    The unit of time to apply to duration.
+     * @param quanta   The quantization factor for each filter. Individual filters
+     *                 will span at most this much time.
+     * @param qUnit    the unit of time to apply to quanta.
+     * @return LayeredBloomFilter with the above properties.
+     */
+    static LayeredBloomFilter createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
+            TimeUnit qUnit) {
+        LayerManager layerManager = LayerManager.builder()
+                .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
+                .setCleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
+                .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
+                        .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
+                .build();
+        return new LayeredBloomFilter(shape, layerManager);
+    }
+
+    // instrumentation to record timestamps in dbgInstrument list
+    private Predicate<BloomFilter> dbg = (bf) -> {
+        TimestampedBloomFilter tbf = (TimestampedBloomFilter) bf;
+        long ts = System.currentTimeMillis();
+        dbgInstrument.add(String.format("T:%s (Elapsed:%s)- EstN:%s (Card:%s)\n", tbf.timestamp, ts - tbf.timestamp,
+                tbf.estimateN(), tbf.cardinality()));
+        return true;
+    };
+    // *** end of instrumentation ***
+
+    @Override
+    protected LayeredBloomFilter createEmptyFilter(Shape shape) {
+        return LayeredBloomFilter.fixed(shape, 10);
+    }
+
+    protected BloomFilter makeFilter(Hasher h) {
+        BloomFilter bf = new SparseBloomFilter(getTestShape());
+        bf.merge(h);
+        return bf;
+    }
+
+    protected BloomFilter makeFilter(IndexProducer p) {
+        BloomFilter bf = new SparseBloomFilter(getTestShape());
+        bf.merge(p);
+        return bf;
+    }
+
+    protected BloomFilter makeFilter(int... values) {
+        return makeFilter(IndexProducer.fromIndexArray(values));
+    }
+
+    private LayeredBloomFilter setupFindTest() {
+        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
+        filter.merge(TestingHashers.FROM1);
+        filter.merge(TestingHashers.FROM11);
+        filter.merge(new IncrementingHasher(11, 2));
+        filter.merge(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape())));
+        return filter;
+    }
+
+    @Override
+    @Test
+    public void testCardinalityAndIsEmpty() {
+        LayerManager layerManager = LayerManager.builder().setExtendCheck(ExtendCheck.neverAdvance())
+                .setSupplier(() -> new SimpleBloomFilter(getTestShape())).build();
+        testCardinalityAndIsEmpty(new LayeredBloomFilter(getTestShape(), layerManager));
+    }
+
+    /**
+     * Tests that the estimated union calculations are correct.
+     */
+    @Test
+    public final void testEstimateUnionCrossTypes() {
+        final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
+        final BloomFilter bf2 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
+        bf2.merge(TestingHashers.FROM11);
+
+        assertEquals(2, bf.estimateUnion(bf2));
+        assertEquals(2, bf2.estimateUnion(bf));
+    }
+
+    // ***** TESTS THAT CHECK LAYERED PROCESSING ******
+
     @Test
     public void testExpiration() throws InterruptedException {
         // this test uses the instrumentation noted above to track changes for debugging
@@ -311,5 +222,94 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         dbgInstrument.add("=== AFTER 600 milliseconds ====\n");
         assertTrue(underTest.forEachBloomFilter(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
                 "Found filter that should have been deleted: " + dbgInstrument.get(dbgInstrument.size() - 1));
+    }
+    @Test
+    public void testFindBitMapProducer() {
+        LayeredBloomFilter filter = setupFindTest();
+
+        IndexProducer idxProducer = TestingHashers.FROM1.indices(getTestShape());
+        BitMapProducer producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
+
+        int[] expected = {0, 3};
+        int[] result = filter.find(producer);
+        assertArrayEquals(expected, result);
+
+        expected = new int[]{1, 3};
+        idxProducer = TestingHashers.FROM11.indices(getTestShape());
+        producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
+        result = filter.find(producer);
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void testFindBloomFilter() {
+        LayeredBloomFilter filter = setupFindTest();
+        int[] expected = {0, 3};
+        int[] result = filter.find(TestingHashers.FROM1);
+        assertArrayEquals(expected, result);
+        expected = new int[] {1, 3};
+        result = filter.find(TestingHashers.FROM11);
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void testFindIndexProducer() {
+        IndexProducer producer = TestingHashers.FROM1.indices(getTestShape());
+        LayeredBloomFilter filter = setupFindTest();
+
+        int[] expected = {0, 3};
+        int[] result = filter.find(producer);
+        assertArrayEquals(expected, result);
+
+        expected = new int[] {1, 3};
+        producer = TestingHashers.FROM11.indices(getTestShape());
+        result = filter.find(producer);
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public final void testGetLayer() {
+        BloomFilter bf = new SimpleBloomFilter(getTestShape());
+        bf.merge(TestingHashers.FROM11);
+        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
+        filter.merge(TestingHashers.FROM1);
+        filter.merge(TestingHashers.FROM11);
+        filter.merge(new IncrementingHasher(11, 2));
+        filter.merge(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape())));
+        assertArrayEquals(bf.asBitMapArray(), filter.get(1).asBitMapArray());
+    }
+
+    @Test
+    public void testMultipleFilters() {
+        LayeredBloomFilter filter = LayeredBloomFilter.fixed(getTestShape(), 10);
+        filter.merge(TestingHashers.FROM1);
+        filter.merge(TestingHashers.FROM11);
+        assertEquals(2, filter.getDepth());
+        assertTrue(filter.contains(makeFilter(TestingHashers.FROM1)));
+        assertTrue(filter.contains(makeFilter(TestingHashers.FROM11)));
+        BloomFilter t1 = makeFilter(6, 7, 17, 18, 19);
+        assertFalse(filter.contains(t1));
+        assertFalse(filter.copy().contains(t1));
+        assertTrue(filter.flatten().contains(t1));
+    }
+
+    @Test
+    public final void testNext() {
+        LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(getTestShape()))
+                .build();
+
+        LayeredBloomFilter filter = new LayeredBloomFilter(getTestShape(), layerManager);
+        filter.merge(TestingHashers.FROM1);
+        filter.merge(TestingHashers.FROM11);
+        assertEquals(1, filter.getDepth());
+        filter.next();
+        filter.merge(new IncrementingHasher(11, 2));
+        assertEquals(2, filter.getDepth());
+        assertTrue(filter.get(0).contains(TestingHashers.FROM1));
+        assertTrue(filter.get(0).contains(TestingHashers.FROM11));
+        assertFalse(filter.get(0).contains(new IncrementingHasher(11, 2)));
+        assertFalse(filter.get(1).contains(TestingHashers.FROM1));
+        assertFalse(filter.get(1).contains(TestingHashers.FROM11));
+        assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
     }
 }

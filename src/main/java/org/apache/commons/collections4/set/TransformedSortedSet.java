@@ -42,25 +42,6 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     private static final long serialVersionUID = -1675486811351124386L;
 
     /**
-     * Factory method to create a transforming sorted set.
-     * <p>
-     * If there are any elements already in the set being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
-     *
-     * @param <E> the element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed {@link SortedSet}
-     * @throws NullPointerException if set or transformer is null
-     * @since 4.0
-     */
-    public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
-            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedSortedSet<>(set, transformer);
-    }
-
-    /**
      * Factory method to create a transforming sorted set that will transform
      * existing contents of the specified sorted set.
      * <p>
@@ -91,6 +72,25 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     }
 
     /**
+     * Factory method to create a transforming sorted set.
+     * <p>
+     * If there are any elements already in the set being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
+     *
+     * @param <E> the element type
+     * @param set  the set to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed {@link SortedSet}
+     * @throws NullPointerException if set or transformer is null
+     * @since 4.0
+     */
+    public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
+            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSortedSet<>(set, transformer);
+    }
+
+    /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the set being decorated, they
@@ -104,6 +104,16 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
         super(set, transformer);
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return getSortedSet().comparator();
+    }
+
+    @Override
+    public E first() {
+        return getSortedSet().first();
+    }
+
     /**
      * Gets the decorated set.
      *
@@ -114,8 +124,9 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     }
 
     @Override
-    public E first() {
-        return getSortedSet().first();
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> set = getSortedSet().headSet(toElement);
+        return new TransformedSortedSet<>(set, transformer);
     }
 
     @Override
@@ -124,19 +135,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     }
 
     @Override
-    public Comparator<? super E> comparator() {
-        return getSortedSet().comparator();
-    }
-
-    @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
-        return new TransformedSortedSet<>(set, transformer);
-    }
-
-    @Override
-    public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> set = getSortedSet().headSet(toElement);
         return new TransformedSortedSet<>(set, transformer);
     }
 

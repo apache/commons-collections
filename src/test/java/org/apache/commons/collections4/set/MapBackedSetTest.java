@@ -32,13 +32,13 @@ public class MapBackedSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Override
-    public Set<E> makeObject() {
-        return MapBackedSet.mapBackedSet(new HashedMap<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public Set<E> makeObject() {
+        return MapBackedSet.mapBackedSet(new HashedMap<>());
     }
 
 //    public void testCreate() throws Exception {

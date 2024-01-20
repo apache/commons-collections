@@ -40,12 +40,10 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     /** Constant "false first" reference. */
     private static final BooleanComparator FALSE_FIRST = new BooleanComparator(false);
 
-    /** {@code true} iff {@code true} values sort before {@code false} values. */
-    private final boolean trueFirst;
-
     /**
      * Returns a BooleanComparator instance that sorts
-     * {@code true} values before {@code false} values.
+     * {@code <i>trueFirst</i>} values before
+     * {@code &#x21;<i>trueFirst</i>} values.
      * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
@@ -54,10 +52,13 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * virtual machine.
      * </p>
      *
-     * @return the true first singleton BooleanComparator
+     * @param trueFirst when {@code true}, sort
+     * {@code true} {@code Boolean}s before {@code false}
+     * @return a singleton BooleanComparator instance
+     * @since 4.0
      */
-    public static BooleanComparator getTrueFirstComparator() {
-        return TRUE_FIRST;
+    public static BooleanComparator booleanComparator(final boolean trueFirst) {
+        return trueFirst ? TRUE_FIRST : FALSE_FIRST;
     }
 
     /**
@@ -79,8 +80,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
 
     /**
      * Returns a BooleanComparator instance that sorts
-     * {@code <i>trueFirst</i>} values before
-     * {@code &#x21;<i>trueFirst</i>} values.
+     * {@code true} values before {@code false} values.
      * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
@@ -89,14 +89,14 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * virtual machine.
      * </p>
      *
-     * @param trueFirst when {@code true}, sort
-     * {@code true} {@code Boolean}s before {@code false}
-     * @return a singleton BooleanComparator instance
-     * @since 4.0
+     * @return the true first singleton BooleanComparator
      */
-    public static BooleanComparator booleanComparator(final boolean trueFirst) {
-        return trueFirst ? TRUE_FIRST : FALSE_FIRST;
+    public static BooleanComparator getTrueFirstComparator() {
+        return TRUE_FIRST;
     }
+
+    /** {@code true} iff {@code true} values sort before {@code false} values. */
+    private final boolean trueFirst;
 
     /**
      * Creates a {@code BooleanComparator} that sorts
@@ -142,18 +142,6 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     */
-    @Override
-    public int hashCode() {
-        final int hash = "BooleanComparator".hashCode();
-        return trueFirst ? -1 * hash : hash;
-    }
-
-    /**
      * Returns {@code true} iff <i>that</i> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
@@ -170,6 +158,18 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
         return this == object ||
                object instanceof BooleanComparator &&
                 this.trueFirst == ((BooleanComparator) object).trueFirst;
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     */
+    @Override
+    public int hashCode() {
+        final int hash = "BooleanComparator".hashCode();
+        return trueFirst ? -1 * hash : hash;
     }
 
     /**

@@ -32,12 +32,6 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 5633766978029907089L;
 
-    /** The value to compare to */
-    private final T iValue;
-
-    /** The equator to use for comparison */
-    private final Equator<T> equator;
-
     /**
      * Factory to create the predicate.
      *
@@ -67,6 +61,12 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
         }
         return new EqualPredicate<>(object, equator);
     }
+
+    /** The value to compare to */
+    private final T iValue;
+
+    /** The equator to use for comparison */
+    private final Equator<T> equator;
 
     /**
      * Constructor that performs no validation.

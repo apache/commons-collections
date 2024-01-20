@@ -34,40 +34,6 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
 
-    /** The tests to consider */
-    private final Predicate<? super E>[] iPredicates;
-    /** The matching closures to call */
-    private final Closure<? super E>[] iClosures;
-    /** The default closure to call if no tests match */
-    private final Closure<? super E> iDefault;
-
-    /**
-     * Factory method that performs validation and copies the parameter arrays.
-     *
-     * @param <E> the type that the closure acts on
-     * @param predicates  array of predicates, cloned, no nulls
-     * @param closures  matching array of closures, cloned, no nulls
-     * @param defaultClosure  the closure to use if no match, null means nop
-     * @return the {@code chained} closure
-     * @throws NullPointerException if array is null
-     * @throws NullPointerException if any element in the array is null
-     * @throws IllegalArgumentException if the array lengths of predicates and closures do not match
-     */
-    @SuppressWarnings("unchecked")
-    public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
-                                               final Closure<? super E>[] closures,
-                                               final Closure<? super E> defaultClosure) {
-        FunctorUtils.validate(predicates);
-        FunctorUtils.validate(closures);
-        if (predicates.length != closures.length) {
-            throw new IllegalArgumentException("The predicate and closure arrays must be the same size");
-        }
-        if (predicates.length == 0) {
-            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
-        }
-        return new SwitchClosure<>(predicates, closures, defaultClosure);
-    }
-
     /**
      * Create a new Closure that calls one of the closures depending
      * on the predicates.
@@ -105,6 +71,40 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         }
         return new SwitchClosure<>(false, preds, closures, defaultClosure);
     }
+    /**
+     * Factory method that performs validation and copies the parameter arrays.
+     *
+     * @param <E> the type that the closure acts on
+     * @param predicates  array of predicates, cloned, no nulls
+     * @param closures  matching array of closures, cloned, no nulls
+     * @param defaultClosure  the closure to use if no match, null means nop
+     * @return the {@code chained} closure
+     * @throws NullPointerException if array is null
+     * @throws NullPointerException if any element in the array is null
+     * @throws IllegalArgumentException if the array lengths of predicates and closures do not match
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
+                                               final Closure<? super E>[] closures,
+                                               final Closure<? super E> defaultClosure) {
+        FunctorUtils.validate(predicates);
+        FunctorUtils.validate(closures);
+        if (predicates.length != closures.length) {
+            throw new IllegalArgumentException("The predicate and closure arrays must be the same size");
+        }
+        if (predicates.length == 0) {
+            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
+        }
+        return new SwitchClosure<>(predicates, closures, defaultClosure);
+    }
+    /** The tests to consider */
+    private final Predicate<? super E>[] iPredicates;
+
+    /** The matching closures to call */
+    private final Closure<? super E>[] iClosures;
+
+    /** The default closure to call if no tests match */
+    private final Closure<? super E> iDefault;
 
     /**
      * Hidden constructor for the use by the static factory methods.
@@ -151,16 +151,6 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Gets the predicates.
-     *
-     * @return a copy of the predicates
-     * @since 3.1
-     */
-    public Predicate<? super E>[] getPredicates() {
-        return FunctorUtils.<E>copy(iPredicates);
-    }
-
-    /**
      * Gets the closures.
      *
      * @return a copy of the closures
@@ -178,6 +168,16 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      */
     public Closure<? super E> getDefaultClosure() {
         return iDefault;
+    }
+
+    /**
+     * Gets the predicates.
+     *
+     * @return a copy of the predicates
+     * @since 3.1
+     */
+    public Predicate<? super E>[] getPredicates() {
+        return FunctorUtils.<E>copy(iPredicates);
     }
 
 }

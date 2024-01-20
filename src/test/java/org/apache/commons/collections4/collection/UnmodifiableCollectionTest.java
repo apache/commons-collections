@@ -41,14 +41,18 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public Collection<E> makeObject() {
-        return UnmodifiableCollection.unmodifiableCollection(new ArrayList<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
-    public Collection<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return UnmodifiableCollection.unmodifiableCollection(list);
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -62,19 +66,14 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public boolean isAddSupported() {
-        return false;
+    public Collection<E> makeFullCollection() {
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return UnmodifiableCollection.unmodifiableCollection(list);
     }
 
     @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    public Collection<E> makeObject() {
+        return UnmodifiableCollection.unmodifiableCollection(new ArrayList<>());
     }
 
     @Test
@@ -85,9 +84,10 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
         assertThrows(NullPointerException.class, () -> UnmodifiableCollection.unmodifiableCollection(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

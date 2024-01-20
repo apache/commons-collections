@@ -53,6 +53,35 @@ public class FilterListIteratorTest {
     private Predicate<Integer> fourPred;
     private final Random random = new Random();
 
+    private void nextNextPrevious(final ListIterator<?> expected, final ListIterator<?> testing) {
+        // calls to next() should change the value returned by previous()
+        // even after previous() has been set by a call to hasPrevious()
+        assertEquals(expected.next(), testing.next());
+        assertEquals(expected.hasPrevious(), testing.hasPrevious());
+        final Object expecteda = expected.next();
+        final Object testinga = testing.next();
+        assertEquals(expecteda, testinga);
+        final Object expectedb = expected.previous();
+        final Object testingb = testing.previous();
+        assertEquals(expecteda, expectedb);
+        assertEquals(testinga, testingb);
+    }
+
+    private void previousPreviousNext(final ListIterator<?> expected, final ListIterator<?> testing) {
+        // calls to previous() should change the value returned by next()
+        // even after next() has been set by a call to hasNext()
+        assertEquals(expected.previous(), testing.previous());
+        assertEquals(expected.hasNext(), testing.hasNext());
+        final Object expecteda = expected.previous();
+        final Object testinga = testing.previous();
+        assertEquals(expecteda, testinga);
+        final Object expectedb = expected.next();
+        final Object testingb = testing.next();
+        assertEquals(expecteda, testingb);
+        assertEquals(expecteda, expectedb);
+        assertEquals(testinga, testingb);
+    }
+
     @BeforeEach
     public void setUp() {
         list = new ArrayList<>();
@@ -110,10 +139,48 @@ public class FilterListIteratorTest {
         fourPred = null;
     }
 
+    /**
+     * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360"}
+     */
     @Test
-    public void testWalkLists() {
-        // this just confirms that our walkLists method works OK
-        walkLists(list, list.listIterator());
+    public void testCollections360() throws Throwable {
+        final Collection<Predicate<Object>> var7 = new GrowthList<>();
+        final Predicate<Object> var9 = PredicateUtils.anyPredicate(var7);
+        final FilterListIterator<Object> var13 = new FilterListIterator<>(var9);
+        assertFalse(var13.hasNext());
+        final FilterListIterator<Object> var14 = new FilterListIterator<>(var9);
+        assertFalse(var14.hasPrevious());
+    }
+
+    @Test
+    public void testEvens() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), evenPred);
+        walkLists(evens, filtered);
+    }
+
+    @Test
+    public void testFailingHasNextBug() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
+        final ListIterator<Integer> expected = fours.listIterator();
+        while (expected.hasNext()) {
+            expected.next();
+            filtered.next();
+        }
+        assertTrue(filtered.hasPrevious());
+        assertFalse(filtered.hasNext());
+        assertEquals(expected.previous(), filtered.previous());
+    }
+
+    @Test
+    public void testFalsePredicate() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), falsePred);
+        walkLists(new ArrayList<>(), filtered);
+    }
+
+    @Test
+    public void testFours() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
+        walkLists(fours, filtered);
     }
 
     @Test
@@ -177,42 +244,6 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testTruePredicate() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), truePred);
-        walkLists(list, filtered);
-    }
-
-    @Test
-    public void testFalsePredicate() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), falsePred);
-        walkLists(new ArrayList<>(), filtered);
-    }
-
-    @Test
-    public void testEvens() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), evenPred);
-        walkLists(evens, filtered);
-    }
-
-    @Test
-    public void testOdds() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), oddPred);
-        walkLists(odds, filtered);
-    }
-
-    @Test
-    public void testThrees() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
-        walkLists(threes, filtered);
-    }
-
-    @Test
-    public void testFours() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
-        walkLists(fours, filtered);
-    }
-
-    @Test
     public void testNestedSixes() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(
                                         new FilterListIterator<>(list.listIterator(), threePred),
@@ -253,6 +284,12 @@ public class FilterListIteratorTest {
     }
 
     @Test
+    public void testOdds() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), oddPred);
+        walkLists(odds, filtered);
+    }
+
+    @Test
     public void testPreviousChangesNext() {
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
@@ -269,40 +306,23 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testFailingHasNextBug() {
-        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
-        final ListIterator<Integer> expected = fours.listIterator();
-        while (expected.hasNext()) {
-            expected.next();
-            filtered.next();
-        }
-        assertTrue(filtered.hasPrevious());
-        assertFalse(filtered.hasNext());
-        assertEquals(expected.previous(), filtered.previous());
-    }
-
-    /**
-     * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360"}
-     */
-    @Test
-    public void testCollections360() throws Throwable {
-        final Collection<Predicate<Object>> var7 = new GrowthList<>();
-        final Predicate<Object> var9 = PredicateUtils.anyPredicate(var7);
-        final FilterListIterator<Object> var13 = new FilterListIterator<>(var9);
-        assertFalse(var13.hasNext());
-        final FilterListIterator<Object> var14 = new FilterListIterator<>(var9);
-        assertFalse(var14.hasPrevious());
+    public void testThrees() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
+        walkLists(threes, filtered);
     }
 
     // Utilities
 
-    private void walkForward(final ListIterator<?> expected, final ListIterator<?> testing) {
-        while (expected.hasNext()) {
-            assertEquals(expected.nextIndex(), testing.nextIndex());
-            assertEquals(expected.previousIndex(), testing.previousIndex());
-            assertTrue(testing.hasNext());
-            assertEquals(expected.next(), testing.next());
-        }
+    @Test
+    public void testTruePredicate() {
+        final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), truePred);
+        walkLists(list, filtered);
+    }
+
+    @Test
+    public void testWalkLists() {
+        // this just confirms that our walkLists method works OK
+        walkLists(list, list.listIterator());
     }
 
     private void walkBackward(final ListIterator<?> expected, final ListIterator<?> testing) {
@@ -314,33 +334,13 @@ public class FilterListIteratorTest {
         }
     }
 
-    private void nextNextPrevious(final ListIterator<?> expected, final ListIterator<?> testing) {
-        // calls to next() should change the value returned by previous()
-        // even after previous() has been set by a call to hasPrevious()
-        assertEquals(expected.next(), testing.next());
-        assertEquals(expected.hasPrevious(), testing.hasPrevious());
-        final Object expecteda = expected.next();
-        final Object testinga = testing.next();
-        assertEquals(expecteda, testinga);
-        final Object expectedb = expected.previous();
-        final Object testingb = testing.previous();
-        assertEquals(expecteda, expectedb);
-        assertEquals(testinga, testingb);
-    }
-
-    private void previousPreviousNext(final ListIterator<?> expected, final ListIterator<?> testing) {
-        // calls to previous() should change the value returned by next()
-        // even after next() has been set by a call to hasNext()
-        assertEquals(expected.previous(), testing.previous());
-        assertEquals(expected.hasNext(), testing.hasNext());
-        final Object expecteda = expected.previous();
-        final Object testinga = testing.previous();
-        assertEquals(expecteda, testinga);
-        final Object expectedb = expected.next();
-        final Object testingb = testing.next();
-        assertEquals(expecteda, testingb);
-        assertEquals(expecteda, expectedb);
-        assertEquals(testinga, testingb);
+    private void walkForward(final ListIterator<?> expected, final ListIterator<?> testing) {
+        while (expected.hasNext()) {
+            assertEquals(expected.nextIndex(), testing.nextIndex());
+            assertEquals(expected.previousIndex(), testing.previousIndex());
+            assertTrue(testing.hasNext());
+            assertEquals(expected.next(), testing.next());
+        }
     }
 
     private <E> void walkLists(final List<E> list, final ListIterator<E> testing) {

@@ -53,6 +53,41 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     /**
+     * The values to be used in the add and set tests.
+     * Default is two strings.
+     */
+    @SuppressWarnings("unchecked")
+    public V[] addSetValues() {
+        return (V[]) new Object[] { "A", "B" };
+    }
+
+    /**
+     * Implement this method to return the confirmed map which contains the same
+     * data as the iterator.
+     *
+     * @return a full map which can be updated
+     */
+    public abstract Map<K, V> getConfirmedMap();
+
+    /**
+     * Implement this method to return the map which contains the same data as the
+     * iterator.
+     *
+     * @return a full map which can be updated
+     */
+    public abstract Map<K, V> getMap();
+
+    /**
+     * Whether the get operation on the map structurally modifies the map,
+     * such as with LRUMap. Default is false.
+     *
+     * @return true if the get method structurally modifies the map
+     */
+    public boolean isGetStructuralModify() {
+        return false;
+    }
+
+    /**
      * Implement this method to return a map iterator over an empty map.
      *
      * @return an empty iterator
@@ -69,22 +104,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     public abstract MapIterator<K, V> makeObject();
 
     /**
-     * Implement this method to return the map which contains the same data as the
-     * iterator.
-     *
-     * @return a full map which can be updated
-     */
-    public abstract Map<K, V> getMap();
-
-    /**
-     * Implement this method to return the confirmed map which contains the same
-     * data as the iterator.
-     *
-     * @return a full map which can be updated
-     */
-    public abstract Map<K, V> getConfirmedMap();
-
-    /**
      * Whether or not we are testing an iterator that supports setValue().
      * Default is true.
      *
@@ -92,25 +111,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      */
     public boolean supportsSetValue() {
         return true;
-    }
-
-    /**
-     * Whether the get operation on the map structurally modifies the map,
-     * such as with LRUMap. Default is false.
-     *
-     * @return true if the get method structurally modifies the map
-     */
-    public boolean isGetStructuralModify() {
-        return false;
-    }
-
-    /**
-     * The values to be used in the add and set tests.
-     * Default is two strings.
-     */
-    @SuppressWarnings("unchecked")
-    public V[] addSetValues() {
-        return (V[]) new Object[] { "A", "B" };
     }
 
     /**
@@ -182,6 +182,44 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
+    public void testMapIteratorRemoveGetKey() {
+        if (!supportsRemove()) {
+            return;
+        }
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
+
+        assertTrue(it.hasNext());
+        final K key = it.next();
+
+        it.remove();
+        confirmed.remove(key);
+        verify();
+
+        assertThrows(IllegalStateException.class, () -> it.getKey());
+        verify();
+    }
+
+    @Test
+    public void testMapIteratorRemoveGetValue() {
+        if (!supportsRemove()) {
+            return;
+        }
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
+
+        assertTrue(it.hasNext());
+        final K key = it.next();
+
+        it.remove();
+        confirmed.remove(key);
+        verify();
+
+        assertThrows(IllegalStateException.class, () -> it.getValue());
+        verify();
+    }
+
+    @Test
     public void testMapIteratorSet() {
         if (!supportsFullIterator()) {
             return;
@@ -226,6 +264,27 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
+    public void testMapIteratorSetRemoveSet() {
+        if (!supportsSetValue() || !supportsRemove()) {
+            return;
+        }
+        final V newValue = addSetValues()[0];
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
+
+        assertTrue(it.hasNext());
+        final K key = it.next();
+
+        it.setValue(newValue);
+        it.remove();
+        confirmed.remove(key);
+        verify();
+
+        assertThrows(IllegalStateException.class, () -> it.setValue(newValue));
+        verify();
+    }
+
+    @Test
     @Override
     public void testRemove() { // override
         final MapIterator<K, V> it = makeObject();
@@ -248,65 +307,6 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             it.remove();  // second remove fails
         } catch (final IllegalStateException ex) {
         }
-        verify();
-    }
-
-    @Test
-    public void testMapIteratorSetRemoveSet() {
-        if (!supportsSetValue() || !supportsRemove()) {
-            return;
-        }
-        final V newValue = addSetValues()[0];
-        final MapIterator<K, V> it = makeObject();
-        final Map<K, V> confirmed = getConfirmedMap();
-
-        assertTrue(it.hasNext());
-        final K key = it.next();
-
-        it.setValue(newValue);
-        it.remove();
-        confirmed.remove(key);
-        verify();
-
-        assertThrows(IllegalStateException.class, () -> it.setValue(newValue));
-        verify();
-    }
-
-    @Test
-    public void testMapIteratorRemoveGetKey() {
-        if (!supportsRemove()) {
-            return;
-        }
-        final MapIterator<K, V> it = makeObject();
-        final Map<K, V> confirmed = getConfirmedMap();
-
-        assertTrue(it.hasNext());
-        final K key = it.next();
-
-        it.remove();
-        confirmed.remove(key);
-        verify();
-
-        assertThrows(IllegalStateException.class, () -> it.getKey());
-        verify();
-    }
-
-    @Test
-    public void testMapIteratorRemoveGetValue() {
-        if (!supportsRemove()) {
-            return;
-        }
-        final MapIterator<K, V> it = makeObject();
-        final Map<K, V> confirmed = getConfirmedMap();
-
-        assertTrue(it.hasNext());
-        final K key = it.next();
-
-        it.remove();
-        confirmed.remove(key);
-        verify();
-
-        assertThrows(IllegalStateException.class, () -> it.getValue());
         verify();
     }
 

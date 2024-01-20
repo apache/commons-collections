@@ -72,11 +72,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /** Serialization version */
     private static final long serialVersionUID = 5966875321133456994L;
 
-    /** The transformer to use for the key */
-    private final Transformer<? super J, ? extends K> keyTransformer;
-    /** The transformer to use for the value */
-    private final Transformer<? super U, ? extends V> valueTransformer;
-
     /**
      * Factory method to create a transforming map.
      * <p>
@@ -98,6 +93,11 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
             final Transformer<? super U, ? extends V> valueTransformer) {
         return new TransformedSplitMap<>(map, keyTransformer, valueTransformer);
     }
+    /** The transformer to use for the key */
+    private final Transformer<? super J, ? extends K> keyTransformer;
+
+    /** The transformer to use for the value */
+    private final Transformer<? super U, ? extends V> valueTransformer;
 
     /**
      * Constructor that wraps (not copies).
@@ -118,14 +118,28 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Override to transform the value when using {@code setValue}.
      *
-     * @param out the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param value the value to transform
+     * @return the transformed value
      */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    protected V checkSetValue(final U value) {
+        return valueTransformer.transform(value);
+    }
+
+    @Override
+    public void clear() {
+        decorated().clear();
+    }
+
+    @Override
+    public V put(final J key, final U value) {
+        return decorated().put(transformKey(key), transformValue(value));
+    }
+
+    @Override
+    public void putAll(final Map<? extends J, ? extends U> mapToCopy) {
+        decorated().putAll(transformMap(mapToCopy));
     }
 
     /**
@@ -155,18 +169,6 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     /**
-     * Transforms a value.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param object the object to transform
-     * @return the transformed object
-     */
-    protected V transformValue(final U object) {
-        return valueTransformer.transform(object);
-    }
-
-    /**
      * Transforms a map.
      * <p>
      * The transformer itself may throw an exception if necessary.
@@ -188,27 +190,25 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     /**
-     * Override to transform the value when using {@code setValue}.
+     * Transforms a value.
+     * <p>
+     * The transformer itself may throw an exception if necessary.
      *
-     * @param value the value to transform
-     * @return the transformed value
+     * @param object the object to transform
+     * @return the transformed object
      */
-    protected V checkSetValue(final U value) {
-        return valueTransformer.transform(value);
+    protected V transformValue(final U object) {
+        return valueTransformer.transform(object);
     }
 
-    @Override
-    public V put(final J key, final U value) {
-        return decorated().put(transformKey(key), transformValue(value));
-    }
-
-    @Override
-    public void putAll(final Map<? extends J, ? extends U> mapToCopy) {
-        decorated().putAll(transformMap(mapToCopy));
-    }
-
-    @Override
-    public void clear() {
-        decorated().clear();
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 }

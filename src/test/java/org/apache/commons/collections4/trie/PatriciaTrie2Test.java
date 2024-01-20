@@ -31,8 +31,8 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
     }
 
     @Override
-    public OrderedMap<String, V> makeObject() {
-        return new PatriciaTrie<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -41,8 +41,8 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public OrderedMap<String, V> makeObject() {
+        return new PatriciaTrie<>();
     }
 
 }

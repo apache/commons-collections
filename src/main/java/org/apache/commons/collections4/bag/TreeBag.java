@@ -57,16 +57,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     /**
-     * Constructs an empty bag that maintains order on its unique representative
-     * members according to the given {@link Comparator}.
-     *
-     * @param comparator the comparator to use
-     */
-    public TreeBag(final Comparator<? super E> comparator) {
-        super(new TreeMap<>(comparator));
-    }
-
-    /**
      * Constructs a {@link TreeBag} containing all the members of the
      * specified collection.
      *
@@ -75,6 +65,16 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     public TreeBag(final Collection<? extends E> coll) {
         this();
         addAll(coll);
+    }
+
+    /**
+     * Constructs an empty bag that maintains order on its unique representative
+     * members according to the given {@link Comparator}.
+     *
+     * @param comparator the comparator to use
+     */
+    public TreeBag(final Comparator<? super E> comparator) {
+        super(new TreeMap<>(comparator));
     }
 
     /**
@@ -96,18 +96,13 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     @Override
-    public E first() {
-        return getMap().firstKey();
-    }
-
-    @Override
-    public E last() {
-        return getMap().lastKey();
-    }
-
-    @Override
     public Comparator<? super E> comparator() {
         return getMap().comparator();
+    }
+
+    @Override
+    public E first() {
+        return getMap().firstKey();
     }
 
     @Override
@@ -115,16 +110,9 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         return (SortedMap<E, AbstractMapBag.MutableInteger>) super.getMap();
     }
 
-    /**
-     * Write the bag out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(comparator());
-        super.doWriteObject(out);
+    @Override
+    public E last() {
+        return getMap().lastKey();
     }
 
     /**
@@ -139,6 +127,18 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         @SuppressWarnings("unchecked")  // This will fail at runtime if the stream is incorrect
         final Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
         super.doReadObject(new TreeMap<>(comp), in);
+    }
+
+    /**
+     * Write the bag out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(comparator());
+        super.doWriteObject(out);
     }
 
 }

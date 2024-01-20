@@ -38,6 +38,20 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /**
      * Factory to create the predicate.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code one} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
+        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+        return new OnePredicate<>(preds);
+    }
+
+    /**
+     * Factory to create the predicate.
      * <p>
      * If the array is size zero, the predicate always returns false.
      * If the array is size one, then that predicate is returned.
@@ -58,20 +72,6 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
             return (Predicate<T>) predicates[0];
         }
         return new OnePredicate<>(FunctorUtils.copy(predicates));
-    }
-
-    /**
-     * Factory to create the predicate.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code one} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
-        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
-        return new OnePredicate<>(preds);
     }
 
     /**

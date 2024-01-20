@@ -29,11 +29,6 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Override
-    public Bag<T> makeObject() {
-        return new HashBag<>();
-    }
-
-    @Override
     public String getCompatibilityVersion() {
         return "4";
     }
@@ -41,6 +36,11 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    public Bag<T> makeObject() {
+        return new HashBag<>();
     }
 
 //    public void testCreate() throws Exception {

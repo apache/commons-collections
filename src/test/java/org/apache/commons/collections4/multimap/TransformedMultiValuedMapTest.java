@@ -42,59 +42,14 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     }
 
     @Override
-    public MultiValuedMap<K, V> makeObject() {
-        return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<>(),
-                TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
-    }
-
-    @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testKeyTransformedMap() {
-        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
-
-        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new ArrayListValuedHashMap<>(),
-                (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
-                null);
-        assertEquals(0, map.size());
-        for (int i = 0; i < els.length; i++) {
-            map.put((K) els[i], (V) els[i]);
-            assertEquals(i + 1, map.size());
-            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
-            assertFalse(map.containsKey(els[i]));
-            assertTrue(map.containsValue(els[i]));
-            assertTrue(map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
-        }
-
-        final Collection<V> coll = map.remove(els[0]);
-        assertNotNull(coll);
-        assertEquals(0, coll.size());
-        assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testValueTransformedMap() {
-        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
-
-        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new ArrayListValuedHashMap<>(), null,
-                (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(0, map.size());
-        for (int i = 0; i < els.length; i++) {
-            map.put((K) els[i], (V) els[i]);
-            assertEquals(i + 1, map.size());
-            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
-            assertFalse(map.containsValue(els[i]));
-            assertTrue(map.containsKey(els[i]));
-            assertTrue(map.get((K) els[i]).contains(Integer.valueOf((String) els[i])));
-        }
-        assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
+    @Override
+    public MultiValuedMap<K, V> makeObject() {
+        return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<>(),
+                TransformerUtils.<K>nopTransformer(), TransformerUtils.<V>nopTransformer());
     }
 
     @Test
@@ -148,6 +103,51 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         transMap.put((K) "D", (V) "4");
         assertEquals(1, transMap.size());
         assertTrue(transMap.get((K) "D").contains(Integer.valueOf(4)));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testKeyTransformedMap() {
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
+
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+                new ArrayListValuedHashMap<>(),
+                (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
+                null);
+        assertEquals(0, map.size());
+        for (int i = 0; i < els.length; i++) {
+            map.put((K) els[i], (V) els[i]);
+            assertEquals(i + 1, map.size());
+            assertTrue(map.containsKey(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsKey(els[i]));
+            assertTrue(map.containsValue(els[i]));
+            assertTrue(map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
+        }
+
+        final Collection<V> coll = map.remove(els[0]);
+        assertNotNull(coll);
+        assertEquals(0, coll.size());
+        assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testValueTransformedMap() {
+        final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
+
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+                new ArrayListValuedHashMap<>(), null,
+                (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(0, map.size());
+        for (int i = 0; i < els.length; i++) {
+            map.put((K) els[i], (V) els[i]);
+            assertEquals(i + 1, map.size());
+            assertTrue(map.containsValue(Integer.valueOf((String) els[i])));
+            assertFalse(map.containsValue(els[i]));
+            assertTrue(map.containsKey(els[i]));
+            assertTrue(map.get((K) els[i]).contains(Integer.valueOf((String) els[i])));
+        }
+        assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
 
 //    public void testCreate() throws Exception {

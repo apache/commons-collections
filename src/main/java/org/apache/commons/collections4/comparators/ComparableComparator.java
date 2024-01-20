@@ -93,18 +93,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     }
 
     /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     * @since 3.0
-     */
-    @Override
-    public int hashCode() {
-        return "ComparableComparator".hashCode();
-    }
-
-    /**
      * Returns {@code true} iff <i>that</i> Object is a {@link Comparator Comparator}
      * whose ordering is known to be equivalent to mine.
      * <p>
@@ -121,6 +109,18 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     public boolean equals(final Object object) {
         return this == object ||
                null != object && object.getClass().equals(this.getClass());
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     * @since 3.0
+     */
+    @Override
+    public int hashCode() {
+        return "ComparableComparator".hashCode();
     }
 
 }

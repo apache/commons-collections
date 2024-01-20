@@ -80,6 +80,11 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
         super(set, predicate);
     }
 
+    @Override
+    public E ceiling(final E e) {
+        return decorated().ceiling(e);
+    }
+
     /**
      * Gets the navigable set being decorated.
      *
@@ -91,8 +96,13 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
     }
 
     @Override
-    public E lower(final E e) {
-        return decorated().lower(e);
+    public Iterator<E> descendingIterator() {
+        return decorated().descendingIterator();
+    }
+
+    @Override
+    public NavigableSet<E> descendingSet() {
+        return predicatedNavigableSet(decorated().descendingSet(), predicate);
     }
 
     @Override
@@ -101,13 +111,19 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
     }
 
     @Override
-    public E ceiling(final E e) {
-        return decorated().ceiling(e);
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
+        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
+        return predicatedNavigableSet(head, predicate);
     }
 
     @Override
     public E higher(final E e) {
         return decorated().higher(e);
+    }
+
+    @Override
+    public E lower(final E e) {
+        return decorated().lower(e);
     }
 
     @Override
@@ -121,26 +137,10 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
     }
 
     @Override
-    public NavigableSet<E> descendingSet() {
-        return predicatedNavigableSet(decorated().descendingSet(), predicate);
-    }
-
-    @Override
-    public Iterator<E> descendingIterator() {
-        return decorated().descendingIterator();
-    }
-
-    @Override
     public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
             final boolean toInclusive) {
         final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
         return predicatedNavigableSet(sub, predicate);
-    }
-
-    @Override
-    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
-        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
-        return predicatedNavigableSet(head, predicate);
     }
 
     @Override

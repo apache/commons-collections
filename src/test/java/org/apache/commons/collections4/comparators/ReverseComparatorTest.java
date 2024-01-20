@@ -38,6 +38,26 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         super(ReverseComparatorTest.class.getSimpleName());
     }
 
+    @Override
+    public List<Integer> getComparableObjectsOrdered() {
+        final List<Integer> list = new LinkedList<>();
+        list.add(Integer.valueOf(1));
+        list.add(Integer.valueOf(2));
+        list.add(Integer.valueOf(3));
+        list.add(Integer.valueOf(4));
+        list.add(Integer.valueOf(5));
+        return list;
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+//    public void testCreate() throws Exception {
+//        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ReverseComparator.version4.obj");
+//    }
+
     /**
      * For the purposes of this test, return a
      * ReverseComparator that wraps the java.util.Collections.reverseOrder()
@@ -51,26 +71,6 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
     @Override
     public Comparator<Integer> makeObject() {
         return new ReverseComparator<>(Collections.<Integer>reverseOrder());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-//    public void testCreate() throws Exception {
-//        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ReverseComparator.version4.obj");
-//    }
-
-    @Override
-    public List<Integer> getComparableObjectsOrdered() {
-        final List<Integer> list = new LinkedList<>();
-        list.add(Integer.valueOf(1));
-        list.add(Integer.valueOf(2));
-        list.add(Integer.valueOf(3));
-        list.add(Integer.valueOf(4));
-        list.add(Integer.valueOf(5));
-        return list;
     }
 
     /**

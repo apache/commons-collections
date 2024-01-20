@@ -33,12 +33,6 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
     /** Serial version UID */
     private static final long serialVersionUID = -5596090919668315834L;
 
-    /** The transformer to call */
-    private final Transformer<? super T, ? extends T> iTransformer;
-
-    /** The predicate to call */
-    private final Predicate<? super T> iPredicate;
-
     /**
      * Factory to create the predicate.
      *
@@ -53,6 +47,12 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
         return new TransformedPredicate<>(Objects.requireNonNull(transformer, "transformer"),
                 Objects.requireNonNull(predicate, "predicate"));
     }
+
+    /** The transformer to call */
+    private final Transformer<? super T, ? extends T> iTransformer;
+
+    /** The predicate to call */
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Constructor that performs no validation.

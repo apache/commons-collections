@@ -38,25 +38,21 @@ import org.junit.jupiter.api.Test;
  */
 public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate = String.class::isInstance;
+
     public PredicatedQueueTest() {
         super(PredicatedQueueTest.class.getSimpleName());
     }
-
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Queue<E> decorateCollection(final Queue<E> queue, final Predicate<E> predicate) {
         return PredicatedQueue.predicatedQueue(queue, predicate);
     }
 
     @Override
-    public Queue<E> makeObject() {
-        return decorateCollection(new LinkedList<>(), truePredicate);
-    }
-
-    @Override
-    public Queue<E> makeFullCollection() {
-        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
-        return decorateCollection(queue, truePredicate);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -70,7 +66,16 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         return list;
     }
 
-    protected Predicate<E> testPredicate = String.class::isInstance;
+    @Override
+    public Queue<E> makeFullCollection() {
+        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
+        return decorateCollection(queue, truePredicate);
+    }
+
+    @Override
+    public Queue<E> makeObject() {
+        return decorateCollection(new LinkedList<>(), truePredicate);
+    }
 
     public Queue<E> makeTestQueue() {
         return decorateCollection(new LinkedList<>(), testPredicate);
@@ -96,11 +101,6 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         queue.add((E) "one");
         assertEquals("one", queue.poll(), "Queue get");
         assertNull(queue.peek());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

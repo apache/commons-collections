@@ -26,11 +26,6 @@ import org.apache.commons.collections4.trie.UnmodifiableTrie;
 public class TrieUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private TrieUtils() {}
-
-    /**
      * Returns an unmodifiable instance of a {@link Trie}
      *
      * @param <K>  the key type
@@ -44,5 +39,10 @@ public class TrieUtils {
     public static <K, V> Trie<K, V> unmodifiableTrie(final Trie<K, ? extends V> trie) {
         return UnmodifiableTrie.unmodifiableTrie(trie);
     }
+
+    /**
+     * Don't allow instances.
+     */
+    private TrieUtils() {}
 
 }

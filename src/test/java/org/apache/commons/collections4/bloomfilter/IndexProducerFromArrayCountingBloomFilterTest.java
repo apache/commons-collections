@@ -21,6 +21,11 @@ public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndex
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected IndexProducer createEmptyProducer() {
+        return new ArrayCountingBloomFilter(shape);
+    }
+
+    @Override
     protected IndexProducer createProducer() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
@@ -29,18 +34,13 @@ public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndex
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT | ORDERED;
     }
 
     @Override
     protected int[] getExpectedIndices() {
         return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return DISTINCT | ORDERED;
     }
 
 }

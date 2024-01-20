@@ -54,6 +54,16 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
         super(list);
     }
 
+    @Override
+    public void add(final int index, final E object) {
+        decorated().add(index, object);
+    }
+
+    @Override
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
+        return decorated().addAll(index, coll);
+    }
+
     /**
      * Gets the list being decorated.
      *
@@ -70,23 +80,13 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
     }
 
     @Override
-    public int hashCode() {
-        return decorated().hashCode();
-    }
-
-    @Override
-    public void add(final int index, final E object) {
-        decorated().add(index, object);
-    }
-
-    @Override
-    public boolean addAll(final int index, final Collection<? extends E> coll) {
-        return decorated().addAll(index, coll);
-    }
-
-    @Override
     public E get(final int index) {
         return decorated().get(index);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override

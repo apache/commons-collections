@@ -42,44 +42,6 @@ public class CountingPredicateTest {
     }
 
     /**
-     * Test when the predicate array is shorter than other array as determined by the number
-     * of times cp.test() is called and all other values result in a true statement.
-     */
-    @Test
-    public void testPredicateShorter() {
-        List<Pair<Integer, Integer>> expected = new ArrayList<>();
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        Integer[] shortAry = {Integer.valueOf(3)};
-        expected.add(Pair.of(3, 1));
-        expected.add(Pair.of(null, 2));
-        CountingPredicate<Integer> cp = new CountingPredicate<>(shortAry, makeFunc((x, y) -> true, result));
-        for (Integer i : ary) {
-            assertTrue(cp.test(i));
-        }
-        assertEquals(expected, result);
-        assertTrue(cp.forEachRemaining());
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Test when the predicate array is shorter than other array as determined by the number
-     * of times cp.test() is called and all other values result in a true statement.
-     */
-    @Test
-    public void testPredicateSameLength() {
-        List<Pair<Integer, Integer>> expected = new ArrayList<>();
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        expected.add( Pair.of(1, 3));
-        expected.add( Pair.of(2, 3));
-        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true, result));
-        assertTrue(cp.test(3));
-        assertTrue(cp.test(3));
-        assertEquals(expected, result);
-        assertTrue(cp.forEachRemaining());
-        assertEquals(expected, result);
-    }
-
-    /**
      * Test when the predicate array is longer than other array as determined by the number
      * of times cp.test() is called and all other values result in a true statement.
      */
@@ -113,6 +75,44 @@ public class CountingPredicateTest {
         result.clear();
         cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1), result));
         assertFalse(cp.forEachRemaining());
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test when the predicate array is shorter than other array as determined by the number
+     * of times cp.test() is called and all other values result in a true statement.
+     */
+    @Test
+    public void testPredicateSameLength() {
+        List<Pair<Integer, Integer>> expected = new ArrayList<>();
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        expected.add( Pair.of(1, 3));
+        expected.add( Pair.of(2, 3));
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true, result));
+        assertTrue(cp.test(3));
+        assertTrue(cp.test(3));
+        assertEquals(expected, result);
+        assertTrue(cp.forEachRemaining());
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test when the predicate array is shorter than other array as determined by the number
+     * of times cp.test() is called and all other values result in a true statement.
+     */
+    @Test
+    public void testPredicateShorter() {
+        List<Pair<Integer, Integer>> expected = new ArrayList<>();
+        List<Pair<Integer, Integer>> result = new ArrayList<>();
+        Integer[] shortAry = {Integer.valueOf(3)};
+        expected.add(Pair.of(3, 1));
+        expected.add(Pair.of(null, 2));
+        CountingPredicate<Integer> cp = new CountingPredicate<>(shortAry, makeFunc((x, y) -> true, result));
+        for (Integer i : ary) {
+            assertTrue(cp.test(i));
+        }
+        assertEquals(expected, result);
+        assertTrue(cp.forEachRemaining());
         assertEquals(expected, result);
     }
 }

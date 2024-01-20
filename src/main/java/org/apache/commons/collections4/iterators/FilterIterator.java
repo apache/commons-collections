@@ -71,6 +71,24 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
+     * Gets the iterator this iterator is using.
+     *
+     * @return the iterator
+     */
+    public Iterator<? extends E> getIterator() {
+        return iterator;
+    }
+
+    /**
+     * Gets the predicate this iterator is using.
+     *
+     * @return the predicate
+     */
+    public Predicate<? super E> getPredicate() {
+        return predicate;
+    }
+
+    /**
      * Returns true if the underlying iterator contains an object that
      * matches the predicate.
      *
@@ -119,15 +137,6 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Gets the iterator this iterator is using.
-     *
-     * @return the iterator
-     */
-    public Iterator<? extends E> getIterator() {
-        return iterator;
-    }
-
-    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
@@ -135,26 +144,6 @@ public class FilterIterator<E> implements Iterator<E> {
      */
     public void setIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
-        nextObject = null;
-        nextObjectSet = false;
-    }
-
-    /**
-     * Gets the predicate this iterator is using.
-     *
-     * @return the predicate
-     */
-    public Predicate<? super E> getPredicate() {
-        return predicate;
-    }
-
-    /**
-     * Sets the predicate this the iterator to use.
-     *
-     * @param predicate  the predicate to use
-     */
-    public void setPredicate(final Predicate<? super E> predicate) {
-        this.predicate = predicate;
         nextObject = null;
         nextObjectSet = false;
     }
@@ -173,6 +162,17 @@ public class FilterIterator<E> implements Iterator<E> {
             }
         }
         return false;
+    }
+
+    /**
+     * Sets the predicate this the iterator to use.
+     *
+     * @param predicate  the predicate to use
+     */
+    public void setPredicate(final Predicate<? super E> predicate) {
+        this.predicate = predicate;
+        nextObject = null;
+        nextObjectSet = false;
     }
 
 }

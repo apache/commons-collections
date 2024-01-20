@@ -64,42 +64,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> lastUsedIterator;
 
     /**
-     * Gets the next iterator after the previous one has been exhausted.
-     * <p>
-     * This method <b>MUST</b> return null when there are no more iterators.
-     *
-     * @param count the number of time this method has been called (starts with 1)
-     * @return the next iterator, or null if there are no more.
-     */
-    protected abstract Iterator<? extends E> nextIterator(int count);
-
-    /**
-     * Updates the current iterator field to ensure that the current Iterator
-     * is not exhausted.
-     */
-    private void updateCurrentIterator() {
-        if (callCounter == 0) {
-            currentIterator = nextIterator(++callCounter);
-            if (currentIterator == null) {
-                currentIterator = EmptyIterator.<E>emptyIterator();
-                chainExhausted = true;
-            }
-            // set last used iterator here, in case the user calls remove
-            // before calling hasNext() or next() (although they shouldn't)
-            lastUsedIterator = currentIterator;
-        }
-
-        while (!currentIterator.hasNext() && !chainExhausted) {
-            final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
-            if (nextIterator != null) {
-                currentIterator = nextIterator;
-            } else {
-                chainExhausted = true;
-            }
-        }
-    }
-
-    /**
      * Return true if any Iterator in the chain has a remaining element.
      *
      * @return true if elements remain
@@ -127,6 +91,16 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     }
 
     /**
+     * Gets the next iterator after the previous one has been exhausted.
+     * <p>
+     * This method <b>MUST</b> return null when there are no more iterators.
+     *
+     * @param count the number of time this method has been called (starts with 1)
+     * @return the next iterator, or null if there are no more.
+     */
+    protected abstract Iterator<? extends E> nextIterator(int count);
+
+    /**
      * Removes from the underlying collection the last element returned by the Iterator.
      * <p>
      * As with next() and hasNext(), this method calls remove() on the underlying Iterator.
@@ -144,6 +118,32 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
             updateCurrentIterator();
         }
         lastUsedIterator.remove();
+    }
+
+    /**
+     * Updates the current iterator field to ensure that the current Iterator
+     * is not exhausted.
+     */
+    private void updateCurrentIterator() {
+        if (callCounter == 0) {
+            currentIterator = nextIterator(++callCounter);
+            if (currentIterator == null) {
+                currentIterator = EmptyIterator.<E>emptyIterator();
+                chainExhausted = true;
+            }
+            // set last used iterator here, in case the user calls remove
+            // before calling hasNext() or next() (although they shouldn't)
+            lastUsedIterator = currentIterator;
+        }
+
+        while (!currentIterator.hasNext() && !chainExhausted) {
+            final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
+            if (nextIterator != null) {
+                currentIterator = nextIterator;
+            } else {
+                chainExhausted = true;
+            }
+        }
     }
 
 }

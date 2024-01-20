@@ -81,6 +81,12 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
         super(multiset, predicate);
     }
 
+    @Override
+    public int add(final E object, final int count) {
+        validate(object);
+        return decorated().add(object, count);
+    }
+
     /**
      * Gets the decorated multiset.
      *
@@ -92,8 +98,18 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     }
 
     @Override
+    public Set<MultiSet.Entry<E>> entrySet() {
+        return decorated().entrySet();
+    }
+
+    @Override
     public boolean equals(final Object object) {
         return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int getCount(final Object object) {
+        return decorated().getCount(object);
     }
 
     @Override
@@ -102,19 +118,8 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     }
 
     @Override
-    public int add(final E object, final int count) {
-        validate(object);
-        return decorated().add(object, count);
-    }
-
-    @Override
     public int remove(final Object object, final int count) {
         return decorated().remove(object, count);
-    }
-
-    @Override
-    public int getCount(final Object object) {
-        return decorated().getCount(object);
     }
 
     @Override
@@ -126,11 +131,6 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     @Override
     public Set<E> uniqueSet() {
         return decorated().uniqueSet();
-    }
-
-    @Override
-    public Set<MultiSet.Entry<E>> entrySet() {
-        return decorated().entrySet();
     }
 
 }

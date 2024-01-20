@@ -51,6 +51,10 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     private NOPTransformer() {
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
     /**
      * Transforms the input to result by doing nothing.
      *
@@ -60,10 +64,6 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     @Override
     public T transform(final T input) {
         return input;
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

@@ -38,11 +38,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  */
 public class SplitMapUtils {
 
-    /**
-     * Don't allow instances.
-     */
-    private SplitMapUtils() {}
-
     private static final class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
         private final Get<K, V> get;
 
@@ -99,6 +94,17 @@ public class SplitMapUtils {
         }
 
         @Override
+        public MapIterator<K, V> mapIterator() {
+            final MapIterator<K, V> it;
+            if (get instanceof IterableGet) {
+                it = ((IterableGet<K, V>) get).mapIterator();
+            } else {
+                it = new EntrySetToMapIteratorAdapter<>(get.entrySet());
+            }
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+        }
+
+        @Override
         public V put(final K key, final V value) {
             throw new UnsupportedOperationException();
         }
@@ -121,17 +127,6 @@ public class SplitMapUtils {
         @Override
         public Collection<V> values() {
             return UnmodifiableCollection.unmodifiableCollection(get.values());
-        }
-
-        @Override
-        public MapIterator<K, V> mapIterator() {
-            final MapIterator<K, V> it;
-            if (get instanceof IterableGet) {
-                it = ((IterableGet<K, V>) get).mapIterator();
-            } else {
-                it = new EntrySetToMapIteratorAdapter<>(get.entrySet());
-            }
-            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
     }
 
@@ -260,5 +255,10 @@ public class SplitMapUtils {
         }
         return new WrappedPut<>(put);
     }
+
+    /**
+     * Don't allow instances.
+     */
+    private SplitMapUtils() {}
 
 }

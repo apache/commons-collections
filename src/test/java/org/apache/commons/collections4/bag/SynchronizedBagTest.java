@@ -31,11 +31,6 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Override
-    public Bag<T> makeObject() {
-        return SynchronizedBag.synchronizedBag(new HashBag<>());
-    }
-
-    @Override
     public String getCompatibilityVersion() {
         return "4";
     }
@@ -43,6 +38,11 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
     @Override
     protected int getIterationBehaviour(){
         return UNORDERED;
+    }
+
+    @Override
+    public Bag<T> makeObject() {
+        return SynchronizedBag.synchronizedBag(new HashBag<>());
     }
 
 //    public void testCreate() throws Exception {

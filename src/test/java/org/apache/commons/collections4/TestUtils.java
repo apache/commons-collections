@@ -27,7 +27,19 @@ import java.io.ObjectOutputStream;
 
 public final class TestUtils {
 
-    private TestUtils() {}
+    /**
+     * Asserts that deserialization of the object returns the same object as the
+     * one that was serialized.
+     * <p>
+     * Effect of method call is the same as:
+     * {@code assertSameAfterSerialization(null, o)}.
+     *
+     * @param o object that will be tested.
+     * @see #assertSameAfterSerialization(String, Object)
+     */
+    public static void assertSameAfterSerialization(final Object o) {
+        assertSameAfterSerialization(null, o);
+    }
 
     /**
      * Asserts that deserialization of the object returns the same object as the
@@ -64,17 +76,5 @@ public final class TestUtils {
         }
     }
 
-    /**
-     * Asserts that deserialization of the object returns the same object as the
-     * one that was serialized.
-     * <p>
-     * Effect of method call is the same as:
-     * {@code assertSameAfterSerialization(null, o)}.
-     *
-     * @param o object that will be tested.
-     * @see #assertSameAfterSerialization(String, Object)
-     */
-    public static void assertSameAfterSerialization(final Object o) {
-        assertSameAfterSerialization(null, o);
-    }
+    private TestUtils() {}
 }

@@ -36,13 +36,67 @@ import org.junit.jupiter.api.Test;
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
+    public class TestListView extends AbstractListTest<K> {
+
+        TestListView() {
+            super("TestListView");
+        }
+
+        @Override
+        public K[] getFullElements() {
+            return ListOrderedMap2Test.this.getSampleKeys();
+        }
+
+        @Override
+        public boolean isAddSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isNullSupported() {
+            return ListOrderedMap2Test.this.isAllowNullKey();
+        }
+        @Override
+        public boolean isRemoveSupported() {
+            return false;
+        }
+        @Override
+        public boolean isSetSupported() {
+            return false;
+        }
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+        @Override
+        public List<K> makeFullCollection() {
+            return ListOrderedMap2Test.this.makeFullMap().asList();
+        }
+        @Override
+        public List<K> makeObject() {
+            return ListOrderedMap2Test.this.makeObject().asList();
+        }
+    }
+
     public ListOrderedMap2Test() {
         super(ListOrderedMap2Test.class.getSimpleName());
     }
 
+    public BulkTest bulkTestListView() {
+        return new TestListView();
+    }
+
     @Override
-    public ListOrderedMap<K, V> makeObject() {
-        return new ListOrderedMap<>();
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ListOrderedMap<K, V> getMap() {
+        return (ListOrderedMap<K, V>) super.getMap();
     }
 
     /**
@@ -51,6 +105,11 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     public ListOrderedMap<K, V> makeFullMap() {
         return (ListOrderedMap<K, V>) super.makeFullMap();
+    }
+
+    @Override
+    public ListOrderedMap<K, V> makeObject() {
+        return new ListOrderedMap<>();
     }
 
     @Test
@@ -123,6 +182,17 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/ListOrderedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/ListOrderedMap.fullCollection.version3.1.obj");
+//    }
+
     @Test
     public void testRemoveByIndex() {
         resetEmpty();
@@ -154,75 +224,5 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
             list.remove(i);
             assertFalse(lom.containsKey(key));
         }
-    }
-
-    public BulkTest bulkTestListView() {
-        return new TestListView();
-    }
-
-    public class TestListView extends AbstractListTest<K> {
-
-        TestListView() {
-            super("TestListView");
-        }
-
-        @Override
-        public List<K> makeObject() {
-            return ListOrderedMap2Test.this.makeObject().asList();
-        }
-
-        @Override
-        public List<K> makeFullCollection() {
-            return ListOrderedMap2Test.this.makeFullMap().asList();
-        }
-
-        @Override
-        public K[] getFullElements() {
-            return ListOrderedMap2Test.this.getSampleKeys();
-        }
-        @Override
-        public boolean isAddSupported() {
-            return false;
-        }
-        @Override
-        public boolean isRemoveSupported() {
-            return false;
-        }
-        @Override
-        public boolean isSetSupported() {
-            return false;
-        }
-        @Override
-        public boolean isNullSupported() {
-            return ListOrderedMap2Test.this.isAllowNullKey();
-        }
-        @Override
-        public boolean isTestSerialization() {
-            return false;
-        }
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/ListOrderedMap.emptyCollection.version3.1.obj");
-//        resetFull();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/ListOrderedMap.fullCollection.version3.1.obj");
-//    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ListOrderedMap<K, V> getMap() {
-        return (ListOrderedMap<K, V>) super.getMap();
     }
 }

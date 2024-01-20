@@ -47,21 +47,21 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
     public static final Iterator INSTANCE = RESETTABLE_INSTANCE;
 
     /**
-     * Gets a typed resettable empty iterator instance.
-     * @param <E> the element type
-     * @return ResettableIterator&lt;E&gt;
-     */
-    public static <E> ResettableIterator<E> resettableEmptyIterator() {
-        return RESETTABLE_INSTANCE;
-    }
-
-    /**
      * Gets a typed empty iterator instance.
      * @param <E> the element type
      * @return Iterator&lt;E&gt;
      */
     public static <E> Iterator<E> emptyIterator() {
         return INSTANCE;
+    }
+
+    /**
+     * Gets a typed resettable empty iterator instance.
+     * @param <E> the element type
+     * @return ResettableIterator&lt;E&gt;
+     */
+    public static <E> ResettableIterator<E> resettableEmptyIterator() {
+        return RESETTABLE_INSTANCE;
     }
 
     /**

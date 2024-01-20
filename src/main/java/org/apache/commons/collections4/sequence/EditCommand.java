@@ -62,15 +62,6 @@ public abstract class EditCommand<T> {
     }
 
     /**
-     * Returns the object associated with this command.
-     *
-     * @return the object on which the command is applied
-     */
-    protected T getObject() {
-        return object;
-    }
-
-    /**
      * Accept a visitor.
      * <p>
      * This method is invoked for each command belonging to
@@ -79,5 +70,14 @@ public abstract class EditCommand<T> {
      * @param visitor  the visitor to be accepted
      */
     public abstract void accept(CommandVisitor<T> visitor);
+
+    /**
+     * Returns the object associated with this command.
+     *
+     * @return the object on which the command is applied
+     */
+    protected T getObject() {
+        return object;
+    }
 
 }

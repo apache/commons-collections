@@ -43,15 +43,6 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         super(UnmodifiableIteratorTest.class.getSimpleName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    protected void setUp() throws Exception {
-        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return UnmodifiableIterator.unmodifiableIterator(Collections.<E>emptyList().iterator());
@@ -62,14 +53,18 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return UnmodifiableIterator.unmodifiableIterator(testList.iterator());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    protected void setUp() throws Exception {
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
+    }
+
     @Override
     public boolean supportsRemove() {
         return false;
-    }
-
-    @Test
-    public void testIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
     @Test
@@ -81,6 +76,11 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
+    }
+
+    @Test
+    public void testIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

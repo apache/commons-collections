@@ -26,46 +26,17 @@ import org.junit.jupiter.api.Test;
 
 public class BitMapTest {
 
-    @Test
-    public final void testGetLongBit() {
-        assertEquals(1, BitMap.getLongBit(0));
-        assertEquals(0x8000000000000000L, BitMap.getLongBit(63));
-        assertEquals(1, BitMap.getLongBit(64));
-        assertEquals(0x8000000000000000L, BitMap.getLongBit(127));
-        assertEquals(1, BitMap.getLongBit(128));
-    }
-
-    @Test
-    public final void testGetLongIndex() {
-        assertEquals(0, BitMap.getLongIndex(0));
-        assertEquals(0, BitMap.getLongIndex(63));
-        assertEquals(1, BitMap.getLongIndex(64));
-        assertEquals(1, BitMap.getLongIndex(127));
-        assertEquals(2, BitMap.getLongIndex(128));
-    }
-
-    @Test
-    public final void testNumberOfBitMaps() {
-        assertEquals(0, BitMap.numberOfBitMaps(0), "Number of bits 0");
-        for (int i = 1; i < 65; i++) {
-            assertEquals(1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
-        }
-        for (int i = 65; i < 129; i++) {
-            assertEquals(2, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
-        }
-        assertEquals(3, BitMap.numberOfBitMaps(129), "Number of bits 129");
-    }
-
-    @Test
-    public final void testSet() {
-        final long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
-        for (int i = 0; i < 129; i++) {
-            BitMap.set(bitMaps, i);
-            assertTrue(BitMap.contains(bitMaps, i), String.format("Failed at index: %d", i));
-        }
-        assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[0]);
-        assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[1]);
-        assertEquals(1L, bitMaps[2]);
+    /**
+     * Assert the {@link BitMap#mod(long, int)} method functions as an unsigned modulus.
+     *
+     * @param dividend the dividend
+     * @param divisor the divisor
+     */
+    private void assertMod(final long dividend, final int divisor) {
+        assertTrue(divisor > 0 && divisor <= Integer.MAX_VALUE,
+            "Incorrect usage. Divisor must be strictly positive.");
+        assertEquals((int) Long.remainderUnsigned(dividend, divisor), BitMap.mod(dividend, divisor),
+            () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
     }
 
     @Test
@@ -105,6 +76,24 @@ public class BitMapTest {
     }
 
     @Test
+    public final void testGetLongBit() {
+        assertEquals(1, BitMap.getLongBit(0));
+        assertEquals(0x8000000000000000L, BitMap.getLongBit(63));
+        assertEquals(1, BitMap.getLongBit(64));
+        assertEquals(0x8000000000000000L, BitMap.getLongBit(127));
+        assertEquals(1, BitMap.getLongBit(128));
+    }
+
+    @Test
+    public final void testGetLongIndex() {
+        assertEquals(0, BitMap.getLongIndex(0));
+        assertEquals(0, BitMap.getLongIndex(63));
+        assertEquals(1, BitMap.getLongIndex(64));
+        assertEquals(1, BitMap.getLongIndex(127));
+        assertEquals(2, BitMap.getLongIndex(128));
+    }
+
+    @Test
     public void testMod() {
         for (final long dividend : new long[] {0, -1, -2, -3, -6378683, -23567468136887892L,
             Long.MIN_VALUE, 345, 678686, 67868768686878924L, Long.MAX_VALUE, Long.MAX_VALUE - 1}) {
@@ -122,16 +111,27 @@ public class BitMapTest {
         assertNotEquals(Math.floorMod(5, -1), BitMap.mod(5, -1));
     }
 
-    /**
-     * Assert the {@link BitMap#mod(long, int)} method functions as an unsigned modulus.
-     *
-     * @param dividend the dividend
-     * @param divisor the divisor
-     */
-    private void assertMod(final long dividend, final int divisor) {
-        assertTrue(divisor > 0 && divisor <= Integer.MAX_VALUE,
-            "Incorrect usage. Divisor must be strictly positive.");
-        assertEquals((int) Long.remainderUnsigned(dividend, divisor), BitMap.mod(dividend, divisor),
-            () -> String.format("failure with dividend=%s and divisor=%s.", dividend, divisor));
+    @Test
+    public final void testNumberOfBitMaps() {
+        assertEquals(0, BitMap.numberOfBitMaps(0), "Number of bits 0");
+        for (int i = 1; i < 65; i++) {
+            assertEquals(1, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
+        }
+        for (int i = 65; i < 129; i++) {
+            assertEquals(2, BitMap.numberOfBitMaps(i), String.format("Number of bits %d", i));
+        }
+        assertEquals(3, BitMap.numberOfBitMaps(129), "Number of bits 129");
+    }
+
+    @Test
+    public final void testSet() {
+        final long[] bitMaps = new long[BitMap.numberOfBitMaps(129)];
+        for (int i = 0; i < 129; i++) {
+            BitMap.set(bitMaps, i);
+            assertTrue(BitMap.contains(bitMaps, i), String.format("Failed at index: %d", i));
+        }
+        assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[0]);
+        assertEquals(0xFFFFFFFFFFFFFFFFL, bitMaps[1]);
+        assertEquals(1L, bitMaps[2]);
     }
 }

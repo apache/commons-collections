@@ -95,9 +95,9 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
     /**
      * Creates an HashSetValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code MultiValuedMap} to copy into this map
+     * @param map a {@code Map} to copy into this map
      */
-    public HashSetValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
+    public HashSetValuedHashMap(final Map<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_SET_CAPACITY);
         super.putAll(map);
     }
@@ -105,9 +105,9 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
     /**
      * Creates an HashSetValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code Map} to copy into this map
+     * @param map a {@code MultiValuedMap} to copy into this map
      */
-    public HashSetValuedHashMap(final Map<? extends K, ? extends V> map) {
+    public HashSetValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_SET_CAPACITY);
         super.putAll(map);
     }
@@ -117,15 +117,15 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
         return new HashSet<>(initialSetCapacity);
     }
 
-    private void writeObject(final ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-        doWriteObject(oos);
-    }
-
     private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         setMap(new HashMap<>());
         doReadObject(ois);
+    }
+
+    private void writeObject(final ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+        doWriteObject(oos);
     }
 
 }

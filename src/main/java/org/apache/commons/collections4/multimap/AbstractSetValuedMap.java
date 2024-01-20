@@ -39,67 +39,6 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
     implements SetValuedMap<K, V> {
 
     /**
-     * Constructor needed for subclass serialisation.
-     */
-    protected AbstractSetValuedMap() {
-    }
-
-    /**
-     * A constructor that wraps, not copies
-     *
-     * @param map  the map to wrap, must not be null
-     * @throws NullPointerException if the map is null
-     */
-    protected AbstractSetValuedMap(final Map<K, ? extends Set<V>> map) {
-        super(map);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected Map<K, Set<V>> getMap() {
-        return (Map<K, Set<V>>) super.getMap();
-    }
-
-    /**
-     * Creates a new value collection using the provided factory.
-     * @return a new set
-     */
-    @Override
-    protected abstract Set<V> createCollection();
-
-    /**
-     * Gets the set of values associated with the specified key. This would
-     * return an empty set in case the mapping is not present
-     *
-     * @param key  the key to retrieve
-     * @return the {@code Set} of values, will return an empty
-     *   {@code Set} for no mapping
-     */
-    @Override
-    public Set<V> get(final K key) {
-        return wrappedCollection(key);
-    }
-
-    @Override
-    Set<V> wrappedCollection(final K key) {
-        return new WrappedSet(key);
-    }
-
-    /**
-     * Removes all values associated with the specified key.
-     * <p>
-     * A subsequent {@code get(Object)} would return an empty set.
-     *
-     * @param key the key to remove values from
-     * @return the {@code Set} of values removed, will return an empty,
-     *   unmodifiable set for no mapping found.
-     */
-    @Override
-    public Set<V> remove(final Object key) {
-        return SetUtils.emptyIfNull(getMap().remove(key));
-    }
-
-    /**
      * Wrapped set to handle add and remove on the collection returned by
      * {@code get(Object)}.
      */
@@ -128,5 +67,66 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
             return SetUtils.hashCodeForSet(set);
         }
 
+    }
+
+    /**
+     * Constructor needed for subclass serialisation.
+     */
+    protected AbstractSetValuedMap() {
+    }
+
+    /**
+     * A constructor that wraps, not copies
+     *
+     * @param map  the map to wrap, must not be null
+     * @throws NullPointerException if the map is null
+     */
+    protected AbstractSetValuedMap(final Map<K, ? extends Set<V>> map) {
+        super(map);
+    }
+
+    /**
+     * Creates a new value collection using the provided factory.
+     * @return a new set
+     */
+    @Override
+    protected abstract Set<V> createCollection();
+
+    /**
+     * Gets the set of values associated with the specified key. This would
+     * return an empty set in case the mapping is not present
+     *
+     * @param key  the key to retrieve
+     * @return the {@code Set} of values, will return an empty
+     *   {@code Set} for no mapping
+     */
+    @Override
+    public Set<V> get(final K key) {
+        return wrappedCollection(key);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected Map<K, Set<V>> getMap() {
+        return (Map<K, Set<V>>) super.getMap();
+    }
+
+    /**
+     * Removes all values associated with the specified key.
+     * <p>
+     * A subsequent {@code get(Object)} would return an empty set.
+     *
+     * @param key the key to remove values from
+     * @return the {@code Set} of values removed, will return an empty,
+     *   unmodifiable set for no mapping found.
+     */
+    @Override
+    public Set<V> remove(final Object key) {
+        return SetUtils.emptyIfNull(getMap().remove(key));
+    }
+
+    @Override
+    Set<V> wrappedCollection(final K key) {
+        return new WrappedSet(key);
     }
 }

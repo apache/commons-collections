@@ -77,6 +77,11 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
+    }
+
     private Map<Integer, String> makeDecoratedTestMap() {
         final Map<Integer, String> m = new HashMap<>();
         m.put(Integer.valueOf(1), "one");
@@ -91,11 +96,6 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     @Override
     public Map<K, V> makeObject() {
         return new PassiveExpiringMap<>();
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
     }
 
     private Map<Integer, String> makeTestMap() {

@@ -53,6 +53,10 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
     private ExceptionTransformer() {
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
     /**
      * Transforms the input to result by cloning it.
      *
@@ -63,10 +67,6 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
     @Override
     public O transform(final I input) {
         throw new FunctorException("ExceptionTransformer invoked");
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

@@ -39,24 +39,6 @@ public class EnumerationUtilsTest {
     public static final String TO_LIST_FIXTURE = "this is a test";
 
     @Test
-    public void testGetFromEnumeration() throws Exception {
-        // Enumeration, entry exists
-        final Vector<String> vector = new Vector<>();
-        vector.addElement("zero");
-        vector.addElement("one");
-        Enumeration<String> en = vector.elements();
-        assertEquals("zero", EnumerationUtils.get(en, 0));
-        en = vector.elements();
-        assertEquals("one", EnumerationUtils.get(en, 1));
-
-        // Enumerator, non-existent entry
-        final Enumeration<String> finalEn = en;
-        assertThrows(IndexOutOfBoundsException.class, () -> EnumerationUtils.get(finalEn, 3));
-
-        assertFalse(en.hasMoreElements());
-    }
-
-    @Test
     public void testAsIterableFor() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
@@ -73,6 +55,24 @@ public class EnumerationUtilsTest {
     @Test
     public void testAsIterableForNull() {
         assertThrows(NullPointerException.class, () -> EnumerationUtils.asIterable((Enumeration) null).iterator().next());
+    }
+
+    @Test
+    public void testGetFromEnumeration() throws Exception {
+        // Enumeration, entry exists
+        final Vector<String> vector = new Vector<>();
+        vector.addElement("zero");
+        vector.addElement("one");
+        Enumeration<String> en = vector.elements();
+        assertEquals("zero", EnumerationUtils.get(en, 0));
+        en = vector.elements();
+        assertEquals("one", EnumerationUtils.get(en, 1));
+
+        // Enumerator, non-existent entry
+        final Enumeration<String> finalEn = en;
+        assertThrows(IndexOutOfBoundsException.class, () -> EnumerationUtils.get(finalEn, 3));
+
+        assertFalse(en.hasMoreElements());
     }
 
     @Test

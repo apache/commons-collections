@@ -50,19 +50,19 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
     /**
      * Gets a typed instance of the iterator.
      * @param <E> the element type
-     * @return {@link ResettableListIterator}&lt;E&gt;
+     * @return {@link ListIterator}&lt;E&gt;
      */
-    public static <E> ResettableListIterator<E> resettableEmptyListIterator() {
-        return RESETTABLE_INSTANCE;
+    public static <E> ListIterator<E> emptyListIterator() {
+        return INSTANCE;
     }
 
     /**
      * Gets a typed instance of the iterator.
      * @param <E> the element type
-     * @return {@link ListIterator}&lt;E&gt;
+     * @return {@link ResettableListIterator}&lt;E&gt;
      */
-    public static <E> ListIterator<E> emptyListIterator() {
-        return INSTANCE;
+    public static <E> ResettableListIterator<E> resettableEmptyListIterator() {
+        return RESETTABLE_INSTANCE;
     }
 
     /**

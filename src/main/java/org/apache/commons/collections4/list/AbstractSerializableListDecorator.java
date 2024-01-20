@@ -44,17 +44,6 @@ public abstract class AbstractSerializableListDecorator<E>
     }
 
     /**
-     * Write the list out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
-    }
-
-    /**
      * Read the list in using a custom routine.
      *
      * @param in  the input stream
@@ -65,6 +54,17 @@ public abstract class AbstractSerializableListDecorator<E>
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         setCollection((Collection<E>) in.readObject());
+    }
+
+    /**
+     * Write the list out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

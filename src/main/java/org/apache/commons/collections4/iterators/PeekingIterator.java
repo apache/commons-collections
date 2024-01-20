@@ -32,18 +32,6 @@ import java.util.Objects;
  */
 public class PeekingIterator<E> implements Iterator<E> {
 
-    /** The iterator being decorated. */
-    private final Iterator<? extends E> iterator;
-
-    /** Indicates that the decorated iterator is exhausted. */
-    private boolean exhausted;
-
-    /** Indicates if the lookahead slot is filled. */
-    private boolean slotFilled;
-
-    /** The current slot for lookahead. */
-    private E slot;
-
     /**
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
@@ -64,6 +52,18 @@ public class PeekingIterator<E> implements Iterator<E> {
         return new PeekingIterator<>(iterator);
     }
 
+    /** The iterator being decorated. */
+    private final Iterator<? extends E> iterator;
+
+    /** Indicates that the decorated iterator is exhausted. */
+    private boolean exhausted;
+
+    /** Indicates if the lookahead slot is filled. */
+    private boolean slotFilled;
+
+    /** The current slot for lookahead. */
+    private E slot;
+
     /**
      * Constructs a new instance.
      *
@@ -71,6 +71,21 @@ public class PeekingIterator<E> implements Iterator<E> {
      */
     public PeekingIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
+    }
+
+    /**
+     * Returns the next element in iteration without advancing the underlying iterator.
+     * If the iterator is already exhausted, null will be returned.
+     *
+     * @return the next element from the iterator
+     * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
+     */
+    public E element() {
+        fill();
+        if (exhausted) {
+            throw new NoSuchElementException();
+        }
+        return slot;
     }
 
     private void fill() {
@@ -95,6 +110,18 @@ public class PeekingIterator<E> implements Iterator<E> {
         return slotFilled || iterator.hasNext();
     }
 
+    @Override
+    public E next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        final E x = slotFilled ? slot : iterator.next();
+        // reset the lookahead slot
+        slot = null;
+        slotFilled = false;
+        return x;
+    }
+
     /**
      * Returns the next element in iteration without advancing the underlying iterator.
      * If the iterator is already exhausted, null will be returned.
@@ -110,33 +137,6 @@ public class PeekingIterator<E> implements Iterator<E> {
     public E peek() {
         fill();
         return exhausted ? null : slot;
-    }
-
-    /**
-     * Returns the next element in iteration without advancing the underlying iterator.
-     * If the iterator is already exhausted, null will be returned.
-     *
-     * @return the next element from the iterator
-     * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
-     */
-    public E element() {
-        fill();
-        if (exhausted) {
-            throw new NoSuchElementException();
-        }
-        return slot;
-    }
-
-    @Override
-    public E next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        final E x = slotFilled ? slot : iterator.next();
-        // reset the lookahead slot
-        slot = null;
-        slotFilled = false;
-        return x;
     }
 
     /**

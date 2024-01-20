@@ -37,6 +37,23 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  */
 public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag<E> {
 
+    /**
+     * Synchronized Set for the Bag class.
+     */
+    final class SynchronizedBagSet extends SynchronizedCollection<E> implements Set<E> {
+        /** Serialization version */
+        private static final long serialVersionUID = 2990565892366827855L;
+
+        /**
+         * Constructs a new instance.
+         * @param set  the set to decorate
+         * @param lock  the lock to use, shared with the bag
+         */
+        SynchronizedBagSet(final Set<E> set, final Object lock) {
+            super(set, lock);
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = 8084674570753837109L;
 
@@ -74,13 +91,11 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         super(bag, lock);
     }
 
-    /**
-     * Gets the bag being decorated.
-     *
-     * @return the decorated bag
-     */
-    protected Bag<E> getBag() {
-        return (Bag<E>) decorated();
+    @Override
+    public boolean add(final E object, final int count) {
+        synchronized (lock) {
+            return getBag().add(object, count);
+        }
     }
 
     @Override
@@ -93,17 +108,26 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
+    /**
+     * Gets the bag being decorated.
+     *
+     * @return the decorated bag
+     */
+    protected Bag<E> getBag() {
+        return (Bag<E>) decorated();
+    }
+
     @Override
-    public int hashCode() {
+    public int getCount(final Object object) {
         synchronized (lock) {
-            return getBag().hashCode();
+            return getBag().getCount(object);
         }
     }
 
     @Override
-    public boolean add(final E object, final int count) {
+    public int hashCode() {
         synchronized (lock) {
-            return getBag().add(object, count);
+            return getBag().hashCode();
         }
     }
 
@@ -119,30 +143,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         synchronized (lock) {
             final Set<E> set = getBag().uniqueSet();
             return new SynchronizedBagSet(set, lock);
-        }
-    }
-
-    @Override
-    public int getCount(final Object object) {
-        synchronized (lock) {
-            return getBag().getCount(object);
-        }
-    }
-
-    /**
-     * Synchronized Set for the Bag class.
-     */
-    final class SynchronizedBagSet extends SynchronizedCollection<E> implements Set<E> {
-        /** Serialization version */
-        private static final long serialVersionUID = 2990565892366827855L;
-
-        /**
-         * Constructs a new instance.
-         * @param set  the set to decorate
-         * @param lock  the lock to use, shared with the bag
-         */
-        SynchronizedBagSet(final Set<E> set, final Object lock) {
-            super(set, lock);
         }
     }
 

@@ -31,13 +31,13 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return data;
+    protected int getAsIndexArrayBehaviour() {
+        return 0;
     }
 
     @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
+    protected int[] getExpectedIndices() {
+        return data;
     }
 
 }

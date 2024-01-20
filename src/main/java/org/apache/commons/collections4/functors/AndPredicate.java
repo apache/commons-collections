@@ -31,11 +31,6 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
     /** Serial version UID */
     private static final long serialVersionUID = 4189014213763186912L;
 
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate1;
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate2;
-
     /**
      * Factory to create the predicate.
      *
@@ -50,6 +45,11 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
         return new AndPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
                 Objects.requireNonNull(predicate2, "predicate2"));
     }
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate1;
+
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate2;
 
     /**
      * Constructor that performs no validation.

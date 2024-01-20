@@ -36,18 +36,6 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         super(ObjectArrayIteratorTest.class.getSimpleName());
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public ObjectArrayIterator<E> makeEmptyIterator() {
-        return new ObjectArrayIterator<>((E[]) new Object[0]);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public ObjectArrayIterator<E> makeObject() {
-        return new ObjectArrayIterator<>((E[]) testArray);
-    }
-
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeArrayIterator() {
         return new ObjectArrayIterator<>();
@@ -63,6 +51,18 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     public ObjectArrayIterator<E> makeArrayIterator(final E[] array, final int start, final int end) {
         return new ObjectArrayIterator<>(array, start, end);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ObjectArrayIterator<E> makeEmptyIterator() {
+        return new ObjectArrayIterator<>((E[]) new Object[0]);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ObjectArrayIterator<E> makeObject() {
+        return new ObjectArrayIterator<>((E[]) testArray);
     }
 
     @Override

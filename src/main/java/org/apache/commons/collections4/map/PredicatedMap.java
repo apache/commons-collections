@@ -58,12 +58,6 @@ public class PredicatedMap<K, V>
     /** Serialization version */
     private static final long serialVersionUID = 7412622456128415156L;
 
-    /** The key predicate to use */
-    protected final Predicate<? super K> keyPredicate;
-
-    /** The value predicate to use */
-    protected final Predicate<? super V> valuePredicate;
-
     /**
      * Factory method to create a predicated (validating) map.
      * <p>
@@ -85,6 +79,12 @@ public class PredicatedMap<K, V>
         return new PredicatedMap<>(map, keyPredicate, valuePredicate);
     }
 
+    /** The key predicate to use */
+    protected final Predicate<? super K> keyPredicate;
+
+    /** The value predicate to use */
+    protected final Predicate<? super V> valuePredicate;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -99,48 +99,6 @@ public class PredicatedMap<K, V>
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
         map.forEach(this::validate);
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @since 3.1
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
-    }
-
-    /**
-     * Validates a key value pair.
-     *
-     * @param key  the key to validate
-     * @param value  the value to validate
-     * @throws IllegalArgumentException if invalid
-     */
-    protected void validate(final K key, final V value) {
-        if (keyPredicate != null && !keyPredicate.evaluate(key)) {
-            throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
-        }
-        if (valuePredicate != null && !valuePredicate.evaluate(value)) {
-            throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
-        }
     }
 
     /**
@@ -182,6 +140,48 @@ public class PredicatedMap<K, V>
             validate(entry.getKey(), entry.getValue());
         }
         super.putAll(mapToCopy);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @since 3.1
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
+    }
+
+    /**
+     * Validates a key value pair.
+     *
+     * @param key  the key to validate
+     * @param value  the value to validate
+     * @throws IllegalArgumentException if invalid
+     */
+    protected void validate(final K key, final V value) {
+        if (keyPredicate != null && !keyPredicate.evaluate(key)) {
+            throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
+        }
+        if (valuePredicate != null && !valuePredicate.evaluate(value)) {
+            throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
+        }
+    }
+
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

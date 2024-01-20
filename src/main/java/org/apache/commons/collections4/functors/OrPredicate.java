@@ -31,11 +31,6 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
     /** Serial version UID */
     private static final long serialVersionUID = -8791518325735182855L;
 
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate1;
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate2;
-
     /**
      * Factory to create the predicate.
      *
@@ -50,6 +45,11 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
         return new OrPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
                 Objects.requireNonNull(predicate2, "predicate2"));
     }
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate1;
+
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate2;
 
     /**
      * Constructor that performs no validation.

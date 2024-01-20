@@ -97,19 +97,6 @@ public class LRUMap<K, V>
      * Constructs a new, empty map with the specified maximum size.
      *
      * @param maxSize  the maximum size of the map
-     * @param initialSize  the initial size of the map
-     * @throws IllegalArgumentException if the maximum size is less than one
-     * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
-     * @since 4.1
-     */
-    public LRUMap(final int maxSize, final int initialSize) {
-        this(maxSize, initialSize, DEFAULT_LOAD_FACTOR);
-    }
-
-    /**
-     * Constructs a new, empty map with the specified maximum size.
-     *
-     * @param maxSize  the maximum size of the map
      * @param scanUntilRemovable  scan until a removable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @since 3.1
@@ -132,6 +119,33 @@ public class LRUMap<K, V>
     }
 
     /**
+     * Constructs a new, empty map with the specified max capacity and load factor.
+     *
+     * @param maxSize  the maximum size of the map
+     * @param loadFactor  the load factor
+     * @param scanUntilRemovable  scan until a removable entry is found, default false
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the load factor is less than zero
+     * @since 3.1
+     */
+    public LRUMap(final int maxSize, final float loadFactor, final boolean scanUntilRemovable) {
+        this(maxSize, maxSize, loadFactor, scanUntilRemovable);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified maximum size.
+     *
+     * @param maxSize  the maximum size of the map
+     * @param initialSize  the initial size of the map
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
+     * @since 4.1
+     */
+    public LRUMap(final int maxSize, final int initialSize) {
+        this(maxSize, initialSize, DEFAULT_LOAD_FACTOR);
+    }
+
+    /**
      * Constructs a new, empty map with the specified max / initial capacity and
      * load factor.
      *
@@ -145,20 +159,6 @@ public class LRUMap<K, V>
      */
     public LRUMap(final int maxSize, final int initialSize, final float loadFactor) {
         this(maxSize, initialSize, loadFactor, false);
-    }
-
-    /**
-     * Constructs a new, empty map with the specified max capacity and load factor.
-     *
-     * @param maxSize  the maximum size of the map
-     * @param loadFactor  the load factor
-     * @param scanUntilRemovable  scan until a removable entry is found, default false
-     * @throws IllegalArgumentException if the maximum size is less than one
-     * @throws IllegalArgumentException if the load factor is less than zero
-     * @since 3.1
-     */
-    public LRUMap(final int maxSize, final float loadFactor, final boolean scanUntilRemovable) {
-        this(maxSize, maxSize, loadFactor, scanUntilRemovable);
     }
 
     /**
@@ -219,87 +219,6 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Gets the value mapped to the key specified.
-     * <p>
-     * This operation changes the position of the key in the map to the
-     * most recently used position (last).
-     *
-     * @param key  the key
-     * @return the mapped value, null if no match
-     */
-    @Override
-    public V get(final Object key) {
-        return get(key, true);
-    }
-
-    /**
-     * Gets the value mapped to the key specified.
-     * <p>
-     * If {@code updateToMRU} is {@code true}, the position of the key in the map
-     * is changed to the most recently used position (last), otherwise the iteration
-     * order is not changed by this operation.
-     *
-     * @param key  the key
-     * @param updateToMRU  whether the key shall be updated to the
-     *   most recently used position
-     * @return the mapped value, null if no match
-     * @since 4.1
-     */
-    public V get(final Object key, final boolean updateToMRU) {
-        final LinkEntry<K, V> entry = getEntry(key);
-        if (entry == null) {
-            return null;
-        }
-        if (updateToMRU) {
-            moveToMRU(entry);
-        }
-        return entry.getValue();
-    }
-
-    /**
-     * Moves an entry to the MRU position at the end of the list.
-     * <p>
-     * This implementation moves the updated entry to the end of the list.
-     *
-     * @param entry  the entry to update
-     */
-    protected void moveToMRU(final LinkEntry<K, V> entry) {
-        if (entry.after != header) {
-            modCount++;
-            // remove
-            if (entry.before == null) {
-                throw new IllegalStateException("Entry.before is null." +
-                    " This should not occur if your keys are immutable, and you have used synchronization properly.");
-            }
-            entry.before.after = entry.after;
-            entry.after.before = entry.before;
-            // add first
-            entry.after = header;
-            entry.before = header.before;
-            header.before.after = entry;
-            header.before = entry;
-        } else if (entry == header) {
-            throw new IllegalStateException("Can't move header to MRU" +
-                    " This should not occur if your keys are immutable, and you have used synchronization properly.");
-        }
-    }
-
-    /**
-     * Updates an existing key-value mapping.
-     * <p>
-     * This implementation moves the updated entry to the end of the list
-     * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
-     *
-     * @param entry  the entry to update
-     * @param newValue  the new value to store
-     */
-    @Override
-    protected void updateEntry(final HashEntry<K, V> entry, final V newValue) {
-        moveToMRU((LinkEntry<K, V>) entry);  // handles modCount
-        entry.setValue(newValue);
-    }
-
-    /**
      * Adds a new key-value mapping into this map.
      * <p>
      * This implementation checks the LRU size and determines whether to
@@ -354,6 +273,188 @@ public class LRUMap<K, V>
     }
 
     /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    @Override
+    public LRUMap<K, V> clone() {
+        return (LRUMap<K, V>) super.clone();
+    }
+
+    /**
+     * Reads the data necessary for {@code put()} to work in the superclass.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @Override
+    protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        maxSize = in.readInt();
+        super.doReadObject(in);
+    }
+
+    /**
+     * Writes the data necessary for {@code put()} to work in deserialization.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    @Override
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
+        out.writeInt(maxSize);
+        super.doWriteObject(out);
+    }
+
+    /**
+     * Gets the value mapped to the key specified.
+     * <p>
+     * This operation changes the position of the key in the map to the
+     * most recently used position (last).
+     *
+     * @param key  the key
+     * @return the mapped value, null if no match
+     */
+    @Override
+    public V get(final Object key) {
+        return get(key, true);
+    }
+
+    /**
+     * Gets the value mapped to the key specified.
+     * <p>
+     * If {@code updateToMRU} is {@code true}, the position of the key in the map
+     * is changed to the most recently used position (last), otherwise the iteration
+     * order is not changed by this operation.
+     *
+     * @param key  the key
+     * @param updateToMRU  whether the key shall be updated to the
+     *   most recently used position
+     * @return the mapped value, null if no match
+     * @since 4.1
+     */
+    public V get(final Object key, final boolean updateToMRU) {
+        final LinkEntry<K, V> entry = getEntry(key);
+        if (entry == null) {
+            return null;
+        }
+        if (updateToMRU) {
+            moveToMRU(entry);
+        }
+        return entry.getValue();
+    }
+
+    /**
+     * Returns true if this map is full and no new mappings can be added.
+     *
+     * @return {@code true} if the map is full
+     */
+    @Override
+    public boolean isFull() {
+        return size >= maxSize;
+    }
+
+    /**
+     * Whether this LRUMap will scan until a removable entry is found when the
+     * map is full.
+     *
+     * @return true if this map scans
+     * @since 3.1
+     */
+    public boolean isScanUntilRemovable() {
+        return scanUntilRemovable;
+    }
+
+    /**
+     * Gets the maximum size of the map (the bound).
+     *
+     * @return the maximum number of elements the map can hold
+     */
+    @Override
+    public int maxSize() {
+        return maxSize;
+    }
+
+    /**
+     * Moves an entry to the MRU position at the end of the list.
+     * <p>
+     * This implementation moves the updated entry to the end of the list.
+     *
+     * @param entry  the entry to update
+     */
+    protected void moveToMRU(final LinkEntry<K, V> entry) {
+        if (entry.after != header) {
+            modCount++;
+            // remove
+            if (entry.before == null) {
+                throw new IllegalStateException("Entry.before is null." +
+                    " This should not occur if your keys are immutable, and you have used synchronization properly.");
+            }
+            entry.before.after = entry.after;
+            entry.after.before = entry.before;
+            // add first
+            entry.after = header;
+            entry.before = header.before;
+            header.before.after = entry;
+            header.before = entry;
+        } else if (entry == header) {
+            throw new IllegalStateException("Can't move header to MRU" +
+                    " This should not occur if your keys are immutable, and you have used synchronization properly.");
+        }
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
+    }
+
+    /**
+     * Subclass method to control removal of the least recently used entry from the map.
+     * <p>
+     * This method exists for subclasses to override. A subclass may wish to
+     * provide cleanup of resources when an entry is removed. For example:
+     * <pre>
+     * protected boolean removeLRU(LinkEntry entry) {
+     *   releaseResources(entry.getValue());  // release resources held by entry
+     *   return true;  // actually delete entry
+     * }
+     * </pre>
+     * <p>
+     * Alternatively, a subclass may choose to not remove the entry or selectively
+     * keep certain LRU entries. For example:
+     * <pre>
+     * protected boolean removeLRU(LinkEntry entry) {
+     *   if (entry.getKey().toString().startsWith("System.")) {
+     *     return false;  // entry not removed from LRUMap
+     *   } else {
+     *     return true;  // actually delete entry
+     *   }
+     * }
+     * </pre>
+     * The effect of returning false is dependent on the scanUntilRemovable flag.
+     * If the flag is true, the next LRU entry will be passed to this method and so on
+     * until one returns false and is removed, or every entry in the map has been passed.
+     * If the scanUntilRemovable flag is false, the map will exceed the maximum size.
+     * <p>
+     * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
+     * This is fixed in version 3.1 onwards.
+     *
+     * @param entry  the entry to be removed
+     * @return {@code true}
+     */
+    protected boolean removeLRU(final LinkEntry<K, V> entry) {
+        return true;
+    }
+
+    /**
      * Reuses an entry by removing it and moving it to a new place in the map.
      * <p>
      * This method uses {@link #removeEntry}, {@link #reuseEntry} and {@link #addEntry}.
@@ -399,82 +500,18 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Subclass method to control removal of the least recently used entry from the map.
+     * Updates an existing key-value mapping.
      * <p>
-     * This method exists for subclasses to override. A subclass may wish to
-     * provide cleanup of resources when an entry is removed. For example:
-     * <pre>
-     * protected boolean removeLRU(LinkEntry entry) {
-     *   releaseResources(entry.getValue());  // release resources held by entry
-     *   return true;  // actually delete entry
-     * }
-     * </pre>
-     * <p>
-     * Alternatively, a subclass may choose to not remove the entry or selectively
-     * keep certain LRU entries. For example:
-     * <pre>
-     * protected boolean removeLRU(LinkEntry entry) {
-     *   if (entry.getKey().toString().startsWith("System.")) {
-     *     return false;  // entry not removed from LRUMap
-     *   } else {
-     *     return true;  // actually delete entry
-     *   }
-     * }
-     * </pre>
-     * The effect of returning false is dependent on the scanUntilRemovable flag.
-     * If the flag is true, the next LRU entry will be passed to this method and so on
-     * until one returns false and is removed, or every entry in the map has been passed.
-     * If the scanUntilRemovable flag is false, the map will exceed the maximum size.
-     * <p>
-     * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
-     * This is fixed in version 3.1 onwards.
+     * This implementation moves the updated entry to the end of the list
+     * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
      *
-     * @param entry  the entry to be removed
-     * @return {@code true}
-     */
-    protected boolean removeLRU(final LinkEntry<K, V> entry) {
-        return true;
-    }
-
-    /**
-     * Returns true if this map is full and no new mappings can be added.
-     *
-     * @return {@code true} if the map is full
+     * @param entry  the entry to update
+     * @param newValue  the new value to store
      */
     @Override
-    public boolean isFull() {
-        return size >= maxSize;
-    }
-
-    /**
-     * Gets the maximum size of the map (the bound).
-     *
-     * @return the maximum number of elements the map can hold
-     */
-    @Override
-    public int maxSize() {
-        return maxSize;
-    }
-
-    /**
-     * Whether this LRUMap will scan until a removable entry is found when the
-     * map is full.
-     *
-     * @return true if this map scans
-     * @since 3.1
-     */
-    public boolean isScanUntilRemovable() {
-        return scanUntilRemovable;
-    }
-
-    /**
-     * Clones the map without cloning the keys or values.
-     *
-     * @return a shallow clone
-     */
-    @Override
-    public LRUMap<K, V> clone() {
-        return (LRUMap<K, V>) super.clone();
+    protected void updateEntry(final HashEntry<K, V> entry, final V newValue) {
+        moveToMRU((LinkEntry<K, V>) entry);  // handles modCount
+        entry.setValue(newValue);
     }
 
     /**
@@ -486,43 +523,6 @@ public class LRUMap<K, V>
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
-    }
-
-    /**
-     * Writes the data necessary for {@code put()} to work in deserialization.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    @Override
-    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
-        out.writeInt(maxSize);
-        super.doWriteObject(out);
-    }
-
-    /**
-     * Reads the data necessary for {@code put()} to work in the superclass.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @Override
-    protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        maxSize = in.readInt();
-        super.doReadObject(in);
     }
 
 }

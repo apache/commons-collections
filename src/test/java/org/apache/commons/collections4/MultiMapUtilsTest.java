@@ -39,23 +39,6 @@ import org.junit.jupiter.api.Test;
 public class MultiMapUtilsTest {
 
     @Test
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void testEmptyUnmodifiableMultiValuedMap() {
-        final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
-        assertTrue(map.isEmpty());
-
-        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
-    }
-
-    @Test
-    public void testTypeSafeEmptyMultiValuedMap() {
-        final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
-        assertTrue(map.isEmpty());
-
-        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
-    }
-
-    @Test
     public void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
 
@@ -65,20 +48,12 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testIsEmptyWithEmptyMap() {
-        assertTrue(MultiMapUtils.isEmpty(new ArrayListValuedHashMap<>()));
-    }
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void testEmptyUnmodifiableMultiValuedMap() {
+        final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
+        assertTrue(map.isEmpty());
 
-    @Test
-    public void testIsEmptyWithNonEmptyMap() {
-        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
-        map.put("item", "value");
-        assertFalse(MultiMapUtils.isEmpty(map));
-    }
-
-    @Test
-    public void testIsEmptyWithNull() {
-        assertTrue(MultiMapUtils.isEmpty(null));
+        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
 
     @Test
@@ -93,6 +68,25 @@ public class MultiMapUtilsTest {
 
         final Collection<String> col = MultiMapUtils.getCollection(map, "key1");
         assertEquals(Arrays.asList(values), col);
+    }
+
+    @Test
+    public void testGetValuesAsBag() {
+        assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
+
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+            map.put("key1", val);
+        }
+
+        final Bag<String> bag = MultiMapUtils.getValuesAsBag(map, "key1");
+        assertEquals(6, bag.size());
+        for (final String val : values) {
+            assertTrue(bag.contains(val));
+            assertEquals(2, bag.getCount(val));
+        }
     }
 
     @Test
@@ -125,22 +119,28 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsBag() {
-        assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
+    public void testIsEmptyWithEmptyMap() {
+        assertTrue(MultiMapUtils.isEmpty(new ArrayListValuedHashMap<>()));
+    }
 
-        final String[] values = { "v1", "v2", "v3" };
+    @Test
+    public void testIsEmptyWithNonEmptyMap() {
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
-        for (final String val : values) {
-            map.put("key1", val);
-            map.put("key1", val);
-        }
+        map.put("item", "value");
+        assertFalse(MultiMapUtils.isEmpty(map));
+    }
 
-        final Bag<String> bag = MultiMapUtils.getValuesAsBag(map, "key1");
-        assertEquals(6, bag.size());
-        for (final String val : values) {
-            assertTrue(bag.contains(val));
-            assertEquals(2, bag.getCount(val));
-        }
+    @Test
+    public void testIsEmptyWithNull() {
+        assertTrue(MultiMapUtils.isEmpty(null));
+    }
+
+    @Test
+    public void testTypeSafeEmptyMultiValuedMap() {
+        final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
+        assertTrue(map.isEmpty());
+
+        assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
 
 }

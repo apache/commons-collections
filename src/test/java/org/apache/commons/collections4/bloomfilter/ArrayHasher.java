@@ -25,18 +25,6 @@ import java.util.function.IntPredicate;
  * <p>To be used for testing only.</p>
  */
 public final class ArrayHasher implements Hasher {
-    private final int[] values;
-
-    public ArrayHasher(final int... values) {
-        this.values = values;
-    }
-
-    @Override
-    public IndexProducer indices(final Shape shape) {
-        Objects.requireNonNull(shape, "shape");
-        return new Producer(shape);
-    }
-
     private final class Producer implements IndexProducer {
         Shape shape;
 
@@ -58,5 +46,17 @@ public final class ArrayHasher implements Hasher {
             }
             return true;
         }
+    }
+
+    private final int[] values;
+
+    public ArrayHasher(final int... values) {
+        this.values = values;
+    }
+
+    @Override
+    public IndexProducer indices(final Shape shape) {
+        Objects.requireNonNull(shape, "shape");
+        return new Producer(shape);
     }
 }

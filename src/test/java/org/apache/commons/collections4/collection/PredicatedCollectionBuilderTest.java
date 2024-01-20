@@ -37,14 +37,40 @@ import org.junit.jupiter.api.Test;
  */
 public class PredicatedCollectionBuilderTest {
 
+    private static final class OddPredicate implements Predicate<Integer> {
+        @Override
+        public boolean evaluate(final Integer value) {
+            return value % 2 == 1;
+        }
+    }
+
+    private void checkPredicatedCollection1(final Collection<String> collection) {
+        assertEquals(1, collection.size());
+
+        collection.add("test2");
+        assertEquals(2, collection.size());
+
+        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate!");
+
+    }
+
+    private void checkPredicatedCollection2(final Collection<Integer> collection) {
+        assertEquals(2, collection.size());
+        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate!");
+        assertEquals(2, collection.size());
+
+        collection.add(5);
+        assertEquals(3, collection.size());
+    }
+
     /**
-     * Verify that passing the Predicate means ending up in the buffer.
+     * Verify that only items that pass the Predicate end up in the buffer.
      */
     @Test
-    public void testAddPass() {
+    public void testAddAllPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
-        builder.add("test");
-        assertEquals(builder.createPredicatedList().size(), 1);
+        builder.addAll(Arrays.asList("test1", null, "test2"));
+        assertEquals(builder.createPredicatedList().size(), 2);
     }
 
     /**
@@ -60,13 +86,13 @@ public class PredicatedCollectionBuilderTest {
     }
 
     /**
-     * Verify that only items that pass the Predicate end up in the buffer.
+     * Verify that passing the Predicate means ending up in the buffer.
      */
     @Test
-    public void testAddAllPass() {
+    public void testAddPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
-        builder.addAll(Arrays.asList("test1", null, "test2"));
-        assertEquals(builder.createPredicatedList().size(), 2);
+        builder.add("test");
+        assertEquals(builder.createPredicatedList().size(), 1);
     }
 
     @Test
@@ -86,16 +112,6 @@ public class PredicatedCollectionBuilderTest {
 
         final Queue<String> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection1(predicatedQueue);
-    }
-
-    private void checkPredicatedCollection1(final Collection<String> collection) {
-        assertEquals(1, collection.size());
-
-        collection.add("test2");
-        assertEquals(2, collection.size());
-
-        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate!");
-
     }
 
     @Test
@@ -118,21 +134,5 @@ public class PredicatedCollectionBuilderTest {
 
         final Queue<Integer> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection2(predicatedQueue);
-    }
-
-    private void checkPredicatedCollection2(final Collection<Integer> collection) {
-        assertEquals(2, collection.size());
-        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate!");
-        assertEquals(2, collection.size());
-
-        collection.add(5);
-        assertEquals(3, collection.size());
-    }
-
-    private static final class OddPredicate implements Predicate<Integer> {
-        @Override
-        public boolean evaluate(final Integer value) {
-            return value % 2 == 1;
-        }
     }
 }

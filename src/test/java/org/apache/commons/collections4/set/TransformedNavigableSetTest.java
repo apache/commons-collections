@@ -42,10 +42,8 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public NavigableSet<E> makeObject() {
-        return TransformedNavigableSet.transformingNavigableSet(new TreeSet<>(),
-                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public String getCompatibilityVersion() {
+        return "4.1";
     }
 
     @Override
@@ -53,6 +51,13 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     public NavigableSet<E> makeFullCollection() {
         final NavigableSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return TransformedNavigableSet.transformingNavigableSet(set,
+                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public NavigableSet<E> makeObject() {
+        return TransformedNavigableSet.transformingNavigableSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
@@ -85,11 +90,6 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
         }
 
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.1";
     }
 
 //    public void testCreate() throws Exception {

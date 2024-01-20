@@ -59,71 +59,33 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     // Query Operations
 
     /**
-     * Returns {@code true} if the internal state is valid.
+     * Adds the specified CellProducer to this Bloom filter.
      *
-     * <p>This flag is a warning that an addition or
-     * subtraction of cells from this filter resulted in an invalid cell for one or more
-     * indexes. For example this may occur if a cell for an index was
-     * set to negative following a subtraction operation, or overflows the value specified by {@code getMaxCell()} following an
-     * addition operation.</p>
+     * <p>Specifically
+     * all cells for the indexes identified by the {@code other} will be incremented
+     * by their corresponding values in the {@code other}.</p>
      *
-     * <p>A counting Bloom filter that has an invalid state is no longer ensured to function
-     * identically to a standard Bloom filter instance that is the merge of all the Bloom filters
-     * that have been added to and not later subtracted from this counting Bloom filter.</p>
+     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: The change to an invalid state may or may not be reversible. Implementations
-     * are expected to document their policy on recovery from an addition or removal operation
-     * that generated an invalid state.</p>
-     *
-     * @return {@code true} if the state is valid
+     * @param other the CellProducer to add.
+     * @return {@code true} if the addition was successful and the state is valid
+     * @see #isValid()
+     * @see #subtract(CellProducer)
      */
-    boolean isValid();
+    boolean add(CellProducer other);
+
+    /**
+     * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
+     * @return a copy of this CountingBloomFilter
+     */
+    @Override
+    CountingBloomFilter copy();
 
     /**
      * Returns the maximum allowable value for a cell count in this Counting filter.
      * @return the maximum allowable value for a cell count in this Counting filter.
      */
     int getMaxCell();
-
-    /**
-     * Determines the maximum number of times the Bloom filter could have been merged
-     * into this counting filter.
-     * @param bloomFilter the Bloom filter the check for.
-     * @return the maximum number of times the Bloom filter could have been inserted.
-     */
-    default int getMaxInsert(final BloomFilter bloomFilter) {
-        return getMaxInsert((BitMapProducer) bloomFilter);
-    }
-
-    /**
-     * Determines the maximum number of times the IndexProducer could have been merged
-     * into this counting filter.
-     * <p>To determine how many times an indxProducer could have been added create a CellProducer
-     * from the indexProducer and check that</p>
-     * @param idxProducer the producer to drive the count check.
-     * @return the maximum number of times the IndexProducer could have been inserted.
-     * @see #getMaxInsert(CellProducer)
-     */
-    default int getMaxInsert(final IndexProducer idxProducer) {
-        return getMaxInsert(CellProducer.from(idxProducer.uniqueIndices()) );
-    }
-
-    /**
-     * Determines the maximum number of times the Cell Producer could have been add.
-     * @param cellProducer the producer of cells.
-     * @return the maximum number of times the CellProducer could have been inserted.
-     */
-    int getMaxInsert(CellProducer cellProducer);
-
-    /**
-     * Determines the maximum number of times the Hasher could have been merged into this
-     * counting filter.
-     * @param hasher the Hasher to provide the indices.
-     * @return the maximum number of times the hasher could have been inserted.
-     */
-    default int getMaxInsert(final Hasher hasher) {
-        return getMaxInsert(hasher.indices(getShape()));
-    }
 
     /**
      * Determines the maximum number of times the BitMapProducer could have been merged into this
@@ -146,7 +108,86 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
         return max[0];
     }
 
+    /**
+     * Determines the maximum number of times the Bloom filter could have been merged
+     * into this counting filter.
+     * @param bloomFilter the Bloom filter the check for.
+     * @return the maximum number of times the Bloom filter could have been inserted.
+     */
+    default int getMaxInsert(final BloomFilter bloomFilter) {
+        return getMaxInsert((BitMapProducer) bloomFilter);
+    }
+
+    /**
+     * Determines the maximum number of times the Cell Producer could have been add.
+     * @param cellProducer the producer of cells.
+     * @return the maximum number of times the CellProducer could have been inserted.
+     */
+    int getMaxInsert(CellProducer cellProducer);
+
+    /**
+     * Determines the maximum number of times the Hasher could have been merged into this
+     * counting filter.
+     * @param hasher the Hasher to provide the indices.
+     * @return the maximum number of times the hasher could have been inserted.
+     */
+    default int getMaxInsert(final Hasher hasher) {
+        return getMaxInsert(hasher.indices(getShape()));
+    }
+
     // Modification Operations
+
+    /**
+     * Determines the maximum number of times the IndexProducer could have been merged
+     * into this counting filter.
+     * <p>To determine how many times an indxProducer could have been added create a CellProducer
+     * from the indexProducer and check that</p>
+     * @param idxProducer the producer to drive the count check.
+     * @return the maximum number of times the IndexProducer could have been inserted.
+     * @see #getMaxInsert(CellProducer)
+     */
+    default int getMaxInsert(final IndexProducer idxProducer) {
+        return getMaxInsert(CellProducer.from(idxProducer.uniqueIndices()) );
+    }
+
+    /**
+     * Returns {@code true} if the internal state is valid.
+     *
+     * <p>This flag is a warning that an addition or
+     * subtraction of cells from this filter resulted in an invalid cell for one or more
+     * indexes. For example this may occur if a cell for an index was
+     * set to negative following a subtraction operation, or overflows the value specified by {@code getMaxCell()} following an
+     * addition operation.</p>
+     *
+     * <p>A counting Bloom filter that has an invalid state is no longer ensured to function
+     * identically to a standard Bloom filter instance that is the merge of all the Bloom filters
+     * that have been added to and not later subtracted from this counting Bloom filter.</p>
+     *
+     * <p>Note: The change to an invalid state may or may not be reversible. Implementations
+     * are expected to document their policy on recovery from an addition or removal operation
+     * that generated an invalid state.</p>
+     *
+     * @return {@code true} if the state is valid
+     */
+    boolean isValid();
+
+    /**
+     * Merges the specified BitMap producer into this Bloom filter.
+     *
+     * <p>Specifically: all cells for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
+     *
+     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
+     *
+     * @param bitMapProducer the BitMapProducer
+     * @return {@code true} if the removal was successful and the state is valid
+     * @see #isValid()
+     * @see #add(CellProducer)
+     */
+    @Override
+    default boolean merge(final BitMapProducer bitMapProducer) {
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
+        return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+    }
 
     /**
      * Merges the specified Bloom filter into this Bloom filter.
@@ -214,21 +255,21 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     }
 
     /**
-     * Merges the specified BitMap producer into this Bloom filter.
+     * Removes the specified BitMapProducer from this Bloom filter.
      *
-     * <p>Specifically: all cells for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
+     * <p>Specifically all cells for the indices produced by the {@code bitMapProducer} will be
+     * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapProducer the BitMapProducer
+     * @param bitMapProducer the BitMapProducer to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #subtract(CellProducer)
      */
-    @Override
-    default boolean merge(final BitMapProducer bitMapProducer) {
+    default boolean remove(final BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+        return remove(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     /**
@@ -295,39 +336,6 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
         }
     }
 
-    /**
-     * Removes the specified BitMapProducer from this Bloom filter.
-     *
-     * <p>Specifically all cells for the indices produced by the {@code bitMapProducer} will be
-     * decremented by 1.</p>
-     *
-     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
-     *
-     * @param bitMapProducer the BitMapProducer to provide the indexes
-     * @return {@code true} if the removal was successful and the state is valid
-     * @see #isValid()
-     * @see #subtract(CellProducer)
-     */
-    default boolean remove(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return remove(IndexProducer.fromBitMapProducer(bitMapProducer));
-    }
-
-    /**
-     * Adds the specified CellProducer to this Bloom filter.
-     *
-     * <p>Specifically
-     * all cells for the indexes identified by the {@code other} will be incremented
-     * by their corresponding values in the {@code other}.</p>
-     *
-     * <p>This method will return {@code true} if the filter is valid after the operation.</p>
-     *
-     * @param other the CellProducer to add.
-     * @return {@code true} if the addition was successful and the state is valid
-     * @see #isValid()
-     * @see #subtract(CellProducer)
-     */
-    boolean add(CellProducer other);
 
     /**
      * Adds the specified CellProducer to this Bloom filter.
@@ -344,14 +352,6 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @see #add(CellProducer)
      */
     boolean subtract(CellProducer other);
-
-
-    /**
-     * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
-     * @return a copy of this CountingBloomFilter
-     */
-    @Override
-    CountingBloomFilter copy();
 
     @Override
     default IndexProducer uniqueIndices() {

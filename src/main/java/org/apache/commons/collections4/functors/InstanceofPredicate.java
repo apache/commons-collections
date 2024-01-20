@@ -32,9 +32,6 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
     /** Serial version UID */
     private static final long serialVersionUID = -6682656911025165584L;
 
-    /** The type to compare to */
-    private final Class<?> iType;
-
     /**
      * Factory to create the identity predicate.
      *
@@ -45,6 +42,9 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
     public static Predicate<Object> instanceOfPredicate(final Class<?> type) {
         return new InstanceofPredicate(Objects.requireNonNull(type, "type"));
     }
+
+    /** The type to compare to */
+    private final Class<?> iType;
 
     /**
      * Constructor that performs no validation.

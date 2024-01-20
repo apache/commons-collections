@@ -48,6 +48,18 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
         super(testName);
     }
 
+    public String getCanonicalComparatorName(final Object object) {
+        final StringBuilder retval = new StringBuilder();
+        retval.append(TEST_DATA_PATH);
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".") + 1);
+        retval.append(colName);
+        retval.append(".version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
     /**
      * Implement this method to return a list of sorted objects.
      *
@@ -64,6 +76,27 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     public abstract Comparator<T> makeObject();
 
     /**
+     * Randomize the list.
+     */
+    protected void randomizeObjects(final List<?> list) {
+        Collections.shuffle(list);
+    }
+
+    /**
+     * Reverse the list.
+     */
+    protected void reverseObjects(final List<?> list) {
+        Collections.reverse(list);
+    }
+
+    /**
+     * Sort the list.
+     */
+    protected void sortObjects(final List<T> list, final Comparator<? super T> comparator) {
+        list.sort(comparator);
+    }
+
+    /**
      * Overrides superclass to block tests.
      */
     @Override
@@ -77,101 +110,6 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Override
     public boolean supportsFullCollections() {
         return false;
-    }
-
-    /**
-     * Reverse the list.
-     */
-    protected void reverseObjects(final List<?> list) {
-        Collections.reverse(list);
-    }
-
-    /**
-     * Randomize the list.
-     */
-    protected void randomizeObjects(final List<?> list) {
-        Collections.shuffle(list);
-    }
-
-    /**
-     * Sort the list.
-     */
-    protected void sortObjects(final List<T> list, final Comparator<? super T> comparator) {
-        list.sort(comparator);
-    }
-
-    /**
-     * Test sorting an empty list
-     */
-    @Test
-    public void testEmptyListSort() {
-        final List<T> list = new LinkedList<>();
-        sortObjects(list, makeObject());
-
-        final List<T> list2 = new LinkedList<>();
-
-        assertEquals(list2, list, "Comparator cannot sort empty lists");
-    }
-
-    /**
-     * Test sorting a reversed list.
-     */
-    @Test
-    public void testReverseListSort() {
-        final Comparator<T> comparator = makeObject();
-
-        final List<T> randomList = getComparableObjectsOrdered();
-        reverseObjects(randomList);
-        sortObjects(randomList, comparator);
-
-        final List<T> orderedList = getComparableObjectsOrdered();
-
-        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
-    }
-
-    /**
-     * Test sorting a random list.
-     */
-    @Test
-    public void testRandomListSort() {
-        final Comparator<T> comparator = makeObject();
-
-        final List<T> randomList = getComparableObjectsOrdered();
-        randomizeObjects(randomList);
-        sortObjects(randomList, comparator);
-
-        final List<T> orderedList = getComparableObjectsOrdered();
-
-        /* debug
-        Iterator i = randomList.iterator();
-        while (i.hasNext()) {
-            System.out.println(i.next());
-        }
-        */
-
-        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
-    }
-
-    /**
-     * Nearly all Comparators should be Serializable.
-     */
-    @Test
-    public void testComparatorIsSerializable() {
-        final Comparator<T> comparator = makeObject();
-        assertTrue(comparator instanceof Serializable,
-                   "This comparator should be Serializable.");
-    }
-
-    public String getCanonicalComparatorName(final Object object) {
-        final StringBuilder retval = new StringBuilder();
-        retval.append(TEST_DATA_PATH);
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1);
-        retval.append(colName);
-        retval.append(".version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
     }
 
     /**
@@ -213,5 +151,67 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
             assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
         }
+    }
+
+    /**
+     * Nearly all Comparators should be Serializable.
+     */
+    @Test
+    public void testComparatorIsSerializable() {
+        final Comparator<T> comparator = makeObject();
+        assertTrue(comparator instanceof Serializable,
+                   "This comparator should be Serializable.");
+    }
+
+    /**
+     * Test sorting an empty list
+     */
+    @Test
+    public void testEmptyListSort() {
+        final List<T> list = new LinkedList<>();
+        sortObjects(list, makeObject());
+
+        final List<T> list2 = new LinkedList<>();
+
+        assertEquals(list2, list, "Comparator cannot sort empty lists");
+    }
+
+    /**
+     * Test sorting a random list.
+     */
+    @Test
+    public void testRandomListSort() {
+        final Comparator<T> comparator = makeObject();
+
+        final List<T> randomList = getComparableObjectsOrdered();
+        randomizeObjects(randomList);
+        sortObjects(randomList, comparator);
+
+        final List<T> orderedList = getComparableObjectsOrdered();
+
+        /* debug
+        Iterator i = randomList.iterator();
+        while (i.hasNext()) {
+            System.out.println(i.next());
+        }
+        */
+
+        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
+    }
+
+    /**
+     * Test sorting a reversed list.
+     */
+    @Test
+    public void testReverseListSort() {
+        final Comparator<T> comparator = makeObject();
+
+        final List<T> randomList = getComparableObjectsOrdered();
+        reverseObjects(randomList);
+        sortObjects(randomList, comparator);
+
+        final List<T> orderedList = getComparableObjectsOrdered();
+
+        assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
     }
 }

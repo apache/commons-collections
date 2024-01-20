@@ -44,6 +44,17 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         super(ListIteratorWrapper2Test.class.getSimpleName());
     }
 
+    @Override
+    public ResettableListIterator<E> makeEmptyIterator() {
+        final ArrayList<E> list = new ArrayList<>();
+        return new ListIteratorWrapper<>(list.listIterator());
+    }
+
+    @Override
+    public ResettableListIterator<E> makeObject() {
+        return new ListIteratorWrapper<>(list1.listIterator());
+    }
+
     @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {
@@ -54,17 +65,6 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         list1.add((E) "Four");
         list1.add((E) "Five");
         list1.add((E) "Six");
-    }
-
-    @Override
-    public ResettableListIterator<E> makeEmptyIterator() {
-        final ArrayList<E> list = new ArrayList<>();
-        return new ListIteratorWrapper<>(list.listIterator());
-    }
-
-    @Override
-    public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<>(list1.listIterator());
     }
 
     @Test

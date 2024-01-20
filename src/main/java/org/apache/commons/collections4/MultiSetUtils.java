@@ -36,9 +36,35 @@ public class MultiSetUtils {
         UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
 
     /**
-     * Don't allow instances.
+     * Gets an empty {@code MultiSet}.
+     *
+     * @param <E> the element type
+     * @return an empty MultiSet
      */
-    private MultiSetUtils() {}
+    @SuppressWarnings("unchecked") // OK, empty multiset is compatible with any type
+    public static <E> MultiSet<E> emptyMultiSet() {
+        return EMPTY_MULTISET;
+    }
+
+    /**
+     * Returns a predicated (validating) multiset backed by the given multiset.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to
+     * the multiset. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original multiset
+     * after invoking this method, as it is a backdoor for adding invalid
+     * objects.
+     *
+     * @param <E> the element type
+     * @param multiset the multiset to predicate, must not be null
+     * @param predicate the predicate for the multiset, must not be null
+     * @return a predicated multiset backed by the given multiset
+     * @throws NullPointerException if the MultiSet or Predicate is null
+     */
+    public static <E> MultiSet<E> predicatedMultiSet(final MultiSet<E> multiset,
+            final Predicate<? super E> predicate) {
+        return PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
+    }
 
     /**
      * Returns a synchronized (thread-safe) multiset backed by the given multiset.
@@ -84,34 +110,8 @@ public class MultiSetUtils {
     }
 
     /**
-     * Returns a predicated (validating) multiset backed by the given multiset.
-     * <p>
-     * Only objects that pass the test in the given predicate can be added to
-     * the multiset. Trying to add an invalid object results in an
-     * IllegalArgumentException. It is important not to use the original multiset
-     * after invoking this method, as it is a backdoor for adding invalid
-     * objects.
-     *
-     * @param <E> the element type
-     * @param multiset the multiset to predicate, must not be null
-     * @param predicate the predicate for the multiset, must not be null
-     * @return a predicated multiset backed by the given multiset
-     * @throws NullPointerException if the MultiSet or Predicate is null
+     * Don't allow instances.
      */
-    public static <E> MultiSet<E> predicatedMultiSet(final MultiSet<E> multiset,
-            final Predicate<? super E> predicate) {
-        return PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
-    }
-
-    /**
-     * Gets an empty {@code MultiSet}.
-     *
-     * @param <E> the element type
-     * @return an empty MultiSet
-     */
-    @SuppressWarnings("unchecked") // OK, empty multiset is compatible with any type
-    public static <E> MultiSet<E> emptyMultiSet() {
-        return EMPTY_MULTISET;
-    }
+    private MultiSetUtils() {}
 
 }

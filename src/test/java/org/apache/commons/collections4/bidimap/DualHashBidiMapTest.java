@@ -27,12 +27,9 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         super(DualHashBidiMapTest.class.getSimpleName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public DualHashBidiMap<K, V> makeObject() {
-        return new DualHashBidiMap<>();
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     /**
@@ -43,9 +40,12 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return new String[] { "DualHashBidiMapTest.bulkTestInverseMap.bulkTestInverseMap" };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
+    public DualHashBidiMap<K, V> makeObject() {
+        return new DualHashBidiMap<>();
     }
 
 //    public void testCreate() throws Exception {

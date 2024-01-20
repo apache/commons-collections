@@ -36,13 +36,6 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 8069309411242014252L;
 
-    /** The test */
-    private final Predicate<? super I> iPredicate;
-    /** The transformer to use if true */
-    private final Transformer<? super I, ? extends O> iTrueTransformer;
-    /** The transformer to use if false */
-    private final Transformer<? super I, ? extends O> iFalseTransformer;
-
     /**
      * Factory method that performs validation.
      *
@@ -61,7 +54,6 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
                 Objects.requireNonNull(trueTransformer, "trueTransformer"),
                 Objects.requireNonNull(falseTransformer, "falseTransformer"));
     }
-
     /**
      * Factory method that performs validation.
      * <p>
@@ -80,6 +72,14 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
         return new IfTransformer<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(trueTransformer, "trueTransformer"), NOPTransformer.<T>nopTransformer());
     }
+    /** The test */
+    private final Predicate<? super I> iPredicate;
+
+    /** The transformer to use if true */
+    private final Transformer<? super I, ? extends O> iTrueTransformer;
+
+    /** The transformer to use if false */
+    private final Transformer<? super I, ? extends O> iFalseTransformer;
 
     /**
      * Constructor that performs no validation.
@@ -99,17 +99,12 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     }
 
     /**
-     * Transforms the input using the true or false transformer based to the result of the predicate.
+     * Gets the transformer used when false.
      *
-     * @param input  the input object to transform
-     * @return the transformed result
+     * @return the transformer
      */
-    @Override
-    public O transform(final I input) {
-        if (iPredicate.evaluate(input)){
-            return iTrueTransformer.transform(input);
-        }
-        return iFalseTransformer.transform(input);
+    public Transformer<? super I, ? extends O> getFalseTransformer() {
+        return iFalseTransformer;
     }
 
     /**
@@ -131,11 +126,16 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     }
 
     /**
-     * Gets the transformer used when false.
+     * Transforms the input using the true or false transformer based to the result of the predicate.
      *
-     * @return the transformer
+     * @param input  the input object to transform
+     * @return the transformed result
      */
-    public Transformer<? super I, ? extends O> getFalseTransformer() {
-        return iFalseTransformer;
+    @Override
+    public O transform(final I input) {
+        if (iPredicate.evaluate(input)){
+            return iTrueTransformer.transform(input);
+        }
+        return iFalseTransformer.transform(input);
     }
 }

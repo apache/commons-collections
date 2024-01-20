@@ -34,46 +34,6 @@ import java.util.function.LongPredicate;
 public interface IndexProducer {
 
     /**
-     * Each index is passed to the predicate. The predicate is applied to each
-     * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further indices are processed.
-     *
-     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
-     *
-     * <p>Indices ordering and uniqueness is not guaranteed.</p>
-     *
-     * @param predicate the action to be performed for each non-zero bit index.
-     * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
-     * @throws NullPointerException if the specified action is null
-     */
-    boolean forEachIndex(IntPredicate predicate);
-
-    /**
-     * Creates an IndexProducer from an array of integers.
-     * @param values the index values
-     * @return an IndexProducer that uses the values.
-     */
-    static IndexProducer fromIndexArray(final int... values) {
-        return new IndexProducer() {
-
-            @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
-                for (final int value : values) {
-                    if (!predicate.test(value)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            @Override
-            public int[] asIndexArray() {
-                return values.clone();
-            }
-        };
-    }
-
-    /**
      * Creates an IndexProducer from a {@code BitMapProducer}.
      * @param producer the {@code BitMapProducer}
      * @return a new {@code IndexProducer}.
@@ -99,6 +59,31 @@ public interface IndexProducer {
                 }
             };
             return producer.forEachBitMap(longPredicate::test);
+        };
+    }
+
+    /**
+     * Creates an IndexProducer from an array of integers.
+     * @param values the index values
+     * @return an IndexProducer that uses the values.
+     */
+    static IndexProducer fromIndexArray(final int... values) {
+        return new IndexProducer() {
+
+            @Override
+            public int[] asIndexArray() {
+                return values.clone();
+            }
+
+            @Override
+            public boolean forEachIndex(final IntPredicate predicate) {
+                for (final int value : values) {
+                    if (!predicate.test(value)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
         };
     }
 
@@ -135,6 +120,21 @@ public interface IndexProducer {
         forEachIndex(indices::add);
         return indices.toArray();
     }
+
+    /**
+     * Each index is passed to the predicate. The predicate is applied to each
+     * index value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further indices are processed.
+     *
+     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
+     *
+     * <p>Indices ordering and uniqueness is not guaranteed.</p>
+     *
+     * @param predicate the action to be performed for each non-zero bit index.
+     * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
+     * @throws NullPointerException if the specified action is null
+     */
+    boolean forEachIndex(IntPredicate predicate);
 
     /**
      * Creates an IndexProducer comprising the unique indices for this producer.

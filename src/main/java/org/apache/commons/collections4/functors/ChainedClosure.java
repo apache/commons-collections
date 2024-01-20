@@ -32,9 +32,6 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = -3520677225766901240L;
 
-    /** The closures to call in turn */
-    private final Closure<? super E>[] iClosures;
-
     /**
      * Factory method that performs validation and copies the parameter array.
      *
@@ -78,6 +75,9 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         FunctorUtils.validate(cmds);
         return new ChainedClosure<>(false, cmds);
     }
+
+    /** The closures to call in turn */
+    private final Closure<? super E>[] iClosures;
 
     /**
      * Hidden constructor for the use by the static factory methods.

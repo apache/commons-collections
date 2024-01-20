@@ -32,21 +32,8 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
-    public SortedMap<K, V> makeObject() {
-        return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
-    }
-
-    @Override
-    public SortedMap<K, V> makeFullMap() {
-        final SortedMap<K, V> map = new TreeMap<>();
-        addSampleMappings(map);
-        return FixedSizeSortedMap.fixedSizeSortedMap(map);
-    }
-
-    @Override
-    public boolean isSubMapViewsSerializable() {
-        // TreeMap sub map views have a bug in deserialization.
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -60,8 +47,21 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
+    @Override
+    public SortedMap<K, V> makeFullMap() {
+        final SortedMap<K, V> map = new TreeMap<>();
+        addSampleMappings(map);
+        return FixedSizeSortedMap.fixedSizeSortedMap(map);
+    }
+
+    @Override
+    public SortedMap<K, V> makeObject() {
+        return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
     }
 
 //    public void testCreate() throws Exception {

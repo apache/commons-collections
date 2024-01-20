@@ -69,13 +69,13 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     }
 
     @Override
-    public boolean offer(final E obj) {
-        return decorated().offer(obj);
+    public E element() {
+        return decorated().element();
     }
 
     @Override
-    public E poll() {
-        return decorated().poll();
+    public boolean offer(final E obj) {
+        return decorated().offer(obj);
     }
 
     @Override
@@ -84,8 +84,8 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     }
 
     @Override
-    public E element() {
-        return decorated().element();
+    public E poll() {
+        return decorated().poll();
     }
 
     @Override

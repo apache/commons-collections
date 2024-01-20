@@ -32,13 +32,6 @@ import org.apache.commons.collections4.iterators.IteratorIterable;
 public class EnumerationUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private EnumerationUtils() {
-        // no instances.
-    }
-
-    /**
      * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
      * single iteration.
      *
@@ -107,6 +100,13 @@ public class EnumerationUtils {
             result.add(stringTokenizer.nextToken());
         }
         return result;
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private EnumerationUtils() {
+        // no instances.
     }
 
 }

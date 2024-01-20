@@ -86,20 +86,6 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     }
 
     /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     */
-    @Override
-    public int hashCode() {
-        int total = 17;
-        total = total*37 + (decorated == null ? 0 : decorated.hashCode());
-        total = total*37 + (transformer == null ? 0 : transformer.hashCode());
-        return total;
-    }
-
-    /**
      * Returns {@code true} iff <i>that</i> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
@@ -125,6 +111,20 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
                    Objects.equals(transformer, comp.transformer);
         }
         return false;
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     */
+    @Override
+    public int hashCode() {
+        int total = 17;
+        total = total*37 + (decorated == null ? 0 : decorated.hashCode());
+        total = total*37 + (transformer == null ? 0 : transformer.hashCode());
+        return total;
     }
 
 }

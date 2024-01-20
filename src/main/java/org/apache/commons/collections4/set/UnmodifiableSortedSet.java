@@ -73,11 +73,6 @@ public final class UnmodifiableSortedSet<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
@@ -93,7 +88,36 @@ public final class UnmodifiableSortedSet<E>
     }
 
     @Override
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> head = decorated().headSet(toElement);
+        return unmodifiableSortedSet(head);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
+    }
+
+    /**
+     * Read the collection in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject()); // (1)
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -106,11 +130,6 @@ public final class UnmodifiableSortedSet<E>
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
@@ -119,12 +138,6 @@ public final class UnmodifiableSortedSet<E>
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return unmodifiableSortedSet(sub);
-    }
-
-    @Override
-    public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> head = decorated().headSet(toElement);
-        return unmodifiableSortedSet(head);
     }
 
     @Override
@@ -142,19 +155,6 @@ public final class UnmodifiableSortedSet<E>
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(decorated());
-    }
-
-    /**
-     * Read the collection in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject()); // (1)
     }
 
 }

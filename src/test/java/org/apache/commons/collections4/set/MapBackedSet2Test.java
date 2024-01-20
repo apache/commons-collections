@@ -52,6 +52,16 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
     }
 
     @Test
+    @Override
+    public void testCanonicalEmptyCollectionExists() {
+    }
+
+    @Test
+    @Override
+    public void testCanonicalFullCollectionExists() {
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     public void testOrdering() {
         final Set<E> set = setupSet();
@@ -83,16 +93,6 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
         for (int i = 0; i < 10; i += 2) {
             assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
-    }
-
-    @Test
-    @Override
-    public void testCanonicalEmptyCollectionExists() {
-    }
-
-    @Test
-    @Override
-    public void testCanonicalFullCollectionExists() {
     }
 
 }

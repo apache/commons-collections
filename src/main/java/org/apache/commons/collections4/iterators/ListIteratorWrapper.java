@@ -225,6 +225,24 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     }
 
     /**
+     * Resets this iterator back to the position at which the iterator
+     * was created.
+     *
+     * @since 3.2
+     */
+    @Override
+    public void reset()  {
+        if (iterator instanceof ListIterator) {
+            final ListIterator<?> li = (ListIterator<?>) iterator;
+            while (li.previousIndex() >= 0) {
+                li.previous();
+            }
+            return;
+        }
+        currentIndex = 0;
+    }
+
+    /**
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
@@ -241,24 +259,6 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
             return;
         }
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
-    }
-
-    /**
-     * Resets this iterator back to the position at which the iterator
-     * was created.
-     *
-     * @since 3.2
-     */
-    @Override
-    public void reset()  {
-        if (iterator instanceof ListIterator) {
-            final ListIterator<?> li = (ListIterator<?>) iterator;
-            while (li.previousIndex() >= 0) {
-                li.previous();
-            }
-            return;
-        }
-        currentIndex = 0;
     }
 
 }

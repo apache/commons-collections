@@ -64,6 +64,24 @@ public class TransformIterator<I, O> implements Iterator<O> {
         this.transformer = transformer;
     }
 
+    /**
+     * Gets the iterator this iterator is using.
+     *
+     * @return the iterator.
+     */
+    public Iterator<? extends I> getIterator() {
+        return iterator;
+    }
+
+    /**
+     * Gets the transformer this iterator is using.
+     *
+     * @return the transformer.
+     */
+    public Transformer<? super I, ? extends O> getTransformer() {
+        return transformer;
+    }
+
     @Override
     public boolean hasNext() {
         return iterator.hasNext();
@@ -88,15 +106,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Gets the iterator this iterator is using.
-     *
-     * @return the iterator.
-     */
-    public Iterator<? extends I> getIterator() {
-        return iterator;
-    }
-
-    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
@@ -104,15 +113,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      */
     public void setIterator(final Iterator<? extends I> iterator) {
         this.iterator = iterator;
-    }
-
-    /**
-     * Gets the transformer this iterator is using.
-     *
-     * @return the transformer.
-     */
-    public Transformer<? super I, ? extends O> getTransformer() {
-        return transformer;
     }
 
     /**

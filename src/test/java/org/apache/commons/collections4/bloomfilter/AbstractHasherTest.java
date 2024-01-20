@@ -24,9 +24,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
 
+    protected abstract Hasher createEmptyHasher();
+
+    @Override
+    protected IndexProducer createEmptyProducer() {
+        return createEmptyHasher().indices(getTestShape());
+    }
+
     protected abstract Hasher createHasher();
 
-    protected abstract Hasher createEmptyHasher();
+    @Override
+    protected IndexProducer createProducer() {
+        return createHasher().indices(getTestShape());
+    }
 
     /**
      * A method to get the number of items in a hasher. Mostly applies to
@@ -46,16 +56,6 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
      */
     protected final Shape getTestShape() {
         return Shape.fromKM(17, 72);
-    }
-
-    @Override
-    protected IndexProducer createProducer() {
-        return createHasher().indices(getTestShape());
-    }
-
-    @Override
-    protected IndexProducer createEmptyProducer() {
-        return createEmptyHasher().indices(getTestShape());
     }
 
     @ParameterizedTest

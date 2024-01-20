@@ -44,30 +44,11 @@ import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
 public class MultiMapUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private MultiMapUtils() {}
-
-    /**
      * An empty {@link UnmodifiableMultiValuedMap}.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static final MultiValuedMap EMPTY_MULTI_VALUED_MAP =
             UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(new ArrayListValuedHashMap(0, 0));
-
-    /**
-     * Returns immutable EMPTY_MULTI_VALUED_MAP with generic type safety.
-     *
-     * @param <K> the type of key in the map
-     * @param <V> the type of value in the map
-     * @return immutable and empty {@code MultiValuedMap}
-     */
-    @SuppressWarnings("unchecked")
-    public static <K, V> MultiValuedMap<K, V> emptyMultiValuedMap() {
-        return EMPTY_MULTI_VALUED_MAP;
-    }
-
-    // Null safe methods
 
     /**
      * Returns an immutable empty {@code MultiValuedMap} if the argument is
@@ -84,16 +65,18 @@ public class MultiMapUtils {
     }
 
     /**
-     * Null-safe check if the specified {@code MultiValuedMap} is empty.
-     * <p>
-     * If the provided map is null, returns true.
+     * Returns immutable EMPTY_MULTI_VALUED_MAP with generic type safety.
      *
-     * @param map  the map to check, may be null
-     * @return true if the map is empty or null
+     * @param <K> the type of key in the map
+     * @param <V> the type of value in the map
+     * @return immutable and empty {@code MultiValuedMap}
      */
-    public static boolean isEmpty(final MultiValuedMap<?, ?> map) {
-        return map == null || map.isEmpty();
+    @SuppressWarnings("unchecked")
+    public static <K, V> MultiValuedMap<K, V> emptyMultiValuedMap() {
+        return EMPTY_MULTI_VALUED_MAP;
     }
+
+    // Null safe methods
 
     /**
      * Gets a Collection from {@code MultiValuedMap} in a null-safe manner.
@@ -107,49 +90,6 @@ public class MultiMapUtils {
     public static <K, V> Collection<V> getCollection(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
             return map.get(key);
-        }
-        return null;
-    }
-
-    // TODO: review the getValuesAsXXX methods - depending on the actual MultiValuedMap type, changes
-    // to the returned collection might update the backing map. This should be clarified and/or prevented.
-
-    /**
-     * Gets a List from {@code MultiValuedMap} in a null-safe manner.
-     *
-     * @param <K> the key type
-     * @param <V> the value type
-     * @param map  the {@link MultiValuedMap} to use
-     * @param key  the key to look up
-     * @return the Collection in the {@link MultiValuedMap} as List, or null if input map is null
-     */
-    public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            final Collection<V> col = map.get(key);
-            if (col instanceof List) {
-                return (List<V>) col;
-            }
-            return new ArrayList<>(col);
-        }
-        return null;
-    }
-
-    /**
-     * Gets a Set from {@code MultiValuedMap} in a null-safe manner.
-     *
-     * @param <K> the key type
-     * @param <V> the value type
-     * @param map  the {@link MultiValuedMap} to use
-     * @param key  the key to look up
-     * @return the Collection in the {@link MultiValuedMap} as Set, or null if input map is null
-     */
-    public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            final Collection<V> col = map.get(key);
-            if (col instanceof Set) {
-                return (Set<V>) col;
-            }
-            return new HashSet<>(col);
         }
         return null;
     }
@@ -175,6 +115,61 @@ public class MultiMapUtils {
     }
 
     /**
+     * Gets a List from {@code MultiValuedMap} in a null-safe manner.
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param map  the {@link MultiValuedMap} to use
+     * @param key  the key to look up
+     * @return the Collection in the {@link MultiValuedMap} as List, or null if input map is null
+     */
+    public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
+        if (map != null) {
+            final Collection<V> col = map.get(key);
+            if (col instanceof List) {
+                return (List<V>) col;
+            }
+            return new ArrayList<>(col);
+        }
+        return null;
+    }
+
+    // TODO: review the getValuesAsXXX methods - depending on the actual MultiValuedMap type, changes
+    // to the returned collection might update the backing map. This should be clarified and/or prevented.
+
+    /**
+     * Gets a Set from {@code MultiValuedMap} in a null-safe manner.
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param map  the {@link MultiValuedMap} to use
+     * @param key  the key to look up
+     * @return the Collection in the {@link MultiValuedMap} as Set, or null if input map is null
+     */
+    public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
+        if (map != null) {
+            final Collection<V> col = map.get(key);
+            if (col instanceof Set) {
+                return (Set<V>) col;
+            }
+            return new HashSet<>(col);
+        }
+        return null;
+    }
+
+    /**
+     * Null-safe check if the specified {@code MultiValuedMap} is empty.
+     * <p>
+     * If the provided map is null, returns true.
+     *
+     * @param map  the map to check, may be null
+     * @return true if the map is empty or null
+     */
+    public static boolean isEmpty(final MultiValuedMap<?, ?> map) {
+        return map == null || map.isEmpty();
+    }
+
+    /**
      * Creates a {@link ListValuedMap} with an {@link java.util.ArrayList ArrayList} as
      * collection class to store the values mapped to a key.
      *
@@ -196,21 +191,6 @@ public class MultiMapUtils {
      */
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
         return new HashSetValuedHashMap<>();
-    }
-
-    /**
-     * Returns an {@code UnmodifiableMultiValuedMap} backed by the given
-     * map.
-     *
-     * @param <K> the key type
-     * @param <V> the value type
-     * @param map  the {@link MultiValuedMap} to decorate, must not be null
-     * @return an unmodifiable {@link MultiValuedMap} backed by the provided map
-     * @throws NullPointerException if map is null
-     */
-    public static <K, V> MultiValuedMap<K, V> unmodifiableMultiValuedMap(
-            final MultiValuedMap<? extends K, ? extends V> map) {
-        return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
     }
 
     /**
@@ -241,5 +221,25 @@ public class MultiMapUtils {
             final Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedMultiValuedMap.transformingMap(map, keyTransformer, valueTransformer);
     }
+
+    /**
+     * Returns an {@code UnmodifiableMultiValuedMap} backed by the given
+     * map.
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param map  the {@link MultiValuedMap} to decorate, must not be null
+     * @return an unmodifiable {@link MultiValuedMap} backed by the provided map
+     * @throws NullPointerException if map is null
+     */
+    public static <K, V> MultiValuedMap<K, V> unmodifiableMultiValuedMap(
+            final MultiValuedMap<? extends K, ? extends V> map) {
+        return UnmodifiableMultiValuedMap.<K, V>unmodifiableMultiValuedMap(map);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private MultiMapUtils() {}
 
 }

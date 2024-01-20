@@ -115,6 +115,34 @@ public class FilterListIterator<E> implements ListIterator<E> {
         throw new UnsupportedOperationException("FilterListIterator.add(Object) is not supported.");
     }
 
+    private void clearNextObject() {
+        nextObject = null;
+        nextObjectSet = false;
+    }
+
+    private void clearPreviousObject() {
+        previousObject = null;
+        previousObjectSet = false;
+    }
+
+    /**
+     * Gets the iterator this iterator is using.
+     *
+     * @return the iterator.
+     */
+    public ListIterator<? extends E> getListIterator() {
+        return iterator;
+    }
+
+    /**
+     * Gets the predicate this iterator is using.
+     *
+     * @return the predicate.
+     */
+    public Predicate<? super E> getPredicate() {
+        return predicate;
+    }
+
     @Override
     public boolean hasNext() {
         return nextObjectSet || setNextObject();
@@ -174,15 +202,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     /**
-     * Gets the iterator this iterator is using.
-     *
-     * @return the iterator.
-     */
-    public ListIterator<? extends E> getListIterator() {
-        return iterator;
-    }
-
-    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
@@ -190,29 +209,6 @@ public class FilterListIterator<E> implements ListIterator<E> {
      */
     public void setListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
-    }
-
-    /**
-     * Gets the predicate this iterator is using.
-     *
-     * @return the predicate.
-     */
-    public Predicate<? super E> getPredicate() {
-        return predicate;
-    }
-
-    /**
-     * Sets the predicate this the iterator to use.
-     *
-     * @param predicate  the transformer to use
-     */
-    public void setPredicate(final Predicate<? super E> predicate) {
-        this.predicate = predicate;
-    }
-
-    private void clearNextObject() {
-        nextObject = null;
-        nextObjectSet = false;
     }
 
     private boolean setNextObject() {
@@ -242,9 +238,13 @@ public class FilterListIterator<E> implements ListIterator<E> {
         return false;
     }
 
-    private void clearPreviousObject() {
-        previousObject = null;
-        previousObjectSet = false;
+    /**
+     * Sets the predicate this the iterator to use.
+     *
+     * @param predicate  the transformer to use
+     */
+    public void setPredicate(final Predicate<? super E> predicate) {
+        this.predicate = predicate;
     }
 
     private boolean setPreviousObject() {

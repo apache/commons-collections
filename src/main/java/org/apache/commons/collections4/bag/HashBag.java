@@ -60,17 +60,6 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
     }
 
     /**
-     * Write the bag out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        super.doWriteObject(out);
-    }
-
-    /**
      * Read the bag in using a custom routine.
      *
      * @param in  the input stream
@@ -80,6 +69,17 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         super.doReadObject(new HashMap<>(), in);
+    }
+
+    /**
+     * Write the bag out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        super.doWriteObject(out);
     }
 
 }

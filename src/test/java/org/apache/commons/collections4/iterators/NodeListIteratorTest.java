@@ -49,6 +49,45 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         super(NodeListIteratorTest.class.getSimpleName());
     }
 
+    @Override
+    public Iterator<Node> makeEmptyIterator() {
+        final NodeList emptyNodeList = new NodeList() {
+            @Override
+            public int getLength() {
+                return 0;
+            }
+            @Override
+            public Node item(final int index) {
+                throw new IndexOutOfBoundsException();
+            }
+        };
+
+        if (createIteratorWithStandardConstr) {
+            return new NodeListIterator(emptyNodeList);
+        }
+        final Node parentNode = createMock(Node.class);
+        expect(parentNode.getChildNodes()).andStubReturn(emptyNodeList);
+        replay(parentNode);
+
+        return new NodeListIterator(parentNode);
+    }
+
+    @Override
+    public Iterator<Node> makeObject() {
+        final NodeList nodeList = new NodeList() {
+            @Override
+            public int getLength() {
+                return nodes.length;
+            }
+            @Override
+            public Node item(final int index) {
+                return nodes[index];
+            }
+        };
+
+        return new NodeListIterator(nodeList);
+    }
+
     @BeforeEach
     protected void setUp() throws Exception {
 
@@ -69,52 +108,8 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     }
 
     @Override
-    public Iterator<Node> makeEmptyIterator() {
-        final NodeList emptyNodeList = new NodeList() {
-            @Override
-            public Node item(final int index) {
-                throw new IndexOutOfBoundsException();
-            }
-            @Override
-            public int getLength() {
-                return 0;
-            }
-        };
-
-        if (createIteratorWithStandardConstr) {
-            return new NodeListIterator(emptyNodeList);
-        }
-        final Node parentNode = createMock(Node.class);
-        expect(parentNode.getChildNodes()).andStubReturn(emptyNodeList);
-        replay(parentNode);
-
-        return new NodeListIterator(parentNode);
-    }
-
-    @Override
-    public Iterator<Node> makeObject() {
-        final NodeList nodeList = new NodeList() {
-            @Override
-            public Node item(final int index) {
-                return nodes[index];
-            }
-            @Override
-            public int getLength() {
-                return nodes.length;
-            }
-        };
-
-        return new NodeListIterator(nodeList);
-    }
-
-    @Override
     public boolean supportsRemove() {
         return false;
-    }
-
-    @Test
-    public void testNullConstructor() {
-        assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 
     /**
@@ -133,6 +128,11 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     public void testFullIteratorWithNodeConstructor(){
         createIteratorWithStandardConstr = false;
         testFullIterator();
+    }
+
+    @Test
+    public void testNullConstructor() {
+        assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 
 }

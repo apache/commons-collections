@@ -42,11 +42,6 @@ class CountingLongPredicate implements LongPredicate {
         this.func = func;
     }
 
-    @Override
-    public boolean test(final long other) {
-        return func.test(idx == ary.length ? 0 : ary[idx++], other);
-    }
-
     /**
      * Call the long-long consuming bi-predicate for each remaining unpaired long in
      * the input array. This method should be invoked after the predicate has been
@@ -64,5 +59,10 @@ class CountingLongPredicate implements LongPredicate {
             i++;
         }
         return i == limit;
+    }
+
+    @Override
+    public boolean test(final long other) {
+        return func.test(idx == ary.length ? 0 : ary[idx++], other);
     }
 }

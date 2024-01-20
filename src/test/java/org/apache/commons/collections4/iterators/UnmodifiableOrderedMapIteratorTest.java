@@ -41,14 +41,13 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Override
-    public OrderedMapIterator<K, V> makeEmptyIterator() {
-        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(
-                ListOrderedMap.listOrderedMap(new HashMap<K, V>()).mapIterator());
-    }
-
-    @Override
-    public OrderedMapIterator<K, V> makeObject() {
-        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(getMap().mapIterator());
+    @SuppressWarnings("unchecked")
+    public Map<K, V> getConfirmedMap() {
+        final Map<K, V> testMap = new TreeMap<>();
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
+        return testMap;
     }
 
     @Override
@@ -62,13 +61,14 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Map<K, V> getConfirmedMap() {
-        final Map<K, V> testMap = new TreeMap<>();
-        testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V) "b");
-        testMap.put((K) "C", (V) "c");
-        return testMap;
+    public OrderedMapIterator<K, V> makeEmptyIterator() {
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(
+                ListOrderedMap.listOrderedMap(new HashMap<K, V>()).mapIterator());
+    }
+
+    @Override
+    public OrderedMapIterator<K, V> makeObject() {
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(getMap().mapIterator());
     }
 
     @Override
@@ -82,11 +82,6 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Test
-    public void testOrderedMapIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
-    }
-
-    @Test
     public void testDecorateFactory() {
         OrderedMapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
@@ -95,6 +90,11 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         assertNotSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null));
+    }
+
+    @Test
+    public void testOrderedMapIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

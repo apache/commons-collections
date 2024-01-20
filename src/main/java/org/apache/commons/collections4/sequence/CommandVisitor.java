@@ -123,6 +123,13 @@ package org.apache.commons.collections4.sequence;
 public interface CommandVisitor<T> {
 
     /**
+     * Method called when a delete command is encountered.
+     *
+     * @param object object to delete (this object comes from the first sequence)
+     */
+    void visitDeleteCommand(T object);
+
+    /**
      * Method called when an insert command is encountered.
      *
      * @param object object to insert (this object comes from the second sequence)
@@ -135,12 +142,5 @@ public interface CommandVisitor<T> {
      * @param object object to keep (this object comes from the first sequence)
      */
     void visitKeepCommand(T object);
-
-    /**
-     * Method called when a delete command is encountered.
-     *
-     * @param object object to delete (this object comes from the first sequence)
-     */
-    void visitDeleteCommand(T object);
 
 }

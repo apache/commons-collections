@@ -42,9 +42,8 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public SortedSet<E> makeObject() {
-        return TransformedSortedSet.transformingSortedSet(new TreeSet<>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -52,6 +51,12 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     public SortedSet<E> makeFullCollection() {
         final SortedSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
         return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public SortedSet<E> makeObject() {
+        return TransformedSortedSet.transformingSortedSet(new TreeSet<>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Test
@@ -82,11 +87,6 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         }
 
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

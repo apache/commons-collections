@@ -39,35 +39,51 @@ import java.util.function.LongPredicate;
 public interface BitMapProducer {
 
     /**
-     * Each bit map is passed to the predicate in order. The predicate is applied to each
-     * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bit maps are processed.
-     *
-     * <p>If the producer is empty this method will return true.</p>
-     *
-     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
-     *
-     * @param predicate the function to execute
-     * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
-     * @throws NullPointerException if the specified consumer is null
+     * Creates a BitMapProducer from an array of Long.
+     * @param bitMaps the bit maps to return.
+     * @return a BitMapProducer.
      */
-    boolean forEachBitMap(LongPredicate predicate);
+    static BitMapProducer fromBitMapArray(final long... bitMaps) {
+        return new BitMapProducer() {
+            @Override
+            public long[] asBitMapArray() {
+                return Arrays.copyOf(bitMaps, bitMaps.length);
+            }
+
+            @Override
+            public boolean forEachBitMap(final LongPredicate predicate) {
+                for (final long word : bitMaps) {
+                    if (!predicate.test(word)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+                final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
+                return other.forEachBitMap(p) && p.forEachRemaining();
+            }
+        };
+    }
 
     /**
-     * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
-     * BitMapProducer to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
-     * for all excess calls to the LongBiPredicate.
-     * <p>
-     * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
-     * of BitMapProducer that have local arrays reimplement this method.</em></p>
-     *
-     * @param other The other BitMapProducer that provides the y values in the (x,y) pair.
-     * @param func The function to apply.
-     * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
+     * Creates a BitMapProducer from an IndexProducer.
+     * @param producer the IndexProducer that specifies the indexes of the bits to enable.
+     * @param numberOfBits the number of bits in the Bloom filter.
+     * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
      */
-    default boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
-        final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
-        return other.forEachBitMap(p) && p.forEachRemaining();
+    static BitMapProducer fromIndexProducer(final IndexProducer producer, final int numberOfBits) {
+        Objects.requireNonNull(producer, "producer");
+        Objects.requireNonNull(numberOfBits, "numberOfBits");
+
+        final long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
+        producer.forEachIndex(i -> {
+            BitMap.set(result, i);
+            return true;
+        });
+        return fromBitMapArray(result);
     }
 
     /**
@@ -106,50 +122,34 @@ public interface BitMapProducer {
     }
 
     /**
-     * Creates a BitMapProducer from an array of Long.
-     * @param bitMaps the bit maps to return.
-     * @return a BitMapProducer.
+     * Each bit map is passed to the predicate in order. The predicate is applied to each
+     * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further bit maps are processed.
+     *
+     * <p>If the producer is empty this method will return true.</p>
+     *
+     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
+     *
+     * @param predicate the function to execute
+     * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
+     * @throws NullPointerException if the specified consumer is null
      */
-    static BitMapProducer fromBitMapArray(final long... bitMaps) {
-        return new BitMapProducer() {
-            @Override
-            public boolean forEachBitMap(final LongPredicate predicate) {
-                for (final long word : bitMaps) {
-                    if (!predicate.test(word)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            @Override
-            public long[] asBitMapArray() {
-                return Arrays.copyOf(bitMaps, bitMaps.length);
-            }
-
-            @Override
-            public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
-                final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
-                return other.forEachBitMap(p) && p.forEachRemaining();
-            }
-        };
-    }
+    boolean forEachBitMap(LongPredicate predicate);
 
     /**
-     * Creates a BitMapProducer from an IndexProducer.
-     * @param producer the IndexProducer that specifies the indexes of the bits to enable.
-     * @param numberOfBits the number of bits in the Bloom filter.
-     * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
+     * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
+     * BitMapProducer to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
+     * for all excess calls to the LongBiPredicate.
+     * <p>
+     * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
+     * of BitMapProducer that have local arrays reimplement this method.</em></p>
+     *
+     * @param other The other BitMapProducer that provides the y values in the (x,y) pair.
+     * @param func The function to apply.
+     * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
-    static BitMapProducer fromIndexProducer(final IndexProducer producer, final int numberOfBits) {
-        Objects.requireNonNull(producer, "producer");
-        Objects.requireNonNull(numberOfBits, "numberOfBits");
-
-        final long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
-        producer.forEachIndex(i -> {
-            BitMap.set(result, i);
-            return true;
-        });
-        return fromBitMapArray(result);
+    default boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+        final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
+        return other.forEachBitMap(p) && p.forEachRemaining();
     }
 }

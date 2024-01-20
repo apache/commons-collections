@@ -23,13 +23,8 @@ public class DefaultCellProducerTest extends AbstractCellProducerTest {
     private final int[] values = {1, 4, 9, 25};
 
     @Override
-    protected int[] getExpectedIndices() {
-        return indices;
-    }
-
-    @Override
-    protected int[] getExpectedValues() {
-        return values;
+    protected CellProducer createEmptyProducer() {
+        return consumer -> true;
     }
 
     @Override
@@ -45,8 +40,13 @@ public class DefaultCellProducerTest extends AbstractCellProducerTest {
     }
 
     @Override
-    protected CellProducer createEmptyProducer() {
-        return consumer -> true;
+    protected int[] getExpectedIndices() {
+        return indices;
+    }
+
+    @Override
+    protected int[] getExpectedValues() {
+        return values;
     }
 
     @Override

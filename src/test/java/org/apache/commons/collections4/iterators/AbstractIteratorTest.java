@@ -95,13 +95,6 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Allows subclasses to add complex cross verification
-     */
-    public void verify() {
-        // do nothing
-    }
-
-    /**
      * Test the empty iterator.
      */
     @Test
@@ -182,6 +175,13 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
         // should throw IllegalStateException for second remove()
         assertThrows(IllegalStateException.class, () -> it.remove());
+    }
+
+    /**
+     * Allows subclasses to add complex cross verification
+     */
+    public void verify() {
+        // do nothing
     }
 
 }

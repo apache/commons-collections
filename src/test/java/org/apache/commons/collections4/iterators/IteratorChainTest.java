@@ -49,19 +49,6 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         super(IteratorChainTest.class.getSimpleName());
     }
 
-    @BeforeEach
-    public void setUp() {
-        list1 = new ArrayList<>();
-        list1.add("One");
-        list1.add("Two");
-        list1.add("Three");
-        list2 = new ArrayList<>();
-        list2.add("Four");
-        list3 = new ArrayList<>();
-        list3.add("Five");
-        list3.add("Six");
-    }
-
     @Override
     public IteratorChain<String> makeEmptyIterator() {
         final ArrayList<String> list = new ArrayList<>();
@@ -76,6 +63,48 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         chain.addIterator(list2.iterator());
         chain.addIterator(list3.iterator());
         return chain;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        list1 = new ArrayList<>();
+        list1.add("One");
+        list1.add("Two");
+        list1.add("Three");
+        list2 = new ArrayList<>();
+        list2.add("Four");
+        list3 = new ArrayList<>();
+        list3.add("Five");
+        list3.add("Six");
+    }
+
+    @Test
+    public void testEmptyChain() {
+        final IteratorChain<Object> chain = new IteratorChain<>();
+        assertFalse(chain.hasNext());
+        assertAll(
+                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
+                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
+        );
+    }
+
+    @Test
+    public void testFirstIteratorIsEmptyBug() {
+        final List<String> empty = new ArrayList<>();
+        final List<String> notEmpty = new ArrayList<>();
+        notEmpty.add("A");
+        notEmpty.add("B");
+        notEmpty.add("C");
+        final IteratorChain<String> chain = new IteratorChain<>();
+        chain.addIterator(empty.iterator());
+        chain.addIterator(notEmpty.iterator());
+        assertTrue(chain.hasNext(), "should have next");
+        assertEquals("A", chain.next());
+        assertTrue(chain.hasNext(), "should have next");
+        assertEquals("B", chain.next());
+        assertTrue(chain.hasNext(), "should have next");
+        assertEquals("C", chain.next());
+        assertFalse(chain.hasNext(), "should not have next");
     }
 
     @Test
@@ -94,31 +123,6 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         } catch (final Exception e) {
             assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
-    }
-
-    @Test
-    public void testRemoveFromFilteredIterator() {
-
-        final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
-
-        final List<Integer> list1 = new ArrayList<>();
-        final List<Integer> list2 = new ArrayList<>();
-
-        list1.add(Integer.valueOf(1));
-        list1.add(Integer.valueOf(2));
-        list2.add(Integer.valueOf(3));
-        list2.add(Integer.valueOf(4)); // will be ignored by the predicate
-
-        final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
-        final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
-
-        final Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-        }
-        assertEquals(0, list1.size());
-        assertEquals(1, list2.size());
     }
 
     @Test
@@ -145,32 +149,28 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testFirstIteratorIsEmptyBug() {
-        final List<String> empty = new ArrayList<>();
-        final List<String> notEmpty = new ArrayList<>();
-        notEmpty.add("A");
-        notEmpty.add("B");
-        notEmpty.add("C");
-        final IteratorChain<String> chain = new IteratorChain<>();
-        chain.addIterator(empty.iterator());
-        chain.addIterator(notEmpty.iterator());
-        assertTrue(chain.hasNext(), "should have next");
-        assertEquals("A", chain.next());
-        assertTrue(chain.hasNext(), "should have next");
-        assertEquals("B", chain.next());
-        assertTrue(chain.hasNext(), "should have next");
-        assertEquals("C", chain.next());
-        assertFalse(chain.hasNext(), "should not have next");
-    }
+    public void testRemoveFromFilteredIterator() {
 
-    @Test
-    public void testEmptyChain() {
-        final IteratorChain<Object> chain = new IteratorChain<>();
-        assertFalse(chain.hasNext());
-        assertAll(
-                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
-                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
-        );
+        final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
+
+        final List<Integer> list1 = new ArrayList<>();
+        final List<Integer> list2 = new ArrayList<>();
+
+        list1.add(Integer.valueOf(1));
+        list1.add(Integer.valueOf(2));
+        list2.add(Integer.valueOf(3));
+        list2.add(Integer.valueOf(4)); // will be ignored by the predicate
+
+        final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
+        final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
+
+        final Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+        assertEquals(0, list1.size());
+        assertEquals(1, list2.size());
     }
 
 }

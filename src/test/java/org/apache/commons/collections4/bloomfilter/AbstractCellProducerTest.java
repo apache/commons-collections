@@ -40,16 +40,11 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     private static final CellConsumer FALSE_CONSUMER = (i, j) -> false;
 
     /**
-     * Creates an array of expected values that aligns with the expected indices entries.
-     * @return an array of expected values.
-     * @see AbstractIndexProducerTest#getExpectedIndices()
+     * Creates a producer without data.
+     * @return a producer that has no data.
      */
-    protected abstract int[] getExpectedValues();
-
     @Override
-    protected final int getAsIndexArrayBehaviour() {
-        return ORDERED | DISTINCT;
-    }
+    protected abstract CellProducer createEmptyProducer();
 
     /**
      * Creates a producer with some data.
@@ -58,65 +53,17 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     @Override
     protected abstract CellProducer createProducer();
 
-    /**
-     * Creates a producer without data.
-     * @return a producer that has no data.
-     */
     @Override
-    protected abstract CellProducer createEmptyProducer();
-
-    @Test
-    public final void testForEachCellPredicates() {
-        final CellProducer populated = createProducer();
-        final CellProducer empty = createEmptyProducer();
-
-        assertFalse(populated.forEachCell(FALSE_CONSUMER), "non-empty should be false");
-        assertTrue(empty.forEachCell(FALSE_CONSUMER), "empty should be true");
-
-        assertTrue(populated.forEachCell(TRUE_CONSUMER), "non-empty should be true");
-        assertTrue(empty.forEachCell(TRUE_CONSUMER), "empty should be true");
+    protected final int getAsIndexArrayBehaviour() {
+        return ORDERED | DISTINCT;
     }
 
-    @Test
-    public final void testEmptyCellProducer() {
-        final CellProducer empty = createEmptyProducer();
-        final int[] ary = empty.asIndexArray();
-        assertEquals(0, ary.length);
-        assertTrue(empty.forEachCell((i, j) -> {
-            fail("forEachCell consumer should not be called");
-            return false;
-        }));
-    }
-
-    @Test
-    public final void testIndexConsistency() {
-        final CellProducer producer = createProducer();
-        final BitSet bs1 = new BitSet();
-        final BitSet bs2 = new BitSet();
-        producer.forEachIndex(i -> {
-            bs1.set(i);
-            return true;
-        });
-        producer.forEachCell((i, j) -> {
-            bs2.set(i);
-            return true;
-        });
-        assertEquals(bs1, bs2);
-    }
-
-    @Test
-    public void testForEachCellValues() {
-        final int[] expectedIdx = getExpectedIndices();
-        final int[] expectedValue = getExpectedValues();
-        assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
-        final int[] idx = {0};
-        createProducer().forEachCell((i, j) -> {
-            assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
-            assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);
-            idx[0]++;
-            return true;
-        });
-    }
+    /**
+     * Creates an array of expected values that aligns with the expected indices entries.
+     * @return an array of expected values.
+     * @see AbstractIndexProducerTest#getExpectedIndices()
+     */
+    protected abstract int[] getExpectedValues();
 
     /**
      * Test the behavior of {@link CellProducer#forEachCell(CellConsumer)} with respect
@@ -137,6 +84,17 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     }
 
     @Test
+    public final void testEmptyCellProducer() {
+        final CellProducer empty = createEmptyProducer();
+        final int[] ary = empty.asIndexArray();
+        assertEquals(0, ary.length);
+        assertTrue(empty.forEachCell((i, j) -> {
+            fail("forEachCell consumer should not be called");
+            return false;
+        }));
+    }
+
+    @Test
     public void testForEachCellEarlyExit() {
         final int[] passes = new int[1];
         assertTrue(createEmptyProducer().forEachCell((i, j) -> {
@@ -150,6 +108,48 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
             return false;
         }));
         assertEquals(1, passes[0]);
+    }
+
+    @Test
+    public final void testForEachCellPredicates() {
+        final CellProducer populated = createProducer();
+        final CellProducer empty = createEmptyProducer();
+
+        assertFalse(populated.forEachCell(FALSE_CONSUMER), "non-empty should be false");
+        assertTrue(empty.forEachCell(FALSE_CONSUMER), "empty should be true");
+
+        assertTrue(populated.forEachCell(TRUE_CONSUMER), "non-empty should be true");
+        assertTrue(empty.forEachCell(TRUE_CONSUMER), "empty should be true");
+    }
+
+    @Test
+    public void testForEachCellValues() {
+        final int[] expectedIdx = getExpectedIndices();
+        final int[] expectedValue = getExpectedValues();
+        assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
+        final int[] idx = {0};
+        createProducer().forEachCell((i, j) -> {
+            assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
+            assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);
+            idx[0]++;
+            return true;
+        });
+    }
+
+    @Test
+    public final void testIndexConsistency() {
+        final CellProducer producer = createProducer();
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
+        producer.forEachIndex(i -> {
+            bs1.set(i);
+            return true;
+        });
+        producer.forEachCell((i, j) -> {
+            bs2.set(i);
+            return true;
+        });
+        assertEquals(bs1, bs2);
     }
 }
 

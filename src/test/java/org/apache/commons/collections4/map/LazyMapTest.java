@@ -45,6 +45,11 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public LazyMap<K, V> makeObject() {
         return lazyMap(new HashMap<>(), FactoryUtils.<V>nullFactory());
     }
@@ -81,11 +86,6 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Number i1 = map.get(123L);
         assertEquals(123, i1);
         assertEquals(1, map.size());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

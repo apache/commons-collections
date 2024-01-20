@@ -66,14 +66,50 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
+    public long[] asBitMapArray() {
+        return Arrays.copyOf(bitMap, bitMap.length);
+    }
+
+    @Override
+    public int cardinality() {
+        // Lazy evaluation with caching
+        int c = cardinality;
+        if (c < 0) {
+            cardinality = c = SetOperations.cardinality(this);
+        }
+        return c;
+    }
+
+    @Override
+    public int characteristics() {
+        return 0;
+    }
+
+    @Override
     public void clear() {
         Arrays.fill(bitMap, 0L);
         cardinality = 0;
     }
 
     @Override
-    public long[] asBitMapArray() {
-        return Arrays.copyOf(bitMap, bitMap.length);
+    public boolean contains(final IndexProducer indexProducer) {
+        return indexProducer.forEachIndex(idx -> BitMap.contains(bitMap, idx));
+    }
+
+    @Override
+    public SimpleBloomFilter copy() {
+        return new SimpleBloomFilter(this);
+    }
+
+    @Override
+    public boolean forEachBitMap(final LongPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (final long l : bitMap) {
+            if (!consumer.test(l)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -83,23 +119,19 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public SimpleBloomFilter copy() {
-        return new SimpleBloomFilter(this);
+    public boolean forEachIndex(final IntPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        return IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
-        indexProducer.forEachIndex(idx -> {
-            if (idx < 0 || idx >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format(
-                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
-            }
-            BitMap.set(bitMap, idx);
-            return true;
-        });
-        cardinality = -1;
-        return true;
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return cardinality == 0 || forEachBitMap(y -> y == 0);
     }
 
     @Override
@@ -131,12 +163,6 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        return merge(hasher.indices(shape));
-    }
-
-    @Override
     public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         if ((other.characteristics() & SPARSE) != 0) {
@@ -148,49 +174,23 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public Shape getShape() {
-        return shape;
+    public boolean merge(final Hasher hasher) {
+        Objects.requireNonNull(hasher, "hasher");
+        return merge(hasher.indices(shape));
     }
 
     @Override
-    public int characteristics() {
-        return 0;
-    }
-
-    @Override
-    public int cardinality() {
-        // Lazy evaluation with caching
-        int c = cardinality;
-        if (c < 0) {
-            cardinality = c = SetOperations.cardinality(this);
-        }
-        return c;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return cardinality == 0 || forEachBitMap(y -> y == 0);
-    }
-
-    @Override
-    public boolean forEachIndex(final IntPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        return IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
-    }
-
-    @Override
-    public boolean forEachBitMap(final LongPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        for (final long l : bitMap) {
-            if (!consumer.test(l)) {
-                return false;
+    public boolean merge(final IndexProducer indexProducer) {
+        Objects.requireNonNull(indexProducer, "indexProducer");
+        indexProducer.forEachIndex(idx -> {
+            if (idx < 0 || idx >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format(
+                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
-        }
+            BitMap.set(bitMap, idx);
+            return true;
+        });
+        cardinality = -1;
         return true;
-    }
-
-    @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> BitMap.contains(bitMap, idx));
     }
 }

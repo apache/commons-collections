@@ -31,9 +31,6 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = -89901658494523293L;
 
-    /** The value to compare to */
-    private final T iValue;
-
     /**
      * Factory to create the identity predicate.
      *
@@ -47,6 +44,9 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
         }
         return new IdentityPredicate<>(object);
     }
+
+    /** The value to compare to */
+    private final T iValue;
 
     /**
      * Constructor that performs no validation.

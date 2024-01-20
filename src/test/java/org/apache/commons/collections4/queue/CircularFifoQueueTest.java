@@ -46,29 +46,16 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     /**
-     *  Runs through the regular verifications, but also verifies that
-     *  the buffer contains the same elements in the same sequence as the
-     *  list.
+     * {@inheritDoc}
      */
     @Override
-    public void verify() {
-        super.verify();
-        final Iterator<E> iterator1 = getCollection().iterator();
-        for (final E e : getConfirmed()) {
-            assertTrue(iterator1.hasNext());
-            final Object o1 = iterator1.next();
-            final Object o2 = e;
-            assertEquals(o1, o2);
-        }
+    public CircularFifoQueue<E> getCollection() {
+        return (CircularFifoQueue<E>) super.getCollection();
     }
 
-    /**
-     * Overridden because CircularFifoQueue doesn't allow null elements.
-     * @return false
-     */
     @Override
-    public boolean isNullSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     /**
@@ -77,6 +64,15 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      */
     @Override
     public boolean isFailFastSupported() {
+        return false;
+    }
+
+    /**
+     * Overridden because CircularFifoQueue doesn't allow null elements.
+     * @return false
+     */
+    @Override
+    public boolean isNullSupported() {
         return false;
     }
 
@@ -110,6 +106,12 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     public Queue<E> makeObject() {
         return new CircularFifoQueue<>(100);
+    }
+
+    @Test
+    public void testAddNull() {
+        final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
+        assertThrows(NullPointerException.class, () -> b.add(null));
     }
 
     /**
@@ -181,6 +183,51 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     @Test
     public void testConstructorException3() {
         assertThrows(NullPointerException.class, () -> new CircularFifoQueue<E>(null));
+    }
+
+    @Test
+    public void testDefaultSizeAndGetError1() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32, fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5, fifo.size());
+        assertThrows(NoSuchElementException.class, () -> fifo.get(5));
+    }
+
+    @Test
+    public void testDefaultSizeAndGetError2() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32, fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5, fifo.size());
+        assertThrows(NoSuchElementException.class, () -> fifo.get(-2));
+    }
+
+    @Test
+    public void testGetIndex() {
+        resetFull();
+
+        final CircularFifoQueue<E> queue = getCollection();
+        final List<E> confirmed = (List<E>) getConfirmed();
+        for (int i = 0; i < confirmed.size(); i++) {
+            assertEquals(confirmed.get(i), queue.get(i));
+        }
+
+        // remove the first two elements and check again
+        queue.remove();
+        queue.remove();
+
+        for (int i = 0; i < queue.size(); i++) {
+            assertEquals(confirmed.get(i + 2), queue.get(i));
+        }
     }
 
     @Test
@@ -402,62 +449,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertTrue(b3.contains("c"));
     }
 
-    @Test
-    public void testGetIndex() {
-        resetFull();
-
-        final CircularFifoQueue<E> queue = getCollection();
-        final List<E> confirmed = (List<E>) getConfirmed();
-        for (int i = 0; i < confirmed.size(); i++) {
-            assertEquals(confirmed.get(i), queue.get(i));
-        }
-
-        // remove the first two elements and check again
-        queue.remove();
-        queue.remove();
-
-        for (int i = 0; i < queue.size(); i++) {
-            assertEquals(confirmed.get(i + 2), queue.get(i));
-        }
-    }
-
-    @Test
-    public void testAddNull() {
-        final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
-        assertThrows(NullPointerException.class, () -> b.add(null));
-    }
-
-    @Test
-    public void testDefaultSizeAndGetError1() {
-        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
-        assertEquals(32, fifo.maxSize());
-        fifo.add((E) "1");
-        fifo.add((E) "2");
-        fifo.add((E) "3");
-        fifo.add((E) "4");
-        fifo.add((E) "5");
-        assertEquals(5, fifo.size());
-        assertThrows(NoSuchElementException.class, () -> fifo.get(5));
-    }
-
-    @Test
-    public void testDefaultSizeAndGetError2() {
-        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
-        assertEquals(32, fifo.maxSize());
-        fifo.add((E) "1");
-        fifo.add((E) "2");
-        fifo.add((E) "3");
-        fifo.add((E) "4");
-        fifo.add((E) "5");
-        assertEquals(5, fifo.size());
-        assertThrows(NoSuchElementException.class, () -> fifo.get(-2));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CircularFifoQueue.emptyCollection.version4.obj");
@@ -466,11 +457,20 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 //    }
 
     /**
-     * {@inheritDoc}
+     *  Runs through the regular verifications, but also verifies that
+     *  the buffer contains the same elements in the same sequence as the
+     *  list.
      */
     @Override
-    public CircularFifoQueue<E> getCollection() {
-        return (CircularFifoQueue<E>) super.getCollection();
+    public void verify() {
+        super.verify();
+        final Iterator<E> iterator1 = getCollection().iterator();
+        for (final E e : getConfirmed()) {
+            assertTrue(iterator1.hasNext());
+            final Object o1 = iterator1.next();
+            final Object o2 = e;
+            assertEquals(o1, o2);
+        }
     }
 
 }

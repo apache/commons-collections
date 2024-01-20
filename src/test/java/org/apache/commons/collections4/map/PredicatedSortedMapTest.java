@@ -66,6 +66,22 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public boolean isAllowNullKey() {
+        return false;
+    }
+
+    @Override
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
+    @Override
     public SortedMap<K, V> makeObject() {
         return decorateMap(new TreeMap<>(), truePredicate, truePredicate);
     }
@@ -76,17 +92,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     public SortedMap<K, V> makeTestMapWithComparator() {
         return decorateMap(new ConcurrentSkipListMap<>(reverseStringComparator), testPredicate, testPredicate);
-    }
-
-    @Override
-    public boolean isSubMapViewsSerializable() {
-        // TreeMap sub map views have a bug in deserialization.
-        return false;
-    }
-
-    @Override
-    public boolean isAllowNullKey() {
-        return false;
     }
 
     // from TestPredicatedMap
@@ -139,30 +144,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSortOrder() {
-        final SortedMap<K, V> map = makeTestMap();
-        map.put((K) "A", (V) "a");
-        map.put((K) "B", (V) "b");
-        assertThrows(IllegalArgumentException.class, () -> map.put(null, (V) "c"),
-                "Null key should raise IllegalArgument");
-        map.put((K) "C", (V) "c");
-        assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
-                "Null value should raise IllegalArgument");
-        assertEquals("A", map.firstKey(), "First key should be A");
-        assertEquals("C", map.lastKey(), "Last key should be C");
-        assertEquals("B", map.tailMap((K) "B").firstKey(),
-                "First key in tail map should be B");
-        assertEquals("B", map.headMap((K) "C").lastKey(),
-                "Last key in head map should be B");
-        assertEquals("B", map.subMap((K) "A", (K) "C").lastKey(),
-                "Last key in submap should be B");
-
-        final Comparator<? super K> c = map.comparator();
-        assertNull(c, "natural order, so comparator should be null");
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     public void testReverseSortOrder() {
         final SortedMap<K, V> map = makeTestMapWithComparator();
         map.put((K) "A",  (V) "a");
@@ -185,9 +166,28 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertSame(c, reverseStringComparator, "reverse order, so comparator should be reverseStringComparator");
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSortOrder() {
+        final SortedMap<K, V> map = makeTestMap();
+        map.put((K) "A", (V) "a");
+        map.put((K) "B", (V) "b");
+        assertThrows(IllegalArgumentException.class, () -> map.put(null, (V) "c"),
+                "Null key should raise IllegalArgument");
+        map.put((K) "C", (V) "c");
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "D", null),
+                "Null value should raise IllegalArgument");
+        assertEquals("A", map.firstKey(), "First key should be A");
+        assertEquals("C", map.lastKey(), "Last key should be C");
+        assertEquals("B", map.tailMap((K) "B").firstKey(),
+                "First key in tail map should be B");
+        assertEquals("B", map.headMap((K) "C").lastKey(),
+                "Last key in head map should be B");
+        assertEquals("B", map.subMap((K) "A", (K) "C").lastKey(),
+                "Last key in submap should be B");
+
+        final Comparator<? super K> c = map.comparator();
+        assertNull(c, "natural order, so comparator should be null");
     }
 
 //    public void testCreate() throws Exception {

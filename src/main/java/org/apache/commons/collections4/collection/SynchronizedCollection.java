@@ -46,11 +46,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /** Serialization version */
     private static final long serialVersionUID = 2412805092710877986L;
 
-    /** The collection to decorate */
-    private final Collection<E> collection;
-    /** The object to lock on, needed for List/SortedSet views */
-    protected final Object lock;
-
     /**
      * Factory method to create a synchronized collection.
      *
@@ -63,6 +58,11 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
         return new SynchronizedCollection<>(coll);
     }
+    /** The collection to decorate */
+    private final Collection<E> collection;
+
+    /** The object to lock on, needed for List/SortedSet views */
+    protected final Object lock;
 
     /**
      * Constructor that wraps (not copies).
@@ -85,15 +85,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
         this.collection = Objects.requireNonNull(collection, "collection");
         this.lock = Objects.requireNonNull(lock, "lock");
-    }
-
-    /**
-     * Gets the collection being decorated.
-     *
-     * @return the decorated collection
-     */
-    protected Collection<E> decorated() {
-        return collection;
     }
 
     @Override
@@ -131,6 +122,32 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         }
     }
 
+    /**
+     * Gets the collection being decorated.
+     *
+     * @return the decorated collection
+     */
+    protected Collection<E> decorated() {
+        return collection;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        synchronized (lock) {
+            if (object == this) {
+                return true;
+            }
+            return object == this || decorated().equals(object);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        synchronized (lock) {
+            return decorated().hashCode();
+        }
+    }
+
     @Override
     public boolean isEmpty() {
         synchronized (lock) {
@@ -155,23 +172,16 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     @Override
-    public Object[] toArray() {
-        synchronized (lock) {
-            return decorated().toArray();
-        }
-    }
-
-    @Override
-    public <T> T[] toArray(final T[] object) {
-        synchronized (lock) {
-            return decorated().toArray(object);
-        }
-    }
-
-    @Override
     public boolean remove(final Object object) {
         synchronized (lock) {
             return decorated().remove(object);
+        }
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        synchronized (lock) {
+            return decorated().removeAll(coll);
         }
     }
 
@@ -182,13 +192,6 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     public boolean removeIf(final Predicate<? super E> filter) {
         synchronized (lock) {
             return decorated().removeIf(filter);
-        }
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        synchronized (lock) {
-            return decorated().removeAll(coll);
         }
     }
 
@@ -207,19 +210,16 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     @Override
-    public boolean equals(final Object object) {
+    public Object[] toArray() {
         synchronized (lock) {
-            if (object == this) {
-                return true;
-            }
-            return object == this || decorated().equals(object);
+            return decorated().toArray();
         }
     }
 
     @Override
-    public int hashCode() {
+    public <T> T[] toArray(final T[] object) {
         synchronized (lock) {
-            return decorated().hashCode();
+            return decorated().toArray(object);
         }
     }
 

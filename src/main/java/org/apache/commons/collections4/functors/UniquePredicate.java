@@ -33,9 +33,6 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = -3319417438027438040L;
 
-    /** The set of previously seen objects */
-    private final Set<T> iSet = new HashSet<>();
-
     /**
      * Factory to create the predicate.
      *
@@ -46,6 +43,9 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
     public static <T> Predicate<T> uniquePredicate() {
         return new UniquePredicate<>();
     }
+
+    /** The set of previously seen objects */
+    private final Set<T> iSet = new HashSet<>();
 
     /**
      * Constructor that performs no validation.

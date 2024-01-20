@@ -39,8 +39,33 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Override
-    public MultiSet<E> makeObject() {
-        return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
+    public MultiSet<E> getCollection() {
+        return super.getCollection();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4.1";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -51,34 +76,15 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Override
-    public MultiSet<E> getCollection() {
-        return super.getCollection();
-    }
-
-    @Override
-    public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+    public MultiSet<E> makeObject() {
+        return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
     }
 
     @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    public void testAdd() {
+        final MultiSet<E> multiset = makeFullCollection();
+        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.add((E) "One", 1));
     }
 
     @Test
@@ -90,10 +96,10 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Test
-    public void testAdd() {
+    public void testEntrySet() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.add((E) "One", 1));
+        assertSame( unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
     }
 
     @Test
@@ -111,15 +117,9 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Test
-    public void testEntrySet() {
-        final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        assertSame( unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.1";
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

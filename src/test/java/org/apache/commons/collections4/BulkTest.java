@@ -169,15 +169,6 @@ public class BulkTest implements Cloneable {
     }
 
     /**
-     *  Returns the name of the simple test method of this {@code BulkTest}.
-     *
-     *  @return the name of the simple test method of this {@code BulkTest}
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      *  Creates a clone of this {@code BulkTest}.<P>
      *
      *  @return  a clone of this {@code BulkTest}
@@ -189,6 +180,15 @@ public class BulkTest implements Cloneable {
         } catch (final CloneNotSupportedException e) {
             throw new Error(); // should never happen
         }
+    }
+
+    /**
+     *  Returns the name of the simple test method of this {@code BulkTest}.
+     *
+     *  @return the name of the simple test method of this {@code BulkTest}
+     */
+    public String getName() {
+        return name;
     }
 
     /**

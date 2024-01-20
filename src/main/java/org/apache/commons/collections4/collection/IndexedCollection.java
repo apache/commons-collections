@@ -52,14 +52,21 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /** Serialization version */
     private static final long serialVersionUID = -5512610452568370038L;
 
-    /** The {@link Transformer} for generating index keys. */
-    private final Transformer<C, K> keyTransformer;
-
-    /** The map of indexes to collected objects. */
-    private final MultiMap<K, C> index;
-
-    /** The uniqueness constraint for the index. */
-    private final boolean uniqueIndex;
+    /**
+     * Create an {@link IndexedCollection} for a non-unique index.
+     *
+     * @param <K> the index object type.
+     * @param <C> the collection type.
+     * @param coll the decorated {@link Collection}.
+     * @param keyTransformer the {@link Transformer} for generating index keys.
+     * @return the created {@link IndexedCollection}.
+     */
+    public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll,
+                                                                            final Transformer<C, K> keyTransformer) {
+        return new IndexedCollection<>(coll, keyTransformer,
+                                           MultiValueMap.<K, C>multiValueMap(new HashMap<>()),
+                                           false);
+    }
 
     /**
      * Create an {@link IndexedCollection} for a unique index.
@@ -80,21 +87,14 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
                                            true);
     }
 
-    /**
-     * Create an {@link IndexedCollection} for a non-unique index.
-     *
-     * @param <K> the index object type.
-     * @param <C> the collection type.
-     * @param coll the decorated {@link Collection}.
-     * @param keyTransformer the {@link Transformer} for generating index keys.
-     * @return the created {@link IndexedCollection}.
-     */
-    public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll,
-                                                                            final Transformer<C, K> keyTransformer) {
-        return new IndexedCollection<>(coll, keyTransformer,
-                                           MultiValueMap.<K, C>multiValueMap(new HashMap<>()),
-                                           false);
-    }
+    /** The {@link Transformer} for generating index keys. */
+    private final Transformer<C, K> keyTransformer;
+
+    /** The map of indexes to collected objects. */
+    private final MultiMap<K, C> index;
+
+    /** The uniqueness constraint for the index. */
+    private final boolean uniqueIndex;
 
     /**
      * Create a {@link IndexedCollection}.
@@ -135,6 +135,21 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
             changed |= add(c);
         }
         return changed;
+    }
+
+    /**
+     * Provides checking for adding the index.
+     *
+     * @param object the object to index
+     * @throws IllegalArgumentException if the object maps to an existing key and the index
+     *   enforces a uniqueness constraint
+     */
+    private void addToIndex(final C object) {
+        final K key = keyTransformer.transform(object);
+        if (uniqueIndex && index.containsKey(key)) {
+            throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
+        }
+        index.put(key, object);
     }
 
     @Override
@@ -187,17 +202,6 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Gets all elements associated with the given key.
-     *
-     * @param key  key to look up
-     * @return a collection of elements found, or null if {@code contains(key) == false}
-     */
-    @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection
-    public Collection<C> values(final K key) {
-        return (Collection<C>) index.get(key);
-    }
-
-    /**
      * Clears the index and re-indexes the entire decorated {@link Collection}.
      */
     public void reindex() {
@@ -215,6 +219,24 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
             removeFromIndex((C) object);
         }
         return removed;
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        boolean changed = false;
+        for (final Object o : coll) {
+            changed |= remove(o);
+        }
+        return changed;
+    }
+
+    /**
+     * Removes an object from the index.
+     *
+     * @param object the object to remove
+     */
+    private void removeFromIndex(final C object) {
+        index.remove(keyTransformer.transform(object));
     }
 
     /**
@@ -240,15 +262,6 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        boolean changed = false;
-        for (final Object o : coll) {
-            changed |= remove(o);
-        }
-        return changed;
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         final boolean changed = super.retainAll(coll);
         if (changed) {
@@ -258,27 +271,14 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Provides checking for adding the index.
+     * Gets all elements associated with the given key.
      *
-     * @param object the object to index
-     * @throws IllegalArgumentException if the object maps to an existing key and the index
-     *   enforces a uniqueness constraint
+     * @param key  key to look up
+     * @return a collection of elements found, or null if {@code contains(key) == false}
      */
-    private void addToIndex(final C object) {
-        final K key = keyTransformer.transform(object);
-        if (uniqueIndex && index.containsKey(key)) {
-            throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
-        }
-        index.put(key, object);
-    }
-
-    /**
-     * Removes an object from the index.
-     *
-     * @param object the object to remove
-     */
-    private void removeFromIndex(final C object) {
-        index.remove(keyTransformer.transform(object));
+    @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection
+    public Collection<C> values(final K key) {
+        return (Collection<C>) index.get(key);
     }
 
 }

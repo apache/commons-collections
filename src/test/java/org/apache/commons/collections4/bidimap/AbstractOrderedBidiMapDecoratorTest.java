@@ -30,38 +30,6 @@ import org.apache.commons.collections4.OrderedBidiMap;
 public class AbstractOrderedBidiMapDecoratorTest<K, V>
         extends AbstractOrderedBidiMapTest<K, V> {
 
-    public AbstractOrderedBidiMapDecoratorTest(final String testName) {
-        super(testName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public OrderedBidiMap<K, V> makeObject() {
-        return new TestOrderedBidiMap<>();
-    }
-
-    @Override
-    public SortedMap<K, V> makeConfirmedMap() {
-        return new TreeMap<>();
-    }
-
-    @Override
-    public boolean isAllowNullKey() {
-        return false;
-    }
-
-    @Override
-    public boolean isAllowNullValue() {
-        return false;
-    }
-
-    @Override
-    public boolean isSetValueSupported() {
-        return true;
-    }
-
     /**
      * Simple class to actually test.
      */
@@ -85,5 +53,37 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
             }
             return inverse;
         }
+    }
+
+    public AbstractOrderedBidiMapDecoratorTest(final String testName) {
+        super(testName);
+    }
+
+    @Override
+    public boolean isAllowNullKey() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowNullValue() {
+        return false;
+    }
+
+    @Override
+    public boolean isSetValueSupported() {
+        return true;
+    }
+
+    @Override
+    public SortedMap<K, V> makeConfirmedMap() {
+        return new TreeMap<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedBidiMap<K, V> makeObject() {
+        return new TestOrderedBidiMap<>();
     }
 }

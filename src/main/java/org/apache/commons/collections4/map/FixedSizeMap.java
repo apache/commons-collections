@@ -88,30 +88,32 @@ public class FixedSizeMap<K, V>
         super(map);
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Map is fixed size");
     }
 
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @since 3.1
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        final Set<Map.Entry<K, V>> set = map.entrySet();
+        // unmodifiable set will still allow modification via Map.Entry objects
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public boolean isFull() {
+        return true;
+    }
+
+    @Override
+    public Set<K> keySet() {
+        final Set<K> set = map.keySet();
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public int maxSize() {
+        return size();
     }
 
     @Override
@@ -132,9 +134,18 @@ public class FixedSizeMap<K, V>
         map.putAll(mapToCopy);
     }
 
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Map is fixed size");
+    /**
+     * Read the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @since 3.1
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
     }
 
     @Override
@@ -143,32 +154,21 @@ public class FixedSizeMap<K, V>
     }
 
     @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        final Set<Map.Entry<K, V>> set = map.entrySet();
-        // unmodifiable set will still allow modification via Map.Entry objects
-        return UnmodifiableSet.unmodifiableSet(set);
-    }
-
-    @Override
-    public Set<K> keySet() {
-        final Set<K> set = map.keySet();
-        return UnmodifiableSet.unmodifiableSet(set);
-    }
-
-    @Override
     public Collection<V> values() {
         final Collection<V> coll = map.values();
         return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
-    @Override
-    public boolean isFull() {
-        return true;
-    }
-
-    @Override
-    public int maxSize() {
-        return size();
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

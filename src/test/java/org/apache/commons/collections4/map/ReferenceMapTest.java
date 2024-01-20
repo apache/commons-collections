@@ -47,28 +47,41 @@ import org.junit.jupiter.api.Test;
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    private static final class AccessibleEntry<K, V> extends ReferenceEntry<K, V> {
+        final AbstractReferenceMap<K, V> parent;
+        final Consumer<V> consumer;
+
+        AccessibleEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next, final int hashCode, final K key, final V value, final Consumer<V> consumer) {
+            super(parent, next, hashCode, key, value);
+            this.parent = parent;
+            this.consumer = consumer;
+        }
+
+        @Override
+        protected void onPurge() {
+            if (parent.isValueType(ReferenceStrength.HARD)) {
+                consumer.accept(getValue());
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private static void gc() {
+        try {
+            // trigger GC
+            final byte[][] tooLarge = new byte[1000000000][1000000000];
+            fail("you have too much RAM");
+        } catch (final OutOfMemoryError ex) {
+            System.gc(); // ignore
+        }
+    }
+
+    WeakReference<K> keyReference;
+
+    WeakReference<V> valueReference;
+
     public ReferenceMapTest() {
         super(ReferenceMapTest.class.getSimpleName());
-    }
-
-    @Override
-    public ReferenceMap<K, V> makeObject() {
-        return new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
-    }
-
-    @Override
-    public boolean isAllowNullKey() {
-        return false;
-    }
-
-    @Override
-    public boolean isAllowNullValue() {
-        return false;
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {
@@ -82,20 +95,21 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            "src/test/resources/data/test/ReferenceMap.fullCollection.version4.obj");
 //    }
 
-    @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
-        resetFull();
-        assertNull(map.get(null));
-        assertFalse(map.containsKey(null));
-        assertFalse(map.containsValue(null));
-        assertNull(map.remove(null));
-        assertFalse(map.entrySet().contains(null));
-        assertFalse(map.containsKey(null));
-        assertFalse(map.containsValue(null));
-        assertThrows(NullPointerException.class, () -> map.put(null, null));
-        assertThrows(NullPointerException.class, () -> map.put((K) new Object(), null));
-        assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
+    public Map<K, V> buildRefMap() {
+        final K key = (K) new Object();
+        final V value = (V) new Object();
+
+        keyReference = new WeakReference<>(key);
+        valueReference = new WeakReference<>(value);
+
+        final Map<K, V> testMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
+        testMap.put(key, value);
+
+        assertEquals(value, testMap.get(key), "In map");
+        assertNotNull(keyReference.get(), "Weak reference released early (1)");
+        assertNotNull(valueReference.get(), "Weak reference released early (2)");
+        return testMap;
     }
 
 /*
@@ -211,49 +225,23 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 */
 
-    WeakReference<K> keyReference;
-    WeakReference<V> valueReference;
-
-    @SuppressWarnings("unchecked")
-    public Map<K, V> buildRefMap() {
-        final K key = (K) new Object();
-        final V value = (V) new Object();
-
-        keyReference = new WeakReference<>(key);
-        valueReference = new WeakReference<>(value);
-
-        final Map<K, V> testMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
-        testMap.put(key, value);
-
-        assertEquals(value, testMap.get(key), "In map");
-        assertNotNull(keyReference.get(), "Weak reference released early (1)");
-        assertNotNull(valueReference.get(), "Weak reference released early (2)");
-        return testMap;
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+    @Override
+    public boolean isAllowNullKey() {
+        return false;
     }
 
-    /** Tests whether purge values setting works */
-    @Test
-    public void testPurgeValues() throws Exception {
-        // many thanks to Juozas Baliuka for suggesting this method
-        final Map<K, V> testMap = buildRefMap();
+    @Override
+    public boolean isAllowNullValue() {
+        return false;
+    }
 
-        int iterations = 0;
-        int bytz = 2;
-        while (true) {
-            System.gc();
-            if (iterations++ > 50) {
-                fail("Max iterations reached before resource released.");
-            }
-            testMap.isEmpty();
-            if (keyReference.get() == null && valueReference.get() == null) {
-                break;
-
-            }
-            // create garbage:
-            @SuppressWarnings("unused")
-            final byte[] b = new byte[bytz];
-            bytz *= 2;
-        }
+    @Override
+    public ReferenceMap<K, V> makeObject() {
+        return new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
     @Test
@@ -335,32 +323,44 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(map.isEmpty(), "Expect empty but have entry: " + map);
     }
 
-    @SuppressWarnings("unused")
-    private static void gc() {
-        try {
-            // trigger GC
-            final byte[][] tooLarge = new byte[1000000000][1000000000];
-            fail("you have too much RAM");
-        } catch (final OutOfMemoryError ex) {
-            System.gc(); // ignore
-        }
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testNullHandling() {
+        resetFull();
+        assertNull(map.get(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertNull(map.remove(null));
+        assertFalse(map.entrySet().contains(null));
+        assertFalse(map.containsKey(null));
+        assertFalse(map.containsValue(null));
+        assertThrows(NullPointerException.class, () -> map.put(null, null));
+        assertThrows(NullPointerException.class, () -> map.put((K) new Object(), null));
+        assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
 
-    private static final class AccessibleEntry<K, V> extends ReferenceEntry<K, V> {
-        final AbstractReferenceMap<K, V> parent;
-        final Consumer<V> consumer;
+    /** Tests whether purge values setting works */
+    @Test
+    public void testPurgeValues() throws Exception {
+        // many thanks to Juozas Baliuka for suggesting this method
+        final Map<K, V> testMap = buildRefMap();
 
-        AccessibleEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next, final int hashCode, final K key, final V value, final Consumer<V> consumer) {
-            super(parent, next, hashCode, key, value);
-            this.parent = parent;
-            this.consumer = consumer;
-        }
-
-        @Override
-        protected void onPurge() {
-            if (parent.isValueType(ReferenceStrength.HARD)) {
-                consumer.accept(getValue());
+        int iterations = 0;
+        int bytz = 2;
+        while (true) {
+            System.gc();
+            if (iterations++ > 50) {
+                fail("Max iterations reached before resource released.");
             }
+            testMap.isEmpty();
+            if (keyReference.get() == null && valueReference.get() == null) {
+                break;
+
+            }
+            // create garbage:
+            @SuppressWarnings("unused")
+            final byte[] b = new byte[bytz];
+            bytz *= 2;
         }
     }
 

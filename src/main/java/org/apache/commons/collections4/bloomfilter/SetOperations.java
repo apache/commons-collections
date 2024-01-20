@@ -26,21 +26,13 @@ import java.util.function.LongBinaryOperator;
 public final class SetOperations {
 
     /**
-     * Calculates the cardinality of the result of a LongBinaryOperator using the
-     * {@code BitMapProducer.makePredicate} method.
-     * @param first the first BitMapProducer
+     * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
      * @param second the second BitMapProducer
-     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
-     * @return the calculated cardinality.
+     * @return the cardinality of the {@code AND} of the filters.
      */
-    private static int cardinality(final BitMapProducer first, final BitMapProducer second, final LongBinaryOperator op) {
-        final int[] cardinality = new int[1];
-
-        first.forEachBitMapPair(second, (x, y) -> {
-            cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
-            return true;
-        });
-        return cardinality[0];
+    public static int andCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x & y);
     }
 
     /**
@@ -59,33 +51,21 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
-     * @param first the first BitMapProducer.
+     * Calculates the cardinality of the result of a LongBinaryOperator using the
+     * {@code BitMapProducer.makePredicate} method.
+     * @param first the first BitMapProducer
      * @param second the second BitMapProducer
-     * @return the cardinality of the {@code AND} of the filters.
+     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
+     * @return the calculated cardinality.
      */
-    public static int andCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality(first, second, (x, y) -> x & y);
-    }
+    private static int cardinality(final BitMapProducer first, final BitMapProducer second, final LongBinaryOperator op) {
+        final int[] cardinality = new int[1];
 
-    /**
-     * Calculates the cardinality of the logical {@code OR} of the bit maps for the two filters.
-     * @param first the first BitMapProducer.
-     * @param second the second BitMapProducer
-     * @return the cardinality of the {@code OR} of the filters.
-     */
-    public static int orCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality(first, second, (x, y) -> x | y);
-    }
-
-    /**
-     * Calculates the cardinality of the logical {@code XOR} of the bit maps for the two filters.
-     * @param first the first BitMapProducer.
-     * @param second the second BitMapProducer
-     * @return the cardinality of the {@code XOR} of the filters.
-     */
-    public static int xorCardinality(final BitMapProducer first, final BitMapProducer second) {
-        return cardinality(first, second, (x, y) -> x ^ y);
+        first.forEachBitMapPair(second, (x, y) -> {
+            cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
+            return true;
+        });
+        return cardinality[0];
     }
 
     /**
@@ -181,6 +161,26 @@ public final class SetOperations {
         });
         final int intersection = cardinality[0];
         return intersection == 0 ? 0 : intersection / (double) cardinality[1];
+    }
+
+    /**
+     * Calculates the cardinality of the logical {@code OR} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer
+     * @return the cardinality of the {@code OR} of the filters.
+     */
+    public static int orCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x | y);
+    }
+
+    /**
+     * Calculates the cardinality of the logical {@code XOR} of the bit maps for the two filters.
+     * @param first the first BitMapProducer.
+     * @param second the second BitMapProducer
+     * @return the cardinality of the {@code XOR} of the filters.
+     */
+    public static int xorCardinality(final BitMapProducer first, final BitMapProducer second) {
+        return cardinality(first, second, (x, y) -> x ^ y);
     }
 
     /**

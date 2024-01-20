@@ -34,6 +34,10 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     public ArrayListIteratorTest() {
     }
 
+    public ArrayListIterator<E> makeArrayListIterator(final Object array) {
+        return new ArrayListIterator<>(array);
+    }
+
     @Override
     public ArrayListIterator<E> makeEmptyIterator() {
         return new ArrayListIterator<>(new Object[0]);
@@ -42,10 +46,6 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     @Override
     public ArrayListIterator<E> makeObject() {
         return new ArrayListIterator<>(testArray);
-    }
-
-    public ArrayListIterator<E> makeArrayListIterator(final Object array) {
-        return new ArrayListIterator<>(array);
     }
 
     @Override

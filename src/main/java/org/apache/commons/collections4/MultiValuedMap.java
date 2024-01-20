@@ -52,22 +52,33 @@ public interface MultiValuedMap<K, V> {
     // Query operations
 
     /**
-     * Gets the total size of the map.
+     * Returns a view of this multivalued map as a {@code Map} from each distinct
+     * key to the non-empty collection of that key's associated values.
      * <p>
-     * Implementations would return the total size of the map which is the count
-     * of the values from all keys.
+     * Note that {@code this.asMap().get(k)} is equivalent to {@code this.get(k)}
+     * only when {@code k} is a key contained in the multivalued map; otherwise it
+     * returns {@code null} as opposed to an empty collection.
+     * </p>
+     * <p>
+     * Changes to the returned map or the collections that serve as its values
+     * will update the underlying multivalued map, and vice versa. The map does
+     * not support {@code put} or {@code putAll}, nor do its entries support
+     * {@link java.util.Map.Entry#setValue(Object) setValue}.
      * </p>
      *
-     * @return the total size of the map
+     * @return a map view of the mappings in this multivalued map
      */
-    int size();
+    Map<K, Collection<V>> asMap();
 
     /**
-     * Returns {@code true} if this map contains no key-value mappings.
+     * Removes all of the mappings from this map (optional operation).
+     * <p>
+     * The map will be empty after this call returns.
+     * </p>
      *
-     * @return {@code true} if this map contains no key-value mappings
+     * @throws UnsupportedOperationException if the map is unmodifiable
      */
-    boolean isEmpty();
+    void clear();
 
     /**
      * Returns {@code true} if this map contains a mapping for the specified
@@ -83,6 +94,15 @@ public interface MultiValuedMap<K, V> {
     boolean containsKey(Object key);
 
     /**
+     * Checks whether the map contains a mapping for the specified key and value.
+     *
+     * @param key  the key to search for
+     * @param value  the value to search for
+     * @return true if the map contains the value
+     */
+    boolean containsMapping(Object key, Object value);
+
+    /**
      * Checks whether the map contains at least one mapping for the specified value.
      *
      * @param value  the value to search for
@@ -93,13 +113,17 @@ public interface MultiValuedMap<K, V> {
     boolean containsValue(Object value);
 
     /**
-     * Checks whether the map contains a mapping for the specified key and value.
+     * Returns a {@link Collection} view of the mappings contained in this multivalued map.
+     * <p>
+     * The collection is backed by the map, so changes to the map are reflected
+     * in the collection, and vice-versa.
+     * </p>
      *
-     * @param key  the key to search for
-     * @param value  the value to search for
-     * @return true if the map contains the value
+     * @return a set view of the mappings contained in this map
      */
-    boolean containsMapping(Object key, Object value);
+    Collection<Entry<K, V>> entries();
+
+    // Modification operations
 
     /**
      * Returns a view collection of the values associated with the specified key.
@@ -116,7 +140,58 @@ public interface MultiValuedMap<K, V> {
      */
     Collection<V> get(K key);
 
-    // Modification operations
+    /**
+     * Returns {@code true} if this map contains no key-value mappings.
+     *
+     * @return {@code true} if this map contains no key-value mappings
+     */
+    boolean isEmpty();
+
+    /**
+     * Returns a {@link MultiSet} view of the keys contained in this multivalued map.
+     * <p>
+     * The {@link MultiSet#getCount(Object)} method of the returned multiset will give
+     * the same result a calling {@code get(Object).size()} for the same key.
+     * </p>
+     * <p>
+     * This multiset is backed by the map, so any changes in the map are reflected in
+     * the multiset.
+     * </p>
+     *
+     * @return a multiset view of the keys contained in this map
+     */
+    MultiSet<K> keys();
+
+    /**
+     * Returns a {@link Set} view of the keys contained in this multivalued map.
+     * <p>
+     * The set is backed by the map, so changes to the map are reflected
+     * in the set, and vice-versa.
+     * </p>
+     * <p>
+     * If the map is modified while an iteration over the set is in
+     * progress (except through the iterator's own {@code remove} operation),
+     * the result of the iteration is undefined. The set supports element
+     * removal, which removes the corresponding mapping from the map, via the
+     * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
+     * {@code retainAll}, and {@code clear} operations. It does not support
+     * the {@code add} or {@code addAll} operations.
+     * </p>
+     *
+     * @return a set view of the keys contained in this map
+     */
+    Set<K> keySet();
+
+    /**
+     * Obtains a {@code MapIterator} over this multivalued map.
+     * <p>
+     * A map iterator is an efficient way of iterating over maps. There is no
+     * need to access the entries collection or use {@code Map.Entry} objects.
+     * </p>
+     *
+     * @return a map iterator
+     */
+    MapIterator<K, V> mapIterator();
 
     /**
      * Adds a key-value mapping to this multivalued map.
@@ -155,6 +230,8 @@ public interface MultiValuedMap<K, V> {
      *   null (optional)
      */
     boolean putAll(K key, Iterable<? extends V> values);
+
+    // Views
 
     /**
      * Copies all mappings from the specified map to this multivalued map
@@ -241,62 +318,15 @@ public interface MultiValuedMap<K, V> {
     boolean removeMapping(Object key, Object item);
 
     /**
-     * Removes all of the mappings from this map (optional operation).
+     * Gets the total size of the map.
      * <p>
-     * The map will be empty after this call returns.
+     * Implementations would return the total size of the map which is the count
+     * of the values from all keys.
      * </p>
      *
-     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @return the total size of the map
      */
-    void clear();
-
-    // Views
-
-    /**
-     * Returns a {@link Collection} view of the mappings contained in this multivalued map.
-     * <p>
-     * The collection is backed by the map, so changes to the map are reflected
-     * in the collection, and vice-versa.
-     * </p>
-     *
-     * @return a set view of the mappings contained in this map
-     */
-    Collection<Entry<K, V>> entries();
-
-    /**
-     * Returns a {@link MultiSet} view of the keys contained in this multivalued map.
-     * <p>
-     * The {@link MultiSet#getCount(Object)} method of the returned multiset will give
-     * the same result a calling {@code get(Object).size()} for the same key.
-     * </p>
-     * <p>
-     * This multiset is backed by the map, so any changes in the map are reflected in
-     * the multiset.
-     * </p>
-     *
-     * @return a multiset view of the keys contained in this map
-     */
-    MultiSet<K> keys();
-
-    /**
-     * Returns a {@link Set} view of the keys contained in this multivalued map.
-     * <p>
-     * The set is backed by the map, so changes to the map are reflected
-     * in the set, and vice-versa.
-     * </p>
-     * <p>
-     * If the map is modified while an iteration over the set is in
-     * progress (except through the iterator's own {@code remove} operation),
-     * the result of the iteration is undefined. The set supports element
-     * removal, which removes the corresponding mapping from the map, via the
-     * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
-     * {@code retainAll}, and {@code clear} operations. It does not support
-     * the {@code add} or {@code addAll} operations.
-     * </p>
-     *
-     * @return a set view of the keys contained in this map
-     */
-    Set<K> keySet();
+    int size();
 
     /**
      * Gets a {@link Collection} view of all values contained in this multivalued map.
@@ -308,35 +338,5 @@ public interface MultiValuedMap<K, V> {
      * @return a collection view of the values contained in this multivalued map
      */
     Collection<V> values();
-
-    /**
-     * Returns a view of this multivalued map as a {@code Map} from each distinct
-     * key to the non-empty collection of that key's associated values.
-     * <p>
-     * Note that {@code this.asMap().get(k)} is equivalent to {@code this.get(k)}
-     * only when {@code k} is a key contained in the multivalued map; otherwise it
-     * returns {@code null} as opposed to an empty collection.
-     * </p>
-     * <p>
-     * Changes to the returned map or the collections that serve as its values
-     * will update the underlying multivalued map, and vice versa. The map does
-     * not support {@code put} or {@code putAll}, nor do its entries support
-     * {@link java.util.Map.Entry#setValue(Object) setValue}.
-     * </p>
-     *
-     * @return a map view of the mappings in this multivalued map
-     */
-    Map<K, Collection<V>> asMap();
-
-    /**
-     * Obtains a {@code MapIterator} over this multivalued map.
-     * <p>
-     * A map iterator is an efficient way of iterating over maps. There is no
-     * need to access the entries collection or use {@code Map.Entry} objects.
-     * </p>
-     *
-     * @return a map iterator
-     */
-    MapIterator<K, V> mapIterator();
 
 }

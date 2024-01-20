@@ -37,51 +37,6 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(IntPredicate predicate) {
-        return wrapped.forEachIndex(predicate);
-    }
-
-    @Override
-    public BloomFilter copy() {
-        return wrapped.copy();
-    }
-
-    @Override
-    public boolean forEachBitMap(LongPredicate predicate) {
-        return wrapped.forEachBitMap(predicate);
-    }
-
-    @Override
-    public int characteristics() {
-        return wrapped.characteristics();
-    }
-
-    @Override
-    public Shape getShape() {
-        return wrapped.getShape();
-    }
-
-    @Override
-    public void clear() {
-        wrapped.clear();
-    }
-
-    @Override
-    public boolean contains(BloomFilter other) {
-        return wrapped.contains(other);
-    }
-
-    @Override
-    public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
-        return wrapped.forEachBitMapPair(other, func);
-    }
-
-    @Override
-    public boolean contains(Hasher hasher) {
-        return wrapped.contains(hasher);
-    }
-
-    @Override
     public long[] asBitMapArray() {
         return wrapped.asBitMapArray();
     }
@@ -92,13 +47,88 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(IndexProducer indexProducer) {
-        return wrapped.contains(indexProducer);
+    public int cardinality() {
+        return wrapped.cardinality();
+    }
+
+    @Override
+    public int characteristics() {
+        return wrapped.characteristics();
+    }
+
+    @Override
+    public void clear() {
+        wrapped.clear();
     }
 
     @Override
     public boolean contains(BitMapProducer bitMapProducer) {
         return wrapped.contains(bitMapProducer);
+    }
+
+    @Override
+    public boolean contains(BloomFilter other) {
+        return wrapped.contains(other);
+    }
+
+    @Override
+    public boolean contains(Hasher hasher) {
+        return wrapped.contains(hasher);
+    }
+
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        return wrapped.contains(indexProducer);
+    }
+
+    @Override
+    public BloomFilter copy() {
+        return wrapped.copy();
+    }
+
+    @Override
+    public int estimateIntersection(BloomFilter other) {
+        return wrapped.estimateIntersection(other);
+    }
+
+    @Override
+    public int estimateN() {
+        return wrapped.estimateN();
+    }
+
+    @Override
+    public int estimateUnion(BloomFilter other) {
+        return wrapped.estimateUnion(other);
+    }
+
+    @Override
+    public boolean forEachBitMap(LongPredicate predicate) {
+        return wrapped.forEachBitMap(predicate);
+    }
+
+    @Override
+    public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
+        return wrapped.forEachBitMapPair(other, func);
+    }
+
+    @Override
+    public boolean forEachIndex(IntPredicate predicate) {
+        return wrapped.forEachIndex(predicate);
+    }
+
+    @Override
+    public Shape getShape() {
+        return wrapped.getShape();
+    }
+
+    @Override
+    public boolean isFull() {
+        return wrapped.isFull();
+    }
+
+    @Override
+    public boolean merge(BitMapProducer bitMapProducer) {
+        return wrapped.merge(bitMapProducer);
     }
 
     @Override
@@ -114,35 +144,5 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     @Override
     public boolean merge(IndexProducer indexProducer) {
         return wrapped.merge(indexProducer);
-    }
-
-    @Override
-    public boolean merge(BitMapProducer bitMapProducer) {
-        return wrapped.merge(bitMapProducer);
-    }
-
-    @Override
-    public boolean isFull() {
-        return wrapped.isFull();
-    }
-
-    @Override
-    public int cardinality() {
-        return wrapped.cardinality();
-    }
-
-    @Override
-    public int estimateN() {
-        return wrapped.estimateN();
-    }
-
-    @Override
-    public int estimateUnion(BloomFilter other) {
-        return wrapped.estimateUnion(other);
-    }
-
-    @Override
-    public int estimateIntersection(BloomFilter other) {
-        return wrapped.estimateIntersection(other);
     }
 }

@@ -49,11 +49,6 @@ class CountingPredicate<T> implements Predicate<T> {
         this.func = func;
     }
 
-    @Override
-    public boolean test(final T other) {
-        return func.test(idx == ary.length ? null : ary[idx++], other);
-    }
-
     /**
      * Call {@code BiPredicate<T, T>} for each remaining unpaired {@code <T>} in the
      * input array. This method should be invoked after the predicate has been
@@ -71,5 +66,10 @@ class CountingPredicate<T> implements Predicate<T> {
             i++;
         }
         return i == limit;
+    }
+
+    @Override
+    public boolean test(final T other) {
+        return func.test(idx == ary.length ? null : ary[idx++], other);
     }
 }

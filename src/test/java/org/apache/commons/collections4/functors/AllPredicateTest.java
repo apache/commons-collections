@@ -45,7 +45,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * {@inheritDoc}
      */
     @Override
-    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer>... predicates) {
+    protected final Predicate<Integer> getPredicateInstance(final Collection<Predicate<Integer>> predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -53,8 +53,19 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * {@inheritDoc}
      */
     @Override
-    protected final Predicate<Integer> getPredicateInstance(final Collection<Predicate<Integer>> predicates) {
+    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer>... predicates) {
         return AllPredicate.allPredicate(predicates);
+    }
+
+    /**
+     * Tests whether multiple true predicates evaluates to true.
+     */
+    @Test
+    public void testAllTrue() {
+        assertTrue(getPredicateInstance(true, true).evaluate(getTestValue()),
+                "multiple true predicates evaluated to false");
+        assertTrue(getPredicateInstance(true, true, true).evaluate(getTestValue()),
+                "multiple true predicates evaluated to false");
     }
 
     /**
@@ -77,19 +88,6 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     }
 
     /**
-     * Tests whether a single true predicate evaluates to true.
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public void testOneTruePredicate() {
-        // use the constructor directly, as getInstance() returns the original predicate when passed
-        // an array of size one.
-        final Predicate<Integer> predicate = createMockPredicate(true);
-
-        assertTrue(allPredicate(predicate).evaluate(getTestValue()), "single true predicate evaluated to false");
-    }
-
-    /**
      * Tests whether a single false predicate evaluates to true.
      */
     @SuppressWarnings("unchecked")
@@ -103,14 +101,16 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     }
 
     /**
-     * Tests whether multiple true predicates evaluates to true.
+     * Tests whether a single true predicate evaluates to true.
      */
+    @SuppressWarnings("unchecked")
     @Test
-    public void testAllTrue() {
-        assertTrue(getPredicateInstance(true, true).evaluate(getTestValue()),
-                "multiple true predicates evaluated to false");
-        assertTrue(getPredicateInstance(true, true, true).evaluate(getTestValue()),
-                "multiple true predicates evaluated to false");
+    public void testOneTruePredicate() {
+        // use the constructor directly, as getInstance() returns the original predicate when passed
+        // an array of size one.
+        final Predicate<Integer> predicate = createMockPredicate(true);
+
+        assertTrue(allPredicate(predicate).evaluate(getTestValue()), "single true predicate evaluated to false");
     }
 
     /**

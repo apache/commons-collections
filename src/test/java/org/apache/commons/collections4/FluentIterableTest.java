@@ -44,6 +44,8 @@ import org.junit.jupiter.api.Test;
  */
 public class FluentIterableTest {
 
+    private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
+
     /**
      * Iterable of {@link Integer}s
      */
@@ -103,24 +105,23 @@ public class FluentIterableTest {
         emptyIterable = Collections.emptyList();
     }
 
-    private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
+    @Test
+    public void testAllMatch() {
+        assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).allMatch(null),
+                "expecting NullPointerException");
+    }
 
     @Test
-    public void testFactoryMethodOf() {
-        FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
-        List<Integer> result = iterable.toList();
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+    public void testAnyMatch() {
+        assertTrue(FluentIterable.of(iterableEven).anyMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
+        assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
 
-        iterable = FluentIterable.of(1);
-        assertEquals(1, iterable.size());
-        assertFalse(iterable.isEmpty());
-        assertEquals(Arrays.asList(1), iterable.toList());
-
-        result = FluentIterable.of(new Integer[0]).toList();
-        assertTrue(result.isEmpty());
-
-        final Iterable<Integer> it = null;
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(it).toList(),
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).anyMatch(null),
                 "expecting NullPointerException");
     }
 
@@ -148,6 +149,16 @@ public class FluentIterableTest {
         assertTrue(IterableUtils.contains(it, 20));
         assertTrue(IterableUtils.contains(it, 30));
         assertFalse(IterableUtils.contains(it, 40));
+    }
+
+    @Test
+    public void testAsEnumeration() {
+        Enumeration<Long> enumeration = FluentIterable.of(iterableB).asEnumeration();
+        final List<Long> result = EnumerationUtils.toList(enumeration);
+        assertEquals(iterableB, result);
+
+        enumeration = FluentIterable.<Long>empty().asEnumeration();
+        assertFalse(enumeration.hasMoreElements());
     }
 
     @Test
@@ -183,6 +194,71 @@ public class FluentIterableTest {
     }
 
     @Test
+    public void testContains() {
+        assertTrue(FluentIterable.of(iterableEven).contains(2));
+        assertFalse(FluentIterable.of(iterableEven).contains(1));
+        assertFalse(FluentIterable.of(iterableEven).contains(null));
+        assertTrue(FluentIterable.of(iterableEven).append((Integer) null).contains(null));
+    }
+
+    @Test
+    public void testCopyInto() {
+        List<Integer> result = new ArrayList<>();
+        FluentIterable.of(iterableA).copyInto(result);
+
+        List<Integer> expected = IterableUtils.toList(iterableA);
+        assertEquals(expected.size(), result.size());
+        assertEquals(expected, result);
+
+        result = new ArrayList<>();
+        result.add(10);
+        result.add(9);
+        result.add(8);
+        FluentIterable.of(iterableA).copyInto(result);
+
+        expected = new ArrayList<>(Arrays.asList(10, 9, 8));
+        expected.addAll(IterableUtils.toList(iterableA));
+        assertEquals(expected.size(), result.size());
+        assertEquals(expected, result);
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).copyInto(null),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testEval() {
+        final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
+        final FluentIterable<Integer> materialized = iterable.eval();
+
+        listNumbers.addAll(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
+        assertEquals(5, materialized.size());
+        assertEquals(10, iterable.size());
+
+        assertEquals(Arrays.asList(2, 4, 6, 8, 10), materialized.toList());
+        assertEquals(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20), iterable.toList());
+    }
+
+    @Test
+    public void testFactoryMethodOf() {
+        FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
+        List<Integer> result = iterable.toList();
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+
+        iterable = FluentIterable.of(1);
+        assertEquals(1, iterable.size());
+        assertFalse(iterable.isEmpty());
+        assertEquals(Arrays.asList(1), iterable.toList());
+
+        result = FluentIterable.of(new Integer[0]).toList();
+        assertTrue(result.isEmpty());
+
+        final Iterable<Integer> it = null;
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(it).toList(),
+                "expecting NullPointerException");
+    }
+
+    @Test
     public void testFilter() {
         final Predicate<Integer> smallerThan3 = object -> object.intValue() < 3;
         List<Integer> result = FluentIterable.of(iterableA).filter(smallerThan3).toList();
@@ -211,6 +287,32 @@ public class FluentIterableTest {
 
         assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).forEach((Closure<Integer>) null),
                 "expecting NullPointerException");
+    }
+
+    @Test
+    public void testGet() {
+        assertEquals(2, FluentIterable.of(iterableEven).get(0).intValue());
+
+        assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(-1),
+                "expecting IndexOutOfBoundsException");
+
+        assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(IterableUtils.size(iterableEven)),
+                "expecting IndexOutOfBoundsException");
+    }
+
+    @Test
+    public void testIsEmpty() {
+        assertTrue(FluentIterable.of(emptyIterable).isEmpty());
+        assertFalse(FluentIterable.of(iterableOdd).isEmpty());
+    }
+
+    @Test
+    public void testIterator() {
+        Iterator<Integer> iterator = FluentIterable.of(iterableA).iterator();
+        assertTrue(iterator.hasNext());
+
+        iterator = FluentIterable.<Integer>empty().iterator();
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -250,6 +352,12 @@ public class FluentIterableTest {
     }
 
     @Test
+    public void testSize() {
+        assertEquals(0, FluentIterable.of(emptyIterable).size());
+        assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
+    }
+
+    @Test
     public void testSkip() {
         List<Integer> result = FluentIterable.of(iterableA).skip(4).toList();
         assertEquals(6, result.size());
@@ -271,6 +379,26 @@ public class FluentIterableTest {
 
         assertThrows(IllegalArgumentException.class, () -> FluentIterable.of(iterableA).skip(-4).toList(),
                 "expecting IllegalArgumentException");
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Test
+    public void testToArray() {
+        final Long[] arr = {1L, 2L, 3L, 4L, 5L};
+        final Long[] result = FluentIterable.of(arr).toArray(Long.class);
+        assertNotNull(result);
+        assertArrayEquals(arr, result);
+
+        assertThrows(ArrayStoreException.class, () -> FluentIterable.of(arr).toArray((Class) String.class));
+    }
+
+    @Test
+    public void testToString() {
+        String result = FluentIterable.of(iterableA).toString();
+        assertEquals(iterableA.toString(), result);
+
+        result = FluentIterable.empty().toString();
+        assertEquals("[]", result);
     }
 
     @Test
@@ -332,134 +460,6 @@ public class FluentIterableTest {
                     .toList();
         combinedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         assertEquals(combinedList, result);
-    }
-
-    @Test
-    public void testAsEnumeration() {
-        Enumeration<Long> enumeration = FluentIterable.of(iterableB).asEnumeration();
-        final List<Long> result = EnumerationUtils.toList(enumeration);
-        assertEquals(iterableB, result);
-
-        enumeration = FluentIterable.<Long>empty().asEnumeration();
-        assertFalse(enumeration.hasMoreElements());
-    }
-
-    @Test
-    public void testAllMatch() {
-        assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).allMatch(null),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void testAnyMatch() {
-        assertTrue(FluentIterable.of(iterableEven).anyMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
-        assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).anyMatch(null),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void testIsEmpty() {
-        assertTrue(FluentIterable.of(emptyIterable).isEmpty());
-        assertFalse(FluentIterable.of(iterableOdd).isEmpty());
-    }
-
-    @Test
-    public void testSize() {
-        assertEquals(0, FluentIterable.of(emptyIterable).size());
-        assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
-    }
-
-    @Test
-    public void testEval() {
-        final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-        final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
-        final FluentIterable<Integer> materialized = iterable.eval();
-
-        listNumbers.addAll(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
-        assertEquals(5, materialized.size());
-        assertEquals(10, iterable.size());
-
-        assertEquals(Arrays.asList(2, 4, 6, 8, 10), materialized.toList());
-        assertEquals(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20), iterable.toList());
-    }
-
-    @Test
-    public void testContains() {
-        assertTrue(FluentIterable.of(iterableEven).contains(2));
-        assertFalse(FluentIterable.of(iterableEven).contains(1));
-        assertFalse(FluentIterable.of(iterableEven).contains(null));
-        assertTrue(FluentIterable.of(iterableEven).append((Integer) null).contains(null));
-    }
-
-    @Test
-    public void testCopyInto() {
-        List<Integer> result = new ArrayList<>();
-        FluentIterable.of(iterableA).copyInto(result);
-
-        List<Integer> expected = IterableUtils.toList(iterableA);
-        assertEquals(expected.size(), result.size());
-        assertEquals(expected, result);
-
-        result = new ArrayList<>();
-        result.add(10);
-        result.add(9);
-        result.add(8);
-        FluentIterable.of(iterableA).copyInto(result);
-
-        expected = new ArrayList<>(Arrays.asList(10, 9, 8));
-        expected.addAll(IterableUtils.toList(iterableA));
-        assertEquals(expected.size(), result.size());
-        assertEquals(expected, result);
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).copyInto(null),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void testIterator() {
-        Iterator<Integer> iterator = FluentIterable.of(iterableA).iterator();
-        assertTrue(iterator.hasNext());
-
-        iterator = FluentIterable.<Integer>empty().iterator();
-        assertFalse(iterator.hasNext());
-    }
-
-    @Test
-    public void testGet() {
-        assertEquals(2, FluentIterable.of(iterableEven).get(0).intValue());
-
-        assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(-1),
-                "expecting IndexOutOfBoundsException");
-
-        assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(IterableUtils.size(iterableEven)),
-                "expecting IndexOutOfBoundsException");
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Test
-    public void testToArray() {
-        final Long[] arr = {1L, 2L, 3L, 4L, 5L};
-        final Long[] result = FluentIterable.of(arr).toArray(Long.class);
-        assertNotNull(result);
-        assertArrayEquals(arr, result);
-
-        assertThrows(ArrayStoreException.class, () -> FluentIterable.of(arr).toArray((Class) String.class));
-    }
-
-    @Test
-    public void testToString() {
-        String result = FluentIterable.of(iterableA).toString();
-        assertEquals(iterableA.toString(), result);
-
-        result = FluentIterable.empty().toString();
-        assertEquals("[]", result);
     }
 
 }

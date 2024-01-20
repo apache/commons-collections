@@ -29,9 +29,6 @@ final class IndexUtils {
      */
     static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
-    // do not instantiate
-    private IndexUtils() {}
-
     /**
      * Ensure the array can add an element at the specified index.
      * @param array the array to check.
@@ -44,4 +41,7 @@ final class IndexUtils {
         }
         return array;
     }
+
+    // do not instantiate
+    private IndexUtils() {}
 }

@@ -42,6 +42,16 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
+    @Override
     public Set<E> makeConfirmedCollection() {
         return new HashSet<>();
     }
@@ -53,16 +63,16 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Set<E> makeObject() {
-        return TransformedSet.transformingSet(new HashSet<>(),
+    public Set<E> makeFullCollection() {
+        final Set<E> list = new HashSet<>(Arrays.asList(getFullElements()));
+        return TransformedSet.transformingSet(list,
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Set<E> makeFullCollection() {
-        final Set<E> list = new HashSet<>(Arrays.asList(getFullElements()));
-        return TransformedSet.transformingSet(list,
+    public Set<E> makeObject() {
+        return TransformedSet.transformingSet(new HashSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
@@ -99,16 +109,6 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
         assertFalse(set.remove(els[0]));
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

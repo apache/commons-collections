@@ -55,12 +55,12 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Override
-    public boolean supportsRemove() {
+    public boolean supportsEmptyIterator() {
         return false;
     }
 
     @Override
-    public boolean supportsEmptyIterator() {
+    public boolean supportsRemove() {
         return false;
     }
 

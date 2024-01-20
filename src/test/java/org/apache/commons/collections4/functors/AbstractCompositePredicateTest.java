@@ -46,24 +46,6 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param predicates the arguments to {@code getInstance}.
-     *
-     * @return a predicate to test.
-     */
-    protected abstract Predicate<T> getPredicateInstance(Predicate<? super T>... predicates);
-
-    /**
-     * Creates an instance of the predicate to test.
-     *
-     * @param predicates the argument to {@code getInstance}.
-     *
-     * @return a predicate to test.
-     */
-    protected abstract Predicate<T> getPredicateInstance(Collection<Predicate<T>> predicates);
-
-    /**
-     * Creates an instance of the predicate to test.
-     *
      * @param mockReturnValues the return values for the mock predicates, or null if that mock is not expected
      *                         to be called
      *
@@ -78,25 +60,22 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests whether {@code getInstance} with a one element array returns the first element in the array.
+     * Creates an instance of the predicate to test.
+     *
+     * @param predicates the argument to {@code getInstance}.
+     *
+     * @return a predicate to test.
      */
-    @SuppressWarnings("unchecked")
-    public void singleElementArrayToGetInstance() {
-        final Predicate<T> predicate = createMockPredicate(null);
-        final Predicate<T> allPredicate = getPredicateInstance(predicate);
-        assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
-    }
+    protected abstract Predicate<T> getPredicateInstance(Collection<Predicate<T>> predicates);
 
     /**
-     * Tests that passing a singleton collection to {@code getInstance} returns the single element in the
-     * collection.
+     * Creates an instance of the predicate to test.
+     *
+     * @param predicates the arguments to {@code getInstance}.
+     *
+     * @return a predicate to test.
      */
-    public void singletonCollectionToGetInstance() {
-        final Predicate<T> predicate = createMockPredicate(null);
-        final Predicate<T> allPredicate = getPredicateInstance(
-                Collections.<Predicate<T>>singleton(predicate));
-        assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
-    }
+    protected abstract Predicate<T> getPredicateInstance(Predicate<? super T>... predicates);
 
     /**
      * Tests {@code getInstance} with a null predicate array.
@@ -104,6 +83,14 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     @Test
     public final void nullArrayToGetInstance() {
         assertThrows(NullPointerException.class, () -> getPredicateInstance((Predicate<T>[]) null));
+    }
+
+    /**
+     * Tests {@code getInstance} with a null predicate collection
+     */
+    @Test
+    public final void nullCollectionToGetInstance() {
+        assertThrows(NullPointerException.class, () -> getPredicateInstance((Collection<Predicate<T>>) null));
     }
 
     /**
@@ -125,14 +112,6 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     }
 
     /**
-     * Tests {@code getInstance} with a null predicate collection
-     */
-    @Test
-    public final void nullCollectionToGetInstance() {
-        assertThrows(NullPointerException.class, () -> getPredicateInstance((Collection<Predicate<T>>) null));
-    }
-
-    /**
      * Tests {@code getInstance} with a predicate collection that contains null elements
      */
     @Test
@@ -141,6 +120,27 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
         coll.add(null);
         coll.add(null);
         assertThrows(NullPointerException.class, () -> getPredicateInstance(coll));
+    }
+
+    /**
+     * Tests whether {@code getInstance} with a one element array returns the first element in the array.
+     */
+    @SuppressWarnings("unchecked")
+    public void singleElementArrayToGetInstance() {
+        final Predicate<T> predicate = createMockPredicate(null);
+        final Predicate<T> allPredicate = getPredicateInstance(predicate);
+        assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
+    }
+
+    /**
+     * Tests that passing a singleton collection to {@code getInstance} returns the single element in the
+     * collection.
+     */
+    public void singletonCollectionToGetInstance() {
+        final Predicate<T> predicate = createMockPredicate(null);
+        final Predicate<T> allPredicate = getPredicateInstance(
+                Collections.<Predicate<T>>singleton(predicate));
+        assertSame(predicate, allPredicate, "expected argument to be returned by getInstance()");
     }
 
 }

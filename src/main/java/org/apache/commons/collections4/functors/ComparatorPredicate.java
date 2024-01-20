@@ -78,22 +78,13 @@ import org.apache.commons.collections4.Predicate;
  */
 public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 
-    private static final long serialVersionUID = -1863209236504077399L;
-
     public enum Criterion {
         EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL,
     }
 
+    private static final long serialVersionUID = -1863209236504077399L;
+
     // Instance variables:
-
-    /** The internal object to compare with */
-    private final T object;
-
-    /** The comparator to use for comparison */
-    private final Comparator<T> comparator;
-
-    /** The comparison evaluation criterion to use */
-    private final Criterion criterion;
 
     /**
      * Factory to create the comparator predicate
@@ -123,6 +114,15 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
         return new ComparatorPredicate<>(object, Objects.requireNonNull(comparator, "comparator"),
                 Objects.requireNonNull(criterion, "criterion"));
     }
+
+    /** The internal object to compare with */
+    private final T object;
+
+    /** The comparator to use for comparison */
+    private final Comparator<T> comparator;
+
+    /** The comparison evaluation criterion to use */
+    private final Criterion criterion;
 
     /**
      * Constructor that performs no validation.

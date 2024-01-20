@@ -121,6 +121,16 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    @Override
+    public CaseInsensitiveMap<K, V> clone() {
+        return (CaseInsensitiveMap<K, V>) super.clone();
+    }
+
+    /**
      * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to
      * lower case.
      * <p>
@@ -142,13 +152,15 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
-     * Clones the map without cloning the keys or values.
+     * Read the map in using a custom routine.
      *
-     * @return a shallow clone
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
-    @Override
-    public CaseInsensitiveMap<K, V> clone() {
-        return (CaseInsensitiveMap<K, V>) super.clone();
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
 
     /**
@@ -160,18 +172,6 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
     }
 
 }

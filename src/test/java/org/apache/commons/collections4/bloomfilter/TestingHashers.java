@@ -33,11 +33,6 @@ public class TestingHashers {
     public static final Hasher FROM11 = new IncrementingHasher(11, 1);
 
     /**
-     * Do not instantiate.
-     */
-    private TestingHashers() {}
-
-    /**
      * Merge several Hashers together into a single Bloom filter.
      * @param <T> The type of bloom filter.
      * @param filter The Bloom filter to populate
@@ -52,16 +47,6 @@ public class TestingHashers {
     }
 
     /**
-     * Merge {@code from1} and {@code from11} into a single Bloom filter.
-     * @param <T> The type of bloom filter.
-     * @param filter The Bloom filter to populate
-     * @return {@code filter} for chaining
-     */
-    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(final T filter) {
-        return mergeHashers(filter, FROM1, FROM11);
-    }
-
-    /**
      * Enables all bits in the filter.
      * @param <T> the Bloom filter type.
      * @param filter the Bloom filter to populate
@@ -69,6 +54,16 @@ public class TestingHashers {
      */
     public static <T extends BloomFilter> T populateEntireFilter(final T filter) {
         return populateRange(filter, 0, filter.getShape().getNumberOfBits() - 1);
+    }
+
+    /**
+     * Merge {@code from1} and {@code from11} into a single Bloom filter.
+     * @param <T> The type of bloom filter.
+     * @param filter The Bloom filter to populate
+     * @return {@code filter} for chaining
+     */
+    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(final T filter) {
+        return mergeHashers(filter, FROM1, FROM11);
     }
 
     /**
@@ -97,4 +92,9 @@ public class TestingHashers {
     public static Hasher randomHasher() {
         return new EnhancedDoubleHasher( ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong() );
     }
+
+    /**
+     * Do not instantiate.
+     */
+    private TestingHashers() {}
 }

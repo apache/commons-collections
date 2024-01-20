@@ -47,6 +47,36 @@ import java.util.Map;
 public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
 
+    /**
+     * HashEntry
+     */
+    protected static class IdentityEntry<K, V> extends HashEntry<K, V> {
+
+        protected IdentityEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
+            super(next, hashCode, key, value);
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Entry)) {
+                return false;
+            }
+            final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
+            return
+                getKey() == other.getKey() &&
+                getValue() == other.getValue();
+        }
+
+        @Override
+        public int hashCode() {
+            return System.identityHashCode(getKey()) ^
+                   System.identityHashCode(getValue());
+        }
+    }
+
     /** Serialisation version */
     private static final long serialVersionUID = 2028493495224302329L;
 
@@ -91,6 +121,32 @@ public class IdentityMap<K, V>
     }
 
     /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    @Override
+    public IdentityMap<K, V> clone() {
+        return (IdentityMap<K, V>) super.clone();
+    }
+
+    /**
+     * Creates an entry to store the data.
+     * This implementation creates an IdentityEntry instance.
+     *
+     * @param next  the next entry in sequence
+     * @param hashCode  the hash code to use
+     * @param key  the key to store
+     * @param value  the value to store
+     * @return the newly created entry
+     */
+    @Override
+    protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
+                                              final K key, final V value) {
+        return new IdentityEntry<>(next, hashCode, key, value);
+    }
+
+    /**
      * Gets the hash code for the key specified.
      * This implementation uses the identity hash code.
      *
@@ -129,59 +185,11 @@ public class IdentityMap<K, V>
     }
 
     /**
-     * Creates an entry to store the data.
-     * This implementation creates an IdentityEntry instance.
-     *
-     * @param next  the next entry in sequence
-     * @param hashCode  the hash code to use
-     * @param key  the key to store
-     * @param value  the value to store
-     * @return the newly created entry
+     * Read the map in using a custom routine.
      */
-    @Override
-    protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
-                                              final K key, final V value) {
-        return new IdentityEntry<>(next, hashCode, key, value);
-    }
-
-    /**
-     * HashEntry
-     */
-    protected static class IdentityEntry<K, V> extends HashEntry<K, V> {
-
-        protected IdentityEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
-            super(next, hashCode, key, value);
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof Entry)) {
-                return false;
-            }
-            final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
-            return
-                getKey() == other.getKey() &&
-                getValue() == other.getValue();
-        }
-
-        @Override
-        public int hashCode() {
-            return System.identityHashCode(getKey()) ^
-                   System.identityHashCode(getValue());
-        }
-    }
-
-    /**
-     * Clones the map without cloning the keys or values.
-     *
-     * @return a shallow clone
-     */
-    @Override
-    public IdentityMap<K, V> clone() {
-        return (IdentityMap<K, V>) super.clone();
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
 
     /**
@@ -190,14 +198,6 @@ public class IdentityMap<K, V>
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
     }
 
 }

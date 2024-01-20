@@ -42,15 +42,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         super(PushbackIteratorTest.class.getSimpleName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    protected void setUp() throws Exception {
-        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return PushbackIterator.pushbackIterator(Collections.<E>emptyList().iterator());
@@ -61,28 +52,18 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         return PushbackIterator.pushbackIterator(testList.iterator());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    protected void setUp() throws Exception {
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
+    }
+
     @Override
     public boolean supportsRemove() {
         return false;
-    }
-
-    @Test
-    public void testNormalIteration() {
-        final PushbackIterator<E> iter = makeObject();
-        assertEquals("a", iter.next());
-        assertEquals("b", iter.next());
-        assertEquals("c", iter.next());
-        assertFalse(iter.hasNext());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testImmediatePushback() {
-        final PushbackIterator<E> iter = makeObject();
-        iter.pushback((E) "x");
-        assertEquals("x", iter.next());
-        assertEquals("a", iter.next());
-        validate(iter, "b", "c");
     }
 
     @Test
@@ -98,6 +79,16 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
+    public void testImmediatePushback() {
+        final PushbackIterator<E> iter = makeObject();
+        iter.pushback((E) "x");
+        assertEquals("x", iter.next());
+        assertEquals("a", iter.next());
+        validate(iter, "b", "c");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     public void testMultiplePushback() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
@@ -107,6 +98,15 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         assertEquals("x", iter.next());
         assertEquals("b", iter.next());
         validate(iter, "c");
+    }
+
+    @Test
+    public void testNormalIteration() {
+        final PushbackIterator<E> iter = makeObject();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        assertEquals("c", iter.next());
+        assertFalse(iter.hasNext());
     }
 
     private void validate(final Iterator<E> iter, final Object... items) {

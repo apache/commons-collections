@@ -44,23 +44,6 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     private static final long serialVersionUID = 5421170911299074185L;
 
     /**
-     * Factory method to create a transforming bag.
-     * <p>
-     * If there are any elements already in the bag being decorated, they
-     * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
-     *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Bag
-     * @throws NullPointerException if bag or transformer is null
-     * @since 4.0
-     */
-    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedBag<>(bag, transformer);
-    }
-
-    /**
      * Factory method to create a transforming bag that will transform
      * existing contents of the specified bag.
      * <p>
@@ -89,6 +72,23 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     }
 
     /**
+     * Factory method to create a transforming bag.
+     * <p>
+     * If there are any elements already in the bag being decorated, they
+     * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
+     *
+     * @param <E> the type of the elements in the bag
+     * @param bag  the bag to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed Bag
+     * @throws NullPointerException if bag or transformer is null
+     * @since 4.0
+     */
+    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedBag<>(bag, transformer);
+    }
+
+    /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the bag being decorated, they
@@ -102,6 +102,16 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         super(bag, transformer);
     }
 
+    @Override
+    public boolean add(final E object, final int nCopies) {
+        return getBag().add(transform(object), nCopies);
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
     /**
      * Gets the decorated bag.
      *
@@ -112,8 +122,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     }
 
     @Override
-    public boolean equals(final Object object) {
-        return object == this || decorated().equals(object);
+    public int getCount(final Object object) {
+        return getBag().getCount(object);
     }
 
     @Override
@@ -122,18 +132,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     }
 
     @Override
-    public int getCount(final Object object) {
-        return getBag().getCount(object);
-    }
-
-    @Override
     public boolean remove(final Object object, final int nCopies) {
         return getBag().remove(object, nCopies);
-    }
-
-    @Override
-    public boolean add(final E object, final int nCopies) {
-        return getBag().add(transform(object), nCopies);
     }
 
     @Override

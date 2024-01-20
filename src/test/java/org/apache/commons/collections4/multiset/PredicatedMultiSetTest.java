@@ -36,18 +36,24 @@ import org.junit.jupiter.api.Test;
  */
 public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
+    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
+
     public PredicatedMultiSetTest() {
         super(PredicatedMultiSetTest.class.getSimpleName());
     }
 
-    protected Predicate<T> stringPredicate() {
-        return String.class::isInstance;
-    }
-
-    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
-
     protected MultiSet<T> decorateMultiSet(final HashMultiSet<T> multiset, final Predicate<T> predicate) {
         return PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4.1";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
     @Override
@@ -59,28 +65,8 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return decorateMultiSet(new HashMultiSet<>(), stringPredicate());
     }
 
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testLegalAddRemove() {
-        final MultiSet<T> multiset = makeTestMultiSet();
-        assertEquals(0, multiset.size());
-        final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
-        for (int i = 0; i < els.length; i++) {
-            multiset.add(els[i]);
-            assertEquals(i + 1, multiset.size());
-            assertTrue(multiset.contains(els[i]));
-        }
-        Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue(set.contains(els[0]), "Unique set contains the first element");
-        assertTrue(multiset.remove(els[0]));
-        set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
-        assertTrue(set.contains(els[0]),
-            "Unique set does not contain anymore the first element");
+    protected Predicate<T> stringPredicate() {
+        return String.class::isInstance;
     }
 
     @Test
@@ -107,9 +93,23 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
                 "Expecting NullPointerException for null predicate.");
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.1";
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testLegalAddRemove() {
+        final MultiSet<T> multiset = makeTestMultiSet();
+        assertEquals(0, multiset.size());
+        final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
+        for (int i = 0; i < els.length; i++) {
+            multiset.add(els[i]);
+            assertEquals(i + 1, multiset.size());
+            assertTrue(multiset.contains(els[i]));
+        }
+        Set<T> set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
+        assertTrue(multiset.remove(els[0]));
+        set = ((PredicatedMultiSet<T>) multiset).uniqueSet();
+        assertTrue(set.contains(els[0]),
+            "Unique set does not contain anymore the first element");
     }
 
 //    public void testCreate() throws Exception {

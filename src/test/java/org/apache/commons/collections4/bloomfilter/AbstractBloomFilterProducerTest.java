@@ -46,6 +46,17 @@ public abstract class AbstractBloomFilterProducerTest {
         return true;
     };
 
+    private BloomFilterProducer createUnderTest() {
+        return createUnderTest(one, two);
+    }
+
+    /**
+     * Creates a BloomFilterProducer that returns the filters (or their copy) in the order presented.
+     * @param filters The filters to return.
+     * @return A BloomFilterProducer that returns the filters in order.
+     */
+    protected abstract BloomFilterProducer createUnderTest(BloomFilter... filters);
+
     /**
      * The shape of the Bloom filters for testing.
      * <ul>
@@ -69,17 +80,6 @@ public abstract class AbstractBloomFilterProducerTest {
         equalityCount[0] = 0;
     }
 
-    /**
-     * Creates a BloomFilterProducer that returns the filters (or their copy) in the order presented.
-     * @param filters The filters to return.
-     * @return A BloomFilterProducer that returns the filters in order.
-     */
-    protected abstract BloomFilterProducer createUnderTest(BloomFilter... filters);
-
-    private BloomFilterProducer createUnderTest() {
-        return createUnderTest(one, two);
-    }
-
     @Test
     public void testAsBloomFilterArray() {
         BloomFilter[] result = createUnderTest().asBloomFilterArray();
@@ -89,9 +89,19 @@ public abstract class AbstractBloomFilterProducerTest {
     }
 
     @Test
-    public void testForEachPairCompleteMatch() {
-        assertTrue(createUnderTest().forEachBloomFilterPair(createUnderTest(), counter));
-        assertArrayEquals(new int[] { 0, 0 }, nullCount);
+    public void testFlatten() {
+        BloomFilter underTest = createUnderTest().flatten();
+        BloomFilter expected = new SimpleBloomFilter(shape);
+        expected.merge(IndexProducer.fromIndexArray(1, 2, 3));
+        assertArrayEquals(expected.asBitMapArray(), underTest.asBitMapArray());
+    }
+
+    @Test
+    public void testForEachPairArrayTooLong() {
+        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
+                counter));
+        assertEquals(1, nullCount[0]);
+        assertEquals(0, nullCount[1]);
         assertEquals(2, equalityCount[0]);
     }
 
@@ -104,12 +114,16 @@ public abstract class AbstractBloomFilterProducerTest {
     }
 
     @Test
-    public void testForEachPairArrayTooLong() {
-        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
-                counter));
-        assertEquals(1, nullCount[0]);
-        assertEquals(0, nullCount[1]);
+    public void testForEachPairCompleteMatch() {
+        assertTrue(createUnderTest().forEachBloomFilterPair(createUnderTest(), counter));
+        assertArrayEquals(new int[] { 0, 0 }, nullCount);
         assertEquals(2, equalityCount[0]);
+    }
+
+    @Test
+    public void testForEachPairReturnFalseEarly() {
+        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
+                (x, y) -> false));
     }
 
     @Test
@@ -128,19 +142,5 @@ public abstract class AbstractBloomFilterProducerTest {
         assertEquals(0, nullCount[0]);
         assertEquals(1, nullCount[1]);
         assertEquals(1, equalityCount[0]);
-    }
-
-    @Test
-    public void testForEachPairReturnFalseEarly() {
-        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
-                (x, y) -> false));
-    }
-
-    @Test
-    public void testFlatten() {
-        BloomFilter underTest = createUnderTest().flatten();
-        BloomFilter expected = new SimpleBloomFilter(shape);
-        expected.merge(IndexProducer.fromIndexArray(1, 2, 3));
-        assertArrayEquals(expected.asBitMapArray(), underTest.asBitMapArray());
     }
 }

@@ -31,9 +31,6 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
     /** Serial version UID */
     private static final long serialVersionUID = -2654603322338049674L;
 
-    /** The predicate to decorate */
-    private final Predicate<? super T> iPredicate;
-
     /**
      * Factory to create the not predicate.
      *
@@ -45,6 +42,9 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
     public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
         return new NotPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
+
+    /** The predicate to decorate */
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Constructor that performs no validation.

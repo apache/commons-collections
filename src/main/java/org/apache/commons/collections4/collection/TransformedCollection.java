@@ -43,28 +43,6 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
     /** Serialization version */
     private static final long serialVersionUID = 8692300188161871514L;
 
-    /** The transformer to use */
-    protected final Transformer<? super E, ? extends E> transformer;
-
-    /**
-     * Factory method to create a transforming collection.
-     * <p>
-     * If there are any elements already in the collection being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
-     *
-     * @param <E> the type of the elements in the collection
-     * @param coll  the collection to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed collection
-     * @throws NullPointerException if collection or transformer is null
-     * @since 4.0
-     */
-    public static <E> TransformedCollection<E> transformingCollection(final Collection<E> coll,
-            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedCollection<>(coll, transformer);
-    }
-
     /**
      * Factory method to create a transforming collection that will transform
      * existing contents of the specified collection.
@@ -97,6 +75,28 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
     }
 
     /**
+     * Factory method to create a transforming collection.
+     * <p>
+     * If there are any elements already in the collection being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
+     *
+     * @param <E> the type of the elements in the collection
+     * @param coll  the collection to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed collection
+     * @throws NullPointerException if collection or transformer is null
+     * @since 4.0
+     */
+    public static <E> TransformedCollection<E> transformingCollection(final Collection<E> coll,
+            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedCollection<>(coll, transformer);
+    }
+
+    /** The transformer to use */
+    protected final Transformer<? super E, ? extends E> transformer;
+
+    /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the collection being decorated, they
@@ -111,16 +111,14 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
         this.transformer = Objects.requireNonNull(transformer, "transformer");
     }
 
-    /**
-     * Transforms an object.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param object  the object to transform
-     * @return a transformed object
-     */
-    protected E transform(final E object) {
-        return transformer.transform(object);
+    @Override
+    public boolean add(final E object) {
+        return decorated().add(transform(object));
+    }
+
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        return decorated().addAll(transform(coll));
     }
 
     /**
@@ -139,14 +137,16 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
         return list;
     }
 
-    @Override
-    public boolean add(final E object) {
-        return decorated().add(transform(object));
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        return decorated().addAll(transform(coll));
+    /**
+     * Transforms an object.
+     * <p>
+     * The transformer itself may throw an exception if necessary.
+     *
+     * @param object  the object to transform
+     * @return a transformed object
+     */
+    protected E transform(final E object) {
+        return transformer.transform(object);
     }
 
 }

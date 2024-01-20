@@ -92,6 +92,19 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         super(array, startIndex, endIndex);
     }
 
+    /**
+     * This iterator does not support modification of its backing collection, and so will
+     * always throw an {@link UnsupportedOperationException} when this method is invoked.
+     *
+     * @param o  the element to add
+     * @throws UnsupportedOperationException always thrown.
+     * @see java.util.ListIterator#set
+     */
+    @Override
+    public void add(final Object o) {
+        throw new UnsupportedOperationException("add() method is not supported");
+    }
+
     // ListIterator interface
     /**
      * Returns true if there are previous elements to return from the array.
@@ -101,22 +114,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     public boolean hasPrevious() {
         return this.index > this.startIndex;
-    }
-
-    /**
-     * Gets the previous element from the array.
-     *
-     * @return the previous element
-     * @throws NoSuchElementException if there is no previous element
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public E previous() {
-        if (!hasPrevious()) {
-            throw new NoSuchElementException();
-        }
-        this.lastItemIndex = --this.index;
-        return (E) Array.get(this.array, this.index);
     }
 
     /**
@@ -146,6 +143,22 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     /**
+     * Gets the previous element from the array.
+     *
+     * @return the previous element
+     * @throws NoSuchElementException if there is no previous element
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public E previous() {
+        if (!hasPrevious()) {
+            throw new NoSuchElementException();
+        }
+        this.lastItemIndex = --this.index;
+        return (E) Array.get(this.array, this.index);
+    }
+
+    /**
      * Gets the index of the item to be retrieved if {@link #previous()} is called.
      *
      * @return the index of the item to be retrieved next
@@ -156,16 +169,12 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     /**
-     * This iterator does not support modification of its backing collection, and so will
-     * always throw an {@link UnsupportedOperationException} when this method is invoked.
-     *
-     * @param o  the element to add
-     * @throws UnsupportedOperationException always thrown.
-     * @see java.util.ListIterator#set
+     * Resets the iterator back to the start index.
      */
     @Override
-    public void add(final Object o) {
-        throw new UnsupportedOperationException("add() method is not supported");
+    public void reset() {
+        super.reset();
+        this.lastItemIndex = -1;
     }
 
     /**
@@ -193,15 +202,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         }
 
         Array.set(this.array, this.lastItemIndex, o);
-    }
-
-    /**
-     * Resets the iterator back to the start index.
-     */
-    @Override
-    public void reset() {
-        super.reset();
-        this.lastItemIndex = -1;
     }
 
 }

@@ -78,15 +78,29 @@ public final class UnmodifiableBag<E>
         super((Bag<E>) bag);
     }
 
-    /**
-     * Write the collection out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    @Override
+    public boolean add(final E object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean add(final E object, final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     /**
@@ -104,27 +118,17 @@ public final class UnmodifiableBag<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
-    public boolean add(final E object) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(final Object object, final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -137,22 +141,7 @@ public final class UnmodifiableBag<E>
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean add(final E object, final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean remove(final Object object, final int count) {
         throw new UnsupportedOperationException();
     }
 
@@ -160,6 +149,17 @@ public final class UnmodifiableBag<E>
     public Set<E> uniqueSet() {
         final Set<E> set = decorated().uniqueSet();
         return UnmodifiableSet.<E>unmodifiableSet(set);
+    }
+
+    /**
+     * Write the collection out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

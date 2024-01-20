@@ -39,24 +39,6 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     private static final long serialVersionUID = -7901091318986132033L;
 
     /**
-     * Factory method to create a transforming queue.
-     * <p>
-     * If there are any elements already in the queue being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
-     *
-     * @param <E> the type of the elements in the queue
-     * @param queue  the queue to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Queue
-     * @throws NullPointerException if queue or transformer is null
-     */
-    public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
-                                                            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedQueue<>(queue, transformer);
-    }
-
-    /**
      * Factory method to create a transforming queue that will transform
      * existing contents of the specified queue.
      * <p>
@@ -87,6 +69,24 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     }
 
     /**
+     * Factory method to create a transforming queue.
+     * <p>
+     * If there are any elements already in the queue being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
+     *
+     * @param <E> the type of the elements in the queue
+     * @param queue  the queue to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed Queue
+     * @throws NullPointerException if queue or transformer is null
+     */
+    public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
+                                                            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedQueue<>(queue, transformer);
+    }
+
+    /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the queue being decorated, they
@@ -98,6 +98,11 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      */
     protected TransformedQueue(final Queue<E> queue, final Transformer<? super E, ? extends E> transformer) {
         super(queue, transformer);
+    }
+
+    @Override
+    public E element() {
+        return getQueue().element();
     }
 
     /**
@@ -115,18 +120,13 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     }
 
     @Override
-    public E poll() {
-        return getQueue().poll();
-    }
-
-    @Override
     public E peek() {
         return getQueue().peek();
     }
 
     @Override
-    public E element() {
-        return getQueue().element();
+    public E poll() {
+        return getQueue().poll();
     }
 
     @Override

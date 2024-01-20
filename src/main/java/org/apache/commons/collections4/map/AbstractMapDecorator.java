@@ -62,15 +62,6 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         this.map = Objects.requireNonNull(map, "map");
     }
 
-    /**
-     * Gets the map being decorated.
-     *
-     * @return the decorated map
-     */
-    protected Map<K, V> decorated() {
-        return map;
-    }
-
     @Override
     public void clear() {
         decorated().clear();
@@ -86,14 +77,36 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         return decorated().containsValue(value);
     }
 
+    /**
+     * Gets the map being decorated.
+     *
+     * @return the decorated map
+     */
+    protected Map<K, V> decorated() {
+        return map;
+    }
+
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return decorated().entrySet();
     }
 
     @Override
+    public boolean equals(final Object object) {
+        if (object == this) {
+            return true;
+        }
+        return decorated().equals(object);
+    }
+
+    @Override
     public V get(final Object key) {
         return decorated().get(key);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override
@@ -127,26 +140,13 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     }
 
     @Override
-    public Collection<V> values() {
-        return decorated().values();
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        if (object == this) {
-            return true;
-        }
-        return decorated().equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-        return decorated().hashCode();
-    }
-
-    @Override
     public String toString() {
         return decorated().toString();
+    }
+
+    @Override
+    public Collection<V> values() {
+        return decorated().values();
     }
 
 }

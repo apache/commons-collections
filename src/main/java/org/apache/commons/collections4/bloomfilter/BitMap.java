@@ -28,22 +28,6 @@ public class BitMap {
     /** A bit shift to apply to an integer to divided by 64 (2^6). */
     private static final int DIVIDE_BY_64 = 6;
 
-    /** Do not instantiate. */
-    private BitMap() {
-    }
-
-    /**
-     * Calculates the number of bit maps (longs) required for the numberOfBits parameter.
-     *
-     * <p><em>If the input is negative the behavior is not defined.</em></p>
-     *
-     * @param numberOfBits the number of bits to store in the array of bit maps.
-     * @return the number of bit maps necessary.
-     */
-    public static int numberOfBitMaps(final int numberOfBits) {
-        return (numberOfBits - 1 >> DIVIDE_BY_64) + 1;
-    }
-
     /**
      * Checks if the specified index bit is enabled in the array of bit maps.
      *
@@ -59,15 +43,24 @@ public class BitMap {
     }
 
     /**
-     * Sets the bit in the bit maps.
-     * <p><em>Does not perform range checking</em></p>
+     * Gets the filter bit mask for the specified bit index assuming the filter is using 64-bit
+     * longs to store bits starting at index 0. The returned value is a {@code long} with only
+     * 1 bit set.
      *
-     * @param bitMaps  The array of bit maps.
-     * @param bitIndex the index of the bit to set.
-     * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
+     * <p>The index is assumed to be positive. For a positive index the result will match
+     * {@code 1L << (bitIndex % 64)}.</p>
+     *
+     * <p><em>If the input is negative the behavior is not defined.</em></p>
+     *
+     * @param bitIndex the bit index (assumed to be positive)
+     * @return the filter bit
      */
-    public static void set(final long[] bitMaps, final int bitIndex) {
-        bitMaps[getLongIndex(bitIndex)] |= getLongBit(bitIndex);
+    public static long getLongBit(final int bitIndex) {
+        // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
+        // using 0x3f (63) or compute bitIndex % 64.
+        // Note: If the index is negative the shift will be (64 - (bitIndex & 0x3f)) and
+        // this will identify an incorrect bit.
+        return 1L << bitIndex;
     }
 
     /**
@@ -94,27 +87,6 @@ public class BitMap {
     }
 
     /**
-     * Gets the filter bit mask for the specified bit index assuming the filter is using 64-bit
-     * longs to store bits starting at index 0. The returned value is a {@code long} with only
-     * 1 bit set.
-     *
-     * <p>The index is assumed to be positive. For a positive index the result will match
-     * {@code 1L << (bitIndex % 64)}.</p>
-     *
-     * <p><em>If the input is negative the behavior is not defined.</em></p>
-     *
-     * @param bitIndex the bit index (assumed to be positive)
-     * @return the filter bit
-     */
-    public static long getLongBit(final int bitIndex) {
-        // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
-        // using 0x3f (63) or compute bitIndex % 64.
-        // Note: If the index is negative the shift will be (64 - (bitIndex & 0x3f)) and
-        // this will identify an incorrect bit.
-        return 1L << bitIndex;
-    }
-
-    /**
      * Performs a modulus calculation on an unsigned long and a positive integer divisor.
      *
      * <p>This method computes the same result as {@link Long#remainderUnsigned(long, long)}
@@ -137,5 +109,33 @@ public class BitMap {
         final long remainder = dividend - quotient * divisor;
         // remainder in [0, 2 * divisor)
         return (int) (remainder >= divisor ? remainder - divisor : remainder);
+    }
+
+    /**
+     * Calculates the number of bit maps (longs) required for the numberOfBits parameter.
+     *
+     * <p><em>If the input is negative the behavior is not defined.</em></p>
+     *
+     * @param numberOfBits the number of bits to store in the array of bit maps.
+     * @return the number of bit maps necessary.
+     */
+    public static int numberOfBitMaps(final int numberOfBits) {
+        return (numberOfBits - 1 >> DIVIDE_BY_64) + 1;
+    }
+
+    /**
+     * Sets the bit in the bit maps.
+     * <p><em>Does not perform range checking</em></p>
+     *
+     * @param bitMaps  The array of bit maps.
+     * @param bitIndex the index of the bit to set.
+     * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
+     */
+    public static void set(final long[] bitMaps, final int bitIndex) {
+        bitMaps[getLongIndex(bitIndex)] |= getLongBit(bitIndex);
+    }
+
+    /** Do not instantiate. */
+    private BitMap() {
     }
 }

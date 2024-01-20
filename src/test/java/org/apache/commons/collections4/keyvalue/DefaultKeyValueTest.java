@@ -74,20 +74,6 @@ public class DefaultKeyValueTest<K, V> {
         assertNull(kv.getValue());
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testSelfReferenceHandling() {
-        // test that #setKey and #setValue do not permit
-        //  the KVP to contain itself (and thus cause infinite recursion
-        //  in #hashCode and #toString)
-
-        final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
-
-        assertThrows(IllegalArgumentException.class, () -> kv.setKey((K) kv));
-        // check that the KVP's state has not changed
-        assertTrue(kv.getKey() == null && kv.getValue() == null);
-    }
-
     /**
      * Subclasses should override this method to test their own constructors.
      */
@@ -147,13 +133,16 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToString() {
-        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
-        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
+    public void testSelfReferenceHandling() {
+        // test that #setKey and #setValue do not permit
+        //  the KVP to contain itself (and thus cause infinite recursion
+        //  in #hashCode and #toString)
 
-        // test with nulls
-        kv = makeDefaultKeyValue(null, null);
-        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
+        final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
+
+        assertThrows(IllegalArgumentException.class, () -> kv.setKey((K) kv));
+        // check that the KVP's state has not changed
+        assertTrue(kv.getKey() == null && kv.getValue() == null);
     }
 
     @Test
@@ -167,6 +156,17 @@ public class DefaultKeyValueTest<K, V> {
 
         assertEquals(entry, kv.toMapEntry());
         assertEquals(entry.hashCode(), kv.hashCode());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testToString() {
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
+        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
+
+        // test with nulls
+        kv = makeDefaultKeyValue(null, null);
+        assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
     }
 
 }

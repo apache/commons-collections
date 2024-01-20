@@ -68,348 +68,6 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  */
 public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> implements OrderedMap<K, V> {
 
-    /** Header in the linked list */
-    transient LinkEntry<K, V> header;
-
-    /**
-     * Constructor only used in deserialization, do not use otherwise.
-     */
-    protected AbstractLinkedMap() {
-    }
-
-    /**
-     * Constructor which performs no validation on the passed in parameters.
-     *
-     * @param initialCapacity  the initial capacity, must be a power of two
-     * @param loadFactor  the load factor, must be &gt; 0.0f and generally &lt; 1.0f
-     * @param threshold  the threshold, must be sensible
-     */
-    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor, final int threshold) {
-        super(initialCapacity, loadFactor, threshold);
-    }
-
-    /**
-     * Constructs a new, empty map with the specified initial capacity.
-     *
-     * @param initialCapacity  the initial capacity
-     * @throws IllegalArgumentException if the initial capacity is negative
-     */
-    protected AbstractLinkedMap(final int initialCapacity) {
-        super(initialCapacity);
-    }
-
-    /**
-     * Constructs a new, empty map with the specified initial capacity and
-     * load factor.
-     *
-     * @param initialCapacity  the initial capacity
-     * @param loadFactor  the load factor
-     * @throws IllegalArgumentException if the initial capacity is negative
-     * @throws IllegalArgumentException if the load factor is less than zero
-     */
-    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor) {
-        super(initialCapacity, loadFactor);
-    }
-
-    /**
-     * Constructor copying elements from another map.
-     *
-     * @param map  the map to copy
-     * @throws NullPointerException if the map is null
-     */
-    protected AbstractLinkedMap(final Map<? extends K, ? extends V> map) {
-        super(map);
-    }
-
-    /**
-     * Initialize this subclass during construction.
-     * <p>
-     * NOTE: As from v3.2 this method calls
-     * {@link #createEntry(HashEntry, int, Object, Object)} to create
-     * the map entry object.
-     */
-    @Override
-    protected void init() {
-        header = createEntry(null, -1, null, null);
-        header.before = header.after = header;
-    }
-
-    /**
-     * Checks whether the map contains the specified value.
-     *
-     * @param value  the value to search for
-     * @return true if the map contains the value
-     */
-    @Override
-    public boolean containsValue(final Object value) {
-        // override uses faster iterator
-        if (value == null) {
-            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
-                if (entry.getValue() == null) {
-                    return true;
-                }
-            }
-        } else {
-            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
-                if (isEqualValue(value, entry.getValue())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Clears the map, resetting the size to zero and nullifying references
-     * to avoid garbage collection issues.
-     */
-    @Override
-    public void clear() {
-        // override to reset the linked list
-        super.clear();
-        header.before = header.after = header;
-    }
-
-    /**
-     * Gets the first key in the map, which is the first inserted.
-     *
-     * @return the eldest key
-     */
-    @Override
-    public K firstKey() {
-        if (size == 0) {
-            throw new NoSuchElementException("Map is empty");
-        }
-        return header.after.getKey();
-    }
-
-    /**
-     * Gets the last key in the map, which is the most recently inserted.
-     *
-     * @return the most recently inserted key
-     */
-    @Override
-    public K lastKey() {
-        if (size == 0) {
-            throw new NoSuchElementException("Map is empty");
-        }
-        return header.before.getKey();
-    }
-
-    /**
-     * Gets the next key in sequence.
-     *
-     * @param key  the key to get after
-     * @return the next key
-     */
-    @Override
-    public K nextKey(final Object key) {
-        final LinkEntry<K, V> entry = getEntry(key);
-        return entry == null || entry.after == header ? null : entry.after.getKey();
-    }
-
-    @Override
-    protected LinkEntry<K, V> getEntry(final Object key) {
-        return (LinkEntry<K, V>) super.getEntry(key);
-    }
-
-    /**
-     * Gets the previous key in sequence.
-     *
-     * @param key  the key to get before
-     * @return the previous key
-     */
-    @Override
-    public K previousKey(final Object key) {
-        final LinkEntry<K, V> entry = getEntry(key);
-        return entry == null || entry.before == header ? null : entry.before.getKey();
-    }
-
-    /**
-     * Gets the key at the specified index.
-     *
-     * @param index  the index to retrieve
-     * @return the key at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     */
-    protected LinkEntry<K, V> getEntry(final int index) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException("Index " + index + " is less than zero");
-        }
-        if (index >= size) {
-            throw new IndexOutOfBoundsException("Index " + index + " is invalid for size " + size);
-        }
-        LinkEntry<K, V> entry;
-        if (index < size / 2) {
-            // Search forwards
-            entry = header.after;
-            for (int currentIndex = 0; currentIndex < index; currentIndex++) {
-                entry = entry.after;
-            }
-        } else {
-            // Search backwards
-            entry = header;
-            for (int currentIndex = size; currentIndex > index; currentIndex--) {
-                entry = entry.before;
-            }
-        }
-        return entry;
-    }
-
-    /**
-     * Adds an entry into this map, maintaining insertion order.
-     * <p>
-     * This implementation adds the entry to the data storage table and
-     * to the end of the linked list.
-     *
-     * @param entry  the entry to add
-     * @param hashIndex  the index into the data array to store at
-     */
-    @Override
-    protected void addEntry(final HashEntry<K, V> entry, final int hashIndex) {
-        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
-        link.after  = header;
-        link.before = header.before;
-        header.before.after = link;
-        header.before = link;
-        data[hashIndex] = link;
-    }
-
-    /**
-     * Creates an entry to store the data.
-     * <p>
-     * This implementation creates a new LinkEntry instance.
-     *
-     * @param next  the next entry in sequence
-     * @param hashCode  the hash code to use
-     * @param key  the key to store
-     * @param value  the value to store
-     * @return the newly created entry
-     */
-    @Override
-    protected LinkEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
-        return new LinkEntry<>(next, hashCode, convertKey(key), value);
-    }
-
-    /**
-     * Removes an entry from the map and the linked list.
-     * <p>
-     * This implementation removes the entry from the linked list chain, then
-     * calls the superclass implementation.
-     *
-     * @param entry  the entry to remove
-     * @param hashIndex  the index into the data structure
-     * @param previous  the previous entry in the chain
-     */
-    @Override
-    protected void removeEntry(final HashEntry<K, V> entry, final int hashIndex, final HashEntry<K, V> previous) {
-        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
-        link.before.after = link.after;
-        link.after.before = link.before;
-        link.after = null;
-        link.before = null;
-        super.removeEntry(entry, hashIndex, previous);
-    }
-
-    /**
-     * Gets the {@code before} field from a {@code LinkEntry}.
-     * Used in subclasses that have no visibility of the field.
-     *
-     * @param entry  the entry to query, must not be null
-     * @return the {@code before} field of the entry
-     * @throws NullPointerException if the entry is null
-     * @since 3.1
-     */
-    protected LinkEntry<K, V> entryBefore(final LinkEntry<K, V> entry) {
-        return entry.before;
-    }
-
-    /**
-     * Gets the {@code after} field from a {@code LinkEntry}.
-     * Used in subclasses that have no visibility of the field.
-     *
-     * @param entry  the entry to query, must not be null
-     * @return the {@code after} field of the entry
-     * @throws NullPointerException if the entry is null
-     * @since 3.1
-     */
-    protected LinkEntry<K, V> entryAfter(final LinkEntry<K, V> entry) {
-        return entry.after;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public OrderedMapIterator<K, V> mapIterator() {
-        if (size == 0) {
-            return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
-        }
-        return new LinkMapIterator<>(this);
-    }
-
-    /**
-     * MapIterator implementation.
-     */
-    protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
-            OrderedMapIterator<K, V>, ResettableIterator<K> {
-
-        protected LinkMapIterator(final AbstractLinkedMap<K, V> parent) {
-            super(parent);
-        }
-
-        @Override
-        public K next() {
-            return super.nextEntry().getKey();
-        }
-
-        @Override
-        public K previous() {
-            return super.previousEntry().getKey();
-        }
-
-        @Override
-        public K getKey() {
-            final LinkEntry<K, V> current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
-            }
-            return current.getKey();
-        }
-
-        @Override
-        public V getValue() {
-            final LinkEntry<K, V> current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
-            }
-            return current.getValue();
-        }
-
-        @Override
-        public V setValue(final V value) {
-            final LinkEntry<K, V> current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
-            }
-            return current.setValue(value);
-        }
-    }
-
-    /**
-     * Creates an entry set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @return the entrySet iterator
-     */
-    @Override
-    protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
-        if (isEmpty()) {
-            return EmptyOrderedIterator.<Map.Entry<K, V>>emptyOrderedIterator();
-        }
-        return new EntrySetIterator<>(this);
-    }
-
     /**
      * EntrySet iterator.
      */
@@ -432,20 +90,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     }
 
     /**
-     * Creates a key set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @return the keySet iterator
-     */
-    @Override
-    protected Iterator<K> createKeySetIterator() {
-        if (isEmpty()) {
-            return EmptyOrderedIterator.<K>emptyOrderedIterator();
-        }
-        return new KeySetIterator<>(this);
-    }
-
-    /**
      * KeySet iterator.
      */
     protected static class KeySetIterator<K> extends LinkIterator<K, Object> implements
@@ -464,42 +108,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         @Override
         public K previous() {
             return super.previousEntry().getKey();
-        }
-    }
-
-    /**
-     * Creates a values iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @return the values iterator
-     */
-    @Override
-    protected Iterator<V> createValuesIterator() {
-        if (isEmpty()) {
-            return EmptyOrderedIterator.<V>emptyOrderedIterator();
-        }
-        return new ValuesIterator<>(this);
-    }
-
-    /**
-     * Values iterator.
-     */
-    protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
-            OrderedIterator<V>, ResettableIterator<V> {
-
-        @SuppressWarnings("unchecked")
-        protected ValuesIterator(final AbstractLinkedMap<?, V> parent) {
-            super((AbstractLinkedMap<Object, V>) parent);
-        }
-
-        @Override
-        public V next() {
-            return super.nextEntry().getValue();
-        }
-
-        @Override
-        public V previous() {
-            return super.previousEntry().getValue();
         }
     }
 
@@ -550,6 +158,10 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             this.expectedModCount = parent.modCount;
         }
 
+        protected LinkEntry<K, V> currentEntry() {
+            return last;
+        }
+
         public boolean hasNext() {
             return next != parent.header;
         }
@@ -583,10 +195,6 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             return last;
         }
 
-        protected LinkEntry<K, V> currentEntry() {
-            return last;
-        }
-
         public void remove() {
             if (last == null) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
@@ -611,6 +219,398 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             }
             return "Iterator[]";
         }
+    }
+
+    /**
+     * MapIterator implementation.
+     */
+    protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
+            OrderedMapIterator<K, V>, ResettableIterator<K> {
+
+        protected LinkMapIterator(final AbstractLinkedMap<K, V> parent) {
+            super(parent);
+        }
+
+        @Override
+        public K getKey() {
+            final LinkEntry<K, V> current = currentEntry();
+            if (current == null) {
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
+            }
+            return current.getKey();
+        }
+
+        @Override
+        public V getValue() {
+            final LinkEntry<K, V> current = currentEntry();
+            if (current == null) {
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
+            }
+            return current.getValue();
+        }
+
+        @Override
+        public K next() {
+            return super.nextEntry().getKey();
+        }
+
+        @Override
+        public K previous() {
+            return super.previousEntry().getKey();
+        }
+
+        @Override
+        public V setValue(final V value) {
+            final LinkEntry<K, V> current = currentEntry();
+            if (current == null) {
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
+            }
+            return current.setValue(value);
+        }
+    }
+
+    /**
+     * Values iterator.
+     */
+    protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
+            OrderedIterator<V>, ResettableIterator<V> {
+
+        @SuppressWarnings("unchecked")
+        protected ValuesIterator(final AbstractLinkedMap<?, V> parent) {
+            super((AbstractLinkedMap<Object, V>) parent);
+        }
+
+        @Override
+        public V next() {
+            return super.nextEntry().getValue();
+        }
+
+        @Override
+        public V previous() {
+            return super.previousEntry().getValue();
+        }
+    }
+
+    /** Header in the linked list */
+    transient LinkEntry<K, V> header;
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     */
+    protected AbstractLinkedMap() {
+    }
+
+    /**
+     * Constructs a new, empty map with the specified initial capacity.
+     *
+     * @param initialCapacity  the initial capacity
+     * @throws IllegalArgumentException if the initial capacity is negative
+     */
+    protected AbstractLinkedMap(final int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified initial capacity and
+     * load factor.
+     *
+     * @param initialCapacity  the initial capacity
+     * @param loadFactor  the load factor
+     * @throws IllegalArgumentException if the initial capacity is negative
+     * @throws IllegalArgumentException if the load factor is less than zero
+     */
+    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor) {
+        super(initialCapacity, loadFactor);
+    }
+
+    /**
+     * Constructor which performs no validation on the passed in parameters.
+     *
+     * @param initialCapacity  the initial capacity, must be a power of two
+     * @param loadFactor  the load factor, must be &gt; 0.0f and generally &lt; 1.0f
+     * @param threshold  the threshold, must be sensible
+     */
+    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor, final int threshold) {
+        super(initialCapacity, loadFactor, threshold);
+    }
+
+    /**
+     * Constructor copying elements from another map.
+     *
+     * @param map  the map to copy
+     * @throws NullPointerException if the map is null
+     */
+    protected AbstractLinkedMap(final Map<? extends K, ? extends V> map) {
+        super(map);
+    }
+
+    /**
+     * Adds an entry into this map, maintaining insertion order.
+     * <p>
+     * This implementation adds the entry to the data storage table and
+     * to the end of the linked list.
+     *
+     * @param entry  the entry to add
+     * @param hashIndex  the index into the data array to store at
+     */
+    @Override
+    protected void addEntry(final HashEntry<K, V> entry, final int hashIndex) {
+        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
+        link.after  = header;
+        link.before = header.before;
+        header.before.after = link;
+        header.before = link;
+        data[hashIndex] = link;
+    }
+
+    /**
+     * Clears the map, resetting the size to zero and nullifying references
+     * to avoid garbage collection issues.
+     */
+    @Override
+    public void clear() {
+        // override to reset the linked list
+        super.clear();
+        header.before = header.after = header;
+    }
+
+    /**
+     * Checks whether the map contains the specified value.
+     *
+     * @param value  the value to search for
+     * @return true if the map contains the value
+     */
+    @Override
+    public boolean containsValue(final Object value) {
+        // override uses faster iterator
+        if (value == null) {
+            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
+                if (entry.getValue() == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
+                if (isEqualValue(value, entry.getValue())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Creates an entry to store the data.
+     * <p>
+     * This implementation creates a new LinkEntry instance.
+     *
+     * @param next  the next entry in sequence
+     * @param hashCode  the hash code to use
+     * @param key  the key to store
+     * @param value  the value to store
+     * @return the newly created entry
+     */
+    @Override
+    protected LinkEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
+        return new LinkEntry<>(next, hashCode, convertKey(key), value);
+    }
+
+    /**
+     * Creates an entry set iterator.
+     * Subclasses can override this to return iterators with different properties.
+     *
+     * @return the entrySet iterator
+     */
+    @Override
+    protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
+        if (isEmpty()) {
+            return EmptyOrderedIterator.<Map.Entry<K, V>>emptyOrderedIterator();
+        }
+        return new EntrySetIterator<>(this);
+    }
+
+    /**
+     * Creates a key set iterator.
+     * Subclasses can override this to return iterators with different properties.
+     *
+     * @return the keySet iterator
+     */
+    @Override
+    protected Iterator<K> createKeySetIterator() {
+        if (isEmpty()) {
+            return EmptyOrderedIterator.<K>emptyOrderedIterator();
+        }
+        return new KeySetIterator<>(this);
+    }
+
+    /**
+     * Creates a values iterator.
+     * Subclasses can override this to return iterators with different properties.
+     *
+     * @return the values iterator
+     */
+    @Override
+    protected Iterator<V> createValuesIterator() {
+        if (isEmpty()) {
+            return EmptyOrderedIterator.<V>emptyOrderedIterator();
+        }
+        return new ValuesIterator<>(this);
+    }
+
+    /**
+     * Gets the {@code after} field from a {@code LinkEntry}.
+     * Used in subclasses that have no visibility of the field.
+     *
+     * @param entry  the entry to query, must not be null
+     * @return the {@code after} field of the entry
+     * @throws NullPointerException if the entry is null
+     * @since 3.1
+     */
+    protected LinkEntry<K, V> entryAfter(final LinkEntry<K, V> entry) {
+        return entry.after;
+    }
+
+    /**
+     * Gets the {@code before} field from a {@code LinkEntry}.
+     * Used in subclasses that have no visibility of the field.
+     *
+     * @param entry  the entry to query, must not be null
+     * @return the {@code before} field of the entry
+     * @throws NullPointerException if the entry is null
+     * @since 3.1
+     */
+    protected LinkEntry<K, V> entryBefore(final LinkEntry<K, V> entry) {
+        return entry.before;
+    }
+
+    /**
+     * Gets the first key in the map, which is the first inserted.
+     *
+     * @return the eldest key
+     */
+    @Override
+    public K firstKey() {
+        if (size == 0) {
+            throw new NoSuchElementException("Map is empty");
+        }
+        return header.after.getKey();
+    }
+
+    /**
+     * Gets the key at the specified index.
+     *
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    protected LinkEntry<K, V> getEntry(final int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index " + index + " is less than zero");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Index " + index + " is invalid for size " + size);
+        }
+        LinkEntry<K, V> entry;
+        if (index < size / 2) {
+            // Search forwards
+            entry = header.after;
+            for (int currentIndex = 0; currentIndex < index; currentIndex++) {
+                entry = entry.after;
+            }
+        } else {
+            // Search backwards
+            entry = header;
+            for (int currentIndex = size; currentIndex > index; currentIndex--) {
+                entry = entry.before;
+            }
+        }
+        return entry;
+    }
+
+    @Override
+    protected LinkEntry<K, V> getEntry(final Object key) {
+        return (LinkEntry<K, V>) super.getEntry(key);
+    }
+
+    /**
+     * Initialize this subclass during construction.
+     * <p>
+     * NOTE: As from v3.2 this method calls
+     * {@link #createEntry(HashEntry, int, Object, Object)} to create
+     * the map entry object.
+     */
+    @Override
+    protected void init() {
+        header = createEntry(null, -1, null, null);
+        header.before = header.after = header;
+    }
+
+    /**
+     * Gets the last key in the map, which is the most recently inserted.
+     *
+     * @return the most recently inserted key
+     */
+    @Override
+    public K lastKey() {
+        if (size == 0) {
+            throw new NoSuchElementException("Map is empty");
+        }
+        return header.before.getKey();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedMapIterator<K, V> mapIterator() {
+        if (size == 0) {
+            return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
+        }
+        return new LinkMapIterator<>(this);
+    }
+
+    /**
+     * Gets the next key in sequence.
+     *
+     * @param key  the key to get after
+     * @return the next key
+     */
+    @Override
+    public K nextKey(final Object key) {
+        final LinkEntry<K, V> entry = getEntry(key);
+        return entry == null || entry.after == header ? null : entry.after.getKey();
+    }
+
+    /**
+     * Gets the previous key in sequence.
+     *
+     * @param key  the key to get before
+     * @return the previous key
+     */
+    @Override
+    public K previousKey(final Object key) {
+        final LinkEntry<K, V> entry = getEntry(key);
+        return entry == null || entry.before == header ? null : entry.before.getKey();
+    }
+
+    /**
+     * Removes an entry from the map and the linked list.
+     * <p>
+     * This implementation removes the entry from the linked list chain, then
+     * calls the superclass implementation.
+     *
+     * @param entry  the entry to remove
+     * @param hashIndex  the index into the data structure
+     * @param previous  the previous entry in the chain
+     */
+    @Override
+    protected void removeEntry(final HashEntry<K, V> entry, final int hashIndex, final HashEntry<K, V> previous) {
+        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
+        link.before.after = link.after;
+        link.after.before = link.before;
+        link.after = null;
+        link.before = null;
+        super.removeEntry(entry, hashIndex, previous);
     }
 
 }

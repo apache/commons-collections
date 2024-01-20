@@ -23,13 +23,13 @@ public class CellProducerFromDefaultIndexProducerTest extends AbstractCellProduc
     int[] values = {1, 2, 1, 1, 1, 1 };
 
     @Override
-    protected CellProducer createProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(data));
+    protected CellProducer createEmptyProducer() {
+        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
     }
 
     @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
+    protected CellProducer createProducer() {
+        return CellProducer.from(IndexProducer.fromIndexArray(data));
     }
 
     @Override

@@ -36,79 +36,13 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
     }
 
     /**
-     * Verification extension, will check the order of elements,
-     * the sets should already be verified equal.
-     */
-    @Override
-    public void verify() {
-        super.verify();
-
-        // Check that iterator returns elements in order and first() and last()
-        // are consistent
-        final Iterator<T> collIter = getCollection().iterator();
-        final Iterator<T> confIter = getConfirmed().iterator();
-        T first = null;
-        T last = null;
-        while (collIter.hasNext()) {
-            if (first == null) {
-                first = collIter.next();
-                last = first;
-            } else {
-                last = collIter.next();
-            }
-            assertEquals(last, confIter.next(), "Element appears to be out of order.");
-        }
-        if (!getCollection().isEmpty()) {
-            assertEquals(first, getCollection().first(),
-                "Incorrect element returned by first().");
-            assertEquals(last, getCollection().last(),
-                "Incorrect element returned by last().");
-        }
-    }
-
-    /**
-     * Overridden because SortedBags don't allow null elements (normally).
-     * @return false
-     */
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract SortedBag<T> makeObject();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SortedBag<T> makeFullCollection() {
-        return (SortedBag<T>) super.makeFullCollection();
-    }
-
-    /**
-     * Returns an empty {@link TreeBag} for use in modification testing.
+     * Returns the {@link #collection} field cast to a {@link SortedBag}.
      *
-     * @return a confirmed empty collection
+     * @return the collection field as a SortedBag
      */
     @Override
-    public SortedBag<T> makeConfirmedCollection() {
-        return new TreeBag<>();
-    }
-
-    @Override
-    public void resetEmpty() {
-        this.setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
-        this.setConfirmed(makeConfirmedCollection());
-    }
-
-    @Override
-    public void resetFull() {
-        this.setCollection(CollectionSortedBag.collectionSortedBag(makeFullCollection()));
-        this.setConfirmed(makeConfirmedFullCollection());
+    public SortedBag<T> getCollection() {
+        return (SortedBag<T>) super.getCollection();
     }
 
     /**
@@ -139,13 +73,79 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
     }
 
     /**
-     * Returns the {@link #collection} field cast to a {@link SortedBag}.
-     *
-     * @return the collection field as a SortedBag
+     * Overridden because SortedBags don't allow null elements (normally).
+     * @return false
      */
     @Override
-    public SortedBag<T> getCollection() {
-        return (SortedBag<T>) super.getCollection();
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    /**
+     * Returns an empty {@link TreeBag} for use in modification testing.
+     *
+     * @return a confirmed empty collection
+     */
+    @Override
+    public SortedBag<T> makeConfirmedCollection() {
+        return new TreeBag<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SortedBag<T> makeFullCollection() {
+        return (SortedBag<T>) super.makeFullCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract SortedBag<T> makeObject();
+
+    @Override
+    public void resetEmpty() {
+        this.setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
+        this.setConfirmed(makeConfirmedCollection());
+    }
+
+    @Override
+    public void resetFull() {
+        this.setCollection(CollectionSortedBag.collectionSortedBag(makeFullCollection()));
+        this.setConfirmed(makeConfirmedFullCollection());
+    }
+
+    /**
+     * Verification extension, will check the order of elements,
+     * the sets should already be verified equal.
+     */
+    @Override
+    public void verify() {
+        super.verify();
+
+        // Check that iterator returns elements in order and first() and last()
+        // are consistent
+        final Iterator<T> collIter = getCollection().iterator();
+        final Iterator<T> confIter = getConfirmed().iterator();
+        T first = null;
+        T last = null;
+        while (collIter.hasNext()) {
+            if (first == null) {
+                first = collIter.next();
+                last = first;
+            } else {
+                last = collIter.next();
+            }
+            assertEquals(last, confIter.next(), "Element appears to be out of order.");
+        }
+        if (!getCollection().isEmpty()) {
+            assertEquals(first, getCollection().first(),
+                "Incorrect element returned by first().");
+            assertEquals(last, getCollection().last(),
+                "Incorrect element returned by last().");
+        }
     }
 
     // TODO: Add the SortedBag tests!

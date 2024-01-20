@@ -444,6 +444,21 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
+     * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked")
+    // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in)
+        throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
+    }
+
+    /**
      * Normal {@link Map#remove(Object)} behavior with the addition of removing
      * any expiration entry as well.
      * {@inheritDoc}
@@ -497,18 +512,13 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * All expired entries are removed from the map prior to returning the value collection.
+     * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in)
-        throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
+    @Override
+    public Collection<V> values() {
+        removeAllExpired(now());
+        return super.values();
     }
 
     /**
@@ -521,15 +531,5 @@ public class PassiveExpiringMap<K, V>
         throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
-    }
-
-    /**
-     * All expired entries are removed from the map prior to returning the value collection.
-     * {@inheritDoc}
-     */
-    @Override
-    public Collection<V> values() {
-        removeAllExpired(now());
-        return super.values();
     }
 }

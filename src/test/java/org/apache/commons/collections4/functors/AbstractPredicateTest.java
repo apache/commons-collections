@@ -30,6 +30,19 @@ public abstract class AbstractPredicateTest {
     protected String cString;
     protected Integer cInteger;
 
+    protected <T> void assertPredicateFalse(final Predicate<T> predicate, final T testObject) {
+        assertFalse(predicate.evaluate(testObject));
+    }
+
+    protected <T> void assertPredicateTrue(final Predicate<T> predicate, final T testObject) {
+        assertTrue(predicate.evaluate(testObject));
+    }
+
+    /**
+     * @return a predicate for general sanity tests.
+     */
+    protected abstract Predicate<?> generatePredicate();
+
     @BeforeEach
     public void initializeTestObjects() throws Exception {
         cObject = new Object();
@@ -41,19 +54,6 @@ public abstract class AbstractPredicateTest {
     public void testPredicateSanityTests() throws Exception {
         final Predicate<?> predicate = generatePredicate();
         assertNotNull(predicate);
-    }
-
-    /**
-     * @return a predicate for general sanity tests.
-     */
-    protected abstract Predicate<?> generatePredicate();
-
-    protected <T> void assertPredicateFalse(final Predicate<T> predicate, final T testObject) {
-        assertFalse(predicate.evaluate(testObject));
-    }
-
-    protected <T> void assertPredicateTrue(final Predicate<T> predicate, final T testObject) {
-        assertTrue(predicate.evaluate(testObject));
     }
 
 }

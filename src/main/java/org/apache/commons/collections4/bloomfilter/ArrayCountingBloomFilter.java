@@ -87,6 +87,12 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      */
     private int state;
 
+    private ArrayCountingBloomFilter(final ArrayCountingBloomFilter source) {
+        this.shape = source.shape;
+        this.state = source.state;
+        this.cells = source.cells.clone();
+    }
+
     /**
      * Constructs an empty counting Bloom filter with the specified shape.
      *
@@ -99,30 +105,35 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         cells = new int[shape.getNumberOfBits()];
     }
 
-    private ArrayCountingBloomFilter(final ArrayCountingBloomFilter source) {
-        this.shape = source.shape;
-        this.state = source.state;
-        this.cells = source.cells.clone();
+    @Override
+    public boolean add(final CellProducer other) {
+        Objects.requireNonNull(other, "other");
+        other.forEachCell(this::add);
+        return isValid();
+    }
+
+    /**
+     * Add to the cell for the bit index.
+     *
+     * @param idx the index
+     * @param addend the amount to add
+     * @return {@code true} always.
+     */
+    private boolean add(final int idx, final int addend) {
+        try {
+            final int updated = cells[idx] + addend;
+            state |= updated;
+            cells[idx] = updated;
+            return true;
+        } catch (final IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(
+                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+        }
     }
 
     @Override
-    public void clear() {
-        Arrays.fill(cells, 0);
-    }
-
-    @Override
-    public int getMaxCell() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public ArrayCountingBloomFilter copy() {
-        return new ArrayCountingBloomFilter(this);
-    }
-
-    @Override
-    public int characteristics() {
-        return SPARSE;
+    public int[] asIndexArray() {
+        return IntStream.range(0, cells.length).filter(i -> cells[i] > 0).toArray();
     }
 
     @Override
@@ -131,58 +142,28 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean add(final CellProducer other) {
-        Objects.requireNonNull(other, "other");
-        other.forEachCell(this::add);
-        return isValid();
+    public int characteristics() {
+        return SPARSE;
     }
 
     @Override
-    public boolean subtract(final CellProducer other) {
-        Objects.requireNonNull(other, "other");
-        other.forEachCell(this::subtract);
-        return isValid();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p><em>Implementation note</em>
-     *
-     * <p>The state transition to invalid is permanent.</p>
-     *
-     * <p>This implementation does not correct negative cells to zero or integer
-     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
-     * generated invalid cells can be reversed by using the complement of the
-     * original operation with the same Bloom filter. This will restore the cells
-     * to the state prior to the invalid operation. Cells can then be extracted
-     * using {@link #forEachCell(CellConsumer)}.</p>
-     */
-    @Override
-    public boolean isValid() {
-        return state >= 0;
+    public void clear() {
+        Arrays.fill(cells, 0);
     }
 
     @Override
-    public boolean forEachCell(final CellProducer.CellConsumer consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        for (int i = 0; i < cells.length; i++) {
-            if (cells[i] != 0 && !consumer.test(i, cells[i])) {
-                return false;
-            }
-        }
-        return true;
+    public boolean contains(final BitMapProducer bitMapProducer) {
+        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        for (int i = 0; i < cells.length; i++) {
-            if (cells[i] != 0 && !consumer.test(i)) {
-                return false;
-            }
-        }
-        return true;
+    public boolean contains(final IndexProducer indexProducer) {
+        return indexProducer.forEachIndex(idx -> this.cells[idx] != 0);
+    }
+
+    @Override
+    public ArrayCountingBloomFilter copy() {
+        return new ArrayCountingBloomFilter(this);
     }
 
     @Override
@@ -213,23 +194,75 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         return consumer.test(value);
     }
 
-    /**
-     * Add to the cell for the bit index.
-     *
-     * @param idx the index
-     * @param addend the amount to add
-     * @return {@code true} always.
-     */
-    private boolean add(final int idx, final int addend) {
-        try {
-            final int updated = cells[idx] + addend;
-            state |= updated;
-            cells[idx] = updated;
-            return true;
-        } catch (final IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
+    @Override
+    public boolean forEachCell(final CellProducer.CellConsumer consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != 0 && !consumer.test(i, cells[i])) {
+                return false;
+            }
         }
+        return true;
+    }
+
+    @Override
+    public boolean forEachIndex(final IntPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != 0 && !consumer.test(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int getMaxCell() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getMaxInsert(final CellProducer cellProducer) {
+        final int[] max = {Integer.MAX_VALUE};
+        cellProducer.forEachCell( (x, y) -> {
+            final int count = cells[x] / y;
+            if (count < max[0]) {
+                max[0] = count;
+            }
+            return max[0] > 0;
+        });
+        return max[0];
+    }
+
+    @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p><em>Implementation note</em>
+     *
+     * <p>The state transition to invalid is permanent.</p>
+     *
+     * <p>This implementation does not correct negative cells to zero or integer
+     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
+     * generated invalid cells can be reversed by using the complement of the
+     * original operation with the same Bloom filter. This will restore the cells
+     * to the state prior to the invalid operation. Cells can then be extracted
+     * using {@link #forEachCell(CellConsumer)}.</p>
+     */
+    @Override
+    public boolean isValid() {
+        return state >= 0;
+    }
+
+    @Override
+    public boolean subtract(final CellProducer other) {
+        Objects.requireNonNull(other, "other");
+        other.forEachCell(this::subtract);
+        return isValid();
     }
 
     /**
@@ -249,38 +282,5 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
         }
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> this.cells[idx] != 0);
-    }
-
-    @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
-    }
-
-    @Override
-    public int[] asIndexArray() {
-        return IntStream.range(0, cells.length).filter(i -> cells[i] > 0).toArray();
-    }
-
-    @Override
-    public int getMaxInsert(final CellProducer cellProducer) {
-        final int[] max = {Integer.MAX_VALUE};
-        cellProducer.forEachCell( (x, y) -> {
-            final int count = cells[x] / y;
-            if (count < max[0]) {
-                max[0] = count;
-            }
-            return max[0] > 0;
-        });
-        return max[0];
     }
 }

@@ -38,19 +38,30 @@ public abstract class AbstractBitMapProducerTest {
     static final LongPredicate TRUE_CONSUMER = arg0 -> true;
 
     /**
-     * Creates a producer with some data.
-     * @return a producer with some data
-     */
-    protected abstract BitMapProducer createProducer();
-
-    /**
      * Creates an producer without data.
      * @return a producer that has no data.
      */
     protected abstract BitMapProducer createEmptyProducer();
 
+    /**
+     * Creates a producer with some data.
+     * @return a producer with some data
+     */
+    protected abstract BitMapProducer createProducer();
+
     protected boolean emptyIsZeroLength() {
         return false;
+    }
+
+    @Test
+    public final void testAsBitMapArray() {
+        long[] array = createEmptyProducer().asBitMapArray();
+        for (int i = 0; i < array.length; i++) {
+            assertEquals(0, array[i], "Wrong value at " + i);
+        }
+
+        array = createProducer().asBitMapArray();
+        assertFalse(array.length == 0);
     }
 
     @Test
@@ -67,14 +78,28 @@ public abstract class AbstractBitMapProducerTest {
     }
 
     @Test
-    public final void testAsBitMapArray() {
-        long[] array = createEmptyProducer().asBitMapArray();
-        for (int i = 0; i < array.length; i++) {
-            assertEquals(0, array[i], "Wrong value at " + i);
-        }
+    public void testForEachBitMapEarlyExit() {
+        final int[] passes = new int[1];
+        assertFalse(createProducer().forEachBitMap(l -> {
+            passes[0]++;
+            return false;
+        }));
+        assertEquals(1, passes[0]);
 
-        array = createProducer().asBitMapArray();
-        assertFalse(array.length == 0);
+        passes[0] = 0;
+        if (emptyIsZeroLength()) {
+            assertTrue(createEmptyProducer().forEachBitMap(l -> {
+                passes[0]++;
+                return false;
+            }));
+            assertEquals(0, passes[0]);
+        } else {
+            assertFalse(createEmptyProducer().forEachBitMap(l -> {
+                passes[0]++;
+                return false;
+            }));
+            assertEquals(1, passes[0]);
+        }
     }
 
     @Test
@@ -113,31 +138,6 @@ public abstract class AbstractBitMapProducerTest {
         };
         final BitMapProducer shortProducer = l -> true;
         assertFalse(createProducer().forEachBitMapPair(shortProducer, shortFunc));
-    }
-
-    @Test
-    public void testForEachBitMapEarlyExit() {
-        final int[] passes = new int[1];
-        assertFalse(createProducer().forEachBitMap(l -> {
-            passes[0]++;
-            return false;
-        }));
-        assertEquals(1, passes[0]);
-
-        passes[0] = 0;
-        if (emptyIsZeroLength()) {
-            assertTrue(createEmptyProducer().forEachBitMap(l -> {
-                passes[0]++;
-                return false;
-            }));
-            assertEquals(0, passes[0]);
-        } else {
-            assertFalse(createEmptyProducer().forEachBitMap(l -> {
-                passes[0]++;
-                return false;
-            }));
-            assertEquals(1, passes[0]);
-        }
     }
 
     @Test

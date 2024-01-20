@@ -57,6 +57,20 @@ public final class IncrementingHasher implements Hasher {
 
         return new IndexProducer() {
             @Override
+            public int[] asIndexArray() {
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
+
+                // This method needs to return duplicate indices
+
+                forEachIndex(i -> {
+                    result[idx[0]++] = i;
+                    return true;
+                });
+                return result;
+            }
+
+            @Override
             public boolean forEachIndex(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
@@ -77,20 +91,6 @@ public final class IncrementingHasher implements Hasher {
                     index = index >= bits ? index - bits : index;
                 }
                 return true;
-            }
-
-            @Override
-            public int[] asIndexArray() {
-                final int[] result = new int[shape.getNumberOfHashFunctions()];
-                final int[] idx = new int[1];
-
-                // This method needs to return duplicate indices
-
-                forEachIndex(i -> {
-                    result[idx[0]++] = i;
-                    return true;
-                });
-                return result;
             }
         };
     }

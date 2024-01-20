@@ -54,33 +54,6 @@ public abstract class AbstractMockPredicateTest<T> {
     }
 
     /**
-     * Creates the list of predicates to verify.
-     */
-    @BeforeEach
-    public final void createVerifyList() {
-        mockPredicatesToVerify = new ArrayList<>();
-    }
-
-    /**
-     * Verifies all the mock predicates created for the test.
-     */
-    @AfterEach
-    public final void verifyPredicates() {
-        for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
-            verify(predicate);
-        }
-    }
-
-    /**
-     * Gets the value which will be passed to the mock predicates.
-     *
-     * @return the test value.
-     */
-    protected final T getTestValue() {
-        return testValue;
-    }
-
-    /**
      * Creates a single mock predicate.
      *
      * @param returnValue the return value for the mock predicate, or null if the mock is not expected to be called.
@@ -97,5 +70,32 @@ public abstract class AbstractMockPredicateTest<T> {
         mockPredicatesToVerify.add(mockPredicate);
 
         return mockPredicate;
+    }
+
+    /**
+     * Creates the list of predicates to verify.
+     */
+    @BeforeEach
+    public final void createVerifyList() {
+        mockPredicatesToVerify = new ArrayList<>();
+    }
+
+    /**
+     * Gets the value which will be passed to the mock predicates.
+     *
+     * @return the test value.
+     */
+    protected final T getTestValue() {
+        return testValue;
+    }
+
+    /**
+     * Verifies all the mock predicates created for the test.
+     */
+    @AfterEach
+    public final void verifyPredicates() {
+        for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
+            verify(predicate);
+        }
     }
 }

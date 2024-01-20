@@ -73,35 +73,6 @@ public final class UnmodifiableQueue<E>
         super((Queue<E>) queue);
     }
 
-    /**
-     * Write the collection out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an I/O error occurs while writing to the output stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
-    }
-
-    /**
-     * Read the collection in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an I/O error occurs while reading from the input stream
-     * @throws ClassNotFoundException if the class of a serialized object can not be found
-     */
-    @SuppressWarnings("unchecked")
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject());
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
-    }
-
     @Override
     public boolean add(final Object object) {
         throw new UnsupportedOperationException();
@@ -118,26 +89,8 @@ public final class UnmodifiableQueue<E>
     }
 
     @Override
-    public boolean remove(final Object object) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @since 4.4
-     */
-    @Override
-    public boolean removeIf(final Predicate<? super E> filter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override
@@ -150,9 +103,56 @@ public final class UnmodifiableQueue<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Read the collection in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an I/O error occurs while reading from the input stream
+     * @throws ClassNotFoundException if the class of a serialized object can not be found
+     */
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject());
+    }
+
     @Override
     public E remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean retainAll(final Collection<?> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Write the collection out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an I/O error occurs while writing to the output stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

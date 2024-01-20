@@ -47,16 +47,6 @@ import java.util.function.IntPredicate;
 public class EnhancedDoubleHasher implements Hasher {
 
     /**
-     * The initial hash value.
-     */
-    private final long initial;
-
-    /**
-     * The value to increment the hash value by.
-     */
-    private final long increment;
-
-    /**
      * Convert bytes to big-endian long filling with zero bytes as necessary..
      * @param byteArray the byte array to extract the values from.
      * @param offset the offset to start extraction from.
@@ -73,6 +63,16 @@ public class EnhancedDoubleHasher implements Hasher {
         }
         return val;
     }
+
+    /**
+     * The initial hash value.
+     */
+    private final long initial;
+
+    /**
+     * The value to increment the hash value by.
+     */
+    private final long increment;
 
     /**
      * Constructs the EnhancedDoubleHasher from a byte array.
@@ -114,14 +114,6 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     /**
-     * Gets the initial value for the hash calculation.
-     * @return the initial value for the hash calculation.
-     */
-    long getInitial() {
-        return initial;
-    }
-
-    /**
      * Gets the increment value for the hash calculation.
      * @return the increment value for the hash calculation.
      */
@@ -129,11 +121,33 @@ public class EnhancedDoubleHasher implements Hasher {
         return increment;
     }
 
+    /**
+     * Gets the initial value for the hash calculation.
+     * @return the initial value for the hash calculation.
+     */
+    long getInitial() {
+        return initial;
+    }
+
     @Override
     public IndexProducer indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
         return new IndexProducer() {
+
+            @Override
+            public int[] asIndexArray() {
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
+
+                // This method needs to return duplicate indices
+
+                forEachIndex(i -> {
+                    result[idx[0]++] = i;
+                    return true;
+                });
+                return result;
+            }
 
             @Override
             public boolean forEachIndex(final IntPredicate consumer) {
@@ -191,20 +205,6 @@ public class EnhancedDoubleHasher implements Hasher {
                     }
                 }
                 return true;
-            }
-
-            @Override
-            public int[] asIndexArray() {
-                final int[] result = new int[shape.getNumberOfHashFunctions()];
-                final int[] idx = new int[1];
-
-                // This method needs to return duplicate indices
-
-                forEachIndex(i -> {
-                    result[idx[0]++] = i;
-                    return true;
-                });
-                return result;
             }
         };
     }

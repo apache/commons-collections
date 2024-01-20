@@ -79,6 +79,11 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
         super(bag, predicate);
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return decorated().comparator();
+    }
+
     /**
      * Gets the decorated sorted bag.
      *
@@ -97,11 +102,6 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
     @Override
     public E last() {
         return decorated().last();
-    }
-
-    @Override
-    public Comparator<? super E> comparator() {
-        return decorated().comparator();
     }
 
 }

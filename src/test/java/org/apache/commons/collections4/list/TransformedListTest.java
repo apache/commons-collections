@@ -44,6 +44,11 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public List<E> makeConfirmedCollection() {
         return new ArrayList<>();
     }
@@ -55,15 +60,40 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<E> makeObject() {
-        return TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public List<E> makeFullCollection() {
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public List<E> makeObject() {
+        return TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    }
+
+    @Test
+    public void testSubList() {
+        final List<E> list = makeObject();
+        List<E> subList = list.subList(0, 0);
+        assertNotNull(subList);
+        list.add((E) "zero");
+        //subList without any element of list
+        subList = list.subList(0, 0);
+        assertNotNull(subList);
+        assertEquals(0, subList.size());
+
+        //subList with one element oif list
+        subList = list.subList(0, 1);
+        assertEquals(1, subList.size());
+
+        final List<E> elements = new ArrayList<>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) "three");
+        list.addAll(1, elements);
+        //subList with all elements of list
+        subList = list.subList(0, list.size());
+        assertEquals(list.size(), subList.size());
     }
 
     @Test
@@ -129,36 +159,6 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
 
         assertFalse(list.remove(els[0]));
         assertTrue(list.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Test
-    public void testSubList() {
-        final List<E> list = makeObject();
-        List<E> subList = list.subList(0, 0);
-        assertNotNull(subList);
-        list.add((E) "zero");
-        //subList without any element of list
-        subList = list.subList(0, 0);
-        assertNotNull(subList);
-        assertEquals(0, subList.size());
-
-        //subList with one element oif list
-        subList = list.subList(0, 1);
-        assertEquals(1, subList.size());
-
-        final List<E> elements = new ArrayList<>();
-        elements.add((E) "one");
-        elements.add((E) "two");
-        elements.add((E) "three");
-        list.addAll(1, elements);
-        //subList with all elements of list
-        subList = list.subList(0, list.size());
-        assertEquals(list.size(), subList.size());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

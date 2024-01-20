@@ -34,9 +34,6 @@ import org.apache.commons.collections4.Unmodifiable;
 public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>,
         Unmodifiable {
 
-    /** The iterator being decorated */
-    private final OrderedMapIterator<? extends K, ? extends V> iterator;
-
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -57,6 +54,9 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         return new UnmodifiableOrderedMapIterator<>(iterator);
     }
 
+    /** The iterator being decorated */
+    private final OrderedMapIterator<? extends K, ? extends V> iterator;
+
     /**
      * Constructs a new instance.
      *
@@ -64,26 +64,6 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      */
     private UnmodifiableOrderedMapIterator(final OrderedMapIterator<K, ? extends V> iterator) {
         this.iterator = iterator;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    @Override
-    public K next() {
-        return iterator.next();
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return iterator.hasPrevious();
-    }
-
-    @Override
-    public K previous() {
-        return iterator.previous();
     }
 
     @Override
@@ -97,13 +77,33 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
     }
 
     @Override
-    public V setValue(final V value) {
-        throw new UnsupportedOperationException("setValue() is not supported");
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return iterator.hasPrevious();
+    }
+
+    @Override
+    public K next() {
+        return iterator.next();
+    }
+
+    @Override
+    public K previous() {
+        return iterator.previous();
     }
 
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
+    }
+
+    @Override
+    public V setValue(final V value) {
+        throw new UnsupportedOperationException("setValue() is not supported");
     }
 
 }

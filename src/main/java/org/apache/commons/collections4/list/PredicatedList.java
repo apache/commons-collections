@@ -49,6 +49,33 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  */
 public class PredicatedList<E> extends PredicatedCollection<E> implements List<E> {
 
+    /**
+     * Inner class Iterator for the PredicatedList
+     */
+    protected class PredicatedListIterator extends AbstractListIteratorDecorator<E> {
+
+        /**
+         * Create a new predicated list iterator.
+         *
+         * @param iterator  the list iterator to decorate
+         */
+        protected PredicatedListIterator(final ListIterator<E> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public void add(final E object) {
+            validate(object);
+            getListIterator().add(object);
+        }
+
+        @Override
+        public void set(final E object) {
+            validate(object);
+            getListIterator().set(object);
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = -5722039223898659102L;
 
@@ -85,6 +112,20 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         super(list, predicate);
     }
 
+    @Override
+    public void add(final int index, final E object) {
+        validate(object);
+        decorated().add(index, object);
+    }
+
+    @Override
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
+        for (final E aColl : coll) {
+            validate(aColl);
+        }
+        return decorated().addAll(index, coll);
+    }
+
     /**
      * Gets the list being decorated.
      *
@@ -101,13 +142,13 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     }
 
     @Override
-    public int hashCode() {
-        return decorated().hashCode();
+    public E get(final int index) {
+        return decorated().get(index);
     }
 
     @Override
-    public E get(final int index) {
-        return decorated().get(index);
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override
@@ -121,25 +162,6 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     }
 
     @Override
-    public E remove(final int index) {
-        return decorated().remove(index);
-    }
-
-    @Override
-    public void add(final int index, final E object) {
-        validate(object);
-        decorated().add(index, object);
-    }
-
-    @Override
-    public boolean addAll(final int index, final Collection<? extends E> coll) {
-        for (final E aColl : coll) {
-            validate(aColl);
-        }
-        return decorated().addAll(index, coll);
-    }
-
-    @Override
     public ListIterator<E> listIterator() {
         return listIterator(0);
     }
@@ -147,6 +169,11 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     @Override
     public ListIterator<E> listIterator(final int i) {
         return new PredicatedListIterator(decorated().listIterator(i));
+    }
+
+    @Override
+    public E remove(final int index) {
+        return decorated().remove(index);
     }
 
     @Override
@@ -159,33 +186,6 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new PredicatedList<>(sub, predicate);
-    }
-
-    /**
-     * Inner class Iterator for the PredicatedList
-     */
-    protected class PredicatedListIterator extends AbstractListIteratorDecorator<E> {
-
-        /**
-         * Create a new predicated list iterator.
-         *
-         * @param iterator  the list iterator to decorate
-         */
-        protected PredicatedListIterator(final ListIterator<E> iterator) {
-            super(iterator);
-        }
-
-        @Override
-        public void add(final E object) {
-            validate(object);
-            getListIterator().add(object);
-        }
-
-        @Override
-        public void set(final E object) {
-            validate(object);
-            getListIterator().set(object);
-        }
     }
 
 }

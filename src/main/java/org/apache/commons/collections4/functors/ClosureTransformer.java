@@ -33,9 +33,6 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 478466901448617286L;
 
-    /** The closure to wrap */
-    private final Closure<? super T> iClosure;
-
     /**
      * Factory method that performs validation.
      *
@@ -48,6 +45,9 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
         return new ClosureTransformer<>(Objects.requireNonNull(closure, "closure"));
     }
 
+    /** The closure to wrap */
+    private final Closure<? super T> iClosure;
+
     /**
      * Constructor that performs no validation.
      * Use {@code closureTransformer} if you want that.
@@ -56,6 +56,16 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      */
     public ClosureTransformer(final Closure<? super T> closure) {
         iClosure = closure;
+    }
+
+    /**
+     * Gets the closure.
+     *
+     * @return the closure
+     * @since 3.1
+     */
+    public Closure<? super T> getClosure() {
+        return iClosure;
     }
 
     /**
@@ -68,16 +78,6 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     public T transform(final T input) {
         iClosure.execute(input);
         return input;
-    }
-
-    /**
-     * Gets the closure.
-     *
-     * @return the closure
-     * @since 3.1
-     */
-    public Closure<? super T> getClosure() {
-        return iClosure;
     }
 
 }

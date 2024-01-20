@@ -54,20 +54,6 @@ public final class SparseBloomFilter implements BloomFilter {
         indices = new TreeSet<>(source.indices);
     }
 
-    @Override
-    public long[] asBitMapArray() {
-        final long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        for (final int i : indices) {
-            BitMap.set(result, i);
-        }
-        return result;
-    }
-
-    @Override
-    public SparseBloomFilter copy() {
-        return new SparseBloomFilter(this);
-    }
-
     /**
      * Adds the index to the indices.
      * @param idx the index to add.
@@ -79,56 +65,12 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
-        indexProducer.forEachIndex(this::add);
-        if (!this.indices.isEmpty()) {
-            if (this.indices.last() >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                        this.indices.last(), shape.getNumberOfBits() - 1));
-            }
-            if (this.indices.first() < 0) {
-                throw new IllegalArgumentException(
-                        String.format("Value in list %s is less than 0", this.indices.first()));
-            }
+    public long[] asBitMapArray() {
+        final long[] result = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        for (final int i : indices) {
+            BitMap.set(result, i);
         }
-        return true;
-    }
-
-    @Override
-    public boolean merge(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return this.merge(IndexProducer.fromBitMapProducer(bitMapProducer));
-    }
-
-    @Override
-    public boolean merge(final Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        merge(hasher.indices(shape));
-        return true;
-    }
-
-    @Override
-    public boolean merge(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
-        merge(producer);
-        return true;
-    }
-
-    @Override
-    public void clear() {
-        indices.clear();
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public int characteristics() {
-        return SPARSE;
+        return result;
     }
 
     @Override
@@ -137,19 +79,28 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean isEmpty() {
-        return indices.isEmpty();
+    public int characteristics() {
+        return SPARSE;
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        for (final int value : indices) {
-            if (!consumer.test(value)) {
-                return false;
-            }
-        }
-        return true;
+    public void clear() {
+        indices.clear();
+    }
+
+    @Override
+    public boolean contains(final BitMapProducer bitMapProducer) {
+        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+    }
+
+    @Override
+    public boolean contains(final IndexProducer indexProducer) {
+        return indexProducer.forEachIndex(indices::contains);
+    }
+
+    @Override
+    public SparseBloomFilter copy() {
+        return new SparseBloomFilter(this);
     }
 
     @Override
@@ -191,12 +142,61 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(indices::contains);
+    public boolean forEachIndex(final IntPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (final int value : indices) {
+            if (!consumer.test(value)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return indices.isEmpty();
+    }
+
+    @Override
+    public boolean merge(final BitMapProducer bitMapProducer) {
+        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
+        return this.merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+    }
+
+    @Override
+    public boolean merge(final BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
+        merge(producer);
+        return true;
+    }
+
+    @Override
+    public boolean merge(final Hasher hasher) {
+        Objects.requireNonNull(hasher, "hasher");
+        merge(hasher.indices(shape));
+        return true;
+    }
+
+    @Override
+    public boolean merge(final IndexProducer indexProducer) {
+        Objects.requireNonNull(indexProducer, "indexProducer");
+        indexProducer.forEachIndex(this::add);
+        if (!this.indices.isEmpty()) {
+            if (this.indices.last() >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
+                        this.indices.last(), shape.getNumberOfBits() - 1));
+            }
+            if (this.indices.first() < 0) {
+                throw new IllegalArgumentException(
+                        String.format("Value in list %s is less than 0", this.indices.first()));
+            }
+        }
+        return true;
     }
 }

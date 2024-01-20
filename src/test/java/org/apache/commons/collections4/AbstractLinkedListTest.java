@@ -44,9 +44,6 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         super(testName);
     }
 
-    @Override
-    public abstract LinkedList<T> makeObject();
-
     /**
      *  Returns the {@link #collection} field cast to a {@link LinkedList}.
      *
@@ -65,6 +62,25 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     protected LinkedList<T> getConfirmedLinkedList() {
         return (LinkedList<T>) getConfirmed();
     }
+
+    /**
+     *  Returns an empty {@link LinkedList}.
+     */
+    @Override
+    public Collection<T> makeConfirmedCollection() {
+        return new LinkedList<>();
+    }
+
+    /**
+     *  Returns a full {@link LinkedList}.
+     */
+    @Override
+    public Collection<T> makeConfirmedFullCollection() {
+        return new LinkedList<>(Arrays.asList(getFullElements()));
+    }
+
+    @Override
+    public abstract LinkedList<T> makeObject();
 
     /**
      *  Tests {@link LinkedList#addFirst(Object)}.
@@ -188,22 +204,6 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         assertEquals(confirmedLast, last,
                 "Result returned by removeLast() was wrong.");
         verify();
-    }
-
-    /**
-     *  Returns an empty {@link LinkedList}.
-     */
-    @Override
-    public Collection<T> makeConfirmedCollection() {
-        return new LinkedList<>();
-    }
-
-    /**
-     *  Returns a full {@link LinkedList}.
-     */
-    @Override
-    public Collection<T> makeConfirmedFullCollection() {
-        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
 }

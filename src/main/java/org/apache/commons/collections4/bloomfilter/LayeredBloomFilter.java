@@ -62,9 +62,32 @@ import java.util.function.Predicate;
  * @since 4.5
  */
 public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
-    private final Shape shape;
-    private LayerManager layerManager;
+    /**
+     * A class used to locate matching filters across all the layers.
+     */
+    private class Finder implements Predicate<BloomFilter> {
+        int[] result = new int[layerManager.getDepth()];
+        int bfIdx;
+        int resultIdx;
+        BloomFilter bf;
 
+        Finder(BloomFilter bf) {
+            this.bf = bf;
+        }
+
+        int[] getResult() {
+            return Arrays.copyOf(result, resultIdx);
+        }
+
+        @Override
+        public boolean test(BloomFilter x) {
+            if (x.contains(bf)) {
+                result[resultIdx++] = bfIdx;
+            }
+            bfIdx++;
+            return true;
+        }
+    }
     /**
      * Creates a fixed size layered bloom filter that adds new filters to the list,
      * but never merges them. List will never exceed maxDepth. As additional filters
@@ -80,6 +103,10 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         return new LayeredBloomFilter(shape, manager);
     }
 
+    private final Shape shape;
+
+    private LayerManager layerManager;
+
     /**
      * Constructor.
      *
@@ -92,39 +119,13 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     @Override
-    public LayeredBloomFilter copy() {
-        return new LayeredBloomFilter(shape, layerManager.copy());
-    }
-
-    /**
-     * Gets the depth of the deepest layer. The minimum value returned by this
-     * method is 1.
-     *
-     * @return the depth of the deepest layer.
-     */
-    public final int getDepth() {
-        return layerManager.getDepth();
-    }
-
-    /**
-     * Gets the Bloom filter at the specified depth
-     *
-     * @param depth the depth of the filter to return.
-     * @return the Bloom filter at the specified depth.
-     * @throws NoSuchElementException if depth is not in the range [0,getDepth())
-     */
-    public BloomFilter get(int depth) {
-        return layerManager.get(depth);
-    }
-
-    @Override
     public int cardinality() {
         return SetOperations.cardinality(this);
     }
 
     @Override
-    public boolean isEmpty() {
-        return forEachBloomFilter(BloomFilter::isEmpty);
+    public int characteristics() {
+        return 0;
     }
 
     @Override
@@ -132,79 +133,9 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         layerManager.clear();
     }
 
-    /**
-     * Processes the Bloom filters in depth order with the most recent filters
-     * first. Each filter is passed to the predicate in turn. The function exits on
-     * the first {@code false} returned by the predicate.
-     *
-     * @param bloomFilterPredicate the predicate to execute.
-     * @return {@code true} if all filters passed the predicate, {@code false}
-     *         otherwise.
-     */
     @Override
-    public final boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
-        return layerManager.forEachBloomFilter(bloomFilterPredicate);
-    }
-
-    /**
-     * Create a standard (non-layered) Bloom filter by merging all of the layers. If
-     * the filter is empty this method will return an empty Bloom filter.
-     *
-     * @return the merged bloom filter.
-     */
-    @Override
-    public BloomFilter flatten() {
-        BloomFilter bf = new SimpleBloomFilter(shape);
-        forEachBloomFilter(bf::merge);
-        return bf;
-    }
-
-    /**
-     * Finds the layers in which the Hasher is found.
-     *
-     * @param hasher the Hasher to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
-     */
-    public int[] find(final Hasher hasher) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(hasher);
-        return find(bf);
-    }
-
-    /**
-     * Finds the layers in which the IndexProducer is found.
-     *
-     * @param indexProducer the Index producer to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
-     */
-    public int[] find(final IndexProducer indexProducer) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(indexProducer);
-        return find(bf);
-    }
-
-    /**
-     * Finds the layers in which the BitMapProducer is found.
-     *
-     * @param bitMapProducer the BitMapProducer to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
-     */
-    public int[] find(final BitMapProducer bitMapProducer) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(bitMapProducer);
-        return find(bf);
-    }
-
-    /**
-     * Finds the layers in which the Bloom filter is found.
-     *
-     * @param bf the Bloom filter to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
-     */
-    public int[] find(BloomFilter bf) {
-        Finder finder = new Finder(bf);
-        forEachBloomFilter(finder);
-        return finder.getResult();
+    public boolean contains(final BitMapProducer bitMapProducer) {
+        return contains(createFilter(bitMapProducer));
     }
 
     /**
@@ -242,6 +173,33 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         });
     }
 
+    @Override
+    public boolean contains(final Hasher hasher) {
+        return contains(createFilter(hasher));
+    }
+
+    @Override
+    public boolean contains(IndexProducer indexProducer) {
+        return contains(createFilter(indexProducer));
+    }
+
+    @Override
+    public LayeredBloomFilter copy() {
+        return new LayeredBloomFilter(shape, layerManager.copy());
+    }
+
+    /**
+     * Creates a Bloom filter from a BitMapProducer.
+     *
+     * @param bitMapProducer the BitMapProducer to create the filter from.
+     * @return the BloomFilter.
+     */
+    private BloomFilter createFilter(final BitMapProducer bitMapProducer) {
+        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(bitMapProducer);
+        return bf;
+    }
+
     /**
      * Creates a Bloom filter from a Hasher.
      *
@@ -266,68 +224,6 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
         return bf;
     }
 
-    /**
-     * Creates a Bloom filter from a BitMapProducer.
-     *
-     * @param bitMapProducer the BitMapProducer to create the filter from.
-     * @return the BloomFilter.
-     */
-    private BloomFilter createFilter(final BitMapProducer bitMapProducer) {
-        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(bitMapProducer);
-        return bf;
-    }
-
-    @Override
-    public int characteristics() {
-        return 0;
-    }
-
-    @Override
-    public final Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean contains(final Hasher hasher) {
-        return contains(createFilter(hasher));
-    }
-
-    @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(createFilter(bitMapProducer));
-    }
-
-    @Override
-    public boolean contains(IndexProducer indexProducer) {
-        return contains(createFilter(indexProducer));
-    }
-
-    @Override
-    public boolean merge(BloomFilter bf) {
-        return layerManager.getTarget().merge(bf);
-    }
-
-    @Override
-    public boolean merge(IndexProducer indexProducer) {
-        return layerManager.getTarget().merge(indexProducer);
-    }
-
-    @Override
-    public boolean merge(BitMapProducer bitMapProducer) {
-        return layerManager.getTarget().merge(bitMapProducer);
-    }
-
-    @Override
-    public boolean forEachIndex(IntPredicate predicate) {
-        return forEachBloomFilter(bf -> bf.forEachIndex(predicate));
-    }
-
-    @Override
-    public boolean forEachBitMap(LongPredicate predicate) {
-        return flatten().forEachBitMap(predicate);
-    }
-
     @Override
     public int estimateN() {
         return flatten().estimateN();
@@ -342,6 +238,137 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     /**
+     * Finds the layers in which the BitMapProducer is found.
+     *
+     * @param bitMapProducer the BitMapProducer to search for.
+     * @return an array of layer indices in which the Bloom filter is found.
+     */
+    public int[] find(final BitMapProducer bitMapProducer) {
+        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(bitMapProducer);
+        return find(bf);
+    }
+
+    /**
+     * Finds the layers in which the Bloom filter is found.
+     *
+     * @param bf the Bloom filter to search for.
+     * @return an array of layer indices in which the Bloom filter is found.
+     */
+    public int[] find(BloomFilter bf) {
+        Finder finder = new Finder(bf);
+        forEachBloomFilter(finder);
+        return finder.getResult();
+    }
+
+    /**
+     * Finds the layers in which the Hasher is found.
+     *
+     * @param hasher the Hasher to search for.
+     * @return an array of layer indices in which the Bloom filter is found.
+     */
+    public int[] find(final Hasher hasher) {
+        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(hasher);
+        return find(bf);
+    }
+
+    /**
+     * Finds the layers in which the IndexProducer is found.
+     *
+     * @param indexProducer the Index producer to search for.
+     * @return an array of layer indices in which the Bloom filter is found.
+     */
+    public int[] find(final IndexProducer indexProducer) {
+        SimpleBloomFilter bf = new SimpleBloomFilter(shape);
+        bf.merge(indexProducer);
+        return find(bf);
+    }
+
+    /**
+     * Create a standard (non-layered) Bloom filter by merging all of the layers. If
+     * the filter is empty this method will return an empty Bloom filter.
+     *
+     * @return the merged bloom filter.
+     */
+    @Override
+    public BloomFilter flatten() {
+        BloomFilter bf = new SimpleBloomFilter(shape);
+        forEachBloomFilter(bf::merge);
+        return bf;
+    }
+
+    @Override
+    public boolean forEachBitMap(LongPredicate predicate) {
+        return flatten().forEachBitMap(predicate);
+    }
+
+    /**
+     * Processes the Bloom filters in depth order with the most recent filters
+     * first. Each filter is passed to the predicate in turn. The function exits on
+     * the first {@code false} returned by the predicate.
+     *
+     * @param bloomFilterPredicate the predicate to execute.
+     * @return {@code true} if all filters passed the predicate, {@code false}
+     *         otherwise.
+     */
+    @Override
+    public final boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
+        return layerManager.forEachBloomFilter(bloomFilterPredicate);
+    }
+
+    @Override
+    public boolean forEachIndex(IntPredicate predicate) {
+        return forEachBloomFilter(bf -> bf.forEachIndex(predicate));
+    }
+
+    /**
+     * Gets the Bloom filter at the specified depth
+     *
+     * @param depth the depth of the filter to return.
+     * @return the Bloom filter at the specified depth.
+     * @throws NoSuchElementException if depth is not in the range [0,getDepth())
+     */
+    public BloomFilter get(int depth) {
+        return layerManager.get(depth);
+    }
+
+    /**
+     * Gets the depth of the deepest layer. The minimum value returned by this
+     * method is 1.
+     *
+     * @return the depth of the deepest layer.
+     */
+    public final int getDepth() {
+        return layerManager.getDepth();
+    }
+
+    @Override
+    public final Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return forEachBloomFilter(BloomFilter::isEmpty);
+    }
+
+    @Override
+    public boolean merge(BitMapProducer bitMapProducer) {
+        return layerManager.getTarget().merge(bitMapProducer);
+    }
+
+    @Override
+    public boolean merge(BloomFilter bf) {
+        return layerManager.getTarget().merge(bf);
+    }
+
+    @Override
+    public boolean merge(IndexProducer indexProducer) {
+        return layerManager.getTarget().merge(indexProducer);
+    }
+
+    /**
      * Forces and advance to the next layer. Executes the same logic as when
      * LayerManager.extendCheck returns {@code true}
      *
@@ -349,32 +376,5 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      */
     public void next() {
         layerManager.next();
-    }
-
-    /**
-     * A class used to locate matching filters across all the layers.
-     */
-    private class Finder implements Predicate<BloomFilter> {
-        int[] result = new int[layerManager.getDepth()];
-        int bfIdx;
-        int resultIdx;
-        BloomFilter bf;
-
-        Finder(BloomFilter bf) {
-            this.bf = bf;
-        }
-
-        @Override
-        public boolean test(BloomFilter x) {
-            if (x.contains(bf)) {
-                result[resultIdx++] = bfIdx;
-            }
-            bfIdx++;
-            return true;
-        }
-
-        int[] getResult() {
-            return Arrays.copyOf(result, resultIdx);
-        }
     }
 }

@@ -55,11 +55,82 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  */
 public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
+    /**
+     * Inner class iterator.
+     */
+    static class SetListIterator<E> extends AbstractIteratorDecorator<E> {
+
+        private final Set<E> set;
+        private E last;
+
+        protected SetListIterator(final Iterator<E> it, final Set<E> set) {
+            super(it);
+            this.set = set;
+        }
+
+        @Override
+        public E next() {
+            last = super.next();
+            return last;
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            set.remove(last);
+            last = null;
+        }
+    }
+
+    /**
+     * Inner class iterator.
+     */
+    static class SetListListIterator<E> extends
+            AbstractListIteratorDecorator<E> {
+
+        private final Set<E> set;
+        private E last;
+
+        protected SetListListIterator(final ListIterator<E> it, final Set<E> set) {
+            super(it);
+            this.set = set;
+        }
+
+        @Override
+        public void add(final E object) {
+            if (!set.contains(object)) {
+                super.add(object);
+                set.add(object);
+            }
+        }
+
+        @Override
+        public E next() {
+            last = super.next();
+            return last;
+        }
+
+        @Override
+        public E previous() {
+            last = super.previous();
+            return last;
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            set.remove(last);
+            last = null;
+        }
+
+        @Override
+        public void set(final E object) {
+            throw new UnsupportedOperationException("ListIterator does not support set");
+        }
+    }
+
     /** Serialization version. */
     private static final long serialVersionUID = 7196982186153478694L;
-
-    /** Internal Set to maintain uniqueness. */
-    private final Set<E> set;
 
     /**
      * Factory method to create a SetList using the supplied list to retain order.
@@ -85,6 +156,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return sl;
     }
 
+    /** Internal Set to maintain uniqueness. */
+    private final Set<E> set;
+
     /**
      * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
@@ -97,15 +171,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     protected SetUniqueList(final List<E> list, final Set<E> set) {
         super(list);
         this.set = Objects.requireNonNull(set, "set");
-    }
-
-    /**
-     * Gets an unmodifiable view as a Set.
-     *
-     * @return an unmodifiable set view
-     */
-    public Set<E> asSet() {
-        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     /**
@@ -195,90 +260,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     }
 
     /**
-     * Sets the value at the specified index avoiding duplicates.
-     * <p>
-     * The object is set into the specified index. Afterwards, any previous
-     * duplicate is removed. If the object is not already in the list then a
-     * normal set occurs. If it is present, then the old version is removed.
+     * Gets an unmodifiable view as a Set.
      *
-     * @param index  the index to insert at
-     * @param object  the object to set
-     * @return the previous object
+     * @return an unmodifiable set view
      */
-    @Override
-    public E set(final int index, final E object) {
-        final int pos = indexOf(object);
-        final E removed = super.set(index, object);
-
-        if (pos != -1 && pos != index) {
-            // the object is already in the unique list
-            // (and it hasn't been swapped with itself)
-            super.remove(pos); // remove the duplicate by index
-        }
-
-        set.remove(removed); // remove the item deleted by the set
-        set.add(object); // add the new item to the unique set
-
-        return removed; // return the item deleted by the set
-    }
-
-    @Override
-    public boolean remove(final Object object) {
-        final boolean result = set.remove(object);
-        if (result) {
-            super.remove(object);
-        }
-        return result;
-    }
-
-    @Override
-    public E remove(final int index) {
-        final E result = super.remove(index);
-        set.remove(result);
-        return result;
-    }
-
-    /**
-     * @since 4.4
-     */
-    @Override
-    public boolean removeIf(final Predicate<? super E> filter) {
-        final boolean result = super.removeIf(filter);
-        set.removeIf(filter);
-        return result;
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        boolean result = false;
-        for (final Object name : coll) {
-            result |= remove(name);
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This implementation iterates over the elements of this list, checking
-     * each element in turn to see if it's contained in {@code coll}.
-     * If it's not contained, it's removed from this list. As a consequence,
-     * it is advised to use a collection type for {@code coll} that provides
-     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
-     */
-    @Override
-    public boolean retainAll(final Collection<?> coll) {
-        final boolean result = set.retainAll(coll);
-        if (!result) {
-            return false;
-        }
-        if (set.isEmpty()) {
-            super.clear();
-        } else {
-            // use the set as parameter for the call to retainAll to improve performance
-            super.retainAll(set);
-        }
-        return result;
+    public Set<E> asSet() {
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
@@ -295,34 +282,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public boolean containsAll(final Collection<?> coll) {
         return set.containsAll(coll);
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return new SetListIterator<>(super.iterator(), set);
-    }
-
-    @Override
-    public ListIterator<E> listIterator() {
-        return new SetListListIterator<>(super.listIterator(), set);
-    }
-
-    @Override
-    public ListIterator<E> listIterator(final int index) {
-        return new SetListListIterator<>(super.listIterator(index), set);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * NOTE: from 4.0, an unmodifiable list will be returned, as changes to the
-     * subList can invalidate the parent list.
-     */
-    @Override
-    public List<E> subList(final int fromIndex, final int toIndex) {
-        final List<E> superSubList = super.subList(fromIndex, toIndex);
-        final Set<E> subSet = createSetBasedOnList(set, superSubList);
-        return ListUtils.unmodifiableList(new SetUniqueList<>(superSubList, subSet));
     }
 
     /**
@@ -352,78 +311,119 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return subSet;
     }
 
-    /**
-     * Inner class iterator.
-     */
-    static class SetListIterator<E> extends AbstractIteratorDecorator<E> {
+    @Override
+    public Iterator<E> iterator() {
+        return new SetListIterator<>(super.iterator(), set);
+    }
 
-        private final Set<E> set;
-        private E last;
+    @Override
+    public ListIterator<E> listIterator() {
+        return new SetListListIterator<>(super.listIterator(), set);
+    }
 
-        protected SetListIterator(final Iterator<E> it, final Set<E> set) {
-            super(it);
-            this.set = set;
+    @Override
+    public ListIterator<E> listIterator(final int index) {
+        return new SetListListIterator<>(super.listIterator(index), set);
+    }
+
+    @Override
+    public E remove(final int index) {
+        final E result = super.remove(index);
+        set.remove(result);
+        return result;
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        final boolean result = set.remove(object);
+        if (result) {
+            super.remove(object);
         }
+        return result;
+    }
 
-        @Override
-        public E next() {
-            last = super.next();
-            return last;
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        boolean result = false;
+        for (final Object name : coll) {
+            result |= remove(name);
         }
-
-        @Override
-        public void remove() {
-            super.remove();
-            set.remove(last);
-            last = null;
-        }
+        return result;
     }
 
     /**
-     * Inner class iterator.
+     * @since 4.4
      */
-    static class SetListListIterator<E> extends
-            AbstractListIteratorDecorator<E> {
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        final boolean result = super.removeIf(filter);
+        set.removeIf(filter);
+        return result;
+    }
 
-        private final Set<E> set;
-        private E last;
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation iterates over the elements of this list, checking
+     * each element in turn to see if it's contained in {@code coll}.
+     * If it's not contained, it's removed from this list. As a consequence,
+     * it is advised to use a collection type for {@code coll} that provides
+     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
+     */
+    @Override
+    public boolean retainAll(final Collection<?> coll) {
+        final boolean result = set.retainAll(coll);
+        if (!result) {
+            return false;
+        }
+        if (set.isEmpty()) {
+            super.clear();
+        } else {
+            // use the set as parameter for the call to retainAll to improve performance
+            super.retainAll(set);
+        }
+        return result;
+    }
 
-        protected SetListListIterator(final ListIterator<E> it, final Set<E> set) {
-            super(it);
-            this.set = set;
+    /**
+     * Sets the value at the specified index avoiding duplicates.
+     * <p>
+     * The object is set into the specified index. Afterwards, any previous
+     * duplicate is removed. If the object is not already in the list then a
+     * normal set occurs. If it is present, then the old version is removed.
+     *
+     * @param index  the index to insert at
+     * @param object  the object to set
+     * @return the previous object
+     */
+    @Override
+    public E set(final int index, final E object) {
+        final int pos = indexOf(object);
+        final E removed = super.set(index, object);
+
+        if (pos != -1 && pos != index) {
+            // the object is already in the unique list
+            // (and it hasn't been swapped with itself)
+            super.remove(pos); // remove the duplicate by index
         }
 
-        @Override
-        public E next() {
-            last = super.next();
-            return last;
-        }
+        set.remove(removed); // remove the item deleted by the set
+        set.add(object); // add the new item to the unique set
 
-        @Override
-        public E previous() {
-            last = super.previous();
-            return last;
-        }
+        return removed; // return the item deleted by the set
+    }
 
-        @Override
-        public void remove() {
-            super.remove();
-            set.remove(last);
-            last = null;
-        }
-
-        @Override
-        public void add(final E object) {
-            if (!set.contains(object)) {
-                super.add(object);
-                set.add(object);
-            }
-        }
-
-        @Override
-        public void set(final E object) {
-            throw new UnsupportedOperationException("ListIterator does not support set");
-        }
+    /**
+     * {@inheritDoc}
+     * <p>
+     * NOTE: from 4.0, an unmodifiable list will be returned, as changes to the
+     * subList can invalidate the parent list.
+     */
+    @Override
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> superSubList = super.subList(fromIndex, toIndex);
+        final Set<E> subSet = createSetBasedOnList(set, superSubList);
+        return ListUtils.unmodifiableList(new SetUniqueList<>(superSubList, subSet));
     }
 
 }

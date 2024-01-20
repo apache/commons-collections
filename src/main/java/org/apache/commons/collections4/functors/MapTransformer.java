@@ -32,9 +32,6 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
     /** Serial version UID */
     private static final long serialVersionUID = 862391807045468939L;
 
-    /** The map of data to lookup in */
-    private final Map<? super I, ? extends O> iMap;
-
     /**
      * Factory to create the transformer.
      * <p>
@@ -52,6 +49,9 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
         return new MapTransformer<>(map);
     }
 
+    /** The map of data to lookup in */
+    private final Map<? super I, ? extends O> iMap;
+
     /**
      * Constructor that performs no validation.
      * Use {@code mapTransformer} if you want that.
@@ -63,6 +63,16 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
     }
 
     /**
+     * Gets the map to lookup in.
+     *
+     * @return the map
+     * @since 3.1
+     */
+    public Map<? super I, ? extends O> getMap() {
+        return iMap;
+    }
+
+    /**
      * Transforms the input to result by looking it up in a {@code Map}.
      *
      * @param input  the input object to transform
@@ -71,16 +81,6 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
     @Override
     public O transform(final I input) {
         return iMap.get(input);
-    }
-
-    /**
-     * Gets the map to lookup in.
-     *
-     * @return the map
-     * @since 3.1
-     */
-    public Map<? super I, ? extends O> getMap() {
-        return iMap;
     }
 
 }

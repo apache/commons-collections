@@ -41,109 +41,55 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  */
 public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
-    /** The map to use to store the data */
-    private transient Map<E, MutableInteger> map;
-    /** The current total size of the multiset */
-    private transient int size;
-    /** The modification count for fail fast iterators */
-    private transient int modCount;
-
     /**
-     * Constructor needed for subclass serialisation.
+     * Inner class EntrySetIterator.
      */
-    protected AbstractMapMultiSet() {
-    }
+    protected static class EntrySetIterator<E> implements Iterator<Entry<E>> {
 
-    /**
-     * Constructor that assigns the specified Map as the backing store. The map
-     * must be empty and non-null.
-     *
-     * @param map the map to assign
-     */
-    protected AbstractMapMultiSet(final Map<E, MutableInteger> map) {
-        this.map = map;
-    }
+        /** The parent map */
+        protected final AbstractMapMultiSet<E> parent;
 
-    /**
-     * Utility method for implementations to access the map that backs this multiset.
-     * Not intended for interactive use outside of subclasses.
-     *
-     * @return the map being used by the MultiSet
-     */
-    protected Map<E, MutableInteger> getMap() {
-        return map;
-    }
+        protected final Iterator<Map.Entry<E, MutableInteger>> decorated;
 
-    /**
-     * Sets the map being wrapped.
-     * <p>
-     * <b>NOTE:</b> this method should only be used during deserialization
-     *
-     * @param map the map to wrap
-     */
-    protected void setMap(final Map<E, MutableInteger> map) {
-        this.map = map;
-    }
+        /** The last returned entry */
+        protected Entry<E> last;
 
-    /**
-     * Returns the number of elements in this multiset.
-     *
-     * @return current size of the multiset
-     */
-    @Override
-    public int size() {
-        return size;
-    }
+        /** Whether remove is allowed at present */
+        protected boolean canRemove;
 
-    /**
-     * Returns true if the underlying map is empty.
-     *
-     * @return true if multiset is empty
-     */
-    @Override
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
-
-    /**
-     * Returns the number of occurrence of the given element in this multiset by
-     * looking up its count in the underlying map.
-     *
-     * @param object the object to search for
-     * @return the number of occurrences of the object, zero if not found
-     */
-    @Override
-    public int getCount(final Object object) {
-        final MutableInteger count = map.get(object);
-        if (count != null) {
-            return count.value;
+        /**
+         * Constructs a new instance.
+         * @param iterator  the iterator to decorate
+         * @param parent  the parent multiset
+         */
+        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> iterator,
+                                   final AbstractMapMultiSet<E> parent) {
+            this.decorated = iterator;
+            this.parent = parent;
         }
-        return 0;
-    }
 
-    /**
-     * Determines if the multiset contains the given element by checking if the
-     * underlying map contains the element as a key.
-     *
-     * @param object the object to search for
-     * @return true if the multiset contains the given element
-     */
-    @Override
-    public boolean contains(final Object object) {
-        return map.containsKey(object);
-    }
+        @Override
+        public boolean hasNext() {
+            return decorated.hasNext();
+        }
 
-    /**
-     * Gets an iterator over the multiset elements. Elements present in the
-     * MultiSet more than once will be returned repeatedly.
-     *
-     * @return the iterator
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new MapBasedMultiSetIterator<>(this);
-    }
+        @Override
+        public Entry<E> next() {
+            last = new MultiSetEntry<>(decorated.next());
+            canRemove = true;
+            return last;
+        }
 
+        @Override
+        public void remove() {
+            if (!canRemove) {
+                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+            }
+            decorated.remove();
+            last = null;
+            canRemove = false;
+        }
+    }
     /**
      * Inner class iterator for the MultiSet.
      */
@@ -208,61 +154,30 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             canRemove = false;
         }
     }
-
-    @Override
-    public int add(final E object, final int occurrences) {
-        if (occurrences < 0) {
-            throw new IllegalArgumentException("Occurrences must not be negative.");
-        }
-
-        final MutableInteger mut = map.get(object);
-        final int oldCount = mut != null ? mut.value : 0;
-
-        if (occurrences > 0) {
-            modCount++;
-            size += occurrences;
-            if (mut == null) {
-                map.put(object, new MutableInteger(occurrences));
-            } else {
-                mut.value += occurrences;
-            }
-        }
-        return oldCount;
-    }
-
     /**
-     * Clears the multiset by clearing the underlying map.
+     * Inner class MultiSetEntry.
      */
-    @Override
-    public void clear() {
-        modCount++;
-        map.clear();
-        size = 0;
-    }
+    protected static class MultiSetEntry<E> extends AbstractEntry<E> {
 
-    @Override
-    public int remove(final Object object, final int occurrences) {
-        if (occurrences < 0) {
-            throw new IllegalArgumentException("Occurrences must not be negative.");
+        protected final Map.Entry<E, MutableInteger> parentEntry;
+
+        /**
+         * Constructs a new instance.
+         * @param parentEntry  the entry to decorate
+         */
+        protected MultiSetEntry(final Map.Entry<E, MutableInteger> parentEntry) {
+            this.parentEntry = parentEntry;
         }
 
-        final MutableInteger mut = map.get(object);
-        if (mut == null) {
-            return 0;
+        @Override
+        public int getCount() {
+            return parentEntry.getValue().value;
         }
-        final int oldCount = mut.value;
-        if (occurrences > 0) {
-            modCount++;
-            if (occurrences < mut.value) {
-                mut.value -= occurrences;
-                size -= occurrences;
-            } else {
-                map.remove(object);
-                size -= mut.value;
-                mut.value = 0;
-            }
+
+        @Override
+        public E getElement() {
+            return parentEntry.getKey();
         }
-        return oldCount;
     }
 
     /**
@@ -292,21 +207,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         public int hashCode() {
             return value;
         }
-    }
-
-    @Override
-    protected Iterator<E> createUniqueSetIterator() {
-        return new UniqueSetIterator<>(getMap().keySet().iterator(), this);
-    }
-
-    @Override
-    protected int uniqueElements() {
-        return map.size();
-    }
-
-    @Override
-    protected Iterator<Entry<E>> createEntrySetIterator() {
-        return new EntrySetIterator<>(map.entrySet().iterator(), this);
     }
 
     /**
@@ -353,94 +253,82 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
     }
 
+    /** The map to use to store the data */
+    private transient Map<E, MutableInteger> map;
+
+    /** The current total size of the multiset */
+    private transient int size;
+
+    /** The modification count for fail fast iterators */
+    private transient int modCount;
+
     /**
-     * Inner class EntrySetIterator.
+     * Constructor needed for subclass serialisation.
      */
-    protected static class EntrySetIterator<E> implements Iterator<Entry<E>> {
+    protected AbstractMapMultiSet() {
+    }
 
-        /** The parent map */
-        protected final AbstractMapMultiSet<E> parent;
+    /**
+     * Constructor that assigns the specified Map as the backing store. The map
+     * must be empty and non-null.
+     *
+     * @param map the map to assign
+     */
+    protected AbstractMapMultiSet(final Map<E, MutableInteger> map) {
+        this.map = map;
+    }
 
-        protected final Iterator<Map.Entry<E, MutableInteger>> decorated;
-
-        /** The last returned entry */
-        protected Entry<E> last;
-
-        /** Whether remove is allowed at present */
-        protected boolean canRemove;
-
-        /**
-         * Constructs a new instance.
-         * @param iterator  the iterator to decorate
-         * @param parent  the parent multiset
-         */
-        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> iterator,
-                                   final AbstractMapMultiSet<E> parent) {
-            this.decorated = iterator;
-            this.parent = parent;
+    @Override
+    public int add(final E object, final int occurrences) {
+        if (occurrences < 0) {
+            throw new IllegalArgumentException("Occurrences must not be negative.");
         }
 
-        @Override
-        public boolean hasNext() {
-            return decorated.hasNext();
-        }
+        final MutableInteger mut = map.get(object);
+        final int oldCount = mut != null ? mut.value : 0;
 
-        @Override
-        public Entry<E> next() {
-            last = new MultiSetEntry<>(decorated.next());
-            canRemove = true;
-            return last;
-        }
-
-        @Override
-        public void remove() {
-            if (!canRemove) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+        if (occurrences > 0) {
+            modCount++;
+            size += occurrences;
+            if (mut == null) {
+                map.put(object, new MutableInteger(occurrences));
+            } else {
+                mut.value += occurrences;
             }
-            decorated.remove();
-            last = null;
-            canRemove = false;
         }
+        return oldCount;
     }
 
     /**
-     * Inner class MultiSetEntry.
-     */
-    protected static class MultiSetEntry<E> extends AbstractEntry<E> {
-
-        protected final Map.Entry<E, MutableInteger> parentEntry;
-
-        /**
-         * Constructs a new instance.
-         * @param parentEntry  the entry to decorate
-         */
-        protected MultiSetEntry(final Map.Entry<E, MutableInteger> parentEntry) {
-            this.parentEntry = parentEntry;
-        }
-
-        @Override
-        public E getElement() {
-            return parentEntry.getKey();
-        }
-
-        @Override
-        public int getCount() {
-            return parentEntry.getValue().value;
-        }
-    }
-
-    /**
-     * Write the multiset out using a custom routine.
-     * @param out the output stream
-     * @throws IOException any of the usual I/O related exceptions
+     * Clears the multiset by clearing the underlying map.
      */
     @Override
-    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
-        out.writeInt(map.size());
-        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
-            out.writeObject(entry.getKey());
-            out.writeInt(entry.getValue().value);
-        }
+    public void clear() {
+        modCount++;
+        map.clear();
+        size = 0;
+    }
+
+    /**
+     * Determines if the multiset contains the given element by checking if the
+     * underlying map contains the element as a key.
+     *
+     * @param object the object to search for
+     * @return true if the multiset contains the given element
+     */
+    @Override
+    public boolean contains(final Object object) {
+        return map.containsKey(object);
+    }
+
+    @Override
+    protected Iterator<Entry<E>> createEntrySetIterator() {
+        return new EntrySetIterator<>(map.entrySet().iterator(), this);
+    }
+
+    @Override
+    protected Iterator<E> createUniqueSetIterator() {
+        return new UniqueSetIterator<>(getMap().keySet().iterator(), this);
     }
 
     /**
@@ -461,6 +349,144 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             map.put(obj, new MutableInteger(count));
             size += count;
         }
+    }
+
+    /**
+     * Write the multiset out using a custom routine.
+     * @param out the output stream
+     * @throws IOException any of the usual I/O related exceptions
+     */
+    @Override
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
+        out.writeInt(map.size());
+        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
+            out.writeObject(entry.getKey());
+            out.writeInt(entry.getValue().value);
+        }
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (object == this) {
+            return true;
+        }
+        if (!(object instanceof MultiSet)) {
+            return false;
+        }
+        final MultiSet<?> other = (MultiSet<?>) object;
+        if (other.size() != size()) {
+            return false;
+        }
+        for (final E element : map.keySet()) {
+            if (other.getCount(element) != getCount(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns the number of occurrence of the given element in this multiset by
+     * looking up its count in the underlying map.
+     *
+     * @param object the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    @Override
+    public int getCount(final Object object) {
+        final MutableInteger count = map.get(object);
+        if (count != null) {
+            return count.value;
+        }
+        return 0;
+    }
+
+    /**
+     * Utility method for implementations to access the map that backs this multiset.
+     * Not intended for interactive use outside of subclasses.
+     *
+     * @return the map being used by the MultiSet
+     */
+    protected Map<E, MutableInteger> getMap() {
+        return map;
+    }
+
+    @Override
+    public int hashCode() {
+        int total = 0;
+        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
+            final E element = entry.getKey();
+            final MutableInteger count = entry.getValue();
+            total += (element == null ? 0 : element.hashCode()) ^ count.value;
+        }
+        return total;
+    }
+
+    /**
+     * Returns true if the underlying map is empty.
+     *
+     * @return true if multiset is empty
+     */
+    @Override
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
+    /**
+     * Gets an iterator over the multiset elements. Elements present in the
+     * MultiSet more than once will be returned repeatedly.
+     *
+     * @return the iterator
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new MapBasedMultiSetIterator<>(this);
+    }
+
+    @Override
+    public int remove(final Object object, final int occurrences) {
+        if (occurrences < 0) {
+            throw new IllegalArgumentException("Occurrences must not be negative.");
+        }
+
+        final MutableInteger mut = map.get(object);
+        if (mut == null) {
+            return 0;
+        }
+        final int oldCount = mut.value;
+        if (occurrences > 0) {
+            modCount++;
+            if (occurrences < mut.value) {
+                mut.value -= occurrences;
+                size -= occurrences;
+            } else {
+                map.remove(object);
+                size -= mut.value;
+                mut.value = 0;
+            }
+        }
+        return oldCount;
+    }
+
+    /**
+     * Sets the map being wrapped.
+     * <p>
+     * <b>NOTE:</b> this method should only be used during deserialization
+     *
+     * @param map the map to wrap
+     */
+    protected void setMap(final Map<E, MutableInteger> map) {
+        this.map = map;
+    }
+
+    /**
+     * Returns the number of elements in this multiset.
+     *
+     * @return current size of the multiset
+     */
+    @Override
+    public int size() {
+        return size;
     }
 
     /**
@@ -521,33 +547,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     @Override
-    public boolean equals(final Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (!(object instanceof MultiSet)) {
-            return false;
-        }
-        final MultiSet<?> other = (MultiSet<?>) object;
-        if (other.size() != size()) {
-            return false;
-        }
-        for (final E element : map.keySet()) {
-            if (other.getCount(element) != getCount(element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int total = 0;
-        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
-            final E element = entry.getKey();
-            final MutableInteger count = entry.getValue();
-            total += (element == null ? 0 : element.hashCode()) ^ count.value;
-        }
-        return total;
+    protected int uniqueElements() {
+        return map.size();
     }
 }

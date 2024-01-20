@@ -70,6 +70,111 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  */
 public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializable, Cloneable {
 
+    /**
+     * List view of map.
+     */
+    static class LinkedMapList<K> extends AbstractList<K> {
+
+        private final LinkedMap<K, ?> parent;
+
+        LinkedMapList(final LinkedMap<K, ?> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void clear() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean contains(final Object obj) {
+            return parent.containsKey(obj);
+        }
+
+        @Override
+        public boolean containsAll(final Collection<?> coll) {
+            return parent.keySet().containsAll(coll);
+        }
+
+        @Override
+        public K get(final int index) {
+            return parent.get(index);
+        }
+
+        @Override
+        public int indexOf(final Object obj) {
+            return parent.indexOf(obj);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return UnmodifiableIterator.unmodifiableIterator(parent.keySet().iterator());
+        }
+
+        @Override
+        public int lastIndexOf(final Object obj) {
+            return parent.indexOf(obj);
+        }
+
+        @Override
+        public ListIterator<K> listIterator() {
+            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator());
+        }
+
+        @Override
+        public ListIterator<K> listIterator(final int fromIndex) {
+            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator(fromIndex));
+        }
+
+        @Override
+        public K remove(final int index) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean remove(final Object obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean removeAll(final Collection<?> coll) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * @since 4.4
+         */
+        @Override
+        public boolean removeIf(final Predicate<? super K> filter) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean retainAll(final Collection<?> coll) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int size() {
+            return parent.size();
+        }
+
+        @Override
+        public List<K> subList(final int fromIndexInclusive, final int toIndexExclusive) {
+            return UnmodifiableList.unmodifiableList(super.subList(fromIndexInclusive, toIndexExclusive));
+        }
+
+        @Override
+        public Object[] toArray() {
+            return parent.keySet().toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(final T[] array) {
+            return parent.keySet().toArray(array);
+        }
+    }
+
     /** Serialisation version */
     private static final long serialVersionUID = 9077234323521161066L;
 
@@ -114,6 +219,25 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     }
 
     /**
+     * Gets an unmodifiable List view of the keys.
+     * <p>
+     * The returned list is unmodifiable because changes to the values of
+     * the list (using {@link java.util.ListIterator#set(Object)}) will
+     * effectively remove the value from the list and reinsert that value at
+     * the end of the list, which is an unexpected side effect of changing the
+     * value of a list.  This occurs because changing the key, changes when the
+     * mapping is added to the map and thus where it appears in the list.
+     * <p>
+     * An alternative to this method is to use {@link #keySet()}.
+     *
+     * @see #keySet()
+     * @return The ordered list of keys.
+     */
+    public List<K> asList() {
+        return new LinkedMapList<>(this);
+    }
+
+    /**
      * Clones the map without cloning the keys or values.
      *
      * @return a shallow clone
@@ -121,29 +245,6 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     @Override
     public LinkedMap<K, V> clone() {
         return (LinkedMap<K, V>) super.clone();
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
     }
 
     /**
@@ -186,6 +287,18 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     }
 
     /**
+     * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
+    }
+
+    /**
      * Removes the element at the specified index.
      *
      * @param index  the index of the object to remove
@@ -198,127 +311,14 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     }
 
     /**
-     * Gets an unmodifiable List view of the keys.
-     * <p>
-     * The returned list is unmodifiable because changes to the values of
-     * the list (using {@link java.util.ListIterator#set(Object)}) will
-     * effectively remove the value from the list and reinsert that value at
-     * the end of the list, which is an unexpected side effect of changing the
-     * value of a list.  This occurs because changing the key, changes when the
-     * mapping is added to the map and thus where it appears in the list.
-     * <p>
-     * An alternative to this method is to use {@link #keySet()}.
+     * Write the map out using a custom routine.
      *
-     * @see #keySet()
-     * @return The ordered list of keys.
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
-    public List<K> asList() {
-        return new LinkedMapList<>(this);
-    }
-
-    /**
-     * List view of map.
-     */
-    static class LinkedMapList<K> extends AbstractList<K> {
-
-        private final LinkedMap<K, ?> parent;
-
-        LinkedMapList(final LinkedMap<K, ?> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.size();
-        }
-
-        @Override
-        public K get(final int index) {
-            return parent.get(index);
-        }
-
-        @Override
-        public boolean contains(final Object obj) {
-            return parent.containsKey(obj);
-        }
-
-        @Override
-        public int indexOf(final Object obj) {
-            return parent.indexOf(obj);
-        }
-
-        @Override
-        public int lastIndexOf(final Object obj) {
-            return parent.indexOf(obj);
-        }
-
-        @Override
-        public boolean containsAll(final Collection<?> coll) {
-            return parent.keySet().containsAll(coll);
-        }
-
-        @Override
-        public K remove(final int index) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * @since 4.4
-         */
-        @Override
-        public boolean removeIf(final Predicate<? super K> filter) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean removeAll(final Collection<?> coll) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean retainAll(final Collection<?> coll) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void clear() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Object[] toArray() {
-            return parent.keySet().toArray();
-        }
-
-        @Override
-        public <T> T[] toArray(final T[] array) {
-            return parent.keySet().toArray(array);
-        }
-
-        @Override
-        public Iterator<K> iterator() {
-            return UnmodifiableIterator.unmodifiableIterator(parent.keySet().iterator());
-        }
-
-        @Override
-        public ListIterator<K> listIterator() {
-            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator());
-        }
-
-        @Override
-        public ListIterator<K> listIterator(final int fromIndex) {
-            return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator(fromIndex));
-        }
-
-        @Override
-        public List<K> subList(final int fromIndexInclusive, final int toIndexExclusive) {
-            return UnmodifiableList.unmodifiableList(super.subList(fromIndexInclusive, toIndexExclusive));
-        }
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
     }
 
 }

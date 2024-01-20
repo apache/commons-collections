@@ -49,19 +49,6 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         super(LazyIteratorChainTest.class.getSimpleName());
     }
 
-    @BeforeEach
-    public void setUp() {
-        list1 = new ArrayList<>();
-        list1.add("One");
-        list1.add("Two");
-        list1.add("Three");
-        list2 = new ArrayList<>();
-        list2.add("Four");
-        list3 = new ArrayList<>();
-        list3.add("Five");
-        list3.add("Six");
-    }
-
     @Override
     public LazyIteratorChain<String> makeEmptyIterator() {
         return new LazyIteratorChain<String>() {
@@ -92,70 +79,27 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         return chain;
     }
 
-    @Test
-    public void testIterator() {
-        final Iterator<String> iter = makeObject();
-        for (final String testValue : testArray) {
-            final Object iterValue = iter.next();
-
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-        }
-
-        assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+    @BeforeEach
+    public void setUp() {
+        list1 = new ArrayList<>();
+        list1.add("One");
+        list1.add("Two");
+        list1.add("Three");
+        list2 = new ArrayList<>();
+        list2.add("Four");
+        list3 = new ArrayList<>();
+        list3.add("Five");
+        list3.add("Six");
     }
 
     @Test
-    public void testRemoveFromFilteredIterator() {
-
-        final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
-
-        final List<Integer> list1 = new ArrayList<>();
-        final List<Integer> list2 = new ArrayList<>();
-
-        list1.add(Integer.valueOf(1));
-        list1.add(Integer.valueOf(2));
-        list2.add(Integer.valueOf(3));
-        list2.add(Integer.valueOf(4)); // will be ignored by the predicate
-
-        final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
-        final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
-
-        final Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-        }
-        assertEquals(0, list1.size());
-        assertEquals(1, list2.size());
-    }
-
-    @Test
-    @Override
-    public void testRemove() {
-        final Iterator<String> iter = makeObject();
-
-        assertThrows(IllegalStateException.class, () -> iter.remove(),
-                "Calling remove before the first call to next() should throw an exception");
-
-        for (final String testValue : testArray) {
-            final String iterValue = iter.next();
-
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-
-            if (!iterValue.equals("Four")) {
-                iter.remove();
-            }
-        }
-
-        assertTrue(list1.isEmpty(), "List is empty");
-        assertEquals(1, list2.size(), "List is empty");
-        assertTrue(list3.isEmpty(), "List is empty");
+    public void testEmptyChain() {
+        final LazyIteratorChain<String> chain = makeEmptyIterator();
+        assertFalse(chain.hasNext());
+        assertAll(
+                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
+                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
+        );
     }
 
     @Test
@@ -187,13 +131,69 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testEmptyChain() {
-        final LazyIteratorChain<String> chain = makeEmptyIterator();
-        assertFalse(chain.hasNext());
-        assertAll(
-                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
-                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
-        );
+    public void testIterator() {
+        final Iterator<String> iter = makeObject();
+        for (final String testValue : testArray) {
+            final Object iterValue = iter.next();
+
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+        }
+
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
+
+        try {
+            iter.next();
+        } catch (final Exception e) {
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
+        }
+    }
+
+    @Test
+    @Override
+    public void testRemove() {
+        final Iterator<String> iter = makeObject();
+
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "Calling remove before the first call to next() should throw an exception");
+
+        for (final String testValue : testArray) {
+            final String iterValue = iter.next();
+
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+
+            if (!iterValue.equals("Four")) {
+                iter.remove();
+            }
+        }
+
+        assertTrue(list1.isEmpty(), "List is empty");
+        assertEquals(1, list2.size(), "List is empty");
+        assertTrue(list3.isEmpty(), "List is empty");
+    }
+
+    @Test
+    public void testRemoveFromFilteredIterator() {
+
+        final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
+
+        final List<Integer> list1 = new ArrayList<>();
+        final List<Integer> list2 = new ArrayList<>();
+
+        list1.add(Integer.valueOf(1));
+        list1.add(Integer.valueOf(2));
+        list2.add(Integer.valueOf(3));
+        list2.add(Integer.valueOf(4)); // will be ignored by the predicate
+
+        final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
+        final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
+
+        final Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+        assertEquals(0, list1.size());
+        assertEquals(1, list2.size());
     }
 
 }

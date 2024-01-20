@@ -32,9 +32,6 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
     /** Serial version UID */
     private static final long serialVersionUID = 3243449850504576071L;
 
-    /** The predicate to decorate */
-    private final Predicate<? super T> iPredicate;
-
     /**
      * Factory to create the null exception predicate.
      *
@@ -46,6 +43,9 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
     public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate) {
         return new NullIsExceptionPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
+
+    /** The predicate to decorate */
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Constructor that performs no validation.

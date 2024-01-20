@@ -38,11 +38,76 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
+    public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
+
+        public TestBidiOrderedMapIterator() {
+            super("TestBidiOrderedMapIterator");
+        }
+
+        @Override
+        public V[] addSetValues() {
+            return AbstractOrderedBidiMapTest.this.getNewSampleValues();
+        }
+
+        @Override
+        public Map<K, V> getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractOrderedBidiMapTest.this.confirmed;
+        }
+
+        @Override
+        public Map<K, V> getMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractOrderedBidiMapTest.this.map;
+        }
+
+        @Override
+        public MapIterator<K, V> makeEmptyIterator() {
+            resetEmpty();
+            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public MapIterator<K, V> makeObject() {
+            resetFull();
+            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return AbstractOrderedBidiMapTest.this.isRemoveSupported();
+        }
+
+        @Override
+        public boolean supportsSetValue() {
+            return AbstractOrderedBidiMapTest.this.isSetValueSupported();
+        }
+
+        @Override
+        public void verify() {
+            super.verify();
+            AbstractOrderedBidiMapTest.this.verify();
+        }
+
+    }
+
+    public AbstractOrderedBidiMapTest() {
+    }
+
     public AbstractOrderedBidiMapTest(final String testName) {
         super(testName);
     }
 
-    public AbstractOrderedBidiMapTest() {
+    public BulkTest bulkTestOrderedMapIterator() {
+        return new TestBidiOrderedMapIterator();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedBidiMap<K, V> getMap() {
+        return (OrderedBidiMap<K, V>) super.getMap();
     }
 
     @Test
@@ -142,71 +207,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         } else {
             assertNull(bidi.previousKey(null));
         }
-    }
-
-    public BulkTest bulkTestOrderedMapIterator() {
-        return new TestBidiOrderedMapIterator();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public OrderedBidiMap<K, V> getMap() {
-        return (OrderedBidiMap<K, V>) super.getMap();
-    }
-
-    public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
-
-        public TestBidiOrderedMapIterator() {
-            super("TestBidiOrderedMapIterator");
-        }
-
-        @Override
-        public V[] addSetValues() {
-            return AbstractOrderedBidiMapTest.this.getNewSampleValues();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return AbstractOrderedBidiMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractOrderedBidiMapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public Map<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedBidiMapTest.this.map;
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractOrderedBidiMapTest.this.confirmed;
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractOrderedBidiMapTest.this.verify();
-        }
-
     }
 
 }

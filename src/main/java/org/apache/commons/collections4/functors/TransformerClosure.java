@@ -32,9 +32,6 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = -5194992589193388969L;
 
-    /** The transformer to wrap */
-    private final Transformer<? super E, ?> iTransformer;
-
     /**
      * Factory method that performs validation.
      * <p>
@@ -50,6 +47,9 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
         }
         return new TransformerClosure<>(transformer);
     }
+
+    /** The transformer to wrap */
+    private final Transformer<? super E, ?> iTransformer;
 
     /**
      * Constructor that performs no validation.

@@ -41,30 +41,29 @@ import org.junit.jupiter.api.Test;
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
+    private String[] array;
+
+    private List<E> list;
+    private FilterIterator<E> iterator;
     /** Creates new TestFilterIterator */
     public FilterIteratorTest() {
         super(FilterIteratorTest.class.getSimpleName());
     }
 
-    private String[] array;
-    private List<E> list;
-    private FilterIterator<E> iterator;
-
-    /**
-     * Sets up instance variables required by this test case.
-     */
-    @BeforeEach
-    public void setUp() {
-        array = new String[] { "a", "b", "c" };
-        initIterator();
+    private void initIterator() {
+        iterator = makeObject();
     }
 
     /**
-     * Tear down instance variables required by this test case.
+     * Returns a FilterIterator that blocks
+     * all of its elements
+     *
+     * @param i      the Iterator to "filter"
+     * @return "filtered" iterator
      */
-    @AfterEach
-    public void tearDown() throws Exception {
-        iterator = null;
+    protected FilterIterator<E> makeBlockAllFilter(final Iterator<E> i) {
+        final Predicate<E> pred = x -> false;
+        return new FilterIterator<>(i, pred);
     }
 
     /**
@@ -89,6 +88,35 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     public FilterIterator<E> makeObject() {
         list = new ArrayList<>(Arrays.asList((E[]) array));
         return makePassThroughFilter(list.iterator());
+    }
+
+    /**
+     * Returns a FilterIterator that does not filter
+     * any of its elements
+     *
+     * @param i      the Iterator to "filter"
+     * @return "filtered" iterator
+     */
+    protected FilterIterator<E> makePassThroughFilter(final Iterator<E> i) {
+        final Predicate<E> pred = x -> true;
+        return new FilterIterator<>(i, pred);
+    }
+
+    /**
+     * Sets up instance variables required by this test case.
+     */
+    @BeforeEach
+    public void setUp() {
+        array = new String[] { "a", "b", "c" };
+        initIterator();
+    }
+
+    /**
+     * Tear down instance variables required by this test case.
+     */
+    @AfterEach
+    public void tearDown() throws Exception {
+        iterator = null;
     }
 
     @Test
@@ -157,11 +185,6 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(filterIterator.hasNext());
     }
 
-    private void verifyNoMoreElements() {
-        assertFalse(iterator.hasNext());
-        assertThrows(NoSuchElementException.class, () -> iterator.next());
-    }
-
     private void verifyElementsInPredicate(final String[] elements) {
         final Predicate<E> pred = x -> {
             for (final String element : elements) {
@@ -190,32 +213,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         }
     }
 
-    private void initIterator() {
-        iterator = makeObject();
-    }
-
-    /**
-     * Returns a FilterIterator that does not filter
-     * any of its elements
-     *
-     * @param i      the Iterator to "filter"
-     * @return "filtered" iterator
-     */
-    protected FilterIterator<E> makePassThroughFilter(final Iterator<E> i) {
-        final Predicate<E> pred = x -> true;
-        return new FilterIterator<>(i, pred);
-    }
-
-    /**
-     * Returns a FilterIterator that blocks
-     * all of its elements
-     *
-     * @param i      the Iterator to "filter"
-     * @return "filtered" iterator
-     */
-    protected FilterIterator<E> makeBlockAllFilter(final Iterator<E> i) {
-        final Predicate<E> pred = x -> false;
-        return new FilterIterator<>(i, pred);
+    private void verifyNoMoreElements() {
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
 }

@@ -40,27 +40,35 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  */
 public class TransformedList<E> extends TransformedCollection<E> implements List<E> {
 
+    /**
+     * Inner class Iterator for the TransformedList
+     */
+    protected class TransformedListIterator extends AbstractListIteratorDecorator<E> {
+
+        /**
+         * Create a new transformed list iterator.
+         *
+         * @param iterator  the list iterator to decorate
+         */
+        protected TransformedListIterator(final ListIterator<E> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public void add(E object) {
+            object = transform(object);
+            getListIterator().add(object);
+        }
+
+        @Override
+        public void set(E object) {
+            object = transform(object);
+            getListIterator().set(object);
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = 1077193035000013141L;
-
-    /**
-     * Factory method to create a transforming list.
-     * <p>
-     * If there are any elements already in the list being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedList(List, Transformer)}.
-     *
-     * @param <E> the type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed list
-     * @throws NullPointerException if list or transformer is null
-     * @since 4.0
-     */
-    public static <E> TransformedList<E> transformingList(final List<E> list,
-                                                          final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedList<>(list, transformer);
-    }
 
     /**
      * Factory method to create a transforming list that will transform
@@ -92,6 +100,25 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     }
 
     /**
+     * Factory method to create a transforming list.
+     * <p>
+     * If there are any elements already in the list being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedList(List, Transformer)}.
+     *
+     * @param <E> the type of the elements in the list
+     * @param list  the list to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed list
+     * @throws NullPointerException if list or transformer is null
+     * @since 4.0
+     */
+    public static <E> TransformedList<E> transformingList(final List<E> list,
+                                                          final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedList<>(list, transformer);
+    }
+
+    /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the list being decorated, they
@@ -103,45 +130,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      */
     protected TransformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {
         super(list, transformer);
-    }
-
-    /**
-     * Gets the decorated list.
-     *
-     * @return the decorated list
-     */
-    protected List<E> getList() {
-        return (List<E>) decorated();
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        return object == this || decorated().equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-        return decorated().hashCode();
-    }
-
-    @Override
-    public E get(final int index) {
-        return getList().get(index);
-    }
-
-    @Override
-    public int indexOf(final Object object) {
-        return getList().indexOf(object);
-    }
-
-    @Override
-    public int lastIndexOf(final Object object) {
-        return getList().lastIndexOf(object);
-    }
-
-    @Override
-    public E remove(final int index) {
-        return getList().remove(index);
     }
 
     @Override
@@ -157,6 +145,40 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     }
 
     @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public E get(final int index) {
+        return getList().get(index);
+    }
+
+    /**
+     * Gets the decorated list.
+     *
+     * @return the decorated list
+     */
+    protected List<E> getList() {
+        return (List<E>) decorated();
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
+    }
+
+    @Override
+    public int indexOf(final Object object) {
+        return getList().indexOf(object);
+    }
+
+    @Override
+    public int lastIndexOf(final Object object) {
+        return getList().lastIndexOf(object);
+    }
+
+    @Override
     public ListIterator<E> listIterator() {
         return listIterator(0);
     }
@@ -164,6 +186,11 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     @Override
     public ListIterator<E> listIterator(final int i) {
         return new TransformedListIterator(getList().listIterator(i));
+    }
+
+    @Override
+    public E remove(final int index) {
+        return getList().remove(index);
     }
 
     @Override
@@ -176,33 +203,6 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = getList().subList(fromIndex, toIndex);
         return new TransformedList<>(sub, transformer);
-    }
-
-    /**
-     * Inner class Iterator for the TransformedList
-     */
-    protected class TransformedListIterator extends AbstractListIteratorDecorator<E> {
-
-        /**
-         * Create a new transformed list iterator.
-         *
-         * @param iterator  the list iterator to decorate
-         */
-        protected TransformedListIterator(final ListIterator<E> iterator) {
-            super(iterator);
-        }
-
-        @Override
-        public void add(E object) {
-            object = transform(object);
-            getListIterator().add(object);
-        }
-
-        @Override
-        public void set(E object) {
-            object = transform(object);
-            getListIterator().set(object);
-        }
     }
 
 }

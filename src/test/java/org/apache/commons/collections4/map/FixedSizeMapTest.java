@@ -34,15 +34,8 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public IterableMap<K, V> makeObject() {
-        return FixedSizeMap.fixedSizeMap(new HashMap<>());
-    }
-
-    @Override
-    public IterableMap<K, V> makeFullMap() {
-        final Map<K, V> map = new HashMap<>();
-        addSampleMappings(map);
-        return FixedSizeMap.fixedSizeMap(map);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -56,8 +49,15 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public IterableMap<K, V> makeFullMap() {
+        final Map<K, V> map = new HashMap<>();
+        addSampleMappings(map);
+        return FixedSizeMap.fixedSizeMap(map);
+    }
+
+    @Override
+    public IterableMap<K, V> makeObject() {
+        return FixedSizeMap.fixedSizeMap(new HashMap<>());
     }
 
 //    public void testCreate() throws Exception {

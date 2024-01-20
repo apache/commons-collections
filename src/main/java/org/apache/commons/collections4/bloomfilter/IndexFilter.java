@@ -27,10 +27,60 @@ import java.util.function.IntPredicate;
  * @since 4.5
  */
 public final class IndexFilter {
-    private final IntPredicate tracker;
-    private final int size;
-    private final IntPredicate consumer;
+    /**
+     * An IndexTracker implementation that uses an array of integers to track whether or not a
+     * number has been seen. Suitable for Shapes that have few hash functions.
+     * @since 4.5
+     */
+    static class ArrayTracker implements IntPredicate {
+        private final int[] seen;
+        private int populated;
 
+        /**
+         * Constructs the tracker based on the shape.
+         * @param shape the shape to build the tracker for.
+         */
+        ArrayTracker(final Shape shape) {
+            seen = new int[shape.getNumberOfHashFunctions()];
+        }
+
+        @Override
+        public boolean test(final int number) {
+            if (number < 0) {
+                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
+            }
+            for (int i = 0; i < populated; i++) {
+                if (seen[i] == number) {
+                    return false;
+                }
+            }
+            seen[populated++] = number;
+            return true;
+        }
+    }
+    /**
+     * An IndexTracker implementation that uses an array of bit maps to track whether or not a
+     * number has been seen.
+     * @since 4.5
+     */
+    static class BitMapTracker implements IntPredicate {
+        private final long[] bits;
+
+        /**
+         * Constructs a bit map based tracker for the specified shape.
+         * @param shape The shape that is being generated.
+         */
+        BitMapTracker(final Shape shape) {
+            bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        }
+
+        @Override
+        public boolean test(final int number) {
+            final boolean retval = !BitMap.contains(bits, number);
+            BitMap.set(bits, number);
+            return retval;
+        }
+    }
     /**
      * Creates an instance optimized for the specified shape.
      * @param shape The shape that is being generated.
@@ -40,6 +90,12 @@ public final class IndexFilter {
     public static IntPredicate create(final Shape shape, final IntPredicate consumer) {
         return new IndexFilter(shape, consumer)::test;
     }
+
+    private final IntPredicate tracker;
+
+    private final int size;
+
+    private final IntPredicate consumer;
 
     /**
      * Creates an instance optimized for the specified shape.
@@ -76,61 +132,5 @@ public final class IndexFilter {
             return  consumer.test(number);
         }
         return true;
-    }
-
-    /**
-     * An IndexTracker implementation that uses an array of integers to track whether or not a
-     * number has been seen. Suitable for Shapes that have few hash functions.
-     * @since 4.5
-     */
-    static class ArrayTracker implements IntPredicate {
-        private final int[] seen;
-        private int populated;
-
-        /**
-         * Constructs the tracker based on the shape.
-         * @param shape the shape to build the tracker for.
-         */
-        ArrayTracker(final Shape shape) {
-            seen = new int[shape.getNumberOfHashFunctions()];
-        }
-
-        @Override
-        public boolean test(final int number) {
-            if (number < 0) {
-                throw new IndexOutOfBoundsException("number may not be less than zero. " + number);
-            }
-            for (int i = 0; i < populated; i++) {
-                if (seen[i] == number) {
-                    return false;
-                }
-            }
-            seen[populated++] = number;
-            return true;
-        }
-    }
-
-    /**
-     * An IndexTracker implementation that uses an array of bit maps to track whether or not a
-     * number has been seen.
-     * @since 4.5
-     */
-    static class BitMapTracker implements IntPredicate {
-        private final long[] bits;
-
-        /**
-         * Constructs a bit map based tracker for the specified shape.
-         * @param shape The shape that is being generated.
-         */
-        BitMapTracker(final Shape shape) {
-            bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
-        }
-
-        @Override
-        public boolean test(final int number) {
-            final boolean retval = !BitMap.contains(bits, number);
-            BitMap.set(bits, number);
-            return retval;
-        }
     }
 }

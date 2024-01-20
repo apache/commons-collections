@@ -74,15 +74,35 @@ public final class UnmodifiableMultiSet<E>
         super((MultiSet<E>) multiset);
     }
 
-    /**
-     * Write the collection out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    @Override
+    public boolean add(final E object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int add(final E object, final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<MultiSet.Entry<E>> entrySet() {
+        final Set<MultiSet.Entry<E>> set = decorated().entrySet();
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     /**
@@ -100,27 +120,17 @@ public final class UnmodifiableMultiSet<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
-    public boolean add(final E object) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int remove(final Object object, final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -129,11 +139,6 @@ public final class UnmodifiableMultiSet<E>
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -148,25 +153,20 @@ public final class UnmodifiableMultiSet<E>
     }
 
     @Override
-    public int add(final E object, final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int remove(final Object object, final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Set<E> uniqueSet() {
         final Set<E> set = decorated().uniqueSet();
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    @Override
-    public Set<MultiSet.Entry<E>> entrySet() {
-        final Set<MultiSet.Entry<E>> set = decorated().entrySet();
-        return UnmodifiableSet.unmodifiableSet(set);
+    /**
+     * Write the collection out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

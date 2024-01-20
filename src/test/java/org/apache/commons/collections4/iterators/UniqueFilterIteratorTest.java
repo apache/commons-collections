@@ -42,6 +42,18 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         super(UniqueFilterIteratorTest.class.getSimpleName());
     }
 
+    @Override
+    public UniqueFilterIterator<E> makeEmptyIterator() {
+        final ArrayList<E> list = new ArrayList<>();
+        return new UniqueFilterIterator<>(list.iterator());
+    }
+
+    @Override
+    public UniqueFilterIterator<E> makeObject() {
+        final Iterator<E> i = list1.iterator();
+        return new UniqueFilterIterator<>(i);
+    }
+
     @BeforeEach
     @SuppressWarnings("unchecked")
     public void setUp() {
@@ -56,18 +68,6 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         list1.add((E) "Five");
         list1.add((E) "Six");
         list1.add((E) "Five");
-    }
-
-    @Override
-    public UniqueFilterIterator<E> makeEmptyIterator() {
-        final ArrayList<E> list = new ArrayList<>();
-        return new UniqueFilterIterator<>(list.iterator());
-    }
-
-    @Override
-    public UniqueFilterIterator<E> makeObject() {
-        final Iterator<E> i = list1.iterator();
-        return new UniqueFilterIterator<>(i);
     }
 
     @Test

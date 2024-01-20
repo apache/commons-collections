@@ -33,14 +33,14 @@ final class NullHasher implements Hasher {
 
     private static final IndexProducer PRODUCER = new IndexProducer() {
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            Objects.requireNonNull(consumer, "consumer");
-            return true;
+        public int[] asIndexArray() {
+            return new int[0];
         }
 
         @Override
-        public int[] asIndexArray() {
-            return new int[0];
+        public boolean forEachIndex(final IntPredicate consumer) {
+            Objects.requireNonNull(consumer, "consumer");
+            return true;
         }
     };
 

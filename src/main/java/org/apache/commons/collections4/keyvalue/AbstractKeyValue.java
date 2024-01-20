@@ -54,12 +54,6 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
         return key;
     }
 
-    protected K setKey(final K key) {
-        final K old = this.key;
-        this.key = key;
-        return old;
-    }
-
     /**
      * Gets the value from the pair.
      *
@@ -68,6 +62,12 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     @Override
     public V getValue() {
         return value;
+    }
+
+    protected K setKey(final K key) {
+        final K old = this.key;
+        this.key = key;
+        return old;
     }
 
     protected V setValue(final V value) {

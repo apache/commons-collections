@@ -32,9 +32,6 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     /** Serial version UID */
     private static final long serialVersionUID = -6817674502475353160L;
 
-    /** The factory to wrap */
-    private final Factory<? extends O> iFactory;
-
     /**
      * Factory method that performs validation.
      *
@@ -48,6 +45,9 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
         return new FactoryTransformer<>(Objects.requireNonNull(factory, "factory"));
     }
 
+    /** The factory to wrap */
+    private final Factory<? extends O> iFactory;
+
     /**
      * Constructor that performs no validation.
      * Use {@code factoryTransformer} if you want that.
@@ -56,6 +56,16 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      */
     public FactoryTransformer(final Factory<? extends O> factory) {
         iFactory = factory;
+    }
+
+    /**
+     * Gets the factory.
+     *
+     * @return the factory
+     * @since 3.1
+     */
+    public Factory<? extends O> getFactory() {
+        return iFactory;
     }
 
     /**
@@ -68,16 +78,6 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     @Override
     public O transform(final I input) {
         return iFactory.create();
-    }
-
-    /**
-     * Gets the factory.
-     *
-     * @return the factory
-     * @since 3.1
-     */
-    public Factory<? extends O> getFactory() {
-        return iFactory;
     }
 
 }

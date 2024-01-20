@@ -32,9 +32,6 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {
 
-    /** The iterator being decorated */
-    private final Iterator<? extends E> iterator;
-
     /**
      * Decorates the specified iterator such that it cannot be modified.
      * <p>
@@ -54,6 +51,9 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
         }
         return new UnmodifiableIterator<>(iterator);
     }
+
+    /** The iterator being decorated */
+    private final Iterator<? extends E> iterator;
 
     /**
      * Constructs a new instance.

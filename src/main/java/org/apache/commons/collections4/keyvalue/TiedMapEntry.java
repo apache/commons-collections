@@ -55,41 +55,6 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     }
 
     /**
-     * Gets the key of this entry
-     *
-     * @return the key
-     */
-    @Override
-    public K getKey() {
-        return key;
-    }
-
-    /**
-     * Gets the value of this entry direct from the map.
-     *
-     * @return the value
-     */
-    @Override
-    public V getValue() {
-        return map.get(key);
-    }
-
-    /**
-     * Sets the value associated with the key direct onto the map.
-     *
-     * @param value  the new value
-     * @return the old value
-     * @throws IllegalArgumentException if the value is set to this map entry
-     */
-    @Override
-    public V setValue(final V value) {
-        if (value == this) {
-            throw new IllegalArgumentException("Cannot set value to this map entry");
-        }
-        return map.put(key, value);
-    }
-
-    /**
      * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
@@ -113,6 +78,26 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     }
 
     /**
+     * Gets the key of this entry
+     *
+     * @return the key
+     */
+    @Override
+    public K getKey() {
+        return key;
+    }
+
+    /**
+     * Gets the value of this entry direct from the map.
+     *
+     * @return the value
+     */
+    @Override
+    public V getValue() {
+        return map.get(key);
+    }
+
+    /**
      * Gets a hashCode compatible with the equals method.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
@@ -124,6 +109,21 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
         final Object value = getValue();
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (value == null ? 0 : value.hashCode());
+    }
+
+    /**
+     * Sets the value associated with the key direct onto the map.
+     *
+     * @param value  the new value
+     * @return the old value
+     * @throws IllegalArgumentException if the value is set to this map entry
+     */
+    @Override
+    public V setValue(final V value) {
+        if (value == this) {
+            throw new IllegalArgumentException("Cannot set value to this map entry");
+        }
+        return map.put(key, value);
     }
 
     /**

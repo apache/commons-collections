@@ -31,11 +31,6 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     }
 
     @Override
-    public MultiSet<T> makeObject() {
-        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
-    }
-
-    @Override
     public String getCompatibilityVersion() {
         return "4.1";
     }
@@ -43,6 +38,11 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    public MultiSet<T> makeObject() {
+        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
     }
 
 //    public void testCreate() throws Exception {

@@ -29,6 +29,24 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class IndexProducerTest {
 
+    private static final class TestingBitMapProducer implements BitMapProducer {
+        long[] values;
+
+        TestingBitMapProducer(final long[] values) {
+            this.values = values;
+        }
+
+        @Override
+        public boolean forEachBitMap(final LongPredicate consumer) {
+            for (final long l : values) {
+                if (!consumer.test(l)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     @Test
     public void fromBitMapProducerTest() {
         TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
@@ -51,24 +69,6 @@ public class IndexProducerTest {
         assertEquals(64, lst.size());
         for (int i = 0; i < 64; i++) {
             assertEquals(Integer.valueOf(i), lst.get(i));
-        }
-    }
-
-    private static final class TestingBitMapProducer implements BitMapProducer {
-        long[] values;
-
-        TestingBitMapProducer(final long[] values) {
-            this.values = values;
-        }
-
-        @Override
-        public boolean forEachBitMap(final LongPredicate consumer) {
-            for (final long l : values) {
-                if (!consumer.test(l)) {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 

@@ -47,8 +47,13 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     @Override
-    public Bag<T> makeObject() {
-        return CollectionBag.collectionBag(new HashBag<>());
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
     /**
@@ -74,13 +79,8 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+    public Bag<T> makeObject() {
+        return CollectionBag.collectionBag(new HashBag<>());
     }
 
 //    public void testCreate() throws Exception {

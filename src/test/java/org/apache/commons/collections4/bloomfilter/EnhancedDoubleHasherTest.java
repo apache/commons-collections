@@ -28,24 +28,24 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     int[] expected = {1, 0, 71, 71, 1, 6, 15, 29, 49, 4, 39, 11, 65, 58, 63, 9, 41};
 
     @Override
-    protected Hasher createHasher() {
-        return new EnhancedDoubleHasher(1, 1);
-    }
-
-    @Override
     protected Hasher createEmptyHasher() {
         return NullHasher.INSTANCE;
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return expected;
+    protected Hasher createHasher() {
+        return new EnhancedDoubleHasher(1, 1);
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
         // Allows duplicates and may be unordered
         return 0;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return expected;
     }
 
     @Override

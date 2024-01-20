@@ -82,29 +82,456 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  */
 public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneable {
 
+    abstract static class EntryIterator<K, V> {
+        private final Flat3Map<K, V> parent;
+        private int nextIndex;
+        private FlatMapEntry<K, V> currentEntry;
+
+        /**
+         * Create a new Flat3Map.EntryIterator.
+         */
+        EntryIterator(final Flat3Map<K, V> parent) {
+            this.parent = parent;
+        }
+
+        public boolean hasNext() {
+            return nextIndex < parent.size;
+        }
+
+        public Map.Entry<K, V> nextEntry() {
+            if (!hasNext()) {
+                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
+            }
+            currentEntry = new FlatMapEntry<>(parent, ++nextIndex);
+            return currentEntry;
+        }
+
+        public void remove() {
+            if (currentEntry == null) {
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
+            }
+            parent.remove(currentEntry.getKey());
+            currentEntry.setRemoved(true);
+            nextIndex--;
+            currentEntry = null;
+        }
+
+    }
+
+    /**
+     * EntrySet
+     */
+    static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
+        private final Flat3Map<K, V> parent;
+
+        EntrySet(final Flat3Map<K, V> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void clear() {
+            parent.clear();
+        }
+
+        @Override
+        public Iterator<Map.Entry<K, V>> iterator() {
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.entrySet().iterator();
+            }
+            if (parent.isEmpty()) {
+                return EmptyIterator.<Map.Entry<K, V>>emptyIterator();
+            }
+            return new EntrySetIterator<>(parent);
+        }
+
+        @Override
+        public boolean remove(final Object obj) {
+            if (!(obj instanceof Map.Entry)) {
+                return false;
+            }
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object key = entry.getKey();
+            final boolean result = parent.containsKey(key);
+            parent.remove(key);
+            return result;
+        }
+
+        @Override
+        public int size() {
+            return parent.size();
+        }
+    }
+    /**
+     * EntrySetIterator and MapEntry
+     */
+    static class EntrySetIterator<K, V> extends EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
+        EntrySetIterator(final Flat3Map<K, V> parent) {
+            super(parent);
+        }
+
+        @Override
+        public Map.Entry<K, V> next() {
+            return nextEntry();
+        }
+    }
+    static class FlatMapEntry<K, V> implements Map.Entry<K, V> {
+        private final Flat3Map<K, V> parent;
+        private final int index;
+        private volatile boolean removed;
+
+        FlatMapEntry(final Flat3Map<K, V> parent, final int index) {
+            this.parent = parent;
+            this.index = index;
+            this.removed = false;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (removed) {
+                return false;
+            }
+            if (!(obj instanceof Map.Entry)) {
+                return false;
+            }
+            final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
+            final Object key = getKey();
+            final Object value = getValue();
+            return (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
+                   (value == null ? other.getValue() == null : value.equals(other.getValue()));
+        }
+
+        @Override
+        public K getKey() {
+            if (removed) {
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
+            }
+            switch (index) {
+            case 3:
+                return parent.key3;
+            case 2:
+                return parent.key2;
+            case 1:
+                return parent.key1;
+            }
+            throw new IllegalStateException("Invalid map index: " + index);
+        }
+
+        @Override
+        public V getValue() {
+            if (removed) {
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
+            }
+            switch (index) {
+            case 3:
+                return parent.value3;
+            case 2:
+                return parent.value2;
+            case 1:
+                return parent.value1;
+            }
+            throw new IllegalStateException("Invalid map index: " + index);
+        }
+
+        @Override
+        public int hashCode() {
+            if (removed) {
+                return 0;
+            }
+            final Object key = getKey();
+            final Object value = getValue();
+            return (key == null ? 0 : key.hashCode()) ^
+                   (value == null ? 0 : value.hashCode());
+        }
+
+        /**
+         * Used by the iterator that created this entry to indicate that
+         * {@link java.util.Iterator#remove()} has been called.
+         * <p>
+         * As a consequence, all subsequent call to {@link #getKey()},
+         * {@link #setValue(Object)} and {@link #getValue()} will fail.
+         *
+         * @param flag the new value of the removed flag
+         */
+        void setRemoved(final boolean flag) {
+            this.removed = flag;
+        }
+
+        @Override
+        public V setValue(final V value) {
+            if (removed) {
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
+            }
+            final V old = getValue();
+            switch (index) {
+            case 3:
+                parent.value3 = value;
+                break;
+            case 2:
+                parent.value2 = value;
+                break;
+            case 1:
+                parent.value1 = value;
+                break;
+            default:
+                throw new IllegalStateException("Invalid map index: " + index);
+            }
+            return old;
+        }
+
+        @Override
+        public String toString() {
+            if (!removed) {
+                return getKey() + "=" + getValue();
+            }
+            return "";
+        }
+
+    }
+    /**
+     * FlatMapIterator
+     */
+    static class FlatMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
+        private final Flat3Map<K, V> parent;
+        private int nextIndex;
+        private boolean canRemove;
+
+        FlatMapIterator(final Flat3Map<K, V> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public K getKey() {
+            if (!canRemove) {
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
+            }
+            switch (nextIndex) {
+            case 3:
+                return parent.key3;
+            case 2:
+                return parent.key2;
+            case 1:
+                return parent.key1;
+            }
+            throw new IllegalStateException("Invalid map index: " + nextIndex);
+        }
+
+        @Override
+        public V getValue() {
+            if (!canRemove) {
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
+            }
+            switch (nextIndex) {
+            case 3:
+                return parent.value3;
+            case 2:
+                return parent.value2;
+            case 1:
+                return parent.value1;
+            }
+            throw new IllegalStateException("Invalid map index: " + nextIndex);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextIndex < parent.size;
+        }
+
+        @Override
+        public K next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
+            }
+            canRemove = true;
+            nextIndex++;
+            return getKey();
+        }
+
+        @Override
+        public void remove() {
+            if (!canRemove) {
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
+            }
+            parent.remove(getKey());
+            nextIndex--;
+            canRemove = false;
+        }
+
+        @Override
+        public void reset() {
+            nextIndex = 0;
+            canRemove = false;
+        }
+
+        @Override
+        public V setValue(final V value) {
+            if (!canRemove) {
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
+            }
+            final V old = getValue();
+            switch (nextIndex) {
+            case 3:
+                parent.value3 = value;
+                break;
+            case 2:
+                parent.value2 = value;
+                break;
+            case 1:
+                parent.value1 = value;
+                break;
+            default:
+                throw new IllegalStateException("Invalid map index: " + nextIndex);
+            }
+            return old;
+        }
+
+        @Override
+        public String toString() {
+            if (canRemove) {
+                return "Iterator[" + getKey() + "=" + getValue() + "]";
+            }
+            return "Iterator[]";
+        }
+    }
+    /**
+     * KeySet
+     */
+    static class KeySet<K> extends AbstractSet<K> {
+        private final Flat3Map<K, ?> parent;
+
+        KeySet(final Flat3Map<K, ?> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void clear() {
+            parent.clear();
+        }
+
+        @Override
+        public boolean contains(final Object key) {
+            return parent.containsKey(key);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.keySet().iterator();
+            }
+            if (parent.isEmpty()) {
+                return EmptyIterator.<K>emptyIterator();
+            }
+            return new KeySetIterator<>(parent);
+        }
+
+        @Override
+        public boolean remove(final Object key) {
+            final boolean result = parent.containsKey(key);
+            parent.remove(key);
+            return result;
+        }
+
+        @Override
+        public int size() {
+            return parent.size();
+        }
+    }
+    /**
+     * KeySetIterator
+     */
+    static class KeySetIterator<K> extends EntryIterator<K, Object> implements Iterator<K> {
+
+        @SuppressWarnings("unchecked")
+        KeySetIterator(final Flat3Map<K, ?> parent) {
+            super((Flat3Map<K, Object>) parent);
+        }
+
+        @Override
+        public K next() {
+            return nextEntry().getKey();
+        }
+    }
+    /**
+     * Values
+     */
+    static class Values<V> extends AbstractCollection<V> {
+        private final Flat3Map<?, V> parent;
+
+        Values(final Flat3Map<?, V> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void clear() {
+            parent.clear();
+        }
+
+        @Override
+        public boolean contains(final Object value) {
+            return parent.containsValue(value);
+        }
+
+        @Override
+        public Iterator<V> iterator() {
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.values().iterator();
+            }
+            if (parent.isEmpty()) {
+                return EmptyIterator.<V>emptyIterator();
+            }
+            return new ValuesIterator<>(parent);
+        }
+
+        @Override
+        public int size() {
+            return parent.size();
+        }
+    }
+    /**
+     * ValuesIterator
+     */
+    static class ValuesIterator<V> extends EntryIterator<Object, V> implements Iterator<V> {
+
+        @SuppressWarnings("unchecked")
+        ValuesIterator(final Flat3Map<?, V> parent) {
+            super((Flat3Map<Object, V>) parent);
+        }
+
+        @Override
+        public V next() {
+            return nextEntry().getValue();
+        }
+    }
     /** Serialization version */
     private static final long serialVersionUID = -6701087419741928296L;
-
     /** The size of the map, used while in flat mode */
     private transient int size;
     /** Hash, used while in flat mode */
     private transient int hash1;
+
     /** Hash, used while in flat mode */
     private transient int hash2;
+
     /** Hash, used while in flat mode */
     private transient int hash3;
+
     /** Key, used while in flat mode */
     private transient K key1;
+
     /** Key, used while in flat mode */
     private transient K key2;
+
     /** Key, used while in flat mode */
     private transient K key3;
+
     /** Value, used while in flat mode */
     private transient V value1;
+
     /** Value, used while in flat mode */
     private transient V value2;
+
     /** Value, used while in flat mode */
     private transient V value3;
+
     /** Map, used while in delegate mode */
     private transient AbstractHashedMap<K, V> delegateMap;
 
@@ -125,76 +552,40 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     }
 
     /**
-     * Gets the value mapped to the key specified.
-     *
-     * @param key  the key
-     * @return the mapped value, null if no match
+     * Clears the map, resetting the size to zero and nullifying references
+     * to avoid garbage collection issues.
      */
     @Override
-    public V get(final Object key) {
+    public void clear() {
         if (delegateMap != null) {
-            return delegateMap.get(key);
-        }
-        if (key == null) {
-            switch (size) {
-            // drop through
-            case 3:
-                if (key3 == null) {
-                    return value3;
-                }
-            case 2:
-                if (key2 == null) {
-                    return value2;
-                }
-            case 1:
-                if (key1 == null) {
-                    return value1;
-                }
-            }
+            delegateMap.clear();  // should aid gc
+            delegateMap = null;  // switch back to flat mode
         } else {
-            if (size > 0) {
-                final int hashCode = key.hashCode();
-                switch (size) {
-                // drop through
-                case 3:
-                    if (hash3 == hashCode && key.equals(key3)) {
-                        return value3;
-                    }
-                case 2:
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        return value2;
-                    }
-                case 1:
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        return value1;
-                    }
-                }
+            size = 0;
+            hash1 = hash2 = hash3 = 0;
+            key1 = key2 = key3 = null;
+            value1 = value2 = value3 = null;
+        }
+    }
+
+    /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     * @since 3.1
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Flat3Map<K, V> clone() {
+        try {
+            final Flat3Map<K, V> cloned = (Flat3Map<K, V>) super.clone();
+            if (cloned.delegateMap != null) {
+                cloned.delegateMap = cloned.delegateMap.clone();
             }
+            return cloned;
+        } catch (final CloneNotSupportedException ex) {
+            throw new UnsupportedOperationException(ex);
         }
-        return null;
-    }
-
-    /**
-     * Gets the size of the map.
-     *
-     * @return the size
-     */
-    @Override
-    public int size() {
-        if (delegateMap != null) {
-            return delegateMap.size();
-        }
-        return size;
-    }
-
-    /**
-     * Checks whether the map is currently empty.
-     *
-     * @return true if the map is currently size zero
-     */
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
     }
 
     /**
@@ -288,6 +679,238 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             }
         }
         return false;
+    }
+
+    /**
+     * Converts the flat map data to a map.
+     */
+    private void convertToMap() {
+        delegateMap = createDelegateMap();
+        switch (size) {  // drop through
+        case 3:
+            delegateMap.put(key3, value3);
+        case 2:
+            delegateMap.put(key2, value2);
+        case 1:
+            delegateMap.put(key1, value1);
+        case 0:
+            break;
+        default:
+            throw new IllegalStateException("Invalid map index: " + size);
+        }
+
+        size = 0;
+        hash1 = hash2 = hash3 = 0;
+        key1 = key2 = key3 = null;
+        value1 = value2 = value3 = null;
+    }
+
+    /**
+     * Create an instance of the map used for storage when in delegation mode.
+     * <p>
+     * This can be overridden by subclasses to provide a different map implementation.
+     * Not every AbstractHashedMap is suitable, identity and reference based maps
+     * would be poor choices.
+     *
+     * @return a new AbstractHashedMap or subclass
+     * @since 3.1
+     */
+    protected AbstractHashedMap<K, V> createDelegateMap() {
+        return new HashedMap<>();
+    }
+
+    /**
+     * Gets the entrySet view of the map.
+     * Changes made to the view affect this map.
+     * <p>
+     * NOTE: from 4.0, the returned Map Entry will be an independent object and will
+     * not change anymore as the iterator progresses. To avoid this additional object
+     * creation and simply iterate through the entries, use {@link #mapIterator()}.
+     *
+     * @return the entrySet view
+     */
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        if (delegateMap != null) {
+            return delegateMap.entrySet();
+        }
+        return new EntrySet<>(this);
+    }
+
+    /**
+     * Compares this map with another.
+     *
+     * @param obj  the object to compare to
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (delegateMap != null) {
+            return delegateMap.equals(obj);
+        }
+        if (!(obj instanceof Map)) {
+            return false;
+        }
+        final Map<?, ?> other = (Map<?, ?>) obj;
+        if (size != other.size()) {
+            return false;
+        }
+        if (size > 0) {
+            Object otherValue = null;
+            switch (size) {  // drop through
+            case 3:
+                if (!other.containsKey(key3)) {
+                    return false;
+                }
+                otherValue = other.get(key3);
+                if (!Objects.equals(value3, otherValue)) {
+                    return false;
+                }
+            case 2:
+                if (!other.containsKey(key2)) {
+                    return false;
+                }
+                otherValue = other.get(key2);
+                if (!Objects.equals(value2, otherValue)) {
+                    return false;
+                }
+            case 1:
+                if (!other.containsKey(key1)) {
+                    return false;
+                }
+                otherValue = other.get(key1);
+                if (!Objects.equals(value1, otherValue)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Gets the value mapped to the key specified.
+     *
+     * @param key  the key
+     * @return the mapped value, null if no match
+     */
+    @Override
+    public V get(final Object key) {
+        if (delegateMap != null) {
+            return delegateMap.get(key);
+        }
+        if (key == null) {
+            switch (size) {
+            // drop through
+            case 3:
+                if (key3 == null) {
+                    return value3;
+                }
+            case 2:
+                if (key2 == null) {
+                    return value2;
+                }
+            case 1:
+                if (key1 == null) {
+                    return value1;
+                }
+            }
+        } else {
+            if (size > 0) {
+                final int hashCode = key.hashCode();
+                switch (size) {
+                // drop through
+                case 3:
+                    if (hash3 == hashCode && key.equals(key3)) {
+                        return value3;
+                    }
+                case 2:
+                    if (hash2 == hashCode && key.equals(key2)) {
+                        return value2;
+                    }
+                case 1:
+                    if (hash1 == hashCode && key.equals(key1)) {
+                        return value1;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the standard Map hashCode.
+     *
+     * @return the hash code defined in the Map interface
+     */
+    @Override
+    public int hashCode() {
+        if (delegateMap != null) {
+            return delegateMap.hashCode();
+        }
+        int total = 0;
+        switch (size) {  // drop through
+        case 3:
+            total += hash3 ^ (value3 == null ? 0 : value3.hashCode());
+        case 2:
+            total += hash2 ^ (value2 == null ? 0 : value2.hashCode());
+        case 1:
+            total += hash1 ^ (value1 == null ? 0 : value1.hashCode());
+        case 0:
+            break;
+        default:
+            throw new IllegalStateException("Invalid map index: " + size);
+        }
+        return total;
+    }
+
+    /**
+     * Checks whether the map is currently empty.
+     *
+     * @return true if the map is currently size zero
+     */
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * Gets the keySet view of the map.
+     * Changes made to the view affect this map.
+     * To simply iterate through the keys, use {@link #mapIterator()}.
+     *
+     * @return the keySet view
+     */
+    @Override
+    public Set<K> keySet() {
+        if (delegateMap != null) {
+            return delegateMap.keySet();
+        }
+        return new KeySet<>(this);
+    }
+
+    /**
+     * Gets an iterator over the map.
+     * Changes made to the iterator affect this map.
+     * <p>
+     * A MapIterator returns the keys in the map. It also provides convenient
+     * methods to get the key and value, and set the value.
+     * It avoids the need to create an entrySet/keySet/values object.
+     * It also avoids creating the Map Entry object.
+     *
+     * @return the map iterator
+     */
+    @Override
+    public MapIterator<K, V> mapIterator() {
+        if (delegateMap != null) {
+            return delegateMap.mapIterator();
+        }
+        if (size == 0) {
+            return EmptyMapIterator.<K, V>emptyMapIterator();
+        }
+        return new FlatMapIterator<>(this);
     }
 
     /**
@@ -403,41 +1026,22 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     }
 
     /**
-     * Converts the flat map data to a map.
-     */
-    private void convertToMap() {
-        delegateMap = createDelegateMap();
-        switch (size) {  // drop through
-        case 3:
-            delegateMap.put(key3, value3);
-        case 2:
-            delegateMap.put(key2, value2);
-        case 1:
-            delegateMap.put(key1, value1);
-        case 0:
-            break;
-        default:
-            throw new IllegalStateException("Invalid map index: " + size);
-        }
-
-        size = 0;
-        hash1 = hash2 = hash3 = 0;
-        key1 = key2 = key3 = null;
-        value1 = value2 = value3 = null;
-    }
-
-    /**
-     * Create an instance of the map used for storage when in delegation mode.
-     * <p>
-     * This can be overridden by subclasses to provide a different map implementation.
-     * Not every AbstractHashedMap is suitable, identity and reference based maps
-     * would be poor choices.
+     * Read the map in using a custom routine.
      *
-     * @return a new AbstractHashedMap or subclass
-     * @since 3.1
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
-    protected AbstractHashedMap<K, V> createDelegateMap() {
-        return new HashedMap<>();
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        final int count = in.readInt();
+        if (count > 3) {
+            delegateMap = createDelegateMap();
+        }
+        for (int i = count; i > 0; i--) {
+            put((K) in.readObject(), (V) in.readObject());
+        }
     }
 
     /**
@@ -592,650 +1196,16 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     }
 
     /**
-     * Clears the map, resetting the size to zero and nullifying references
-     * to avoid garbage collection issues.
+     * Gets the size of the map.
+     *
+     * @return the size
      */
     @Override
-    public void clear() {
+    public int size() {
         if (delegateMap != null) {
-            delegateMap.clear();  // should aid gc
-            delegateMap = null;  // switch back to flat mode
-        } else {
-            size = 0;
-            hash1 = hash2 = hash3 = 0;
-            key1 = key2 = key3 = null;
-            value1 = value2 = value3 = null;
+            return delegateMap.size();
         }
-    }
-
-    /**
-     * Gets an iterator over the map.
-     * Changes made to the iterator affect this map.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Map Entry object.
-     *
-     * @return the map iterator
-     */
-    @Override
-    public MapIterator<K, V> mapIterator() {
-        if (delegateMap != null) {
-            return delegateMap.mapIterator();
-        }
-        if (size == 0) {
-            return EmptyMapIterator.<K, V>emptyMapIterator();
-        }
-        return new FlatMapIterator<>(this);
-    }
-
-    /**
-     * FlatMapIterator
-     */
-    static class FlatMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
-        private final Flat3Map<K, V> parent;
-        private int nextIndex;
-        private boolean canRemove;
-
-        FlatMapIterator(final Flat3Map<K, V> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return nextIndex < parent.size;
-        }
-
-        @Override
-        public K next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
-            }
-            canRemove = true;
-            nextIndex++;
-            return getKey();
-        }
-
-        @Override
-        public void remove() {
-            if (!canRemove) {
-                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
-            }
-            parent.remove(getKey());
-            nextIndex--;
-            canRemove = false;
-        }
-
-        @Override
-        public K getKey() {
-            if (!canRemove) {
-                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
-            }
-            switch (nextIndex) {
-            case 3:
-                return parent.key3;
-            case 2:
-                return parent.key2;
-            case 1:
-                return parent.key1;
-            }
-            throw new IllegalStateException("Invalid map index: " + nextIndex);
-        }
-
-        @Override
-        public V getValue() {
-            if (!canRemove) {
-                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
-            }
-            switch (nextIndex) {
-            case 3:
-                return parent.value3;
-            case 2:
-                return parent.value2;
-            case 1:
-                return parent.value1;
-            }
-            throw new IllegalStateException("Invalid map index: " + nextIndex);
-        }
-
-        @Override
-        public V setValue(final V value) {
-            if (!canRemove) {
-                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
-            }
-            final V old = getValue();
-            switch (nextIndex) {
-            case 3:
-                parent.value3 = value;
-                break;
-            case 2:
-                parent.value2 = value;
-                break;
-            case 1:
-                parent.value1 = value;
-                break;
-            default:
-                throw new IllegalStateException("Invalid map index: " + nextIndex);
-            }
-            return old;
-        }
-
-        @Override
-        public void reset() {
-            nextIndex = 0;
-            canRemove = false;
-        }
-
-        @Override
-        public String toString() {
-            if (canRemove) {
-                return "Iterator[" + getKey() + "=" + getValue() + "]";
-            }
-            return "Iterator[]";
-        }
-    }
-
-    /**
-     * Gets the entrySet view of the map.
-     * Changes made to the view affect this map.
-     * <p>
-     * NOTE: from 4.0, the returned Map Entry will be an independent object and will
-     * not change anymore as the iterator progresses. To avoid this additional object
-     * creation and simply iterate through the entries, use {@link #mapIterator()}.
-     *
-     * @return the entrySet view
-     */
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        if (delegateMap != null) {
-            return delegateMap.entrySet();
-        }
-        return new EntrySet<>(this);
-    }
-
-    /**
-     * EntrySet
-     */
-    static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
-        private final Flat3Map<K, V> parent;
-
-        EntrySet(final Flat3Map<K, V> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.size();
-        }
-
-        @Override
-        public void clear() {
-            parent.clear();
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            if (!(obj instanceof Map.Entry)) {
-                return false;
-            }
-            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            final Object key = entry.getKey();
-            final boolean result = parent.containsKey(key);
-            parent.remove(key);
-            return result;
-        }
-
-        @Override
-        public Iterator<Map.Entry<K, V>> iterator() {
-            if (parent.delegateMap != null) {
-                return parent.delegateMap.entrySet().iterator();
-            }
-            if (parent.isEmpty()) {
-                return EmptyIterator.<Map.Entry<K, V>>emptyIterator();
-            }
-            return new EntrySetIterator<>(parent);
-        }
-    }
-
-    static class FlatMapEntry<K, V> implements Map.Entry<K, V> {
-        private final Flat3Map<K, V> parent;
-        private final int index;
-        private volatile boolean removed;
-
-        FlatMapEntry(final Flat3Map<K, V> parent, final int index) {
-            this.parent = parent;
-            this.index = index;
-            this.removed = false;
-        }
-
-        /**
-         * Used by the iterator that created this entry to indicate that
-         * {@link java.util.Iterator#remove()} has been called.
-         * <p>
-         * As a consequence, all subsequent call to {@link #getKey()},
-         * {@link #setValue(Object)} and {@link #getValue()} will fail.
-         *
-         * @param flag the new value of the removed flag
-         */
-        void setRemoved(final boolean flag) {
-            this.removed = flag;
-        }
-
-        @Override
-        public K getKey() {
-            if (removed) {
-                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
-            }
-            switch (index) {
-            case 3:
-                return parent.key3;
-            case 2:
-                return parent.key2;
-            case 1:
-                return parent.key1;
-            }
-            throw new IllegalStateException("Invalid map index: " + index);
-        }
-
-        @Override
-        public V getValue() {
-            if (removed) {
-                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
-            }
-            switch (index) {
-            case 3:
-                return parent.value3;
-            case 2:
-                return parent.value2;
-            case 1:
-                return parent.value1;
-            }
-            throw new IllegalStateException("Invalid map index: " + index);
-        }
-
-        @Override
-        public V setValue(final V value) {
-            if (removed) {
-                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
-            }
-            final V old = getValue();
-            switch (index) {
-            case 3:
-                parent.value3 = value;
-                break;
-            case 2:
-                parent.value2 = value;
-                break;
-            case 1:
-                parent.value1 = value;
-                break;
-            default:
-                throw new IllegalStateException("Invalid map index: " + index);
-            }
-            return old;
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (removed) {
-                return false;
-            }
-            if (!(obj instanceof Map.Entry)) {
-                return false;
-            }
-            final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
-            final Object key = getKey();
-            final Object value = getValue();
-            return (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
-                   (value == null ? other.getValue() == null : value.equals(other.getValue()));
-        }
-
-        @Override
-        public int hashCode() {
-            if (removed) {
-                return 0;
-            }
-            final Object key = getKey();
-            final Object value = getValue();
-            return (key == null ? 0 : key.hashCode()) ^
-                   (value == null ? 0 : value.hashCode());
-        }
-
-        @Override
-        public String toString() {
-            if (!removed) {
-                return getKey() + "=" + getValue();
-            }
-            return "";
-        }
-
-    }
-
-    abstract static class EntryIterator<K, V> {
-        private final Flat3Map<K, V> parent;
-        private int nextIndex;
-        private FlatMapEntry<K, V> currentEntry;
-
-        /**
-         * Create a new Flat3Map.EntryIterator.
-         */
-        EntryIterator(final Flat3Map<K, V> parent) {
-            this.parent = parent;
-        }
-
-        public boolean hasNext() {
-            return nextIndex < parent.size;
-        }
-
-        public Map.Entry<K, V> nextEntry() {
-            if (!hasNext()) {
-                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
-            }
-            currentEntry = new FlatMapEntry<>(parent, ++nextIndex);
-            return currentEntry;
-        }
-
-        public void remove() {
-            if (currentEntry == null) {
-                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
-            }
-            parent.remove(currentEntry.getKey());
-            currentEntry.setRemoved(true);
-            nextIndex--;
-            currentEntry = null;
-        }
-
-    }
-
-    /**
-     * EntrySetIterator and MapEntry
-     */
-    static class EntrySetIterator<K, V> extends EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
-        EntrySetIterator(final Flat3Map<K, V> parent) {
-            super(parent);
-        }
-
-        @Override
-        public Map.Entry<K, V> next() {
-            return nextEntry();
-        }
-    }
-
-    /**
-     * Gets the keySet view of the map.
-     * Changes made to the view affect this map.
-     * To simply iterate through the keys, use {@link #mapIterator()}.
-     *
-     * @return the keySet view
-     */
-    @Override
-    public Set<K> keySet() {
-        if (delegateMap != null) {
-            return delegateMap.keySet();
-        }
-        return new KeySet<>(this);
-    }
-
-    /**
-     * KeySet
-     */
-    static class KeySet<K> extends AbstractSet<K> {
-        private final Flat3Map<K, ?> parent;
-
-        KeySet(final Flat3Map<K, ?> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.size();
-        }
-
-        @Override
-        public void clear() {
-            parent.clear();
-        }
-
-        @Override
-        public boolean contains(final Object key) {
-            return parent.containsKey(key);
-        }
-
-        @Override
-        public boolean remove(final Object key) {
-            final boolean result = parent.containsKey(key);
-            parent.remove(key);
-            return result;
-        }
-
-        @Override
-        public Iterator<K> iterator() {
-            if (parent.delegateMap != null) {
-                return parent.delegateMap.keySet().iterator();
-            }
-            if (parent.isEmpty()) {
-                return EmptyIterator.<K>emptyIterator();
-            }
-            return new KeySetIterator<>(parent);
-        }
-    }
-
-    /**
-     * KeySetIterator
-     */
-    static class KeySetIterator<K> extends EntryIterator<K, Object> implements Iterator<K> {
-
-        @SuppressWarnings("unchecked")
-        KeySetIterator(final Flat3Map<K, ?> parent) {
-            super((Flat3Map<K, Object>) parent);
-        }
-
-        @Override
-        public K next() {
-            return nextEntry().getKey();
-        }
-    }
-
-    /**
-     * Gets the values view of the map.
-     * Changes made to the view affect this map.
-     * To simply iterate through the values, use {@link #mapIterator()}.
-     *
-     * @return the values view
-     */
-    @Override
-    public Collection<V> values() {
-        if (delegateMap != null) {
-            return delegateMap.values();
-        }
-        return new Values<>(this);
-    }
-
-    /**
-     * Values
-     */
-    static class Values<V> extends AbstractCollection<V> {
-        private final Flat3Map<?, V> parent;
-
-        Values(final Flat3Map<?, V> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.size();
-        }
-
-        @Override
-        public void clear() {
-            parent.clear();
-        }
-
-        @Override
-        public boolean contains(final Object value) {
-            return parent.containsValue(value);
-        }
-
-        @Override
-        public Iterator<V> iterator() {
-            if (parent.delegateMap != null) {
-                return parent.delegateMap.values().iterator();
-            }
-            if (parent.isEmpty()) {
-                return EmptyIterator.<V>emptyIterator();
-            }
-            return new ValuesIterator<>(parent);
-        }
-    }
-
-    /**
-     * ValuesIterator
-     */
-    static class ValuesIterator<V> extends EntryIterator<Object, V> implements Iterator<V> {
-
-        @SuppressWarnings("unchecked")
-        ValuesIterator(final Flat3Map<?, V> parent) {
-            super((Flat3Map<Object, V>) parent);
-        }
-
-        @Override
-        public V next() {
-            return nextEntry().getValue();
-        }
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeInt(size());
-        for (final MapIterator<?, ?> it = mapIterator(); it.hasNext();) {
-            out.writeObject(it.next());  // key
-            out.writeObject(it.getValue());  // value
-        }
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked")
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        final int count = in.readInt();
-        if (count > 3) {
-            delegateMap = createDelegateMap();
-        }
-        for (int i = count; i > 0; i--) {
-            put((K) in.readObject(), (V) in.readObject());
-        }
-    }
-
-    /**
-     * Clones the map without cloning the keys or values.
-     *
-     * @return a shallow clone
-     * @since 3.1
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public Flat3Map<K, V> clone() {
-        try {
-            final Flat3Map<K, V> cloned = (Flat3Map<K, V>) super.clone();
-            if (cloned.delegateMap != null) {
-                cloned.delegateMap = cloned.delegateMap.clone();
-            }
-            return cloned;
-        } catch (final CloneNotSupportedException ex) {
-            throw new UnsupportedOperationException(ex);
-        }
-    }
-
-    /**
-     * Compares this map with another.
-     *
-     * @param obj  the object to compare to
-     * @return true if equal
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (delegateMap != null) {
-            return delegateMap.equals(obj);
-        }
-        if (!(obj instanceof Map)) {
-            return false;
-        }
-        final Map<?, ?> other = (Map<?, ?>) obj;
-        if (size != other.size()) {
-            return false;
-        }
-        if (size > 0) {
-            Object otherValue = null;
-            switch (size) {  // drop through
-            case 3:
-                if (!other.containsKey(key3)) {
-                    return false;
-                }
-                otherValue = other.get(key3);
-                if (!Objects.equals(value3, otherValue)) {
-                    return false;
-                }
-            case 2:
-                if (!other.containsKey(key2)) {
-                    return false;
-                }
-                otherValue = other.get(key2);
-                if (!Objects.equals(value2, otherValue)) {
-                    return false;
-                }
-            case 1:
-                if (!other.containsKey(key1)) {
-                    return false;
-                }
-                otherValue = other.get(key1);
-                if (!Objects.equals(value1, otherValue)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Gets the standard Map hashCode.
-     *
-     * @return the hash code defined in the Map interface
-     */
-    @Override
-    public int hashCode() {
-        if (delegateMap != null) {
-            return delegateMap.hashCode();
-        }
-        int total = 0;
-        switch (size) {  // drop through
-        case 3:
-            total += hash3 ^ (value3 == null ? 0 : value3.hashCode());
-        case 2:
-            total += hash2 ^ (value2 == null ? 0 : value2.hashCode());
-        case 1:
-            total += hash1 ^ (value1 == null ? 0 : value1.hashCode());
-        case 0:
-            break;
-        default:
-            throw new IllegalStateException("Invalid map index: " + size);
-        }
-        return total;
+        return size;
     }
 
     /**
@@ -1275,6 +1245,36 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
         buf.append('}');
         return buf.toString();
+    }
+
+    /**
+     * Gets the values view of the map.
+     * Changes made to the view affect this map.
+     * To simply iterate through the values, use {@link #mapIterator()}.
+     *
+     * @return the values view
+     */
+    @Override
+    public Collection<V> values() {
+        if (delegateMap != null) {
+            return delegateMap.values();
+        }
+        return new Values<>(this);
+    }
+
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(size());
+        for (final MapIterator<?, ?> it = mapIterator(); it.hasNext();) {
+            out.writeObject(it.next());  // key
+            out.writeObject(it.getValue());  // value
+        }
     }
 
 }

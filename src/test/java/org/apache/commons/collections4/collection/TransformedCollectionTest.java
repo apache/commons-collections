@@ -61,24 +61,8 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     }
 
     @Override
-    public Collection<Object> makeConfirmedCollection() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public Collection<Object> makeConfirmedFullCollection() {
-        return new ArrayList<>(Arrays.asList(getFullElements()));
-    }
-
-    @Override
-    public Collection<Object> makeObject() {
-        return TransformedCollection.transformingCollection(new ArrayList<>(), NOOP_TRANSFORMER);
-    }
-
-    @Override
-    public Collection<Object> makeFullCollection() {
-        final List<Object> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -89,6 +73,27 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     @Override
     public Object[] getOtherElements() {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
+    }
+
+    @Override
+    public Collection<Object> makeConfirmedCollection() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Collection<Object> makeConfirmedFullCollection() {
+        return new ArrayList<>(Arrays.asList(getFullElements()));
+    }
+
+    @Override
+    public Collection<Object> makeFullCollection() {
+        final List<Object> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
+    }
+
+    @Override
+    public Collection<Object> makeObject() {
+        return TransformedCollection.transformingCollection(new ArrayList<>(), NOOP_TRANSFORMER);
     }
 
     @Test
@@ -120,11 +125,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
         assertFalse(collection.remove(elements[0]));
         assertTrue(collection.remove(Integer.valueOf((String) elements[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

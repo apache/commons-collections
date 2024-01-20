@@ -35,13 +35,6 @@ import org.apache.commons.collections4.Predicate;
  */
 public class WhileClosure<E> implements Closure<E> {
 
-    /** The test condition */
-    private final Predicate<? super E> iPredicate;
-    /** The closure to call */
-    private final Closure<? super E> iClosure;
-    /** The flag, true is a do loop, false is a while */
-    private final boolean iDoLoop;
-
     /**
      * Factory method that performs validation.
      *
@@ -57,6 +50,13 @@ public class WhileClosure<E> implements Closure<E> {
         return new WhileClosure<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(closure, "closure"), doLoop);
     }
+    /** The test condition */
+    private final Predicate<? super E> iPredicate;
+    /** The closure to call */
+    private final Closure<? super E> iClosure;
+
+    /** The flag, true is a do loop, false is a while */
+    private final boolean iDoLoop;
 
     /**
      * Constructor that performs no validation.
@@ -88,16 +88,6 @@ public class WhileClosure<E> implements Closure<E> {
     }
 
     /**
-     * Gets the predicate in use.
-     *
-     * @return the predicate
-     * @since 3.1
-     */
-    public Predicate<? super E> getPredicate() {
-        return iPredicate;
-    }
-
-    /**
      * Gets the closure.
      *
      * @return the closure
@@ -105,6 +95,16 @@ public class WhileClosure<E> implements Closure<E> {
      */
     public Closure<? super E> getClosure() {
         return iClosure;
+    }
+
+    /**
+     * Gets the predicate in use.
+     *
+     * @return the predicate
+     * @since 3.1
+     */
+    public Predicate<? super E> getPredicate() {
+        return iPredicate;
     }
 
     /**

@@ -21,15 +21,15 @@ public class BitMapProducerFromLayeredBloomFilterTest extends AbstractBitMapProd
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected BitMapProducer createEmptyProducer() {
+        return LayeredBloomFilter.fixed(shape, 10);
+    }
+
+    @Override
     protected BitMapProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(0, 1);
         final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
         bf.merge(hasher);
         return bf;
-    }
-
-    @Override
-    protected BitMapProducer createEmptyProducer() {
-        return LayeredBloomFilter.fixed(shape, 10);
     }
 }

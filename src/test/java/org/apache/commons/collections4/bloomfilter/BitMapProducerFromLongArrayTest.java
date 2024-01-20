@@ -25,22 +25,6 @@ import org.junit.jupiter.api.Test;
 
 public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest {
 
-    @Override
-    protected BitMapProducer createProducer() {
-        final long[] ary = {1L, 2L, 3L, 4L, 5L};
-        return BitMapProducer.fromBitMapArray(ary);
-    }
-
-    @Override
-    protected BitMapProducer createEmptyProducer() {
-        return BitMapProducer.fromBitMapArray(new long[0]);
-    }
-
-    @Override
-    protected boolean emptyIsZeroLength() {
-        return true;
-    }
-
     @Test
     public void constructorTest() {
         final List<Long> lst = new ArrayList<>();
@@ -50,6 +34,22 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
         assertEquals(Long.valueOf(3), lst.get(2));
         assertEquals(Long.valueOf(4), lst.get(3));
         assertEquals(Long.valueOf(5), lst.get(4));
+    }
+
+    @Override
+    protected BitMapProducer createEmptyProducer() {
+        return BitMapProducer.fromBitMapArray(new long[0]);
+    }
+
+    @Override
+    protected BitMapProducer createProducer() {
+        final long[] ary = {1L, 2L, 3L, 4L, 5L};
+        return BitMapProducer.fromBitMapArray(ary);
+    }
+
+    @Override
+    protected boolean emptyIsZeroLength() {
+        return true;
     }
 
     @Test

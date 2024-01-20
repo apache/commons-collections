@@ -71,30 +71,6 @@ public final class GuavaTestlibTest extends TestCase {
     }
 
     /**
-     * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Maps.
-     * @param name name of the test
-     * @param factory factory to create new Maps
-     * @return a JUnit 3, 4 Test Suite
-     */
-    private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory) {
-        return MapTestSuiteBuilder.using(new TestStringMapGenerator() {
-            @Override
-            protected Map<String, String> create(final Map.Entry<String, String>[] entries) {
-                final Map<String, String> map = factory.get();
-                for (final Map.Entry<String, String> entry : entries) {
-                    map.put(entry.getKey(), entry.getValue());
-                }
-                return map;
-            }
-        })
-                .named(name)
-                .withFeatures(
-                        CollectionSize.ANY, MapFeature.GENERAL_PURPOSE,
-                        MapFeature.ALLOWS_ANY_NULL_QUERIES, CollectionFeature.SUPPORTS_ITERATOR_REMOVE)
-                .createTestSuite();
-    }
-
-    /**
      * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Lists.
      * @param name name of the test
      * @param factory factory to create new Lists
@@ -120,5 +96,29 @@ public final class GuavaTestlibTest extends TestCase {
                         CollectionFeature.SUBSET_VIEW);
         suite.withFeatures(features);
         return suite.createTestSuite();
+    }
+
+    /**
+     * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Maps.
+     * @param name name of the test
+     * @param factory factory to create new Maps
+     * @return a JUnit 3, 4 Test Suite
+     */
+    private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory) {
+        return MapTestSuiteBuilder.using(new TestStringMapGenerator() {
+            @Override
+            protected Map<String, String> create(final Map.Entry<String, String>[] entries) {
+                final Map<String, String> map = factory.get();
+                for (final Map.Entry<String, String> entry : entries) {
+                    map.put(entry.getKey(), entry.getValue());
+                }
+                return map;
+            }
+        })
+                .named(name)
+                .withFeatures(
+                        CollectionSize.ANY, MapFeature.GENERAL_PURPOSE,
+                        MapFeature.ALLOWS_ANY_NULL_QUERIES, CollectionFeature.SUPPORTS_ITERATOR_REMOVE)
+                .createTestSuite();
     }
 }

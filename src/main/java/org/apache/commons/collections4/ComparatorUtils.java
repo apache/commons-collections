@@ -45,11 +45,6 @@ public class ComparatorUtils {
     private static final Comparator[] EMPTY_COMPARATOR_ARRAY = {};
 
     /**
-     * Don't allow instances.
-     */
-    private ComparatorUtils() {}
-
-    /**
      * Comparator for natural sort order.
      *
      * @see ComparableComparator#comparableComparator()
@@ -58,14 +53,38 @@ public class ComparatorUtils {
     public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();
 
     /**
-     * Gets a comparator that uses the natural order of the objects.
+     * Gets a Comparator that can sort Boolean objects.
+     * <p>
+     * The parameter specifies whether true or false is sorted first.
+     * </p>
+     * <p>
+     * The comparator throws NullPointerException if a null value is compared.
+     * </p>
+     *
+     * @param trueFirst  when {@code true}, sort
+     *        {@code true} {@link Boolean}s before
+     *        {@code false} {@link Boolean}s.
+     * @return  a comparator that sorts booleans
+     */
+    public static Comparator<Boolean> booleanComparator(final boolean trueFirst) {
+        return BooleanComparator.booleanComparator(trueFirst);
+    }
+
+    /**
+     * Gets a comparator that compares using a collection of {@link Comparator}s,
+     * applied in (default iterator) sequence until one returns not equal or the
+     * collection is exhausted.
      *
      * @param <E>  the object type to compare
-     * @return  a comparator which uses natural order
+     * @param comparators  the comparators to use, not null or empty or containing nulls
+     * @return a {@link ComparatorChain} formed from the input comparators
+     * @throws NullPointerException if comparators collection is null or contains a null
+     * @throws ClassCastException if the comparators collection contains the wrong object type
+     * @see ComparatorChain
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> naturalComparator() {
-        return NATURAL_COMPARATOR;
+    public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
+        return chainedComparator(comparators.toArray(EMPTY_COMPARATOR_ARRAY));
     }
 
     /**
@@ -87,50 +106,75 @@ public class ComparatorUtils {
     }
 
     /**
-     * Gets a comparator that compares using a collection of {@link Comparator}s,
-     * applied in (default iterator) sequence until one returns not equal or the
-     * collection is exhausted.
+     * Returns the largest of the given objects according to the given
+     * comparator, returning the second object if the comparator
+     * returns equal.
      *
      * @param <E>  the object type to compare
-     * @param comparators  the comparators to use, not null or empty or containing nulls
-     * @return a {@link ComparatorChain} formed from the input comparators
-     * @throws NullPointerException if comparators collection is null or contains a null
-     * @throws ClassCastException if the comparators collection contains the wrong object type
-     * @see ComparatorChain
+     * @param o1  the first object to compare
+     * @param o2  the second object to compare
+     * @param comparator  the sort order to use
+     * @return  the larger of the two objects
      */
     @SuppressWarnings("unchecked")
-    public static <E> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
-        return chainedComparator(comparators.toArray(EMPTY_COMPARATOR_ARRAY));
+    public static <E> E max(final E o1, final E o2, Comparator<E> comparator) {
+        if (comparator == null) {
+            comparator = NATURAL_COMPARATOR;
+        }
+        final int c = comparator.compare(o1, o2);
+        return c > 0 ? o1 : o2;
     }
 
     /**
-     * Gets a comparator that reverses the order of the given comparator.
+     * Returns the smallest of the given objects according to the given
+     * comparator, returning the second object if the comparator
+     * returns equal.
      *
      * @param <E>  the object type to compare
-     * @param comparator  the comparator to reverse
-     * @return  a comparator that reverses the order of the input comparator
-     * @see ReverseComparator
+     * @param o1  the first object to compare
+     * @param o2  the second object to compare
+     * @param comparator  the sort order to use
+     * @return  the smaller of the two objects
      */
-    public static <E> Comparator<E> reversedComparator(final Comparator<E> comparator) {
-        return new ReverseComparator<>(comparator);
+    @SuppressWarnings("unchecked")
+    public static <E> E min(final E o1, final E o2, Comparator<E> comparator) {
+        if (comparator == null) {
+            comparator = NATURAL_COMPARATOR;
+        }
+        final int c = comparator.compare(o1, o2);
+        return c < 0 ? o1 : o2;
     }
 
     /**
-     * Gets a Comparator that can sort Boolean objects.
+     * Gets a comparator that uses the natural order of the objects.
+     *
+     * @param <E>  the object type to compare
+     * @return  a comparator which uses natural order
+     */
+    @SuppressWarnings("unchecked")
+    public static <E extends Comparable<? super E>> Comparator<E> naturalComparator() {
+        return NATURAL_COMPARATOR;
+    }
+
+    /**
+     * Gets a Comparator that controls the comparison of {@code null} values.
      * <p>
-     * The parameter specifies whether true or false is sorted first.
-     * </p>
-     * <p>
-     * The comparator throws NullPointerException if a null value is compared.
+     * The returned comparator will consider a null value to be greater than
+     * any nonnull value, and equal to any other null value.  Two nonnull
+     * values will be evaluated with the given comparator.
      * </p>
      *
-     * @param trueFirst  when {@code true}, sort
-     *        {@code true} {@link Boolean}s before
-     *        {@code false} {@link Boolean}s.
-     * @return  a comparator that sorts booleans
+     * @param <E>  the object type to compare
+     * @param comparator the comparator that wants to allow nulls
+     * @return  a version of that comparator that allows nulls
+     * @see NullComparator
      */
-    public static Comparator<Boolean> booleanComparator(final boolean trueFirst) {
-        return BooleanComparator.booleanComparator(trueFirst);
+    @SuppressWarnings("unchecked")
+    public static <E> Comparator<E> nullHighComparator(Comparator<E> comparator) {
+        if (comparator == null) {
+            comparator = NATURAL_COMPARATOR;
+        }
+        return new NullComparator<>(comparator, true);
     }
 
     /**
@@ -155,24 +199,15 @@ public class ComparatorUtils {
     }
 
     /**
-     * Gets a Comparator that controls the comparison of {@code null} values.
-     * <p>
-     * The returned comparator will consider a null value to be greater than
-     * any nonnull value, and equal to any other null value.  Two nonnull
-     * values will be evaluated with the given comparator.
-     * </p>
+     * Gets a comparator that reverses the order of the given comparator.
      *
      * @param <E>  the object type to compare
-     * @param comparator the comparator that wants to allow nulls
-     * @return  a version of that comparator that allows nulls
-     * @see NullComparator
+     * @param comparator  the comparator to reverse
+     * @return  a comparator that reverses the order of the input comparator
+     * @see ReverseComparator
      */
-    @SuppressWarnings("unchecked")
-    public static <E> Comparator<E> nullHighComparator(Comparator<E> comparator) {
-        if (comparator == null) {
-            comparator = NATURAL_COMPARATOR;
-        }
-        return new NullComparator<>(comparator, true);
+    public static <E> Comparator<E> reversedComparator(final Comparator<E> comparator) {
+        return new ReverseComparator<>(comparator);
     }
 
     /**
@@ -201,43 +236,8 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the smallest of the given objects according to the given
-     * comparator, returning the second object if the comparator
-     * returns equal.
-     *
-     * @param <E>  the object type to compare
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
-     * @param comparator  the sort order to use
-     * @return  the smaller of the two objects
+     * Don't allow instances.
      */
-    @SuppressWarnings("unchecked")
-    public static <E> E min(final E o1, final E o2, Comparator<E> comparator) {
-        if (comparator == null) {
-            comparator = NATURAL_COMPARATOR;
-        }
-        final int c = comparator.compare(o1, o2);
-        return c < 0 ? o1 : o2;
-    }
-
-    /**
-     * Returns the largest of the given objects according to the given
-     * comparator, returning the second object if the comparator
-     * returns equal.
-     *
-     * @param <E>  the object type to compare
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
-     * @param comparator  the sort order to use
-     * @return  the larger of the two objects
-     */
-    @SuppressWarnings("unchecked")
-    public static <E> E max(final E o1, final E o2, Comparator<E> comparator) {
-        if (comparator == null) {
-            comparator = NATURAL_COMPARATOR;
-        }
-        final int c = comparator.compare(o1, o2);
-        return c > 0 ? o1 : o2;
-    }
+    private ComparatorUtils() {}
 
 }

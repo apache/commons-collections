@@ -32,9 +32,6 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     /** Serial version UID */
     private static final long serialVersionUID = 5278818408044349346L;
 
-    /** The closure to wrap */
-    private final Predicate<? super T> iPredicate;
-
     /**
      * Factory method that performs validation.
      *
@@ -50,6 +47,9 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
         return new PredicateTransformer<>(predicate);
     }
 
+    /** The closure to wrap */
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Constructor that performs no validation.
      * Use {@code predicateTransformer} if you want that.
@@ -61,6 +61,16 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     }
 
     /**
+     * Gets the predicate.
+     *
+     * @return the predicate
+     * @since 3.1
+     */
+    public Predicate<? super T> getPredicate() {
+        return iPredicate;
+    }
+
+    /**
      * Transforms the input to result by calling a predicate.
      *
      * @param input  the input object to transform
@@ -69,16 +79,6 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     @Override
     public Boolean transform(final T input) {
         return Boolean.valueOf(iPredicate.evaluate(input));
-    }
-
-    /**
-     * Gets the predicate.
-     *
-     * @return the predicate
-     * @since 3.1
-     */
-    public Predicate<? super T> getPredicate() {
-        return iPredicate;
     }
 
 }

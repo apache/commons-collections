@@ -21,6 +21,11 @@ public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProduce
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected IndexProducer createEmptyProducer() {
+        return new SimpleBloomFilter(shape);
+    }
+
+    @Override
     protected IndexProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(3, 2);
         final BloomFilter bf = new SimpleBloomFilter(shape);
@@ -29,17 +34,12 @@ public class IndexProducerFromSimpleBloomFilterTest extends AbstractIndexProduce
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new SimpleBloomFilter(shape);
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT | ORDERED;
     }
 
     @Override
     protected int[] getExpectedIndices() {
         return new int[] {3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35};
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return DISTINCT | ORDERED;
     }
 }

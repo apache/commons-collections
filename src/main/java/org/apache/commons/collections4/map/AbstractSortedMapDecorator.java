@@ -49,84 +49,6 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
         IterableSortedMap<K, V> {
 
     /**
-     * Constructor only used in deserialization, do not use otherwise.
-     * @since 3.1
-     */
-    protected AbstractSortedMapDecorator() {
-    }
-
-    /**
-     * Constructor that wraps (not copies).
-     *
-     * @param map  the map to decorate, must not be null
-     * @throws NullPointerException if the map is null
-     */
-    public AbstractSortedMapDecorator(final SortedMap<K, V> map) {
-        super(map);
-    }
-
-    /**
-     * Gets the map being decorated.
-     *
-     * @return the decorated map
-     */
-    @Override
-    protected SortedMap<K, V> decorated() {
-        return (SortedMap<K, V>) super.decorated();
-    }
-
-    @Override
-    public Comparator<? super K> comparator() {
-        return decorated().comparator();
-    }
-
-    @Override
-    public K firstKey() {
-        return decorated().firstKey();
-    }
-
-    @Override
-    public K lastKey() {
-        return decorated().lastKey();
-    }
-
-    @Override
-    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
-        return decorated().subMap(fromKey, toKey);
-    }
-
-    @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        return decorated().headMap(toKey);
-    }
-
-    @Override
-    public SortedMap<K, V> tailMap(final K fromKey) {
-        return decorated().tailMap(fromKey);
-    }
-
-    @Override
-    public K previousKey(final K key) {
-        final SortedMap<K, V> headMap = headMap(key);
-        return headMap.isEmpty() ? null : headMap.lastKey();
-    }
-
-    @Override
-    public K nextKey(final K key) {
-        final Iterator<K> it = tailMap(key).keySet().iterator();
-        it.next();
-        return it.hasNext() ? it.next() : null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public OrderedMapIterator<K, V> mapIterator() {
-        return new SortedMapIterator<>(entrySet());
-    }
-
-    /**
      * OrderedMapIterator implementation.
      *
      * @param <K>  the key type
@@ -147,15 +69,6 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
          * {@inheritDoc}
          */
         @Override
-        public synchronized void reset() {
-            super.reset();
-            iterator = new ListIteratorWrapper<>(iterator);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public boolean hasPrevious() {
             return ((ListIterator<Map.Entry<K, V>>) iterator).hasPrevious();
         }
@@ -168,5 +81,92 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
             entry = ((ListIterator<Map.Entry<K, V>>) iterator).previous();
             return getKey();
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public synchronized void reset() {
+            super.reset();
+            iterator = new ListIteratorWrapper<>(iterator);
+        }
+    }
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since 3.1
+     */
+    protected AbstractSortedMapDecorator() {
+    }
+
+    /**
+     * Constructor that wraps (not copies).
+     *
+     * @param map  the map to decorate, must not be null
+     * @throws NullPointerException if the map is null
+     */
+    public AbstractSortedMapDecorator(final SortedMap<K, V> map) {
+        super(map);
+    }
+
+    @Override
+    public Comparator<? super K> comparator() {
+        return decorated().comparator();
+    }
+
+    /**
+     * Gets the map being decorated.
+     *
+     * @return the decorated map
+     */
+    @Override
+    protected SortedMap<K, V> decorated() {
+        return (SortedMap<K, V>) super.decorated();
+    }
+
+    @Override
+    public K firstKey() {
+        return decorated().firstKey();
+    }
+
+    @Override
+    public SortedMap<K, V> headMap(final K toKey) {
+        return decorated().headMap(toKey);
+    }
+
+    @Override
+    public K lastKey() {
+        return decorated().lastKey();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedMapIterator<K, V> mapIterator() {
+        return new SortedMapIterator<>(entrySet());
+    }
+
+    @Override
+    public K nextKey(final K key) {
+        final Iterator<K> it = tailMap(key).keySet().iterator();
+        it.next();
+        return it.hasNext() ? it.next() : null;
+    }
+
+    @Override
+    public K previousKey(final K key) {
+        final SortedMap<K, V> headMap = headMap(key);
+        return headMap.isEmpty() ? null : headMap.lastKey();
+    }
+
+    @Override
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
+        return decorated().subMap(fromKey, toKey);
+    }
+
+    @Override
+    public SortedMap<K, V> tailMap(final K fromKey) {
+        return decorated().tailMap(fromKey);
     }
 }

@@ -41,6 +41,32 @@ import org.junit.jupiter.api.Test;
 public class ListOrderedSetTest<E>
     extends AbstractSetTest<E> {
 
+    static class A {
+
+        @Override
+        public boolean equals(final Object obj) {
+            return obj instanceof A || obj instanceof B;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
+    static class B {
+
+        @Override
+        public boolean equals(final Object obj) {
+            return obj instanceof A || obj instanceof B;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
     private static final Integer ZERO = Integer.valueOf(0);
 
     private static final Integer ONE = Integer.valueOf(1);
@@ -51,6 +77,11 @@ public class ListOrderedSetTest<E>
 
     public ListOrderedSetTest() {
         super(ListOrderedSetTest.class.getSimpleName());
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -69,70 +100,34 @@ public class ListOrderedSetTest<E>
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testOrdering() {
-        final ListOrderedSet<E> set = setupSet();
-        Iterator<E> it = set.iterator();
-
-        for (int i = 0; i < 10; i++) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
-
-        for (int i = 0; i < 10; i += 2) {
-            assertTrue(set.remove(Integer.toString(i)),
-                       "Must be able to remove int");
-        }
-
-        it = set.iterator();
-        for (int i = 1; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(),
-                         "Sequence is wrong after remove ");
-        }
-
-        for (int i = 0; i < 10; i++) {
-            set.add((E) Integer.toString(i));
-        }
-
-        assertEquals(10, set.size(), "Size of set is wrong!");
-
-        it = set.iterator();
-        for (int i = 1; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
-        for (int i = 0; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
+    public void testDecorator() {
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<>(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<>()))
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddRemove() {
-        final ListOrderedSet<E> set = makeObject();
-        final List<E> view = set.asList();
-        set.add((E) ZERO);
-        set.add((E) ONE);
-        set.add((E) TWO);
+    public void testDuplicates() {
+        final List<E> list = new ArrayList<>(10);
+        list.add((E) Integer.valueOf(1));
+        list.add((E) Integer.valueOf(2));
+        list.add((E) Integer.valueOf(3));
+        list.add((E) Integer.valueOf(1));
 
-        assertEquals(3, set.size());
-        assertSame(ZERO, set.get(0));
-        assertSame(ONE, set.get(1));
-        assertSame(TWO, set.get(2));
-        assertEquals(3, view.size());
-        assertSame(ZERO, view.get(0));
-        assertSame(ONE, view.get(1));
-        assertSame(TWO, view.get(2));
+        final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(list);
 
-        assertEquals(0, set.indexOf(ZERO));
-        assertEquals(1, set.indexOf(ONE));
-        assertEquals(2, set.indexOf(TWO));
+        assertEquals(3, orderedSet.size());
+        assertEquals(3, IteratorUtils.toArray(orderedSet.iterator()).length);
 
-        set.remove(1);
-        assertEquals(2, set.size());
-        assertSame(ZERO, set.get(0));
-        assertSame(TWO, set.get(1));
-        assertEquals(2, view.size());
-        assertSame(ZERO, view.get(0));
-        assertSame(TWO, view.get(1));
+        // insertion order preserved?
+        assertEquals(Integer.valueOf(1), orderedSet.get(0));
+        assertEquals(Integer.valueOf(2), orderedSet.get(1));
+        assertEquals(Integer.valueOf(3), orderedSet.get(2));
     }
 
     @Test
@@ -176,6 +171,37 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
+    public void testListAddRemove() {
+        final ListOrderedSet<E> set = makeObject();
+        final List<E> view = set.asList();
+        set.add((E) ZERO);
+        set.add((E) ONE);
+        set.add((E) TWO);
+
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        assertEquals(3, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(ONE, view.get(1));
+        assertSame(TWO, view.get(2));
+
+        assertEquals(0, set.indexOf(ZERO));
+        assertEquals(1, set.indexOf(ONE));
+        assertEquals(2, set.indexOf(TWO));
+
+        set.remove(1);
+        assertEquals(2, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(TWO, set.get(1));
+        assertEquals(2, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(TWO, view.get(1));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     public void testListAddReplacing() {
         final ListOrderedSet<E> set = makeObject();
         final A a = new A();
@@ -188,6 +214,42 @@ public class ListOrderedSetTest<E>
         assertSame(a, set.iterator().next());
         assertSame(a, set.get(0));
         assertSame(a, set.asList().get(0));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testOrdering() {
+        final ListOrderedSet<E> set = setupSet();
+        Iterator<E> it = set.iterator();
+
+        for (int i = 0; i < 10; i++) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
+
+        for (int i = 0; i < 10; i += 2) {
+            assertTrue(set.remove(Integer.toString(i)),
+                       "Must be able to remove int");
+        }
+
+        it = set.iterator();
+        for (int i = 1; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(),
+                         "Sequence is wrong after remove ");
+        }
+
+        for (int i = 0; i < 10; i++) {
+            set.add((E) Integer.toString(i));
+        }
+
+        assertEquals(10, set.size(), "Size of set is wrong!");
+
+        it = set.iterator();
+        for (int i = 1; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
+        for (int i = 0; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
     }
 
     @Test
@@ -213,68 +275,6 @@ public class ListOrderedSetTest<E>
         assertEquals(Integer.valueOf(4), orderedSet.get(2));
         assertEquals(Integer.valueOf(2), orderedSet.get(3));
         assertEquals(Integer.valueOf(0), orderedSet.get(4));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testDuplicates() {
-        final List<E> list = new ArrayList<>(10);
-        list.add((E) Integer.valueOf(1));
-        list.add((E) Integer.valueOf(2));
-        list.add((E) Integer.valueOf(3));
-        list.add((E) Integer.valueOf(1));
-
-        final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(list);
-
-        assertEquals(3, orderedSet.size());
-        assertEquals(3, IteratorUtils.toArray(orderedSet.iterator()).length);
-
-        // insertion order preserved?
-        assertEquals(Integer.valueOf(1), orderedSet.get(0));
-        assertEquals(Integer.valueOf(2), orderedSet.get(1));
-        assertEquals(Integer.valueOf(3), orderedSet.get(2));
-    }
-
-    static class A {
-
-        @Override
-        public boolean equals(final Object obj) {
-            return obj instanceof A || obj instanceof B;
-        }
-
-        @Override
-        public int hashCode() {
-            return 1;
-        }
-    }
-
-    static class B {
-
-        @Override
-        public boolean equals(final Object obj) {
-            return obj instanceof A || obj instanceof B;
-        }
-
-        @Override
-        public int hashCode() {
-            return 1;
-        }
-    }
-
-    @Test
-    public void testDecorator() {
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<>(), null)),
-                () -> assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<>()))
-        );
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

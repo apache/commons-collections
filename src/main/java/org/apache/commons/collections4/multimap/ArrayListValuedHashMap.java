@@ -96,16 +96,6 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code MultiValuedMap} to copy into this map
-     */
-    public ArrayListValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
-        this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);
-        super.putAll(map);
-    }
-
-    /**
-     * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
-     *
      * @param map a {@code Map} to copy into this map
      */
     public ArrayListValuedHashMap(final Map<? extends K, ? extends V> map) {
@@ -113,9 +103,25 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
         super.putAll(map);
     }
 
+    /**
+     * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
+     *
+     * @param map a {@code MultiValuedMap} to copy into this map
+     */
+    public ArrayListValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
+        this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);
+        super.putAll(map);
+    }
+
     @Override
     protected ArrayList<V> createCollection() {
         return new ArrayList<>(initialListCapacity);
+    }
+
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        setMap(new HashMap<>());
+        doReadObject(ois);
     }
 
     /**
@@ -131,12 +137,6 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         doWriteObject(oos);
-    }
-
-    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        setMap(new HashMap<>());
-        doReadObject(ois);
     }
 
 }

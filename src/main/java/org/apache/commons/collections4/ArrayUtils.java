@@ -37,12 +37,6 @@ package org.apache.commons.collections4;
 final class ArrayUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private ArrayUtils() {
-    }
-
-    /**
      * <p>
      * Checks if the object is in the given array.
      * </p>
@@ -56,22 +50,6 @@ final class ArrayUtils {
      */
     static boolean contains(final Object[] array, final Object objectToFind) {
         return indexOf(array, objectToFind) != CollectionUtils.INDEX_NOT_FOUND;
-    }
-
-    /**
-     * <p>
-     * Finds the index of the given object in the array.
-     * </p>
-     * <p>
-     * This method returns {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
-     * </p>
-     *
-     * @param array        the array to search through for the object, may be {@code null}
-     * @param objectToFind the object to find, may be {@code null}
-     * @return the index of the object within the array, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
-     */
-    static <T> int indexOf(final T[] array, final Object objectToFind) {
-        return indexOf(array, objectToFind, 0);
     }
 
     /**
@@ -112,6 +90,28 @@ final class ArrayUtils {
             }
         }
         return CollectionUtils.INDEX_NOT_FOUND;
+    }
+
+    /**
+     * <p>
+     * Finds the index of the given object in the array.
+     * </p>
+     * <p>
+     * This method returns {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
+     * </p>
+     *
+     * @param array        the array to search through for the object, may be {@code null}
+     * @param objectToFind the object to find, may be {@code null}
+     * @return the index of the object within the array, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
+     */
+    static <T> int indexOf(final T[] array, final Object objectToFind) {
+        return indexOf(array, objectToFind, 0);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private ArrayUtils() {
     }
 
 }

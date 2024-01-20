@@ -52,6 +52,11 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public IterableMap<K, V> makeObject() {
         return decorateMap(new HashMap<>(), truePredicate, truePredicate);
     }
@@ -104,11 +109,6 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         iterator = map.entrySet().iterator();
         entry = iterator.next();
         entry.setValue((V) "x");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

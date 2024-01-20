@@ -37,13 +37,13 @@ public abstract class MockTestCase {
         return registerMock(mock);
     }
 
+    protected <T> IExpectationSetters<T> expect(final T t) {
+        return EasyMock.expect(t);
+    }
+
     private <T> T registerMock(final T mock) {
         mockObjects.add(mock);
         return mock;
-    }
-
-    protected <T> IExpectationSetters<T> expect(final T t) {
-        return EasyMock.expect(t);
     }
 
     protected final void replay() {

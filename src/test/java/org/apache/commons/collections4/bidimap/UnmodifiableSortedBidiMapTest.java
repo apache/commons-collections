@@ -37,29 +37,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
     }
 
     @Override
-    public SortedBidiMap<K, V> makeObject() {
-        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<>());
-    }
-
-    @Override
-    public SortedBidiMap<K, V> makeFullMap() {
-        final SortedBidiMap<K, V> bidi = new DualTreeBidiMap<>();
-        addSampleMappings(bidi);
-        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(bidi);
-    }
-
-    @Override
-    public SortedMap<K, V> makeConfirmedMap() {
-        return new TreeMap<>();
-    }
-
-    @Override
-    public boolean isSubMapViewsSerializable() {
-        // TreeMap sub map views have a bug in deserialization.
-        return false;
-    }
-
-    @Override
     public String[] ignoredTests() {
         // Override to prevent infinite recursion of tests.
         return new String[] {"UnmodifiableSortedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
@@ -90,10 +67,27 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         return false;
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
+    @Override
+    public SortedMap<K, V> makeConfirmedMap() {
+        return new TreeMap<>();
+    }
+
+    @Override
+    public SortedBidiMap<K, V> makeFullMap() {
+        final SortedBidiMap<K, V> bidi = new DualTreeBidiMap<>();
+        addSampleMappings(bidi);
+        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(bidi);
+    }
+
+    @Override
+    public SortedBidiMap<K, V> makeObject() {
+        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<>());
     }
 
     @Test
@@ -102,6 +96,12 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         assertSame(map, UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(map));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null));
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 }

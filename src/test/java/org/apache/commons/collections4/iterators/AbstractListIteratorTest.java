@@ -50,6 +50,14 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
+     * The value to be used in the add and set tests.
+     * Default is null.
+     */
+    public E addSetValue() {
+        return null;
+    }
+
+    /**
      * Implements the abstract superclass method to return the list iterator.
      *
      * @return an empty iterator
@@ -83,72 +91,6 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      */
     public boolean supportsSet() {
         return true;
-    }
-
-    /**
-     * The value to be used in the add and set tests.
-     * Default is null.
-     */
-    public E addSetValue() {
-        return null;
-    }
-
-    /**
-     * Test that the empty list iterator contract is correct.
-     */
-    @Test
-    public void testEmptyListIteratorIsIndeedEmpty() {
-        if (!supportsEmptyIterator()) {
-            return;
-        }
-
-        final ListIterator<E> it = makeEmptyIterator();
-
-        assertFalse(it.hasNext());
-        assertEquals(0, it.nextIndex());
-        assertFalse(it.hasPrevious());
-        assertEquals(-1, it.previousIndex());
-
-        // next() should throw a NoSuchElementException
-        assertThrows(NoSuchElementException.class, () -> it.next(),
-                "NoSuchElementException must be thrown from empty ListIterator");
-
-        // previous() should throw a NoSuchElementException
-        assertThrows(NoSuchElementException.class, () -> it.previous(),
-                "NoSuchElementException must be thrown from empty ListIterator");
-    }
-
-    /**
-     * Test navigation through the iterator.
-     */
-    @Test
-    public void testWalkForwardAndBack() {
-        final ArrayList<E> list = new ArrayList<>();
-        final ListIterator<E> it = makeObject();
-        while (it.hasNext()) {
-            list.add(it.next());
-        }
-
-        // check state at end
-        assertFalse(it.hasNext());
-        assertTrue(it.hasPrevious());
-        assertThrows(NoSuchElementException.class, () -> it.next(),
-                "NoSuchElementException must be thrown from next at end of ListIterator");
-
-        // loop back through comparing
-        for (int i = list.size() - 1; i >= 0; i--) {
-            assertEquals(i + 1, it.nextIndex());
-            assertEquals(i, it.previousIndex());
-
-            final Object obj = list.get(i);
-            assertEquals(obj, it.previous());
-        }
-
-        // check state at start
-        assertTrue(it.hasNext());
-        assertFalse(it.hasPrevious());
-        assertThrows(NoSuchElementException.class, () -> it.previous(),
-                "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
     /**
@@ -189,6 +131,70 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
+     * Test remove after add behavior.
+     */
+    @Test
+    public void testAddThenRemove() {
+        final ListIterator<E> it = makeObject();
+
+        // add then remove
+        if (supportsAdd() && supportsRemove()) {
+            it.next();
+            it.add(addSetValue());
+            assertThrows(IllegalStateException.class, () -> it.remove(),
+                    "IllegalStateException must be thrown from remove after add");
+        }
+    }
+
+    @Test
+    public void testAddThenSet() {
+        final ListIterator<E> it = makeObject();
+        // add then set
+        if (supportsAdd() && supportsSet()) {
+            it.next();
+            it.add(addSetValue());
+            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
+                    "IllegalStateException must be thrown from set after add");
+        }
+    }
+
+    /**
+     * Test that the empty list iterator contract is correct.
+     */
+    @Test
+    public void testEmptyListIteratorIsIndeedEmpty() {
+        if (!supportsEmptyIterator()) {
+            return;
+        }
+
+        final ListIterator<E> it = makeEmptyIterator();
+
+        assertFalse(it.hasNext());
+        assertEquals(0, it.nextIndex());
+        assertFalse(it.hasPrevious());
+        assertEquals(-1, it.previousIndex());
+
+        // next() should throw a NoSuchElementException
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown from empty ListIterator");
+
+        // previous() should throw a NoSuchElementException
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from empty ListIterator");
+    }
+
+    @Test
+    public void testRemoveThenSet() {
+        final ListIterator<E> it = makeObject();
+        if (supportsRemove() && supportsSet()) {
+            it.next();
+            it.remove();
+            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
+                    "IllegalStateException must be thrown from set after remove");
+        }
+    }
+
+    /**
      * Test set behavior.
      */
     @Test
@@ -214,43 +220,37 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
 
     }
 
-    @Test
-    public void testRemoveThenSet() {
-        final ListIterator<E> it = makeObject();
-        if (supportsRemove() && supportsSet()) {
-            it.next();
-            it.remove();
-            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
-                    "IllegalStateException must be thrown from set after remove");
-        }
-    }
-
-    @Test
-    public void testAddThenSet() {
-        final ListIterator<E> it = makeObject();
-        // add then set
-        if (supportsAdd() && supportsSet()) {
-            it.next();
-            it.add(addSetValue());
-            assertThrows(IllegalStateException.class, () -> it.set(addSetValue()),
-                    "IllegalStateException must be thrown from set after add");
-        }
-    }
-
     /**
-     * Test remove after add behavior.
+     * Test navigation through the iterator.
      */
     @Test
-    public void testAddThenRemove() {
+    public void testWalkForwardAndBack() {
+        final ArrayList<E> list = new ArrayList<>();
         final ListIterator<E> it = makeObject();
-
-        // add then remove
-        if (supportsAdd() && supportsRemove()) {
-            it.next();
-            it.add(addSetValue());
-            assertThrows(IllegalStateException.class, () -> it.remove(),
-                    "IllegalStateException must be thrown from remove after add");
+        while (it.hasNext()) {
+            list.add(it.next());
         }
+
+        // check state at end
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, () -> it.next(),
+                "NoSuchElementException must be thrown from next at end of ListIterator");
+
+        // loop back through comparing
+        for (int i = list.size() - 1; i >= 0; i--) {
+            assertEquals(i + 1, it.nextIndex());
+            assertEquals(i, it.previousIndex());
+
+            final Object obj = list.get(i);
+            assertEquals(obj, it.previous());
+        }
+
+        // check state at start
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
 }

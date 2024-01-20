@@ -35,12 +35,6 @@ import java.util.Objects;
  */
 public class PushbackIterator<E> implements Iterator<E> {
 
-    /** The iterator being decorated. */
-    private final Iterator<? extends E> iterator;
-
-    /** The LIFO queue containing the pushed back items. */
-    private final Deque<E> items = new ArrayDeque<>();
-
     /**
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
@@ -61,6 +55,12 @@ public class PushbackIterator<E> implements Iterator<E> {
         return new PushbackIterator<>(iterator);
     }
 
+    /** The iterator being decorated. */
+    private final Iterator<? extends E> iterator;
+
+    /** The LIFO queue containing the pushed back items. */
+    private final Deque<E> items = new ArrayDeque<>();
+
     /**
      * Constructs a new instance.
      *
@@ -68,6 +68,16 @@ public class PushbackIterator<E> implements Iterator<E> {
      */
     public PushbackIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return !items.isEmpty() || iterator.hasNext();
+    }
+
+    @Override
+    public E next() {
+        return !items.isEmpty() ? items.pop() : iterator.next();
     }
 
     /**
@@ -79,16 +89,6 @@ public class PushbackIterator<E> implements Iterator<E> {
      */
     public void pushback(final E item) {
         items.push(item);
-    }
-
-    @Override
-    public boolean hasNext() {
-        return !items.isEmpty() || iterator.hasNext();
-    }
-
-    @Override
-    public E next() {
-        return !items.isEmpty() ? items.pop() : iterator.next();
     }
 
     /**

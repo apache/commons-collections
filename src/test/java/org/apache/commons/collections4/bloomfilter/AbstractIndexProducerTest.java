@@ -33,14 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractIndexProducerTest {
 
-    private static final IntPredicate TRUE_PREDICATE = i -> true;
-    private static final IntPredicate FALSE_PREDICATE = i -> false;
-
-    /** Flag to indicate the indices are ordered, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
-    protected static final int ORDERED = 0x1;
-    /** Flag to indicate the indices are distinct, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
-    protected static final int DISTINCT = 0x2;
-
     /**
      * An expandable list of int values.
      */
@@ -71,12 +63,14 @@ public abstract class AbstractIndexProducerTest {
             return Arrays.copyOf(data, size);
         }
     }
+    private static final IntPredicate TRUE_PREDICATE = i -> true;
 
-    /**
-     * Creates a producer with some data.
-     * @return a producer with some data
-     */
-    protected abstract IndexProducer createProducer();
+    private static final IntPredicate FALSE_PREDICATE = i -> false;
+    /** Flag to indicate the indices are ordered, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
+    protected static final int ORDERED = 0x1;
+
+    /** Flag to indicate the indices are distinct, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
+    protected static final int DISTINCT = 0x2;
 
     /**
      * Creates an producer without data.
@@ -85,12 +79,25 @@ public abstract class AbstractIndexProducerTest {
     protected abstract IndexProducer createEmptyProducer();
 
     /**
+     * Creates a producer with some data.
+     * @return a producer with some data
+     */
+    protected abstract IndexProducer createProducer();
+
+    /**
      * Gets the behavior of the {@link IndexProducer#asIndexArray()} method.
      * @return the behavior.
      * @see #ORDERED
      * @see #DISTINCT
      */
     protected abstract int getAsIndexArrayBehaviour();
+
+    /**
+     * Creates an array of expected indices.
+     * The expected indices are dependent upon the producer created in the {@code createProducer()} method.
+     * @return an array of expected indices.
+     */
+    protected abstract int[] getExpectedIndices();
 
     /**
      * Gets the behavior of the {@link IndexProducer#forEachIndex(IntPredicate)} method.
@@ -104,13 +111,6 @@ public abstract class AbstractIndexProducerTest {
     }
 
     /**
-     * Creates an array of expected indices.
-     * The expected indices are dependent upon the producer created in the {@code createProducer()} method.
-     * @return an array of expected indices.
-     */
-    protected abstract int[] getExpectedIndices();
-
-    /**
      * Test to ensure that all expected values are generated at least once.
      */
     @Test
@@ -120,59 +120,6 @@ public abstract class AbstractIndexProducerTest {
         for (final int i : getExpectedIndices()) {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
-    }
-
-    /**
-     * Test to ensure that for each index returns each expected index at least once.
-     */
-    @Test
-    public final void testForEachIndex() {
-        final BitSet bs1 = new BitSet();
-        final BitSet bs2 = new BitSet();
-        Arrays.stream(getExpectedIndices()).forEach(bs1::set);
-        createProducer().forEachIndex(i -> {
-            bs2.set(i);
-            return true;
-        });
-        assertEquals(bs1, bs2);
-    }
-
-    @Test
-    public final void testForEachIndexPredicates() {
-        final IndexProducer populated = createProducer();
-        final IndexProducer empty = createEmptyProducer();
-
-        assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
-        assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
-
-        assertTrue(populated.forEachIndex(TRUE_PREDICATE), "non-empty should be true");
-        assertTrue(empty.forEachIndex(TRUE_PREDICATE), "empty should be true");
-    }
-
-    @Test
-    public final void testEmptyProducer() {
-        final IndexProducer empty = createEmptyProducer();
-        final int[] ary = empty.asIndexArray();
-        assertEquals(0, ary.length);
-        assertTrue(empty.forEachIndex(i -> {
-            throw new AssertionError("forEach predictate should not be called");
-        }));
-    }
-
-    /**
-     * Test the distinct indices output from the producer are consistent.
-     */
-    @Test
-    public final void testConsistency() {
-        final IndexProducer producer = createProducer();
-        final BitSet bs1 = new BitSet();
-        final BitSet bs2 = new BitSet();
-        Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
-        producer.forEachIndex(i -> {
-            bs2.set(i);
-            return true;
-        });
-        assertEquals(bs1, bs2);
     }
 
     /**
@@ -230,6 +177,47 @@ public abstract class AbstractIndexProducerTest {
         }
     }
 
+    /**
+     * Test the distinct indices output from the producer are consistent.
+     */
+    @Test
+    public final void testConsistency() {
+        final IndexProducer producer = createProducer();
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
+        Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
+        producer.forEachIndex(i -> {
+            bs2.set(i);
+            return true;
+        });
+        assertEquals(bs1, bs2);
+    }
+
+    @Test
+    public final void testEmptyProducer() {
+        final IndexProducer empty = createEmptyProducer();
+        final int[] ary = empty.asIndexArray();
+        assertEquals(0, ary.length);
+        assertTrue(empty.forEachIndex(i -> {
+            throw new AssertionError("forEach predictate should not be called");
+        }));
+    }
+
+    /**
+     * Test to ensure that for each index returns each expected index at least once.
+     */
+    @Test
+    public final void testForEachIndex() {
+        final BitSet bs1 = new BitSet();
+        final BitSet bs2 = new BitSet();
+        Arrays.stream(getExpectedIndices()).forEach(bs1::set);
+        createProducer().forEachIndex(i -> {
+            bs2.set(i);
+            return true;
+        });
+        assertEquals(bs1, bs2);
+    }
+
     @Test
     public void testForEachIndexEarlyExit() {
         final int[] passes = new int[1];
@@ -245,6 +233,18 @@ public abstract class AbstractIndexProducerTest {
             return false;
         }));
         assertEquals(0, passes[0]);
+    }
+
+    @Test
+    public final void testForEachIndexPredicates() {
+        final IndexProducer populated = createProducer();
+        final IndexProducer empty = createEmptyProducer();
+
+        assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
+        assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
+
+        assertTrue(populated.forEachIndex(TRUE_PREDICATE), "non-empty should be true");
+        assertTrue(empty.forEachIndex(TRUE_PREDICATE), "empty should be true");
     }
 
     @Test

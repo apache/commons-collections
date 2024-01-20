@@ -34,6 +34,10 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
     public ObjectArrayListIteratorTest() {
     }
 
+    public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
+        return new ObjectArrayListIterator<>(array);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeEmptyIterator() {
@@ -44,10 +48,6 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeObject() {
         return new ObjectArrayListIterator<>((E[]) testArray);
-    }
-
-    public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
-        return new ObjectArrayListIterator<>(array);
     }
 
     /**

@@ -21,16 +21,16 @@ public class CellProducerFromArrayCountingBloomFilterTest extends AbstractCellPr
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected CellProducer createEmptyProducer() {
+        return new ArrayCountingBloomFilter(shape);
+    }
+
+    @Override
     protected CellProducer createProducer() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
         filter.merge(new IncrementingHasher(5, 1));
         return filter;
-    }
-
-    @Override
-    protected CellProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
     }
 
     @Override

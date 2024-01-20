@@ -38,26 +38,6 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 3514945074733160196L;
 
-    /** The transformers to call in turn */
-    private final Transformer<? super T, ? extends T>[] iTransformers;
-
-    /**
-     * Factory method that performs validation and copies the parameter array.
-     *
-     * @param <T>  the object type
-     * @param transformers  the transformers to chain, copied, no nulls
-     * @return the {@code chained} transformer
-     * @throws NullPointerException if the transformers array is null
-     * @throws NullPointerException if any transformer in the array is null
-     */
-    public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
-        FunctorUtils.validate(transformers);
-        if (transformers.length == 0) {
-            return NOPTransformer.<T>nopTransformer();
-        }
-        return new ChainedTransformer<>(transformers);
-    }
-
     /**
      * Create a new Transformer that calls each transformer in turn, passing the
      * result into the next transformer. The ordering is that of the iterator()
@@ -82,6 +62,26 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     }
 
     /**
+     * Factory method that performs validation and copies the parameter array.
+     *
+     * @param <T>  the object type
+     * @param transformers  the transformers to chain, copied, no nulls
+     * @return the {@code chained} transformer
+     * @throws NullPointerException if the transformers array is null
+     * @throws NullPointerException if any transformer in the array is null
+     */
+    public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
+        FunctorUtils.validate(transformers);
+        if (transformers.length == 0) {
+            return NOPTransformer.<T>nopTransformer();
+        }
+        return new ChainedTransformer<>(transformers);
+    }
+
+    /** The transformers to call in turn */
+    private final Transformer<? super T, ? extends T>[] iTransformers;
+
+    /**
      * Hidden constructor for the use by the static factory methods.
      *
      * @param clone  if {@code true} the input argument will be cloned
@@ -102,6 +102,16 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     }
 
     /**
+     * Gets the transformers.
+     *
+     * @return a copy of the transformers
+     * @since 3.1
+     */
+    public Transformer<? super T, ? extends T>[] getTransformers() {
+        return FunctorUtils.<T, T>copy(iTransformers);
+    }
+
+    /**
      * Transforms the input to result via each decorated transformer
      *
      * @param object  the input object passed to the first transformer
@@ -113,16 +123,6 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
             object = iTransformer.transform(object);
         }
         return object;
-    }
-
-    /**
-     * Gets the transformers.
-     *
-     * @return a copy of the transformers
-     * @since 3.1
-     */
-    public Transformer<? super T, ? extends T>[] getTransformers() {
-        return FunctorUtils.<T, T>copy(iTransformers);
     }
 
 }

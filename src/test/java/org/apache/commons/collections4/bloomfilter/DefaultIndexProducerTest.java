@@ -30,12 +30,45 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
 
+    /**
+     * Generates an array of integers.
+     * @param size the size of the array
+     * @param bound the upper bound (exclusive) of the values in the array.
+     * @return an array of int.
+     */
+    public static int[] generateIntArray(final int size, final int bound) {
+        return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
+    }
+
+    /**
+     * Creates a sorted unique array of ints.
+     * @param ary the array to sort and make unique
+     * @return the sorted unique array.
+     */
+    public static int[] unique(final int[] ary) {
+        return Arrays.stream(ary).distinct().sorted().toArray();
+    }
+
+    /**
+     * Creates a BitSet of indices.
+     * @param ary the array
+     * @return the set.
+     */
+    public static BitSet uniqueSet(final int[] ary) {
+        final BitSet bs = new BitSet();
+        Arrays.stream(ary).forEach(bs::set);
+        return bs;
+    }
+
     /** Make forEachIndex unordered and contain duplicates. */
     private final int[] values = {10, 1, 10, 1};
 
     @Override
-    protected int[] getExpectedIndices() {
-        return values;
+    protected IndexProducer createEmptyProducer() {
+        return predicate -> {
+            Objects.requireNonNull(predicate);
+            return true;
+        };
     }
 
     @Override
@@ -52,16 +85,13 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return predicate -> {
-            Objects.requireNonNull(predicate);
-            return true;
-        };
+    protected int getAsIndexArrayBehaviour() {
+        return 0;
     }
 
     @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
+    protected int[] getExpectedIndices() {
+        return values;
     }
 
     @Override
@@ -70,34 +100,21 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
         return 0;
     }
 
-    /**
-     * Generates an array of integers.
-     * @param size the size of the array
-     * @param bound the upper bound (exclusive) of the values in the array.
-     * @return an array of int.
-     */
-    public static int[] generateIntArray(final int size, final int bound) {
-        return ThreadLocalRandom.current().ints(size, 0, bound).toArray();
-    }
-
-    /**
-     * Creates a BitSet of indices.
-     * @param ary the array
-     * @return the set.
-     */
-    public static BitSet uniqueSet(final int[] ary) {
-        final BitSet bs = new BitSet();
-        Arrays.stream(ary).forEach(bs::set);
-        return bs;
-    }
-
-    /**
-     * Creates a sorted unique array of ints.
-     * @param ary the array to sort and make unique
-     * @return the sorted unique array.
-     */
-    public static int[] unique(final int[] ary) {
-        return Arrays.stream(ary).distinct().sorted().toArray();
+    @ParameterizedTest
+    @ValueSource(ints = {32, 33})
+    public void testEntries(final int size) {
+        final int[] values = IntStream.range(0, size).toArray();
+        final IndexProducer producer =  predicate -> {
+            Objects.requireNonNull(predicate);
+            for (final int i : values) {
+                if (!predicate.test(i)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        final int[] other = producer.asIndexArray();
+        assertArrayEquals(values, other);
     }
 
     @Test
@@ -120,22 +137,5 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
             final IndexProducer ip = IndexProducer.fromIndexArray(expected);
             assertArrayEquals(expected, ip.asIndexArray());
         }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {32, 33})
-    public void testEntries(final int size) {
-        final int[] values = IntStream.range(0, size).toArray();
-        final IndexProducer producer =  predicate -> {
-            Objects.requireNonNull(predicate);
-            for (final int i : values) {
-                if (!predicate.test(i)) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        final int[] other = producer.asIndexArray();
-        assertArrayEquals(values, other);
     }
 }

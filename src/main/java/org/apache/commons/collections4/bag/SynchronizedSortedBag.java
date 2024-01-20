@@ -57,21 +57,35 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
      * Constructor that wraps (not copies).
      *
      * @param bag  the bag to decorate, must not be null
-     * @throws NullPointerException if bag is null
+     * @param lock  the lock to use, must not be null
+     * @throws NullPointerException if bag or lock is null
      */
-    protected SynchronizedSortedBag(final SortedBag<E> bag) {
-        super(bag);
+    protected SynchronizedSortedBag(final Bag<E> bag, final Object lock) {
+        super(bag, lock);
     }
 
     /**
      * Constructor that wraps (not copies).
      *
      * @param bag  the bag to decorate, must not be null
-     * @param lock  the lock to use, must not be null
-     * @throws NullPointerException if bag or lock is null
+     * @throws NullPointerException if bag is null
      */
-    protected SynchronizedSortedBag(final Bag<E> bag, final Object lock) {
-        super(bag, lock);
+    protected SynchronizedSortedBag(final SortedBag<E> bag) {
+        super(bag);
+    }
+
+    @Override
+    public synchronized Comparator<? super E> comparator() {
+        synchronized (lock) {
+            return getSortedBag().comparator();
+        }
+    }
+
+    @Override
+    public synchronized E first() {
+        synchronized (lock) {
+            return getSortedBag().first();
+        }
     }
 
     /**
@@ -84,23 +98,9 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     }
 
     @Override
-    public synchronized E first() {
-        synchronized (lock) {
-            return getSortedBag().first();
-        }
-    }
-
-    @Override
     public synchronized E last() {
         synchronized (lock) {
             return getSortedBag().last();
-        }
-    }
-
-    @Override
-    public synchronized Comparator<? super E> comparator() {
-        synchronized (lock) {
-            return getSortedBag().comparator();
         }
     }
 

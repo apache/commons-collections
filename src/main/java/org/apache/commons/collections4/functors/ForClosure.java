@@ -31,11 +31,6 @@ import org.apache.commons.collections4.Closure;
  */
 public class ForClosure<E> implements Closure<E> {
 
-    /** The number of times to loop */
-    private final int iCount;
-    /** The closure to call */
-    private final Closure<? super E> iClosure;
-
     /**
      * Factory method that performs validation.
      * <p>
@@ -57,6 +52,11 @@ public class ForClosure<E> implements Closure<E> {
         }
         return new ForClosure<>(count, closure);
     }
+    /** The number of times to loop */
+    private final int iCount;
+
+    /** The closure to call */
+    private final Closure<? super E> iClosure;
 
     /**
      * Constructor that performs no validation.

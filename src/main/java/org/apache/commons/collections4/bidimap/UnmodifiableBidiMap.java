@@ -39,9 +39,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
 public final class UnmodifiableBidiMap<K, V>
         extends AbstractBidiMapDecorator<K, V> implements Unmodifiable {
 
-    /** The inverse unmodifiable map */
-    private UnmodifiableBidiMap<V, K> inverse;
-
     /**
      * Factory method to create an unmodifiable map.
      * <p>
@@ -63,6 +60,9 @@ public final class UnmodifiableBidiMap<K, V>
         return new UnmodifiableBidiMap<>(map);
     }
 
+    /** The inverse unmodifiable map */
+    private UnmodifiableBidiMap<V, K> inverse;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -77,6 +77,33 @@ public final class UnmodifiableBidiMap<K, V>
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        final Set<Map.Entry<K, V>> set = super.entrySet();
+        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
+    }
+
+    @Override
+    public synchronized BidiMap<V, K> inverseBidiMap() {
+        if (inverse == null) {
+            inverse = new UnmodifiableBidiMap<>(decorated().inverseBidiMap());
+            inverse.inverse = this;
+        }
+        return inverse;
+    }
+
+    @Override
+    public Set<K> keySet() {
+        final Set<K> set = super.keySet();
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public MapIterator<K, V> mapIterator() {
+        final MapIterator<K, V> it = decorated().mapIterator();
+        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
     @Override
@@ -95,41 +122,14 @@ public final class UnmodifiableBidiMap<K, V>
     }
 
     @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        final Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
-    }
-
-    @Override
-    public Set<K> keySet() {
-        final Set<K> set = super.keySet();
-        return UnmodifiableSet.unmodifiableSet(set);
+    public K removeValue(final Object value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Set<V> values() {
         final Set<V> set = super.values();
         return UnmodifiableSet.unmodifiableSet(set);
-    }
-
-    @Override
-    public K removeValue(final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public MapIterator<K, V> mapIterator() {
-        final MapIterator<K, V> it = decorated().mapIterator();
-        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
-    }
-
-    @Override
-    public synchronized BidiMap<V, K> inverseBidiMap() {
-        if (inverse == null) {
-            inverse = new UnmodifiableBidiMap<>(decorated().inverseBidiMap());
-            inverse.inverse = this;
-        }
-        return inverse;
     }
 
 }

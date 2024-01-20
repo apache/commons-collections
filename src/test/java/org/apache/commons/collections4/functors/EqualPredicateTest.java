@@ -24,7 +24,20 @@ import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
 public class EqualPredicateTest extends AbstractPredicateTest {
+    public static class EqualsTestObject {
+        private final boolean b;
+
+        public EqualsTestObject(final boolean b) {
+            this.b = b;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            return b;
+        }
+    }
     private static final EqualsTestObject FALSE_OBJECT = new EqualsTestObject(false);
+
     private static final EqualsTestObject TRUE_OBJECT = new EqualsTestObject(true);
 
     @Override
@@ -49,18 +62,5 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         final Predicate<Number> predicate = equalPredicate((Number) 4);
         assertPredicateTrue(predicate, 4);
-    }
-
-    public static class EqualsTestObject {
-        private final boolean b;
-
-        public EqualsTestObject(final boolean b) {
-            this.b = b;
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            return b;
-        }
     }
 }

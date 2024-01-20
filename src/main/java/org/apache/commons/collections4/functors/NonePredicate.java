@@ -39,25 +39,6 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
     /**
      * Factory to create the predicate.
      * <p>
-     * If the array is size zero, the predicate always returns true.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code any} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
-        FunctorUtils.validate(predicates);
-        if (predicates.length == 0) {
-            return TruePredicate.<T>truePredicate();
-        }
-        return new NonePredicate<>(FunctorUtils.copy(predicates));
-    }
-
-    /**
-     * Factory to create the predicate.
-     * <p>
      * If the collection is size zero, the predicate always returns true.
      *
      * @param <T> the type that the predicate queries
@@ -72,6 +53,25 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
             return TruePredicate.<T>truePredicate();
         }
         return new NonePredicate<>(preds);
+    }
+
+    /**
+     * Factory to create the predicate.
+     * <p>
+     * If the array is size zero, the predicate always returns true.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code any} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
+        FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return TruePredicate.<T>truePredicate();
+        }
+        return new NonePredicate<>(FunctorUtils.copy(predicates));
     }
 
     /**

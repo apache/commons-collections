@@ -85,21 +85,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Constructor that creates a queue with the specified size.
-     *
-     * @param size  the size of the queue (cannot be changed)
-     * @throws IllegalArgumentException  if the size is &lt; 1
-     */
-    @SuppressWarnings("unchecked")
-    public CircularFifoQueue(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("The size must be greater than 0");
-        }
-        elements = (E[]) new Object[size];
-        maxElements = elements.length;
-    }
-
-    /**
      * Constructor that creates a queue from the specified collection.
      * The collection size also sets the queue size.
      *
@@ -112,116 +97,18 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Write the queue out using a custom routine.
+     * Constructor that creates a queue with the specified size.
      *
-     * @param out  the output stream
-     * @throws IOException if an I/O error occurs while writing to the output stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeInt(size());
-        for (final E e : this) {
-            out.writeObject(e);
-        }
-    }
-
-    /**
-     * Read the queue in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an I/O error occurs while writing to the output stream
-     * @throws ClassNotFoundException if the class of a serialized object can not be found
+     * @param size  the size of the queue (cannot be changed)
+     * @throws IllegalArgumentException  if the size is &lt; 1
      */
     @SuppressWarnings("unchecked")
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        elements = (E[]) new Object[maxElements];
-        final int size = in.readInt();
-        for (int i = 0; i < size; i++) {
-            elements[i] = (E) in.readObject();
+    public CircularFifoQueue(final int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("The size must be greater than 0");
         }
-        start = 0;
-        full = size == maxElements;
-        if (full) {
-            end = 0;
-        } else {
-            end = size;
-        }
-    }
-
-    /**
-     * Returns the number of elements stored in the queue.
-     *
-     * @return this queue's size
-     */
-    @Override
-    public int size() {
-        int size = 0;
-
-        if (end < start) {
-            size = maxElements - start + end;
-        } else if (end == start) {
-            size = full ? maxElements : 0;
-        } else {
-            size = end - start;
-        }
-
-        return size;
-    }
-
-    /**
-     * Returns true if this queue is empty; false otherwise.
-     *
-     * @return true if this queue is empty
-     */
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * A {@code CircularFifoQueue} can never be full, thus this returns always
-     * {@code false}.
-     *
-     * @return always returns {@code false}
-     */
-    @Override
-    public boolean isFull() {
-        return false;
-    }
-
-    /**
-     * Returns {@code true} if the capacity limit of this queue has been reached,
-     * i.e. the number of elements stored in the queue equals its maximum size.
-     *
-     * @return {@code true} if the capacity limit has been reached, {@code false} otherwise
-     * @since 4.1
-     */
-    public boolean isAtFullCapacity() {
-        return size() == maxElements;
-    }
-
-    /**
-     * Gets the maximum size of the collection (the bound).
-     *
-     * @return the maximum number of elements the collection can hold
-     */
-    @Override
-    public int maxSize() {
-        return maxElements;
-    }
-
-    /**
-     * Clears this queue.
-     */
-    @Override
-    public void clear() {
-        full = false;
-        start = 0;
-        end = 0;
-        Arrays.fill(elements, null);
+        elements = (E[]) new Object[size];
+        maxElements = elements.length;
     }
 
     /**
@@ -254,6 +141,39 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
+     * Clears this queue.
+     */
+    @Override
+    public void clear() {
+        full = false;
+        start = 0;
+        end = 0;
+        Arrays.fill(elements, null);
+    }
+
+    /**
+     * Decrements the internal index.
+     *
+     * @param index  the index to decrement
+     * @return the updated index
+     */
+    private int decrement(int index) {
+        index--;
+        if (index < 0) {
+            index = maxElements - 1;
+        }
+        return index;
+    }
+
+    @Override
+    public E element() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("queue is empty");
+        }
+        return peek();
+    }
+
+    /**
      * Returns the element at the specified position in this queue.
      *
      * @param index the position of the element in the queue
@@ -273,61 +193,6 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Adds the given element to this queue. If the queue is full, the least recently added
-     * element is discarded so that a new element can be inserted.
-     *
-     * @param element  the element to add
-     * @return true, always
-     * @throws NullPointerException  if the given element is null
-     */
-    @Override
-    public boolean offer(final E element) {
-        return add(element);
-    }
-
-    @Override
-    public E poll() {
-        if (isEmpty()) {
-            return null;
-        }
-        return remove();
-    }
-
-    @Override
-    public E element() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("queue is empty");
-        }
-        return peek();
-    }
-
-    @Override
-    public E peek() {
-        if (isEmpty()) {
-            return null;
-        }
-        return elements[start];
-    }
-
-    @Override
-    public E remove() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("queue is empty");
-        }
-
-        final E element = elements[start];
-        if (null != element) {
-            elements[start++] = null;
-
-            if (start >= maxElements) {
-                start = 0;
-            }
-            full = false;
-        }
-        return element;
-    }
-
-    /**
      * Increments the internal index.
      *
      * @param index  the index to increment
@@ -342,17 +207,37 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Decrements the internal index.
+     * Returns {@code true} if the capacity limit of this queue has been reached,
+     * i.e. the number of elements stored in the queue equals its maximum size.
      *
-     * @param index  the index to decrement
-     * @return the updated index
+     * @return {@code true} if the capacity limit has been reached, {@code false} otherwise
+     * @since 4.1
      */
-    private int decrement(int index) {
-        index--;
-        if (index < 0) {
-            index = maxElements - 1;
-        }
-        return index;
+    public boolean isAtFullCapacity() {
+        return size() == maxElements;
+    }
+
+    /**
+     * Returns true if this queue is empty; false otherwise.
+     *
+     * @return true if this queue is empty
+     */
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A {@code CircularFifoQueue} can never be full, thus this returns always
+     * {@code false}.
+     *
+     * @return always returns {@code false}
+     */
+    @Override
+    public boolean isFull() {
+        return false;
     }
 
     /**
@@ -422,6 +307,121 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
             }
 
         };
+    }
+
+    /**
+     * Gets the maximum size of the collection (the bound).
+     *
+     * @return the maximum number of elements the collection can hold
+     */
+    @Override
+    public int maxSize() {
+        return maxElements;
+    }
+
+    /**
+     * Adds the given element to this queue. If the queue is full, the least recently added
+     * element is discarded so that a new element can be inserted.
+     *
+     * @param element  the element to add
+     * @return true, always
+     * @throws NullPointerException  if the given element is null
+     */
+    @Override
+    public boolean offer(final E element) {
+        return add(element);
+    }
+
+    @Override
+    public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
+        return elements[start];
+    }
+
+    @Override
+    public E poll() {
+        if (isEmpty()) {
+            return null;
+        }
+        return remove();
+    }
+
+    /**
+     * Read the queue in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an I/O error occurs while writing to the output stream
+     * @throws ClassNotFoundException if the class of a serialized object can not be found
+     */
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        elements = (E[]) new Object[maxElements];
+        final int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            elements[i] = (E) in.readObject();
+        }
+        start = 0;
+        full = size == maxElements;
+        if (full) {
+            end = 0;
+        } else {
+            end = size;
+        }
+    }
+
+    @Override
+    public E remove() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("queue is empty");
+        }
+
+        final E element = elements[start];
+        if (null != element) {
+            elements[start++] = null;
+
+            if (start >= maxElements) {
+                start = 0;
+            }
+            full = false;
+        }
+        return element;
+    }
+
+    /**
+     * Returns the number of elements stored in the queue.
+     *
+     * @return this queue's size
+     */
+    @Override
+    public int size() {
+        int size = 0;
+
+        if (end < start) {
+            size = maxElements - start + end;
+        } else if (end == start) {
+            size = full ? maxElements : 0;
+        } else {
+            size = end - start;
+        }
+
+        return size;
+    }
+
+    /**
+     * Write the queue out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an I/O error occurs while writing to the output stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(size());
+        for (final E e : this) {
+            out.writeObject(e);
+        }
     }
 
 }

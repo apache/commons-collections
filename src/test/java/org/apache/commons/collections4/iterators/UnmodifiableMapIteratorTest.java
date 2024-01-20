@@ -40,13 +40,13 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Override
-    public MapIterator<K, V> makeEmptyIterator() {
-        return UnmodifiableMapIterator.unmodifiableMapIterator(new DualHashBidiMap<K, V>().mapIterator());
-    }
-
-    @Override
-    public MapIterator<K, V> makeObject() {
-        return UnmodifiableMapIterator.unmodifiableMapIterator(getMap().mapIterator());
+    @SuppressWarnings("unchecked")
+    public Map<K, V> getConfirmedMap() {
+        final Map<K, V> testMap = new HashMap<>();
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
+        return testMap;
     }
 
     @Override
@@ -60,13 +60,13 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Map<K, V> getConfirmedMap() {
-        final Map<K, V> testMap = new HashMap<>();
-        testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V) "b");
-        testMap.put((K) "C", (V) "c");
-        return testMap;
+    public MapIterator<K, V> makeEmptyIterator() {
+        return UnmodifiableMapIterator.unmodifiableMapIterator(new DualHashBidiMap<K, V>().mapIterator());
+    }
+
+    @Override
+    public MapIterator<K, V> makeObject() {
+        return UnmodifiableMapIterator.unmodifiableMapIterator(getMap().mapIterator());
     }
 
     @Override
@@ -80,11 +80,6 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Test
-    public void testMapIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
-    }
-
-    @Test
     public void testDecorateFactory() {
         MapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
@@ -93,6 +88,11 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         assertNotSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableMapIterator.unmodifiableMapIterator(null));
+    }
+
+    @Test
+    public void testMapIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

@@ -39,11 +39,6 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     @SuppressWarnings("rawtypes")
     private static final Transformer NO_ARG_INSTANCE = new InstantiateTransformer<>();
 
-    /** The constructor parameter types */
-    private final Class<?>[] iParamTypes;
-    /** The constructor arguments */
-    private final Object[] iArgs;
-
     /**
      * Gets a typed no-arg instance.
      *
@@ -53,7 +48,6 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {
         return NO_ARG_INSTANCE;
     }
-
     /**
      * Transformer method that performs validation.
      *
@@ -76,6 +70,12 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
         }
         return new InstantiateTransformer<>(paramTypes, args);
     }
+
+    /** The constructor parameter types */
+    private final Class<?>[] iParamTypes;
+
+    /** The constructor arguments */
+    private final Object[] iArgs;
 
     /**
      * Constructor for no arg instance.

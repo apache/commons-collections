@@ -61,14 +61,6 @@ public interface Get<K, V> {
     V get(Object key);
 
     /**
-     * @param key key whose mapping is to be removed from the map
-     * @return the previous value associated with {@code key}, or
-     *         {@code null} if there was no mapping for {@code key}.
-     * @see java.util.Map#remove(Object)
-     */
-    V remove(Object key);
-
-    /**
      * @return {@code true} if this map contains no key-value mappings
      * @see java.util.Map#isEmpty()
      */
@@ -79,6 +71,14 @@ public interface Get<K, V> {
      * @see java.util.Map#keySet()
      */
     Set<K> keySet();
+
+    /**
+     * @param key key whose mapping is to be removed from the map
+     * @return the previous value associated with {@code key}, or
+     *         {@code null} if there was no mapping for {@code key}.
+     * @see java.util.Map#remove(Object)
+     */
+    V remove(Object key);
 
     /**
      * @return the number of key-value mappings in this map

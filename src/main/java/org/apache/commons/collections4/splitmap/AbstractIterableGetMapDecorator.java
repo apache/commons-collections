@@ -39,27 +39,18 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     transient Map<K, V> map;
 
     /**
-     * Create a new AbstractSplitMapDecorator.
-     * @param map the map to decorate, must not be null
-     * @throws NullPointerException if map is null
-     */
-    public AbstractIterableGetMapDecorator(final Map<K, V> map) {
-        this.map = Objects.requireNonNull(map, "map");
-    }
-
-    /**
      * Constructor only used in deserialization, do not use otherwise.
      */
     protected AbstractIterableGetMapDecorator() {
     }
 
     /**
-     * Gets the map being decorated.
-     *
-     * @return the decorated map
+     * Create a new AbstractSplitMapDecorator.
+     * @param map the map to decorate, must not be null
+     * @throws NullPointerException if map is null
      */
-    protected Map<K, V> decorated() {
-        return map;
+    public AbstractIterableGetMapDecorator(final Map<K, V> map) {
+        this.map = Objects.requireNonNull(map, "map");
     }
 
     @Override
@@ -72,9 +63,26 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
         return decorated().containsValue(value);
     }
 
+    /**
+     * Gets the map being decorated.
+     *
+     * @return the decorated map
+     */
+    protected Map<K, V> decorated() {
+        return map;
+    }
+
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return decorated().entrySet();
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (object == this) {
+            return true;
+        }
+        return decorated().equals(object);
     }
 
     @Override
@@ -83,8 +91,8 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     }
 
     @Override
-    public V remove(final Object key) {
-        return decorated().remove(key);
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override
@@ -97,16 +105,6 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
         return decorated().keySet();
     }
 
-    @Override
-    public int size() {
-        return decorated().size();
-    }
-
-    @Override
-    public Collection<V> values() {
-        return decorated().values();
-    }
-
     /**
      * Gets a MapIterator over this Get.
      * @return MapIterator&lt;K, V&gt;
@@ -117,21 +115,23 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     }
 
     @Override
-    public boolean equals(final Object object) {
-        if (object == this) {
-            return true;
-        }
-        return decorated().equals(object);
+    public V remove(final Object key) {
+        return decorated().remove(key);
     }
 
     @Override
-    public int hashCode() {
-        return decorated().hashCode();
+    public int size() {
+        return decorated().size();
     }
 
     @Override
     public String toString() {
         return decorated().toString();
+    }
+
+    @Override
+    public Collection<V> values() {
+        return decorated().values();
     }
 
 }

@@ -131,23 +131,27 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Gets the value mapped to the specified multi-key.
+     * Check to ensure that input keys are valid MultiKey objects.
      *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @return the mapped value, null if no match
+     * @param key  the key to check
      */
-    public V get(final Object key1, final Object key2) {
-        final int hashCode = hash(key1, key2);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
-                return entry.getValue();
-            }
-            entry = entry.next;
+    protected void checkKey(final MultiKey<?> key) {
+        Objects.requireNonNull(key, "key");
+    }
+
+    /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public MultiKeyMap<K, V> clone() {
+        try {
+            return (MultiKeyMap<K, V>) super.clone();
+        } catch (final CloneNotSupportedException e) {
+            throw new UnsupportedOperationException(e);
         }
-        return null;
     }
 
     /**
@@ -171,49 +175,161 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Stores the value against the specified multi-key.
+     * Checks whether the map contains the specified multi-key.
      *
      * @param key1  the first key
      * @param key2  the second key
-     * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
+     * @param key3  the third key
+     * @return true if the map contains the key
      */
-    public V put(final K key1, final K key2, final V value) {
-        final int hashCode = hash(key1, key2);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+    public boolean containsKey(final Object key1, final Object key2, final Object key3) {
+        final int hashCode = hash(key1, key2, key3);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
         while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
-                final V oldValue = entry.getValue();
-                decorated().updateEntry(entry, value);
-                return oldValue;
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
+                return true;
             }
             entry = entry.next;
         }
-        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2), value);
+        return false;
+    }
+
+    /**
+     * Checks whether the map contains the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @return true if the map contains the key
+     */
+    public boolean containsKey(final Object key1, final Object key2, final Object key3, final Object key4) {
+        final int hashCode = hash(key1, key2, key3, key4);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
+                return true;
+            }
+            entry = entry.next;
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the map contains the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @param key5  the fifth key
+     * @return true if the map contains the key
+     */
+    public boolean containsKey(final Object key1, final Object key2, final Object key3,
+                               final Object key4, final Object key5) {
+        final int hashCode = hash(key1, key2, key3, key4, key5);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
+                return true;
+            }
+            entry = entry.next;
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected AbstractHashedMap<MultiKey<? extends K>, V> decorated() {
+        return (AbstractHashedMap<MultiKey<? extends K>, V>) super.decorated();
+    }
+
+    /**
+     * Gets the value mapped to the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @return the mapped value, null if no match
+     */
+    public V get(final Object key1, final Object key2) {
+        final int hashCode = hash(key1, key2);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
+                return entry.getValue();
+            }
+            entry = entry.next;
+        }
         return null;
     }
 
     /**
-     * Removes the specified multi-key from this map.
+     * Gets the value mapped to the specified multi-key.
      *
      * @param key1  the first key
      * @param key2  the second key
-     * @return the value mapped to the removed key, null if key not in map
-     * @since 4.0 (previous name: remove(Object, Object))
+     * @param key3  the third key
+     * @return the mapped value, null if no match
      */
-    public V removeMultiKey(final Object key1, final Object key2) {
-        final int hashCode = hash(key1, key2);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
+    public V get(final Object key1, final Object key2, final Object key3) {
+        final int hashCode = hash(key1, key2, key3);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
         while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
-                final V oldValue = entry.getValue();
-                decorated().removeMapping(entry, index, previous);
-                return oldValue;
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
+                return entry.getValue();
             }
-            previous = entry;
+            entry = entry.next;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the value mapped to the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @return the mapped value, null if no match
+     */
+    public V get(final Object key1, final Object key2, final Object key3, final Object key4) {
+        final int hashCode = hash(key1, key2, key3, key4);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
+                return entry.getValue();
+            }
+            entry = entry.next;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the value mapped to the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @param key5  the fifth key
+     * @return the mapped value, null if no match
+     */
+    public V get(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
+        final int hashCode = hash(key1, key2, key3, key4, key5);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
+                return entry.getValue();
+            }
             entry = entry.next;
         }
         return null;
@@ -242,116 +358,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Is the key equal to the combined key.
-     *
-     * @param entry  the entry to compare to
-     * @param key1  the first key
-     * @param key2  the second key
-     * @return true if the key matches
-     */
-    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
-            final Object key1, final Object key2) {
-        final MultiKey<? extends K> multi = entry.getKey();
-        return
-            multi.size() == 2 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1)));
-    }
-
-    /**
-     * Gets the value mapped to the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @return the mapped value, null if no match
-     */
-    public V get(final Object key1, final Object key2, final Object key3) {
-        final int hashCode = hash(key1, key2, key3);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
-                return entry.getValue();
-            }
-            entry = entry.next;
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether the map contains the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @return true if the map contains the key
-     */
-    public boolean containsKey(final Object key1, final Object key2, final Object key3) {
-        final int hashCode = hash(key1, key2, key3);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
-                return true;
-            }
-            entry = entry.next;
-        }
-        return false;
-    }
-
-    /**
-     * Stores the value against the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
-     */
-    public V put(final K key1, final K key2, final K key3, final V value) {
-        final int hashCode = hash(key1, key2, key3);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
-                final V oldValue = entry.getValue();
-                decorated().updateEntry(entry, value);
-                return oldValue;
-            }
-            entry = entry.next;
-        }
-        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3), value);
-        return null;
-    }
-
-    /**
-     * Removes the specified multi-key from this map.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @return the value mapped to the removed key, null if key not in map
-     * @since 4.0 (previous name: remove(Object, Object, Object))
-     */
-    public V removeMultiKey(final Object key1, final Object key2, final Object key3) {
-        final int hashCode = hash(key1, key2, key3);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
-                final V oldValue = entry.getValue();
-                decorated().removeMapping(entry, index, previous);
-                return oldValue;
-            }
-            previous = entry;
-            entry = entry.next;
-        }
-        return null;
-    }
-
-    /**
      * Gets the hash code for the specified multi-key.
      *
      * @param key1  the first key
@@ -375,122 +381,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         h +=  h << 4;
         h ^=  h >>> 10;
         return h;
-    }
-
-    /**
-     * Is the key equal to the combined key.
-     *
-     * @param entry  the entry to compare to
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @return true if the key matches
-     */
-    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
-                                 final Object key1, final Object key2, final Object key3) {
-        final MultiKey<? extends K> multi = entry.getKey();
-        return
-            multi.size() == 3 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
-            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2)));
-    }
-
-    /**
-     * Gets the value mapped to the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @return the mapped value, null if no match
-     */
-    public V get(final Object key1, final Object key2, final Object key3, final Object key4) {
-        final int hashCode = hash(key1, key2, key3, key4);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
-                return entry.getValue();
-            }
-            entry = entry.next;
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether the map contains the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @return true if the map contains the key
-     */
-    public boolean containsKey(final Object key1, final Object key2, final Object key3, final Object key4) {
-        final int hashCode = hash(key1, key2, key3, key4);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
-                return true;
-            }
-            entry = entry.next;
-        }
-        return false;
-    }
-
-    /**
-     * Stores the value against the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
-     */
-    public V put(final K key1, final K key2, final K key3, final K key4, final V value) {
-        final int hashCode = hash(key1, key2, key3, key4);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
-                final V oldValue = entry.getValue();
-                decorated().updateEntry(entry, value);
-                return oldValue;
-            }
-            entry = entry.next;
-        }
-        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4), value);
-        return null;
-    }
-
-    /**
-     * Removes the specified multi-key from this map.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @return the value mapped to the removed key, null if key not in map
-     * @since 4.0 (previous name: remove(Object, Object, Object, Object))
-     */
-    public V removeMultiKey(final Object key1, final Object key2, final Object key3, final Object key4) {
-        final int hashCode = hash(key1, key2, key3, key4);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
-                final V oldValue = entry.getValue();
-                decorated().removeMapping(entry, index, previous);
-                return oldValue;
-            }
-            previous = entry;
-            entry = entry.next;
-        }
-        return null;
     }
 
     /**
@@ -521,130 +411,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         h +=  h << 4;
         h ^=  h >>> 10;
         return h;
-    }
-
-    /**
-     * Is the key equal to the combined key.
-     *
-     * @param entry  the entry to compare to
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @return true if the key matches
-     */
-    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
-                                 final Object key1, final Object key2, final Object key3, final Object key4) {
-        final MultiKey<? extends K> multi = entry.getKey();
-        return
-            multi.size() == 4 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
-            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2))) &&
-            (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3)));
-    }
-
-    /**
-     * Gets the value mapped to the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param key5  the fifth key
-     * @return the mapped value, null if no match
-     */
-    public V get(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
-        final int hashCode = hash(key1, key2, key3, key4, key5);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
-                return entry.getValue();
-            }
-            entry = entry.next;
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether the map contains the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param key5  the fifth key
-     * @return true if the map contains the key
-     */
-    public boolean containsKey(final Object key1, final Object key2, final Object key3,
-                               final Object key4, final Object key5) {
-        final int hashCode = hash(key1, key2, key3, key4, key5);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
-                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
-                return true;
-            }
-            entry = entry.next;
-        }
-        return false;
-    }
-
-    /**
-     * Stores the value against the specified multi-key.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param key5  the fifth key
-     * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
-     */
-    public V put(final K key1, final K key2, final K key3, final K key4, final K key5, final V value) {
-        final int hashCode = hash(key1, key2, key3, key4, key5);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
-                final V oldValue = entry.getValue();
-                decorated().updateEntry(entry, value);
-                return oldValue;
-            }
-            entry = entry.next;
-        }
-        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4, key5), value);
-        return null;
-    }
-
-    /**
-     * Removes the specified multi-key from this map.
-     *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param key5  the fifth key
-     * @return the value mapped to the removed key, null if key not in map
-     * @since 4.0 (previous name: remove(Object, Object, Object, Object, Object))
-     */
-    public V removeMultiKey(final Object key1, final Object key2, final Object key3,
-                            final Object key4, final Object key5) {
-        final int hashCode = hash(key1, key2, key3, key4, key5);
-        final int index = decorated().hashIndex(hashCode, decorated().data.length);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
-                final V oldValue = entry.getValue();
-                decorated().removeMapping(entry, index, previous);
-                return oldValue;
-            }
-            previous = entry;
-            entry = entry.next;
-        }
-        return null;
     }
 
     /**
@@ -687,6 +453,63 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param entry  the entry to compare to
      * @param key1  the first key
      * @param key2  the second key
+     * @return true if the key matches
+     */
+    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
+            final Object key1, final Object key2) {
+        final MultiKey<? extends K> multi = entry.getKey();
+        return
+            multi.size() == 2 &&
+            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
+            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1)));
+    }
+
+    /**
+     * Is the key equal to the combined key.
+     *
+     * @param entry  the entry to compare to
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @return true if the key matches
+     */
+    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
+                                 final Object key1, final Object key2, final Object key3) {
+        final MultiKey<? extends K> multi = entry.getKey();
+        return
+            multi.size() == 3 &&
+            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
+            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
+            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2)));
+    }
+
+    /**
+     * Is the key equal to the combined key.
+     *
+     * @param entry  the entry to compare to
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @return true if the key matches
+     */
+    protected boolean isEqualKey(final AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry,
+                                 final Object key1, final Object key2, final Object key3, final Object key4) {
+        final MultiKey<? extends K> multi = entry.getKey();
+        return
+            multi.size() == 4 &&
+            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
+            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
+            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2))) &&
+            (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3)));
+    }
+
+    /**
+     * Is the key equal to the combined key.
+     *
+     * @param entry  the entry to compare to
+     * @param key1  the first key
+     * @param key2  the second key
      * @param key3  the third key
      * @param key4  the fourth key
      * @param key5  the fifth key
@@ -702,6 +525,158 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2))) &&
             (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3))) &&
             (key5 == multi.getKey(4) || key5 != null && key5.equals(multi.getKey(4)));
+    }
+
+    @Override
+    public MapIterator<MultiKey<? extends K>, V> mapIterator() {
+        return decorated().mapIterator();
+    }
+
+    /**
+     * Stores the value against the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @param key5  the fifth key
+     * @param value  the value to store
+     * @return the value previously mapped to this combined key, null if none
+     */
+    public V put(final K key1, final K key2, final K key3, final K key4, final K key5, final V value) {
+        final int hashCode = hash(key1, key2, key3, key4, key5);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
+                final V oldValue = entry.getValue();
+                decorated().updateEntry(entry, value);
+                return oldValue;
+            }
+            entry = entry.next;
+        }
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4, key5), value);
+        return null;
+    }
+
+    /**
+     * Stores the value against the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @param value  the value to store
+     * @return the value previously mapped to this combined key, null if none
+     */
+    public V put(final K key1, final K key2, final K key3, final K key4, final V value) {
+        final int hashCode = hash(key1, key2, key3, key4);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
+                final V oldValue = entry.getValue();
+                decorated().updateEntry(entry, value);
+                return oldValue;
+            }
+            entry = entry.next;
+        }
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4), value);
+        return null;
+    }
+
+    /**
+     * Stores the value against the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param value  the value to store
+     * @return the value previously mapped to this combined key, null if none
+     */
+    public V put(final K key1, final K key2, final K key3, final V value) {
+        final int hashCode = hash(key1, key2, key3);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
+                final V oldValue = entry.getValue();
+                decorated().updateEntry(entry, value);
+                return oldValue;
+            }
+            entry = entry.next;
+        }
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3), value);
+        return null;
+    }
+
+    /**
+     * Stores the value against the specified multi-key.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param value  the value to store
+     * @return the value previously mapped to this combined key, null if none
+     */
+    public V put(final K key1, final K key2, final V value) {
+        final int hashCode = hash(key1, key2);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
+                final V oldValue = entry.getValue();
+                decorated().updateEntry(entry, value);
+                return oldValue;
+            }
+            entry = entry.next;
+        }
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2), value);
+        return null;
+    }
+
+    /**
+     * Puts the key and value into the map, where the key must be a non-null
+     * MultiKey object.
+     *
+     * @param key  the non-null MultiKey object
+     * @param value  the value to store
+     * @return the previous value for the key
+     * @throws NullPointerException if the key is null
+     * @throws ClassCastException if the key is not a MultiKey
+     */
+    @Override
+    public V put(final MultiKey<? extends K> key, final V value) {
+        checkKey(key);
+        return super.put(key, value);
+    }
+
+    /**
+     * Copies all of the keys and values from the specified map to this map.
+     * Each key must be non-null and a MultiKey object.
+     *
+     * @param mapToCopy  to this map
+     * @throws NullPointerException if the mapToCopy or any key within is null
+     * @throws ClassCastException if any key in mapToCopy is not a MultiKey
+     */
+    @Override
+    public void putAll(final Map<? extends MultiKey<? extends K>, ? extends V> mapToCopy) {
+        for (final MultiKey<? extends K> key : mapToCopy.keySet()) {
+            checkKey(key);
+        }
+        super.putAll(mapToCopy);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<MultiKey<? extends K>, V>) in.readObject();
     }
 
     /**
@@ -809,72 +784,110 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Check to ensure that input keys are valid MultiKey objects.
+     * Removes the specified multi-key from this map.
      *
-     * @param key  the key to check
+     * @param key1  the first key
+     * @param key2  the second key
+     * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object))
      */
-    protected void checkKey(final MultiKey<?> key) {
-        Objects.requireNonNull(key, "key");
-    }
-
-    /**
-     * Clones the map without cloning the keys or values.
-     *
-     * @return a shallow clone
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public MultiKeyMap<K, V> clone() {
-        try {
-            return (MultiKeyMap<K, V>) super.clone();
-        } catch (final CloneNotSupportedException e) {
-            throw new UnsupportedOperationException(e);
+    public V removeMultiKey(final Object key1, final Object key2) {
+        final int hashCode = hash(key1, key2);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
+                final V oldValue = entry.getValue();
+                decorated().removeMapping(entry, index, previous);
+                return oldValue;
+            }
+            previous = entry;
+            entry = entry.next;
         }
+        return null;
     }
 
     /**
-     * Puts the key and value into the map, where the key must be a non-null
-     * MultiKey object.
+     * Removes the specified multi-key from this map.
      *
-     * @param key  the non-null MultiKey object
-     * @param value  the value to store
-     * @return the previous value for the key
-     * @throws NullPointerException if the key is null
-     * @throws ClassCastException if the key is not a MultiKey
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object))
      */
-    @Override
-    public V put(final MultiKey<? extends K> key, final V value) {
-        checkKey(key);
-        return super.put(key, value);
-    }
-
-    /**
-     * Copies all of the keys and values from the specified map to this map.
-     * Each key must be non-null and a MultiKey object.
-     *
-     * @param mapToCopy  to this map
-     * @throws NullPointerException if the mapToCopy or any key within is null
-     * @throws ClassCastException if any key in mapToCopy is not a MultiKey
-     */
-    @Override
-    public void putAll(final Map<? extends MultiKey<? extends K>, ? extends V> mapToCopy) {
-        for (final MultiKey<? extends K> key : mapToCopy.keySet()) {
-            checkKey(key);
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3) {
+        final int hashCode = hash(key1, key2, key3);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
+                final V oldValue = entry.getValue();
+                decorated().removeMapping(entry, index, previous);
+                return oldValue;
+            }
+            previous = entry;
+            entry = entry.next;
         }
-        super.putAll(mapToCopy);
-    }
-
-    @Override
-    public MapIterator<MultiKey<? extends K>, V> mapIterator() {
-        return decorated().mapIterator();
+        return null;
     }
 
     /**
-     * {@inheritDoc}
+     * Removes the specified multi-key from this map.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object, Object))
      */
-    @Override
-    protected AbstractHashedMap<MultiKey<? extends K>, V> decorated() {
-        return (AbstractHashedMap<MultiKey<? extends K>, V>) super.decorated();
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3, final Object key4) {
+        final int hashCode = hash(key1, key2, key3, key4);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
+                final V oldValue = entry.getValue();
+                decorated().removeMapping(entry, index, previous);
+                return oldValue;
+            }
+            previous = entry;
+            entry = entry.next;
+        }
+        return null;
+    }
+
+    /**
+     * Removes the specified multi-key from this map.
+     *
+     * @param key1  the first key
+     * @param key2  the second key
+     * @param key3  the third key
+     * @param key4  the fourth key
+     * @param key5  the fifth key
+     * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object, Object, Object))
+     */
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3,
+                            final Object key4, final Object key5) {
+        final int hashCode = hash(key1, key2, key3, key4, key5);
+        final int index = decorated().hashIndex(hashCode, decorated().data.length);
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> previous = null;
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
+                final V oldValue = entry.getValue();
+                decorated().removeMapping(entry, index, previous);
+                return oldValue;
+            }
+            previous = entry;
+            entry = entry.next;
+        }
+        return null;
     }
 
     /**
@@ -886,19 +899,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked")
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<MultiKey<? extends K>, V>) in.readObject();
     }
 
 }

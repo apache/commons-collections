@@ -52,6 +52,10 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     private StringValueTransformer() {
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
     /**
      * Transforms the input to result by calling {@code String.valueOf}.
      *
@@ -61,10 +65,6 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     @Override
     public String transform(final T input) {
         return String.valueOf(input);
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

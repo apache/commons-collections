@@ -82,16 +82,41 @@ public final class UnmodifiableMap<K, V>
         super((Map<K, V>) map);
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        final Set<Map.Entry<K, V>> set = super.entrySet();
+        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
+    }
+
+    @Override
+    public Set<K> keySet() {
+        final Set<K> set = super.keySet();
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public MapIterator<K, V> mapIterator() {
+        if (map instanceof IterableMap) {
+            final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+        }
+        final MapIterator<K, V> it = new EntrySetMapIterator<>(map);
+        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+    }
+
+    @Override
+    public V put(final K key, final V value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -109,51 +134,26 @@ public final class UnmodifiableMap<K, V>
     }
 
     @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public V put(final K key, final V value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public MapIterator<K, V> mapIterator() {
-        if (map instanceof IterableMap) {
-            final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
-            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
-        }
-        final MapIterator<K, V> it = new EntrySetMapIterator<>(map);
-        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
-    }
-
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        final Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
-    }
-
-    @Override
-    public Set<K> keySet() {
-        final Set<K> set = super.keySet();
-        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
         final Collection<V> coll = super.values();
         return UnmodifiableCollection.unmodifiableCollection(coll);
+    }
+
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

@@ -19,23 +19,23 @@ package org.apache.commons.collections4.bloomfilter;
 public class IndexProducerFromUniqueHasherTest extends AbstractIndexProducerTest {
 
     @Override
+    protected IndexProducer createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    }
+
+    @Override
     protected IndexProducer createProducer() {
         // hasher has collisions and wraps
         return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)).uniqueIndices();
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    protected int getAsIndexArrayBehaviour() {
+        return DISTINCT;
     }
 
     @Override
     protected int[] getExpectedIndices() {
         return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
-    }
-
-    @Override
-    protected int getAsIndexArrayBehaviour() {
-        return DISTINCT;
     }
 }

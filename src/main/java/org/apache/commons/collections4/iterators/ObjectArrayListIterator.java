@@ -87,6 +87,18 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     }
 
     /**
+     * This iterator does not support modification of its backing array's size, and so will
+     * always throw an {@link UnsupportedOperationException} when this method is invoked.
+     *
+     * @param obj  the object to add
+     * @throws UnsupportedOperationException always thrown.
+     */
+    @Override
+    public void add(final E obj) {
+        throw new UnsupportedOperationException("add() method is not supported");
+    }
+
+    /**
      * Returns true if there are previous elements to return from the array.
      *
      * @return true if there is a previous element to return
@@ -94,21 +106,6 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     @Override
     public boolean hasPrevious() {
         return this.index > getStartIndex();
-    }
-
-    /**
-     * Gets the previous element from the array.
-     *
-     * @return the previous element
-     * @throws NoSuchElementException if there is no previous element
-     */
-    @Override
-    public E previous() {
-        if (!hasPrevious()) {
-            throw new NoSuchElementException();
-        }
-        this.lastItemIndex = --this.index;
-        return this.array[this.index];
     }
 
     /**
@@ -137,6 +134,21 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     }
 
     /**
+     * Gets the previous element from the array.
+     *
+     * @return the previous element
+     * @throws NoSuchElementException if there is no previous element
+     */
+    @Override
+    public E previous() {
+        if (!hasPrevious()) {
+            throw new NoSuchElementException();
+        }
+        this.lastItemIndex = --this.index;
+        return this.array[this.index];
+    }
+
+    /**
      * Gets the index of the item to be retrieved if {@link #previous()} is called.
      *
      * @return the index of the item to be retrieved next
@@ -147,15 +159,12 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     }
 
     /**
-     * This iterator does not support modification of its backing array's size, and so will
-     * always throw an {@link UnsupportedOperationException} when this method is invoked.
-     *
-     * @param obj  the object to add
-     * @throws UnsupportedOperationException always thrown.
+     * Resets the iterator back to the start index.
      */
     @Override
-    public void add(final E obj) {
-        throw new UnsupportedOperationException("add() method is not supported");
+    public void reset() {
+        super.reset();
+        this.lastItemIndex = -1;
     }
 
     /**
@@ -182,15 +191,6 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         }
 
         this.array[this.lastItemIndex] = obj;
-    }
-
-    /**
-     * Resets the iterator back to the start index.
-     */
-    @Override
-    public void reset() {
-        super.reset();
-        this.lastItemIndex = -1;
     }
 
 }

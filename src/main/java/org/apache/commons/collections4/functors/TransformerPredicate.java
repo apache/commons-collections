@@ -33,9 +33,6 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
     /** Serial version UID */
     private static final long serialVersionUID = -2407966402920578741L;
 
-    /** The transformer to call */
-    private final Transformer<? super T, Boolean> iTransformer;
-
     /**
      * Factory to create the predicate.
      *
@@ -47,6 +44,9 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
     public static <T> Predicate<T> transformerPredicate(final Transformer<? super T, Boolean> transformer) {
         return new TransformerPredicate<>(Objects.requireNonNull(transformer, "transformer"));
     }
+
+    /** The transformer to call */
+    private final Transformer<? super T, Boolean> iTransformer;
 
     /**
      * Constructor that performs no validation.

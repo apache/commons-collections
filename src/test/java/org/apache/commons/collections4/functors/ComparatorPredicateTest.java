@@ -32,6 +32,11 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
         }
     }
 
+    @Override
+    protected Predicate<?> generatePredicate() {
+        return comparatorPredicate(Integer.valueOf(10), new TestComparator<>());
+    }
+
     @Test
     public void testCompareEquals() {
         final Integer value = Integer.valueOf(10);
@@ -51,15 +56,6 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareLess() {
-        final Integer value = Integer.valueOf(10);
-        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS);
-        assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
-        assertPredicateFalse(p, Integer.valueOf(value.intValue()));
-        assertPredicateTrue(p, Integer.valueOf(value.intValue() + 1));
-    }
-
-    @Test
     public void testCompareGreaterOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER_OR_EQUAL);
@@ -69,16 +65,20 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
+    public void testCompareLess() {
+        final Integer value = Integer.valueOf(10);
+        final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS);
+        assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
+        assertPredicateFalse(p, Integer.valueOf(value.intValue()));
+        assertPredicateTrue(p, Integer.valueOf(value.intValue() + 1));
+    }
+
+    @Test
     public void testCompareLessOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = comparatorPredicate(value, new TestComparator<>(), Criterion.LESS_OR_EQUAL);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
         assertPredicateTrue(p, Integer.valueOf(value.intValue()));
         assertPredicateTrue(p, Integer.valueOf(value.intValue() + 1));
-    }
-
-    @Override
-    protected Predicate<?> generatePredicate() {
-        return comparatorPredicate(Integer.valueOf(10), new TestComparator<>());
     }
 }

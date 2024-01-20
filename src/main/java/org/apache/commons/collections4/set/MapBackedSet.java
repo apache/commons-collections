@@ -45,12 +45,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     /** Serialization version */
     private static final long serialVersionUID = 6723912213766056587L;
 
-    /** The map being used as the backing store */
-    private final Map<E, ? super V> map;
-
-    /** The dummyValue to use */
-    private final V dummyValue;
-
     /**
      * Factory method to create a set from a map.
      *
@@ -80,6 +74,12 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return new MapBackedSet<>(map, dummyValue);
     }
 
+    /** The map being used as the backing store */
+    private final Map<E, ? super V> map;
+
+    /** The dummyValue to use */
+    private final V dummyValue;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -90,31 +90,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         this.map = Objects.requireNonNull(map, "map");
         this.dummyValue = dummyValue;
-    }
-
-    @Override
-    public int size() {
-        return map.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return map.keySet().iterator();
-    }
-
-    @Override
-    public boolean contains(final Object obj) {
-        return map.containsKey(obj);
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> coll) {
-        return map.keySet().containsAll(coll);
     }
 
     @Override
@@ -134,10 +109,50 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     }
 
     @Override
+    public void clear() {
+        map.clear();
+    }
+
+    @Override
+    public boolean contains(final Object obj) {
+        return map.containsKey(obj);
+    }
+
+    @Override
+    public boolean containsAll(final Collection<?> coll) {
+        return map.keySet().containsAll(coll);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return map.keySet().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return map.keySet().hashCode();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return map.keySet().iterator();
+    }
+
+    @Override
     public boolean remove(final Object obj) {
         final int size = map.size();
         map.remove(obj);
         return map.size() != size;
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        return map.keySet().removeAll(coll);
     }
 
     /**
@@ -149,18 +164,13 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        return map.keySet().removeAll(coll);
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         return map.keySet().retainAll(coll);
     }
 
     @Override
-    public void clear() {
-        map.clear();
+    public int size() {
+        return map.size();
     }
 
     @Override
@@ -171,16 +181,6 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     @Override
     public <T> T[] toArray(final T[] array) {
         return map.keySet().toArray(array);
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return map.keySet().equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return map.keySet().hashCode();
     }
 
 }

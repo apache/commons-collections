@@ -26,23 +26,6 @@ import org.junit.jupiter.api.Test;
 
 public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
-    long[] values = generateLongArray(5);
-
-    @Override
-    protected BitMapProducer createProducer() {
-        return new DefaultBitMapProducer(values);
-    }
-
-    @Override
-    protected BitMapProducer createEmptyProducer() {
-        return new DefaultBitMapProducer(new long[0]);
-    }
-
-    @Override
-    protected boolean emptyIsZeroLength() {
-        return true;
-    }
-
     class DefaultBitMapProducer implements BitMapProducer {
         long[] bitMaps;
 
@@ -70,22 +53,21 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
         return ThreadLocalRandom.current().longs(size).toArray();
     }
 
-    @Test
-    public void testFromIndexProducer() {
-        final int[] expected = DefaultIndexProducerTest.generateIntArray(10, 256);
-        final IndexProducer ip = IndexProducer.fromIndexArray(expected);
-        final long[] ary = BitMapProducer.fromIndexProducer(ip, 256).asBitMapArray();
-        for (final int idx : expected) {
-            assertTrue(BitMap.contains(ary, idx));
-        }
+    long[] values = generateLongArray(5);
+
+    @Override
+    protected BitMapProducer createEmptyProducer() {
+        return new DefaultBitMapProducer(new long[0]);
     }
 
-    @Test
-    public void testFromBitMapArray() {
-        final int nOfBitMaps = BitMap.numberOfBitMaps(256);
-        final long[] expected = generateLongArray(nOfBitMaps);
-        final long[] ary = BitMapProducer.fromBitMapArray(expected).asBitMapArray();
-        assertArrayEquals(expected, ary);
+    @Override
+    protected BitMapProducer createProducer() {
+        return new DefaultBitMapProducer(values);
+    }
+
+    @Override
+    protected boolean emptyIsZeroLength() {
+        return true;
     }
 
     @Test
@@ -101,5 +83,23 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
         };
         final long[] ary = producer.asBitMapArray();
         assertArrayEquals(expected, ary);
+    }
+
+    @Test
+    public void testFromBitMapArray() {
+        final int nOfBitMaps = BitMap.numberOfBitMaps(256);
+        final long[] expected = generateLongArray(nOfBitMaps);
+        final long[] ary = BitMapProducer.fromBitMapArray(expected).asBitMapArray();
+        assertArrayEquals(expected, ary);
+    }
+
+    @Test
+    public void testFromIndexProducer() {
+        final int[] expected = DefaultIndexProducerTest.generateIntArray(10, 256);
+        final IndexProducer ip = IndexProducer.fromIndexArray(expected);
+        final long[] ary = BitMapProducer.fromIndexProducer(ip, 256).asBitMapArray();
+        for (final int idx : expected) {
+            assertTrue(BitMap.contains(ary, idx));
+        }
     }
 }

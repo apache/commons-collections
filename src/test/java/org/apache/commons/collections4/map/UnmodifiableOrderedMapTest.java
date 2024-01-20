@@ -39,17 +39,17 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
     }
 
     @Override
-    public OrderedMap<K, V> makeObject() {
-        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
-    }
-
-    @Override
-    public boolean isPutChangeSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     public boolean isPutAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isPutChangeSupported() {
         return false;
     }
 
@@ -65,10 +65,9 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public OrderedMap<K, V> makeObject() {
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
     }
 
     @Test
@@ -79,9 +78,10 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
         assertThrows(NullPointerException.class, () -> UnmodifiableOrderedMap.unmodifiableOrderedMap(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

@@ -26,6 +26,24 @@ import org.junit.jupiter.api.Test;
 
 public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTest {
 
+    private static final class TestingBitMapProducer implements BitMapProducer {
+        long[] values;
+
+        TestingBitMapProducer(final long[] values) {
+            this.values = values;
+        }
+
+        @Override
+        public boolean forEachBitMap(final LongPredicate consumer) {
+            for (final long l : values) {
+                if (!consumer.test(l)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     @Override
     protected IndexProducer createEmptyProducer() {
         final TestingBitMapProducer producer = new TestingBitMapProducer(new long[0]);
@@ -50,14 +68,14 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return new int[] {0, 65, 128, 129};
-    }
-
-    @Override
     protected int getAsIndexArrayBehaviour() {
         // Bit maps will be distinct. Conversion to indices should be ordered.
         return DISTINCT | ORDERED;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return new int[] {0, 65, 128, 129};
     }
 
     @Test
@@ -81,24 +99,6 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         assertEquals(64, lst.size());
         for (int i = 0; i < 64; i++) {
             assertEquals(Integer.valueOf(i), lst.get(i));
-        }
-    }
-
-    private static final class TestingBitMapProducer implements BitMapProducer {
-        long[] values;
-
-        TestingBitMapProducer(final long[] values) {
-            this.values = values;
-        }
-
-        @Override
-        public boolean forEachBitMap(final LongPredicate consumer) {
-            for (final long l : values) {
-                if (!consumer.test(l)) {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

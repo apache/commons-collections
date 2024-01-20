@@ -44,14 +44,8 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     }
 
     @Override
-    public NavigableSet<E> makeObject() {
-        return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<>());
-    }
-
-    @Override
-    public UnmodifiableNavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
-        return (UnmodifiableNavigableSet<E>) UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
+    public String getCompatibilityVersion() {
+        return "4.1";
     }
 
     @Override
@@ -64,11 +58,36 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         return false;
     }
 
+    @Override
+    public UnmodifiableNavigableSet<E> makeFullCollection() {
+        final TreeSet<E> set = new TreeSet<>(Arrays.asList(getFullElements()));
+        return (UnmodifiableNavigableSet<E>) UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
+    }
+
+    @Override
+    public NavigableSet<E> makeObject() {
+        return UnmodifiableNavigableSet.unmodifiableNavigableSet(new TreeSet<>());
+    }
+
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
         array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
+    }
+
+    @Test
+    public void testComparator() {
+        setupSet();
+        final Comparator<? super E> c = set.comparator();
+        assertNull(c, "natural order, so comparator should be null");
+    }
+
+    @Test
+    public void testDecorateFactory() {
+        final NavigableSet<E> set = makeFullCollection();
+        assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
+        assertThrows(NullPointerException.class, () -> UnmodifiableNavigableSet.unmodifiableNavigableSet(null));
     }
 
     /**
@@ -87,13 +106,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), (E) Integer.valueOf(3)));
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), false, (E) Integer.valueOf(3), false));
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), true, (E) Integer.valueOf(3), true));
-    }
-
-    @Test
-    public void testDecorateFactory() {
-        final NavigableSet<E> set = makeFullCollection();
-        assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
-        assertThrows(NullPointerException.class, () -> UnmodifiableNavigableSet.unmodifiableNavigableSet(null));
     }
 
     /**
@@ -115,18 +127,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
             assertThrows(UnsupportedOperationException.class, () -> navigableSet.pollFirst());
             assertThrows(UnsupportedOperationException.class, () -> navigableSet.pollLast());
         }
-    }
-
-    @Test
-    public void testComparator() {
-        setupSet();
-        final Comparator<? super E> c = set.comparator();
-        assertNull(c, "natural order, so comparator should be null");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.1";
     }
 
 //    public void testCreate() throws Exception {

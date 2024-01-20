@@ -33,13 +33,6 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
 
-    /** The test */
-    private final Predicate<? super E> iPredicate;
-    /** The closure to use if true */
-    private final Closure<? super E> iTrueClosure;
-    /** The closure to use if false */
-    private final Closure<? super E> iFalseClosure;
-
     /**
      * Factory method that performs validation.
      * <p>
@@ -56,7 +49,6 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure, NOPClosure.<E>nopClosure());
     }
-
     /**
      * Factory method that performs validation.
      *
@@ -74,6 +66,14 @@ public class IfClosure<E> implements Closure<E>, Serializable {
                 Objects.requireNonNull(trueClosure, "trueClosure"),
                 Objects.requireNonNull(falseClosure, "falseClosure"));
     }
+    /** The test */
+    private final Predicate<? super E> iPredicate;
+
+    /** The closure to use if true */
+    private final Closure<? super E> iTrueClosure;
+
+    /** The closure to use if false */
+    private final Closure<? super E> iFalseClosure;
 
     /**
      * Constructor that performs no validation.
@@ -120,6 +120,16 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
+     * Gets the closure called when false.
+     *
+     * @return the closure
+     * @since 3.1
+     */
+    public Closure<? super E> getFalseClosure() {
+        return iFalseClosure;
+    }
+
+    /**
      * Gets the predicate.
      *
      * @return the predicate
@@ -137,16 +147,6 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      */
     public Closure<? super E> getTrueClosure() {
         return iTrueClosure;
-    }
-
-    /**
-     * Gets the closure called when false.
-     *
-     * @return the closure
-     * @since 3.1
-     */
-    public Closure<? super E> getFalseClosure() {
-        return iFalseClosure;
     }
 
 }

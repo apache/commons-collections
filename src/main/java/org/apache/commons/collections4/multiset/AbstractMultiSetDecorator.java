@@ -52,6 +52,11 @@ public abstract class AbstractMultiSetDecorator<E>
         super(multiset);
     }
 
+    @Override
+    public int add(final E object, final int count) {
+        return decorated().add(object, count);
+    }
+
     /**
      * Gets the multiset being decorated.
      *
@@ -63,13 +68,13 @@ public abstract class AbstractMultiSetDecorator<E>
     }
 
     @Override
-    public boolean equals(final Object object) {
-        return object == this || decorated().equals(object);
+    public Set<Entry<E>> entrySet() {
+        return decorated().entrySet();
     }
 
     @Override
-    public int hashCode() {
-        return decorated().hashCode();
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
     }
 
     @Override
@@ -78,13 +83,8 @@ public abstract class AbstractMultiSetDecorator<E>
     }
 
     @Override
-    public int setCount(final E object, final int count) {
-        return decorated().setCount(object, count);
-    }
-
-    @Override
-    public int add(final E object, final int count) {
-        return decorated().add(object, count);
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override
@@ -93,13 +93,13 @@ public abstract class AbstractMultiSetDecorator<E>
     }
 
     @Override
-    public Set<E> uniqueSet() {
-        return decorated().uniqueSet();
+    public int setCount(final E object, final int count) {
+        return decorated().setCount(object, count);
     }
 
     @Override
-    public Set<Entry<E>> entrySet() {
-        return decorated().entrySet();
+    public Set<E> uniqueSet() {
+        return decorated().uniqueSet();
     }
 
 }

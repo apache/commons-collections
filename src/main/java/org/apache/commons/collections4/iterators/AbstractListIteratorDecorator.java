@@ -43,6 +43,12 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void add(final E obj) {
+        iterator.add(obj);
+    }
+
     /**
      * Gets the iterator being decorated.
      *
@@ -60,6 +66,12 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 
     /** {@inheritDoc} */
     @Override
+    public boolean hasPrevious() {
+        return iterator.hasPrevious();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public E next() {
         return iterator.next();
     }
@@ -68,12 +80,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     @Override
     public int nextIndex() {
         return iterator.nextIndex();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasPrevious() {
-        return iterator.hasPrevious();
     }
 
     /** {@inheritDoc} */
@@ -98,12 +104,6 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     @Override
     public void set(final E obj) {
         iterator.set(obj);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void add(final E obj) {
-        iterator.add(obj);
     }
 
 }

@@ -58,17 +58,6 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     }
 
     /**
-     * Write the multiset out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        super.doWriteObject(out);
-    }
-
-    /**
      * Read the multiset in using a custom routine.
      *
      * @param in the input stream
@@ -79,6 +68,17 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
         in.defaultReadObject();
         setMap(new HashMap<>());
         super.doReadObject(in);
+    }
+
+    /**
+     * Write the multiset out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        super.doWriteObject(out);
     }
 
 }

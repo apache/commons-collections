@@ -21,18 +21,18 @@ public class BitMapProducerFromWrappedBloomFilterTest extends AbstractBitMapProd
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected BitMapProducer createEmptyProducer() {
+        return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+        };
+    }
+
+    @Override
     protected BitMapProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(0, 1);
         final BloomFilter bf = new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
         };
         bf.merge(hasher);
         return bf;
-    }
-
-    @Override
-    protected BitMapProducer createEmptyProducer() {
-        return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
-        };
     }
 
 }

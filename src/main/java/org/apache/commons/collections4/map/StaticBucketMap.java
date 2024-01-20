@@ -97,10 +97,241 @@ import org.apache.commons.collections4.KeyValue;
  */
 public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
+    class BaseIterator {
+        private final ArrayList<Map.Entry<K, V>> current = new ArrayList<>();
+        private int bucket;
+        private Map.Entry<K, V> last;
+
+        public boolean hasNext() {
+            if (!current.isEmpty()) {
+                return true;
+            }
+            while (bucket < buckets.length) {
+                synchronized (locks[bucket]) {
+                    Node<K, V> n = buckets[bucket];
+                    while (n != null) {
+                        current.add(n);
+                        n = n.next;
+                    }
+                    bucket++;
+                    if (!current.isEmpty()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        protected Map.Entry<K, V> nextEntry() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            last = current.remove(current.size() - 1);
+            return last;
+        }
+
+        public void remove() {
+            if (last == null) {
+                throw new IllegalStateException();
+            }
+            StaticBucketMap.this.remove(last.getKey());
+            last = null;
+        }
+    }
+    private final class EntryIterator extends BaseIterator implements Iterator<Map.Entry<K, V>> {
+
+        @Override
+        public Map.Entry<K, V> next() {
+            return nextEntry();
+        }
+
+    }
+    private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
+
+        @Override
+        public void clear() {
+            StaticBucketMap.this.clear();
+        }
+
+        @Override
+        public boolean contains(final Object obj) {
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final int hash = getHash(entry.getKey());
+            synchronized (locks[hash]) {
+                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
+                    if (n.equals(entry)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public Iterator<Map.Entry<K, V>> iterator() {
+            return new EntryIterator();
+        }
+
+        @Override
+        public boolean remove(final Object obj) {
+            if (!(obj instanceof Map.Entry<?, ?>)) {
+                return false;
+            }
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final int hash = getHash(entry.getKey());
+            synchronized (locks[hash]) {
+                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
+                    if (n.equals(entry)) {
+                        StaticBucketMap.this.remove(n.getKey());
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public int size() {
+            return StaticBucketMap.this.size();
+        }
+
+    }
+
+    private final class KeyIterator extends BaseIterator implements Iterator<K> {
+
+        @Override
+        public K next() {
+            return nextEntry().getKey();
+        }
+
+    }
+
+    private final class KeySet extends AbstractSet<K> {
+
+        @Override
+        public void clear() {
+            StaticBucketMap.this.clear();
+        }
+
+        @Override
+        public boolean contains(final Object obj) {
+            return StaticBucketMap.this.containsKey(obj);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return new KeyIterator();
+        }
+
+        @Override
+        public boolean remove(final Object obj) {
+            final int hash = getHash(obj);
+            synchronized (locks[hash]) {
+                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
+                    final Object k = n.getKey();
+                    if (Objects.equals(k, obj)) {
+                        StaticBucketMap.this.remove(k);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public int size() {
+            return StaticBucketMap.this.size();
+        }
+
+    }
+
+    /**
+     * The lock object, which also includes a count of the nodes in this lock.
+     */
+    private static final class Lock {
+        public int size;
+    }
+
+    /**
+     * The Map.Entry for the StaticBucketMap.
+     */
+    private static final class Node<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
+        protected K key;
+        protected V value;
+        protected Node<K, V> next;
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Map.Entry<?, ?>)) {
+                return false;
+            }
+
+            final Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
+            return (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
+                (value == null ? e2.getValue() == null : value.equals(e2.getValue()));
+        }
+
+        @Override
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getValue() {
+            return value;
+        }
+
+        @Override
+        public int hashCode() {
+            return (key == null ? 0 : key.hashCode()) ^
+                    (value == null ? 0 : value.hashCode());
+        }
+
+        @Override
+        public V setValue(final V obj) {
+            final V retVal = value;
+            value = obj;
+            return retVal;
+        }
+    }
+
+    private final class ValueIterator extends BaseIterator implements Iterator<V> {
+
+        @Override
+        public V next() {
+            return nextEntry().getValue();
+        }
+
+    }
+
+    private final class Values extends AbstractCollection<V> {
+
+        @Override
+        public void clear() {
+            StaticBucketMap.this.clear();
+        }
+
+        @Override
+        public Iterator<V> iterator() {
+            return new ValueIterator();
+        }
+
+        @Override
+        public int size() {
+            return StaticBucketMap.this.size();
+        }
+
+    }
+
     /** The default number of buckets to use */
     private static final int DEFAULT_BUCKETS = 255;
+
     /** The array of buckets, where the actual data is held */
     private final Node<K, V>[] buckets;
+
     /** The matching array of locks */
     private final Lock[] locks;
 
@@ -139,83 +370,65 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
-     * Determine the exact hash entry for the key.  The hash algorithm
-     * is rather simplistic, but it does the job:
+     *  Prevents any operations from occurring on this map while the
+     *  given {@link Runnable} executes.  This method can be used, for
+     *  instance, to execute a bulk operation atomically:
      *
-     * <pre>
-     *   He = |Hk mod n|
-     * </pre>
+     *  <pre>
+     *    staticBucketMapInstance.atomic(new Runnable() {
+     *        public void run() {
+     *            staticBucketMapInstance.putAll(map);
+     *        }
+     *    });
+     *  </pre>
      *
-     * <p>
-     *   He is the entry's hashCode, Hk is the key's hashCode, and n is
-     *   the number of buckets.
-     * </p>
+     *  It can also be used if you need a reliable iterator:
+     *
+     *  <pre>
+     *    staticBucketMapInstance.atomic(new Runnable() {
+     *        public void run() {
+     *            Iterator iterator = staticBucketMapInstance.iterator();
+     *            while (iterator.hasNext()) {
+     *                foo(iterator.next();
+     *            }
+     *        }
+     *    });
+     *  </pre>
+     *
+     *  <b>Implementation note:</b> This method requires a lot of time
+     *  and a ton of stack space.  Essentially a recursive algorithm is used
+     *  to enter each bucket's monitor.  If you have twenty thousand buckets
+     *  in your map, then the recursive method will be invoked twenty thousand
+     *  times.  You have been warned.
+     *
+     *  @param runnable  the code to execute atomically
      */
-    private int getHash(final Object key) {
-        if (key == null) {
-            return 0;
+    public void atomic(final Runnable runnable) {
+        atomic(Objects.requireNonNull(runnable, "runnable"), 0);
+    }
+
+    private void atomic(final Runnable r, final int bucket) {
+        if (bucket >= buckets.length) {
+            r.run();
+            return;
         }
-        int hash = key.hashCode();
-        hash += ~(hash << 15);
-        hash ^= hash >>> 10;
-        hash += hash << 3;
-        hash ^= hash >>> 6;
-        hash += ~(hash << 11);
-        hash ^= hash >>> 16;
-        hash %= buckets.length;
-        return hash < 0 ? hash * -1 : hash;
+        synchronized (locks[bucket]) {
+            atomic(r, bucket + 1);
+        }
     }
 
     /**
-     * Gets the current size of the map.
-     * The value is computed fresh each time the method is called.
-     *
-     * @return the current size
+     * Clears the map of all entries.
      */
     @Override
-    public int size() {
-        int cnt = 0;
-
+    public void clear() {
         for (int i = 0; i < buckets.length; i++) {
-            synchronized (locks[i]) {
-                cnt += locks[i].size;
+            final Lock lock = locks[i];
+            synchronized (lock) {
+                buckets[i] = null;
+                lock.size = 0;
             }
         }
-        return cnt;
-    }
-
-    /**
-     * Checks if the size is currently zero.
-     *
-     * @return true if empty
-     */
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    /**
-     * Gets the value associated with the key.
-     *
-     * @param key  the key to retrieve
-     * @return the associated value
-     */
-    @Override
-    public V get(final Object key) {
-        final int hash = getHash(key);
-
-        synchronized (locks[hash]) {
-            Node<K, V> n = buckets[hash];
-
-            while (n != null) {
-                if (Objects.equals(n.key, key)) {
-                    return n.value;
-                }
-
-                n = n.next;
-            }
-        }
-        return null;
     }
 
     /**
@@ -267,6 +480,128 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
+     * Gets the entry set.
+     *
+     * @return the entry set
+     */
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        return new EntrySet();
+    }
+
+    /**
+     * Compares this map to another, as per the Map specification.
+     *
+     * @param obj  the object to compare to
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Map<?, ?>)) {
+            return false;
+        }
+        final Map<?, ?> other = (Map<?, ?>) obj;
+        return entrySet().equals(other.entrySet());
+    }
+
+    /**
+     * Gets the value associated with the key.
+     *
+     * @param key  the key to retrieve
+     * @return the associated value
+     */
+    @Override
+    public V get(final Object key) {
+        final int hash = getHash(key);
+
+        synchronized (locks[hash]) {
+            Node<K, V> n = buckets[hash];
+
+            while (n != null) {
+                if (Objects.equals(n.key, key)) {
+                    return n.value;
+                }
+
+                n = n.next;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Determine the exact hash entry for the key.  The hash algorithm
+     * is rather simplistic, but it does the job:
+     *
+     * <pre>
+     *   He = |Hk mod n|
+     * </pre>
+     *
+     * <p>
+     *   He is the entry's hashCode, Hk is the key's hashCode, and n is
+     *   the number of buckets.
+     * </p>
+     */
+    private int getHash(final Object key) {
+        if (key == null) {
+            return 0;
+        }
+        int hash = key.hashCode();
+        hash += ~(hash << 15);
+        hash ^= hash >>> 10;
+        hash += hash << 3;
+        hash ^= hash >>> 6;
+        hash += ~(hash << 11);
+        hash ^= hash >>> 16;
+        hash %= buckets.length;
+        return hash < 0 ? hash * -1 : hash;
+    }
+
+    /**
+     * Gets the hash code, as per the Map specification.
+     *
+     * @return the hash code
+     */
+    @Override
+    public int hashCode() {
+        int hashCode = 0;
+
+        for (int i = 0; i < buckets.length; i++) {
+            synchronized (locks[i]) {
+                Node<K, V> n = buckets[i];
+
+                while (n != null) {
+                    hashCode += n.hashCode();
+                    n = n.next;
+                }
+            }
+        }
+        return hashCode;
+    }
+
+    /**
+     * Checks if the size is currently zero.
+     *
+     * @return true if empty
+     */
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * Gets the key set.
+     *
+     * @return the key set
+     */
+    @Override
+    public Set<K> keySet() {
+        return new KeySet();
+    }
+
+    /**
      * Puts a new key value mapping into the map.
      *
      * @param key  the key to use
@@ -314,6 +649,19 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
+     * Puts all the entries from the specified map into this map.
+     * This operation is <b>not atomic</b> and may have undesired effects.
+     *
+     * @param map  the map of entries to add
+     */
+    @Override
+    public void putAll(final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
      * Removes the specified key from the map.
      *
      * @param key  the key to remove
@@ -349,13 +697,21 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
-     * Gets the key set.
+     * Gets the current size of the map.
+     * The value is computed fresh each time the method is called.
      *
-     * @return the key set
+     * @return the current size
      */
     @Override
-    public Set<K> keySet() {
-        return new KeySet();
+    public int size() {
+        int cnt = 0;
+
+        for (int i = 0; i < buckets.length; i++) {
+            synchronized (locks[i]) {
+                cnt += locks[i].size;
+            }
+        }
+        return cnt;
     }
 
     /**
@@ -366,362 +722,6 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public Collection<V> values() {
         return new Values();
-    }
-
-    /**
-     * Gets the entry set.
-     *
-     * @return the entry set
-     */
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        return new EntrySet();
-    }
-
-    /**
-     * Puts all the entries from the specified map into this map.
-     * This operation is <b>not atomic</b> and may have undesired effects.
-     *
-     * @param map  the map of entries to add
-     */
-    @Override
-    public void putAll(final Map<? extends K, ? extends V> map) {
-        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            put(entry.getKey(), entry.getValue());
-        }
-    }
-
-    /**
-     * Clears the map of all entries.
-     */
-    @Override
-    public void clear() {
-        for (int i = 0; i < buckets.length; i++) {
-            final Lock lock = locks[i];
-            synchronized (lock) {
-                buckets[i] = null;
-                lock.size = 0;
-            }
-        }
-    }
-
-    /**
-     * Compares this map to another, as per the Map specification.
-     *
-     * @param obj  the object to compare to
-     * @return true if equal
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof Map<?, ?>)) {
-            return false;
-        }
-        final Map<?, ?> other = (Map<?, ?>) obj;
-        return entrySet().equals(other.entrySet());
-    }
-
-    /**
-     * Gets the hash code, as per the Map specification.
-     *
-     * @return the hash code
-     */
-    @Override
-    public int hashCode() {
-        int hashCode = 0;
-
-        for (int i = 0; i < buckets.length; i++) {
-            synchronized (locks[i]) {
-                Node<K, V> n = buckets[i];
-
-                while (n != null) {
-                    hashCode += n.hashCode();
-                    n = n.next;
-                }
-            }
-        }
-        return hashCode;
-    }
-
-    /**
-     * The Map.Entry for the StaticBucketMap.
-     */
-    private static final class Node<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
-        protected K key;
-        protected V value;
-        protected Node<K, V> next;
-
-        @Override
-        public K getKey() {
-            return key;
-        }
-
-        @Override
-        public V getValue() {
-            return value;
-        }
-
-        @Override
-        public int hashCode() {
-            return (key == null ? 0 : key.hashCode()) ^
-                    (value == null ? 0 : value.hashCode());
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof Map.Entry<?, ?>)) {
-                return false;
-            }
-
-            final Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
-            return (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
-                (value == null ? e2.getValue() == null : value.equals(e2.getValue()));
-        }
-
-        @Override
-        public V setValue(final V obj) {
-            final V retVal = value;
-            value = obj;
-            return retVal;
-        }
-    }
-
-    /**
-     * The lock object, which also includes a count of the nodes in this lock.
-     */
-    private static final class Lock {
-        public int size;
-    }
-
-    class BaseIterator {
-        private final ArrayList<Map.Entry<K, V>> current = new ArrayList<>();
-        private int bucket;
-        private Map.Entry<K, V> last;
-
-        public boolean hasNext() {
-            if (!current.isEmpty()) {
-                return true;
-            }
-            while (bucket < buckets.length) {
-                synchronized (locks[bucket]) {
-                    Node<K, V> n = buckets[bucket];
-                    while (n != null) {
-                        current.add(n);
-                        n = n.next;
-                    }
-                    bucket++;
-                    if (!current.isEmpty()) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        protected Map.Entry<K, V> nextEntry() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            last = current.remove(current.size() - 1);
-            return last;
-        }
-
-        public void remove() {
-            if (last == null) {
-                throw new IllegalStateException();
-            }
-            StaticBucketMap.this.remove(last.getKey());
-            last = null;
-        }
-    }
-
-    private final class EntryIterator extends BaseIterator implements Iterator<Map.Entry<K, V>> {
-
-        @Override
-        public Map.Entry<K, V> next() {
-            return nextEntry();
-        }
-
-    }
-
-    private final class ValueIterator extends BaseIterator implements Iterator<V> {
-
-        @Override
-        public V next() {
-            return nextEntry().getValue();
-        }
-
-    }
-
-    private final class KeyIterator extends BaseIterator implements Iterator<K> {
-
-        @Override
-        public K next() {
-            return nextEntry().getKey();
-        }
-
-    }
-
-    private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
-
-        @Override
-        public int size() {
-            return StaticBucketMap.this.size();
-        }
-
-        @Override
-        public void clear() {
-            StaticBucketMap.this.clear();
-        }
-
-        @Override
-        public Iterator<Map.Entry<K, V>> iterator() {
-            return new EntryIterator();
-        }
-
-        @Override
-        public boolean contains(final Object obj) {
-            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            final int hash = getHash(entry.getKey());
-            synchronized (locks[hash]) {
-                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
-                    if (n.equals(entry)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            if (!(obj instanceof Map.Entry<?, ?>)) {
-                return false;
-            }
-            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            final int hash = getHash(entry.getKey());
-            synchronized (locks[hash]) {
-                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
-                    if (n.equals(entry)) {
-                        StaticBucketMap.this.remove(n.getKey());
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-    }
-
-    private final class KeySet extends AbstractSet<K> {
-
-        @Override
-        public int size() {
-            return StaticBucketMap.this.size();
-        }
-
-        @Override
-        public void clear() {
-            StaticBucketMap.this.clear();
-        }
-
-        @Override
-        public Iterator<K> iterator() {
-            return new KeyIterator();
-        }
-
-        @Override
-        public boolean contains(final Object obj) {
-            return StaticBucketMap.this.containsKey(obj);
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            final int hash = getHash(obj);
-            synchronized (locks[hash]) {
-                for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
-                    final Object k = n.getKey();
-                    if (Objects.equals(k, obj)) {
-                        StaticBucketMap.this.remove(k);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-    }
-
-    private final class Values extends AbstractCollection<V> {
-
-        @Override
-        public int size() {
-            return StaticBucketMap.this.size();
-        }
-
-        @Override
-        public void clear() {
-            StaticBucketMap.this.clear();
-        }
-
-        @Override
-        public Iterator<V> iterator() {
-            return new ValueIterator();
-        }
-
-    }
-
-    /**
-     *  Prevents any operations from occurring on this map while the
-     *  given {@link Runnable} executes.  This method can be used, for
-     *  instance, to execute a bulk operation atomically:
-     *
-     *  <pre>
-     *    staticBucketMapInstance.atomic(new Runnable() {
-     *        public void run() {
-     *            staticBucketMapInstance.putAll(map);
-     *        }
-     *    });
-     *  </pre>
-     *
-     *  It can also be used if you need a reliable iterator:
-     *
-     *  <pre>
-     *    staticBucketMapInstance.atomic(new Runnable() {
-     *        public void run() {
-     *            Iterator iterator = staticBucketMapInstance.iterator();
-     *            while (iterator.hasNext()) {
-     *                foo(iterator.next();
-     *            }
-     *        }
-     *    });
-     *  </pre>
-     *
-     *  <b>Implementation note:</b> This method requires a lot of time
-     *  and a ton of stack space.  Essentially a recursive algorithm is used
-     *  to enter each bucket's monitor.  If you have twenty thousand buckets
-     *  in your map, then the recursive method will be invoked twenty thousand
-     *  times.  You have been warned.
-     *
-     *  @param runnable  the code to execute atomically
-     */
-    public void atomic(final Runnable runnable) {
-        atomic(Objects.requireNonNull(runnable, "runnable"), 0);
-    }
-
-    private void atomic(final Runnable r, final int bucket) {
-        if (bucket >= buckets.length) {
-            r.run();
-            return;
-        }
-        synchronized (locks[bucket]) {
-            atomic(r, bucket + 1);
-        }
     }
 
 }

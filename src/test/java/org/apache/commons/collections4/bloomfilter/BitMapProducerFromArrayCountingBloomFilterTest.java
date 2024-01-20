@@ -21,15 +21,15 @@ public class BitMapProducerFromArrayCountingBloomFilterTest extends AbstractBitM
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
+    protected BitMapProducer createEmptyProducer() {
+        return new ArrayCountingBloomFilter(shape);
+    }
+
+    @Override
     protected BitMapProducer createProducer() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         final Hasher hasher = new IncrementingHasher(0, 1);
         filter.merge(hasher);
         return filter;
-    }
-
-    @Override
-    protected BitMapProducer createEmptyProducer() {
-        return new ArrayCountingBloomFilter(shape);
     }
 }

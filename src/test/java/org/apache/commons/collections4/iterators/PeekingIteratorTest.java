@@ -45,15 +45,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         super(PeekingIteratorTest.class.getSimpleName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    protected void setUp() throws Exception {
-        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return PeekingIterator.peekingIterator(Collections.<E>emptyList().iterator());
@@ -62,6 +53,15 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     public PeekingIterator<E> makeObject() {
         return PeekingIterator.peekingIterator(testList.iterator());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    protected void setUp() throws Exception {
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
     @Override
@@ -76,12 +76,27 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testSinglePeek() {
+    public void testIllegalRemove() {
         final PeekingIterator<E> it = makeObject();
-        assertEquals("a", it.peek());
-        assertEquals("a", it.element());
-        validate(it, (E[]) testArray);
+        it.next();
+        it.remove(); // supported
+
+        assertTrue(it.hasNext());
+        assertEquals("b", it.peek());
+
+        assertThrows(IllegalStateException.class, () -> it.remove());
+    }
+
+    @Test
+    public void testIteratorExhausted() {
+        final PeekingIterator<E> it = makeObject();
+        it.next();
+        it.next();
+        it.next();
+        assertFalse(it.hasNext());
+        assertNull(it.peek());
+
+        assertThrows(NoSuchElementException.class, () -> it.element());
     }
 
     @Test
@@ -102,27 +117,12 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIteratorExhausted() {
+    @SuppressWarnings("unchecked")
+    public void testSinglePeek() {
         final PeekingIterator<E> it = makeObject();
-        it.next();
-        it.next();
-        it.next();
-        assertFalse(it.hasNext());
-        assertNull(it.peek());
-
-        assertThrows(NoSuchElementException.class, () -> it.element());
-    }
-
-    @Test
-    public void testIllegalRemove() {
-        final PeekingIterator<E> it = makeObject();
-        it.next();
-        it.remove(); // supported
-
-        assertTrue(it.hasNext());
-        assertEquals("b", it.peek());
-
-        assertThrows(IllegalStateException.class, () -> it.remove());
+        assertEquals("a", it.peek());
+        assertEquals("a", it.element());
+        validate(it, (E[]) testArray);
     }
 
     private void validate(final Iterator<E> iter, final E... items) {

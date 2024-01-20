@@ -44,8 +44,19 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public String[] ignoredTests() {
         return null;
+    }
+
+    @Override
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
     }
 
     @Override
@@ -56,10 +67,46 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
                 (Transformer<? super V, ? extends V>) TransformerUtils.nopTransformer());
     }
 
-    @Override
-    public boolean isSubMapViewsSerializable() {
-        // TreeMap sub map views have a bug in deserialization.
-        return false;
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFactory_Decorate() {
+        final SortedMap<K, V> base = new TreeMap<>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        final SortedMap<K, V> trans = TransformedSortedMap
+                .transformingSortedMap(
+                        base,
+                        null,
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals("1", trans.get("A"));
+        assertEquals("2", trans.get("B"));
+        assertEquals("3", trans.get("C"));
+        trans.put((K) "D", (V) "4");
+        assertEquals(Integer.valueOf(4), trans.get("D"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFactory_decorateTransform() {
+        final SortedMap<K, V> base = new TreeMap<>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        final SortedMap<K, V> trans = TransformedSortedMap
+                .transformedSortedMap(
+                        base,
+                        null,
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals(Integer.valueOf(1), trans.get("A"));
+        assertEquals(Integer.valueOf(2), trans.get("B"));
+        assertEquals(Integer.valueOf(3), trans.get("C"));
+        trans.put((K) "D", (V) "4");
+        assertEquals(Integer.valueOf(4), trans.get("D"));
     }
 
     @Test
@@ -115,53 +162,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         entry.setValue((V) "88");
         assertEquals(Integer.valueOf(88), entry.getValue());
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
-        final SortedMap<K, V> base = new TreeMap<>();
-        base.put((K) "A", (V) "1");
-        base.put((K) "B", (V) "2");
-        base.put((K) "C", (V) "3");
-
-        final SortedMap<K, V> trans = TransformedSortedMap
-                .transformingSortedMap(
-                        base,
-                        null,
-                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(3, trans.size());
-        assertEquals("1", trans.get("A"));
-        assertEquals("2", trans.get("B"));
-        assertEquals("3", trans.get("C"));
-        trans.put((K) "D", (V) "4");
-        assertEquals(Integer.valueOf(4), trans.get("D"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
-        final SortedMap<K, V> base = new TreeMap<>();
-        base.put((K) "A", (V) "1");
-        base.put((K) "B", (V) "2");
-        base.put((K) "C", (V) "3");
-
-        final SortedMap<K, V> trans = TransformedSortedMap
-                .transformedSortedMap(
-                        base,
-                        null,
-                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(3, trans.size());
-        assertEquals(Integer.valueOf(1), trans.get("A"));
-        assertEquals(Integer.valueOf(2), trans.get("B"));
-        assertEquals(Integer.valueOf(3), trans.get("C"));
-        trans.put((K) "D", (V) "4");
-        assertEquals(Integer.valueOf(4), trans.get("D"));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

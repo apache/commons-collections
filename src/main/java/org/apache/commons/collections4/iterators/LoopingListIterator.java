@@ -60,6 +60,30 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
         _reset();
     }
 
+    private void _reset() {
+        iterator = list.listIterator();
+    }
+
+    /**
+     * Inserts the specified element into the underlying list.
+     * <p>
+     * The element is inserted before the next element that would be
+     * returned by {@link #next}, if any, and after the next element
+     * that would be returned by {@link #previous}, if any.
+     * <p>
+     * This feature is only supported if the underlying list's
+     * {@link List#listIterator} method returns an implementation
+     * that supports it.
+     *
+     * @param obj  the element to insert
+     * @throws UnsupportedOperationException if the add method is not
+     *  supported by the iterator implementation of the underlying list
+     */
+    @Override
+    public void add(final E obj) {
+        iterator.add(obj);
+    }
+
     /**
      * Returns whether this iterator has any more elements.
      * <p>
@@ -70,6 +94,19 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      */
     @Override
     public boolean hasNext() {
+        return !list.isEmpty();
+    }
+
+    /**
+     * Returns whether this iterator has any more previous elements.
+     * <p>
+     * Returns false only if the list originally had zero elements, or
+     * all elements have been {@link #remove removed}.
+     *
+     * @return {@code true} if there are more elements
+     */
+    @Override
+    public boolean hasPrevious() {
         return !list.isEmpty();
     }
 
@@ -114,19 +151,6 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             return 0;
         }
         return iterator.nextIndex();
-    }
-
-    /**
-     * Returns whether this iterator has any more previous elements.
-     * <p>
-     * Returns false only if the list originally had zero elements, or
-     * all elements have been {@link #remove removed}.
-     *
-     * @return {@code true} if there are more elements
-     */
-    @Override
-    public boolean hasPrevious() {
-        return !list.isEmpty();
     }
 
     /**
@@ -202,23 +226,11 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Inserts the specified element into the underlying list.
-     * <p>
-     * The element is inserted before the next element that would be
-     * returned by {@link #next}, if any, and after the next element
-     * that would be returned by {@link #previous}, if any.
-     * <p>
-     * This feature is only supported if the underlying list's
-     * {@link List#listIterator} method returns an implementation
-     * that supports it.
-     *
-     * @param obj  the element to insert
-     * @throws UnsupportedOperationException if the add method is not
-     *  supported by the iterator implementation of the underlying list
+     * Resets the iterator back to the start of the list.
      */
     @Override
-    public void add(final E obj) {
-        iterator.add(obj);
+    public void reset() {
+        _reset();
     }
 
     /**
@@ -236,18 +248,6 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     @Override
     public void set(final E obj) {
         iterator.set(obj);
-    }
-
-    /**
-     * Resets the iterator back to the start of the list.
-     */
-    @Override
-    public void reset() {
-        _reset();
-    }
-
-    private void _reset() {
-        iterator = list.listIterator();
     }
 
     /**

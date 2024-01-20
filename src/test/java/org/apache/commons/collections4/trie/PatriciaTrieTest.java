@@ -50,13 +50,18 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Override
-    public SortedMap<String, V> makeObject() {
-        return new PatriciaTrie<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     public boolean isAllowNullKey() {
         return false;
+    }
+
+    @Override
+    public SortedMap<String, V> makeObject() {
+        return new PatriciaTrie<>();
     }
 
     @Test
@@ -289,6 +294,67 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
+    public void testPrefixMapClear() {
+        final Trie<String, Integer> trie = new PatriciaTrie<>();
+        trie.put("Anna", 1);
+        trie.put("Anael", 2);
+        trie.put("Analu", 3);
+        trie.put("Andreas", 4);
+        trie.put("Andrea", 5);
+        trie.put("Andres", 6);
+        trie.put("Anatole", 7);
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
+        assertEquals(new HashSet<>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
+        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<>(prefixMap.values()));
+
+        prefixMap.clear();
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
+        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    @Test
+    public void testPrefixMapClearNothing() {
+        final Trie<String, Integer> trie = new PatriciaTrie<>();
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
+        assertEquals(new HashSet<>(), prefixMap.keySet());
+        assertEquals(new ArrayList<>(0), new ArrayList<>(prefixMap.values()));
+
+        prefixMap.clear();
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(new HashSet<>(), trie.keySet());
+        assertEquals(new ArrayList<>(0), new ArrayList<>(trie.values()));
+    }
+
+    @Test
+    public void testPrefixMapClearUsingRemove() {
+        final Trie<String, Integer> trie = new PatriciaTrie<>();
+        trie.put("Anna", 1);
+        trie.put("Anael", 2);
+        trie.put("Analu", 3);
+        trie.put("Andreas", 4);
+        trie.put("Andrea", 5);
+        trie.put("Andres", 6);
+        trie.put("Anatole", 7);
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
+        assertEquals(new HashSet<>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
+        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<>(prefixMap.values()));
+
+        final Set<String> keys = new HashSet<>(prefixMap.keySet());
+        for (final String key : keys) {
+            prefixMap.remove(key);
+        }
+        assertTrue(prefixMap.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
+        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    @Test
     public void testPrefixMapRemoval() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
@@ -372,72 +438,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         assertEquals(2, trie.prefixMap(prefixString).size());
         assertTrue(trie.prefixMap(prefixString).containsKey(longerString));
-    }
-
-    @Test
-    public void testPrefixMapClear() {
-        final Trie<String, Integer> trie = new PatriciaTrie<>();
-        trie.put("Anna", 1);
-        trie.put("Anael", 2);
-        trie.put("Analu", 3);
-        trie.put("Andreas", 4);
-        trie.put("Andrea", 5);
-        trie.put("Andres", 6);
-        trie.put("Anatole", 7);
-        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
-        assertEquals(new HashSet<>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
-        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<>(prefixMap.values()));
-
-        prefixMap.clear();
-        assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.isEmpty());
-        assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
-        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
-    }
-
-    @Test
-    public void testPrefixMapClearNothing() {
-        final Trie<String, Integer> trie = new PatriciaTrie<>();
-        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
-        assertEquals(new HashSet<>(), prefixMap.keySet());
-        assertEquals(new ArrayList<>(0), new ArrayList<>(prefixMap.values()));
-
-        prefixMap.clear();
-        assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.isEmpty());
-        assertEquals(new HashSet<>(), trie.keySet());
-        assertEquals(new ArrayList<>(0), new ArrayList<>(trie.values()));
-    }
-
-    @Test
-    public void testPrefixMapClearUsingRemove() {
-        final Trie<String, Integer> trie = new PatriciaTrie<>();
-        trie.put("Anna", 1);
-        trie.put("Anael", 2);
-        trie.put("Analu", 3);
-        trie.put("Andreas", 4);
-        trie.put("Andrea", 5);
-        trie.put("Andres", 6);
-        trie.put("Anatole", 7);
-        final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
-        assertEquals(new HashSet<>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
-        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<>(prefixMap.values()));
-
-        final Set<String> keys = new HashSet<>(prefixMap.keySet());
-        for (final String key : keys) {
-            prefixMap.remove(key);
-        }
-        assertTrue(prefixMap.isEmpty());
-        assertTrue(prefixMap.isEmpty());
-        assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
-        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

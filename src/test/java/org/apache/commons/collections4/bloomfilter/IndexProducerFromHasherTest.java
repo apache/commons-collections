@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bloomfilter;
 public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
 
     @Override
-    protected int getAsIndexArrayBehaviour() {
-        return 0;
+    protected IndexProducer createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
 
     @Override
@@ -30,8 +30,8 @@ public class IndexProducerFromHasherTest extends AbstractIndexProducerTest {
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
+    protected int getAsIndexArrayBehaviour() {
+        return 0;
     }
 
     @Override

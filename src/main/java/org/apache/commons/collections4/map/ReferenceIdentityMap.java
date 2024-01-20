@@ -228,17 +228,6 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     }
 
     /**
-     * Write the map out using a custom routine.
-     *
-     * @param out the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        doWriteObject(out);
-    }
-
-    /**
      * Read the map in using a custom routine.
      *
      * @param in the input stream
@@ -248,6 +237,17 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
+    }
+
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
     }
 
 }

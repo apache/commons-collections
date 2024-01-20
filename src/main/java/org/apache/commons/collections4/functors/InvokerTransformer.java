@@ -36,13 +36,6 @@ import org.apache.commons.collections4.Transformer;
  */
 public class InvokerTransformer<I, O> implements Transformer<I, O> {
 
-    /** The method name to call */
-    private final String iMethodName;
-    /** The array of reflection parameter types */
-    private final Class<?>[] iParamTypes;
-    /** The array of reflection arguments */
-    private final Object[] iArgs;
-
     /**
      * Gets an instance of this transformer calling a specific method with no arguments.
      *
@@ -56,7 +49,6 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
         return new InvokerTransformer<>(Objects.requireNonNull(methodName, "methodName"));
     }
-
     /**
      * Gets an instance of this transformer calling a specific method with specific values.
      *
@@ -82,6 +74,14 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
         }
         return new InvokerTransformer<>(methodName, paramTypes, args);
     }
+    /** The method name to call */
+    private final String iMethodName;
+
+    /** The array of reflection parameter types */
+    private final Class<?>[] iParamTypes;
+
+    /** The array of reflection arguments */
+    private final Object[] iArgs;
 
     /**
      * Constructor for no arg instance.

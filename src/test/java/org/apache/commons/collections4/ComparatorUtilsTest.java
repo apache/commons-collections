@@ -90,18 +90,18 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testNullLowComparator() {
-        final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
-        assertTrue(comp.compare(null, 10) < 0);
-        assertEquals(0, comp.compare(null, null));
-        assertTrue(comp.compare(10, null) > 0);
-    }
-
-    @Test
     public void testNullHighComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
         assertTrue(comp.compare(null, 10) > 0);
         assertEquals(0, comp.compare(null, null));
         assertTrue(comp.compare(10, null) < 0);
+    }
+
+    @Test
+    public void testNullLowComparator() {
+        final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
+        assertTrue(comp.compare(null, 10) < 0);
+        assertEquals(0, comp.compare(null, null));
+        assertTrue(comp.compare(10, null) > 0);
     }
 }

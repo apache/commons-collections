@@ -30,6 +30,141 @@ import org.junit.jupiter.api.Test;
  * Tests for the {@link BloomFilter}.
  */
 public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloomFilterTest.AbstractDefaultBloomFilter> {
+    abstract static class AbstractDefaultBloomFilter implements BloomFilter {
+        private final Shape shape;
+        protected TreeSet<Integer> indices;
+
+        AbstractDefaultBloomFilter(final Shape shape) {
+            this.shape = shape;
+            this.indices = new TreeSet<>();
+        }
+
+        @Override
+        public int cardinality() {
+            return indices.size();
+        }
+
+        private void checkIndicesRange() {
+            if (!indices.isEmpty()) {
+                if (indices.last() >= shape.getNumberOfBits()) {
+                    throw new IllegalArgumentException(
+                        String.format("Value in list %s is greater than maximum value (%s)", indices.last(),
+                            shape.getNumberOfBits()));
+                }
+                if (indices.first() < 0) {
+                    throw new IllegalArgumentException(
+                        String.format("Value in list %s is less than 0", indices.first()));
+                }
+            }
+        }
+
+        @Override
+        public void clear() {
+            indices.clear();
+        }
+
+        @Override
+        public boolean contains(final BitMapProducer bitMapProducer) {
+            return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+        }
+
+        @Override
+        public boolean contains(final IndexProducer indexProducer) {
+            return indexProducer.forEachIndex(indices::contains);
+        }
+
+        @Override
+        public boolean forEachBitMap(final LongPredicate consumer) {
+            return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
+        }
+
+        @Override
+        public boolean forEachIndex(final IntPredicate consumer) {
+            for (final Integer i : indices) {
+                if (!consumer.test(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public Shape getShape() {
+            return shape;
+        }
+
+        @Override
+        public boolean merge(final BitMapProducer bitMapProducer) {
+            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+        }
+
+        @Override
+        public boolean merge(final IndexProducer indexProducer) {
+            final boolean result = indexProducer.forEachIndex(x -> {
+                indices.add(x);
+                return true;
+            });
+            checkIndicesRange();
+            return result;
+        }
+    }
+
+    static class BrokenCardinality extends NonSparseDefaultBloomFilter {
+
+        BrokenCardinality(final Shape shape) {
+            super(shape);
+        }
+
+        @Override
+        public int cardinality() {
+            return super.cardinality() + 1;
+        }
+    }
+
+    /**
+     * A default implementation of a non-sparse Bloom filter.
+     */
+    public static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
+
+        public NonSparseDefaultBloomFilter(final Shape shape) {
+            super(shape);
+        }
+
+        @Override
+        public int characteristics() {
+            return 0;
+        }
+
+        @Override
+        public AbstractDefaultBloomFilter copy() {
+            final AbstractDefaultBloomFilter result = new NonSparseDefaultBloomFilter(getShape());
+            result.indices.addAll(indices);
+            return result;
+        }
+    }
+
+    /**
+     * A default implementation of a Sparse bloom filter.
+     */
+    public static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
+
+        public SparseDefaultBloomFilter(final Shape shape) {
+            super(shape);
+        }
+
+        @Override
+        public int characteristics() {
+            return SPARSE;
+        }
+
+        @Override
+        public AbstractDefaultBloomFilter copy() {
+            final AbstractDefaultBloomFilter result = new SparseDefaultBloomFilter(getShape());
+            result.indices.addAll(indices);
+            return result;
+        }
+    }
+
     @Override
     protected AbstractDefaultBloomFilter createEmptyFilter(final Shape shape) {
         return new SparseDefaultBloomFilter(shape);
@@ -54,28 +189,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
     }
 
     @Test
-    public void testHasherBasedMergeWithDifferingSparseness() {
-        final Hasher hasher = new IncrementingHasher(1, 1);
-
-        BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
-        bf1.merge(hasher);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair(bf1, (x, y) -> x == y));
-
-        bf1 = new SparseDefaultBloomFilter(getTestShape());
-        bf1.merge(hasher);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair(bf1, (x, y) -> x == y));
-    }
-
-    @Test
-    public void testEstimateNWithBrokenCardinality() {
-        // build a filter
-        final BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
-        assertThrows(IllegalArgumentException.class, () -> filter1.estimateN());
-    }
-
-    @Test
     public void testEstimateLargeN() {
         final Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bits set.
@@ -96,6 +209,28 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         // the actual result of the calculation is: 46144189292, so the returned value
         // should be Integer.MAX_VALUE.
         assertEquals(Integer.MAX_VALUE, bf1.estimateN());
+    }
+
+    @Test
+    public void testEstimateNWithBrokenCardinality() {
+        // build a filter
+        final BloomFilter filter1 = TestingHashers.populateEntireFilter(new BrokenCardinality(getTestShape()));
+        assertThrows(IllegalArgumentException.class, () -> filter1.estimateN());
+    }
+
+    @Test
+    public void testHasherBasedMergeWithDifferingSparseness() {
+        final Hasher hasher = new IncrementingHasher(1, 1);
+
+        BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
+        bf1.merge(hasher);
+        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .forEachBitMapPair(bf1, (x, y) -> x == y));
+
+        bf1 = new SparseDefaultBloomFilter(getTestShape());
+        bf1.merge(hasher);
+        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .forEachBitMapPair(bf1, (x, y) -> x == y));
     }
 
     @Test
@@ -134,140 +269,5 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         result = bf2.copy();
         result.merge(bf1);
         assertEquals(27, result.cardinality());
-    }
-
-    abstract static class AbstractDefaultBloomFilter implements BloomFilter {
-        private final Shape shape;
-        protected TreeSet<Integer> indices;
-
-        AbstractDefaultBloomFilter(final Shape shape) {
-            this.shape = shape;
-            this.indices = new TreeSet<>();
-        }
-
-        @Override
-        public void clear() {
-            indices.clear();
-        }
-
-        @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            for (final Integer i : indices) {
-                if (!consumer.test(i)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public boolean forEachBitMap(final LongPredicate consumer) {
-            return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
-        }
-
-        @Override
-        public Shape getShape() {
-            return shape;
-        }
-
-        @Override
-        public boolean contains(final IndexProducer indexProducer) {
-            return indexProducer.forEachIndex(indices::contains);
-        }
-
-        @Override
-        public boolean contains(final BitMapProducer bitMapProducer) {
-            return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
-        }
-
-        private void checkIndicesRange() {
-            if (!indices.isEmpty()) {
-                if (indices.last() >= shape.getNumberOfBits()) {
-                    throw new IllegalArgumentException(
-                        String.format("Value in list %s is greater than maximum value (%s)", indices.last(),
-                            shape.getNumberOfBits()));
-                }
-                if (indices.first() < 0) {
-                    throw new IllegalArgumentException(
-                        String.format("Value in list %s is less than 0", indices.first()));
-                }
-            }
-        }
-
-        @Override
-        public boolean merge(final IndexProducer indexProducer) {
-            final boolean result = indexProducer.forEachIndex(x -> {
-                indices.add(x);
-                return true;
-            });
-            checkIndicesRange();
-            return result;
-        }
-
-        @Override
-        public boolean merge(final BitMapProducer bitMapProducer) {
-            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
-        }
-
-        @Override
-        public int cardinality() {
-            return indices.size();
-        }
-    }
-
-    /**
-     * A default implementation of a Sparse bloom filter.
-     */
-    public static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
-
-        public SparseDefaultBloomFilter(final Shape shape) {
-            super(shape);
-        }
-
-        @Override
-        public int characteristics() {
-            return SPARSE;
-        }
-
-        @Override
-        public AbstractDefaultBloomFilter copy() {
-            final AbstractDefaultBloomFilter result = new SparseDefaultBloomFilter(getShape());
-            result.indices.addAll(indices);
-            return result;
-        }
-    }
-
-    /**
-     * A default implementation of a non-sparse Bloom filter.
-     */
-    public static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
-
-        public NonSparseDefaultBloomFilter(final Shape shape) {
-            super(shape);
-        }
-
-        @Override
-        public int characteristics() {
-            return 0;
-        }
-
-        @Override
-        public AbstractDefaultBloomFilter copy() {
-            final AbstractDefaultBloomFilter result = new NonSparseDefaultBloomFilter(getShape());
-            result.indices.addAll(indices);
-            return result;
-        }
-    }
-
-    static class BrokenCardinality extends NonSparseDefaultBloomFilter {
-
-        BrokenCardinality(final Shape shape) {
-            super(shape);
-        }
-
-        @Override
-        public int cardinality() {
-            return super.cardinality() + 1;
-        }
     }
 }

@@ -37,6 +37,11 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public SortedBag<T> makeObject() {
         return TransformedSortedBag.transformingSortedBag(new TreeBag<>(), (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
@@ -72,11 +77,6 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         }
 
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

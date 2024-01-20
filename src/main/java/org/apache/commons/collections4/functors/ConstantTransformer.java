@@ -39,20 +39,6 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     @SuppressWarnings("rawtypes")
     public static final Transformer NULL_INSTANCE = new ConstantTransformer<>(null);
 
-    /** The closures to call in turn */
-    private final O iConstant;
-
-    /**
-     * Gets a typed null instance.
-     *
-     * @param <I>  the input type
-     * @param <O>  the output type
-     * @return Transformer&lt;I, O&gt; that always returns null.
-     */
-    public static <I, O> Transformer<I, O> nullTransformer() {
-        return NULL_INSTANCE;
-    }
-
     /**
      * Transformer method that performs validation.
      *
@@ -69,6 +55,20 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     }
 
     /**
+     * Gets a typed null instance.
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
+     * @return Transformer&lt;I, O&gt; that always returns null.
+     */
+    public static <I, O> Transformer<I, O> nullTransformer() {
+        return NULL_INSTANCE;
+    }
+
+    /** The closures to call in turn */
+    private final O iConstant;
+
+    /**
      * Constructor that performs no validation.
      * Use {@code constantTransformer} if you want that.
      *
@@ -76,27 +76,6 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      */
     public ConstantTransformer(final O constantToReturn) {
         iConstant = constantToReturn;
-    }
-
-    /**
-     * Transforms the input by ignoring it and returning the stored constant instead.
-     *
-     * @param input  the input object which is ignored
-     * @return the stored constant
-     */
-    @Override
-    public O transform(final I input) {
-        return iConstant;
-    }
-
-    /**
-     * Gets the constant.
-     *
-     * @return the constant
-     * @since 3.1
-     */
-    public O getConstant() {
-        return iConstant;
     }
 
     /**
@@ -115,6 +94,16 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     }
 
     /**
+     * Gets the constant.
+     *
+     * @return the constant
+     * @since 3.1
+     */
+    public O getConstant() {
+        return iConstant;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -124,5 +113,16 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
             result |= getConstant().hashCode();
         }
         return result;
+    }
+
+    /**
+     * Transforms the input by ignoring it and returning the stored constant instead.
+     *
+     * @param input  the input object which is ignored
+     * @return the stored constant
+     */
+    @Override
+    public O transform(final I input) {
+        return iConstant;
     }
 }

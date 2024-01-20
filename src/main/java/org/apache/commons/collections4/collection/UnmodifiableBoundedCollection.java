@@ -116,11 +116,6 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
@@ -136,7 +131,32 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     @Override
+    protected BoundedCollection<E> decorated() {
+        return (BoundedCollection<E>) super.decorated();
+    }
+
+    @Override
+    public boolean isFull() {
+        return decorated().isFull();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
+    }
+
+    @Override
+    public int maxSize() {
+        return decorated().maxSize();
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -149,27 +169,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isFull() {
-        return decorated().isFull();
-    }
-
-    @Override
-    public int maxSize() {
-        return decorated().maxSize();
-    }
-
-    @Override
-    protected BoundedCollection<E> decorated() {
-        return (BoundedCollection<E>) super.decorated();
     }
 }

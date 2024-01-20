@@ -26,20 +26,20 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DualTreeBidiMap<K, V> makeObject() {
-        return new DualTreeBidiMap<>();
-    }
-
-    /**
      * Override to prevent infinite recursion of tests.
      */
     @Override
     public String[] ignoredTests() {
         final String recursiveTest = "DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap";
         return new String[] { recursiveTest };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DualTreeBidiMap<K, V> makeObject() {
+        return new DualTreeBidiMap<>();
     }
 
 //    public void testCreate() throws Exception {

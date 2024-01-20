@@ -76,42 +76,15 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    @Override
-    public void testWalkForwardAndBack() {
-        final ArrayList<E> list = new ArrayList<>();
-        final ListIterator<E> it = makeObject();
-        while (it.hasNext()) {
-            list.add(it.next());
-        }
-
-        // check state at end
-        assertFalse(it.hasNext());
-        assertTrue(it.hasPrevious());
-
-        // this had to be commented out, as there is a bug in the JDK before JDK1.5
-        // where calling previous at the start of an iterator would push the cursor
-        // back to an invalid negative value
-//        try {
-//            it.next();
-//            fail("NoSuchElementException must be thrown from next at end of ListIterator");
-//        } catch (NoSuchElementException e) {
-//        }
-
-        // loop back through comparing
-        for (int i = list.size() - 1; i >= 0; i--) {
-            assertEquals(list.size() - i - 2, it.nextIndex(), "" + i);  // reversed index
-            assertEquals(list.size() - i - 1, it.previousIndex());  // reversed index
-
-            final Object obj = list.get(i);
-            assertEquals(obj, it.previous());
-        }
-
-        // check state at start
-        assertTrue(it.hasNext());
-        assertFalse(it.hasPrevious());
-
-        assertThrows(NoSuchElementException.class, () -> it.previous(),
-                "NoSuchElementException must be thrown from previous at start of ListIterator");
+    public void testReset() {
+        final ResettableListIterator<E> it = makeObject();
+        assertEquals("Four", it.next());
+        it.reset();
+        assertEquals("Four", it.next());
+        it.next();
+        it.next();
+        it.reset();
+        assertEquals("Four", it.next());
     }
 
     @Test
@@ -148,15 +121,42 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
-        final ResettableListIterator<E> it = makeObject();
-        assertEquals("Four", it.next());
-        it.reset();
-        assertEquals("Four", it.next());
-        it.next();
-        it.next();
-        it.reset();
-        assertEquals("Four", it.next());
+    @Override
+    public void testWalkForwardAndBack() {
+        final ArrayList<E> list = new ArrayList<>();
+        final ListIterator<E> it = makeObject();
+        while (it.hasNext()) {
+            list.add(it.next());
+        }
+
+        // check state at end
+        assertFalse(it.hasNext());
+        assertTrue(it.hasPrevious());
+
+        // this had to be commented out, as there is a bug in the JDK before JDK1.5
+        // where calling previous at the start of an iterator would push the cursor
+        // back to an invalid negative value
+//        try {
+//            it.next();
+//            fail("NoSuchElementException must be thrown from next at end of ListIterator");
+//        } catch (NoSuchElementException e) {
+//        }
+
+        // loop back through comparing
+        for (int i = list.size() - 1; i >= 0; i--) {
+            assertEquals(list.size() - i - 2, it.nextIndex(), "" + i);  // reversed index
+            assertEquals(list.size() - i - 1, it.previousIndex());  // reversed index
+
+            final Object obj = list.get(i);
+            assertEquals(obj, it.previous());
+        }
+
+        // check state at start
+        assertTrue(it.hasNext());
+        assertFalse(it.hasPrevious());
+
+        assertThrows(NoSuchElementException.class, () -> it.previous(),
+                "NoSuchElementException must be thrown from previous at start of ListIterator");
     }
 
 }

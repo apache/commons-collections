@@ -24,16 +24,6 @@ public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
     public ArrayListIterator2Test() {
     }
 
-    @Override
-    public ArrayListIterator<E> makeEmptyIterator() {
-        return new ArrayListIterator<>(new int[0]);
-    }
-
-    @Override
-    public ArrayListIterator<E> makeObject() {
-        return new ArrayListIterator<>(testArray);
-    }
-
     public ArrayListIterator<E> makeArrayListIterator(final Object array) {
         return new ArrayListIterator<>(array);
     }
@@ -44,6 +34,16 @@ public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
     public ArrayListIterator<E> makeArrayListIterator(final Object array, final int start, final int end) {
         return new ArrayListIterator<>(array, start, end);
+    }
+
+    @Override
+    public ArrayListIterator<E> makeEmptyIterator() {
+        return new ArrayListIterator<>(new int[0]);
+    }
+
+    @Override
+    public ArrayListIterator<E> makeObject() {
+        return new ArrayListIterator<>(testArray);
     }
 
 }

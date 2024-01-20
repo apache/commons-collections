@@ -43,6 +43,29 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
     /**
      * Factory to create the predicate.
      * <p>
+     * If the collection is size zero, the predicate always returns true.
+     * If the collection is size one, then that predicate is returned.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code all} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
+        final Predicate<? super T>[] preds = validate(predicates);
+        if (preds.length == 0) {
+            return truePredicate();
+        }
+        if (preds.length == 1) {
+            return coerce(preds[0]);
+        }
+        return new AllPredicate<>(preds);
+    }
+
+    /**
+     * Factory to create the predicate.
+     * <p>
      * If the array is size zero, the predicate always returns true.
      * If the array is size one, then that predicate is returned.
      *
@@ -62,29 +85,6 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
         }
 
         return new AllPredicate<>(FunctorUtils.copy(predicates));
-    }
-
-    /**
-     * Factory to create the predicate.
-     * <p>
-     * If the collection is size zero, the predicate always returns true.
-     * If the collection is size one, then that predicate is returned.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code all} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
-        final Predicate<? super T>[] preds = validate(predicates);
-        if (preds.length == 0) {
-            return truePredicate();
-        }
-        if (preds.length == 1) {
-            return coerce(preds[0]);
-        }
-        return new AllPredicate<>(preds);
     }
 
     /**
