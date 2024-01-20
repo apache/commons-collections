@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections4.list.TreeList;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LRUMap;
@@ -41,6 +37,10 @@ import com.google.common.collect.testing.features.CollectionSize;
 import com.google.common.collect.testing.features.Feature;
 import com.google.common.collect.testing.features.ListFeature;
 import com.google.common.collect.testing.features.MapFeature;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * This test uses Google's Guava Testlib testing libraries to validate the
