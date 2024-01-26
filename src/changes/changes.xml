@@ -203,6 +203,9 @@
     <action dev="ggregory" type="fix" due-to="Martin Wiesner, Bruno P. Kinoshita, Gary Gregory">
       Fix punctuation and minor Javadoc issues #409.
     </action>
+    <action dev="ggregory" type="fix" due-to="Gary Gregory">
+      Deprecate IterableUtils 0-argument constructor.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-843" dev="ggregory" type="add" due-to="Claude Warren, Alex Herbert, Gary Gregory">
       Implement Layered Bloom filter #402.

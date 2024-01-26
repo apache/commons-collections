@@ -1040,4 +1040,13 @@ public class IterableUtils {
         };
     }
 
+    /**
+     * Make private in 5.0.
+     *
+     * @deprecated TODO Make private in 5.0.
+     */
+    @Deprecated
+    public IterableUtils() {
+        // empty
+    }
 }
