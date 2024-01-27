@@ -743,9 +743,8 @@ public class TreeList<E> extends AbstractList<E> {
                 .append(value)
                 .append(CollectionUtils.COMMA)
                 .append(getRightSubTree() != null)
-                .append(", faedelung ")
                 .append(rightIsNext)
-                .append(" )")
+                .append(")")
                 .toString();
         }
     }
