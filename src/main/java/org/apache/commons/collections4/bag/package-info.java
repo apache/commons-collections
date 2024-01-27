@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * This package contains implementations of the {@link org.apache.commons.collections4.Bag Bag} and
  * {@link org.apache.commons.collections4.SortedBag SortedBag} interfaces.
