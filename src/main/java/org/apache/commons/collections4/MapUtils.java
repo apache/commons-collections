@@ -216,6 +216,7 @@ public class MapUtils {
      * equals 'true' ignoring case then {@code true} is returned, otherwise {@code false}. If the value is a
      * {@code Number} an integer zero value returns {@code false} and non-zero returns {@code true}.
      * Otherwise, {@code null} is returned.
+     * </p>
      *
      * @param <K> the key type
      * @param map the map to use
@@ -1272,7 +1273,6 @@ public class MapUtils {
      * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
      * Object obj = lazyMap.get("test");
      * </pre>
-     *
      * <p>
      * After the above code is executed, {@code obj} will contain a new {@code Date} instance. Furthermore,
      * that {@code Date} instance is the value for the {@code "test"} key in the map.
@@ -1623,25 +1623,20 @@ public class MapUtils {
      * <p>
      * For example, to create a color map:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(),
      *         new String[][] { { "RED", "#FF0000" }, { "GREEN", "#00FF00" }, { "BLUE", "#0000FF" } });
      * </pre>
-     *
      * <p>
      * or:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(),
      *         new String[] { "RED", "#FF0000", "GREEN", "#00FF00", "BLUE", "#0000FF" });
      * </pre>
-     *
      * <p>
      * or:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(), new Map.Entry[] { new DefaultMapEntry("RED", "#FF0000"),
      *         new DefaultMapEntry("GREEN", "#00FF00"), new DefaultMapEntry("BLUE", "#0000FF") });
@@ -1734,7 +1729,6 @@ public class MapUtils {
      * <p>
      * You must manually synchronize on the returned buffer's iterator to avoid non-deterministic behavior:
      * </p>
-     *
      * <pre>
      * Map m = MapUtils.synchronizedMap(myMap);
      * Sets s = m.keySet(); // outside synchronized block
@@ -1745,7 +1739,6 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     *
      * <p>
      * This method uses the implementation in {@link java.util.Collections Collections}.
      * </p>
@@ -1764,7 +1757,6 @@ public class MapUtils {
      * <p>
      * You must manually synchronize on the returned buffer's iterator to avoid non-deterministic behavior:
      * </p>
-     *
      * <pre>
      * Map m = MapUtils.synchronizedSortedMap(myMap);
      * Sets s = m.keySet(); // outside synchronized block
@@ -1775,7 +1767,6 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     *
      * <p>
      * This method uses the implementation in {@link java.util.Collections Collections}.
      * </p>
