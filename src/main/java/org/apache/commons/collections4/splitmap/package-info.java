@@ -16,7 +16,7 @@
  */
 
 /**
- * The "split map" concept is that of an object that implements
+ * Implements the "split map" concept. A split map is an object that implements
  * the {@link org.apache.commons.collections4.Put Put} and
  * {@link org.apache.commons.collections4.Get Get} interfaces,
  * with <i>differing</i> generic types. This is like a pre-generics

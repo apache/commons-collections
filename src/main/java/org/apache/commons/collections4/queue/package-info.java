@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations for the {@link java.util.Queue Queue} interface.
+ * Implements the {@link java.util.Queue Queue} interface.
  * <p>
  * The following implementations are provided in the package:
  * <ul>

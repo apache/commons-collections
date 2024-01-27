@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the {@link java.util.List List} interface.
+ * Implements the {@link java.util.List List} interface.
  * <p>
  * The following implementations are provided in the package:
  * <ul>

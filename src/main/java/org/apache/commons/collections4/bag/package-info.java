@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the {@link org.apache.commons.collections4.Bag Bag} and
+ * Implements the {@link org.apache.commons.collections4.Bag Bag} and
  * {@link org.apache.commons.collections4.SortedBag SortedBag} interfaces.
  * A bag stores an object and a count of the number of occurrences of the object.
  * <p>

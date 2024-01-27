@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the
+ * Implementations of the
  * {@link java.util.Collection Collection} interface.
  * <p>
  * The following implementations are provided in the package:

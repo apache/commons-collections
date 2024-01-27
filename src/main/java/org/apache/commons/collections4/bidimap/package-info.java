@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link org.apache.commons.collections4.BidiMap BidiMap},
  * {@link org.apache.commons.collections4.OrderedBidiMap OrderedBidiMap} and
  * {@link org.apache.commons.collections4.SortedBidiMap SortedBidiMap} interfaces.

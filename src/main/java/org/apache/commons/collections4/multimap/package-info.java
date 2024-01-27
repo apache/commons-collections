@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the {@link org.apache.commons.collections4.MultiValuedMap} interfaces.
+ * Implements the {@link org.apache.commons.collections4.MultiValuedMap} interfaces.
  * A MultiValuedMap holds a collection of values against each key.
  * <p>
  * The following implementations are provided in the package:

@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link org.apache.commons.collections4.Trie Trie} interface.
  * <p>
  * The implementations are in the form of direct implementations and decorators.

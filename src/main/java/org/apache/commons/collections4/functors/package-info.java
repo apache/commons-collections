@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link org.apache.commons.collections4.Closure Closure},
  * {@link org.apache.commons.collections4.Predicate Predicate},
  * {@link org.apache.commons.collections4.Transformer Transformer} and

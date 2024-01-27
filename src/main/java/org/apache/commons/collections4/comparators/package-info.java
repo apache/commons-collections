@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link java.util.Comparator Comparator} interface.
  * <p>
  * You may also consider using

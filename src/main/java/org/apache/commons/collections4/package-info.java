@@ -16,7 +16,7 @@
  */
 
 /**
- * This package contains the interfaces and utilities shared across all the subpackages of this component.
+ * Interfaces and utilities shared across all packages.
  * <p>
  * The following collection implementations are provided in the package:
  * <ul>
