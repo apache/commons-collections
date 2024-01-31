@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -149,5 +150,21 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         assertTrue(!caseInsensitiveMap.containsValue("One")
             || !caseInsensitiveMap.containsValue("Three")); // ones collapsed
         assertEquals("Four", caseInsensitiveMap.get(null));
+    }
+
+    // COLLECTIONS-803
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testPutConvertKeyOnlyOnce() {
+        CaseInsensitiveMap<String, String> mock = EasyMock.partialMockBuilder(CaseInsensitiveMap.class)
+                .addMockedMethod("convertKey")
+                .createMock();
+        mock.data = new AbstractHashedMap.HashEntry[16];
+        EasyMock.expect(mock.convertKey("Key")).andReturn("key").once();
+        EasyMock.replay(mock);
+
+        mock.put("Key", "value");
+
+        EasyMock.verify(mock);
     }
 }
