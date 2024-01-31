@@ -496,7 +496,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             }
             boolean modified = false;
             for (final Object current : coll) {
-                modified |= remove(current);
+                modified |= super.remove(current);
             }
             return modified;
         }

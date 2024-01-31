@@ -68,8 +68,6 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         testList = Arrays.asList((E[]) testArray);
     }
 
-    // ---------------- Tests ---------------------
-
     /**
      * Test a decorated iterator bounded such that the first element returned is
      * at an index greater its first element, and the last element returned is

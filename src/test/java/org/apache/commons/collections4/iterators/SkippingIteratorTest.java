@@ -64,8 +64,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
         testList = Arrays.asList((E[]) testArray);
     }
 
-    // ---------------- Tests ---------------------
-
     /**
      * Test the case if a negative {@code offset} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
