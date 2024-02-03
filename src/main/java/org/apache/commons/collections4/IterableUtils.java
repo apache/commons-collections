@@ -83,6 +83,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to limit, may not be null
@@ -111,9 +112,11 @@ public class IterableUtils {
      * The returned iterable has an iterator that traverses the elements in the order
      * of the arguments, i.e. iterables[0], iterables[1], .... The source iterators
      * are not polled until necessary.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param iterables  the iterables to combine, may not be null
@@ -144,9 +147,11 @@ public class IterableUtils {
      * The returned iterable has an iterator that traverses the elements in {@code a},
      * followed by the elements in {@code b}. The source iterators are not polled until
      * necessary.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param a  the first iterable, may not be null
@@ -166,9 +171,11 @@ public class IterableUtils {
      * The returned iterable has an iterator that traverses the elements in {@code a},
      * followed by the elements in {@code b} and {@code c}. The source iterators are
      * not polled until necessary.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param a  the first iterable, may not be null
@@ -190,9 +197,11 @@ public class IterableUtils {
      * The returned iterable has an iterator that traverses the elements in {@code a},
      * followed by the elements in {@code b}, {@code c} and {@code d}. The source
      * iterators are not polled until necessary.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param a  the first iterable, may not be null
@@ -240,6 +249,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param comparator  the comparator defining an ordering over the elements,
@@ -267,6 +277,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param a  the first iterable, must not be null
@@ -294,6 +305,7 @@ public class IterableUtils {
      * A {@code null} object will not be passed to the equator, instead a
      * {@link org.apache.commons.collections4.functors.NullPredicate NullPredicate}
      * will be used.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to check, may be null
@@ -312,6 +324,7 @@ public class IterableUtils {
      * Checks if the object is contained in the given iterable.
      * <p>
      * A {@code null} or empty iterable returns false.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to check, may be null
@@ -329,6 +342,7 @@ public class IterableUtils {
      * Counts the number of elements in the input iterable that match the predicate.
      * <p>
      * A {@code null} iterable matches no elements.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param input  the {@link Iterable} to get the input from, may be null
@@ -357,6 +371,7 @@ public class IterableUtils {
      * Gets an empty iterable.
      * <p>
      * This iterable does not contain any elements.
+     * </p>
      *
      * @param <E> the element type
      * @return an empty iterable
@@ -384,6 +399,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to filter, may not be null
@@ -407,6 +423,7 @@ public class IterableUtils {
      * Finds the first element in the given iterable which matches the given predicate.
      * <p>
      * A {@code null} or empty iterator returns null.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
@@ -454,6 +471,7 @@ public class IterableUtils {
      * Executes the given closure on each but the last element in the iterable.
      * <p>
      * If the input iterable is null no change is made.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to get the input from, may be null
@@ -488,6 +506,7 @@ public class IterableUtils {
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
+     * </p>
      *
      * @param <T> the type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
@@ -508,6 +527,7 @@ public class IterableUtils {
      * matches the given predicate.
      * <p>
      * A {@code null} or empty iterable returns -1.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
@@ -523,6 +543,7 @@ public class IterableUtils {
      * Answers true if the provided iterable is empty.
      * <p>
      * A {@code null} iterable returns true.
+     * </p>
      *
      * @param iterable  the {@link Iterable to use}, may be null
      * @return true if the iterable is null or empty, false otherwise
@@ -543,6 +564,7 @@ public class IterableUtils {
      * cycles omit the removed element, which is no longer in {@code iterable}. The
      * iterator's {@code hasNext()} method returns {@code true} until {@code iterable}
      * is empty.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to loop, may not be null
@@ -571,6 +593,7 @@ public class IterableUtils {
      * Answers true if a predicate is true for every element of an iterable.
      * <p>
      * A {@code null} or empty iterable returns true.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
@@ -587,6 +610,7 @@ public class IterableUtils {
      * Answers true if a predicate is true for any element of the iterable.
      * <p>
      * A {@code null} or empty iterable returns false.
+     * </p>
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
@@ -605,6 +629,7 @@ public class IterableUtils {
      * For each predicate, the returned list will contain a collection holding
      * all elements of the input iterable matching the predicate. The last collection
      * contained in the list will hold all elements which didn't match any predicate:
+     * </p>
      * <pre>
      *  [C1, C2, R] = partition(I, P1, P2) with
      *  I = input
@@ -617,14 +642,17 @@ public class IterableUtils {
      * <p>
      * <b>Note</b>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
+     * </p>
      * <p>
      * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
      * If no predicates have been provided, all elements of the input collection
      * will be added to the rejected collection.
+     * </p>
      * <p>
      * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
      * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
+     * </p>
      *
      * @param <O>  the type of object the {@link Iterable} contains
      * @param <R>  the type of the output {@link Collection}
@@ -694,6 +722,7 @@ public class IterableUtils {
      * For each predicate, the result will contain a list holding all elements of the
      * input iterable matching the predicate. The last list will hold all elements
      * which didn't match any predicate:
+     * </p>
      * <pre>
      *  [C1, R] = partition(I, P1) with
      *  I = input
@@ -704,9 +733,11 @@ public class IterableUtils {
      * <p>
      * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
+     * </p>
      * <p>
      * Example: for an input list [1, 2, 3, 4, 5] calling partition with a predicate [x &lt; 3]
      * will result in the following output: [[1, 2], [3, 4, 5]].
+     * </p>
      *
      * @param <O>  the type of object the {@link Iterable} contains
      * @param iterable  the iterable to partition, may be null
@@ -731,6 +762,7 @@ public class IterableUtils {
      * For each predicate, the result will contain a list holding all elements of the
      * input iterable matching the predicate. The last list will hold all elements
      * which didn't match any predicate:
+     * </p>
      * <pre>
      *  [C1, C2, R] = partition(I, P1, P2) with
      *  I = input
@@ -743,12 +775,15 @@ public class IterableUtils {
      * <p>
      * <b>Note</b>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
+     * </p>
      * <p>
      * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
+     * </p>
      * <p>
      * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
      * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
+     * </p>
      *
      * @param <O>  the type of object the {@link Iterable} contains
      * @param iterable  the collection to get the input from, may be null
@@ -770,9 +805,11 @@ public class IterableUtils {
      * In case the provided iterable is a {@link List} instance, a
      * {@link ReverseListIterator} will be used to reverse the traversal
      * order, otherwise an intermediate {@link List} needs to be created.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} if the
      * provided iterable is a {@link List} instance.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
@@ -797,6 +834,7 @@ public class IterableUtils {
      * Returns the number of elements contained in the given iterator.
      * <p>
      * A {@code null} or empty iterator returns {@code 0}.
+     * </p>
      *
      * @param iterable  the iterable to check, may be null
      * @return the number of elements contained in the iterable
@@ -816,6 +854,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
@@ -856,6 +895,7 @@ public class IterableUtils {
      * enclosed in square brackets ({@code "[]"}). Adjacent elements are separated
      * by the characters {@code ", "} (a comma followed by a space). Elements are
      * converted to strings as by {@code String.valueOf(Object)}.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
@@ -872,6 +912,7 @@ public class IterableUtils {
      * enclosed in square brackets ({@code "[]"}). Adjacent elements are separated
      * by the characters {@code ", "} (a comma followed by a space). Elements are
      * converted to strings as by using the provided {@code transformer}.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
@@ -892,6 +933,7 @@ public class IterableUtils {
      * enclosed by the provided {@code prefix} and {@code suffix}. Adjacent elements
      * are separated by the provided {@code delimiter}. Elements are converted to
      * strings as by using the provided {@code transformer}.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
@@ -917,6 +959,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <I>  the input element type
      * @param <O>  the output element type
@@ -943,6 +986,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it. Calling {@code remove()}
      * will only remove a single element from the underlying iterator.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
@@ -963,6 +1007,7 @@ public class IterableUtils {
      * Returns an unmodifiable view of the given iterable.
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
+     * </p>
      *
      * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
@@ -983,9 +1028,11 @@ public class IterableUtils {
      * The returned iterable has an iterator that traverses the elements in {@code a}
      * and {@code b} in alternating order. The source iterators are not polled until
      * necessary.
+     * </p>
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
+     * </p>
      *
      * @param <E> the element type
      * @param a  the first iterable, may not be null
