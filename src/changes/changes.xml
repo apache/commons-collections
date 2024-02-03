@@ -288,6 +288,7 @@
     <action dev="ggregory" type="add" due-to="Ajay Kumar Jha, Bruno P. Kinoshita, Claude Warren">
       Add test cases for indexOf and contains method of ArrayUtils class #215.
     </action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
       Bump org.easymock:easymock from 4.0.2 to 5.2.0 #352, #355, #375, #414.
@@ -305,7 +306,7 @@
       Bump codecov/codecov-action from 2 to 3 #297.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump Apache commons-parent from 48 to 65, #339, #435.
+      Bump Apache commons-parent from 48 to 66.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.

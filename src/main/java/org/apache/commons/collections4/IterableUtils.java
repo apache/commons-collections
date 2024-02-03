@@ -1008,29 +1008,27 @@ public class IterableUtils {
     /**
      * Interleaves two iterables into a single iterable.
      * <p>
-     * The returned iterable has an iterator that traverses the elements in {@code a}
-     * and {@code b} in alternating order. The source iterators are not polled until
-     * necessary.
+     * The returned iterable has an iterator that traverses the elements in {@code a} and {@code b} in alternating order. The source iterators are not polled
+     * until necessary.
+     * </p>
      * <p>
-     * The returned iterable's iterator supports {@code remove()} when the corresponding
-     * input iterator supports it.
+     * The returned iterable's iterator supports {@code remove()} when the corresponding input iterator supports it.
+     * </p>
      *
-     * @param <E> the element type
+     * @param <E>    the element type
      * @param first  the first iterable, may not be null
-     * @param others  the array of iterables to interleave, may not be null
+     * @param others the array of iterables to interleave, may not be null
      * @return a new iterable, interleaving the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
-    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> first,
-                                                  final Iterable<? extends E>... others) {
+    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> first, final Iterable<? extends E>... others) {
         checkNotNull(first);
         checkNotNull(others);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 @SuppressWarnings("unchecked") // safe
-                final
-                Iterator<? extends E>[] iterators = new Iterator[others.length + 1];
+                final Iterator<? extends E>[] iterators = new Iterator[others.length + 1];
                 iterators[0] = first.iterator();
                 for (int i = 0; i < others.length; i++) {
                     iterators[i + 1] = others[i].iterator();
