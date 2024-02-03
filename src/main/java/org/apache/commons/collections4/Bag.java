@@ -238,6 +238,6 @@ public interface Bag<E> extends Collection<E> {
 //     *
 //     * @return the hash code of the Bag
 //     */
-//    int hashCode();
+//
 
 }
