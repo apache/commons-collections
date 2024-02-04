@@ -207,7 +207,7 @@ public class IterableUtils {
                                                   final Iterable<? extends E> b,
                                                   final Iterable<? extends E> c,
                                                   final Iterable<? extends E> d) {
-        return chainedIterable(new Iterable[] {a, b, c, d});
+        return chainedIterable();
     }
 
     /**
