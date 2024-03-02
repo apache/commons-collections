@@ -21,14 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 
+import org.apache.commons.collections4.iterators.EnumerationIterator;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -124,4 +119,30 @@ public class EnumerationUtilsTest {
         assertEquals(expectedList2, actualList);
     }
 
+    @Test
+    public void testRemove() {
+        // arrange
+        List<String> list = new ArrayList<>(Arrays.asList("First", "Second", "Third"));
+        List<String> emptyList = new ArrayList<>();
+        Enumeration<String> enumeration1 = Collections.enumeration(list);
+        Enumeration<String> enumeration2 = Collections.enumeration(list);
+        Enumeration<String> enumeration3 = Collections.enumeration(emptyList);
+
+        Iterator<String> enumerationIterator1 = new EnumerationIterator<>(enumeration1, list);
+        Iterator<String> enumerationIterator2 = new EnumerationIterator<>(enumeration2, list);
+        Iterator<String> enumerationIterator3 = new EnumerationIterator<>(enumeration2);
+        Iterator<String> enumerationIterator4 = new EnumerationIterator<>(enumeration3, emptyList);
+        enumerationIterator1.next();
+        enumerationIterator1.remove();
+
+        // act and assert
+        // test to check for valid remove
+        assertEquals(Arrays.asList("Second", "Third"), list);
+        // test to remove without iterator next
+        assertThrows(IllegalStateException.class, enumerationIterator2::remove);
+        // test to check if collection is null
+        assertThrows(UnsupportedOperationException.class, enumerationIterator3::remove);
+        // test to remove from empty collection
+        assertThrows(IllegalStateException.class, enumerationIterator4::remove);
+    }
 }

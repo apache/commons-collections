@@ -101,6 +101,24 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                 "Cannot find 'Missing Item'");
     }
 
+    @Test
+    public void testPeekForItemsDownInStack() {
+        // arrange
+        final ArrayStack<E> stack = makeObject();
+        final ArrayStack<E> emptyStack = makeObject();
+        stack.push((E) "First");
+        stack.push((E) "Second");
+        stack.push((E) "Third");
+
+        // act and assert
+        // check for valid index
+        assertEquals("Second", stack.peek(1));
+        // check for invalid index
+        assertThrows(EmptyStackException.class, () -> {stack.peek(5);});
+        // check if stack is empty.
+        assertThrows(EmptyStackException.class, () -> {emptyStack.peek(1);});
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/ArrayStack.emptyCollection.version4.obj");
