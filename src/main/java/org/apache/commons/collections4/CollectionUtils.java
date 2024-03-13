@@ -361,7 +361,7 @@ public class CollectionUtils {
      *   Be aware that the order of parameters has changed.
      */
     @Deprecated
-    public static <O> int cardinality(final O obj, final Iterable<? super O> collection) {
+    public static <O> int (final O obj, final Iterable<? super O> collection) {
         return IterableUtils.frequency(Objects.requireNonNull(collection, "collection"), obj);
     }
 
