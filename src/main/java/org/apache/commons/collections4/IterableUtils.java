@@ -204,7 +204,7 @@ public class IterableUtils {
      */
     @SuppressWarnings("unchecked")
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> e,
-                                                  final Iterable<? extends E>f ,
+                                                  final Iterable<? extends E> f,
                                                   final Iterable<? extends E> g,
                                                   final Iterable<? extends E> h ) {
         return chainedIterable();
