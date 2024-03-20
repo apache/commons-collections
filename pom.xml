@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>66</version>
+    <version>67</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
@@ -512,7 +512,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
-      <version>33.0.0-jre</version>
+      <version>33.1.0-jre</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
