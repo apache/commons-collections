@@ -801,8 +801,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //        }
 //        assertTrue( values.contains("un"));
 //        assertTrue( values.contains("uno"));
-//        assertEquals(false, map.iterator("A").hasNext());
-//        assertEquals(false, map.iterator("A").hasNext());
+//        assertFalse(map.iterator("A").hasNext());
+//        assertFalse(map.iterator("A").hasNext());
 //        if (!isAddSupported()) {
 //            return;
 //        }
@@ -810,7 +810,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //        it = map.iterator("A");
 //        assertTrue( it.hasNext());
 //        it.next();
-//        assertEquals(false, it.hasNext());
+//        assertFalse(it.hasNext());
 //    }
 
     @Test
