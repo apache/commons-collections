@@ -16,10 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -28,6 +24,8 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the ListIteratorWrapper to ensure that it simulates
@@ -54,6 +52,11 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     @Override
     public ResettableListIterator<E> makeObject() {
         return new ListIteratorWrapper<>(list1.iterator());
+    }
+
+    public ResettableListIterator<E> makeCustomObject() {
+        ListIterator<E> listIterator= list1.listIterator();
+        return new ListIteratorWrapper<>(listIterator);
     }
 
     @BeforeEach
@@ -223,4 +226,21 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         }
     }
 
+    @Test
+    public void testAdd() {
+
+        // arrange part starts
+        final ResettableListIterator<E> iter1 = makeCustomObject();
+        final ResettableListIterator<E> iter2 = makeObject();
+        int[] x = new int[]{1};
+        // arrange part ends
+
+        // act and assert starts
+        // check for no exception
+        assertDoesNotThrow(()->{iter1.add((E) x);});
+
+        // check for exception
+        assertThrows(UnsupportedOperationException.class,()-> {iter2.add((E)"e");});
+        // act and assert ends
+    }
 }
