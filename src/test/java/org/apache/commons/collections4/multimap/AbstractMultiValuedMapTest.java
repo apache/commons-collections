@@ -794,23 +794,23 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //    public void testIterator_Key() {
 //        final MultiValuedMap<K, V> map = makeFullMap();
 //        Iterator<V> it = map.iterator("one");
-//        assertEquals(true, it.hasNext());
+//        assertTrue( it.hasNext());
 //        Set<V> values = new HashSet<V>();
 //        while (it.hasNext()) {
 //            values.add(it.next());
 //        }
-//        assertEquals(true, values.contains("un"));
-//        assertEquals(true, values.contains("uno"));
-//        assertEquals(false, map.iterator("A").hasNext());
-//        assertEquals(false, map.iterator("A").hasNext());
+//        assertTrue( values.contains("un"));
+//        assertTrue( values.contains("uno"));
+//        assertFalse(map.iterator("A").hasNext());
+//        assertFalse(map.iterator("A").hasNext());
 //        if (!isAddSupported()) {
 //            return;
 //        }
 //        map.put((K) "A", (V) "AA");
 //        it = map.iterator("A");
-//        assertEquals(true, it.hasNext());
+//        assertTrue( it.hasNext());
 //        it.next();
-//        assertEquals(false, it.hasNext());
+//        assertFalse(it.hasNext());
 //    }
 
     @Test
