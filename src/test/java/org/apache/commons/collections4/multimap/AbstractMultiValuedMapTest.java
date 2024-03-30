@@ -520,7 +520,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
-        final Object[] result = { "k0", "k0", "k1", "k1", "k2", "k2" };
+        final Object[] result = new Object[getSampleSize()];
         int k = 0;
         for (int i = 0; i < result.length; i += 2, k++) {
             final String key = "k" + Integer.valueOf(k);
@@ -528,6 +528,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             result[i + 1] = key;
         }
         return (K[]) result;
+    }
+
+    public int getSampleSize() {
+        return 6;
     }
 
     /**
@@ -538,10 +542,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      */
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
-        final Object[] result = {
-            "v1_b", "v0_b", "v1_a", "v1_b",
-            "v2_a", "v2_b"
-        };
+        final Object[] result = new Object[getSampleSize()];
         int k = 0;
         for (int i = 0; i < result.length; i += 2, k++) {
             final String key = "v" + Integer.valueOf(k);
