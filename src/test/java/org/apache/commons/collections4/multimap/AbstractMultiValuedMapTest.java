@@ -871,7 +871,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(2, bag.getCount("k0"));
         assertEquals(2, bag.getCount("k1"));
         assertEquals(2, bag.getCount("k2"));
-        assertEquals(6, bag.size());
+        assertEquals(getSampleSize(), bag.size());
     }
 
     @Test
@@ -888,7 +888,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(2, keyMultiSet.getCount("k1"));
         assertEquals(2, keyMultiSet.getCount("k2"));
         assertEquals(0, keyMultiSet.getCount("conut"));
-        assertEquals(6, keyMultiSet.size());
+        assertEquals(getSampleSize(), keyMultiSet.size());
     }
 
     @Test
@@ -1150,7 +1150,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         @SuppressWarnings("unchecked")
         Collection<V> col = map.get((K) "k0");
         assertEquals(2, col.size());
-        assertEquals(6, map.size());
+        assertEquals(getSampleSize(), map.size());
         assertTrue(col.remove("v0_a"));
         assertTrue(col.remove("v0_b"));
         assertFalse(map.containsKey("k0"));
@@ -1203,7 +1203,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     @Test
     public void testSize() {
-        assertEquals(6, makeFullMap().size());
+        assertEquals(getSampleSize(), makeFullMap().size());
     }
 
     @Test
@@ -1303,7 +1303,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         expected.add((V) "v2_a");
         expected.add((V) "v2_b");
         final Collection<V> c = map.values();
-        assertEquals(6, c.size());
+        assertEquals(getSampleSize(), c.size());
         assertEquals(expected, new HashSet<>(c));
     }
 
