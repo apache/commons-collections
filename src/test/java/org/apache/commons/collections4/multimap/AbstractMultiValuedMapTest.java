@@ -534,6 +534,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return 6;
     }
 
+    public int getSampleValuesPerKey() {
+        return 2;
+    }
+
     /**
      * Returns the set of values in the mappings used to test the map. This
      * method must return an array with the same length as
@@ -559,6 +563,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support put adding.
+     * </p>
      */
     public boolean isAddSupported() {
         return true;
@@ -570,6 +575,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support null keys.
+     * </p>
      */
     public boolean isAllowNullKey() {
         return true;
@@ -581,6 +587,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * <p>
      * Default implementation returns false. Override if your collection class
      * supports set value.
+     * </p>
      */
     public boolean isHashSetValue() {
         return false;
@@ -593,6 +600,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support removal operations.
+     * </p>
      */
     public boolean isRemoveSupported() {
         return true;
