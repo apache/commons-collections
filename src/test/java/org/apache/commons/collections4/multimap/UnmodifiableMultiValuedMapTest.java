@@ -37,7 +37,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for UnmodifiableMultiValuedMap
+ * Tests {@link UnmodifiableMultiValuedMap}.
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
