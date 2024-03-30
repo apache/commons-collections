@@ -314,7 +314,8 @@ public class ListUtils {
         if (list1 == list2) {
             return true;
         }
-        if (list1 == null || list2 == null || list1.size() != list2.size()) {
+
+        if(checkCollectionSize(list1, list2)) {
             return false;
         }
 
@@ -331,6 +332,17 @@ public class ListUtils {
         }
 
         return !(it1.hasNext() || it2.hasNext());
+    }
+
+    /**
+     * Checks if two collections are not equal in size or if either of them is null.
+     *
+     * @param list1 The first collection to compare.
+     * @param list2 The second collection to compare.
+     * @return True if the collections are not equal in size or if either is null, false otherwise.
+     */
+    private static boolean checkCollectionSize(final Collection<?> list1, final Collection<?> list2) {
+        return (list1 == null || list2 == null || list1.size() != list2.size());
     }
 
     /**
