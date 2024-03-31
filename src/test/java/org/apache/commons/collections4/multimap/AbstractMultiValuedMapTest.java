@@ -48,6 +48,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.map.AbstractMapTest;
 import org.apache.commons.collections4.multiset.AbstractMultiSetTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +64,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public class TestMultiValuedMapAsMap extends AbstractMapTest<K, Collection<V>> {
 
         public TestMultiValuedMapAsMap() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override
@@ -177,7 +178,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     public class TestMultiValuedMapEntries extends AbstractCollectionTest<Entry<K, V>> {
         public TestMultiValuedMapEntries() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @SuppressWarnings("unchecked")
@@ -253,7 +254,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public class TestMultiValuedMapKeys extends AbstractMultiSetTest<K> {
 
         public TestMultiValuedMapKeys() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override
@@ -313,7 +314,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     public class TestMultiValuedMapKeySet extends AbstractSetTest<K> {
         public TestMultiValuedMapKeySet() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @SuppressWarnings("unchecked")
@@ -360,7 +361,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     public class TestMultiValuedMapValues extends AbstractCollectionTest<V> {
         public TestMultiValuedMapValues() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override

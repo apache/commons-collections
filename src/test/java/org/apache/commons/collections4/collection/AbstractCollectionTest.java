@@ -46,6 +46,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -341,7 +342,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
         return (E[]) new Object[] {
-            "",
+            StringUtils.EMPTY,
             "One",
             Integer.valueOf(2),
             "Three",

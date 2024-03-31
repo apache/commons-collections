@@ -31,6 +31,7 @@ import java.util.TreeMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -482,19 +483,19 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
         try {
-            lom.setValue(0, (V) "");
+            lom.setValue(0, (V) StringUtils.EMPTY);
         } catch (final IndexOutOfBoundsException ex) {}
         try {
-            lom.setValue(-1, (V) "");
+            lom.setValue(-1, (V) StringUtils.EMPTY);
         } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
-            lom.setValue(-1, (V) "");
+            lom.setValue(-1, (V) StringUtils.EMPTY);
         } catch (final IndexOutOfBoundsException ex) {}
         try {
-            lom.setValue(lom.size(), (V) "");
+            lom.setValue(lom.size(), (V) StringUtils.EMPTY);
         } catch (final IndexOutOfBoundsException ex) {}
 
         for (int i = 0; i < lom.size(); i++) {

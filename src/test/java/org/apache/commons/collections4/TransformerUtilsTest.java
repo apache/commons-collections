@@ -38,6 +38,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -166,7 +167,7 @@ public class TransformerUtilsTest {
         assertThrows(FunctorException.class, () -> finalTrans.transform(String.class));
 
         trans = TransformerUtils.instantiateTransformer();
-        assertEquals("", trans.transform(String.class));
+        assertEquals(StringUtils.EMPTY, trans.transform(String.class));
 
         trans = TransformerUtils.instantiateTransformer(new Class[] { Long.TYPE }, new Object[] {1000L});
         assertEquals(new Date(1000L), trans.transform(Date.class));

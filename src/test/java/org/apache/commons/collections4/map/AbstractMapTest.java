@@ -44,6 +44,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -330,7 +331,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
     public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override
@@ -410,7 +411,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override

@@ -31,6 +31,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -110,7 +111,7 @@ public class TransformedSplitMapTest extends BulkTest {
                 new HashMap<>(), intToString, objectToClass);
 
         final Integer[] k = { 0, 1, 2, 3, 4, 5, 6 };
-        final Object[] v = { "", new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
+        final Object[] v = { StringUtils.EMPTY, new Object(), new HashMap<>(), 0, BigInteger.TEN, null,
             new Object[0] };
 
         assertEquals(0, map.size());

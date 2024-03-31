@@ -39,6 +39,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -71,7 +72,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     public class TestBagUniqueSet extends AbstractSetTest<T> {
 
         public TestBagUniqueSet() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override

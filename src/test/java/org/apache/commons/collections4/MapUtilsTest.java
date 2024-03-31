@@ -50,6 +50,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -607,7 +608,7 @@ public class MapUtilsTest {
             if ("noKey".equals(key)) {
                 return "default";
             }
-            return "";
+            return StringUtils.EMPTY;
         }));
         assertEquals("default", MapUtils.getString(null, "noKey", "default"));
     }
@@ -990,7 +991,7 @@ public class MapUtilsTest {
         MapUtils.safeAddToMap(inMap, "key1", "value1");
         MapUtils.safeAddToMap(inMap, "key2", null);
         assertEquals("value1", inMap.get("key1"));
-        assertEquals("", inMap.get("key2"));
+        assertEquals(StringUtils.EMPTY, inMap.get("key2"));
     }
 
     @Test

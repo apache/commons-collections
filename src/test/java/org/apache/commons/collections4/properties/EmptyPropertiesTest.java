@@ -38,6 +38,7 @@ import java.util.Properties;
 
 import org.apache.commons.io.input.NullReader;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 public class EmptyPropertiesTest {
@@ -62,7 +63,7 @@ public class EmptyPropertiesTest {
 
     private String removeLine2(final String x) {
         final String[] s = x.split("\\R", 2);
-        return s[0] + System.lineSeparator() + (s.length > 2 ? s[2] : "");
+        return s[0] + System.lineSeparator() + (s.length > 2 ? s[2] : StringUtils.EMPTY);
     }
 
     @Test

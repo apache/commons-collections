@@ -36,6 +36,7 @@ import java.util.SortedMap;
 
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -67,7 +68,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = {
-            "",
+            StringUtils.EMPTY,
             "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
             "Alberts", "Allie", "Alliese", "Alabama", "Banane",
             "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
@@ -272,7 +273,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         iterator = map.values().iterator();
         assertFalse(iterator.hasNext());
 
-        map = trie.prefixMap("");
+        map = trie.prefixMap(StringUtils.EMPTY);
         assertSame(trie, map); // stricter than necessary, but a good check
 
         map = trie.prefixMap("\0");
@@ -423,7 +424,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         final char char_b = 'b'; // 1100010
 
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
-        final String prefixString = "" + char_b;
+        final String prefixString = StringUtils.EMPTY + char_b;
         final String longerString = prefixString + u8000;
 
         assertEquals(1, prefixString.length());

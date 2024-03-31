@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -446,13 +447,13 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(new ArrayList<>(), input -> {
             fail("not supposed to reach here");
-            return "";
+            return StringUtils.EMPTY;
         });
         assertEquals("[]", result);
 
         result = IterableUtils.toString(null, input -> {
             fail("not supposed to reach here");
-            return "";
+            return StringUtils.EMPTY;
         });
         assertEquals("[]", result);
     }
@@ -462,13 +463,13 @@ public class IterableUtilsTest {
 
         final Transformer<Integer, String> transformer = input -> Integer.toString(input * 2);
 
-        String result = IterableUtils.toString(iterableA, transformer, "", "", "");
+        String result = IterableUtils.toString(iterableA, transformer, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY);
         assertEquals("2446668888", result);
 
-        result = IterableUtils.toString(iterableA, transformer, ",", "", "");
+        result = IterableUtils.toString(iterableA, transformer, ",", StringUtils.EMPTY, StringUtils.EMPTY);
         assertEquals("2,4,4,6,6,6,8,8,8,8", result);
 
-        result = IterableUtils.toString(iterableA, transformer, "", "[", "]");
+        result = IterableUtils.toString(iterableA, transformer, StringUtils.EMPTY, "[", "]");
         assertEquals("[2446668888]", result);
 
         result = IterableUtils.toString(iterableA, transformer, ",", "[", "]");
@@ -483,38 +484,38 @@ public class IterableUtilsTest {
         result = IterableUtils.toString(iterableA, transformer, ",,", "((", "))");
         assertEquals("((2,,4,,4,,6,,6,,6,,8,,8,,8,,8))", result);
 
-        result = IterableUtils.toString(new ArrayList<>(), transformer, "", "(", ")");
+        result = IterableUtils.toString(new ArrayList<>(), transformer, StringUtils.EMPTY, "(", ")");
         assertEquals("()", result);
 
-        result = IterableUtils.toString(new ArrayList<>(), transformer, "", "", "");
-        assertEquals("", result);
+        result = IterableUtils.toString(new ArrayList<>(), transformer, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY);
+        assertEquals(StringUtils.EMPTY, result);
     }
 
     @Test
     public void testToStringWithNullArguments() {
         final String result = IterableUtils.toString(null, input -> {
             fail("not supposed to reach here");
-            return "";
-        }, "", "(", ")");
+            return StringUtils.EMPTY;
+        }, StringUtils.EMPTY, "(", ")");
         assertEquals("()", result);
         assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), null, "", "(", ")"),
+                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), null, StringUtils.EMPTY, "(", ")"),
                         "expecting NullPointerException"),
                 () -> assertThrows(NullPointerException.class, () ->
                                 IterableUtils.toString(new ArrayList<>(), input -> {
                                     fail("not supposed to reach here");
-                                    return "";
+                                    return StringUtils.EMPTY;
                                 }, null, "(", ")"),
                         "expecting NullPointerException"),
                 () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
                     fail("not supposed to reach here");
-                    return "";
-                }, "", null, ")"),
+                    return StringUtils.EMPTY;
+                }, StringUtils.EMPTY, null, ")"),
                         "expecting NullPointerException"),
                 () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
                     fail("not supposed to reach here");
-                    return "";
-                }, "", "(", null),
+                    return StringUtils.EMPTY;
+                }, StringUtils.EMPTY, "(", null),
                         "expecting NullPointerException")
         );
     }

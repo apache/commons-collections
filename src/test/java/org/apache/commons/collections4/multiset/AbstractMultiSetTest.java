@@ -38,6 +38,7 @@ import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -64,7 +65,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     public class TestMultiSetUniqueSet extends AbstractSetTest<T> {
         public TestMultiSetUniqueSet() {
-            super("");
+            super(StringUtils.EMPTY);
         }
 
         @Override

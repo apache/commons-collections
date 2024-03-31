@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -294,7 +295,7 @@ public class ListUtilsTest {
                         "failed to check for null argument")
         );
 
-        String lcs = ListUtils.longestCommonSubsequence("", "");
+        String lcs = ListUtils.longestCommonSubsequence(StringUtils.EMPTY, StringUtils.EMPTY);
         assertEquals(0, lcs.length());
 
         final String banana = "BANANA";
