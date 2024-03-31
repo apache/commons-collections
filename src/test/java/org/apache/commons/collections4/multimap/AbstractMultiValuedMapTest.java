@@ -1030,33 +1030,26 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testMultiValuedMapIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MapIterator<K, V> it = map.mapIterator();
-
         assertThrows(IllegalStateException.class, () -> it.getKey());
         assertThrows(IllegalStateException.class, () -> it.getValue());
         if (isAddSupported()) {
             assertThrows(IllegalStateException.class, () -> it.setValue((V) "V"));
         }
-
         if (!isHashSetValue() && isAddSupported()) {
-            assertTrue(it.hasNext() );
-            assertEquals("k0", it.next());
-            assertEquals("k0", it.getKey());
-            assertEquals("v0_0", it.getValue());
-            assertEquals("k0", it.next());
-            assertEquals("k0", it.getKey());
-            assertEquals("v0_1", it.getValue());
-            assertEquals("k1", it.next());
-            assertEquals("k1", it.getKey());
-            assertEquals("v1_0", it.getValue());
-            assertEquals("k1", it.next());
-            assertEquals("k1", it.getKey());
-            assertEquals("v1_1", it.getValue());
-            assertEquals("k2", it.next());
-            assertEquals("k2", it.getKey());
-            assertEquals("v2_0", it.getValue());
-            assertEquals("k2", it.next());
-            assertEquals("k2", it.getKey());
-            assertEquals("v2_1", it.getValue());
+            assertTrue(it.hasNext());
+            final int maxK = getSampleKeySize();
+            final int maxV = getSampleCountPerKey();
+            for (int k = 0; k < maxK; k++) {
+                final Object key = makeKey(k);
+                for (int v = 0; v < maxV; v++) {
+                    final Object value = makeValue(k, v);
+                    assertTrue(it.hasNext());
+                    assertEquals(key, it.next());
+                    assertEquals(key, it.getKey());
+                    assertEquals(value, it.getValue());
+                    assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
+                }
+            }
             assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
         }
     }
