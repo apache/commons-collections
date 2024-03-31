@@ -1235,21 +1235,30 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assumeTrue(isRemoveSupported());
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
-        @SuppressWarnings("unchecked")
-        final Iterator<V> it = map.get((K) "k0").iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
+        int expectedSize = map.size();
+        final int maxK = getSampleKeySize();
+        for (int k = 0; k < maxK; k++) {
+            final String key = makeKey(k);
+            final int cpk = getSampleCountPerKey();
+            @SuppressWarnings("unchecked")
+            final Iterator<V> it = map.get((K) key).iterator();
+            while (it.hasNext()) {
+                it.next();
+                it.remove();
+            }
+            assertFalse(map.containsKey(key));
+            for (int j = 0; j < cpk; j++) {
+                assertFalse(map.containsMapping(key, makeValue(k + 1, j)));
+                final Object value = makeValue(k, j);
+                assertFalse(map.containsMapping(key, value));
+                assertFalse(map.containsValue(value));
+            }
+            expectedSize -= cpk;
+            assertEquals(expectedSize, map.size());
+            final Collection<V> coll = map.remove("k0");
+            assertNotNull(coll);
+            assertEquals(0, coll.size());
         }
-        assertFalse(map.containsKey("k0"));
-        assertFalse(map.containsMapping("k0", "v1_1"));
-        assertFalse(map.containsMapping("k0", "v0_1"));
-        assertFalse(map.containsValue("v0_0"));
-        assertFalse(map.containsValue("v0_1"));
-        assertEquals(4, map.size());
-        final Collection<V> coll = map.remove("k0");
-        assertNotNull(coll);
-        assertEquals(0, coll.size());
     }
 
     @Test
