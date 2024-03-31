@@ -1257,10 +1257,18 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assumeTrue(isRemoveSupported());
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<V> values = map.values();
-        values.remove("v0_0");
-        values.remove("v0_1");
-        assertFalse(map.containsKey("k0"));
-        assertEquals(4, map.size());
+        final int maxK = getSampleKeySize();
+        final int maxV = getSampleCountPerKey();
+        int expectedSize = map.size();
+        for (int k = 0; k < maxK; k++) {
+            for (int v = 0; v < maxV; v++) {
+                values.remove(makeValue(k, v));
+            }
+            assertFalse(map.containsKey(makeKey(k)));
+            expectedSize -= maxV;
+            assertEquals(expectedSize, map.size());
+        }
+        assertEquals(0, map.size());
     }
 
     @Test
