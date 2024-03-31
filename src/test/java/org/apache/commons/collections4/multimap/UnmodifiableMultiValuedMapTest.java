@@ -21,10 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -52,9 +55,21 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
      * @param map the MultiValuedMap<K, V> to check
      */
     private void assertMapContainsAllValues(final MultiValuedMap<K, V> map) {
-        assertEquals("[v0_0, v0_1]", map.get((K) "k0").toString());
-        assertEquals("[v1_0, v1_1]", map.get((K) "k1").toString());
-        assertEquals("[v2_0, v2_1]", map.get((K) "k2").toString());
+        final int maxK = getSampleKeySize();
+        final int cpk = getSampleCountPerKey();
+        for (int k = 0; k < maxK; k++) {
+            final K key = makeKey(k);
+            final Collection<V> collection = map.get((K) key);
+            assertEquals(cpk, collection.size());
+            final String toString = collection.toString();
+            final List<V> expected = new ArrayList<>(cpk);
+            for (int j = 0; j < cpk; j++) {
+                expected.add(makeValue(k, j));
+            }
+            assertEquals(expected.size(), collection.size());
+            assertEquals(expected, new ArrayList<>(collection));
+            assertEquals(expected.toString(), toString);
+        }
     }
 
     @Override
