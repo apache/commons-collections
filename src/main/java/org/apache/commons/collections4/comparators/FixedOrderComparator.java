@@ -201,36 +201,19 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         return position1.compareTo(position2);
     }
 
-    /**
-     * Returns {@code true} iff <i>that</i> Object is
-     * a {@link Comparator} whose ordering is known to be
-     * equivalent to mine.
-     * <p>
-     * This implementation returns {@code true}
-     * iff {@code <i>that</i>} is a {@link FixedOrderComparator}
-     * whose attributes are equal to mine.
-     *
-     * @param object  the object to compare to
-     * @return true if equal
-     */
     @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (null == object) {
+        if (obj == null) {
             return false;
         }
-        if (object.getClass().equals(this.getClass())) {
-            final FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
-            return (null == map ? null == comp.map : map.equals(comp.map)) &&
-                   (null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
-                        unknownObjectBehavior == comp.unknownObjectBehavior &&
-                        counter == comp.counter &&
-                        isLocked == comp.isLocked &&
-                        unknownObjectBehavior == comp.unknownObjectBehavior);
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-        return false;
+        FixedOrderComparator other = (FixedOrderComparator) obj;
+        return counter == other.counter && isLocked == other.isLocked && Objects.equals(map, other.map) && unknownObjectBehavior == other.unknownObjectBehavior;
     }
 
     /**
@@ -242,20 +225,9 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         return unknownObjectBehavior;
     }
 
-    /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     */
     @Override
     public int hashCode() {
-        int total = 17;
-        total = total*37 + map.hashCode();
-        total = total*37 + (unknownObjectBehavior == null ? 0 : unknownObjectBehavior.hashCode());
-        total = total*37 + counter;
-        total = total*37 + (isLocked ? 0 : 1);
-        return total;
+        return Objects.hash(counter, isLocked, map, unknownObjectBehavior);
     }
 
     // Bean methods / state querying methods

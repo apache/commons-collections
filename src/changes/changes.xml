@@ -209,6 +209,9 @@
     <action issue="COLLECTIONS-850" dev="ggregory" type="fix" due-to="Gary Gregory, Anirudh Madhavan">
       Tests in org.apache.commons.collections4.multimap should not depend on map iteration order, see also #429.
     </action>
+    <action issue="COLLECTIONS-850" dev="ggregory" type="fix" due-to="Gary Gregory, Saurabh Rahate">
+      Reimplement FixedOrderComparator#equals() and hashCode(), see also #392.
+    </action>
     <!-- ADD -->
     <action issue="COLLECTIONS-843" dev="ggregory" type="add" due-to="Claude Warren, Alex Herbert, Gary Gregory">
       Implement Layered Bloom filter #402.
