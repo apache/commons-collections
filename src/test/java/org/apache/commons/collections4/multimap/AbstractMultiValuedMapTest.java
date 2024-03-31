@@ -948,7 +948,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     public void testKeySetSize() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        assertEquals(3, map.keySet().size());
+        assertEquals(getSampleKeySize(), map.keySet().size());
     }
 
     @Test
