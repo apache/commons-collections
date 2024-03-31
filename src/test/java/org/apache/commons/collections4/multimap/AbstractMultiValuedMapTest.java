@@ -86,10 +86,20 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             // See comment in getSampleValues() to understand why we are calling makeObject() and not
             // getMap(). See COLLECTIONS-661 for more.
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
-            final Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen" };
-            final Collection<V>[] colArr = new Collection[3];
-            for (int i = 0; i < 3; i++) {
-                final Collection<V> coll = Arrays.asList((V) sampleValues[i * 2], (V) sampleValues[i * 2 + 1]);
+            final int maxV = getSampleTotalValueCount();
+            final int maxK = getSampleKeySize();
+            final V[] sampleValues = (V[]) new Object[maxV];
+            for (int v = 0; v < maxV; v++) {
+                // + something so that the key is different from an existing key.
+                sampleValues[v] = makeValue(maxK + 9, v);
+            }
+            final int cpk = getSampleCountPerKey();
+            final Collection<V>[] colArr = new Collection[maxK];
+            for (int i = 0; i < maxK; i++) {
+                List<V> coll = new ArrayList<>(cpk);
+                for (int j = 0; j < cpk; j++) {
+                    coll.add(sampleValues[i * cpk + j]);
+                }
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }
             return colArr;
@@ -99,9 +109,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         @SuppressWarnings("unchecked")
         public K[] getSampleKeys() {
             final K[] samplekeys = AbstractMultiValuedMapTest.this.getSampleKeys();
-            final Object[] finalKeys = new Object[3];
-            for (int i = 0; i < 3; i++) {
-                finalKeys[i] = samplekeys[i * 2];
+            final int maxK = getSampleKeySize();
+            final int cpk = getSampleCountPerKey();
+            final Object[] finalKeys = new Object[maxK];
+            for (int i = 0; i < maxK; i++) {
+                finalKeys[i] = samplekeys[i * cpk];
             }
             return (K[]) finalKeys;
         }
@@ -114,9 +126,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             // would be to re-design the tests, or add a boolean method to the parent.
             final boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
             final V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
-            final Collection<V>[] colArr = new Collection[3];
-            for (int i = 0; i < 3; i++) {
-                final Collection<V> coll = Arrays.asList(sampleValues[i * 2], sampleValues[i * 2 + 1]);
+            final int maxK = getSampleKeySize();
+            final int cpk = getSampleCountPerKey();
+            final Collection<V>[] colArr = new Collection[maxK];
+            for (int i = 0; i < maxK; i++) {
+                final List<V> coll = new ArrayList<>(cpk);
+                for (int j = 0; j < cpk; j++) {
+                    coll.add(sampleValues[i * cpk + j]);
+                }
                 colArr[i] = isSetValuedMap ? new HashSet<>(coll) : coll;
             }
             return colArr;
@@ -642,8 +659,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Override
     public abstract MultiValuedMap<K, V> makeObject();
 
-    String makeValue(final int key, final int value) {
-        return new StringBuilder("v").append(key).append('_').append(value).toString();
+    <E> E makeValue(final int key, final int value) {
+        return (E) new StringBuilder("v").append(key).append('_').append(value).toString();
     }
 
     /**
