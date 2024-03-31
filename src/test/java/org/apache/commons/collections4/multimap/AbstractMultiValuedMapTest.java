@@ -1217,21 +1217,34 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
-        @SuppressWarnings("unchecked")
-        Collection<V> col = map.get((K) "k0");
-        assertEquals(getSampleCountPerKey(), col.size());
-        assertEquals(getSampleTotalValueCount(), map.size());
-        assertTrue(col.remove("v0_0"));
-        assertTrue(col.remove("v0_1"));
-        assertFalse(map.containsKey("k0"));
-        assertFalse(map.containsMapping("k0", "v0_0"));
-        assertFalse(map.containsMapping("k0", "v0_1"));
-        assertFalse(map.containsValue("v0_0"));
-        assertFalse(map.containsValue("v0_1"));
-        assertEquals(4, map.size());
-        col = map.remove("k0");
-        assertNotNull(col);
-        assertEquals(0, col.size());
+        final int cpk = getSampleCountPerKey();
+        int expectedCount = getSampleTotalValueCount();
+        assertEquals(expectedCount, map.size());
+        for (int k = 0; k < getSampleKeySize(); k++) {
+            final Object key = makeKey(k);
+            @SuppressWarnings("unchecked")
+            Collection<V> col = map.get((K) key);
+            assertEquals(cpk, col.size());
+            for (int i = 0; i < cpk; i++) {
+                final Object value = makeValue(k, i);
+                assertTrue(col.remove(value), () -> value.toString());
+            }
+            for (int i = 0; i < cpk; i++) {
+                assertFalse(col.remove(makeValue(k, i)));
+            }
+            assertFalse(map.containsKey(key));
+            for (int i = 0; i < cpk; i++) {
+                assertFalse(map.containsMapping(key, i));
+            }
+            for (int i = 0; i < cpk; i++) {
+                assertFalse(map.containsValue(makeValue(k, i)));
+            }
+            expectedCount -= cpk;
+            assertEquals(expectedCount, map.size());
+            col = map.remove(key);
+            assertNotNull(col);
+            assertEquals(0, col.size());
+        }
     }
 
     @Test
