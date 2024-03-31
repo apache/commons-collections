@@ -804,7 +804,12 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @SuppressWarnings("unchecked")
     public void testContainsValue_Key() {
         final MultiValuedMap<K, V> map = makeFullMap();
-        assertTrue(map.containsMapping("k0", "v0_1"));
+        final int maxK = getSampleKeySize();
+        final int maxV = getSampleCountPerKey();
+        for (int k = 0; k < maxK; k++) {
+            for (int v = 0; v < maxV; v++) {
+                assertTrue(map.containsMapping(makeKey(k), makeValue(k, v)));            }
+        }
         assertFalse(map.containsMapping("k1", "2"));
         if (!isAddSupported()) {
             return;
