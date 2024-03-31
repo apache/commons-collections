@@ -557,7 +557,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public int getSampleKeySize() {
-        return 3;
+        return 256;
     }
 
     public int getSampleTotalValueCount() {
@@ -1037,19 +1037,18 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
         if (!isHashSetValue() && isAddSupported()) {
             assertTrue(it.hasNext());
-            final int maxK = getSampleKeySize();
-            final int maxV = getSampleCountPerKey();
-            for (int k = 0; k < maxK; k++) {
-                final Object key = makeKey(k);
-                for (int v = 0; v < maxV; v++) {
-                    final Object value = makeValue(k, v);
-                    assertTrue(it.hasNext());
-                    assertEquals(key, it.next());
-                    assertEquals(key, it.getKey());
-                    assertEquals(value, it.getValue());
-                    assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
-                }
+            final MultiValuedMap<K, V> dejaVu = makeObject();
+            while (it.hasNext()) {
+                final K next = it.next();
+                assertNotNull(next);
+                final K itKey = it.getKey();
+                assertEquals(next, itKey);
+                final V itValue = it.getValue();
+                dejaVu.put(itKey, itValue);
+                assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
             }
+            assertEquals(map, dejaVu);
+            assertEquals(dejaVu, map);
             assertThrows(UnsupportedOperationException.class, () -> it.setValue((V) "threetrois"));
         }
     }
