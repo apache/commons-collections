@@ -22,7 +22,7 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+  <release version="4.5.0-M1" date="YYYY-MM-DD" description="Maintenance release.">
     <!-- FIX -->
     <action issue="COLLECTIONS-780" dev="kinow" type="fix" due-to="Arturo Bernal">
       Use assertThrows V2.
