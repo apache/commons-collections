@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -698,12 +700,12 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddMappingThroughGet(){
+    public void testAddMappingThroughGet() {
         if (!isAddSupported()) {
             return;
         }
         resetEmpty();
-        final MultiValuedMap<K, V> map =  getMap();
+        final MultiValuedMap<K, V> map = getMap();
         final Collection<V> col1 = map.get((K) "k0");
         final Collection<V> col2 = map.get((K) "k0");
         assertTrue(col1.isEmpty());
