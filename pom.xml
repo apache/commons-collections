@@ -124,7 +124,7 @@
 
     <!-- Current 4.x release series -->
     <commons.release.version>4.5.0-M1</commons.release.version>
-    <commons.release.version>4.5.0</commons.release.version>
+    <commons.release.next>4.5.0</commons.release.next>
     <commons.release.desc>(Requires Java 8 or above)</commons.release.desc>
 
     <!-- Previous 4.2 release on Java 7 -->
