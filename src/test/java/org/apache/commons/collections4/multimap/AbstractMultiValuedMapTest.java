@@ -493,7 +493,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public MultiValuedMap<K, V> getConfirmed() {
-        return this.confirmed;
+        return confirmed;
     }
 
     /**
@@ -509,7 +509,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public MultiValuedMap<K, V> getMap() {
-        return this.map;
+        return map;
     }
 
     public int getSampleCountPerKey() {
@@ -756,9 +756,17 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
         resetFull();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
-        mapCol.remove("k0");
+        final int maxK = getSampleKeySize();
+        int expectedSize = getMap().size();
+        for (int k = 0; k < maxK; k++) {
+            final K key = makeKey(k);
+            mapCol.remove(key);
+            assertFalse(getMap().containsKey(key));
+            expectedSize -= getSampleCountPerKey();
+            assertEquals(expectedSize, getMap().size());
+        }
         assertFalse(getMap().containsKey("k0"));
-        assertEquals(4, getMap().size());
+        assertEquals(0, getMap().size());
     }
 
     @Test
