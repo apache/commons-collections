@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -701,9 +700,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testAddMappingThroughGet() {
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         resetEmpty();
         final MultiValuedMap<K, V> map = getMap();
         final Collection<V> col1 = map.get((K) "k0");
@@ -971,9 +968,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testMapEquals() {
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> one = makeObject();
         final Integer value = Integer.valueOf(1);
         one.put((K) "One", (V) value);
@@ -1080,9 +1075,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testPutAll_KeyIterable() {
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> map = makeObject();
         Collection<V> coll = (Collection<V>) Arrays.asList("X", "Y", "Z");
 
@@ -1118,9 +1111,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testPutAll_Map1() {
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> original = makeObject();
         original.put((K) "key", (V) "object1");
         original.put((K) "key", (V) "object2");
@@ -1147,9 +1138,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testPutAll_Map2() {
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         final Map<K, V> original = new HashMap<>();
         original.put((K) "keyX", (V) "object1");
         original.put((K) "keyY", (V) "object2");
@@ -1177,9 +1166,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testRemove_KeyItem() {
-        if (!isRemoveSupported() || !isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
+        assumeTrue(isRemoveSupported());
         final MultiValuedMap<K, V> map = makeObject();
         map.put((K) "A", (V) "AA");
         map.put((K) "A", (V) "AB");
@@ -1325,9 +1313,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     @Test
     @SuppressWarnings("unchecked")
     public void testSizeWithPutRemove() {
-        if (!isRemoveSupported() || !isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
+        assumeTrue(isRemoveSupported());
         final MultiValuedMap<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) "A", (V) "AA");
@@ -1346,9 +1333,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     @Test
     public void testToString(){
-        if (!isAddSupported()) {
-            return;
-        }
+        assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> map = makeObject();
         map.put((K) "A", (V) "X");
         map.put((K) "A", (V) "Y");
