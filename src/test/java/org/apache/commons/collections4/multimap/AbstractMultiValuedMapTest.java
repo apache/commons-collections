@@ -532,7 +532,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public int getSampleCountPerKey() {
-        return 2;
+        return 8;
     }
 
     /**
