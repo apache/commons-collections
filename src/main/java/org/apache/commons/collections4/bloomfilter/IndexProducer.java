@@ -33,6 +33,7 @@ import java.util.function.LongPredicate;
 @FunctionalInterface
 public interface IndexProducer {
 
+
     /**
      * Creates an IndexProducer from a {@code BitMapProducer}.
      * @param producer the {@code BitMapProducer}
@@ -106,7 +107,7 @@ public interface IndexProducer {
             private int size;
 
             boolean add(final int index) {
-                data = IndexUtils.ensureCapacityForAdd(data, size);
+                data = ensureCapacityForAdd(data, size);
                 data[size++] = index;
                 return true;
             }
@@ -172,5 +173,21 @@ public interface IndexProducer {
                 return this;
             }
         };
+    }
+
+    /**
+     * Ensure the array can add an element at the specified index.
+     * @param array the array to check.
+     * @param index the index to add at.
+     * @return the array or a newly allocated copy of the array.
+     */
+    static int[] ensureCapacityForAdd(final int[] array, final int index) {
+
+        final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+        if (index >= array.length) {
+            return Arrays.copyOf(array, (int) Math.min(MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
+        }
+        return array;
     }
 }
