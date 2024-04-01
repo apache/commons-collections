@@ -978,7 +978,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      *  A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
      */
-    protected static class TrieEntry<K, V> extends BasicEntry<K, V> {
+    public static class TrieEntry<K, V> extends BasicEntry<K, V> {
 
         private static final long serialVersionUID = 4596023148184140013L;
 
@@ -1700,7 +1700,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * <p>This is implemented by going always to the right until
      * we encounter a valid uplink. That uplink is the last key.
      */
-    TrieEntry<K, V> lastEntry() {
+    public TrieEntry<K, V> lastEntry() {
         return followRight(root.left);
     }
 
