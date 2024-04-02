@@ -22,6 +22,10 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
+  <release version="4.5.0" date="YYYY-MM-DD" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
+     <!-- FIX -->
+     <!-- UPDATE -->
+  </release>
   <release version="4.5.0-M1" date="2024-03-31" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter` for review.">
     <!-- FIX -->
     <action issue="COLLECTIONS-780" dev="kinow" type="fix" due-to="Arturo Bernal">
