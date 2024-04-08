@@ -26,6 +26,7 @@
      <!-- FIX -->
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475 .</action>
   </release>
   <release version="4.5.0-M1" date="2024-03-31" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter` for review.">
     <!-- FIX -->
