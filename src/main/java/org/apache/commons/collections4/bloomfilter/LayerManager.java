@@ -380,4 +380,15 @@ public class LayerManager implements BloomFilterProducer {
         this.filterCleanup.accept(filters);
         addFilter();
     }
+
+    /**
+     * Forces execution the filterCleanup without creating a new filter except in cases
+     * where the cleanup removes all the layers.
+     */
+    void clean() {
+        this.filterCleanup.accept(filters);
+        if (filters.isEmpty()) {
+            addFilter();
+        }
+    }
 }

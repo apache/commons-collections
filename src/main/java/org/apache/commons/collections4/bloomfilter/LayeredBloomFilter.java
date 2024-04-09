@@ -372,9 +372,18 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * Forces and advance to the next layer. Executes the same logic as when
      * LayerManager.extendCheck returns {@code true}
      *
-     * @see LayerManager
+     * @see LayerManager#next()
      */
     public void next() {
         layerManager.next();
+    }
+
+    /**
+     * Forces the execution of {@code LayerManager.clean()}.
+     * 
+     * @see LayerManager#clear()
+     */
+    public void clean() {
+        layerManager.clean();
     }
 }
