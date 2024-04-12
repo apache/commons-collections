@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -30,6 +31,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.collections4.bloomfilter.LayerManager.Cleanup;
 import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
+import org.apache.commons.collections4.bloomfilter.LayerManagerTest.NumberedBloomFilter;
 import org.junit.jupiter.api.Test;
 
 public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter> {
@@ -310,5 +312,37 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertFalse(filter.get(1).contains(TestingHashers.FROM1));
         assertFalse(filter.get(1).contains(TestingHashers.FROM11));
         assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
+    }
+
+    @Test
+    public void testClean() {
+        int[] sequence = {1};
+        LayerManager layerManager = LayerManager.builder()
+                .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
+                .setExtendCheck(ExtendCheck.neverAdvance())
+                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
+        LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager );
+        assertEquals(1, underTest.getDepth());
+        underTest.merge(TestingHashers.randomHasher());
+        underTest.clean(); // first count == 2
+        assertEquals(1, underTest.getDepth());
+        underTest.next(); // first count == 1
+        assertEquals(2, underTest.getDepth());
+        underTest.merge(TestingHashers.randomHasher());
+        underTest.clean(); // first count == 0
+        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(1, f.sequence);
+
+        assertEquals(2, underTest.getDepth());
+        underTest.clean(); // should be removed ; second is now 1st with value 1
+        assertEquals(1, underTest.getDepth());
+        f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(2, f.sequence);
+
+        underTest.clean(); // first count == 0
+        underTest.clean(); // should be removed.  But there is always at least one
+        assertEquals(1, underTest.getDepth());
+        f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(3, f.sequence);  // it is a new one.
     }
 }

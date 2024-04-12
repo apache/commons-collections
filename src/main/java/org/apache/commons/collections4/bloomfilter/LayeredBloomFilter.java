@@ -380,7 +380,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
 
     /**
      * Forces the execution of {@code LayerManager.clean()}.
-     * 
+     *
      * @see LayerManager#clear()
      */
     public void clean() {

@@ -199,7 +199,7 @@ public class LayerManagerTest {
         LayerManager underTest = LayerManager.builder()
                 .setSupplier(() -> new NumberedBloomFilter(shape, 3, sequence[0]++))
                 .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter)f).value-- == 0))).build();
+                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
         assertEquals(1, underTest.getDepth());
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.clean(); // first count == 2
@@ -208,19 +208,19 @@ public class LayerManagerTest {
         assertEquals(2, underTest.getDepth());
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.clean(); // first count == 0
-        NumberedBloomFilter f = (NumberedBloomFilter)underTest.get(0);
+        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(1, f.sequence);
-        
+
         assertEquals(2, underTest.getDepth());
         underTest.clean(); // should be removed ; second is now 1st with value 1
         assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter)underTest.get(0);
+        f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(2, f.sequence);
-        
+
         underTest.clean(); // first count == 0
         underTest.clean(); // should be removed.  But there is always at least one
         assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter)underTest.get(0);
+        f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.
     }
 
@@ -323,7 +323,7 @@ public class LayerManagerTest {
         assertEquals(2, supplierCount[0]);
     }
 
-    class NumberedBloomFilter extends WrappedBloomFilter {
+    static class NumberedBloomFilter extends WrappedBloomFilter {
         int value;
         int sequence;
         NumberedBloomFilter(Shape shape, int value, int sequence) {
@@ -331,6 +331,5 @@ public class LayerManagerTest {
             this.value = value;
             this.sequence = sequence;
         }
-        
     }
 }
