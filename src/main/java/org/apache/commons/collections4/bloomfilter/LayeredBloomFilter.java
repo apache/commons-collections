@@ -369,21 +369,24 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     /**
-     * Forces and advance to the next layer. Executes the same logic as when
-     * LayerManager.extendCheck returns {@code true}
+     * Forces and advance to the next layer. This method will clean-up the current
+     * layers and generate a new filter layer. In most cases is it unnecessary to
+     * call this method directly.
      *
-     * @see LayerManager#next()
+     * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
+     * @see LayerManager.Builder#setExtendCheck(Predicate)
      */
     public void next() {
         layerManager.next();
     }
 
     /**
-     * Forces the execution of {@code LayerManager.clean()}.
+     * Forces the execution of the cleanup Consumer that was provided when the associated LayerManager
+     * was built.
      *
-     * @see LayerManager#clear()
+     * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
      */
-    public void clean() {
-        layerManager.clean();
+    public void cleanup() {
+        layerManager.cleanup();
     }
 }

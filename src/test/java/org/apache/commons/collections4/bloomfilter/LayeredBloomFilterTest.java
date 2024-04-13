@@ -315,7 +315,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testClean() {
+    public void testCleanup() {
         int[] sequence = {1};
         LayerManager layerManager = LayerManager.builder()
                 .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
@@ -324,23 +324,23 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager );
         assertEquals(1, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());
-        underTest.clean(); // first count == 2
+        underTest.cleanup(); // first count == 2
         assertEquals(1, underTest.getDepth());
         underTest.next(); // first count == 1
         assertEquals(2, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());
-        underTest.clean(); // first count == 0
+        underTest.cleanup(); // first count == 0
         NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(1, f.sequence);
 
         assertEquals(2, underTest.getDepth());
-        underTest.clean(); // should be removed ; second is now 1st with value 1
+        underTest.cleanup(); // should be removed ; second is now 1st with value 1
         assertEquals(1, underTest.getDepth());
         f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(2, f.sequence);
 
-        underTest.clean(); // first count == 0
-        underTest.clean(); // should be removed.  But there is always at least one
+        underTest.cleanup(); // first count == 0
+        underTest.cleanup(); // should be removed.  But there is always at least one
         assertEquals(1, underTest.getDepth());
         f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.

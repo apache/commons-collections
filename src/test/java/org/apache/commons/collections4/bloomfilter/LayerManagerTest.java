@@ -33,7 +33,6 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -191,37 +190,6 @@ public class LayerManagerTest {
         assertEquals(1, underTest.getDepth());
         underTest.next();
         assertEquals(2, underTest.getDepth());
-    }
-
-    @Test
-    public void testClean() {
-        int[] sequence = {1};
-        LayerManager underTest = LayerManager.builder()
-                .setSupplier(() -> new NumberedBloomFilter(shape, 3, sequence[0]++))
-                .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
-        assertEquals(1, underTest.getDepth());
-        underTest.getTarget().merge(TestingHashers.randomHasher());
-        underTest.clean(); // first count == 2
-        assertEquals(1, underTest.getDepth());
-        underTest.next(); // first count == 1
-        assertEquals(2, underTest.getDepth());
-        underTest.getTarget().merge(TestingHashers.randomHasher());
-        underTest.clean(); // first count == 0
-        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(1, f.sequence);
-
-        assertEquals(2, underTest.getDepth());
-        underTest.clean(); // should be removed ; second is now 1st with value 1
-        assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(2, f.sequence);
-
-        underTest.clean(); // first count == 0
-        underTest.clean(); // should be removed.  But there is always at least one
-        assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(3, f.sequence);  // it is a new one.
     }
 
     @Test
