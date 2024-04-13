@@ -137,8 +137,7 @@ public final class Shape {
         // exp(-1/Integer.MAX_INT) approx 0.9999999995343387 so Math.pow( x, y ) will
         // always be 0<x<1 and y>0
         if (probability >= 1.0) {
-            throw new IllegalArgumentException(
-                    String.format("Calculated probability is greater than or equal to 1: " + probability));
+            throw new IllegalArgumentException("Calculated probability is greater than or equal to 1: " + probability);
         }
     }
 
