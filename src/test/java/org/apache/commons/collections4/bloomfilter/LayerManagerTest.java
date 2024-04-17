@@ -291,4 +291,13 @@ public class LayerManagerTest {
         assertEquals(2, supplierCount[0]);
     }
 
+    static class NumberedBloomFilter extends WrappedBloomFilter {
+        int value;
+        int sequence;
+        NumberedBloomFilter(Shape shape, int value, int sequence) {
+            super(new SimpleBloomFilter(shape));
+            this.value = value;
+            this.sequence = sequence;
+        }
+    }
 }
