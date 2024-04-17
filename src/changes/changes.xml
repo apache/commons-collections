@@ -23,6 +23,8 @@
   </properties>
   <body>
   <release version="4.5.0" date="YYYY-MM-DD" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
+     <!-- UPDATE -->
+     <action isue="COLLECTIONS-852" type="update" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layerd bloom filter clean method #476 .</action>
      <!-- FIX -->
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>

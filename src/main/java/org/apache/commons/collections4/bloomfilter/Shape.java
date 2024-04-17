@@ -111,8 +111,7 @@ public final class Shape {
         // than integer math.
         final long k = Math.round(LN_2 * numberOfBits / numberOfItems);
         if (k < 1) {
-            throw new IllegalArgumentException(
-                    String.format("Filter too small: Calculated number of hash functions (%s) was less than 1", k));
+            throw new IllegalArgumentException(String.format("Filter too small: Calculated number of hash functions (%s) was less than 1", k));
         }
         // Normally we would check that numberOfHashFunctions <= Integer.MAX_VALUE but
         // since numberOfBits is at most Integer.MAX_VALUE the numerator of
@@ -137,8 +136,7 @@ public final class Shape {
         // exp(-1/Integer.MAX_INT) approx 0.9999999995343387 so Math.pow( x, y ) will
         // always be 0<x<1 and y>0
         if (probability >= 1.0) {
-            throw new IllegalArgumentException(
-                    String.format("Calculated probability is greater than or equal to 1: " + probability));
+            throw new IllegalArgumentException("Calculated probability is greater than or equal to 1: " + probability);
         }
     }
 
@@ -165,8 +163,7 @@ public final class Shape {
      */
     private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
         if (numberOfHashFunctions < 1) {
-            throw new IllegalArgumentException(
-                    "Number of hash functions must be greater than 0: " + numberOfHashFunctions);
+            throw new IllegalArgumentException("Number of hash functions must be greater than 0: " + numberOfHashFunctions);
         }
         return numberOfHashFunctions;
     }
@@ -330,8 +327,7 @@ public final class Shape {
 
         // Number of items (n):
         // n = ceil(m / (-k / ln(1 - exp(ln(p) / k))))
-        final double n = Math.ceil(numberOfBits
-                / (-numberOfHashFunctions / Math.log(-Math.expm1(Math.log(probability) / numberOfHashFunctions))));
+        final double n = Math.ceil(numberOfBits / (-numberOfHashFunctions / Math.log(-Math.expm1(Math.log(probability) / numberOfHashFunctions))));
 
         // log of probability is always < 0
         // number of hash functions is >= 1
@@ -378,8 +374,7 @@ public final class Shape {
         // Shape is final so no check for the same class as inheritance is not possible
         if (obj instanceof Shape) {
             final Shape other = (Shape) obj;
-            return numberOfBits == other.numberOfBits &&
-                   numberOfHashFunctions == other.numberOfHashFunctions;
+            return numberOfBits == other.numberOfBits && numberOfHashFunctions == other.numberOfHashFunctions;
         }
         return false;
     }
@@ -463,8 +458,7 @@ public final class Shape {
         if (numberOfItems == 0) {
             return 0;
         }
-        return Math.pow(-Math.expm1(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits),
-                numberOfHashFunctions);
+        return Math.pow(-Math.expm1(-1.0 * numberOfHashFunctions * numberOfItems / numberOfBits), numberOfHashFunctions);
     }
 
     @Override

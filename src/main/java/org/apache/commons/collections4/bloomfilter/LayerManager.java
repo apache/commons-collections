@@ -82,7 +82,7 @@ public class LayerManager implements BloomFilterProducer {
          *
          * @param cleanup the Consumer that will modify the list of filters removing out
          *                dated or stale filters.
-         * @return this for chaining.
+         * @return this
          */
         public Builder setCleanup(Consumer<LinkedList<BloomFilter>> cleanup) {
             this.cleanup = cleanup;
@@ -375,9 +375,23 @@ public class LayerManager implements BloomFilterProducer {
      * Ths method is used within {@link #getTarget()} when the configured
      * {@code ExtendCheck} returns {@code true}.
      * </p>
+     * @see LayerManager.Builder#setExtendCheck(Predicate)
+     * @see LayerManager.Builder#setCleanup(Consumer)
      */
     void next() {
         this.filterCleanup.accept(filters);
         addFilter();
+    }
+
+    /**
+     * Forces execution the configured cleanup without creating a new filter except in cases
+     * where the cleanup removes all the layers.
+     * @see LayerManager.Builder#setCleanup(Consumer)
+     */
+    void cleanup() {
+        this.filterCleanup.accept(filters);
+        if (filters.isEmpty()) {
+            addFilter();
+        }
     }
 }
