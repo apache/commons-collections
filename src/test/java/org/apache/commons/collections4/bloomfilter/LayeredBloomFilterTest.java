@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -31,7 +30,6 @@ import java.util.function.Predicate;
 
 import org.apache.commons.collections4.bloomfilter.LayerManager.Cleanup;
 import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
-import org.apache.commons.collections4.bloomfilter.LayerManagerTest.NumberedBloomFilter;
 import org.junit.jupiter.api.Test;
 
 public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
@@ -360,5 +358,20 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertEquals(1, underTest.getDepth());
         f = (NumberedBloomFilter) underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.
+    }
+
+    static class NumberedBloomFilter extends WrappedBloomFilter {
+        int value;
+        int sequence;
+        NumberedBloomFilter(Shape shape, int value, int sequence) {
+            super(new SimpleBloomFilter(shape));
+            this.value = value;
+            this.sequence = sequence;
+        }
+
+        @Override
+        public BloomFilter copy() {
+            return new NumberedBloomFilter(getShape(), value, sequence);
+        }
     }
 }
