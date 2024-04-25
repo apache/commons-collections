@@ -23,6 +23,12 @@ public class BitMapProducerFromWrappedBloomFilterTest extends AbstractBitMapProd
     @Override
     protected BitMapProducer createEmptyProducer() {
         return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+            @Override
+            public BloomFilter copy() {
+                BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+                result.merge(wrapped);
+                return result;
+            }
         };
     }
 
@@ -30,6 +36,12 @@ public class BitMapProducerFromWrappedBloomFilterTest extends AbstractBitMapProd
     protected BitMapProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(0, 1);
         final BloomFilter bf = new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+            @Override
+            public BloomFilter copy() {
+                BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+                result.merge(wrapped);
+                return result;
+            }
         };
         bf.merge(hasher);
         return bf;

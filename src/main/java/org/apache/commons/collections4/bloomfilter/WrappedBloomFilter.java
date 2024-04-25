@@ -25,7 +25,7 @@ import java.util.function.LongPredicate;
  * @since 4.5
  */
 public abstract class WrappedBloomFilter implements BloomFilter {
-    final BloomFilter wrapped;
+    protected final BloomFilter wrapped;
 
     /**
      * Wraps a Bloom filter.  The wrapped filter is maintained as a reference
@@ -79,11 +79,6 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     @Override
     public boolean contains(IndexProducer indexProducer) {
         return wrapped.contains(indexProducer);
-    }
-
-    @Override
-    public BloomFilter copy() {
-        return wrapped.copy();
     }
 
     @Override

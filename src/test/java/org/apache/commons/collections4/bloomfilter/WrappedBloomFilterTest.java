@@ -26,6 +26,12 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
     @Override
     protected WrappedBloomFilter createEmptyFilter(Shape shape) {
         return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+            @Override
+            public BloomFilter copy() {
+                BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+                result.merge(this.wrapped);
+                return result;
+            }
         };
     }
 
@@ -39,7 +45,14 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
                 return characteristics;
             }
         };
-        WrappedBloomFilter underTest = new WrappedBloomFilter(inner) {};
+        WrappedBloomFilter underTest = new WrappedBloomFilter(inner) {
+            @Override
+            public BloomFilter copy() {
+                BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+                result.merge(this.wrapped);
+                return result;
+            }
+        };
         assertEquals(characteristics, underTest.characteristics());
     }
 }
