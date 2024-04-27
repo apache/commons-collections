@@ -102,7 +102,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         @Override
         public TimestampedBloomFilter copy() {
-            return new TimestampedBloomFilter(this.wrapped.copy(), timestamp);
+            return new TimestampedBloomFilter(this.getWrapped().copy(), timestamp);
         }
     }
 

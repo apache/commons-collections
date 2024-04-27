@@ -29,7 +29,7 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
             @Override
             public BloomFilter copy() {
                 BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-                result.merge(this.wrapped);
+                result.merge(this.getWrapped());
                 return result;
             }
         };
@@ -49,7 +49,7 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
             @Override
             public BloomFilter copy() {
                 BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-                result.merge(this.wrapped);
+                result.merge(this.getWrapped());
                 return result;
             }
         };

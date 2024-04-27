@@ -26,7 +26,7 @@ public class BitMapProducerFromWrappedBloomFilterTest extends AbstractBitMapProd
             @Override
             public BloomFilter copy() {
                 BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-                result.merge(wrapped);
+                result.merge(getWrapped());
                 return result;
             }
         };
@@ -39,7 +39,7 @@ public class BitMapProducerFromWrappedBloomFilterTest extends AbstractBitMapProd
             @Override
             public BloomFilter copy() {
                 BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
-                result.merge(wrapped);
+                result.merge(getWrapped());
                 return result;
             }
         };
