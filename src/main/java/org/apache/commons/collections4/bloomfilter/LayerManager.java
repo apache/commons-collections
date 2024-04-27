@@ -199,10 +199,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnPopulated() {
-            return lm -> {
-                T t = lm.last();
-                return t != null && !t.isEmpty();
-            };
+            return lm -> !lm.last().isEmpty();
         }
 
         /**
@@ -222,7 +219,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
             }
             return manager -> {
                 BloomFilter bf = manager.last();
-                return bf != null && maxN <= bf.getShape().estimateN(bf.cardinality());
+                return maxN <= bf.getShape().estimateN(bf.cardinality());
             };
         }
 
@@ -350,7 +347,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
 
     /**
      * Returns the number of filters in the LayerManager.  In the default LayerManager implementation
-     * there is alwasy at least one layer.
+     * there is always at least one layer.
      *
      * @return the current depth.
      */
@@ -361,21 +358,21 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     /**
      * Gets the Bloom filter from the first layer.
      * No extension check is performed during this call.
-     * @return The Bloom filter from the first layer. May be {@code null}.
+     * @return The Bloom filter from the first layer.
      * @see #getTarget()
      */
     public final T first() {
-        return filters.isEmpty() ? null : filters.get(0);
+        return filters.get(0);
     }
 
     /**
      * Gets the Bloom filter from the last layer.
      * No extension check is performed during this call.
-     * @return The Bloom filter from the last layer. May be {@code null}.
+     * @return The Bloom filter from the last layer.
      * @see #getTarget()
      */
     public final T last() {
-        return filters.isEmpty() ? null : filters.get(filters.size()-1);
+        return filters.get(filters.size()-1);
     }
 
     /**

@@ -47,8 +47,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         @Override
         public boolean test(LayerManager<TimestampedBloomFilter> lm) {
             // can not use getTarget() as it causes recursion.
-            TimestampedBloomFilter bf =  lm.last();
-            return bf != null && bf.timestamp + quanta < System.currentTimeMillis();
+            return lm.last().timestamp + quanta < System.currentTimeMillis();
         }
     }
 
