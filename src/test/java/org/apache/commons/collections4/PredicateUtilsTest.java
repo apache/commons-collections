@@ -57,9 +57,9 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     @SuppressWarnings("unchecked")
     public void testAllPredicate() {
         assertPredicateTrue(AllPredicate.allPredicate(), null);
-        assertTrue(AllPredicate.allPredicate(truePredicate(), truePredicate(), truePredicate()).evaluate(null));
-        assertFalse(AllPredicate.allPredicate(truePredicate(), FalsePredicate.falsePredicate(), truePredicate()).evaluate(null));
-        assertFalse(AllPredicate.allPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), truePredicate()).evaluate(null));
+        assertTrue(AllPredicate.allPredicate(truePredicate(), truePredicate(), truePredicate()).test(null));
+        assertFalse(AllPredicate.allPredicate(truePredicate(), FalsePredicate.falsePredicate(), truePredicate()).test(null));
+        assertFalse(AllPredicate.allPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), truePredicate()).test(null));
         assertFalse(AllPredicate.allPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(TruePredicate.truePredicate());

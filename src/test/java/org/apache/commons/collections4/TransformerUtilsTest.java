@@ -55,7 +55,9 @@ public class TransformerUtilsTest {
     public void testChainedTransformer() {
         final Transformer<Object, Object> a = TransformerUtils.<Object, Object>constantTransformer("A");
         final Transformer<Object, Object> b = TransformerUtils.constantTransformer((Object) "B");
-
+        assertEquals("A", TransformerUtils.chainedTransformer(b, a).apply(null));
+        assertEquals("B", TransformerUtils.chainedTransformer(a, b).apply(null));
+        assertEquals("A", TransformerUtils.chainedTransformer(b, a).apply(null));
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         assertEquals("B", TransformerUtils.chainedTransformer(a, b).transform(null));
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));

@@ -70,7 +70,7 @@ public class ClosureUtilsTest {
     public void testChainedClosure() {
         MockClosure<Object> a = new MockClosure<>();
         MockClosure<Object> b = new MockClosure<>();
-        ClosureUtils.chainedClosure(a, b).execute(null);
+        ClosureUtils.chainedClosure(a, b).accept(null);
         assertEquals(1, a.count);
         assertEquals(1, b.count);
 

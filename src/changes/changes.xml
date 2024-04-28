@@ -29,6 +29,7 @@
      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Closure in favor of java.util.function.Consumer.</action>
      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Factory in favor of java.util.function.Supplier.</action>
      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Predicate in favor of java.util.function.Predicate.</action>
+     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Transformer in favor of java.util.function.Function.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475 .</action>

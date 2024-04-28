@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.function.Function;
+
 /**
  * Defines a functor interface implemented by classes that transform one
  * object into another.
@@ -31,13 +33,19 @@ package org.apache.commons.collections4;
  * cloning and returning the string value.
  * </p>
  *
- * @param <I> the input type to the transformer
- * @param <O> the output type from the transformer
+ * @param <T> the input type to the transformer
+ * @param <R> the output type from the transformer
  *
  * @since 1.0
+ * @deprecated Use {@link Function}.
  */
-@FunctionalInterface
-public interface Transformer<I, O> {
+@Deprecated
+public interface Transformer<T, R> extends Function<T, R> {
+
+    @Override
+    default R apply(final T t) {
+        return transform(t);
+    }
 
     /**
      * Transforms the input object (leaving it unchanged) into some output object.
@@ -48,6 +56,6 @@ public interface Transformer<I, O> {
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the transform cannot be completed
      */
-    O transform(I input);
+    R transform(T input);
 
 }

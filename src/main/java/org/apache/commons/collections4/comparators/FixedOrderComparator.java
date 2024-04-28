@@ -212,7 +212,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        FixedOrderComparator other = (FixedOrderComparator) obj;
+        FixedOrderComparator<?> other = (FixedOrderComparator<?>) obj;
         return counter == other.counter && isLocked == other.isLocked && Objects.equals(map, other.map) && unknownObjectBehavior == other.unknownObjectBehavior;
     }
 
