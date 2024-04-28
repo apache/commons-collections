@@ -24,8 +24,9 @@
   <body>
   <release version="4.5.0" date="YYYY-MM-DD" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
      <!-- ADD -->
-     <action issue="COLLECTIONS-852" type="update" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layerd bloom filter clean method #476 .</action>
+     <action issue="COLLECTIONS-852" type="update" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layerd bloom filter clean method #476.</action>
      <!-- FIX -->
+     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Closure in favor of java.util.function.Consumer.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475 .</action>
