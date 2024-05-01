@@ -504,17 +504,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * JDK1.2 has bugs in null handling of Maps, especially HashMap.Entry.toString
-     * This avoids nulls for JDK1.2
-     */
-    private static final boolean JDK12;
-
-    static {
-        final String str = System.getProperty("java.version");
-        JDK12 = str.startsWith("1.2");
-    }
-
-    /**
      * Creates a new Map Entry that is independent of the first and the map.
      */
     public static <K, V> Map.Entry<K, V> cloneMapEntry(final Map.Entry<K, V> entry) {
@@ -679,7 +668,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         final Object[] result = {
-            isAllowNullValue() && !JDK12 && isAllowDuplicateValues() ? null : "newnonnullvalue",
+            isAllowNullValue() && isAllowDuplicateValues() ? null : "newnonnullvalue",
             "newvalue",
             isAllowDuplicateValues() ? "newvalue" : "newvalue2",
             "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv",
@@ -728,7 +717,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
             "key",
             "key2",
-            isAllowNullKey() && !JDK12 ? null : "nonnullkey"
+            isAllowNullKey() ? null : "nonnullkey"
         };
         return (K[]) result;
     }
@@ -747,7 +736,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] result = {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
-            isAllowNullValue() && !JDK12 ? null : "nonnullvalue",
+            isAllowNullValue() ? null : "nonnullvalue",
             "value",
             isAllowDuplicateValues() ? "value" : "value2",
         };
