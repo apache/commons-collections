@@ -40,7 +40,9 @@ import java.util.Collection;
  * </p>
  *
  * @since 3.0
+ * @deprecated
  */
+@Deprecated
 public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /** Serialization version */

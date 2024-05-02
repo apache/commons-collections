@@ -59,6 +59,7 @@ import java.util.ListIterator;
  * @since 1.0
  * @deprecated
  */
+@Deprecated
 public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /**
