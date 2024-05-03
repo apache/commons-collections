@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link AbstractLinkedListForJava21}.
  */
-public abstract class AbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
+public class AbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
 
     public AbstractLinkedListForJava21Test() {
         super(AbstractLinkedListForJava21Test.class.getSimpleName());
@@ -198,7 +198,7 @@ public abstract class AbstractLinkedListForJava21Test<E> extends AbstractListTes
         return new DefaultAbstractLinkedListForJava21<>();
     }
 
-    private class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
+    private static class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
         DefaultAbstractLinkedListForJava21() {
             init();
         }
