@@ -55,7 +55,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * A Consumer that cleans the list based on how long each filters has been in
      * the list.
      */
-    static class CleanByTime implements Consumer<List<? extends BloomFilter>> {
+    static class CleanByTime<T extends TimestampedBloomFilter> implements Consumer<List<T>> {
         long elapsedTime;
 
         CleanByTime(long duration, TimeUnit unit) {
@@ -63,11 +63,11 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
 
         @Override
-        public void accept(List<? extends BloomFilter> t) {
+        public void accept(List<T> t) {
             long min = System.currentTimeMillis() - elapsedTime;
-            Iterator<? extends BloomFilter> iter = t.iterator();
+            Iterator<T> iter = t.iterator();
             while (iter.hasNext()) {
-                TimestampedBloomFilter bf = (TimestampedBloomFilter) iter.next();
+                TimestampedBloomFilter bf = iter.next();
                 if (bf.getTimestamp() < min) {
                     dbgInstrument.add(String.format("Removing old entry: T:%s (Aged: %s) \n", bf.getTimestamp(),
                             (min - bf.getTimestamp())));
@@ -124,9 +124,10 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     static LayeredBloomFilter<TimestampedBloomFilter> createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
             TimeUnit qUnit) {
         LayerManager.Builder<TimestampedBloomFilter> builder = LayerManager.builder();
+        Consumer<List<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit));
         LayerManager<TimestampedBloomFilter> layerManager = builder
                 .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
-                .setCleanup(Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit)))
+                .setCleanup(cleanup)
                 .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
                         .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
                 .build();

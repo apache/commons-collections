@@ -120,7 +120,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * Creates a new instance of the BloomFilter with the same properties as the current one.
      * @return a copy of this BloomFilter
      */
-    BloomFilter copy();
+    <T extends BloomFilter> T copy();
 
     // update operations
 

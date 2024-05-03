@@ -193,7 +193,7 @@ public class LayerManagerTest {
 
     @Test
     public void testNoCleanup() {
-        Consumer<List<? extends BloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
+        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
         List<BloomFilter> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             assertEquals(i, list.size());
@@ -205,7 +205,7 @@ public class LayerManagerTest {
     @ParameterizedTest
     @ValueSource(ints = {5, 100, 2, 1})
     public void testOnMaxSize(int maxSize) {
-        Consumer<List<? extends BloomFilter>> underTest = LayerManager.Cleanup.onMaxSize(maxSize);
+        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.onMaxSize(maxSize);
         List<BloomFilter> list = new ArrayList<>();
         for (int i = 0; i < maxSize; i++) {
             assertEquals(i, list.size());
@@ -229,7 +229,7 @@ public class LayerManagerTest {
 
     @Test
     public void testRemoveEmptyTarget() {
-        Consumer<List<? extends BloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
+        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
         List<BloomFilter> list = new ArrayList<>();
 
         // removes an empty filter

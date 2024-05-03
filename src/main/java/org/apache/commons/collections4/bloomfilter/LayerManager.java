@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -59,7 +59,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     public static class Builder<T extends BloomFilter> {
         private Predicate<LayerManager<T>> extendCheck;
         private Supplier<T> supplier;
-        private Consumer<List<? extends BloomFilter>> cleanup;
+        private Consumer<List<T>> cleanup;
 
         private Builder() {
             extendCheck = ExtendCheck.neverAdvance();
@@ -85,7 +85,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *                dated or stale filters.
          * @return this
          */
-        public Builder<T> setCleanup(Consumer<List<? extends BloomFilter>> cleanup) {
+        public Builder<T> setCleanup(Consumer<List<T>> cleanup) {
             this.cleanup = cleanup;
             return this;
         }
@@ -125,7 +125,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * A Cleanup that never removes anything.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static Consumer<List<? extends BloomFilter>> noCleanup() {
+        public static  <T extends BloomFilter>  Consumer<List<T>> noCleanup() {
             return x -> {};
         }
 
@@ -138,7 +138,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          * @throws IllegalArgumentException if {@code maxSize <= 0}.
          */
-        public static <T extends BloomFilter> Consumer<List<? extends BloomFilter>> onMaxSize(int maxSize) {
+        public static <T extends BloomFilter> Consumer<List<T>> onMaxSize(int maxSize) {
             if (maxSize <= 0) {
                 throw new IllegalArgumentException("'maxSize' must be greater than 0");
             }
@@ -155,12 +155,22 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static <T extends BloomFilter> Consumer<List<? extends BloomFilter>> removeEmptyTarget() {
+        public static <T extends BloomFilter> Consumer<List<T>> removeEmptyTarget() {
             return x -> {
                 if (!x.isEmpty() && x.get(x.size()-1).isEmpty()) {
                     x.remove(x.size()-1);
                 }
             };
+        }
+
+        /**
+         * Removes any layer identified by the predicate.
+         *
+         * @param test Predicate.
+         * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
+         */
+        public static <T extends BloomFilter> Consumer<List<T>> removeIf(Predicate<? super T> test) {
+            return x -> x.removeIf(test);
         }
 
         private Cleanup() {
@@ -246,8 +256,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     public static <T extends BloomFilter> Builder<T> builder() {
         return new Builder<>();
     }
-    private final List<T> filters = new ArrayList<>();
-    private final Consumer<List<? extends BloomFilter>> filterCleanup;
+    private final LinkedList<T> filters = new LinkedList<>();
+    private final Consumer<List<T>> filterCleanup;
 
     private final Predicate<LayerManager<T>> extendCheck;
 
@@ -265,7 +275,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @param initialize     true if the filter list should be initialized.
      */
     private LayerManager(Supplier<T> filterSupplier, Predicate<LayerManager<T>> extendCheck,
-            Consumer<List<? extends BloomFilter>> filterCleanup, boolean initialize) {
+            Consumer<List<T>> filterCleanup, boolean initialize) {
         this.filterSupplier = filterSupplier;
         this.extendCheck = extendCheck;
         this.filterCleanup = filterCleanup;
@@ -306,7 +316,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     public LayerManager<T> copy() {
         LayerManager<T> newMgr = new LayerManager<>(filterSupplier, extendCheck, filterCleanup, false);
         for (T bf : filters) {
-            newMgr.filters.add((T) bf.copy());
+            newMgr.filters.add(bf.copy());
         }
         return newMgr;
     }
@@ -362,7 +372,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @see #getTarget()
      */
     public final T first() {
-        return filters.get(0);
+        return filters.getFirst();
     }
 
     /**
@@ -372,7 +382,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @see #getTarget()
      */
     public final T last() {
-        return filters.get(filters.size()-1);
+        return filters.getLast();
     }
 
     /**
