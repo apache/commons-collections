@@ -198,6 +198,106 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
         return new DefaultAbstractLinkedListForJava21<>();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSubList() {
+        List<E> list = makeObject();
+        list.add((E) "A");
+        list.add((E) "B");
+        list.add((E) "C");
+        list.add((E) "D");
+        list.add((E) "E");
+
+        assertEquals("[A, B, C, D, E]", list.toString());
+        assertEquals("[A, B, C, D, E]", list.subList(0, 5).toString());
+        assertEquals("[B, C, D, E]", list.subList(1, 5).toString());
+        assertEquals("[C, D, E]", list.subList(2, 5).toString());
+        assertEquals("[D, E]", list.subList(3, 5).toString());
+        assertEquals("[E]", list.subList(4, 5).toString());
+        assertEquals("[]", list.subList(5, 5).toString());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSubListAddBegin() {
+        List<E> list = makeObject();
+        list.add((E) "A");
+        list.add((E) "B");
+        list.add((E) "C");
+        list.add((E) "D");
+        list.add((E) "E");
+
+        final List<E> sublist = list.subList(0, 0);
+        sublist.add((E) "a");
+        assertEquals("[a, A, B, C, D, E]", list.toString());
+        assertEquals("[a]", sublist.toString());
+        sublist.add((E) "b");
+        assertEquals("[a, b, A, B, C, D, E]", list.toString());
+        assertEquals("[a, b]", sublist.toString());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSubListAddEnd() {
+        List<E> list = makeObject();
+        list.add((E) "A");
+        list.add((E) "B");
+        list.add((E) "C");
+        list.add((E) "D");
+        list.add((E) "E");
+
+        final List<E> sublist = list.subList(5, 5);
+        sublist.add((E) "F");
+        assertEquals("[A, B, C, D, E, F]", list.toString());
+        assertEquals("[F]", sublist.toString());
+        sublist.add((E) "G");
+        assertEquals("[A, B, C, D, E, F, G]", list.toString());
+        assertEquals("[F, G]", sublist.toString());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSubListAddMiddle() {
+        List<E> list = makeObject();
+        list.add((E) "A");
+        list.add((E) "B");
+        list.add((E) "C");
+        list.add((E) "D");
+        list.add((E) "E");
+
+        final List<E> sublist = list.subList(1, 3);
+        sublist.add((E) "a");
+        assertEquals("[A, B, C, a, D, E]", list.toString());
+        assertEquals("[B, C, a]", sublist.toString());
+        sublist.add((E) "b");
+        assertEquals("[A, B, C, a, b, D, E]", list.toString());
+        assertEquals("[B, C, a, b]", sublist.toString());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSubListRemove() {
+        List<E> list = makeObject();
+        list.add((E) "A");
+        list.add((E) "B");
+        list.add((E) "C");
+        list.add((E) "D");
+        list.add((E) "E");
+
+        final List<E> sublist = list.subList(1, 4);
+        assertEquals("[B, C, D]", sublist.toString());
+        assertEquals("[A, B, C, D, E]", list.toString());
+        sublist.remove("C");
+        assertEquals("[B, D]", sublist.toString());
+        assertEquals("[A, B, D, E]", list.toString());
+        sublist.remove(1);
+        assertEquals("[B]", sublist.toString());
+        assertEquals("[A, B, E]", list.toString());
+        sublist.clear();
+        assertEquals("[]", sublist.toString());
+        assertEquals("[A, E]", list.toString());
+    }
+
     private static class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
         DefaultAbstractLinkedListForJava21() {
             init();
