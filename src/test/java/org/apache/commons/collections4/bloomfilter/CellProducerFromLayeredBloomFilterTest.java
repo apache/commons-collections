@@ -22,13 +22,13 @@ public class CellProducerFromLayeredBloomFilterTest extends AbstractCellProducer
 
     @Override
     protected CellProducer createEmptyProducer() {
-        return CellProducer.from(LayeredBloomFilter.fixed(shape, 10));
+        return CellProducer.from(LayeredBloomFilterTest.fixed(shape, 10));
     }
 
     @Override
     protected CellProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(3, 2);
-        final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
+        final BloomFilter bf = LayeredBloomFilterTest.fixed(shape, 10);
         bf.merge(hasher);
         return CellProducer.from(bf);
     }

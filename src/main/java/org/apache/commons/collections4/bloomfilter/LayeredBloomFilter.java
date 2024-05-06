@@ -22,7 +22,6 @@ import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
  * Layered Bloom filters are described in Zhiwang, Cen; Jungang, Xu; Jian, Sun
@@ -89,36 +88,6 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
             bfIdx++;
             return true;
         }
-    }
-
-    /**
-     * Creates a fixed size layered bloom filter that adds new filters to the list,
-     * but never merges them. List will never exceed maxDepth. As additional filters
-     * are added earlier filters are removed.  Uses SimpleBloomFilters.
-     *
-     * @param shape    The shape for the enclosed Bloom filters.
-     * @param maxDepth The maximum depth of layers.
-     * @return An empty layered Bloom filter of the specified shape and depth.
-     */
-    public static  LayeredBloomFilter<BloomFilter> fixed(final Shape shape, int maxDepth) {
-        return fixed(shape, maxDepth, () -> new SimpleBloomFilter(shape));
-    }
-
-    /**
-     * Creates a fixed size layered bloom filter that adds new filters to the list,
-     * but never merges them. List will never exceed maxDepth. As additional filters
-     * are added earlier filters are removed.
-     *
-     * @param shape    The shape for the enclosed Bloom filters.
-     * @param maxDepth The maximum depth of layers.
-     * @param supplier A supplier of the Bloom filters to create layers with.
-     * @return An empty layered Bloom filter of the specified shape and depth.
-     */
-    public static <T extends BloomFilter> LayeredBloomFilter<T> fixed(final Shape shape, int maxDepth, Supplier<T> supplier) {
-        LayerManager.Builder<T> builder = LayerManager.builder();
-        builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
-                .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(supplier);
-        return new LayeredBloomFilter<>(shape, builder.build());
     }
 
     private final Shape shape;
