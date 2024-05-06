@@ -30,10 +30,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link AbstractLinkedListForJava21}.
  */
-public class AbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
+public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
 
-    public AbstractLinkedListForJava21Test() {
-        super(AbstractLinkedListForJava21Test.class.getSimpleName());
+    public DefaultAbstractLinkedListForJava21Test() {
+        super(DefaultAbstractLinkedListForJava21Test.class.getSimpleName());
     }
 
     protected void checkNodes() {
