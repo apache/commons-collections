@@ -39,14 +39,14 @@ import org.apache.commons.collections4.OrderedIterator;
  * Overridable methods are provided to change the storage node and to change how
  * nodes are added to and removed. Hopefully, all you need for unusual subclasses
  * is here.
- * </p>
+ * <p>
+ * This is a copy of AbstractLinkedList, modified to be compatible with Java 21
+ * (see COLLECTIONS-842 for details).
  *
  * @param <E> the type of elements in this list
  * @since 3.0
- * @deprecated use {@link AbstractLinkedListForJava21} instead
  */
-@Deprecated
-public abstract class AbstractLinkedList<E> implements List<E> {
+public abstract class AbstractLinkedListForJava21<E> implements List<E> {
 
     /*
      * Implementation notes:
@@ -67,11 +67,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     protected static class LinkedListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
 
         /** The parent list */
-        protected final AbstractLinkedList<E> parent;
+        protected final AbstractLinkedListForJava21<E> parent;
 
         /**
          * The node that will be returned by {@link #next()}. If this is equal
-         * to {@link AbstractLinkedList#header} then there are no more values to return.
+         * to {@link AbstractLinkedListForJava21#header} then there are no more values to return.
          */
         protected Node<E> next;
 
@@ -105,7 +105,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param fromIndex  the index to start at
          * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
          */
-        protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex)
+        protected LinkedListIterator(final AbstractLinkedListForJava21<E> parent, final int fromIndex)
                 throws IndexOutOfBoundsException {
             this.parent = parent;
             this.expectedModCount = parent.modCount;
@@ -221,13 +221,13 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     /**
-     * The sublist implementation for AbstractLinkedList.
+     * The sublist implementation for AbstractLinkedListForJava21.
      *
      * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
         /** The main list */
-        AbstractLinkedList<E> parent;
+        AbstractLinkedListForJava21<E> parent;
         /** Offset from the main list */
         int offset;
         /** Sublist size */
@@ -235,7 +235,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /** Sublist modCount */
         int expectedModCount;
 
-        protected LinkedSubList(final AbstractLinkedList<E> parent, final int fromIndex, final int toIndex) {
+        protected LinkedSubList(final AbstractLinkedListForJava21<E> parent, final int fromIndex, final int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
             }
@@ -524,7 +524,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * If this constructor is used by a serializable subclass then the init()
      * method must be called.
      */
-    protected AbstractLinkedList() {
+    protected AbstractLinkedListForJava21() {
     }
 
     /**
@@ -532,7 +532,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      *
      * @param coll  the collection to copy
      */
-    protected AbstractLinkedList(final Collection<? extends E> coll) {
+    protected AbstractLinkedListForJava21(final Collection<? extends E> coll) {
         init();
         addAll(coll);
     }
@@ -563,14 +563,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return true;
     }
 
-    public boolean addFirst(final E o) {
+    public void addFirst(final E o) {
         addNodeAfter(header, o);
-        return true;
     }
 
-    public boolean addLast(final E o) {
+    public void addLast(final E o) {
         addNodeBefore(header, o);
-        return true;
     }
 
     /**
@@ -596,7 +594,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * {@code value} and inserts it after {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
-     * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
+     * {@link #addNode(AbstractLinkedListForJava21.Node,AbstractLinkedListForJava21.Node)}.
      *
      * @param node  node to insert after
      * @param value  value of the newly added node
@@ -612,7 +610,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * {@code value} and inserts it before {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
-     * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
+     * {@link #addNode(AbstractLinkedListForJava21.Node,AbstractLinkedListForJava21.Node)}.
      *
      * @param node  node to insert before
      * @param value  value of the newly added node

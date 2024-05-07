@@ -57,7 +57,9 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since 1.0
+ * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21
  */
+@Deprecated
 public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /**
