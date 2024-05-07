@@ -40,7 +40,7 @@ import java.util.Collection;
  * </p>
  *
  * @since 3.0
- * @deprecated
+ * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21
  */
 @Deprecated
 public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
