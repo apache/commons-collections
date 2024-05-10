@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -155,7 +156,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     static LayeredBloomFilter<TimestampedBloomFilter> createTimedLayeredFilter(Shape shape, long duration, TimeUnit dUnit, long quanta,
             TimeUnit qUnit) {
         LayerManager.Builder<TimestampedBloomFilter> builder = LayerManager.builder();
-        Consumer<List<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit));
+        Consumer<Deque<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit));
         LayerManager<TimestampedBloomFilter> layerManager = builder
                 .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
                 .setCleanup(cleanup)

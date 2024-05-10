@@ -27,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -193,8 +195,8 @@ public class LayerManagerTest {
 
     @Test
     public void testNoCleanup() {
-        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
-        List<BloomFilter> list = new ArrayList<>();
+        Consumer<Deque<BloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
+        Deque<BloomFilter> list = new LinkedList<>();
         for (int i = 0; i < 20; i++) {
             assertEquals(i, list.size());
             list.add(new SimpleBloomFilter(shape));
@@ -205,8 +207,8 @@ public class LayerManagerTest {
     @ParameterizedTest
     @ValueSource(ints = {5, 100, 2, 1})
     public void testOnMaxSize(int maxSize) {
-        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.onMaxSize(maxSize);
-        List<BloomFilter> list = new ArrayList<>();
+        Consumer<Deque<BloomFilter>> underTest = LayerManager.Cleanup.onMaxSize(maxSize);
+        LinkedList<BloomFilter> list = new LinkedList<>();
         for (int i = 0; i < maxSize; i++) {
             assertEquals(i, list.size());
             list.add(new SimpleBloomFilter(shape));
@@ -229,8 +231,8 @@ public class LayerManagerTest {
 
     @Test
     public void testRemoveEmptyTarget() {
-        Consumer<List<BloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
-        List<BloomFilter> list = new ArrayList<>();
+        Consumer<Deque<BloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
+        LinkedList<BloomFilter> list = new LinkedList<>();
 
         // removes an empty filter
         BloomFilter bf = new SimpleBloomFilter(shape);

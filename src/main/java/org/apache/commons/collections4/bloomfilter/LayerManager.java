@@ -16,8 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -59,7 +59,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     public static class Builder<T extends BloomFilter> {
         private Predicate<LayerManager<T>> extendCheck;
         private Supplier<T> supplier;
-        private Consumer<List<T>> cleanup;
+        private Consumer<Deque<T>> cleanup;
 
         private Builder() {
             extendCheck = ExtendCheck.neverAdvance();
@@ -85,7 +85,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *                dated or stale filters.
          * @return this
          */
-        public Builder<T> setCleanup(Consumer<List<T>> cleanup) {
+        public Builder<T> setCleanup(Consumer<Deque<T>> cleanup) {
             this.cleanup = cleanup;
             return this;
         }
@@ -125,7 +125,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * A Cleanup that never removes anything.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static  <T extends BloomFilter>  Consumer<List<T>> noCleanup() {
+        public static  <T extends BloomFilter>  Consumer<Deque<T>> noCleanup() {
             return x -> {};
         }
 
@@ -138,13 +138,13 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          * @throws IllegalArgumentException if {@code maxSize <= 0}.
          */
-        public static <T extends BloomFilter> Consumer<List<T>> onMaxSize(int maxSize) {
+        public static <T extends BloomFilter> Consumer<Deque<T>> onMaxSize(int maxSize) {
             if (maxSize <= 0) {
                 throw new IllegalArgumentException("'maxSize' must be greater than 0");
             }
             return ll -> {
                 while (ll.size() > maxSize) {
-                    ll.remove(0);
+                    ll.removeFirst();
                 }
             };
         }
@@ -155,10 +155,10 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static <T extends BloomFilter> Consumer<List<T>> removeEmptyTarget() {
+        public static <T extends BloomFilter> Consumer<Deque<T>> removeEmptyTarget() {
             return x -> {
-                if (!x.isEmpty() && x.get(x.size()-1).isEmpty()) {
-                    x.remove(x.size()-1);
+                if (!x.isEmpty() && x.getLast().isEmpty()) {
+                    x.removeLast();
                 }
             };
         }
@@ -169,7 +169,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @param test Predicate.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static <T extends BloomFilter> Consumer<List<T>> removeIf(Predicate<? super T> test) {
+        public static <T extends BloomFilter> Consumer<Deque<T>> removeIf(Predicate<? super T> test) {
             return x -> x.removeIf(test);
         }
 
@@ -257,7 +257,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
         return new Builder<>();
     }
     private final LinkedList<T> filters = new LinkedList<>();
-    private final Consumer<List<T>> filterCleanup;
+    private final Consumer<Deque<T>> filterCleanup;
 
     private final Predicate<LayerManager<T>> extendCheck;
 
@@ -275,7 +275,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @param initialize     true if the filter list should be initialized.
      */
     private LayerManager(Supplier<T> filterSupplier, Predicate<LayerManager<T>> extendCheck,
-            Consumer<List<T>> filterCleanup, boolean initialize) {
+            Consumer<Deque<T>> filterCleanup, boolean initialize) {
         this.filterSupplier = filterSupplier;
         this.extendCheck = extendCheck;
         this.filterCleanup = filterCleanup;
