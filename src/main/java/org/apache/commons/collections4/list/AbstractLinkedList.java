@@ -1078,4 +1078,28 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         node.setValue(value);
     }
 
+
+    /**
+     * Deserializes the data held in this object to the stream specified.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
+    }
+
+    /**
+     * Serializes the data held in this object to the stream specified.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
+    }
+
 }

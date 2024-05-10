@@ -16,17 +16,17 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * JUnit tests.
@@ -82,6 +82,12 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return UnmodifiableBidiMap.unmodifiableBidiMap(new DualHashBidiMap<>());
     }
 
+    public Set<Map.Entry<K, V>> makeCustomFullMap() {
+        final BidiMap<K, V> bidi = new DualHashBidiMap<>();
+        addSampleMappings(bidi);
+        return UnmodifiableBidiMap.unmodifiableBidiMap(bidi).entrySet();
+    }
+
     @Test
     public void testDecorateFactory() {
         final BidiMap<K, V> map = makeFullMap();
@@ -96,4 +102,31 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
+    @Test
+    public void testToArray() {
+        // arrange
+        Set<Map.Entry<K, V>> x = makeCustomFullMap();
+
+        // act
+        Object[] array1 = x.toArray();
+        Object[] array2 = x.toArray(new Map.Entry[x.size()]);
+        Object[] array3 = x.toArray(new Map.Entry[0]);
+
+        // assert
+        // check for same length
+        assertEquals(18, array1.length);
+        assertEquals(18, array2.length);
+        assertEquals(18, array3.length);
+
+        // verify the type for each entry
+        for (Object obj : array1) {
+            assertTrue(obj instanceof Map.Entry);
+        }
+        for (Object obj : array2) {
+            assertTrue(obj instanceof Map.Entry);
+        }
+        for (Object obj : array3) {
+            assertTrue(obj instanceof Map.Entry);
+        }
+    }
 }

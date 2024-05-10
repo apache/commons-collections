@@ -56,163 +56,6 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  */
 public class CollectionUtils {
 
-    /**
-     * Helper class to easily access cardinality properties of two collections.
-     * @param <O>  the element type
-     */
-    private static class CardinalityHelper<O> {
-
-        /** Contains the cardinality for each object in collection A. */
-        final Map<O, Integer> cardinalityA;
-
-        /** Contains the cardinality for each object in collection B. */
-        final Map<O, Integer> cardinalityB;
-
-        /**
-         * Create a new CardinalityHelper for two collections.
-         * @param a  the first collection
-         * @param b  the second collection
-         */
-        CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
-            cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
-        }
-
-        /**
-         * Returns the frequency of this object in collection A.
-         * @param obj  the object
-         * @return the frequency of the object in collection A
-         */
-        public int freqA(final Object obj) {
-            return getFreq(obj, cardinalityA);
-        }
-
-        /**
-         * Returns the frequency of this object in collection B.
-         * @param obj  the object
-         * @return the frequency of the object in collection B
-         */
-        public int freqB(final Object obj) {
-            return getFreq(obj, cardinalityB);
-        }
-
-        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
-            final Integer count = freqMap.get(obj);
-            if (count != null) {
-                return count.intValue();
-            }
-            return 0;
-        }
-
-        /**
-         * Returns the maximum frequency of an object.
-         * @param obj  the object
-         * @return the maximum frequency of the object
-         */
-        public final int max(final Object obj) {
-            return Math.max(freqA(obj), freqB(obj));
-        }
-
-        /**
-         * Returns the minimum frequency of an object.
-         * @param obj  the object
-         * @return the minimum frequency of the object
-         */
-        public final int min(final Object obj) {
-            return Math.min(freqA(obj), freqB(obj));
-        }
-    }
-
-    /**
-     * Wraps another object and uses the provided Equator to implement
-     * {@link #equals(Object)} and {@link #hashCode()}.
-     * <p>
-     * This class can be used to store objects into a Map.
-     * </p>
-     *
-     * @param <O>  the element type
-     * @since 4.0
-     */
-    private static final class EquatorWrapper<O> {
-        private final Equator<? super O> equator;
-        private final O object;
-
-        EquatorWrapper(final Equator<? super O> equator, final O object) {
-            this.equator = equator;
-            this.object = object;
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (!(obj instanceof EquatorWrapper)) {
-                return false;
-            }
-            @SuppressWarnings("unchecked")
-            final EquatorWrapper<O> otherObj = (EquatorWrapper<O>) obj;
-            return equator.equate(object, otherObj.getObject());
-        }
-
-        public O getObject() {
-            return object;
-        }
-
-        @Override
-        public int hashCode() {
-            return equator.hash(object);
-        }
-    }
-
-    /**
-     * Helper class for set-related operations, e.g. union, subtract, intersection.
-     * @param <O>  the element type
-     */
-    private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
-
-        /** Contains the unique elements of the two collections. */
-        private final Set<O> elements;
-
-        /** Output collection. */
-        private final List<O> newList;
-
-        /**
-         * Create a new set operation helper from the two collections.
-         * @param a  the first collection
-         * @param b  the second collection
-         */
-        SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            super(a, b);
-            elements = new HashSet<>();
-            addAll(elements, a);
-            addAll(elements, b);
-            // the resulting list must contain at least each unique element, but may grow
-            newList = new ArrayList<>(elements.size());
-        }
-
-        @Override
-        public Iterator<O> iterator() {
-            return elements.iterator();
-        }
-
-        /**
-         * Returns the resulting collection.
-         * @return the result
-         */
-        public Collection<O> list() {
-            return newList;
-        }
-
-        /**
-         * Add the object {@code count} times to the result collection.
-         * @param obj  the object to add
-         * @param count  the count
-         */
-        public void setCardinality(final O obj, final int count) {
-            for (int i = 0; i < count; i++) {
-                newList.add(obj);
-            }
-        }
-
-    }
 
     /**
      * The index value when an element is not found in a collection or array: {@code -1}.
@@ -1058,35 +901,44 @@ public class CollectionUtils {
         if (i < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
+        if (object == null) {
+            throw new IllegalArgumentException("Unsupported object type: null");
+        }
+        return retrieveElement(object, index);
+    }
+
+    /**
+     * Retrieves the element at index 'i' from various types of objects.
+     * @param object - The object from which to retrieve the element.
+     * @param i - The index of the element to retrieve.
+     * @return - The element at index 'i' from the provided object.
+     * @throws - IllegalArgumentException if the provided object type is unsupported.
+     */
+    private static Object retrieveElement(final Object object, final int i) {
         if (object instanceof Map<?, ?>) {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
             return IteratorUtils.get(iterator, i);
-        }
-        if (object instanceof Object[]) {
+        } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
-        }
-        if (object instanceof Iterator<?>) {
+        } else if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
             return IteratorUtils.get(it, i);
-        }
-        if (object instanceof Iterable<?>) {
+        } else if (object instanceof Iterable<?>) {
             final Iterable<?> iterable = (Iterable<?>) object;
             return IterableUtils.get(iterable, i);
-        }
-        if (object instanceof Enumeration<?>) {
+        } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
             return EnumerationUtils.get(it, i);
-        }
-        if (object == null) {
-            throw new IllegalArgumentException("Unsupported object type: null");
-        }
-        try {
-            return Array.get(object, i);
-        } catch (final IllegalArgumentException ex) {
-            throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
+        } else {
+            try {
+                return Array.get(object, i);
+            } catch (final IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
+            }
         }
     }
+
 
     /**
      * Returns a {@link Map} mapping each unique element in the given

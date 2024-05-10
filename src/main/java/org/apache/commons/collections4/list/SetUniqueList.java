@@ -398,13 +398,13 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public E set(final int index, final E object) {
-        final int pos = indexOf(object);
+        final int position = indexOf(object);
         final E removed = super.set(index, object);
 
-        if (pos != -1 && pos != index) {
+        if (position != -1 && position != index) {
             // the object is already in the unique list
             // (and it hasn't been swapped with itself)
-            super.remove(pos); // remove the duplicate by index
+            super.remove(position); // remove the duplicate by index
         }
 
         set.remove(removed); // remove the item deleted by the set
