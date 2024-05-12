@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import org.apache.commons.collections4.Predicate;
@@ -60,8 +59,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final List<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
-        return list;
+        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
     @Override
