@@ -95,7 +95,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     /**
      * JUnit constructor.
      *
-     * @param testName  the test name
+     * @param testName the test name
      */
     public AbstractOrderedMapTest(final String testName) {
         super(testName);
@@ -114,8 +114,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     }
 
     /**
-     * The only confirmed collection we have that is ordered is the sorted one.
-     * Thus, sort the keys.
+     * The only confirmed collection we have that is ordered is the sorted one. Thus, sort the keys.
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -186,7 +185,8 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         if (!isAllowNullKey()) {
             try {
                 assertNull(ordered.nextKey(null)); // this is allowed too
-            } catch (final NullPointerException ex) {}
+            } catch (final NullPointerException ex) {
+            }
         } else {
             assertNull(ordered.nextKey(null));
         }
@@ -218,7 +218,8 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         if (!isAllowNullKey()) {
             try {
                 assertNull(ordered.previousKey(null)); // this is allowed too
-            } catch (final NullPointerException ex) {}
+            } catch (final NullPointerException ex) {
+            }
         } else {
             assertNull(ordered.previousKey(null));
         }

@@ -817,11 +817,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         resetFull();
         try {
             getCollection().listIterator(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         resetFull();
         try {
             getCollection().listIterator(getCollection().size() + 1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         resetFull();
         for (int i = 0; i <= getConfirmed().size(); i++) {
             forwardTest(getCollection().listIterator(i), i);

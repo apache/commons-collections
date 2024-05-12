@@ -59,6 +59,7 @@ limitations under the License.
     <module name="RightCurly"/>
     <module name="GenericWhitespace"/>
     <module name="WhitespaceAfter"/>
+    <module name="WhitespaceAround"/>
     <module name="NoWhitespaceBefore"/>
     <module name="Indentation">
       <!-- Indentation style recommended by Oracle -->

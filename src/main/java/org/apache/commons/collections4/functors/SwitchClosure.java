@@ -93,7 +93,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
             throw new IllegalArgumentException("The predicate and closure arrays must be the same size");
         }
         if (predicates.length == 0) {
-            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
+            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
         }
         return new SwitchClosure<>(predicates, closures, defaultClosure);
     }

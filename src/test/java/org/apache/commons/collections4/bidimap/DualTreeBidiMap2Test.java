@@ -42,8 +42,9 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 
-    private static final class IntegerComparator implements Comparator<Integer>, Serializable{
+    private static final class IntegerComparator implements Comparator<Integer>, Serializable {
         private static final long serialVersionUID = 1L;
+
         @Override
         public int compare(final Integer o1, final Integer o2) {
             return o1.compareTo(o2);

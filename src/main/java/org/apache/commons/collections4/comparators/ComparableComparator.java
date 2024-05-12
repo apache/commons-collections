@@ -45,7 +45,7 @@ import java.util.Comparator;
 public class ComparableComparator<E extends Comparable<? super E>> implements Comparator<E>, Serializable {
 
     /** Serialization version. */
-    private static final long serialVersionUID=-291439688585137865L;
+    private static final long serialVersionUID = -291439688585137865L;
 
     /** The singleton instance. */
     @SuppressWarnings("rawtypes")

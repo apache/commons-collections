@@ -380,7 +380,7 @@ public class PredicateUtils {
      * @throws NullPointerException if the predicate is null.
      * @see NullIsExceptionPredicate
      */
-    public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate) {
         return NullIsExceptionPredicate.nullIsExceptionPredicate(predicate);
     }
 
@@ -395,7 +395,7 @@ public class PredicateUtils {
      * @throws NullPointerException if the predicate is null.
      * @see NullIsFalsePredicate
      */
-    public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate) {
         return NullIsFalsePredicate.nullIsFalsePredicate(predicate);
     }
 
@@ -410,7 +410,7 @@ public class PredicateUtils {
      * @throws NullPointerException if the predicate is null.
      * @see NullIsTruePredicate
      */
-    public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate) {
         return NullIsTruePredicate.nullIsTruePredicate(predicate);
     }
 
@@ -486,8 +486,7 @@ public class PredicateUtils {
      * @see TransformedPredicate
      * @since 3.1
      */
-    public static <T> Predicate<T> transformedPredicate(
-            final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
+    public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
         return TransformedPredicate.transformedPredicate(transformer, predicate);
     }
 
@@ -521,6 +520,8 @@ public class PredicateUtils {
     /**
      * Don't allow instances.
      */
-    private PredicateUtils() {}
+    private PredicateUtils() {
+        // empty
+    }
 
 }

@@ -492,10 +492,8 @@ public class LRUMap<K, V>
             reuseEntry(entry, hashIndex, hashCode, key, value);
             addEntry(entry, hashIndex);
         } catch (final NullPointerException ex) {
-            throw new IllegalStateException(
-                    "NPE, entry=" + entry + " entryIsHeader=" + (entry==header) +
-                    " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
-                    " This should not occur if your keys are immutable, and you have used synchronization properly.");
+            throw new IllegalStateException("NPE, entry=" + entry + " entryIsHeader=" + (entry == header) + " key=" + key + " value=" + value + " size=" + size
+                    + " maxSize=" + maxSize + " This should not occur if your keys are immutable, and you have used synchronization properly.");
         }
     }
 

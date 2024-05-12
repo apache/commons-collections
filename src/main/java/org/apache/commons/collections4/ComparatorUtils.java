@@ -238,6 +238,8 @@ public class ComparatorUtils {
     /**
      * Don't allow instances.
      */
-    private ComparatorUtils() {}
+    private ComparatorUtils() {
+        // empty
+    }
 
 }

@@ -87,7 +87,7 @@ public class MultiKeyTest {
         }
 
         private Object readResolve() {
-            hashCode=2; // simulate different hashCode after deserialization in another process
+            hashCode = 2; // simulate different hashCode after deserialization in another process
             return this;
         }
     }

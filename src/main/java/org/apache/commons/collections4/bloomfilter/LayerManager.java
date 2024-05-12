@@ -125,8 +125,10 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * A Cleanup that never removes anything.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static  <T extends BloomFilter>  Consumer<Deque<T>> noCleanup() {
-            return x -> {};
+        public static <T extends BloomFilter> Consumer<Deque<T>> noCleanup() {
+            return x -> {
+                // empty
+            };
         }
 
         /**

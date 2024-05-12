@@ -112,6 +112,8 @@ public class MultiSetUtils {
     /**
      * Don't allow instances.
      */
-    private MultiSetUtils() {}
+    private MultiSetUtils() {
+        // empty
+    }
 
 }

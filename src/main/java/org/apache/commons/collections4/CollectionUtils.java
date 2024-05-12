@@ -2151,5 +2151,7 @@ public class CollectionUtils {
     /**
      * Don't allow instances.
      */
-    private CollectionUtils() {}
+    private CollectionUtils() {
+        // empty
+    }
 }

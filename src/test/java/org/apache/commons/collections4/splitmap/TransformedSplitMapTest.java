@@ -57,8 +57,7 @@ public class TransformedSplitMapTest extends BulkTest {
                                                     NOPTransformer.<String>nopTransformer(),
                                                     NOPTransformer.<String>nopTransformer() );
 
-        final ObjectInputStream in =
-                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedSplitMap.emptyCollection.version4.obj" ) );
+        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(TEST_DATA_PATH + "/TransformedSplitMap.emptyCollection.version4.obj"));
         final Object readObject = in.readObject();
         in.close();
 
@@ -78,14 +77,13 @@ public class TransformedSplitMapTest extends BulkTest {
         map.put( "e", "f" );
         map.put( "g", "h" );
 
-        final ObjectInputStream in =
-                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedSplitMap.fullCollection.version4.obj" ) );
+        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(TEST_DATA_PATH + "TransformedSplitMap.fullCollection.version4.obj"));
         final Object readObject = in.readObject();
         in.close();
 
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
         assertFalse(readMap.isEmpty(), "Map should not be empty");
-        assertEquals( map.entrySet(), readMap.entrySet() );
+        assertEquals(map.entrySet(), readMap.entrySet());
     }
 
     @Test

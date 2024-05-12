@@ -480,6 +480,8 @@ public class TransformerUtils {
     /**
      * This class is not normally instantiated.
      */
-    private TransformerUtils() {}
+    private TransformerUtils() {
+        // empty
+    }
 
 }

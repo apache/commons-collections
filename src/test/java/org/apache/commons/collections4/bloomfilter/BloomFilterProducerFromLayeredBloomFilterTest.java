@@ -16,14 +16,13 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloomFilterProducerTest{
+public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloomFilterProducerTest {
 
     @Override
     protected BloomFilterProducer createUnderTest(final BloomFilter... filters) {
         final Shape shape = filters[0].getShape();
-        final LayerManager layerManager = LayerManager.builder().setSupplier( () -> new SimpleBloomFilter(shape) )
-                .setExtendCheck( LayerManager.ExtendCheck.advanceOnPopulated())
-                .setCleanup(LayerManager.Cleanup.noCleanup()).build();
+        final LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape))
+                .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).setCleanup(LayerManager.Cleanup.noCleanup()).build();
         final LayeredBloomFilter underTest = new LayeredBloomFilter(shape, layerManager);
         for (final BloomFilter bf : filters) {
             underTest.merge(bf);

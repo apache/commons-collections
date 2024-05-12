@@ -51,7 +51,7 @@ public class CountingPredicateTest {
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
 
-        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null, result));
+        CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x != null, result));
         assertTrue(cp.test(Integer.valueOf(3)));
         assertEquals(expected, result);
         expected.add(Pair.of(2, null));
@@ -64,16 +64,16 @@ public class CountingPredicateTest {
         expected.add(Pair.of(1, null));
         expected.add(Pair.of(2, null));
         result.clear();
-        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x!=null, result));
+        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x != null, result));
         assertTrue(cp.forEachRemaining());
-        assertEquals( expected, result);
+        assertEquals(expected, result);
 
         // If a test fails then the result should be false and the rest of the list should
         // not be processed.
         expected.clear();
         expected.add(Pair.of(1, null));
         result.clear();
-        cp = new CountingPredicate<>(ary,  makeFunc((x, y) -> x == Integer.valueOf(1), result));
+        cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x == Integer.valueOf(1), result));
         assertFalse(cp.forEachRemaining());
         assertEquals(expected, result);
     }

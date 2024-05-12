@@ -29,8 +29,7 @@ import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
- * implementation.
+ * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap} implementation.
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
@@ -54,22 +53,27 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         public boolean isNullSupported() {
             return ListOrderedMap2Test.this.isAllowNullKey();
         }
+
         @Override
         public boolean isRemoveSupported() {
             return false;
         }
+
         @Override
         public boolean isSetSupported() {
             return false;
         }
+
         @Override
         public boolean isTestSerialization() {
             return false;
         }
+
         @Override
         public List<K> makeFullCollection() {
             return ListOrderedMap2Test.this.makeFullMap().asList();
         }
+
         @Override
         public List<K> makeObject() {
             return ListOrderedMap2Test.this.makeObject().asList();
@@ -116,19 +120,23 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.get(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -142,19 +150,23 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.getValue(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -197,19 +209,23 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.remove(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.remove(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {

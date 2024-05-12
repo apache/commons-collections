@@ -176,7 +176,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testTrimToSize(){
+    public void testTrimToSize() {
         final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
@@ -192,7 +192,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testValuesListIteratorMethods(){
+    public void testValuesListIteratorMethods() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");

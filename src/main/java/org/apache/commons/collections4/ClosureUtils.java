@@ -370,6 +370,8 @@ public class ClosureUtils {
     /**
      * Don't allow instances.
      */
-    private ClosureUtils() {}
+    private ClosureUtils() {
+        // empty
+    }
 
 }

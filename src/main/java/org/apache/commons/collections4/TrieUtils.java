@@ -43,6 +43,8 @@ public class TrieUtils {
     /**
      * Don't allow instances.
      */
-    private TrieUtils() {}
+    private TrieUtils() {
+        // empty
+    }
 
 }

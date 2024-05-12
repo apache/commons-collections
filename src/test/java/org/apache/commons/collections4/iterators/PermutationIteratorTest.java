@@ -151,7 +151,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationResultSize() {
         int factorial = 1;
-        for (int i = 0; i < 8; i++, factorial*=i) {
+        for (int i = 0; i < 8; i++, factorial *= i) {
             final List<Integer> list = new ArrayList<>();
             for (int j = 0; j < i; j++) {
                 list.add(j);

@@ -652,5 +652,8 @@ public class SetUtils {
     /**
      * Don't allow instances.
      */
-    private SetUtils() {}
+    private SetUtils() {
+        // empty
+    }
+
 }

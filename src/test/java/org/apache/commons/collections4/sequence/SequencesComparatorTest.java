@@ -178,20 +178,18 @@ public class SequencesComparatorTest {
 
         final Random random = new Random(4564634237452342L);
 
-        for (int nbCom = 0; nbCom <= 40; nbCom+=5) {
+        for (int nbCom = 0; nbCom <= 40; nbCom += 5) {
             sentenceAfter.clear();
             sentenceAfter.addAll(sentenceBefore);
-            for (int i = 0; i<nbCom; i++) {
+            for (int i = 0; i < nbCom; i++) {
                 if (random.nextInt(2) == 0) {
-                    sentenceAfter.add(random.nextInt(sentenceAfter.size() + 1),
-                                      shadokAlph[random.nextInt(4)]);
+                    sentenceAfter.add(random.nextInt(sentenceAfter.size() + 1), shadokAlph[random.nextInt(4)]);
                 } else {
                     sentenceAfter.remove(random.nextInt(sentenceAfter.size()));
                 }
             }
 
-            final SequencesComparator<String> comparator =
-                    new SequencesComparator<>(sentenceBefore, sentenceAfter);
+            final SequencesComparator<String> comparator = new SequencesComparator<>(sentenceBefore, sentenceAfter);
             assertTrue(comparator.getScript().getModifications() <= nbCom);
         }
     }
@@ -206,7 +204,7 @@ public class SequencesComparatorTest {
             "MEU"
         };
         List<List<String>> shadokSentences = new ArrayList<>();
-        for (int lg=0; lg<lgMax; ++lg) {
+        for (int lg = 0; lg < lgMax; ++lg) {
             final List<List<String>> newTab = new ArrayList<>();
             newTab.add(new ArrayList<>());
             for (final String element : shadokAlph) {

@@ -145,6 +145,8 @@ public class FactoryUtils {
     /**
      * Don't allow instances.
      */
-    private FactoryUtils() {}
+    private FactoryUtils() {
+        // empty
+    }
 
 }

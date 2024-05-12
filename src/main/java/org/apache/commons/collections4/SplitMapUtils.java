@@ -259,6 +259,8 @@ public class SplitMapUtils {
     /**
      * Don't allow instances.
      */
-    private SplitMapUtils() {}
+    private SplitMapUtils() {
+        // empty
+    }
 
 }

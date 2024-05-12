@@ -221,19 +221,17 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         BitMapProducer bitMapProducer = BitMapProducer.fromIndexProducer(new IncrementingHasher(1, 1).indices(getTestShape()),
                 getTestShape().getNumberOfBits());
         assertTrue(bf2.contains(bitMapProducer), "BF2 Should contain this hasher");
-        bitMapProducer = BitMapProducer.fromIndexProducer(new IncrementingHasher(1, 3).indices(getTestShape()),
-                getTestShape().getNumberOfBits());
+        bitMapProducer = BitMapProducer.fromIndexProducer(new IncrementingHasher(1, 3).indices(getTestShape()), getTestShape().getNumberOfBits());
         assertFalse(bf2.contains(bitMapProducer), "BF2 Should not contain this hasher");
 
         // Test different lengths
         bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
-        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1),
-                TestingHashers.FROM1);
+        final BloomFilter bf3 = createFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1), TestingHashers.FROM1);
         assertTrue(bf1.contains(bf3));
         assertTrue(bf3.contains(bf1));
 
-        final BloomFilter bf4 = TestingHashers.populateRange(createEmptyFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1)),
-                1, 11+getTestShape().getNumberOfHashFunctions());
+        final BloomFilter bf4 = TestingHashers.populateRange(createEmptyFilter(Shape.fromKM(getTestShape().getNumberOfHashFunctions(), Long.SIZE - 1)), 1,
+                11 + getTestShape().getNumberOfHashFunctions());
 
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
@@ -253,7 +251,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      */
     @Test
     public final void testEstimateIntersection() {
-
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
@@ -272,7 +269,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         final int midPoint = getTestShape().getNumberOfBits() / 2;
         final BloomFilter bf5 = TestingHashers.populateRange(createEmptyFilter(getTestShape()), 0, midPoint);
-        final BloomFilter bf6 = TestingHashers.populateRange(createEmptyFilter(getTestShape()), midPoint+1, getTestShape().getNumberOfBits()-1);
+        final BloomFilter bf6 = TestingHashers.populateRange(createEmptyFilter(getTestShape()), midPoint + 1, getTestShape().getNumberOfBits() - 1);
         assertThrows(IllegalArgumentException.class, () -> bf5.estimateIntersection(bf6));
 
         // infinite with infinite

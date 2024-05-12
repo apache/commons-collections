@@ -263,5 +263,8 @@ public class BagUtils {
     /**
      * Don't allow instances.
      */
-    private BagUtils() {}
+    private BagUtils() {
+        // empty
+    }
+
 }

@@ -149,7 +149,9 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         if (!isAllowNullKey()) {
             try {
                 assertNull(bidi.nextKey(null)); // this is allowed too
-            } catch (final NullPointerException ex) {}
+            } catch (final NullPointerException ignore) {
+                // ignore
+            }
         } else {
             assertNull(bidi.nextKey(null));
         }
@@ -182,7 +184,9 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         if (!isAllowNullKey()) {
             try {
                 assertNull(bidi.previousKey(null)); // this is allowed too
-            } catch (final NullPointerException ex) {}
+            } catch (final NullPointerException ignore) {
+                // ignore
+            }
         } else {
             assertNull(bidi.previousKey(null));
         }

@@ -113,8 +113,7 @@ public class QueueUtils {
      * @return a transformed queue backed by the given queue
      * @throws NullPointerException if the queue or transformer is null
      */
-    public static <E> Queue<E> transformingQueue(final Queue<E> queue,
-                                                 final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Queue<E> transformingQueue(final Queue<E> queue, final Transformer<? super E, ? extends E> transformer) {
         return TransformedQueue.transformingQueue(queue, transformer);
     }
 
@@ -133,5 +132,7 @@ public class QueueUtils {
     /**
      * Don't allow instances.
      */
-    private QueueUtils() {}
+    private QueueUtils() {
+        // empty
+    }
 }

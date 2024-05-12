@@ -240,6 +240,8 @@ public class MultiMapUtils {
     /**
      * Don't allow instances.
      */
-    private MultiMapUtils() {}
+    private MultiMapUtils() {
+        // empty
+    }
 
 }

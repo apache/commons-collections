@@ -2061,11 +2061,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * Reads the content of the stream.
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
+    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         root = new TrieEntry<>(null, null, -1);
         final int size = stream.readInt();
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             final K k = (K) stream.readObject();
             final V v = (V) stream.readObject();
             put(k, v);
@@ -2434,7 +2434,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Writes the content to the stream for serialization.
      */
-    private void writeObject(final ObjectOutputStream stream) throws IOException{
+    private void writeObject(final ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         stream.writeInt(this.size());
         for (final Entry<K, V> entry : entrySet()) {

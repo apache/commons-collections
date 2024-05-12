@@ -76,5 +76,8 @@ public final class TestUtils {
         }
     }
 
-    private TestUtils() {}
+    private TestUtils() {
+        // empty
+    }
+
 }

@@ -42,6 +42,10 @@ final class IndexUtils {
         return array;
     }
 
-    // do not instantiate
-    private IndexUtils() {}
+    /**
+     *  Don't instantiate.
+     */
+    private IndexUtils() {
+        // empty
+    }
 }

@@ -137,20 +137,19 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /** Shuffles the keys and asserts that the comparator sorts them back to
      * their original order.
      */
-    private void assertComparatorYieldsOrder(final String[] orderedObjects,
-                                             final Comparator<String> comparator) {
+    private void assertComparatorYieldsOrder(final String[] orderedObjects, final Comparator<String> comparator) {
         final String[] keys = orderedObjects.clone();
 
-        // shuffle until the order changes.  It's extremely rare that
+        // shuffle until the order changes. It's extremely rare that
         // this requires more than one shuffle.
 
         boolean isInNewOrder = false;
         final Random rand = new Random();
         while (keys.length > 1 && !isInNewOrder) {
             // shuffle:
-            for (int i = keys.length-1; i > 0; i--) {
+            for (int i = keys.length - 1; i > 0; i--) {
                 final String swap = keys[i];
-                final int j = rand.nextInt(i+1);
+                final int j = rand.nextInt(i + 1);
                 keys[i] = keys[j];
                 keys[j] = swap;
             }
@@ -164,7 +163,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             }
         }
 
-        // The real test:  sort and make sure they come out right.
+        // The real test: sort and make sure they come out right.
 
         Arrays.sort(keys, comparator);
 

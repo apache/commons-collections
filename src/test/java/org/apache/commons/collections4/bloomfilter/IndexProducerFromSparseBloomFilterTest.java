@@ -35,11 +35,11 @@ public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProduce
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        return DISTINCT |ORDERED;
+        return DISTINCT | ORDERED;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[] {2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67};
+        return new int[] { 2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67 };
     }
 }

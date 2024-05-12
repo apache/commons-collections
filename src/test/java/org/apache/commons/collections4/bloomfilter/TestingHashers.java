@@ -90,11 +90,14 @@ public class TestingHashers {
      * Creates an EnhancedDoubleHasher hasher from 2 random longs.
      */
     public static Hasher randomHasher() {
-        return new EnhancedDoubleHasher( ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong() );
+        return new EnhancedDoubleHasher(ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong());
     }
 
     /**
      * Do not instantiate.
      */
-    private TestingHashers() {}
+    private TestingHashers() {
+        // empty
+    }
+
 }

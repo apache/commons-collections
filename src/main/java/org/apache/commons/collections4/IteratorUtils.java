@@ -1438,6 +1438,8 @@ public class IteratorUtils {
     /**
      * Don't allow instances.
      */
-    private IteratorUtils() {}
+    private IteratorUtils() {
+        // empty
+    }
 
 }

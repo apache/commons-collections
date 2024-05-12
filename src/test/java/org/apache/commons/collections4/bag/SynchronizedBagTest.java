@@ -19,8 +19,7 @@ package org.apache.commons.collections4.bag;
 import org.apache.commons.collections4.Bag;
 
 /**
- * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
- * implementation.
+ * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag} implementation.
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
@@ -34,7 +33,7 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Override
-    protected int getIterationBehaviour(){
+    protected int getIterationBehaviour() {
         return UNORDERED;
     }
 

@@ -744,5 +744,8 @@ public class ListUtils {
     /**
      * Don't allow instances.
      */
-    private ListUtils() {}
+    private ListUtils() {
+        // empty
+    }
+
 }

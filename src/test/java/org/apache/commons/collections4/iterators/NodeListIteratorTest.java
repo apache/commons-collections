@@ -56,6 +56,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
             public int getLength() {
                 return 0;
             }
+
             @Override
             public Node item(final int index) {
                 throw new IndexOutOfBoundsException();
@@ -79,6 +80,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
             public int getLength() {
                 return nodes.length;
             }
+
             @Override
             public Node item(final int index) {
                 return nodes[index];
@@ -99,7 +101,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         final Node node2 = createMock(Element.class);
         final Node node3 = createMock(Text.class);
         final Node node4 = createMock(Element.class);
-        nodes = new Node[] {node1, node2, node3, node4};
+        nodes = new Node[] { node1, node2, node3, node4 };
 
         replay(node1);
         replay(node2);
@@ -116,7 +118,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testEmptyIteratorWithNodeConstructor(){
+    public void testEmptyIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
     }
@@ -125,7 +127,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testFullIteratorWithNodeConstructor(){
+    public void testFullIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testFullIterator();
     }

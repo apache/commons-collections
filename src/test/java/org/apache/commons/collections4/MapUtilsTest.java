@@ -247,7 +247,7 @@ public class MapUtilsTest {
         final String INDENT = "    ";
 
         final Map<Object, Object> map = new HashMap<>();
-        final Map<Object, Object> map2= new HashMap<>();
+        final Map<Object, Object> map2 = new HashMap<>();
         map.put(null, map2);
         map2.put("2", "B");
 

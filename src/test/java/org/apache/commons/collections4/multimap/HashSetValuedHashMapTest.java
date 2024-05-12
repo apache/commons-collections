@@ -61,7 +61,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
-    public void testHashSetValuedHashMap_2(){
+    public void testHashSetValuedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2;

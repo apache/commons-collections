@@ -1969,13 +1969,13 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
+    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         rootNode = new Node[2];
         final int size = stream.readInt();
-        for (int i = 0; i < size; i++){
-            final K k =(K) stream.readObject();
-            final V v =(V) stream.readObject();
+        for (int i = 0; i < size; i++) {
+            final K k = (K) stream.readObject();
+            final V v = (V) stream.readObject();
             put(k, v);
         }
     }
@@ -2224,7 +2224,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param stream  the output stream
      * @throws IOException if an error occurs while writing to the stream
      */
-    private void writeObject(final ObjectOutputStream stream) throws IOException{
+    private void writeObject(final ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
         stream.writeInt(this.size());
         for (final Entry<K, V> entry : entrySet()) {

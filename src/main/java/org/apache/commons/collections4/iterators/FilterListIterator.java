@@ -182,7 +182,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     @Override
     public int previousIndex() {
-        return nextIndex-1;
+        return nextIndex - 1;
     }
 
     /** Not supported. */

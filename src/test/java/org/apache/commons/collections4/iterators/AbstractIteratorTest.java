@@ -159,7 +159,8 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
             // check for UnsupportedOperationException if not supported
             try {
                 it.remove();
-            } catch (final UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {
+            }
             return;
         }
 

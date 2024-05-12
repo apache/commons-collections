@@ -1337,7 +1337,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testToString(){
+    public void testToString() {
         assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> map = makeObject();
         map.put((K) "A", (V) "X");
@@ -1346,18 +1346,11 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         map.put((K) "B", (V) "U");
         map.put((K) "B", (V) "V");
         map.put((K) "B", (V) "W");
-        assertTrue(
-            "{A=[X, Y, Z], B=[U, V, W]}".equals(map.toString()) ||
-            "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString())
-        );
+        assertTrue("{A=[X, Y, Z], B=[U, V, W]}".equals(map.toString()) || "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString()));
 
         final MultiValuedMap<K, V> originalNull = null;
-        assertThrows(NullPointerException.class, () -> map.putAll(originalNull),
-                "expecting NullPointerException");
-        assertTrue(
-            "{A=[X, Y, Z], B=[U, V, W]}".equals(map.toString()) ||
-            "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString())
-        );
+        assertThrows(NullPointerException.class, () -> map.putAll(originalNull), "expecting NullPointerException");
+        assertTrue("{A=[X, Y, Z], B=[U, V, W]}".equals(map.toString()) || "{B=[U, V, W], A=[X, Y, Z]}".equals(map.toString()));
 
         map.remove("A");
         map.remove("B");

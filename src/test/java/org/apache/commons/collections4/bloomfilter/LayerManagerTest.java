@@ -78,7 +78,7 @@ public class LayerManagerTest {
         while (layerManager.getTarget().getShape().estimateN(layerManager.getTarget().cardinality()) < maxN) {
             assertFalse(underTest.test(layerManager));
             layerManager.getTarget().merge(new IncrementingHasher(hashStart, shape.getNumberOfHashFunctions()));
-            hashStart+=shape.getNumberOfHashFunctions();
+            hashStart += shape.getNumberOfHashFunctions();
         }
         assertTrue(underTest.test(layerManager));
         assertThrows(IllegalArgumentException.class, () -> LayerManager.ExtendCheck.advanceOnSaturation(0));

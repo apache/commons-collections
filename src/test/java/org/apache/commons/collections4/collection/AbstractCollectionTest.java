@@ -384,7 +384,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * @return the iteration behavior
      * @see #UNORDERED
      */
-    protected int getIterationBehaviour(){
+    protected int getIterationBehaviour() {
         return 0;
     }
 
