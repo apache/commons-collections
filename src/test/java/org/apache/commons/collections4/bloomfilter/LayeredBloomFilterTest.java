@@ -37,36 +37,6 @@ import org.junit.jupiter.api.Test;
 public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
 
     /**
-     * Creates a fixed size layered bloom filter that adds new filters to the list,
-     * but never merges them. List will never exceed maxDepth. As additional filters
-     * are added earlier filters are removed.  Uses SimpleBloomFilters.
-     *
-     * @param shape    The shape for the enclosed Bloom filters.
-     * @param maxDepth The maximum depth of layers.
-     * @return An empty layered Bloom filter of the specified shape and depth.
-     */
-    public static  LayeredBloomFilter<BloomFilter> fixed(final Shape shape, int maxDepth) {
-        return fixed(shape, maxDepth, () -> new SimpleBloomFilter(shape));
-    }
-
-    /**
-     * Creates a fixed size layered bloom filter that adds new filters to the list,
-     * but never merges them. List will never exceed maxDepth. As additional filters
-     * are added earlier filters are removed.
-     *
-     * @param shape    The shape for the enclosed Bloom filters.
-     * @param maxDepth The maximum depth of layers.
-     * @param supplier A supplier of the Bloom filters to create layers with.
-     * @return An empty layered Bloom filter of the specified shape and depth.
-     */
-    public static <T extends BloomFilter> LayeredBloomFilter<T> fixed(final Shape shape, int maxDepth, Supplier<T> supplier) {
-        LayerManager.Builder<T> builder = LayerManager.builder();
-        builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
-                .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(supplier);
-        return new LayeredBloomFilter<>(shape, builder.build());
-    }
-
-    /**
      * A Predicate that advances after a quantum of time.
      */
     static class AdvanceOnTimeQuanta implements Predicate<LayerManager<TimestampedBloomFilter>> {
@@ -111,6 +81,21 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
     }
 
+    static class NumberedBloomFilter extends WrappedBloomFilter {
+        int value;
+        int sequence;
+        NumberedBloomFilter(Shape shape, int value, int sequence) {
+            super(new SimpleBloomFilter(shape));
+            this.value = value;
+            this.sequence = sequence;
+        }
+
+        @Override
+        public BloomFilter copy() {
+            return new NumberedBloomFilter(getShape(), value, sequence);
+        }
+    }
+
     /**
      * A Bloomfilter implementation that tracks the creation time.
      */
@@ -127,13 +112,13 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
             this.timestamp = timestamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
-
         @Override
         public TimestampedBloomFilter copy() {
             return new TimestampedBloomFilter(this.getWrapped().copy(), timestamp);
+        }
+
+        public long getTimestamp() {
+            return timestamp;
         }
     }
 
@@ -164,6 +149,36 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
                         .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
                 .build();
         return new LayeredBloomFilter<>(shape, layerManager);
+    }
+
+    /**
+     * Creates a fixed size layered bloom filter that adds new filters to the list,
+     * but never merges them. List will never exceed maxDepth. As additional filters
+     * are added earlier filters are removed.  Uses SimpleBloomFilters.
+     *
+     * @param shape    The shape for the enclosed Bloom filters.
+     * @param maxDepth The maximum depth of layers.
+     * @return An empty layered Bloom filter of the specified shape and depth.
+     */
+    public static  LayeredBloomFilter<BloomFilter> fixed(final Shape shape, int maxDepth) {
+        return fixed(shape, maxDepth, () -> new SimpleBloomFilter(shape));
+    }
+
+    /**
+     * Creates a fixed size layered bloom filter that adds new filters to the list,
+     * but never merges them. List will never exceed maxDepth. As additional filters
+     * are added earlier filters are removed.
+     *
+     * @param shape    The shape for the enclosed Bloom filters.
+     * @param maxDepth The maximum depth of layers.
+     * @param supplier A supplier of the Bloom filters to create layers with.
+     * @return An empty layered Bloom filter of the specified shape and depth.
+     */
+    public static <T extends BloomFilter> LayeredBloomFilter<T> fixed(final Shape shape, int maxDepth, Supplier<T> supplier) {
+        LayerManager.Builder<T> builder = LayerManager.builder();
+        builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
+                .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(supplier);
+        return new LayeredBloomFilter<>(shape, builder.build());
     }
 
     // instrumentation to record timestamps in dbgInstrument list
@@ -214,6 +229,39 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         testCardinalityAndIsEmpty(new LayeredBloomFilter<>(getTestShape(), layerManager));
     }
 
+    // ***** TESTS THAT CHECK LAYERED PROCESSING ******
+
+    @Test
+    public void testCleanup() {
+        int[] sequence = {1};
+        LayerManager layerManager = LayerManager.builder()
+                .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
+                .setExtendCheck(ExtendCheck.neverAdvance())
+                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
+        LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager );
+        assertEquals(1, underTest.getDepth());
+        underTest.merge(TestingHashers.randomHasher());
+        underTest.cleanup(); // first count == 2
+        assertEquals(1, underTest.getDepth());
+        underTest.next(); // first count == 1
+        assertEquals(2, underTest.getDepth());
+        underTest.merge(TestingHashers.randomHasher());
+        underTest.cleanup(); // first count == 0
+        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(1, f.sequence);
+
+        assertEquals(2, underTest.getDepth());
+        underTest.cleanup(); // should be removed ; second is now 1st with value 1
+        assertEquals(1, underTest.getDepth());
+        f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(2, f.sequence);
+
+        underTest.cleanup(); // first count == 0
+        underTest.cleanup(); // should be removed.  But there is always at least one
+        assertEquals(1, underTest.getDepth());
+        f = (NumberedBloomFilter) underTest.get(0);
+        assertEquals(3, f.sequence);  // it is a new one.
+    }
     /**
      * Tests that the estimated union calculations are correct.
      */
@@ -226,8 +274,6 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertEquals(2, bf.estimateUnion(bf2));
         assertEquals(2, bf2.estimateUnion(bf));
     }
-
-    // ***** TESTS THAT CHECK LAYERED PROCESSING ******
 
     @Test
     public void testExpiration() throws InterruptedException {
@@ -270,6 +316,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertTrue(underTest.forEachBloomFilter(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
                 "Found filter that should have been deleted: " + dbgInstrument.get(dbgInstrument.size() - 1));
     }
+
     @Test
     public void testFindBitMapProducer() {
         LayeredBloomFilter<BloomFilter> filter = setupFindTest();
@@ -358,52 +405,5 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertFalse(filter.get(1).contains(TestingHashers.FROM1));
         assertFalse(filter.get(1).contains(TestingHashers.FROM11));
         assertTrue(filter.get(1).contains(new IncrementingHasher(11, 2)));
-    }
-
-    @Test
-    public void testCleanup() {
-        int[] sequence = {1};
-        LayerManager layerManager = LayerManager.builder()
-                .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
-                .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
-        LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager );
-        assertEquals(1, underTest.getDepth());
-        underTest.merge(TestingHashers.randomHasher());
-        underTest.cleanup(); // first count == 2
-        assertEquals(1, underTest.getDepth());
-        underTest.next(); // first count == 1
-        assertEquals(2, underTest.getDepth());
-        underTest.merge(TestingHashers.randomHasher());
-        underTest.cleanup(); // first count == 0
-        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(1, f.sequence);
-
-        assertEquals(2, underTest.getDepth());
-        underTest.cleanup(); // should be removed ; second is now 1st with value 1
-        assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(2, f.sequence);
-
-        underTest.cleanup(); // first count == 0
-        underTest.cleanup(); // should be removed.  But there is always at least one
-        assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
-        assertEquals(3, f.sequence);  // it is a new one.
-    }
-
-    static class NumberedBloomFilter extends WrappedBloomFilter {
-        int value;
-        int sequence;
-        NumberedBloomFilter(Shape shape, int value, int sequence) {
-            super(new SimpleBloomFilter(shape));
-            this.value = value;
-            this.sequence = sequence;
-        }
-
-        @Override
-        public BloomFilter copy() {
-            return new NumberedBloomFilter(getShape(), value, sequence);
-        }
     }
 }

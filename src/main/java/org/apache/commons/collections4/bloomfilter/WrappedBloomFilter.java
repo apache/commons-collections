@@ -36,10 +36,6 @@ public abstract class WrappedBloomFilter implements BloomFilter {
         this.wrapped = bf;
     }
 
-    protected BloomFilter getWrapped() {
-        return wrapped;
-    }
-
     @Override
     public long[] asBitMapArray() {
         return wrapped.asBitMapArray();
@@ -118,6 +114,10 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     @Override
     public Shape getShape() {
         return wrapped.getShape();
+    }
+
+    protected BloomFilter getWrapped() {
+        return wrapped;
     }
 
     @Override

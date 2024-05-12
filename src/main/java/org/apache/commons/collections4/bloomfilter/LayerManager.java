@@ -300,6 +300,18 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     }
 
     /**
+     * Forces execution the configured cleanup without creating a new filter except in cases
+     * where the cleanup removes all the layers.
+     * @see LayerManager.Builder#setCleanup(Consumer)
+     */
+    void cleanup() {
+        this.filterCleanup.accept(filters);
+        if (filters.isEmpty()) {
+            addFilter();
+        }
+    }
+
+    /**
      * Removes all the filters from the layer manager, and sets up a new one as the
      * target.
      */
@@ -323,6 +335,16 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
             newMgr.filters.add(bf.copy());
         }
         return newMgr;
+    }
+
+    /**
+     * Gets the Bloom filter from the first layer.
+     * No extension check is performed during this call.
+     * @return The Bloom filter from the first layer.
+     * @see #getTarget()
+     */
+    public final T first() {
+        return filters.getFirst();
     }
 
     /**
@@ -370,26 +392,6 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     }
 
     /**
-     * Gets the Bloom filter from the first layer.
-     * No extension check is performed during this call.
-     * @return The Bloom filter from the first layer.
-     * @see #getTarget()
-     */
-    public final T first() {
-        return filters.getFirst();
-    }
-
-    /**
-     * Gets the Bloom filter from the last layer.
-     * No extension check is performed during this call.
-     * @return The Bloom filter from the last layer.
-     * @see #getTarget()
-     */
-    public final T last() {
-        return filters.getLast();
-    }
-
-    /**
      * Returns the current target filter. If a new filter should be created based on
      * {@code extendCheck} it will be created before this method returns.
      *
@@ -400,6 +402,16 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
             next();
         }
         return last();
+    }
+
+    /**
+     * Gets the Bloom filter from the last layer.
+     * No extension check is performed during this call.
+     * @return The Bloom filter from the last layer.
+     * @see #getTarget()
+     */
+    public final T last() {
+        return filters.getLast();
     }
 
     /**
@@ -416,17 +428,5 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
     void next() {
         this.filterCleanup.accept(filters);
         addFilter();
-    }
-
-    /**
-     * Forces execution the configured cleanup without creating a new filter except in cases
-     * where the cleanup removes all the layers.
-     * @see LayerManager.Builder#setCleanup(Consumer)
-     */
-    void cleanup() {
-        this.filterCleanup.accept(filters);
-        if (filters.isEmpty()) {
-            addFilter();
-        }
     }
 }

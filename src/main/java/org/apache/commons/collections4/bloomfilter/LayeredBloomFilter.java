@@ -115,6 +115,16 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
         return 0;
     }
 
+    /**
+     * Forces the execution of the cleanup Consumer that was provided when the associated LayerManager
+     * was built.
+     *
+     * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
+     */
+    public void cleanup() {
+        layerManager.cleanup();
+    }
+
     @Override
     public final void clear() {
         layerManager.clear();
@@ -365,15 +375,5 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      */
     public void next() {
         layerManager.next();
-    }
-
-    /**
-     * Forces the execution of the cleanup Consumer that was provided when the associated LayerManager
-     * was built.
-     *
-     * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
-     */
-    public void cleanup() {
-        layerManager.cleanup();
     }
 }

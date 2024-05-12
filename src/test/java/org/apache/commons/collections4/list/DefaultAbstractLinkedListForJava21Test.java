@@ -32,6 +32,22 @@ import org.junit.jupiter.api.Test;
  */
 public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
 
+    private static class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
+        DefaultAbstractLinkedListForJava21() {
+            init();
+        }
+
+        private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            doReadObject(in);
+        }
+
+        private void writeObject(final ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            doWriteObject(out);
+        }
+    }
+
     public DefaultAbstractLinkedListForJava21Test() {
         super(DefaultAbstractLinkedListForJava21Test.class.getSimpleName());
     }
@@ -45,6 +61,26 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
                     list.getNode(i, false));
             }
         }
+    }
+
+    @Override
+    public AbstractLinkedListForJava21<E> getCollection() {
+        return (AbstractLinkedListForJava21<E>) super.getCollection();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return null;
+    }
+
+    @Override
+    public List<E> makeObject() {
+        return new DefaultAbstractLinkedListForJava21<>();
+    }
+
+    @Override
+    protected boolean skipSerializedCanonicalTests() {
+        return true;
     }
 
     @Test
@@ -178,26 +214,6 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
         checkNodes();
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return null;
-    }
-
-    @Override
-    protected boolean skipSerializedCanonicalTests() {
-        return true;
-    }
-
-    @Override
-    public AbstractLinkedListForJava21<E> getCollection() {
-        return (AbstractLinkedListForJava21<E>) super.getCollection();
-    }
-
-    @Override
-    public List<E> makeObject() {
-        return new DefaultAbstractLinkedListForJava21<>();
-    }
-
     @Test
     @SuppressWarnings("unchecked")
     public void testSubList() {
@@ -296,21 +312,5 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
         sublist.clear();
         assertEquals("[]", sublist.toString());
         assertEquals("[A, E]", list.toString());
-    }
-
-    private static class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
-        DefaultAbstractLinkedListForJava21() {
-            init();
-        }
-
-        private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-            in.defaultReadObject();
-            doReadObject(in);
-        }
-
-        private void writeObject(final ObjectOutputStream out) throws IOException {
-            out.defaultWriteObject();
-            doWriteObject(out);
-        }
     }
 }
