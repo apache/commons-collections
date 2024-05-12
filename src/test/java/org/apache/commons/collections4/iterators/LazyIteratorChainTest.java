@@ -61,7 +61,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 
     @Override
     public LazyIteratorChain<String> makeObject() {
-        final LazyIteratorChain<String> chain = new LazyIteratorChain<String>() {
+        return new LazyIteratorChain<String>() {
             @Override
             protected Iterator<String> nextIterator(final int count) {
                 switch (count) {
@@ -75,8 +75,6 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
                 return null;
             }
         };
-
-        return chain;
     }
 
     @BeforeEach
