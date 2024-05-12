@@ -202,7 +202,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -212,7 +212,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        FixedOrderComparator<?> other = (FixedOrderComparator<?>) obj;
+        final FixedOrderComparator<?> other = (FixedOrderComparator<?>) obj;
         return counter == other.counter && isLocked == other.isLocked && Objects.equals(map, other.map) && unknownObjectBehavior == other.unknownObjectBehavior;
     }
 

@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 public class BloomFilterProducerFromBloomFilterArrayTest extends AbstractBloomFilterProducerTest{
 
     @Override
-    protected BloomFilterProducer createUnderTest(BloomFilter... filters) {
+    protected BloomFilterProducer createUnderTest(final BloomFilter... filters) {
         return BloomFilterProducer.fromBloomFilterArray(filters);
     }
 }

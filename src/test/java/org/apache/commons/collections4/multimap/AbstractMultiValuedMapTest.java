@@ -98,7 +98,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             final int cpk = getSampleCountPerKey();
             final Collection<V>[] colArr = new Collection[maxK];
             for (int i = 0; i < maxK; i++) {
-                List<V> coll = new ArrayList<>(cpk);
+                final List<V> coll = new ArrayList<>(cpk);
                 for (int j = 0; j < cpk; j++) {
                     coll.add(sampleValues[i * cpk + j]);
                 }
@@ -934,9 +934,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     public void testKeysBagIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<K> col = new ArrayList<>();
-        for (K element : map.keys()) {
-            col.add(element);
-        }
+        col.addAll(map.keys());
         final Bag<K> bag = new HashBag<>(col);
         final int maxK = getSampleKeySize();
         for (int k = 0; k < maxK; k++) {

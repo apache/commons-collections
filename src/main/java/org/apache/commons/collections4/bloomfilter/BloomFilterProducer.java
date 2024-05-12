@@ -42,7 +42,7 @@ public interface BloomFilterProducer {
      * @param filters The filters to be returned by the producer.
      * @return THe BloomFilterProducer containing the filters.
      */
-    static BloomFilterProducer fromBloomFilterArray(BloomFilter... filters) {
+    static BloomFilterProducer fromBloomFilterArray(final BloomFilter... filters) {
         Objects.requireNonNull(filters, "filters");
         return new BloomFilterProducer() {
             /**
@@ -99,7 +99,7 @@ public interface BloomFilterProducer {
      * @return the merged bloom filter.
      */
     default BloomFilter flatten() {
-        BloomFilter[] bf = {null};
+        final BloomFilter[] bf = {null};
         forEachBloomFilter( x -> {
             if (bf[0] == null) {
                 bf[0] = new SimpleBloomFilter( x.getShape());

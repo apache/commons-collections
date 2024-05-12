@@ -32,7 +32,7 @@ public abstract class WrappedBloomFilter implements BloomFilter {
      * not a copy.  Changes in one will be reflected in the other.
      * @param bf The Bloom filter.
      */
-    public WrappedBloomFilter(BloomFilter bf) {
+    public WrappedBloomFilter(final BloomFilter bf) {
         this.wrapped = bf;
     }
 
@@ -62,27 +62,27 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(BitMapProducer bitMapProducer) {
+    public boolean contains(final BitMapProducer bitMapProducer) {
         return wrapped.contains(bitMapProducer);
     }
 
     @Override
-    public boolean contains(BloomFilter other) {
+    public boolean contains(final BloomFilter other) {
         return wrapped.contains(other);
     }
 
     @Override
-    public boolean contains(Hasher hasher) {
+    public boolean contains(final Hasher hasher) {
         return wrapped.contains(hasher);
     }
 
     @Override
-    public boolean contains(IndexProducer indexProducer) {
+    public boolean contains(final IndexProducer indexProducer) {
         return wrapped.contains(indexProducer);
     }
 
     @Override
-    public int estimateIntersection(BloomFilter other) {
+    public int estimateIntersection(final BloomFilter other) {
         return wrapped.estimateIntersection(other);
     }
 
@@ -92,22 +92,22 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public int estimateUnion(BloomFilter other) {
+    public int estimateUnion(final BloomFilter other) {
         return wrapped.estimateUnion(other);
     }
 
     @Override
-    public boolean forEachBitMap(LongPredicate predicate) {
+    public boolean forEachBitMap(final LongPredicate predicate) {
         return wrapped.forEachBitMap(predicate);
     }
 
     @Override
-    public boolean forEachBitMapPair(BitMapProducer other, LongBiPredicate func) {
+    public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
         return wrapped.forEachBitMapPair(other, func);
     }
 
     @Override
-    public boolean forEachIndex(IntPredicate predicate) {
+    public boolean forEachIndex(final IntPredicate predicate) {
         return wrapped.forEachIndex(predicate);
     }
 
@@ -126,22 +126,22 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(BitMapProducer bitMapProducer) {
+    public boolean merge(final BitMapProducer bitMapProducer) {
         return wrapped.merge(bitMapProducer);
     }
 
     @Override
-    public boolean merge(BloomFilter other) {
+    public boolean merge(final BloomFilter other) {
         return wrapped.merge(other);
     }
 
     @Override
-    public boolean merge(Hasher hasher) {
+    public boolean merge(final Hasher hasher) {
         return wrapped.merge(hasher);
     }
 
     @Override
-    public boolean merge(IndexProducer indexProducer) {
+    public boolean merge(final IndexProducer indexProducer) {
         return wrapped.merge(indexProducer);
     }
 }

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractBloomFilterProducerTest {
-    private Shape shape = Shape.fromKM(17, 72);
+    private final Shape shape = Shape.fromKM(17, 72);
 
     BloomFilter one = new SimpleBloomFilter(shape);
     BloomFilter two = new SimpleBloomFilter(shape);
@@ -82,7 +82,7 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testAsBloomFilterArray() {
-        BloomFilter[] result = createUnderTest().asBloomFilterArray();
+        final BloomFilter[] result = createUnderTest().asBloomFilterArray();
         assertEquals(2, result.length);
         assertEquals(1, result[0].cardinality());
         assertEquals(2, result[1].cardinality());
@@ -90,8 +90,8 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testFlatten() {
-        BloomFilter underTest = createUnderTest().flatten();
-        BloomFilter expected = new SimpleBloomFilter(shape);
+        final BloomFilter underTest = createUnderTest().flatten();
+        final BloomFilter expected = new SimpleBloomFilter(shape);
         expected.merge(IndexProducer.fromIndexArray(1, 2, 3));
         assertArrayEquals(expected.asBitMapArray(), underTest.asBitMapArray());
     }

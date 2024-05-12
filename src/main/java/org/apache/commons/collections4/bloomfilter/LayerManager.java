@@ -85,7 +85,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *                dated or stale filters.
          * @return this
          */
-        public Builder<T> setCleanup(Consumer<Deque<T>> cleanup) {
+        public Builder<T> setCleanup(final Consumer<Deque<T>> cleanup) {
             this.cleanup = cleanup;
             return this;
         }
@@ -98,7 +98,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *                    created.
          * @return this for chaining.
          */
-        public Builder<T> setExtendCheck(Predicate<LayerManager<T>> extendCheck) {
+        public Builder<T> setExtendCheck(final Predicate<LayerManager<T>> extendCheck) {
             this.extendCheck = extendCheck;
             return this;
         }
@@ -110,7 +110,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @param supplier The supplier of new Bloom filter instances.
          * @return this for chaining.
          */
-        public Builder<T> setSupplier(Supplier<T> supplier) {
+        public Builder<T> setSupplier(final Supplier<T> supplier) {
             this.supplier = supplier;
             return this;
         }
@@ -138,7 +138,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          * @throws IllegalArgumentException if {@code maxSize <= 0}.
          */
-        public static <T extends BloomFilter> Consumer<Deque<T>> onMaxSize(int maxSize) {
+        public static <T extends BloomFilter> Consumer<Deque<T>> onMaxSize(final int maxSize) {
             if (maxSize <= 0) {
                 throw new IllegalArgumentException("'maxSize' must be greater than 0");
             }
@@ -169,7 +169,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @param test Predicate.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
-        public static <T extends BloomFilter> Consumer<Deque<T>> removeIf(Predicate<? super T> test) {
+        public static <T extends BloomFilter> Consumer<Deque<T>> removeIf(final Predicate<? super T> test) {
             return x -> x.removeIf(test);
         }
 
@@ -190,7 +190,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code breakAt <= 0}
          */
-        public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnCount(int breakAt) {
+        public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnCount(final int breakAt) {
             if (breakAt <= 0) {
                 throw new IllegalArgumentException("'breakAt' must be greater than 0");
             }
@@ -198,7 +198,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
                 int count;
 
                 @Override
-                public boolean test(LayerManager<T> filter) {
+                public boolean test(final LayerManager<T> filter) {
                     if (++count == breakAt) {
                         count = 0;
                         return true;
@@ -227,12 +227,12 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code maxN <= 0}
          */
-        public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnSaturation(double maxN) {
+        public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnSaturation(final double maxN) {
             if (maxN <= 0) {
                 throw new IllegalArgumentException("'maxN' must be greater than 0");
             }
             return manager -> {
-                BloomFilter bf = manager.last();
+                final BloomFilter bf = manager.last();
                 return maxN <= bf.getShape().estimateN(bf.cardinality());
             };
         }
@@ -278,8 +278,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      *                       list.
      * @param initialize     true if the filter list should be initialized.
      */
-    private LayerManager(Supplier<T> filterSupplier, Predicate<LayerManager<T>> extendCheck,
-            Consumer<Deque<T>> filterCleanup, boolean initialize) {
+    private LayerManager(final Supplier<T> filterSupplier, final Predicate<LayerManager<T>> extendCheck,
+            final Consumer<Deque<T>> filterCleanup, final boolean initialize) {
         this.filterSupplier = filterSupplier;
         this.extendCheck = extendCheck;
         this.filterCleanup = filterCleanup;
@@ -292,7 +292,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * Adds a new Bloom filter to the list.
      */
     private void addFilter() {
-        T bf = filterSupplier.get();
+        final T bf = filterSupplier.get();
         if (bf == null) {
             throw new NullPointerException("filterSupplier returned null.");
         }
@@ -330,8 +330,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @return a copy of this layer Manager.
      */
     public LayerManager<T> copy() {
-        LayerManager<T> newMgr = new LayerManager<>(filterSupplier, extendCheck, filterCleanup, false);
-        for (T bf : filters) {
+        final LayerManager<T> newMgr = new LayerManager<>(filterSupplier, extendCheck, filterCleanup, false);
+        for (final T bf : filters) {
             newMgr.filters.add(bf.copy());
         }
         return newMgr;
@@ -356,8 +356,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      *         {@code true} if all filters pass the test.
      */
     @Override
-    public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
-        for (BloomFilter bf : filters) {
+    public boolean forEachBloomFilter(final Predicate<BloomFilter> bloomFilterPredicate) {
+        for (final BloomFilter bf : filters) {
             if (!bloomFilterPredicate.test(bf)) {
                 return false;
             }
@@ -374,7 +374,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      * @throws NoSuchElementException if depth is not in the range
      *                                [0,filters.size())
      */
-    public final T get(int depth) {
+    public final T get(final int depth) {
         if (depth < 0 || depth >= filters.size()) {
             throw new NoSuchElementException(String.format("Depth must be in the range [0,%s)", filters.size()));
         }

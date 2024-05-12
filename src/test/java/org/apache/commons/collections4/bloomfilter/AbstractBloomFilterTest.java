@@ -173,7 +173,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      *
      * @param bf The Bloom filter to test.
      */
-    protected void testCardinalityAndIsEmpty(BloomFilter bf) {
+    protected void testCardinalityAndIsEmpty(final BloomFilter bf) {
         assertTrue(bf.isEmpty());
         assertEquals(0, bf.cardinality());
         for (int i = 0; i < getTestShape().getNumberOfBits(); i++) {
@@ -243,7 +243,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     public void testEmptyAfterMergeWithNothing() {
         // test the case where is empty after merge
         // in this case the internal cardinality == -1
-        BloomFilter bf = createEmptyFilter(getTestShape());
+        final BloomFilter bf = createEmptyFilter(getTestShape());
         bf.merge(IndexProducer.fromIndexArray());
         assertTrue(bf.isEmpty());
     }
