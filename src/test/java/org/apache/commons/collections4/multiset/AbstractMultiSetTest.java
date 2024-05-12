@@ -169,8 +169,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
-        final ArrayList<T> list = new ArrayList<>();
-        return list;
+        return new ArrayList<>();
     }
 
     /**
