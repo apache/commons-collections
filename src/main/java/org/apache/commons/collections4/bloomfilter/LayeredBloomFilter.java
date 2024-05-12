@@ -59,9 +59,10 @@ import java.util.function.Predicate;
  * removes them. It also checks it a new layer should be added, and if so adds
  * it and sets the {@code target} before the operation.</li>
  * </ul>
+ * @param <T> The type of Bloom Filter that is used for the layers.
  * @since 4.5
  */
-public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
+public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, BloomFilterProducer {
     /**
      * A class used to locate matching filters across all the layers.
      */
@@ -88,24 +89,10 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
             return true;
         }
     }
-    /**
-     * Creates a fixed size layered bloom filter that adds new filters to the list,
-     * but never merges them. List will never exceed maxDepth. As additional filters
-     * are added earlier filters are removed.
-     *
-     * @param shape    The shape for the enclosed Bloom filters.
-     * @param maxDepth The maximum depth of layers.
-     * @return An empty layered Bloom filter of the specified shape and depth.
-     */
-    public static LayeredBloomFilter fixed(final Shape shape, int maxDepth) {
-        LayerManager manager = LayerManager.builder().setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
-                .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(() -> new SimpleBloomFilter(shape)).build();
-        return new LayeredBloomFilter(shape, manager);
-    }
 
     private final Shape shape;
 
-    private LayerManager layerManager;
+    private final LayerManager<T> layerManager;
 
     /**
      * Constructor.
@@ -113,7 +100,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * @param shape        the Shape of the enclosed Bloom filters
      * @param layerManager the LayerManager to manage the layers.
      */
-    public LayeredBloomFilter(Shape shape, LayerManager layerManager) {
+    public LayeredBloomFilter(Shape shape, LayerManager<T> layerManager) {
         this.shape = shape;
         this.layerManager = layerManager;
     }
@@ -184,8 +171,8 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
     }
 
     @Override
-    public LayeredBloomFilter copy() {
-        return new LayeredBloomFilter(shape, layerManager.copy());
+    public LayeredBloomFilter<T> copy() {
+        return new LayeredBloomFilter<>(shape, layerManager.copy());
     }
 
     /**
@@ -329,7 +316,7 @@ public class LayeredBloomFilter implements BloomFilter, BloomFilterProducer {
      * @return the Bloom filter at the specified depth.
      * @throws NoSuchElementException if depth is not in the range [0,getDepth())
      */
-    public BloomFilter get(int depth) {
+    public T get(int depth) {
         return layerManager.get(depth);
     }
 

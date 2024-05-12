@@ -22,13 +22,13 @@ public class BitMapProducerFromLayeredBloomFilterTest extends AbstractBitMapProd
 
     @Override
     protected BitMapProducer createEmptyProducer() {
-        return LayeredBloomFilter.fixed(shape, 10);
+        return LayeredBloomFilterTest.fixed(shape, 10);
     }
 
     @Override
     protected BitMapProducer createProducer() {
         final Hasher hasher = new IncrementingHasher(0, 1);
-        final BloomFilter bf = LayeredBloomFilter.fixed(shape, 10);
+        final BloomFilter bf = LayeredBloomFilterTest.fixed(shape, 10);
         bf.merge(hasher);
         return bf;
     }
