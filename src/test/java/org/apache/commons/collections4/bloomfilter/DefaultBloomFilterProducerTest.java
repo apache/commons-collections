@@ -16,22 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.function.Predicate;
-
 public class DefaultBloomFilterProducerTest extends AbstractBloomFilterProducerTest {
 
     @Override
-    protected BloomFilterProducer createUnderTest(BloomFilter... filters) {
-        return new BloomFilterProducer() {
-            @Override
-            public boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate) {
-                for (BloomFilter bf : filters) {
-                    if (!bloomFilterPredicate.test(bf)) {
-                        return false;
-                    }
+    protected BloomFilterProducer createUnderTest(final BloomFilter... filters) {
+        return bloomFilterPredicate -> {
+            for (final BloomFilter bf : filters) {
+                if (!bloomFilterPredicate.test(bf)) {
+                    return false;
                 }
-                return true;
             }
+            return true;
         };
     }
 }
