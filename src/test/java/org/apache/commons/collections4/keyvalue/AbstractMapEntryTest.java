@@ -52,8 +52,7 @@ public abstract class AbstractMapEntryTest<K, V> {
     public Map.Entry<K, V> makeKnownMapEntry(final K key, final V value) {
         final Map<K, V> map = new HashMap<>(1);
         map.put(key, value);
-        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
-        return entry;
+        return map.entrySet().iterator().next();
     }
 
     /**
