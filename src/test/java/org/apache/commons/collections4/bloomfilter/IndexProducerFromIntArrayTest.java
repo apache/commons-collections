@@ -22,7 +22,7 @@ public class IndexProducerFromIntArrayTest extends AbstractIndexProducerTest {
 
     @Override
     protected IndexProducer createEmptyProducer() {
-        return IndexProducer.fromIndexArray(new int[0]);
+        return IndexProducer.fromIndexArray();
     }
 
     @Override
