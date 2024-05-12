@@ -24,7 +24,7 @@ public class CellProducerFromDefaultIndexProducerTest extends AbstractCellProduc
 
     @Override
     protected CellProducer createEmptyProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(new int[0]));
+        return CellProducer.from(IndexProducer.fromIndexArray());
     }
 
     @Override
