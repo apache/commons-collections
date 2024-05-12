@@ -46,6 +46,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
 
     /** The decorated comparator. */
     private final Comparator<O> decorated;
+
     /** The transformer being used. */
     private final Transformer<? super I, ? extends O> transformer;
 
@@ -122,9 +123,8 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     @Override
     public int hashCode() {
         int total = 17;
-        total = total*37 + (decorated == null ? 0 : decorated.hashCode());
-        total = total*37 + (transformer == null ? 0 : transformer.hashCode());
-        return total;
+        total = total * 37 + (decorated == null ? 0 : decorated.hashCode());
+        return total * 37 + (transformer == null ? 0 : transformer.hashCode());
     }
 
 }
