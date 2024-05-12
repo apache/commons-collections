@@ -353,8 +353,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
-        final ArrayList<E> list = new ArrayList<>();
-        return list;
+        return new ArrayList<>();
     }
 
     /**
