@@ -199,7 +199,11 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
 
                 @Override
                 public boolean test(LayerManager<T> filter) {
-                    return ++count % breakAt == 0;
+                    if (++count == breakAt) {
+                        count = 0;
+                        return true;
+                    }
+                    return false;
                 }
             };
         }
