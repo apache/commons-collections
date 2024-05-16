@@ -45,14 +45,14 @@ public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtracto
     }
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
-        final TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[0]);
-        return IndexExtractor.fromBitMapProducer(producer);
+    protected IndexExtractor createEmptyExtractor() {
+        final TestingBitMapExtractor testingBitMapExtractor = new TestingBitMapExtractor(new long[0]);
+        return IndexExtractor.fromBitMapExtractor(testingBitMapExtractor);
     }
 
     @Override
-    protected IndexExtractor createProducer() {
-        /* Creates an index producer that produces the values:
+    protected IndexExtractor createExtractor() {
+        /* Creates an index testingBitMapExtractor that produces the values:
          * 0, 65, 128, and 129
          @formatter:off
                 Index2    Index1     Index0
@@ -63,8 +63,8 @@ public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtracto
          3L => ...0011
          @formatter:on
          */
-        final TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
-        return IndexExtractor.fromBitMapProducer(producer);
+        final TestingBitMapExtractor testingBitMapExtractor = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
+        return IndexExtractor.fromBitMapExtractor(testingBitMapExtractor);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtracto
     }
 
     @Test
-    public final void testFromBitMapProducerTest() {
-        IndexExtractor underTest = createProducer();
+    public final void testFromBitMapExtractor() {
+        IndexExtractor underTest = createExtractor();
         List<Integer> lst = new ArrayList<>();
 
         underTest.processIndices(lst::add);
@@ -90,8 +90,8 @@ public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtracto
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        final BitMapExtractor producer = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
-        underTest = IndexExtractor.fromBitMapProducer(producer);
+        final BitMapExtractor bitMapExtractor = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
+        underTest = IndexExtractor.fromBitMapExtractor(bitMapExtractor);
         lst = new ArrayList<>();
 
         underTest.processIndices(lst::add);

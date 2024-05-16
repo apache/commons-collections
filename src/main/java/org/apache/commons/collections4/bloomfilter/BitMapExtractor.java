@@ -70,16 +70,16 @@ public interface BitMapExtractor {
 
     /**
      * Creates a BitMapExtractor from an IndexExtractor.
-     * @param producer the IndexExtractor that specifies the indexes of the bits to enable.
+     * @param extractor the IndexExtractor that specifies the indexes of the bits to enable.
      * @param numberOfBits the number of bits in the Bloom filter.
-     * @return A BitMapExtractor that produces the bit maps equivalent of the Indices from the producer.
+     * @return A BitMapExtractor that produces the bit maps equivalent of the Indices from the extractor.
      */
-    static BitMapExtractor fromIndexProducer(final IndexExtractor producer, final int numberOfBits) {
-        Objects.requireNonNull(producer, "producer");
+    static BitMapExtractor fromIndexExtractor(final IndexExtractor extractor, final int numberOfBits) {
+        Objects.requireNonNull(extractor, "extractor");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
         final long[] result = new long[BitMaps.numberOfBitMaps(numberOfBits)];
-        producer.processIndices(i -> {
+        extractor.processIndices(i -> {
             BitMaps.set(result, i);
             return true;
         });
@@ -126,7 +126,7 @@ public interface BitMapExtractor {
      * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
      * is returned, and no further bit maps are processed.
      *
-     * <p>If the producer is empty this method will return true.</p>
+     * <p>If the extractor is empty this method will return true.</p>
      *
      * <p>Any exceptions thrown by the action are relayed to the caller.</p>
      *
@@ -138,7 +138,7 @@ public interface BitMapExtractor {
 
     /**
      * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
-     * BitMapExtractor to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
+     * BitMapExtractor to this extractor. If this extractor does not have as many bit maps it will provide 0 (zero)
      * for all excess calls to the LongBiPredicate.
      * <p>
      * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
@@ -146,7 +146,7 @@ public interface BitMapExtractor {
      *
      * @param other The other BitMapExtractor that provides the y values in the (x,y) pair.
      * @param func The function to apply.
-     * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
+     * @return A LongPredicate that tests this BitMapExtractor's bitmap values in order.
      */
     default boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);

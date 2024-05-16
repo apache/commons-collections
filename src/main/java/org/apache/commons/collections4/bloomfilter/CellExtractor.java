@@ -22,7 +22,7 @@ import java.util.function.IntPredicate;
 
 /**
  * Some Bloom filter implementations use a count rather than a bit flag. The term {@code Cell} is used to
- * refer to these counts and their associated index.  This class is the equivalent of the index producer except
+ * refer to these counts and their associated index.  This class is the equivalent of the index extractor except
  * that it produces cells.
  *
  * <p>Note that a CellExtractor must not return duplicate indices and must be ordered.</p>
@@ -80,10 +80,10 @@ public interface CellExtractor extends IndexExtractor {
      * ...
      * </pre>
      *
-     * @param producer An index producer.
+     * @param indexExtractor An index indexExtractor.
      * @return A CellExtractor with the same indices as the IndexExtractor.
      */
-    static CellExtractor from(final IndexExtractor producer) {
+    static CellExtractor from(final IndexExtractor indexExtractor) {
         return new CellExtractor() {
             /**
              * Class to track cell values in the TreeMap.
@@ -124,7 +124,7 @@ public interface CellExtractor extends IndexExtractor {
 
             private void populate() {
                 if (counterCells.isEmpty()) {
-                    producer.processIndices(idx -> {
+                    indexExtractor.processIndices(idx -> {
                         final CounterCell cell = new CounterCell(idx, 1);
                         final CounterCell counter = counterCells.get(cell);
                         if (counter == null) {

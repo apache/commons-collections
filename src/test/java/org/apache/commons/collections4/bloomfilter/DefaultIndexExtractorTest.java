@@ -64,7 +64,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     private final int[] values = {10, 1, 10, 1};
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return predicate -> {
             Objects.requireNonNull(predicate);
             return true;
@@ -72,7 +72,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     }
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         return predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {
@@ -104,7 +104,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     @ValueSource(ints = {32, 33})
     public void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
-        final IndexExtractor producer = predicate -> {
+        final IndexExtractor indexExtractor = predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {
                 if (!predicate.test(i)) {
@@ -113,19 +113,19 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
             }
             return true;
         };
-        final int[] other = producer.asIndexArray();
+        final int[] other = indexExtractor.asIndexArray();
         assertArrayEquals(values, other);
     }
 
     @Test
-    public void testFromBitMapProducer() {
+    public void testFromBitMapExtractor() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(7, 256);
             final long[] bits = new long[BitMaps.numberOfBitMaps(256)];
             for (final int bitIndex : expected) {
                 BitMaps.set(bits, bitIndex);
             }
-            final IndexExtractor ip = IndexExtractor.fromBitMapProducer(BitMapExtractor.fromBitMapArray(bits));
+            final IndexExtractor ip = IndexExtractor.fromBitMapExtractor(BitMapExtractor.fromBitMapArray(bits));
             assertArrayEquals(unique(expected), ip.asIndexArray());
         }
     }

@@ -153,18 +153,18 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     /**
-     * Returns {@code true} if each filter within the {@code producer} exits within
+     * Returns {@code true} if each filter within the {@code bloomFilterExtractor} exits within
      * this filter.
      *
-     * @param producer the BloomFilterExtractor that provides the filters to check
+     * @param bloomFilterExtractor the BloomFilterExtractor that provides the filters to check
      *                 for.
      * @return {@code true} if this filter contains all of the filters contained in
-     *         the {@code producer}.
+     *         the {@code bloomFilterExtractor}.
      */
-    public boolean contains(final BloomFilterExtractor producer) {
+    public boolean contains(final BloomFilterExtractor bloomFilterExtractor) {
         final boolean[] result = { true };
         // return false when we have found a match to short circuit checks
-        return producer.processBloomFilters(x -> {
+        return bloomFilterExtractor.processBloomFilters(x -> {
             result[0] &= contains(x);
             return result[0];
         });
@@ -273,7 +273,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     /**
      * Finds the layers in which the IndexExtractor is found.
      *
-     * @param indexExtractor the Index producer to search for.
+     * @param indexExtractor the Index extractor to search for.
      * @return an array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final IndexExtractor indexExtractor) {
@@ -376,4 +376,5 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     public void next() {
         layerManager.next();
     }
+
 }

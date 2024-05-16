@@ -152,7 +152,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(final BitMapExtractor bitMapExtractor) {
-        return contains(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+        return contains(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     @Override
@@ -221,9 +221,9 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public int getMaxInsert(final CellExtractor cellProducer) {
+    public int getMaxInsert(final CellExtractor cellExtractor) {
         final int[] max = {Integer.MAX_VALUE};
-        cellProducer.processCells( (x, y) -> {
+        cellExtractor.processCells( (x, y) -> {
             final int count = cells[x] / y;
             if (count < max[0]) {
                 max[0] = count;

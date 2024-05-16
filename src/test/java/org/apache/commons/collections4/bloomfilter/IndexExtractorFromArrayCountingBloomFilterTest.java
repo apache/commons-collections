@@ -21,12 +21,12 @@ public class IndexExtractorFromArrayCountingBloomFilterTest extends AbstractInde
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return new ArrayCountingBloomFilter(shape);
     }
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
         filter.merge(new IncrementingHasher(5, 1));

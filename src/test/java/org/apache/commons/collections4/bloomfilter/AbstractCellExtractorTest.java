@@ -40,18 +40,18 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     private static final CellPredicate FALSE_CONSUMER = (i, j) -> false;
 
     /**
-     * Creates a producer without data.
-     * @return a producer that has no data.
+     * Creates a CellExtractor without data.
+     * @return a cell extractor that has no data.
      */
     @Override
-    protected abstract CellExtractor createEmptyProducer();
+    protected abstract CellExtractor createEmptyExtractor();
 
     /**
-     * Creates a producer with some data.
-     * @return a producer with some data
+     * Creates a CellExtractor with some data.
+     * @return a cell extractor with some data
      */
     @Override
-    protected abstract CellExtractor createProducer();
+    protected abstract CellExtractor createExtractor();
 
     @Override
     protected final int getAsIndexArrayBehaviour() {
@@ -73,7 +73,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     @Test
     public final void testBehaviourForEachCell() {
         final IntList list = new IntList();
-        createProducer().processCells((i, j) -> list.add(i));
+        createExtractor().processCells((i, j) -> list.add(i));
         final int[] actual = list.toArray();
         // check order
         final int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -84,8 +84,8 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public final void testEmptyCellProducer() {
-        final CellExtractor empty = createEmptyProducer();
+    public final void testEmptyCellExtractor() {
+        final CellExtractor empty = createEmptyExtractor();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.processCells((i, j) -> {
@@ -97,13 +97,13 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     @Test
     public void testForEachCellEarlyExit() {
         final int[] passes = new int[1];
-        assertTrue(createEmptyProducer().processCells((i, j) -> {
+        assertTrue(createEmptyExtractor().processCells((i, j) -> {
             passes[0]++;
             return false;
         }));
         assertEquals(0, passes[0]);
 
-        assertFalse(createProducer().processCells((i, j) -> {
+        assertFalse(createExtractor().processCells((i, j) -> {
             passes[0]++;
             return false;
         }));
@@ -112,8 +112,8 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
 
     @Test
     public final void testForEachCellPredicates() {
-        final CellExtractor populated = createProducer();
-        final CellExtractor empty = createEmptyProducer();
+        final CellExtractor populated = createExtractor();
+        final CellExtractor empty = createEmptyExtractor();
 
         assertFalse(populated.processCells(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(empty.processCells(FALSE_CONSUMER), "empty should be true");
@@ -128,7 +128,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
         final int[] expectedValue = getExpectedValues();
         assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
         final int[] idx = {0};
-        createProducer().processCells((i, j) -> {
+        createExtractor().processCells((i, j) -> {
             assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
             assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);
             idx[0]++;
@@ -138,14 +138,14 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
 
     @Test
     public final void testIndexConsistency() {
-        final CellExtractor producer = createProducer();
+        final CellExtractor extractor = createExtractor();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
-        producer.processIndices(i -> {
+        extractor.processIndices(i -> {
             bs1.set(i);
             return true;
         });
-        producer.processCells((i, j) -> {
+        extractor.processCells((i, j) -> {
             bs2.set(i);
             return true;
         });

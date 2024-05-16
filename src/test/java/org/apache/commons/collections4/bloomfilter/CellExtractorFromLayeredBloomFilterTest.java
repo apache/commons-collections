@@ -21,12 +21,12 @@ public class CellExtractorFromLayeredBloomFilterTest extends AbstractCellExtract
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected CellExtractor createEmptyProducer() {
+    protected CellExtractor createEmptyExtractor() {
         return CellExtractor.from(LayeredBloomFilterTest.fixed(shape, 10));
     }
 
     @Override
-    protected CellExtractor createProducer() {
+    protected CellExtractor createExtractor() {
         final Hasher hasher = new IncrementingHasher(3, 2);
         final BloomFilter bf = LayeredBloomFilterTest.fixed(shape, 10);
         bf.merge(hasher);

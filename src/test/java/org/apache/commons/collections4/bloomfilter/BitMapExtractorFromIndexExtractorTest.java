@@ -26,22 +26,22 @@ import org.junit.jupiter.api.Test;
 public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
 
     @Override
-    protected BitMapExtractor createEmptyProducer() {
-        final IndexExtractor iProducer = consumer -> true;
-        return BitMapExtractor.fromIndexProducer(iProducer, 200);
+    protected BitMapExtractor createEmptyExtractor() {
+        final IndexExtractor indexExtractor = consumer -> true;
+        return BitMapExtractor.fromIndexExtractor(indexExtractor, 200);
     }
 
     @Override
-    protected BitMapExtractor createProducer() {
-        final IndexExtractor iProducer = consumer -> consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
+    protected BitMapExtractor createExtractor() {
+        final IndexExtractor indexExtractor = consumer -> consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
                 && consumer.test(127) && consumer.test(128);
-        return BitMapExtractor.fromIndexProducer(iProducer, 200);
+        return BitMapExtractor.fromIndexExtractor(indexExtractor, 200);
     }
 
     @Test
-    public final void testFromIndexProducer() {
+    public final void testFromIndexExtractor() {
         final List<Long> lst = new ArrayList<>();
-        createProducer().processBitMaps(lst::add);
+        createExtractor().processBitMaps(lst::add);
         final long[] buckets = lst.stream().mapToLong(Long::longValue).toArray();
         assertTrue(BitMaps.contains(buckets, 0));
         assertTrue(BitMaps.contains(buckets, 1));

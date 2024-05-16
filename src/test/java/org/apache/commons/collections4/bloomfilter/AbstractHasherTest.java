@@ -27,14 +27,14 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
     protected abstract Hasher createEmptyHasher();
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return createEmptyHasher().indices(getTestShape());
     }
 
     protected abstract Hasher createHasher();
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         return createHasher().indices(getTestShape());
     }
 

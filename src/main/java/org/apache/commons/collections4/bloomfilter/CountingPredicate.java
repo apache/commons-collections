@@ -52,7 +52,7 @@ class CountingPredicate<T> implements Predicate<T> {
     /**
      * Call {@code BiPredicate<T, T>} for each remaining unpaired {@code <T>} in the
      * input array. This method should be invoked after the predicate has been
-     * passed to a {@code Producer.forEach<T>(BiPredicate<T, T>)} to consume any
+     * passed to a {@code Extractor.forEach<T>(BiPredicate<T, T>)} to consume any
      * unpaired {@code <T>}s. The second argument to the BiPredicate will be {@code null}.
      *
      * @return true if all calls the predicate were successful

@@ -19,12 +19,12 @@ package org.apache.commons.collections4.bloomfilter;
 public class IndexExtractorFromHasherTest extends AbstractIndexExtractorTest {
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         // hasher has collisions and wraps
         return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72));
     }

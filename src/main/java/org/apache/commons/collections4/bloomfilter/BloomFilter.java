@@ -261,16 +261,16 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
 
     /**
      * Merges the specified hasher into this Bloom filter. Specifically all
-     * bit indexes that are identified by the {@code producer} will be enabled in this filter.
+     * bit indexes that are identified by the {@code bitMapExtractor} will be enabled in this filter.
      *
      * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
      * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes
-     * enabled in the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
+     * enabled in the {@code bitMapExtractor}.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
-     * @param bitMapExtractor The producer to merge.
+     * @param bitMapExtractor The BitMapExtractor to merge.
      * @return true if the merge was successful
-     * @throws IllegalArgumentException if producer sends illegal value.
+     * @throws IllegalArgumentException if bitMapExtractor sends illegal value.
      */
     boolean merge(BitMapExtractor bitMapExtractor);
 
@@ -312,21 +312,21 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
 
     /**
      * Merges the specified IndexExtractor into this Bloom filter. Specifically all
-     * bit indexes that are identified by the {@code producer} will be enabled in this filter.
+     * bit indexes that are identified by the {@code indexExtractor} will be enabled in this filter.
      *
      * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
      * enabled. A {@code false} result indicates that this filter may or may not contain all the indexes of
-     * the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
+     * the {@code indexExtractor}.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
      * @param indexExtractor The IndexExtractor to merge.
      * @return true if the merge was successful
-     * @throws IllegalArgumentException if producer sends illegal value.
+     * @throws IllegalArgumentException if indexExtractor sends illegal value.
      */
     boolean merge(IndexExtractor indexExtractor);
 
     /**
-     * Most Bloom filters create unique IndexProducers.
+     * Most Bloom filters create unique IndexExtractors.
      */
     @Override
     default IndexExtractor uniqueIndices() {

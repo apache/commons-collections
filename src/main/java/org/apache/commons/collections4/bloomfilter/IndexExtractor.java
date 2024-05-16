@@ -35,11 +35,11 @@ public interface IndexExtractor {
 
     /**
      * Creates an IndexExtractor from a {@code BitMapExtractor}.
-     * @param producer the {@code BitMapExtractor}
+     * @param bitMapExtractor the {@code BitMapExtractor}
      * @return a new {@code IndexExtractor}.
      */
-    static IndexExtractor fromBitMapProducer(final BitMapExtractor producer) {
-        Objects.requireNonNull(producer, "producer");
+    static IndexExtractor fromBitMapExtractor(final BitMapExtractor bitMapExtractor) {
+        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
         return consumer -> {
             final LongPredicate longPredicate = new LongPredicate() {
                 int wordIdx;
@@ -58,7 +58,7 @@ public interface IndexExtractor {
                     return true;
                 }
             };
-            return producer.processBitMaps(longPredicate::test);
+            return bitMapExtractor.processBitMaps(longPredicate::test);
         };
     }
 
@@ -137,10 +137,10 @@ public interface IndexExtractor {
     boolean processIndices(IntPredicate predicate);
 
     /**
-     * Creates an IndexExtractor comprising the unique indices for this producer.
+     * Creates an IndexExtractor comprising the unique indices for this extractor.
      *
-     * <p>By default creates a new producer with some overhead to remove
-     * duplicates.  IndexProducers that return unique indices by default
+     * <p>By default creates a new extractor with some overhead to remove
+     * duplicates.  IndexExtractors that return unique indices by default
      * should override this to return {@code this}.</p>
      *
      * <p>The default implementation will filter the indices from this instance

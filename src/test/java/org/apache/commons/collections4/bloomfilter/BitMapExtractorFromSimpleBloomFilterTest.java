@@ -21,12 +21,12 @@ public class BitMapExtractorFromSimpleBloomFilterTest extends AbstractBitMapExtr
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitMapExtractor createEmptyProducer() {
+    protected BitMapExtractor createEmptyExtractor() {
         return new SimpleBloomFilter(shape);
     }
 
     @Override
-    protected BitMapExtractor createProducer() {
+    protected BitMapExtractor createExtractor() {
         final Hasher hasher = new IncrementingHasher(0, 1);
         final BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);

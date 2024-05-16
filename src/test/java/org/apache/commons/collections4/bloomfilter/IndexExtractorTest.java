@@ -48,9 +48,9 @@ public class IndexExtractorTest {
     }
 
     @Test
-    public void fromBitMapProducerTest() {
-        TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
-        IndexExtractor underTest = IndexExtractor.fromBitMapProducer(producer);
+    public void testFromBitMapExtractor() {
+        TestingBitMapExtractor testingBitMapExtractor = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
+        IndexExtractor underTest = IndexExtractor.fromBitMapExtractor(testingBitMapExtractor);
         List<Integer> lst = new ArrayList<>();
 
         underTest.processIndices(lst::add);
@@ -60,8 +60,8 @@ public class IndexExtractorTest {
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        producer = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
-        underTest = IndexExtractor.fromBitMapProducer(producer);
+        testingBitMapExtractor = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
+        underTest = IndexExtractor.fromBitMapExtractor(testingBitMapExtractor);
         lst = new ArrayList<>();
 
         underTest.processIndices(lst::add);

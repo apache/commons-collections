@@ -90,7 +90,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(final BitMapExtractor bitMapExtractor) {
-        return contains(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+        return contains(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     @Override
@@ -165,14 +165,14 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(final BitMapExtractor bitMapExtractor) {
         Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
-        return this.merge(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+        return this.merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     @Override
     public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        final IndexExtractor producer = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapProducer(other);
-        merge(producer);
+        final IndexExtractor indexExtractor = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapExtractor(other);
+        merge(indexExtractor);
         return true;
     }
 

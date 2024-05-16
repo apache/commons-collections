@@ -39,7 +39,7 @@ public interface BloomFilterExtractor {
      * </ul>
      * <p><em>All modifications to the Bloom filters are reflected in the original filters</em></p>
      *
-     * @param filters The filters to be returned by the producer.
+     * @param filters The filters to be returned by the extractor.
      * @return THe BloomFilterExtractor containing the filters.
      */
     static BloomFilterExtractor fromBloomFilterArray(final BloomFilter... filters) {
@@ -121,8 +121,8 @@ public interface BloomFilterExtractor {
 
     /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
-     * of the Bloom filters from the other BloomFilterExtractor to this producer. If
-     * either {@code this} producer or {@code other} producer has fewer BloomFilters
+     * of the Bloom filters from the other BloomFilterExtractor to this extractor. If
+     * either {@code this} extractor or {@code other} extractor has fewer BloomFilters
      * ths method will provide {@code null} for all excess calls to the {@code func}.
      *
      * <p><em>This implementation returns references to the Bloom filter.  Other implementations

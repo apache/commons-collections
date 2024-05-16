@@ -65,7 +65,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(final BitMapExtractor bitMapExtractor) {
-            return contains(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+            return contains(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
         }
 
         @Override
@@ -75,7 +75,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean processBitMaps(final LongPredicate consumer) {
-            return BitMapExtractor.fromIndexProducer(this, shape.getNumberOfBits()).processBitMaps(consumer);
+            return BitMapExtractor.fromIndexExtractor(this, shape.getNumberOfBits()).processBitMaps(consumer);
         }
 
         @Override
@@ -95,7 +95,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(final BitMapExtractor bitMapExtractor) {
-            return merge(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+            return merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
         }
 
         @Override
@@ -224,12 +224,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
-        assertTrue(BitMapExtractor.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+        assertTrue(BitMapExtractor.fromIndexExtractor(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .processBitMapPairs(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
-        assertTrue(BitMapExtractor.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+        assertTrue(BitMapExtractor.fromIndexExtractor(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
                 .processBitMapPairs(bf1, (x, y) -> x == y));
     }
 

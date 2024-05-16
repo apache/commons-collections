@@ -32,7 +32,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     }
 
     @Test
-    public void testBitMapProducerEdgeCases() {
+    public void testBitMapExtractorEdgeCases() {
         int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71};
         BloomFilter bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
 

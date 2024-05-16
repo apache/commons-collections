@@ -23,12 +23,12 @@ public class CellExtractorFromDefaultIndexExtractorTest extends AbstractCellExtr
     int[] values = {1, 2, 1, 1, 1, 1 };
 
     @Override
-    protected CellExtractor createEmptyProducer() {
+    protected CellExtractor createEmptyExtractor() {
         return CellExtractor.from(IndexExtractor.fromIndexArray());
     }
 
     @Override
-    protected CellExtractor createProducer() {
+    protected CellExtractor createExtractor() {
         return CellExtractor.from(IndexExtractor.fromIndexArray(data));
     }
 

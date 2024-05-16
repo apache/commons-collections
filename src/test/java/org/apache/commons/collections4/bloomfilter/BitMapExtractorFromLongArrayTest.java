@@ -28,7 +28,7 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
     @Test
     public void constructorTest() {
         final List<Long> lst = new ArrayList<>();
-        createProducer().processBitMaps(lst::add);
+        createExtractor().processBitMaps(lst::add);
         assertEquals(Long.valueOf(1), lst.get(0));
         assertEquals(Long.valueOf(2), lst.get(1));
         assertEquals(Long.valueOf(3), lst.get(2));
@@ -37,12 +37,12 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
     }
 
     @Override
-    protected BitMapExtractor createEmptyProducer() {
+    protected BitMapExtractor createEmptyExtractor() {
         return BitMapExtractor.fromBitMapArray();
     }
 
     @Override
-    protected BitMapExtractor createProducer() {
+    protected BitMapExtractor createExtractor() {
         final long[] ary = {1L, 2L, 3L, 4L, 5L};
         return BitMapExtractor.fromBitMapArray(ary);
     }
@@ -53,9 +53,9 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
     }
 
     @Test
-    public void testFromIndexProducer() {
+    public void testFromIndexExtractor() {
         final int limit = Integer.SIZE + Long.SIZE;
-        final IndexExtractor iProducer = consumer -> {
+        final IndexExtractor indexExtractor = consumer -> {
             for (int i = 0; i < limit; i++) {
                 if (!consumer.test(i)) {
                     return false;
@@ -63,9 +63,9 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
             }
             return true;
         };
-        final BitMapExtractor producer = BitMapExtractor.fromIndexProducer(iProducer, limit);
+        final BitMapExtractor bitMapExtractor = BitMapExtractor.fromIndexExtractor(indexExtractor, limit);
         final List<Long> lst = new ArrayList<>();
-        producer.processBitMaps(lst::add);
+        bitMapExtractor.processBitMaps(lst::add);
         long expected = ~0L;
         assertEquals(expected, lst.get(0).longValue());
         expected &= 0XFFFFFFFFL;

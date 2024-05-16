@@ -121,7 +121,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean processIndices(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        return IndexExtractor.fromBitMapProducer(this).processIndices(consumer);
+        return IndexExtractor.fromBitMapExtractor(this).processIndices(consumer);
     }
 
     @Override

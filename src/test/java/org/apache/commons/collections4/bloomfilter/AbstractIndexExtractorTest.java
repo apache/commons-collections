@@ -73,16 +73,16 @@ public abstract class AbstractIndexExtractorTest {
     protected static final int DISTINCT = 0x2;
 
     /**
-     * Creates an producer without data.
-     * @return a producer that has no data.
+     * Creates an extractor without data.
+     * @return an IndexExtractor that has no data.
      */
-    protected abstract IndexExtractor createEmptyProducer();
+    protected abstract IndexExtractor createEmptyExtractor();
 
     /**
-     * Creates a producer with some data.
-     * @return a producer with some data
+     * Creates an extractor with some data.
+     * @return an IndexExtractor with some data
      */
-    protected abstract IndexExtractor createProducer();
+    protected abstract IndexExtractor createExtractor();
 
     /**
      * Gets the behavior of the {@link IndexExtractor#asIndexArray()} method.
@@ -94,7 +94,7 @@ public abstract class AbstractIndexExtractorTest {
 
     /**
      * Creates an array of expected indices.
-     * The expected indices are dependent upon the producer created in the {@code createProducer()} method.
+     * The expected indices are dependent upon the extractor created in the {@code createExtractor()} method.
      * @return an array of expected indices.
      */
     protected abstract int[] getExpectedIndices();
@@ -116,7 +116,7 @@ public abstract class AbstractIndexExtractorTest {
     @Test
     public final void testAsIndexArrayValues() {
         final BitSet bs = new BitSet();
-        Arrays.stream(createProducer().asIndexArray()).forEach(bs::set);
+        Arrays.stream(createExtractor().asIndexArray()).forEach(bs::set);
         for (final int i : getExpectedIndices()) {
             assertTrue(bs.get(i), () -> "Missing " + i);
         }
@@ -132,7 +132,7 @@ public abstract class AbstractIndexExtractorTest {
     @Test
     public final void testBehaviourAsIndexArray() {
         final int flags = getAsIndexArrayBehaviour();
-        final int[] actual = createProducer().asIndexArray();
+        final int[] actual = createExtractor().asIndexArray();
         if ((flags & ORDERED) != 0) {
             final int[] expected = Arrays.stream(actual).sorted().toArray();
             assertArrayEquals(expected, actual);
@@ -159,7 +159,7 @@ public abstract class AbstractIndexExtractorTest {
     public final void testBehaviourForEachIndex() {
         final int flags = getForEachIndexBehaviour();
         final IntList list = new IntList();
-        createProducer().processIndices(list::add);
+        createExtractor().processIndices(list::add);
         final int[] actual = list.toArray();
         if ((flags & ORDERED) != 0) {
             final int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -178,15 +178,15 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     /**
-     * Test the distinct indices output from the producer are consistent.
+     * Test the distinct indices output from the extractor are consistent.
      */
     @Test
     public final void testConsistency() {
-        final IndexExtractor producer = createProducer();
+        final IndexExtractor extractor = createExtractor();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
-        Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
-        producer.processIndices(i -> {
+        Arrays.stream(extractor.asIndexArray()).forEach(bs1::set);
+        extractor.processIndices(i -> {
             bs2.set(i);
             return true;
         });
@@ -194,24 +194,24 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     @Test
-    public final void testEmptyProducer() {
-        final IndexExtractor empty = createEmptyProducer();
+    public final void testEmptyExtractor() {
+        final IndexExtractor empty = createEmptyExtractor();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.processIndices(i -> {
-            throw new AssertionError("forEach predictate should not be called");
+            throw new AssertionError("processIndices predictate should not be called");
         }));
     }
 
     /**
-     * Test to ensure that for each index returns each expected index at least once.
+     * Test to ensure that processIndices returns each expected index at least once.
      */
     @Test
     public final void testForEachIndex() {
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         Arrays.stream(getExpectedIndices()).forEach(bs1::set);
-        createProducer().processIndices(i -> {
+        createExtractor().processIndices(i -> {
             bs2.set(i);
             return true;
         });
@@ -221,14 +221,14 @@ public abstract class AbstractIndexExtractorTest {
     @Test
     public void testForEachIndexEarlyExit() {
         final int[] passes = new int[1];
-        assertFalse(createProducer().processIndices(i -> {
+        assertFalse(createExtractor().processIndices(i -> {
             passes[0]++;
             return false;
         }));
         assertEquals(1, passes[0]);
 
         passes[0] = 0;
-        assertTrue(createEmptyProducer().processIndices(i -> {
+        assertTrue(createEmptyExtractor().processIndices(i -> {
             passes[0]++;
             return false;
         }));
@@ -237,8 +237,8 @@ public abstract class AbstractIndexExtractorTest {
 
     @Test
     public final void testForEachIndexPredicates() {
-        final IndexExtractor populated = createProducer();
-        final IndexExtractor empty = createEmptyProducer();
+        final IndexExtractor populated = createExtractor();
+        final IndexExtractor empty = createEmptyExtractor();
 
         assertFalse(populated.processIndices(FALSE_PREDICATE), "non-empty should be false");
         assertTrue(empty.processIndices(FALSE_PREDICATE), "empty should be true");
@@ -249,7 +249,7 @@ public abstract class AbstractIndexExtractorTest {
 
     @Test
     public void testUniqueReturnsSelf() {
-        final IndexExtractor expected = createProducer().uniqueIndices();
+        final IndexExtractor expected = createExtractor().uniqueIndices();
         assertSame(expected, expected.uniqueIndices());
     }
 }

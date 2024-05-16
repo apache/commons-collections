@@ -21,12 +21,12 @@ public class IndexExtractorFromIntArrayTest extends AbstractIndexExtractorTest {
     int[] data = {6, 8, 1, 2, 4, 4, 5};
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return IndexExtractor.fromIndexArray();
     }
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         return IndexExtractor.fromIndexArray(data);
     }
 

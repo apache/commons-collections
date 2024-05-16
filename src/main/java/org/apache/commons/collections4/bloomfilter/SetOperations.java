@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.function.LongBinaryOperator;
 
 /**
- * Implementations of set operations on BitMapProducers.
+ * Implementations of set operations on BitMapExtractors.
  *
  * @since 4.5
  */
@@ -37,13 +37,13 @@ public final class SetOperations {
 
     /**
      * Calculates the cardinality of a BitMapExtractor. By necessity this method will visit each bit map
-     * created by the producer.
-     * @param producer the Producer to calculate the cardinality for.
-     * @return the cardinality of the bit maps produced by the producer.
+     * created by the bitMapExtractor.
+     * @param bitMapExtractor the extractor to calculate the cardinality for.
+     * @return the cardinality of the bit maps produced by the bitMapExtractor.
      */
-    public static int cardinality(final BitMapExtractor producer) {
+    public static int cardinality(final BitMapExtractor bitMapExtractor) {
         final int[] cardinality = new int[1];
-        producer.processBitMaps(l -> {
+        bitMapExtractor.processBitMaps(l -> {
             cardinality[0] += Long.bitCount(l);
             return true;
         });
@@ -55,7 +55,7 @@ public final class SetOperations {
      * {@code BitMapExtractor.makePredicate} method.
      * @param first the first BitMapExtractor
      * @param second the second BitMapExtractor
-     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap producers.
+     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap extractors.
      * @return the calculated cardinality.
      */
     private static int cardinality(final BitMapExtractor first, final BitMapExtractor second, final LongBinaryOperator op) {
@@ -82,11 +82,11 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the Cosine similarity between two BitMapProducers.
+     * Calculates the Cosine similarity between two BitMapExtractors.
      * <p> Also known as Orchini similarity and the Tucker coefficient of congruence or
      * Ochiai similarity.</p>
      *
-     * <p>If either producer is empty the result is 0 (zero)</p>
+     * <p>If either extractor is empty the result is 0 (zero)</p>
      *
      * @param first the first BitMapExtractor.
      * @param second the second BitMapExtractor.
@@ -120,7 +120,7 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the Hamming distance between two BitMapProducers.
+     * Calculates the Hamming distance between two BitMapExtractors.
      *
      * @param first the first BitMapExtractor.
      * @param second the second BitMapExtractor.

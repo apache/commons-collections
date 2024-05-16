@@ -119,11 +119,11 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     }
 
     /**
-     * Determines the maximum number of times the Cell Producer could have been add.
-     * @param cellProducer the producer of cells.
+     * Determines the maximum number of times the Cell Extractor could have been added.
+     * @param cellExtractor the extractor of cells.
      * @return the maximum number of times the CellExtractor could have been inserted.
      */
-    int getMaxInsert(CellExtractor cellProducer);
+    int getMaxInsert(CellExtractor cellExtractor);
 
     /**
      * Determines the maximum number of times the Hasher could have been merged into this
@@ -140,14 +140,14 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     /**
      * Determines the maximum number of times the IndexExtractor could have been merged
      * into this counting filter.
-     * <p>To determine how many times an indxProducer could have been added create a CellExtractor
-     * from the indexProducer and check that</p>
-     * @param idxProducer the producer to drive the count check.
+     * <p>To determine how many times an indexExtractor could have been added create a CellExtractor
+     * from the indexExtractor and check that</p>
+     * @param indexExtractor the extractor to drive the count check.
      * @return the maximum number of times the IndexExtractor could have been inserted.
      * @see #getMaxInsert(CellExtractor)
      */
-    default int getMaxInsert(final IndexExtractor idxProducer) {
-        return getMaxInsert(CellExtractor.from(idxProducer.uniqueIndices()) );
+    default int getMaxInsert(final IndexExtractor indexExtractor) {
+        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()) );
     }
 
     /**
@@ -172,7 +172,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     boolean isValid();
 
     /**
-     * Merges the specified BitMap producer into this Bloom filter.
+     * Merges the specified BitMap extractor into this Bloom filter.
      *
      * <p>Specifically: all cells for the indexes identified by the {@code bitMapExtractor} will be incremented by 1.</p>
      *
@@ -186,7 +186,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     @Override
     default boolean merge(final BitMapExtractor bitMapExtractor) {
         Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
-        return merge(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+        return merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     /**
@@ -229,7 +229,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     }
 
     /**
-     * Merges the specified index producer into this Bloom filter.
+     * Merges the specified index extractor into this Bloom filter.
      *
      * <p>Specifically: all unique cells for the indices identified by the {@code indexExtractor} will be incremented by 1.</p>
      *
@@ -269,7 +269,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      */
     default boolean remove(final BitMapExtractor bitMapExtractor) {
         Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
-        return remove(IndexExtractor.fromBitMapProducer(bitMapExtractor));
+        return remove(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     /**

@@ -31,7 +31,7 @@ final class NullHasher implements Hasher {
      */
     static final NullHasher INSTANCE = new NullHasher();
 
-    private static final IndexExtractor PRODUCER = new IndexExtractor() {
+    private static final IndexExtractor INDEX_EXTRACTOR = new IndexExtractor() {
         @Override
         public int[] asIndexArray() {
             return new int[0];
@@ -51,6 +51,6 @@ final class NullHasher implements Hasher {
     @Override
     public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
+        return INDEX_EXTRACTOR;
     }
 }

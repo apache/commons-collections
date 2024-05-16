@@ -21,12 +21,12 @@ public class BitMapExtractorFromArrayCountingBloomFilterTest extends AbstractBit
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitMapExtractor createEmptyProducer() {
+    protected BitMapExtractor createEmptyExtractor() {
         return new ArrayCountingBloomFilter(shape);
     }
 
     @Override
-    protected BitMapExtractor createProducer() {
+    protected BitMapExtractor createExtractor() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         final Hasher hasher = new IncrementingHasher(0, 1);
         filter.merge(hasher);

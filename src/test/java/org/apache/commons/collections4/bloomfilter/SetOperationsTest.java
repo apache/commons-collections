@@ -48,9 +48,9 @@ public class SetOperationsTest {
         return bf;
     }
 
-    private BloomFilter createFilter(final Shape shape, final IndexExtractor producer) {
+    private BloomFilter createFilter(final Shape shape, final IndexExtractor indexExtractor) {
         final BloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(producer);
+        bf.merge(indexExtractor);
         return bf;
     }
 

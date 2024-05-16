@@ -21,12 +21,12 @@ public class IndexExtractorFromSimpleBloomFilterTest extends AbstractIndexExtrac
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected IndexExtractor createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return new SimpleBloomFilter(shape);
     }
 
     @Override
-    protected IndexExtractor createProducer() {
+    protected IndexExtractor createExtractor() {
         final Hasher hasher = new IncrementingHasher(3, 2);
         final BloomFilter bf = new SimpleBloomFilter(shape);
         bf.merge(hasher);
