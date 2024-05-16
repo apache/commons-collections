@@ -24,7 +24,7 @@ package org.apache.commons.collections4.bloomfilter;
  *
  * @since 4.5
  */
-public class BitMap {
+public class BitMaps {
     /** A bit shift to apply to an integer to divided by 64 (2^6). */
     private static final int DIVIDE_BY_64 = 6;
 
@@ -136,6 +136,6 @@ public class BitMap {
     }
 
     /** Do not instantiate. */
-    private BitMap() {
+    private BitMaps() {
     }
 }

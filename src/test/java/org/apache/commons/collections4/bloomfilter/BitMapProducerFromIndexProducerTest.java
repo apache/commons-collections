@@ -43,11 +43,11 @@ public class BitMapProducerFromIndexProducerTest extends AbstractBitMapProducerT
         final List<Long> lst = new ArrayList<>();
         createProducer().forEachBitMap(lst::add);
         final long[] buckets = lst.stream().mapToLong(Long::longValue).toArray();
-        assertTrue(BitMap.contains(buckets, 0));
-        assertTrue(BitMap.contains(buckets, 1));
-        assertTrue(BitMap.contains(buckets, 63));
-        assertTrue(BitMap.contains(buckets, 64));
-        assertTrue(BitMap.contains(buckets, 127));
-        assertTrue(BitMap.contains(buckets, 128));
+        assertTrue(BitMaps.contains(buckets, 0));
+        assertTrue(BitMaps.contains(buckets, 1));
+        assertTrue(BitMaps.contains(buckets, 63));
+        assertTrue(BitMaps.contains(buckets, 64));
+        assertTrue(BitMaps.contains(buckets, 127));
+        assertTrue(BitMaps.contains(buckets, 128));
     }
 }

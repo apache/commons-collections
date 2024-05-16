@@ -51,7 +51,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
-        this.bitMap = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+        this.bitMap = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
         this.cardinality = 0;
     }
 
@@ -93,7 +93,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> BitMap.contains(bitMap, idx));
+        return indexProducer.forEachIndex(idx -> BitMaps.contains(bitMap, idx));
     }
 
     @Override
@@ -145,7 +145,7 @@ public final class SimpleBloomFilter implements BloomFilter {
             });
             // idx[0] will be limit+1 so decrement it
             idx[0]--;
-            final int idxLimit = BitMap.getLongIndex(shape.getNumberOfBits());
+            final int idxLimit = BitMaps.getLongIndex(shape.getNumberOfBits());
             if (idxLimit == idx[0]) {
                 final long excess = bitMap[idxLimit] >> shape.getNumberOfBits();
                 if (excess != 0) {
@@ -187,7 +187,7 @@ public final class SimpleBloomFilter implements BloomFilter {
                 throw new IllegalArgumentException(String.format(
                         "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
-            BitMap.set(bitMap, idx);
+            BitMaps.set(bitMap, idx);
             return true;
         });
         cardinality = -1;

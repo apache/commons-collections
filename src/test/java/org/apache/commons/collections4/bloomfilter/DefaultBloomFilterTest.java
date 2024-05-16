@@ -201,7 +201,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             }
             long last = 0L;
             for (int i = 0; i < limit; i++) {
-                last |= BitMap.getLongBit(i);
+                last |= BitMaps.getLongBit(i);
             }
             predicate.test(last);
             return true;
@@ -246,7 +246,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             }
             long last = 0L;
             for (int i = 0; i < limit; i++) {
-                last |= BitMap.getLongBit(i);
+                last |= BitMaps.getLongBit(i);
             }
             predicate.test(last);
             return true;

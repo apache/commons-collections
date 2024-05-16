@@ -121,9 +121,9 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     public void testFromBitMapProducer() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(7, 256);
-            final long[] bits = new long[BitMap.numberOfBitMaps(256)];
+            final long[] bits = new long[BitMaps.numberOfBitMaps(256)];
             for (final int bitIndex : expected) {
-                BitMap.set(bits, bitIndex);
+                BitMaps.set(bits, bitIndex);
             }
             final IndexProducer ip = IndexProducer.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
             assertArrayEquals(unique(expected), ip.asIndexArray());

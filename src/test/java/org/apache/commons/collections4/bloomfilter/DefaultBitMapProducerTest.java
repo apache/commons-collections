@@ -87,7 +87,7 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
 
     @Test
     public void testFromBitMapArray() {
-        final int nOfBitMaps = BitMap.numberOfBitMaps(256);
+        final int nOfBitMaps = BitMaps.numberOfBitMaps(256);
         final long[] expected = generateLongArray(nOfBitMaps);
         final long[] ary = BitMapProducer.fromBitMapArray(expected).asBitMapArray();
         assertArrayEquals(expected, ary);
@@ -99,7 +99,7 @@ public class DefaultBitMapProducerTest extends AbstractBitMapProducerTest {
         final IndexProducer ip = IndexProducer.fromIndexArray(expected);
         final long[] ary = BitMapProducer.fromIndexProducer(ip, 256).asBitMapArray();
         for (final int idx : expected) {
-            assertTrue(BitMap.contains(ary, idx));
+            assertTrue(BitMaps.contains(ary, idx));
         }
     }
 }

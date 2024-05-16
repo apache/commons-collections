@@ -100,7 +100,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
         final long[] bitMaps = bitMapProducer.asBitMapArray();
         final int[] max = { Integer.MAX_VALUE };
         forEachCell((x, y) -> {
-            if ((bitMaps[BitMap.getLongIndex(x)] & BitMap.getLongBit(x)) != 0) {
+            if ((bitMaps[BitMaps.getLongIndex(x)] & BitMaps.getLongBit(x)) != 0) {
                 max[0] = max[0] <= y ? max[0] : y;
             }
             return true;

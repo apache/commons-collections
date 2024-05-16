@@ -78,9 +78,9 @@ public interface BitMapProducer {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
-        final long[] result = new long[BitMap.numberOfBitMaps(numberOfBits)];
+        final long[] result = new long[BitMaps.numberOfBitMaps(numberOfBits)];
         producer.forEachIndex(i -> {
-            BitMap.set(result, i);
+            BitMaps.set(result, i);
             return true;
         });
         return fromBitMapArray(result);

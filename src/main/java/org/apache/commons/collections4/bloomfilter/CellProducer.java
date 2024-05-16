@@ -51,7 +51,7 @@ public interface CellProducer extends IndexProducer {
      * {@link java.util.function.BiPredicate} for {@code int}.</p>
      */
     @FunctionalInterface
-    interface CellConsumer {
+    interface CellPredicate {
         /**
          * Performs an operation on the given {@code <index, count>} pair.
          *
@@ -112,7 +112,7 @@ public interface CellProducer extends IndexProducer {
             }
 
             @Override
-            public boolean forEachCell(final CellConsumer consumer) {
+            public boolean forEachCell(final CellPredicate consumer) {
                 populate();
                 for (final CounterCell cell : counterCells.values()) {
                     if (!consumer.test(cell.idx, cell.count)) {
@@ -153,7 +153,7 @@ public interface CellProducer extends IndexProducer {
      * @return {@code true} if all cells return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
-    boolean forEachCell(CellConsumer consumer);
+    boolean forEachCell(CellPredicate consumer);
 
     /**
      * The default implementation returns distinct and ordered indices for all cells with a non-zero count.

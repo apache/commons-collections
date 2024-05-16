@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.BitSet;
 
-import org.apache.commons.collections4.bloomfilter.CellProducer.CellConsumer;
+import org.apache.commons.collections4.bloomfilter.CellProducer.CellPredicate;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest {
@@ -33,11 +33,11 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     /**
      * A testing CellConsumer that always returns true.
      */
-    private static final CellConsumer TRUE_CONSUMER = (i, j) -> true;
+    private static final CellPredicate TRUE_CONSUMER = (i, j) -> true;
     /**
      * A testing CellConsumer that always returns false.
      */
-    private static final CellConsumer FALSE_CONSUMER = (i, j) -> false;
+    private static final CellPredicate FALSE_CONSUMER = (i, j) -> false;
 
     /**
      * Creates a producer without data.
@@ -66,7 +66,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     protected abstract int[] getExpectedValues();
 
     /**
-     * Test the behavior of {@link CellProducer#forEachCell(CellConsumer)} with respect
+     * Test the behavior of {@link CellProducer#forEachCell(CellPredicate)} with respect
      * to ordered and distinct indices. Currently the behavior is assumed to be the same as
      * {@link IndexProducer#forEachIndex(java.util.function.IntPredicate)}.
      */

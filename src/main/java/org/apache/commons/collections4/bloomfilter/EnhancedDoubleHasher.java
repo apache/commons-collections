@@ -166,8 +166,8 @@ public class EnhancedDoubleHasher implements Hasher {
                 // The final hash is:
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
-                int index = BitMap.mod(initial, bits);
-                int inc = BitMap.mod(increment, bits);
+                int index = BitMaps.mod(initial, bits);
+                int inc = BitMaps.mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
                 if (k > bits) {

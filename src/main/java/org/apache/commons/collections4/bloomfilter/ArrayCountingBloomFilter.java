@@ -168,7 +168,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean forEachBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        final int blocksm1 = BitMap.numberOfBitMaps(cells.length) - 1;
+        final int blocksm1 = BitMaps.numberOfBitMaps(cells.length) - 1;
         int i = 0;
         long value;
         // must break final block separate as the number of bits may not fall on the long boundary
@@ -176,7 +176,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
             value = 0;
             for (int k = 0; k < Long.SIZE; k++) {
                 if (cells[i++] != 0) {
-                    value |= BitMap.getLongBit(k);
+                    value |= BitMaps.getLongBit(k);
                 }
             }
             if (!consumer.test(value)) {
@@ -187,14 +187,14 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         value = 0;
         for (int k = 0; i < cells.length; k++) {
             if (cells[i++] != 0) {
-                value |= BitMap.getLongBit(k);
+                value |= BitMaps.getLongBit(k);
             }
         }
         return consumer.test(value);
     }
 
     @Override
-    public boolean forEachCell(final CellProducer.CellConsumer consumer) {
+    public boolean forEachCell(final CellPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != 0 && !consumer.test(i, cells[i])) {
@@ -250,7 +250,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * generated invalid cells can be reversed by using the complement of the
      * original operation with the same Bloom filter. This will restore the cells
      * to the state prior to the invalid operation. Cells can then be extracted
-     * using {@link #forEachCell(CellConsumer)}.</p>
+     * using {@link #forEachCell(CellPredicate)}.</p>
      */
     @Override
     public boolean isValid() {
