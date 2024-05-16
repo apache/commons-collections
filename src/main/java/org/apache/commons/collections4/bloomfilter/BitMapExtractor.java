@@ -51,7 +51,7 @@ public interface BitMapExtractor {
             }
 
             @Override
-            public boolean processBitMap(final LongPredicate predicate) {
+            public boolean processBitMaps(final LongPredicate predicate) {
                 for (final long word : bitMaps) {
                     if (!predicate.test(word)) {
                         return false;
@@ -61,9 +61,9 @@ public interface BitMapExtractor {
             }
 
             @Override
-            public boolean processBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
+            public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
                 final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
-                return other.processBitMap(p) && p.forEachRemaining();
+                return other.processBitMaps(p) && p.forEachRemaining();
             }
         };
     }
@@ -117,7 +117,7 @@ public interface BitMapExtractor {
             }
         }
         final Bits bits = new Bits();
-        processBitMap(bits::add);
+        processBitMaps(bits::add);
         return bits.toArray();
     }
 
@@ -134,7 +134,7 @@ public interface BitMapExtractor {
      * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
-    boolean processBitMap(LongPredicate predicate);
+    boolean processBitMaps(LongPredicate predicate);
 
     /**
      * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
@@ -148,8 +148,8 @@ public interface BitMapExtractor {
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
-    default boolean processBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
+    default boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
-        return other.processBitMap(p) && p.forEachRemaining();
+        return other.processBitMaps(p) && p.forEachRemaining();
     }
 }

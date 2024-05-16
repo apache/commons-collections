@@ -97,13 +97,13 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean processBitMap(final LongPredicate predicate) {
-        return wrapped.processBitMap(predicate);
+    public boolean processBitMaps(final LongPredicate predicate) {
+        return wrapped.processBitMaps(predicate);
     }
 
     @Override
-    public boolean processBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
-        return wrapped.processBitMapPair(other, func);
+    public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
+        return wrapped.processBitMapPairs(other, func);
     }
 
     @Override

@@ -296,8 +296,8 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean processBitMap(final LongPredicate predicate) {
-        return flatten().processBitMap(predicate);
+    public boolean processBitMaps(final LongPredicate predicate) {
+        return flatten().processBitMaps(predicate);
     }
 
     /**

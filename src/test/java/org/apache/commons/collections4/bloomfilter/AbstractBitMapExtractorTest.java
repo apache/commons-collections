@@ -66,21 +66,21 @@ public abstract class AbstractBitMapExtractorTest {
 
     @Test
     public final void testForEachBitMap() {
-        assertFalse(createProducer().processBitMap(FALSE_CONSUMER), "non-empty should be false");
+        assertFalse(createProducer().processBitMaps(FALSE_CONSUMER), "non-empty should be false");
         if (emptyIsZeroLength()) {
-            assertTrue(createEmptyProducer().processBitMap(FALSE_CONSUMER), "empty should be true");
+            assertTrue(createEmptyProducer().processBitMaps(FALSE_CONSUMER), "empty should be true");
         } else {
-            assertFalse(createEmptyProducer().processBitMap(FALSE_CONSUMER), "empty should be false");
+            assertFalse(createEmptyProducer().processBitMaps(FALSE_CONSUMER), "empty should be false");
         }
 
-        assertTrue(createProducer().processBitMap(TRUE_CONSUMER), "non-empty should be true");
-        assertTrue(createEmptyProducer().processBitMap(TRUE_CONSUMER), "empty should be true");
+        assertTrue(createProducer().processBitMaps(TRUE_CONSUMER), "non-empty should be true");
+        assertTrue(createEmptyProducer().processBitMaps(TRUE_CONSUMER), "empty should be true");
     }
 
     @Test
     public void testForEachBitMapEarlyExit() {
         final int[] passes = new int[1];
-        assertFalse(createProducer().processBitMap(l -> {
+        assertFalse(createProducer().processBitMaps(l -> {
             passes[0]++;
             return false;
         }));
@@ -88,13 +88,13 @@ public abstract class AbstractBitMapExtractorTest {
 
         passes[0] = 0;
         if (emptyIsZeroLength()) {
-            assertTrue(createEmptyProducer().processBitMap(l -> {
+            assertTrue(createEmptyProducer().processBitMaps(l -> {
                 passes[0]++;
                 return false;
             }));
             assertEquals(0, passes[0]);
         } else {
-            assertFalse(createEmptyProducer().processBitMap(l -> {
+            assertFalse(createEmptyProducer().processBitMaps(l -> {
                 passes[0]++;
                 return false;
             }));
@@ -105,10 +105,10 @@ public abstract class AbstractBitMapExtractorTest {
     @Test
     public final void testForEachBitMapPair() {
         final LongBiPredicate func = (x, y) -> x == y;
-        assertTrue(createEmptyProducer().processBitMapPair(createEmptyProducer(), func), "empty == empty failed");
-        assertFalse(createEmptyProducer().processBitMapPair(createProducer(), func), "empty == not_empty failed");
-        assertFalse(createProducer().processBitMapPair(createEmptyProducer(), func), "not_empty == empty passed");
-        assertTrue(createProducer().processBitMapPair(createProducer(), func), "not_empty == not_empty failed");
+        assertTrue(createEmptyProducer().processBitMapPairs(createEmptyProducer(), func), "empty == empty failed");
+        assertFalse(createEmptyProducer().processBitMapPairs(createProducer(), func), "empty == not_empty failed");
+        assertFalse(createProducer().processBitMapPairs(createEmptyProducer(), func), "not_empty == empty passed");
+        assertTrue(createProducer().processBitMapPairs(createProducer(), func), "not_empty == not_empty failed");
 
         // test BitMapProducers of different length send 0 for missing values.
         final int[] count = new int[3];
@@ -122,11 +122,11 @@ public abstract class AbstractBitMapExtractorTest {
             count[2]++;
             return true;
         };
-        createEmptyProducer().processBitMapPair(createProducer(), lbp);
+        createEmptyProducer().processBitMapPairs(createProducer(), lbp);
         assertEquals(count[2], count[0]);
 
         Arrays.fill(count, 0);
-        createProducer().processBitMapPair(createEmptyProducer(), lbp);
+        createProducer().processBitMapPairs(createEmptyProducer(), lbp);
         assertEquals(count[2], count[1]);
 
         // test where the created producer does not process all records because the predicate function
@@ -137,7 +137,7 @@ public abstract class AbstractBitMapExtractorTest {
             return limit[0] < 2;
         };
         final BitMapExtractor shortProducer = l -> true;
-        assertFalse(createProducer().processBitMapPair(shortProducer, shortFunc));
+        assertFalse(createProducer().processBitMapPairs(shortProducer, shortFunc));
     }
 
     @Test
@@ -149,11 +149,11 @@ public abstract class AbstractBitMapExtractorTest {
             count[0]++;
             return false;
         };
-        createProducer().processBitMapPair(createEmptyProducer(), lbp);
+        createProducer().processBitMapPairs(createEmptyProducer(), lbp);
         assertEquals(1, count[0]);
 
         Arrays.fill(count, 0);
-        createEmptyProducer().processBitMapPair(createProducer(), lbp);
+        createEmptyProducer().processBitMapPairs(createProducer(), lbp);
         assertEquals(1, count[0]);
     }
 }

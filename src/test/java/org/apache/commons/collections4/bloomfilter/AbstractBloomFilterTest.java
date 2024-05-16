@@ -148,14 +148,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     @Test
     public void testBitMapProducerSize() {
         final int[] idx = new int[1];
-        createFilter(getTestShape(), TestingHashers.FROM1).processBitMap(i -> {
+        createFilter(getTestShape(), TestingHashers.FROM1).processBitMaps(i -> {
             idx[0]++;
             return true;
         });
         assertEquals(BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
 
         idx[0] = 0;
-        createEmptyFilter(getTestShape()).processBitMap(i -> {
+        createEmptyFilter(getTestShape()).processBitMaps(i -> {
             idx[0]++;
             return true;
         });
@@ -424,7 +424,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             for (final long l : values) {
                 lst.add(l);
             }
-            assertTrue(f.processBitMap(l -> lst.remove(Long.valueOf(l))));
+            assertTrue(f.processBitMaps(l -> lst.remove(Long.valueOf(l))));
             assertTrue(lst.isEmpty());
         }
         // values too large

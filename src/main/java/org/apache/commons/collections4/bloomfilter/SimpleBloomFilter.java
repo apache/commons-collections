@@ -102,7 +102,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean processBitMap(final LongPredicate consumer) {
+    public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (final long l : bitMap) {
             if (!consumer.test(l)) {
@@ -113,9 +113,9 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean processBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
+    public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
-        return other.processBitMap(p) && p.forEachRemaining();
+        return other.processBitMaps(p) && p.forEachRemaining();
     }
 
     @Override
@@ -131,7 +131,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public boolean isEmpty() {
-        return cardinality == 0 || processBitMap(y -> y == 0);
+        return cardinality == 0 || processBitMaps(y -> y == 0);
     }
 
     @Override
@@ -139,7 +139,7 @@ public final class SimpleBloomFilter implements BloomFilter {
         Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
         try {
             final int[] idx = new int[1];
-            bitMapExtractor.processBitMap(value -> {
+            bitMapExtractor.processBitMaps(value -> {
                 bitMap[idx[0]++] |= value;
                 return true;
             });

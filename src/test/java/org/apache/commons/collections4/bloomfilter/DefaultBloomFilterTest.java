@@ -74,8 +74,8 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean processBitMap(final LongPredicate consumer) {
-            return BitMapExtractor.fromIndexProducer(this, shape.getNumberOfBits()).processBitMap(consumer);
+        public boolean processBitMaps(final LongPredicate consumer) {
+            return BitMapExtractor.fromIndexProducer(this, shape.getNumberOfBits()).processBitMaps(consumer);
         }
 
         @Override
@@ -225,12 +225,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
         assertTrue(BitMapExtractor.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .processBitMapPair(bf1, (x, y) -> x == y));
+                .processBitMapPairs(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
         assertTrue(BitMapExtractor.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .processBitMapPair(bf1, (x, y) -> x == y));
+                .processBitMapPairs(bf1, (x, y) -> x == y));
     }
 
     @Test

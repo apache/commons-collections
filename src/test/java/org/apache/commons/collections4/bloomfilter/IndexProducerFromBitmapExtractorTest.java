@@ -34,7 +34,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
         }
 
         @Override
-        public boolean processBitMap(final LongPredicate consumer) {
+        public boolean processBitMaps(final LongPredicate consumer) {
             for (final long l : values) {
                 if (!consumer.test(l)) {
                     return false;

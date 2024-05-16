@@ -38,7 +38,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
 
         // verify exit early before bitmap boundary
         final int[] passes = new int[1];
-        assertFalse(bf.processBitMap(l -> {
+        assertFalse(bf.processBitMaps(l -> {
             passes[0]++;
             return false;
         }));
@@ -47,7 +47,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         // verify exit early at bitmap boundary
         bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
         passes[0] = 0;
-        assertFalse(bf.processBitMap(l -> {
+        assertFalse(bf.processBitMaps(l -> {
             final boolean result = passes[0] == 0;
             if (result) {
                 passes[0]++;
@@ -60,7 +60,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         values = new int[] {1, 2, 3, 4};
         bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
         passes[0] = 0;
-        assertTrue(bf.processBitMap(l -> {
+        assertTrue(bf.processBitMaps(l -> {
             passes[0]++;
             return true;
         }));
@@ -71,7 +71,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         values = new int[] {1, 2, 3, 4};
         bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
         passes[0] = 0;
-        assertFalse(bf.processBitMap(l -> {
+        assertFalse(bf.processBitMaps(l -> {
             final boolean result = passes[0] == 0;
             if (result) {
                 passes[0]++;
@@ -87,6 +87,6 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
         bf2.merge(TestingHashers.FROM1);
         bf1.merge(bf2);
-        assertTrue(bf2.processBitMapPair(bf1, (x, y) -> x == y));
+        assertTrue(bf2.processBitMapPairs(bf1, (x, y) -> x == y));
     }
 }

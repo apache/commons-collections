@@ -41,7 +41,7 @@ public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtract
     @Test
     public final void testFromIndexProducer() {
         final List<Long> lst = new ArrayList<>();
-        createProducer().processBitMap(lst::add);
+        createProducer().processBitMaps(lst::add);
         final long[] buckets = lst.stream().mapToLong(Long::longValue).toArray();
         assertTrue(BitMaps.contains(buckets, 0));
         assertTrue(BitMaps.contains(buckets, 1));
