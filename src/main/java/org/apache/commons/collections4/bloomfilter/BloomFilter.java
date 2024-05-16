@@ -70,7 +70,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(final BitMapExtractor bitMapExtractor) {
-        return forEachBitMapPair(bitMapExtractor, (x, y) -> (x & y) == y);
+        return processBitMapPair(bitMapExtractor, (x, y) -> (x & y) == y);
     }
 
     /**
@@ -245,7 +245,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @return {@code true} if no bits are enabled, {@code false} otherwise.
      */
     default boolean isEmpty() {
-        return forEachBitMap(y -> y == 0);
+        return processBitMap(y -> y == 0);
     }
 
     /**

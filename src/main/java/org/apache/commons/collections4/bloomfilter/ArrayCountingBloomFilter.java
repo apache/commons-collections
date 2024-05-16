@@ -166,7 +166,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean forEachBitMap(final LongPredicate consumer) {
+    public boolean processBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int blocksm1 = BitMaps.numberOfBitMaps(cells.length) - 1;
         int i = 0;

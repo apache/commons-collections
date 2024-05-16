@@ -43,7 +43,7 @@ public final class SetOperations {
      */
     public static int cardinality(final BitMapExtractor producer) {
         final int[] cardinality = new int[1];
-        producer.forEachBitMap(l -> {
+        producer.processBitMap(l -> {
             cardinality[0] += Long.bitCount(l);
             return true;
         });
@@ -61,7 +61,7 @@ public final class SetOperations {
     private static int cardinality(final BitMapExtractor first, final BitMapExtractor second, final LongBinaryOperator op) {
         final int[] cardinality = new int[1];
 
-        first.forEachBitMapPair(second, (x, y) -> {
+        first.processBitMapPair(second, (x, y) -> {
             cardinality[0] += Long.bitCount(op.applyAsLong(x, y));
             return true;
         });
@@ -154,7 +154,7 @@ public final class SetOperations {
      */
     public static double jaccardSimilarity(final BitMapExtractor first, final BitMapExtractor second) {
         final int[] cardinality = new int[2];
-        first.forEachBitMapPair(second, (x, y) -> {
+        first.processBitMapPair(second, (x, y) -> {
             cardinality[0] += Long.bitCount(x & y);
             cardinality[1] += Long.bitCount(x | y);
             return true;

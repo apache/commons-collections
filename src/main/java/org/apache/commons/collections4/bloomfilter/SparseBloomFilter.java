@@ -104,7 +104,7 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachBitMap(final LongPredicate consumer) {
+    public boolean processBitMap(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int limit = BitMaps.numberOfBitMaps(shape.getNumberOfBits());
         /*

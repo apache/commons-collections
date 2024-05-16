@@ -37,7 +37,7 @@ public class IndexExtractorTest {
         }
 
         @Override
-        public boolean forEachBitMap(final LongPredicate consumer) {
+        public boolean processBitMap(final LongPredicate consumer) {
             for (final long l : values) {
                 if (!consumer.test(l)) {
                     return false;

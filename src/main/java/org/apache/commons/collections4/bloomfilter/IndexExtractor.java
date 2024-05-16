@@ -58,7 +58,7 @@ public interface IndexExtractor {
                     return true;
                 }
             };
-            return producer.forEachBitMap(longPredicate::test);
+            return producer.processBitMap(longPredicate::test);
         };
     }
 

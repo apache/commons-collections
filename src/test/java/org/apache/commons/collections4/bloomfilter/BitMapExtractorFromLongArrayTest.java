@@ -28,7 +28,7 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
     @Test
     public void constructorTest() {
         final List<Long> lst = new ArrayList<>();
-        createProducer().forEachBitMap(lst::add);
+        createProducer().processBitMap(lst::add);
         assertEquals(Long.valueOf(1), lst.get(0));
         assertEquals(Long.valueOf(2), lst.get(1));
         assertEquals(Long.valueOf(3), lst.get(2));
@@ -65,7 +65,7 @@ public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTes
         };
         final BitMapExtractor producer = BitMapExtractor.fromIndexProducer(iProducer, limit);
         final List<Long> lst = new ArrayList<>();
-        producer.forEachBitMap(lst::add);
+        producer.processBitMap(lst::add);
         long expected = ~0L;
         assertEquals(expected, lst.get(0).longValue());
         expected &= 0XFFFFFFFFL;

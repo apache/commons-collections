@@ -34,7 +34,7 @@ public class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
         }
 
         @Override
-        public boolean forEachBitMap(final LongPredicate predicate) {
+        public boolean processBitMap(final LongPredicate predicate) {
             for (final long bitmap : bitMaps) {
                 if (!predicate.test(bitmap)) {
                     return false;
