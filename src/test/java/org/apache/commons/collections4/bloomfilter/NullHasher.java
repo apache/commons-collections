@@ -38,7 +38,7 @@ final class NullHasher implements Hasher {
         }
 
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
+        public boolean processIndices(final IntPredicate consumer) {
             Objects.requireNonNull(consumer, "consumer");
             return true;
         }

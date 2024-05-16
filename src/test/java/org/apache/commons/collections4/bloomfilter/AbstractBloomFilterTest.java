@@ -61,7 +61,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         final IndexExtractor indices = IndexExtractor.fromIndexArray(values);
         final BloomFilter filter = createFilter(shape, indices);
         final List<Integer> lst = new ArrayList<>();
-        filter.forEachIndex(x -> {
+        filter.processIndices(x -> {
             lst.add(x);
             return true;
         });
@@ -458,7 +458,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             final int[] values = DefaultIndexExtractorTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
             final BloomFilter f = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
             final BitSet uniqueValues = DefaultIndexExtractorTest.uniqueSet(values);
-            assertTrue(f.forEachIndex(idx -> {
+            assertTrue(f.processIndices(idx -> {
                 final boolean result = uniqueValues.get(idx);
                 uniqueValues.clear(idx);
                 return result;

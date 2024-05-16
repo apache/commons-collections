@@ -315,8 +315,8 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate predicate) {
-        return processBloomFilters(bf -> bf.forEachIndex(predicate));
+    public boolean processIndices(final IntPredicate predicate) {
+        return processBloomFilters(bf -> bf.processIndices(predicate));
     }
 
     /**

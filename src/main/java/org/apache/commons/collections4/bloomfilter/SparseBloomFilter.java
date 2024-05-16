@@ -95,7 +95,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(final IndexExtractor indexExtractor) {
-        return indexExtractor.forEachIndex(indices::contains);
+        return indexExtractor.processIndices(indices::contains);
     }
 
     @Override
@@ -142,7 +142,7 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate consumer) {
+    public boolean processIndices(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (final int value : indices) {
             if (!consumer.test(value)) {
@@ -186,7 +186,7 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(final IndexExtractor indexExtractor) {
         Objects.requireNonNull(indexExtractor, "indexExtractor");
-        indexExtractor.forEachIndex(this::add);
+        indexExtractor.processIndices(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",

@@ -70,7 +70,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(final IndexExtractor indexExtractor) {
-            return indexExtractor.forEachIndex(indices::contains);
+            return indexExtractor.processIndices(indices::contains);
         }
 
         @Override
@@ -79,7 +79,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
+        public boolean processIndices(final IntPredicate consumer) {
             for (final Integer i : indices) {
                 if (!consumer.test(i)) {
                     return false;
@@ -100,7 +100,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(final IndexExtractor indexExtractor) {
-            final boolean result = indexExtractor.forEachIndex(x -> {
+            final boolean result = indexExtractor.processIndices(x -> {
                 indices.add(x);
                 return true;
             });

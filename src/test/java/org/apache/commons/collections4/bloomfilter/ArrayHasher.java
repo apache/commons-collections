@@ -33,7 +33,7 @@ public final class ArrayHasher implements Hasher {
         }
 
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
+        public boolean processIndices(final IntPredicate consumer) {
             Objects.requireNonNull(consumer, "consumer");
 
             int pos = 0;

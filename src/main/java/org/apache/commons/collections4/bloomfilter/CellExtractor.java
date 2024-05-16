@@ -124,7 +124,7 @@ public interface CellExtractor extends IndexExtractor {
 
             private void populate() {
                 if (counterCells.isEmpty()) {
-                    producer.forEachIndex( idx -> {
+                    producer.processIndices(idx -> {
                         final CounterCell cell = new CounterCell(idx, 1);
                         final CounterCell counter = counterCells.get(cell);
                         if (counter == null) {
@@ -159,7 +159,7 @@ public interface CellExtractor extends IndexExtractor {
      * The default implementation returns distinct and ordered indices for all cells with a non-zero count.
      */
     @Override
-    default boolean forEachIndex(final IntPredicate predicate) {
+    default boolean processIndices(final IntPredicate predicate) {
         return processCells((i, v) -> predicate.test(i));
     }
 

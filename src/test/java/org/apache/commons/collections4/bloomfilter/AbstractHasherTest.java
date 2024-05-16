@@ -68,7 +68,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
     public void testHashing(final int k, final int m) {
         final int[] count = {0};
         final Hasher hasher = createHasher();
-        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+        hasher.indices(Shape.fromKM(k, m)).processIndices(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return true;
@@ -78,7 +78,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
 
         // test early exit
         count[0] = 0;
-        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+        hasher.indices(Shape.fromKM(k, m)).processIndices(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return false;

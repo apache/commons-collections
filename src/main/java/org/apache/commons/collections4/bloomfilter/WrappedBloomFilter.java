@@ -107,8 +107,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate predicate) {
-        return wrapped.forEachIndex(predicate);
+    public boolean processIndices(final IntPredicate predicate) {
+        return wrapped.processIndices(predicate);
     }
 
     @Override

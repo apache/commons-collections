@@ -63,7 +63,7 @@ public final class IncrementingHasher implements Hasher {
 
                 // This method needs to return duplicate indices
 
-                forEachIndex(i -> {
+                processIndices(i -> {
                     result[idx[0]++] = i;
                     return true;
                 });
@@ -71,7 +71,7 @@ public final class IncrementingHasher implements Hasher {
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
+            public boolean processIndices(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
 

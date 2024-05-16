@@ -66,10 +66,10 @@ public abstract class AbstractIndexExtractorTest {
     private static final IntPredicate TRUE_PREDICATE = i -> true;
 
     private static final IntPredicate FALSE_PREDICATE = i -> false;
-    /** Flag to indicate the indices are ordered, e.g. from {@link IndexExtractor#forEachIndex(IntPredicate)}. */
+    /** Flag to indicate the indices are ordered, e.g. from {@link IndexExtractor#processIndices(IntPredicate)}. */
     protected static final int ORDERED = 0x1;
 
-    /** Flag to indicate the indices are distinct, e.g. from {@link IndexExtractor#forEachIndex(IntPredicate)}. */
+    /** Flag to indicate the indices are distinct, e.g. from {@link IndexExtractor#processIndices(IntPredicate)}. */
     protected static final int DISTINCT = 0x2;
 
     /**
@@ -100,7 +100,7 @@ public abstract class AbstractIndexExtractorTest {
     protected abstract int[] getExpectedIndices();
 
     /**
-     * Gets the behavior of the {@link IndexExtractor#forEachIndex(IntPredicate)} method.
+     * Gets the behavior of the {@link IndexExtractor#processIndices(IntPredicate)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
      * @return the behavior.
      * @see #ORDERED
@@ -159,7 +159,7 @@ public abstract class AbstractIndexExtractorTest {
     public final void testBehaviourForEachIndex() {
         final int flags = getForEachIndexBehaviour();
         final IntList list = new IntList();
-        createProducer().forEachIndex(list::add);
+        createProducer().processIndices(list::add);
         final int[] actual = list.toArray();
         if ((flags & ORDERED) != 0) {
             final int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -186,7 +186,7 @@ public abstract class AbstractIndexExtractorTest {
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
-        producer.forEachIndex(i -> {
+        producer.processIndices(i -> {
             bs2.set(i);
             return true;
         });
@@ -198,7 +198,7 @@ public abstract class AbstractIndexExtractorTest {
         final IndexExtractor empty = createEmptyProducer();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
-        assertTrue(empty.forEachIndex(i -> {
+        assertTrue(empty.processIndices(i -> {
             throw new AssertionError("forEach predictate should not be called");
         }));
     }
@@ -211,7 +211,7 @@ public abstract class AbstractIndexExtractorTest {
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         Arrays.stream(getExpectedIndices()).forEach(bs1::set);
-        createProducer().forEachIndex(i -> {
+        createProducer().processIndices(i -> {
             bs2.set(i);
             return true;
         });
@@ -221,14 +221,14 @@ public abstract class AbstractIndexExtractorTest {
     @Test
     public void testForEachIndexEarlyExit() {
         final int[] passes = new int[1];
-        assertFalse(createProducer().forEachIndex(i -> {
+        assertFalse(createProducer().processIndices(i -> {
             passes[0]++;
             return false;
         }));
         assertEquals(1, passes[0]);
 
         passes[0] = 0;
-        assertTrue(createEmptyProducer().forEachIndex(i -> {
+        assertTrue(createEmptyProducer().processIndices(i -> {
             passes[0]++;
             return false;
         }));
@@ -240,11 +240,11 @@ public abstract class AbstractIndexExtractorTest {
         final IndexExtractor populated = createProducer();
         final IndexExtractor empty = createEmptyProducer();
 
-        assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
-        assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
+        assertFalse(populated.processIndices(FALSE_PREDICATE), "non-empty should be false");
+        assertTrue(empty.processIndices(FALSE_PREDICATE), "empty should be true");
 
-        assertTrue(populated.forEachIndex(TRUE_PREDICATE), "non-empty should be true");
-        assertTrue(empty.forEachIndex(TRUE_PREDICATE), "empty should be true");
+        assertTrue(populated.processIndices(TRUE_PREDICATE), "non-empty should be true");
+        assertTrue(empty.processIndices(TRUE_PREDICATE), "empty should be true");
     }
 
     @Test

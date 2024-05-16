@@ -93,7 +93,7 @@ public final class SimpleBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(final IndexExtractor indexExtractor) {
-        return indexExtractor.forEachIndex(idx -> BitMaps.contains(bitMap, idx));
+        return indexExtractor.processIndices(idx -> BitMaps.contains(bitMap, idx));
     }
 
     @Override
@@ -119,9 +119,9 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate consumer) {
+    public boolean processIndices(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        return IndexExtractor.fromBitMapProducer(this).forEachIndex(consumer);
+        return IndexExtractor.fromBitMapProducer(this).processIndices(consumer);
     }
 
     @Override
@@ -182,7 +182,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean merge(final IndexExtractor indexExtractor) {
         Objects.requireNonNull(indexExtractor, "indexExtractor");
-        indexExtractor.forEachIndex(idx -> {
+        indexExtractor.processIndices(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format(
                         "IndexExtractor should only send values in the range[0,%s)", shape.getNumberOfBits()));

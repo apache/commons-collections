@@ -83,7 +83,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
         IndexExtractor underTest = createProducer();
         List<Integer> lst = new ArrayList<>();
 
-        underTest.forEachIndex(lst::add);
+        underTest.processIndices(lst::add);
         assertEquals(4, lst.size());
         assertEquals(Integer.valueOf(0), lst.get(0));
         assertEquals(Integer.valueOf(1 + 64), lst.get(1));
@@ -94,7 +94,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
         underTest = IndexExtractor.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 
-        underTest.forEachIndex(lst::add);
+        underTest.processIndices(lst::add);
 
         assertEquals(64, lst.size());
         for (int i = 0; i < 64; i++) {

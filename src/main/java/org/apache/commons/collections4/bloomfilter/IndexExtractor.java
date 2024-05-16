@@ -76,7 +76,7 @@ public interface IndexExtractor {
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
+            public boolean processIndices(final IntPredicate predicate) {
                 for (final int value : values) {
                     if (!predicate.test(value)) {
                         return false;
@@ -117,7 +117,7 @@ public interface IndexExtractor {
             }
         }
         final Indices indices = new Indices();
-        forEachIndex(indices::add);
+        processIndices(indices::add);
         return indices.toArray();
     }
 
@@ -134,7 +134,7 @@ public interface IndexExtractor {
      * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified action is null
      */
-    boolean forEachIndex(IntPredicate predicate);
+    boolean processIndices(IntPredicate predicate);
 
     /**
      * Creates an IndexExtractor comprising the unique indices for this producer.
@@ -151,14 +151,14 @@ public interface IndexExtractor {
      */
     default IndexExtractor uniqueIndices() {
         final BitSet bitSet = new BitSet();
-        forEachIndex(i -> {
+        processIndices(i -> {
             bitSet.set(i);
             return true;
         });
 
         return new IndexExtractor() {
             @Override
-            public boolean forEachIndex(final IntPredicate predicate) {
+            public boolean processIndices(final IntPredicate predicate) {
                 for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx + 1)) {
                     if (!predicate.test(idx)) {
                         return false;

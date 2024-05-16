@@ -79,7 +79,7 @@ public interface BitMapExtractor {
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
         final long[] result = new long[BitMaps.numberOfBitMaps(numberOfBits)];
-        producer.forEachIndex(i -> {
+        producer.processIndices(i -> {
             BitMaps.set(result, i);
             return true;
         });

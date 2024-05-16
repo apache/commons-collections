@@ -68,7 +68,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
     /**
      * Test the behavior of {@link CellExtractor#processCells(CellPredicate)} with respect
      * to ordered and distinct indices. Currently the behavior is assumed to be the same as
-     * {@link IndexExtractor#forEachIndex(java.util.function.IntPredicate)}.
+     * {@link IndexExtractor#processIndices(java.util.function.IntPredicate)}.
      */
     @Test
     public final void testBehaviourForEachCell() {
@@ -141,7 +141,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
         final CellExtractor producer = createProducer();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
-        producer.forEachIndex(i -> {
+        producer.processIndices(i -> {
             bs1.set(i);
             return true;
         });
