@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
+public class BloomFilteExtractorFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
 
     @Override
     protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {

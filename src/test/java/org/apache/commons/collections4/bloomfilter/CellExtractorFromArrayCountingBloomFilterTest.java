@@ -16,30 +16,30 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromDefaultIndexExtractorTest extends AbstractCellProducerTest {
+public class CellExtractorFromArrayCountingBloomFilterTest extends AbstractCellExtractorTest {
 
-    int[] data = {0, 63, 1, 64, 128, 1, 127};
-    int[] indices = {0, 1, 63, 64, 127, 128};
-    int[] values = {1, 2, 1, 1, 1, 1 };
+    protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
     protected CellExtractor createEmptyProducer() {
-        return CellExtractor.from(IndexExtractor.fromIndexArray());
+        return new ArrayCountingBloomFilter(shape);
     }
 
     @Override
     protected CellExtractor createProducer() {
-        return CellExtractor.from(IndexExtractor.fromIndexArray(data));
+        final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
+        filter.merge(new IncrementingHasher(0, 1));
+        filter.merge(new IncrementingHasher(5, 1));
+        return filter;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return indices;
+        return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
     }
 
     @Override
     protected int[] getExpectedValues() {
-        return values;
+        return new int[] {1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1};
     }
-
 }

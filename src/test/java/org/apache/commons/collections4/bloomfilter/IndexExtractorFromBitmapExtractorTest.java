@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
-public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractorTest {
+public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtractorTest {
 
     private static final class TestingBitMapExtractor implements BitMapExtractor {
         long[] values;

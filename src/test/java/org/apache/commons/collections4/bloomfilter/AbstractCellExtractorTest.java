@@ -28,7 +28,7 @@ import java.util.BitSet;
 import org.apache.commons.collections4.bloomfilter.CellExtractor.CellPredicate;
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTest {
+public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * A testing CellConsumer that always returns true.
