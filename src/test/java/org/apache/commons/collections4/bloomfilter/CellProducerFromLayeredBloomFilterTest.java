@@ -21,16 +21,16 @@ public class CellProducerFromLayeredBloomFilterTest extends AbstractCellProducer
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(LayeredBloomFilterTest.fixed(shape, 10));
+    protected CellExtractor createEmptyProducer() {
+        return CellExtractor.from(LayeredBloomFilterTest.fixed(shape, 10));
     }
 
     @Override
-    protected CellProducer createProducer() {
+    protected CellExtractor createProducer() {
         final Hasher hasher = new IncrementingHasher(3, 2);
         final BloomFilter bf = LayeredBloomFilterTest.fixed(shape, 10);
         bf.merge(hasher);
-        return CellProducer.from(bf);
+        return CellExtractor.from(bf);
     }
 
     @Override

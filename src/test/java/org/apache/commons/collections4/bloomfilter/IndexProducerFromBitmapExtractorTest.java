@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
-public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTest {
+public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractorTest {
 
     private static final class TestingBitMapProducer implements BitMapProducer {
         long[] values;
@@ -45,13 +45,13 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
     }
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexExtractor createEmptyProducer() {
         final TestingBitMapProducer producer = new TestingBitMapProducer(new long[0]);
-        return IndexProducer.fromBitMapProducer(producer);
+        return IndexExtractor.fromBitMapProducer(producer);
     }
 
     @Override
-    protected IndexProducer createProducer() {
+    protected IndexExtractor createProducer() {
         /* Creates an index producer that produces the values:
          * 0, 65, 128, and 129
          @formatter:off
@@ -64,7 +64,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
          @formatter:on
          */
         final TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
-        return IndexProducer.fromBitMapProducer(producer);
+        return IndexExtractor.fromBitMapProducer(producer);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
 
     @Test
     public final void testFromBitMapProducerTest() {
-        IndexProducer underTest = createProducer();
+        IndexExtractor underTest = createProducer();
         List<Integer> lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
@@ -91,7 +91,7 @@ public class IndexProducerFromBitmapProducerTest extends AbstractIndexProducerTe
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
         final BitMapProducer producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
-        underTest = IndexProducer.fromBitMapProducer(producer);
+        underTest = IndexExtractor.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);

@@ -16,30 +16,28 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellProducerFromDefaultIndexProducerTest extends AbstractCellProducerTest {
+public class IndexExtractorFromIntArrayTest extends AbstractIndexExtractorTest {
 
-    int[] data = {0, 63, 1, 64, 128, 1, 127};
-    int[] indices = {0, 1, 63, 64, 127, 128};
-    int[] values = {1, 2, 1, 1, 1, 1 };
+    int[] data = {6, 8, 1, 2, 4, 4, 5};
 
     @Override
-    protected CellProducer createEmptyProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray());
+    protected IndexExtractor createEmptyProducer() {
+        return IndexExtractor.fromIndexArray();
     }
 
     @Override
-    protected CellProducer createProducer() {
-        return CellProducer.from(IndexProducer.fromIndexArray(data));
+    protected IndexExtractor createProducer() {
+        return IndexExtractor.fromIndexArray(data);
+    }
+
+    @Override
+    protected int getAsIndexArrayBehaviour() {
+        return 0;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return indices;
-    }
-
-    @Override
-    protected int[] getExpectedValues() {
-        return values;
+        return data;
     }
 
 }

@@ -130,10 +130,10 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
 
             @Override
             public int[] asIndexArray() {

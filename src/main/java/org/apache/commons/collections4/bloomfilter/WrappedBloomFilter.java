@@ -77,8 +77,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return wrapped.contains(indexProducer);
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return wrapped.contains(indexExtractor);
     }
 
     @Override
@@ -141,7 +141,7 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        return wrapped.merge(indexProducer);
+    public boolean merge(final IndexExtractor indexExtractor) {
+        return wrapped.merge(indexExtractor);
     }
 }

@@ -92,8 +92,8 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> BitMaps.contains(bitMap, idx));
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return indexExtractor.forEachIndex(idx -> BitMaps.contains(bitMap, idx));
     }
 
     @Override
@@ -121,7 +121,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean forEachIndex(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        return IndexProducer.fromBitMapProducer(this).forEachIndex(consumer);
+        return IndexExtractor.fromBitMapProducer(this).forEachIndex(consumer);
     }
 
     @Override
@@ -166,7 +166,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
         if ((other.characteristics() & SPARSE) != 0) {
-            merge((IndexProducer) other);
+            merge((IndexExtractor) other);
         } else {
             merge((BitMapProducer) other);
         }
@@ -180,12 +180,12 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
-        indexProducer.forEachIndex(idx -> {
+    public boolean merge(final IndexExtractor indexExtractor) {
+        Objects.requireNonNull(indexExtractor, "indexExtractor");
+        indexExtractor.forEachIndex(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format(
-                        "IndexProducer should only send values in the range[0,%s)", shape.getNumberOfBits()));
+                        "IndexExtractor should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
             BitMaps.set(bitMap, idx);
             return true;

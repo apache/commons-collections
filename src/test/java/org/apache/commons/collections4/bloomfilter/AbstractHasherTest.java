@@ -22,19 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
+public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
 
     protected abstract Hasher createEmptyHasher();
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexExtractor createEmptyProducer() {
         return createEmptyHasher().indices(getTestShape());
     }
 
     protected abstract Hasher createHasher();
 
     @Override
-    protected IndexProducer createProducer() {
+    protected IndexExtractor createProducer() {
         return createHasher().indices(getTestShape());
     }
 

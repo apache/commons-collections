@@ -90,12 +90,12 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+        return contains(IndexExtractor.fromBitMapProducer(bitMapProducer));
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(indices::contains);
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return indexExtractor.forEachIndex(indices::contains);
     }
 
     @Override
@@ -165,13 +165,13 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean merge(final BitMapProducer bitMapProducer) {
         Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return this.merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+        return this.merge(IndexExtractor.fromBitMapProducer(bitMapProducer));
     }
 
     @Override
     public boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        final IndexProducer producer = (other.characteristics() & SPARSE) != 0 ? (IndexProducer) other : IndexProducer.fromBitMapProducer(other);
+        final IndexExtractor producer = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapProducer(other);
         merge(producer);
         return true;
     }
@@ -184,9 +184,9 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
-        indexProducer.forEachIndex(this::add);
+    public boolean merge(final IndexExtractor indexExtractor) {
+        Objects.requireNonNull(indexExtractor, "indexExtractor");
+        indexExtractor.forEachIndex(this::add);
         if (!this.indices.isEmpty()) {
             if (this.indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",

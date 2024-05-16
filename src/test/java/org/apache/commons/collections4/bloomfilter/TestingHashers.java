@@ -75,7 +75,7 @@ public class TestingHashers {
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateRange(final T filter, final int start, final int end) {
-        filter.merge((IndexProducer) p -> {
+        filter.merge((IndexExtractor) p -> {
             for (int i = start; i <= end; i++) {
                 if (!p.test(i)) {
                     return false;

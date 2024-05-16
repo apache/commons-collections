@@ -55,7 +55,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
     @Test
     public void testFromIndexProducer() {
         final int limit = Integer.SIZE + Long.SIZE;
-        final IndexProducer iProducer = consumer -> {
+        final IndexExtractor iProducer = consumer -> {
             for (int i = 0; i < limit; i++) {
                 if (!consumer.test(i)) {
                     return false;

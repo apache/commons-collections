@@ -31,14 +31,14 @@ import java.util.function.LongPredicate;
  * @since 4.5
  */
 @FunctionalInterface
-public interface IndexProducer {
+public interface IndexExtractor {
 
     /**
-     * Creates an IndexProducer from a {@code BitMapProducer}.
+     * Creates an IndexExtractor from a {@code BitMapProducer}.
      * @param producer the {@code BitMapProducer}
-     * @return a new {@code IndexProducer}.
+     * @return a new {@code IndexExtractor}.
      */
-    static IndexProducer fromBitMapProducer(final BitMapProducer producer) {
+    static IndexExtractor fromBitMapProducer(final BitMapProducer producer) {
         Objects.requireNonNull(producer, "producer");
         return consumer -> {
             final LongPredicate longPredicate = new LongPredicate() {
@@ -63,12 +63,12 @@ public interface IndexProducer {
     }
 
     /**
-     * Creates an IndexProducer from an array of integers.
+     * Creates an IndexExtractor from an array of integers.
      * @param values the index values
-     * @return an IndexProducer that uses the values.
+     * @return an IndexExtractor that uses the values.
      */
-    static IndexProducer fromIndexArray(final int... values) {
-        return new IndexProducer() {
+    static IndexExtractor fromIndexArray(final int... values) {
+        return new IndexExtractor() {
 
             @Override
             public int[] asIndexArray() {
@@ -88,7 +88,7 @@ public interface IndexProducer {
     }
 
     /**
-     * Return a copy of the IndexProducer data as an int array.
+     * Return a copy of the IndexExtractor data as an int array.
      *
      * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
@@ -137,7 +137,7 @@ public interface IndexProducer {
     boolean forEachIndex(IntPredicate predicate);
 
     /**
-     * Creates an IndexProducer comprising the unique indices for this producer.
+     * Creates an IndexExtractor comprising the unique indices for this producer.
      *
      * <p>By default creates a new producer with some overhead to remove
      * duplicates.  IndexProducers that return unique indices by default
@@ -146,17 +146,17 @@ public interface IndexProducer {
      * <p>The default implementation will filter the indices from this instance
      * and return them in ascending order.</p>
      *
-     * @return the IndexProducer of unique values.
+     * @return the IndexExtractor of unique values.
      * @throws IndexOutOfBoundsException if any index is less than zero.
      */
-    default IndexProducer uniqueIndices() {
+    default IndexExtractor uniqueIndices() {
         final BitSet bitSet = new BitSet();
         forEachIndex(i -> {
             bitSet.set(i);
             return true;
         });
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
             @Override
             public boolean forEachIndex(final IntPredicate predicate) {
                 for (int idx = bitSet.nextSetBit(0); idx >= 0; idx = bitSet.nextSetBit(idx + 1)) {
@@ -168,7 +168,7 @@ public interface IndexProducer {
             }
 
             @Override
-            public IndexProducer uniqueIndices() {
+            public IndexExtractor uniqueIndices() {
                 return this;
             }
         };

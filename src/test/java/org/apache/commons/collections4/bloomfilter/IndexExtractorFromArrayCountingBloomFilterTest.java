@@ -16,17 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromArrayCountingBloomFilterTest extends AbstractIndexProducerTest {
+public class IndexExtractorFromArrayCountingBloomFilterTest extends AbstractIndexExtractorTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexExtractor createEmptyProducer() {
         return new ArrayCountingBloomFilter(shape);
     }
 
     @Override
-    protected IndexProducer createProducer() {
+    protected IndexExtractor createProducer() {
         final ArrayCountingBloomFilter filter = new ArrayCountingBloomFilter(shape);
         filter.merge(new IncrementingHasher(0, 1));
         filter.merge(new IncrementingHasher(5, 1));

@@ -65,12 +65,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean contains(final BitMapProducer bitMapProducer) {
-            return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+            return contains(IndexExtractor.fromBitMapProducer(bitMapProducer));
         }
 
         @Override
-        public boolean contains(final IndexProducer indexProducer) {
-            return indexProducer.forEachIndex(indices::contains);
+        public boolean contains(final IndexExtractor indexExtractor) {
+            return indexExtractor.forEachIndex(indices::contains);
         }
 
         @Override
@@ -95,12 +95,12 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         @Override
         public boolean merge(final BitMapProducer bitMapProducer) {
-            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+            return merge(IndexExtractor.fromBitMapProducer(bitMapProducer));
         }
 
         @Override
-        public boolean merge(final IndexProducer indexProducer) {
-            final boolean result = indexProducer.forEachIndex(x -> {
+        public boolean merge(final IndexExtractor indexExtractor) {
+            final boolean result = indexExtractor.forEachIndex(x -> {
                 indices.add(x);
                 return true;
             });

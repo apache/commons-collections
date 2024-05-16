@@ -69,12 +69,12 @@ public interface BitMapProducer {
     }
 
     /**
-     * Creates a BitMapProducer from an IndexProducer.
-     * @param producer the IndexProducer that specifies the indexes of the bits to enable.
+     * Creates a BitMapProducer from an IndexExtractor.
+     * @param producer the IndexExtractor that specifies the indexes of the bits to enable.
      * @param numberOfBits the number of bits in the Bloom filter.
      * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
      */
-    static BitMapProducer fromIndexProducer(final IndexProducer producer, final int numberOfBits) {
+    static BitMapProducer fromIndexProducer(final IndexExtractor producer, final int numberOfBits) {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 

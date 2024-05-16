@@ -201,14 +201,14 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         return bf;
     }
 
-    protected BloomFilter makeFilter(final IndexProducer p) {
+    protected BloomFilter makeFilter(final IndexExtractor p) {
         final BloomFilter bf = new SparseBloomFilter(getTestShape());
         bf.merge(p);
         return bf;
     }
 
     protected BloomFilter makeFilter(final int... values) {
-        return makeFilter(IndexProducer.fromIndexArray(values));
+        return makeFilter(IndexExtractor.fromIndexArray(values));
     }
 
     private LayeredBloomFilter<BloomFilter> setupFindTest() {
@@ -320,7 +320,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     public void testFindBitMapProducer() {
         final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
 
-        IndexProducer idxProducer = TestingHashers.FROM1.indices(getTestShape());
+        IndexExtractor idxProducer = TestingHashers.FROM1.indices(getTestShape());
         BitMapProducer producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
 
         int[] expected = {0, 3};
@@ -347,7 +347,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public void testFindIndexProducer() {
-        IndexProducer producer = TestingHashers.FROM1.indices(getTestShape());
+        IndexExtractor producer = TestingHashers.FROM1.indices(getTestShape());
         final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
 
         int[] expected = {0, 3};

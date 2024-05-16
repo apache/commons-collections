@@ -176,8 +176,8 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return contains(createFilter(indexProducer));
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return contains(createFilter(indexExtractor));
     }
 
     @Override
@@ -210,14 +210,14 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     /**
-     * Creates a Bloom filter from an IndexProducer.
+     * Creates a Bloom filter from an IndexExtractor.
      *
-     * @param indexProducer the IndexProducer to create the filter from.
+     * @param indexExtractor the IndexExtractor to create the filter from.
      * @return the BloomFilter.
      */
-    private BloomFilter createFilter(final IndexProducer indexProducer) {
+    private BloomFilter createFilter(final IndexExtractor indexExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(indexProducer);
+        bf.merge(indexExtractor);
         return bf;
     }
 
@@ -271,14 +271,14 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     /**
-     * Finds the layers in which the IndexProducer is found.
+     * Finds the layers in which the IndexExtractor is found.
      *
-     * @param indexProducer the Index producer to search for.
+     * @param indexExtractor the Index producer to search for.
      * @return an array of layer indices in which the Bloom filter is found.
      */
-    public int[] find(final IndexProducer indexProducer) {
+    public int[] find(final IndexExtractor indexExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(indexProducer);
+        bf.merge(indexExtractor);
         return find(bf);
     }
 
@@ -361,8 +361,8 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        return layerManager.getTarget().merge(indexProducer);
+    public boolean merge(final IndexExtractor indexExtractor) {
+        return layerManager.getTarget().merge(indexExtractor);
     }
 
     /**

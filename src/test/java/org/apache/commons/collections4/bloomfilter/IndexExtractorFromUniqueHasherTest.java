@@ -16,30 +16,26 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexProducerFromSparseBloomFilterTest extends AbstractIndexProducerTest {
-
-    protected Shape shape = Shape.fromKM(17, 72);
+public class IndexExtractorFromUniqueHasherTest extends AbstractIndexExtractorTest {
 
     @Override
-    protected IndexProducer createEmptyProducer() {
-        return new SparseBloomFilter(shape);
+    protected IndexExtractor createEmptyProducer() {
+        return NullHasher.INSTANCE.indices(Shape.fromKM(17, 72));
     }
 
     @Override
-    protected IndexProducer createProducer() {
-        final Hasher hasher = new IncrementingHasher(4, 7);
-        final BloomFilter bf = new SparseBloomFilter(shape);
-        bf.merge(hasher);
-        return bf;
+    protected IndexExtractor createProducer() {
+        // hasher has collisions and wraps
+        return new IncrementingHasher(4, 8).indices(Shape.fromKM(17, 72)).uniqueIndices();
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
-        return DISTINCT | ORDERED;
+        return DISTINCT;
     }
 
     @Override
     protected int[] getExpectedIndices() {
-        return new int[] { 2, 4, 9, 11, 16, 18, 23, 25, 30, 32, 37, 39, 44, 46, 53, 60, 67 };
+        return new int[] {4, 12, 20, 28, 36, 44, 52, 60, 68};
     }
 }

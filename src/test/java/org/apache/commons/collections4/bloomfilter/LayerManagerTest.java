@@ -242,7 +242,7 @@ public class LayerManagerTest {
         assertTrue(list.isEmpty());
 
         // does not remove a populated filter.
-        bf.merge(IndexProducer.fromIndexArray(1));
+        bf.merge(IndexExtractor.fromIndexArray(1));
         list.add(bf);
         assertEquals(bf, list.get(0));
         underTest.accept(list);

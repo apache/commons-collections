@@ -72,9 +72,9 @@ public abstract class AbstractBloomFilterProducerTest {
     @BeforeEach
     public void setup() {
         one.clear();
-        one.merge(IndexProducer.fromIndexArray(1));
+        one.merge(IndexExtractor.fromIndexArray(1));
         two.clear();
-        two.merge(IndexProducer.fromIndexArray(2, 3));
+        two.merge(IndexExtractor.fromIndexArray(2, 3));
         nullCount[0] = 0;
         nullCount[1] = 0;
         equalityCount[0] = 0;
@@ -92,7 +92,7 @@ public abstract class AbstractBloomFilterProducerTest {
     public void testFlatten() {
         final BloomFilter underTest = createUnderTest().flatten();
         final BloomFilter expected = new SimpleBloomFilter(shape);
-        expected.merge(IndexProducer.fromIndexArray(1, 2, 3));
+        expected.merge(IndexExtractor.fromIndexArray(1, 2, 3));
         assertArrayEquals(expected.asBitMapArray(), underTest.asBitMapArray());
     }
 

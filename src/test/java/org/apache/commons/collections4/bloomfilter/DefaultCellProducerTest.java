@@ -23,12 +23,12 @@ public class DefaultCellProducerTest extends AbstractCellProducerTest {
     private final int[] values = {1, 4, 9, 25};
 
     @Override
-    protected CellProducer createEmptyProducer() {
+    protected CellExtractor createEmptyProducer() {
         return consumer -> true;
     }
 
     @Override
-    protected CellProducer createProducer() {
+    protected CellExtractor createProducer() {
         return consumer -> {
             for (int i = 0; i < indices.length; i++) {
                 if (!consumer.test(indices[i], values[i] )) {

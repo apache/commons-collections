@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
+public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Generates an array of integers.
@@ -64,7 +64,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     private final int[] values = {10, 1, 10, 1};
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexExtractor createEmptyProducer() {
         return predicate -> {
             Objects.requireNonNull(predicate);
             return true;
@@ -72,7 +72,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     }
 
     @Override
-    protected IndexProducer createProducer() {
+    protected IndexExtractor createProducer() {
         return predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {
@@ -104,7 +104,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     @ValueSource(ints = {32, 33})
     public void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
-        final IndexProducer producer =  predicate -> {
+        final IndexExtractor producer = predicate -> {
             Objects.requireNonNull(predicate);
             for (final int i : values) {
                 if (!predicate.test(i)) {
@@ -125,7 +125,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
             for (final int bitIndex : expected) {
                 BitMaps.set(bits, bitIndex);
             }
-            final IndexProducer ip = IndexProducer.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
+            final IndexExtractor ip = IndexExtractor.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
             assertArrayEquals(unique(expected), ip.asIndexArray());
         }
     }
@@ -134,7 +134,7 @@ public class DefaultIndexProducerTest extends AbstractIndexProducerTest {
     public void testFromIndexArray() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(10, 256);
-            final IndexProducer ip = IndexProducer.fromIndexArray(expected);
+            final IndexExtractor ip = IndexExtractor.fromIndexArray(expected);
             assertArrayEquals(expected, ip.asIndexArray());
         }
     }

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class IndexProducerTest {
+public class IndexExtractorTest {
 
     private static final class TestingBitMapProducer implements BitMapProducer {
         long[] values;
@@ -50,7 +50,7 @@ public class IndexProducerTest {
     @Test
     public void fromBitMapProducerTest() {
         TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
-        IndexProducer underTest = IndexProducer.fromBitMapProducer(producer);
+        IndexExtractor underTest = IndexExtractor.fromBitMapProducer(producer);
         List<Integer> lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
@@ -61,7 +61,7 @@ public class IndexProducerTest {
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
         producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
-        underTest = IndexProducer.fromBitMapProducer(producer);
+        underTest = IndexExtractor.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 
         underTest.forEachIndex(lst::add);
@@ -75,7 +75,7 @@ public class IndexProducerTest {
     @ParameterizedTest
     @ValueSource(ints = {32, 33})
     void testAsIndexArray(final int n) {
-        final IndexProducer ip = i -> {
+        final IndexExtractor ip = i -> {
             for (int j = 0; j < n; j++) {
                 // Always test index zero
                 i.test(0);

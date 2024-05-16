@@ -21,13 +21,13 @@ import java.util.Objects;
 /**
  * The interface that describes a Bloom filter.
  * <p>
- * <em>See implementation notes for BitMapProducer and IndexProducer.</em>
+ * <em>See implementation notes for BitMapProducer and IndexExtractor.</em>
  * </p>
  * @see BitMapProducer
- * @see IndexProducer
+ * @see IndexExtractor
  * @since 4.5
  */
-public interface BloomFilter extends IndexProducer, BitMapProducer {
+public interface BloomFilter extends IndexExtractor, BitMapProducer {
 
     /**
      * The sparse characteristic used to determine the best method for matching.
@@ -86,7 +86,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      */
     default boolean contains(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return (characteristics() & SPARSE) != 0 ? contains((IndexProducer) other) : contains((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? contains((IndexExtractor) other) : contains((BitMapProducer) other);
     }
 
     /**
@@ -106,15 +106,15 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     }
 
     /**
-     * Returns {@code true} if this filter contains the indices specified IndexProducer.
+     * Returns {@code true} if this filter contains the indices specified IndexExtractor.
      *
      * <p>Specifically this returns {@code true} if this filter is enabled for all bit indexes
-     * identified by the {@code IndexProducer}.</p>
+     * identified by the {@code IndexExtractor}.</p>
      *
-     * @param indexProducer the IndexProducer to provide the indexes
-     * @return {@code true} if this filter is enabled for all bits specified by the IndexProducer
+     * @param indexExtractor the IndexExtractor to provide the indexes
+     * @return {@code true} if this filter is enabled for all bits specified by the IndexExtractor
      */
-    boolean contains(IndexProducer indexProducer);
+    boolean contains(IndexExtractor indexExtractor);
 
     /**
      * Creates a new instance of the BloomFilter with the same properties as the current one.
@@ -289,7 +289,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * @return true if the merge was successful
      */
     default boolean merge(final BloomFilter other) {
-        return (characteristics() & SPARSE) != 0 ? merge((IndexProducer) other) : merge((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? merge((IndexExtractor) other) : merge((BitMapProducer) other);
     }
 
     /**
@@ -311,7 +311,7 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
     }
 
     /**
-     * Merges the specified IndexProducer into this Bloom filter. Specifically all
+     * Merges the specified IndexExtractor into this Bloom filter. Specifically all
      * bit indexes that are identified by the {@code producer} will be enabled in this filter.
      *
      * <p><em>Note: This method should return {@code true} even if no additional bit indexes were
@@ -319,17 +319,17 @@ public interface BloomFilter extends IndexProducer, BitMapProducer {
      * the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
-     * @param indexProducer The IndexProducer to merge.
+     * @param indexExtractor The IndexExtractor to merge.
      * @return true if the merge was successful
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-    boolean merge(IndexProducer indexProducer);
+    boolean merge(IndexExtractor indexExtractor);
 
     /**
      * Most Bloom filters create unique IndexProducers.
      */
     @Override
-    default IndexProducer uniqueIndices() {
+    default IndexExtractor uniqueIndices() {
         return this;
     }
 }

@@ -46,7 +46,7 @@ import java.util.stream.IntStream;
  * consumption of approximately 8 GB.
  *
  * @see Shape
- * @see CellProducer
+ * @see CellExtractor
  * @since 4.5
  */
 public final class ArrayCountingBloomFilter implements CountingBloomFilter {
@@ -105,7 +105,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean add(final CellProducer other) {
+    public boolean add(final CellExtractor other) {
         Objects.requireNonNull(other, "other");
         other.forEachCell(this::add);
         return isValid();
@@ -152,12 +152,12 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+        return contains(IndexExtractor.fromBitMapProducer(bitMapProducer));
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return indexProducer.forEachIndex(idx -> this.cells[idx] != 0);
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return indexExtractor.forEachIndex(idx -> this.cells[idx] != 0);
     }
 
     @Override
@@ -221,7 +221,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public int getMaxInsert(final CellProducer cellProducer) {
+    public int getMaxInsert(final CellExtractor cellProducer) {
         final int[] max = {Integer.MAX_VALUE};
         cellProducer.forEachCell( (x, y) -> {
             final int count = cells[x] / y;
@@ -258,7 +258,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean subtract(final CellProducer other) {
+    public boolean subtract(final CellExtractor other) {
         Objects.requireNonNull(other, "other");
         other.forEachCell(this::subtract);
         return isValid();

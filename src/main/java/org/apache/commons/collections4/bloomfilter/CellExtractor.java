@@ -25,23 +25,23 @@ import java.util.function.IntPredicate;
  * refer to these counts and their associated index.  This class is the equivalent of the index producer except
  * that it produces cells.
  *
- * <p>Note that a CellProducer must not return duplicate indices and must be ordered.</p>
+ * <p>Note that a CellExtractor must not return duplicate indices and must be ordered.</p>
  *
  * <p>Implementations must guarantee that:</p>
  *
  * <ul>
- * <li>The IndexProducer implementation returns unique ordered indices.</li>
- * <li>The cells are produced in IndexProducer order.</li>
- * <li>For every value produced by the IndexProducer there will be only one matching
- * cell produced by the CellProducer.</li>
- * <li>The CellProducer will not generate cells with indices that are not output by the IndexProducer.</li>
- * <li>The IndexProducer will not generate indices that have a zero count for the cell.</li>
+ * <li>The IndexExtractor implementation returns unique ordered indices.</li>
+ * <li>The cells are produced in IndexExtractor order.</li>
+ * <li>For every value produced by the IndexExtractor there will be only one matching
+ * cell produced by the CellExtractor.</li>
+ * <li>The CellExtractor will not generate cells with indices that are not output by the IndexExtractor.</li>
+ * <li>The IndexExtractor will not generate indices that have a zero count for the cell.</li>
  * </ul>
  *
  * @since 4.5
  */
 @FunctionalInterface
-public interface CellProducer extends IndexProducer {
+public interface CellExtractor extends IndexExtractor {
 
     /**
      * Represents an operation that accepts an {@code <index, count>} pair.
@@ -63,15 +63,15 @@ public interface CellProducer extends IndexProducer {
     }
 
     /**
-     * Creates a CellProducer from an IndexProducer.
+     * Creates a CellExtractor from an IndexExtractor.
      *
      * <p>Note the following properties:
      * <ul>
-     * <li>Each index returned from the IndexProducer is assumed to have a cell value of 1.</li>
-     * <li>The CellProducer aggregates duplicate indices from the IndexProducer.</li>
+     * <li>Each index returned from the IndexExtractor is assumed to have a cell value of 1.</li>
+     * <li>The CellExtractor aggregates duplicate indices from the IndexExtractor.</li>
      * </ul>
      *
-     * <p>A CellProducer that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
+     * <p>A CellExtractor that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
      * of indices including:
      * <pre>
      * [1, 1, 2, 2, 2, 3]
@@ -81,10 +81,10 @@ public interface CellProducer extends IndexProducer {
      * </pre>
      *
      * @param producer An index producer.
-     * @return A CellProducer with the same indices as the IndexProducer.
+     * @return A CellExtractor with the same indices as the IndexExtractor.
      */
-    static CellProducer from(final IndexProducer producer) {
-        return new CellProducer() {
+    static CellExtractor from(final IndexExtractor producer) {
+        return new CellExtractor() {
             /**
              * Class to track cell values in the TreeMap.
              */
@@ -164,7 +164,7 @@ public interface CellProducer extends IndexProducer {
     }
 
     @Override
-    default IndexProducer uniqueIndices() {
+    default IndexExtractor uniqueIndices() {
         return this;
     }
 }

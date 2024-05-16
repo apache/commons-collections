@@ -29,9 +29,9 @@ import java.util.function.IntPredicate;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test for IndexProducer.
+ * Test for IndexExtractor.
  */
-public abstract class AbstractIndexProducerTest {
+public abstract class AbstractIndexExtractorTest {
 
     /**
      * An expandable list of int values.
@@ -66,26 +66,26 @@ public abstract class AbstractIndexProducerTest {
     private static final IntPredicate TRUE_PREDICATE = i -> true;
 
     private static final IntPredicate FALSE_PREDICATE = i -> false;
-    /** Flag to indicate the indices are ordered, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
+    /** Flag to indicate the indices are ordered, e.g. from {@link IndexExtractor#forEachIndex(IntPredicate)}. */
     protected static final int ORDERED = 0x1;
 
-    /** Flag to indicate the indices are distinct, e.g. from {@link IndexProducer#forEachIndex(IntPredicate)}. */
+    /** Flag to indicate the indices are distinct, e.g. from {@link IndexExtractor#forEachIndex(IntPredicate)}. */
     protected static final int DISTINCT = 0x2;
 
     /**
      * Creates an producer without data.
      * @return a producer that has no data.
      */
-    protected abstract IndexProducer createEmptyProducer();
+    protected abstract IndexExtractor createEmptyProducer();
 
     /**
      * Creates a producer with some data.
      * @return a producer with some data
      */
-    protected abstract IndexProducer createProducer();
+    protected abstract IndexExtractor createProducer();
 
     /**
-     * Gets the behavior of the {@link IndexProducer#asIndexArray()} method.
+     * Gets the behavior of the {@link IndexExtractor#asIndexArray()} method.
      * @return the behavior.
      * @see #ORDERED
      * @see #DISTINCT
@@ -100,7 +100,7 @@ public abstract class AbstractIndexProducerTest {
     protected abstract int[] getExpectedIndices();
 
     /**
-     * Gets the behavior of the {@link IndexProducer#forEachIndex(IntPredicate)} method.
+     * Gets the behavior of the {@link IndexExtractor#forEachIndex(IntPredicate)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
      * @return the behavior.
      * @see #ORDERED
@@ -123,7 +123,7 @@ public abstract class AbstractIndexProducerTest {
     }
 
     /**
-     * Tests the behavior of {@code IndexProducer.asIndexArray()}.
+     * Tests the behavior of {@code IndexExtractor.asIndexArray()}.
      * The expected behavior is defined by the {@code getBehaviour()} method.
      * The index array may be Ordered, Distinct or both.
      * If the index array is not distinct then all elements returned by the {@code getExpectedIndices()}
@@ -151,9 +151,9 @@ public abstract class AbstractIndexProducerTest {
     }
 
     /**
-     * Tests the behavior of {@code IndexProducer.forEachIndex()}.
+     * Tests the behavior of {@code IndexExtractor.forEachIndex()}.
      * The expected behavior is defined by the {@code getBehaviour()} method.
-     * The order is assumed to follow the order produced by {@code IndexProducer.asIndexArray()}.
+     * The order is assumed to follow the order produced by {@code IndexExtractor.asIndexArray()}.
      */
     @Test
     public final void testBehaviourForEachIndex() {
@@ -182,7 +182,7 @@ public abstract class AbstractIndexProducerTest {
      */
     @Test
     public final void testConsistency() {
-        final IndexProducer producer = createProducer();
+        final IndexExtractor producer = createProducer();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         Arrays.stream(producer.asIndexArray()).forEach(bs1::set);
@@ -195,7 +195,7 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public final void testEmptyProducer() {
-        final IndexProducer empty = createEmptyProducer();
+        final IndexExtractor empty = createEmptyProducer();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachIndex(i -> {
@@ -237,8 +237,8 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public final void testForEachIndexPredicates() {
-        final IndexProducer populated = createProducer();
-        final IndexProducer empty = createEmptyProducer();
+        final IndexExtractor populated = createProducer();
+        final IndexExtractor empty = createEmptyProducer();
 
         assertFalse(populated.forEachIndex(FALSE_PREDICATE), "non-empty should be false");
         assertTrue(empty.forEachIndex(FALSE_PREDICATE), "empty should be true");
@@ -249,7 +249,7 @@ public abstract class AbstractIndexProducerTest {
 
     @Test
     public void testUniqueReturnsSelf() {
-        final IndexProducer expected = createProducer().uniqueIndices();
+        final IndexExtractor expected = createProducer().uniqueIndices();
         assertSame(expected, expected.uniqueIndices());
     }
 }

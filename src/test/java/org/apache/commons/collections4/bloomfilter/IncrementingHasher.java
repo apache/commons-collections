@@ -52,10 +52,10 @@ public final class IncrementingHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
             @Override
             public int[] asIndexArray() {
                 final int[] result = new int[shape.getNumberOfHashFunctions()];

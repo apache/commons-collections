@@ -25,10 +25,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Arrays;
 import java.util.BitSet;
 
-import org.apache.commons.collections4.bloomfilter.CellProducer.CellPredicate;
+import org.apache.commons.collections4.bloomfilter.CellExtractor.CellPredicate;
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest {
+public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTest {
 
     /**
      * A testing CellConsumer that always returns true.
@@ -44,14 +44,14 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
      * @return a producer that has no data.
      */
     @Override
-    protected abstract CellProducer createEmptyProducer();
+    protected abstract CellExtractor createEmptyProducer();
 
     /**
      * Creates a producer with some data.
      * @return a producer with some data
      */
     @Override
-    protected abstract CellProducer createProducer();
+    protected abstract CellExtractor createProducer();
 
     @Override
     protected final int getAsIndexArrayBehaviour() {
@@ -61,14 +61,14 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
     /**
      * Creates an array of expected values that aligns with the expected indices entries.
      * @return an array of expected values.
-     * @see AbstractIndexProducerTest#getExpectedIndices()
+     * @see AbstractIndexExtractorTest#getExpectedIndices()
      */
     protected abstract int[] getExpectedValues();
 
     /**
-     * Test the behavior of {@link CellProducer#forEachCell(CellPredicate)} with respect
+     * Test the behavior of {@link CellExtractor#forEachCell(CellPredicate)} with respect
      * to ordered and distinct indices. Currently the behavior is assumed to be the same as
-     * {@link IndexProducer#forEachIndex(java.util.function.IntPredicate)}.
+     * {@link IndexExtractor#forEachIndex(java.util.function.IntPredicate)}.
      */
     @Test
     public final void testBehaviourForEachCell() {
@@ -85,7 +85,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
 
     @Test
     public final void testEmptyCellProducer() {
-        final CellProducer empty = createEmptyProducer();
+        final CellExtractor empty = createEmptyProducer();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
         assertTrue(empty.forEachCell((i, j) -> {
@@ -112,8 +112,8 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
 
     @Test
     public final void testForEachCellPredicates() {
-        final CellProducer populated = createProducer();
-        final CellProducer empty = createEmptyProducer();
+        final CellExtractor populated = createProducer();
+        final CellExtractor empty = createEmptyProducer();
 
         assertFalse(populated.forEachCell(FALSE_CONSUMER), "non-empty should be false");
         assertTrue(empty.forEachCell(FALSE_CONSUMER), "empty should be true");
@@ -138,7 +138,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexProducerTest
 
     @Test
     public final void testIndexConsistency() {
-        final CellProducer producer = createProducer();
+        final CellExtractor producer = createProducer();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         producer.forEachIndex(i -> {
