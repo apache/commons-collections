@@ -89,8 +89,8 @@ public class SetOperationsTest {
 
     @Test
     public final void testCommutativityOnMismatchedSizes() {
-        final BitMapProducer p1 = BitMapProducer.fromBitMapArray(0x3L, 0x5L);
-        final BitMapProducer p2 = BitMapProducer.fromBitMapArray(0x1L);
+        final BitMapExtractor p1 = BitMapExtractor.fromBitMapArray(0x3L, 0x5L);
+        final BitMapExtractor p2 = BitMapExtractor.fromBitMapArray(0x1L);
 
         assertEquals(SetOperations.orCardinality(p1, p2), SetOperations.orCardinality(p2, p1));
         assertEquals(SetOperations.xorCardinality(p1, p2), SetOperations.xorCardinality(p2, p1));

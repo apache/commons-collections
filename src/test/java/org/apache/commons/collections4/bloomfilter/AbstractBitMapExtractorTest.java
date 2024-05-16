@@ -25,7 +25,7 @@ import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractBitMapProducerTest {
+public abstract class AbstractBitMapExtractorTest {
 
     /**
      * A testing consumer that always returns false.
@@ -41,13 +41,13 @@ public abstract class AbstractBitMapProducerTest {
      * Creates an producer without data.
      * @return a producer that has no data.
      */
-    protected abstract BitMapProducer createEmptyProducer();
+    protected abstract BitMapExtractor createEmptyProducer();
 
     /**
      * Creates a producer with some data.
      * @return a producer with some data
      */
-    protected abstract BitMapProducer createProducer();
+    protected abstract BitMapExtractor createProducer();
 
     protected boolean emptyIsZeroLength() {
         return false;
@@ -136,7 +136,7 @@ public abstract class AbstractBitMapProducerTest {
             limit[0]++;
             return limit[0] < 2;
         };
-        final BitMapProducer shortProducer = l -> true;
+        final BitMapExtractor shortProducer = l -> true;
         assertFalse(createProducer().forEachBitMapPair(shortProducer, shortFunc));
     }
 

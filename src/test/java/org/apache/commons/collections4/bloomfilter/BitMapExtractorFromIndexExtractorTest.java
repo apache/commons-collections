@@ -23,19 +23,19 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class BitMapProducerFromIndexExtractorTest extends AbstractBitMapProducerTest {
+public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
 
     @Override
-    protected BitMapProducer createEmptyProducer() {
+    protected BitMapExtractor createEmptyProducer() {
         final IndexExtractor iProducer = consumer -> true;
-        return BitMapProducer.fromIndexProducer(iProducer, 200);
+        return BitMapExtractor.fromIndexProducer(iProducer, 200);
     }
 
     @Override
-    protected BitMapProducer createProducer() {
+    protected BitMapExtractor createProducer() {
         final IndexExtractor iProducer = consumer -> consumer.test(0) && consumer.test(1) && consumer.test(63) && consumer.test(64)
                 && consumer.test(127) && consumer.test(128);
-        return BitMapProducer.fromIndexProducer(iProducer, 200);
+        return BitMapExtractor.fromIndexProducer(iProducer, 200);
     }
 
     @Test

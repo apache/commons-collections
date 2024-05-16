@@ -26,7 +26,7 @@ import java.util.function.BiPredicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractBloomFilterProducerTest {
+public abstract class AbstractBloomFilterExtractorTest {
     private final Shape shape = Shape.fromKM(17, 72);
 
     BloomFilter one = new SimpleBloomFilter(shape);
@@ -46,16 +46,16 @@ public abstract class AbstractBloomFilterProducerTest {
         return true;
     };
 
-    private BloomFilterProducer createUnderTest() {
+    private BloomFilterExtractor createUnderTest() {
         return createUnderTest(one, two);
     }
 
     /**
-     * Creates a BloomFilterProducer that returns the filters (or their copy) in the order presented.
+     * Creates a BloomFilterExtractor that returns the filters (or their copy) in the order presented.
      * @param filters The filters to return.
-     * @return A BloomFilterProducer that returns the filters in order.
+     * @return A BloomFilterExtractor that returns the filters in order.
      */
-    protected abstract BloomFilterProducer createUnderTest(BloomFilter... filters);
+    protected abstract BloomFilterExtractor createUnderTest(BloomFilter... filters);
 
     /**
      * The shape of the Bloom filters for testing.
@@ -98,7 +98,7 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testForEachPairArrayTooLong() {
-        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
+        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 counter));
         assertEquals(1, nullCount[0]);
         assertEquals(0, nullCount[1]);
@@ -107,7 +107,7 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testForEachPairArrayTooShort() {
-        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one), counter));
+        assertTrue(createUnderTest().forEachBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one), counter));
         assertEquals(0, nullCount[0]);
         assertEquals(1, nullCount[1]);
         assertEquals(1, equalityCount[0]);
@@ -122,13 +122,13 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testForEachPairReturnFalseEarly() {
-        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
+        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 (x, y) -> false));
     }
 
     @Test
     public void testForEachPairReturnFalseLate() {
-        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one, two, one),
+        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 counter.and((x, y) -> x != null && y != null)));
         assertEquals(1, nullCount[0]);
         assertEquals(0, nullCount[1]);
@@ -137,7 +137,7 @@ public abstract class AbstractBloomFilterProducerTest {
 
     @Test
     public void testForEachPairReturnFalseLateShortArray() {
-        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterProducer.fromBloomFilterArray(one),
+        assertFalse(createUnderTest().forEachBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one),
                 counter.and((x, y) -> x != null && y != null)));
         assertEquals(0, nullCount[0]);
         assertEquals(1, nullCount[1]);

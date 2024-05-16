@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest {
+public class BitMapExtractorFromLongArrayTest extends AbstractBitMapExtractorTest {
 
     @Test
     public void constructorTest() {
@@ -37,14 +37,14 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
     }
 
     @Override
-    protected BitMapProducer createEmptyProducer() {
-        return BitMapProducer.fromBitMapArray();
+    protected BitMapExtractor createEmptyProducer() {
+        return BitMapExtractor.fromBitMapArray();
     }
 
     @Override
-    protected BitMapProducer createProducer() {
+    protected BitMapExtractor createProducer() {
         final long[] ary = {1L, 2L, 3L, 4L, 5L};
-        return BitMapProducer.fromBitMapArray(ary);
+        return BitMapExtractor.fromBitMapArray(ary);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class BitMapProducerFromLongArrayTest extends AbstractBitMapProducerTest 
             }
             return true;
         };
-        final BitMapProducer producer = BitMapProducer.fromIndexProducer(iProducer, limit);
+        final BitMapExtractor producer = BitMapExtractor.fromIndexProducer(iProducer, limit);
         final List<Long> lst = new ArrayList<>();
         producer.forEachBitMap(lst::add);
         long expected = ~0L;

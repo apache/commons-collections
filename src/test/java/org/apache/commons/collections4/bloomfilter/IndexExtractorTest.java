@@ -29,10 +29,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class IndexExtractorTest {
 
-    private static final class TestingBitMapProducer implements BitMapProducer {
+    private static final class TestingBitMapExtractor implements BitMapExtractor {
         long[] values;
 
-        TestingBitMapProducer(final long[] values) {
+        TestingBitMapExtractor(final long[] values) {
             this.values = values;
         }
 
@@ -49,7 +49,7 @@ public class IndexExtractorTest {
 
     @Test
     public void fromBitMapProducerTest() {
-        TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
+        TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
         IndexExtractor underTest = IndexExtractor.fromBitMapProducer(producer);
         List<Integer> lst = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class IndexExtractorTest {
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
+        producer = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
         underTest = IndexExtractor.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 

@@ -16,17 +16,17 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitMapProducerFromLayeredBloomFilterTest extends AbstractBitMapProducerTest {
+public class BitMapExtractorFromLayeredBloomFilterTest extends AbstractBitMapExtractorTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 
     @Override
-    protected BitMapProducer createEmptyProducer() {
+    protected BitMapExtractor createEmptyProducer() {
         return LayeredBloomFilterTest.fixed(shape, 10);
     }
 
     @Override
-    protected BitMapProducer createProducer() {
+    protected BitMapExtractor createProducer() {
         final Hasher hasher = new IncrementingHasher(0, 1);
         final BloomFilter bf = LayeredBloomFilterTest.fixed(shape, 10);
         bf.merge(hasher);

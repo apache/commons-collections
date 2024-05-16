@@ -321,7 +321,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
 
         IndexExtractor idxProducer = TestingHashers.FROM1.indices(getTestShape());
-        BitMapProducer producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
+        BitMapExtractor producer = BitMapExtractor.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
 
         int[] expected = {0, 3};
         int[] result = filter.find(producer);
@@ -329,7 +329,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         expected = new int[]{1, 3};
         idxProducer = TestingHashers.FROM11.indices(getTestShape());
-        producer = BitMapProducer.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
+        producer = BitMapExtractor.fromIndexProducer(idxProducer, getTestShape().getNumberOfBits());
         result = filter.find(producer);
         assertArrayEquals(expected, result);
     }

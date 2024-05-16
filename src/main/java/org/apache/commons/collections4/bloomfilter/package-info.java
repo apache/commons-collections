@@ -42,7 +42,7 @@
  * The choice to use not use atomic transactions was made to achieve maximum performance under correct usage.</p>
  *
  * <p>In addition the architecture is designed so that the implementation of the storage of bits is abstracted.
- * Programs that utilize the Bloom filters may use the {@code BitMapProducer} or {@code IndexExtractor} to retrieve a
+ * Programs that utilize the Bloom filters may use the {@code BitMapExtractor} or {@code IndexExtractor} to retrieve a
  * representation of the internal structure. Additional methods are available in the {@code BitMap} to assist in
  * manipulation of the representations.</p>
  *
@@ -61,7 +61,7 @@
  *
  * <li>{@link BloomFilter#getShape()} which returns the shape the Bloom filter was created with.</li>
  *
- * <li>{@link BloomFilter#merge(BitMapProducer)} which merges the BitMaps from the BitMapProducer into the internal
+ * <li>{@link BloomFilter#merge(BitMapExtractor)} which merges the BitMaps from the BitMapExtractor into the internal
  * representation of the Bloom filter.</li>
  *
  * <li>{@link BloomFilter#merge(IndexExtractor)} which merges the indices from the IndexExtractor into the internal

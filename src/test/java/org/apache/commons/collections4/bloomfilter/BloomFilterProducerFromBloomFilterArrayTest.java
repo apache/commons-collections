@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BloomFilterProducerFromBloomFilterArrayTest extends AbstractBloomFilterProducerTest {
+public class BloomFilterProducerFromBloomFilterArrayTest extends AbstractBloomFilterExtractorTest {
 
     @Override
-    protected BloomFilterProducer createUnderTest(final BloomFilter... filters) {
-        return BloomFilterProducer.fromBloomFilterArray(filters);
+    protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {
+        return BloomFilterExtractor.fromBloomFilterArray(filters);
     }
 }

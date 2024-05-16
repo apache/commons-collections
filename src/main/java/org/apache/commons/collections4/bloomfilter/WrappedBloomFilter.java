@@ -62,8 +62,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return wrapped.contains(bitMapProducer);
+    public boolean contains(final BitMapExtractor bitMapExtractor) {
+        return wrapped.contains(bitMapExtractor);
     }
 
     @Override
@@ -102,7 +102,7 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+    public boolean forEachBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
         return wrapped.forEachBitMapPair(other, func);
     }
 
@@ -126,8 +126,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BitMapProducer bitMapProducer) {
-        return wrapped.merge(bitMapProducer);
+    public boolean merge(final BitMapExtractor bitMapExtractor) {
+        return wrapped.merge(bitMapExtractor);
     }
 
     @Override

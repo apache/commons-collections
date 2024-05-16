@@ -88,16 +88,16 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     int getMaxCell();
 
     /**
-     * Determines the maximum number of times the BitMapProducer could have been merged into this
+     * Determines the maximum number of times the BitMapExtractor could have been merged into this
      * counting filter.
-     * @param bitMapProducer the BitMapProducer to provide the indices.
-     * @return the maximum number of times the BitMapProducer could have been inserted.
+     * @param bitMapExtractor the BitMapExtractor to provide the indices.
+     * @return the maximum number of times the BitMapExtractor could have been inserted.
      */
-    default int getMaxInsert(final BitMapProducer bitMapProducer) {
-        if (!contains(bitMapProducer)) {
+    default int getMaxInsert(final BitMapExtractor bitMapExtractor) {
+        if (!contains(bitMapExtractor)) {
             return 0;
         }
-        final long[] bitMaps = bitMapProducer.asBitMapArray();
+        final long[] bitMaps = bitMapExtractor.asBitMapArray();
         final int[] max = { Integer.MAX_VALUE };
         forEachCell((x, y) -> {
             if ((bitMaps[BitMaps.getLongIndex(x)] & BitMaps.getLongBit(x)) != 0) {
@@ -115,7 +115,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @return the maximum number of times the Bloom filter could have been inserted.
      */
     default int getMaxInsert(final BloomFilter bloomFilter) {
-        return getMaxInsert((BitMapProducer) bloomFilter);
+        return getMaxInsert((BitMapExtractor) bloomFilter);
     }
 
     /**
@@ -174,19 +174,19 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     /**
      * Merges the specified BitMap producer into this Bloom filter.
      *
-     * <p>Specifically: all cells for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code bitMapExtractor} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapProducer the BitMapProducer
+     * @param bitMapExtractor the BitMapExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)
      */
     @Override
-    default boolean merge(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return merge(IndexExtractor.fromBitMapProducer(bitMapProducer));
+    default boolean merge(final BitMapExtractor bitMapExtractor) {
+        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
+        return merge(IndexExtractor.fromBitMapProducer(bitMapExtractor));
     }
 
     /**
@@ -255,21 +255,21 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     }
 
     /**
-     * Removes the specified BitMapProducer from this Bloom filter.
+     * Removes the specified BitMapExtractor from this Bloom filter.
      *
-     * <p>Specifically all cells for the indices produced by the {@code bitMapProducer} will be
+     * <p>Specifically all cells for the indices produced by the {@code bitMapExtractor} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapProducer the BitMapProducer to provide the indexes
+     * @param bitMapExtractor the BitMapExtractor to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
      */
-    default boolean remove(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return remove(IndexExtractor.fromBitMapProducer(bitMapProducer));
+    default boolean remove(final BitMapExtractor bitMapExtractor) {
+        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
+        return remove(IndexExtractor.fromBitMapProducer(bitMapExtractor));
     }
 
     /**

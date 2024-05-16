@@ -125,7 +125,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
             for (final int bitIndex : expected) {
                 BitMaps.set(bits, bitIndex);
             }
-            final IndexExtractor ip = IndexExtractor.fromBitMapProducer(BitMapProducer.fromBitMapArray(bits));
+            final IndexExtractor ip = IndexExtractor.fromBitMapProducer(BitMapExtractor.fromBitMapArray(bits));
             assertArrayEquals(unique(expected), ip.asIndexArray());
         }
     }

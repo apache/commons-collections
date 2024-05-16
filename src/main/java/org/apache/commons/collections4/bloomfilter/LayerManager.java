@@ -51,7 +51,7 @@ import java.util.function.Supplier;
  *
  * @since 4.5
  */
-public class LayerManager<T extends BloomFilter> implements BloomFilterProducer {
+public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor {
 
     /**
      * Builder to create Layer Manager

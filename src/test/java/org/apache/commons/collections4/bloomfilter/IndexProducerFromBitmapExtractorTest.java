@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractorTest {
 
-    private static final class TestingBitMapProducer implements BitMapProducer {
+    private static final class TestingBitMapExtractor implements BitMapExtractor {
         long[] values;
 
-        TestingBitMapProducer(final long[] values) {
+        TestingBitMapExtractor(final long[] values) {
             this.values = values;
         }
 
@@ -46,7 +46,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
 
     @Override
     protected IndexExtractor createEmptyProducer() {
-        final TestingBitMapProducer producer = new TestingBitMapProducer(new long[0]);
+        final TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[0]);
         return IndexExtractor.fromBitMapProducer(producer);
     }
 
@@ -63,7 +63,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
          3L => ...0011
          @formatter:on
          */
-        final TestingBitMapProducer producer = new TestingBitMapProducer(new long[] {1L, 2L, 3L});
+        final TestingBitMapExtractor producer = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
         return IndexExtractor.fromBitMapProducer(producer);
     }
 
@@ -90,7 +90,7 @@ public class IndexProducerFromBitmapExtractorTest extends AbstractIndexExtractor
         assertEquals(Integer.valueOf(0 + 128), lst.get(2));
         assertEquals(Integer.valueOf(1 + 128), lst.get(3));
 
-        final BitMapProducer producer = new TestingBitMapProducer(new long[] {0xFFFFFFFFFFFFFFFFL});
+        final BitMapExtractor producer = new TestingBitMapExtractor(new long[] {0xFFFFFFFFFFFFFFFFL});
         underTest = IndexExtractor.fromBitMapProducer(producer);
         lst = new ArrayList<>();
 

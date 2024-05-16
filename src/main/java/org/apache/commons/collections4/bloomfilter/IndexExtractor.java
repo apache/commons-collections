@@ -34,11 +34,11 @@ import java.util.function.LongPredicate;
 public interface IndexExtractor {
 
     /**
-     * Creates an IndexExtractor from a {@code BitMapProducer}.
-     * @param producer the {@code BitMapProducer}
+     * Creates an IndexExtractor from a {@code BitMapExtractor}.
+     * @param producer the {@code BitMapExtractor}
      * @return a new {@code IndexExtractor}.
      */
-    static IndexExtractor fromBitMapProducer(final BitMapProducer producer) {
+    static IndexExtractor fromBitMapProducer(final BitMapExtractor producer) {
         Objects.requireNonNull(producer, "producer");
         return consumer -> {
             final LongPredicate longPredicate = new LongPredicate() {

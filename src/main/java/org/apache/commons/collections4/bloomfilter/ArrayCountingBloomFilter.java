@@ -151,8 +151,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(IndexExtractor.fromBitMapProducer(bitMapProducer));
+    public boolean contains(final BitMapExtractor bitMapExtractor) {
+        return contains(IndexExtractor.fromBitMapProducer(bitMapExtractor));
     }
 
     @Override

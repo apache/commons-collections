@@ -16,10 +16,10 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloomFilterProducerTest {
+public class BloomFilterProducerFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
 
     @Override
-    protected BloomFilterProducer createUnderTest(final BloomFilter... filters) {
+    protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {
         final Shape shape = filters[0].getShape();
         final LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape))
                 .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).setCleanup(LayerManager.Cleanup.noCleanup()).build();

@@ -167,7 +167,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
         assertFalse(bf.contains(bf2), "BF should not contain BF2");
         assertTrue(bf2.contains(bf), "BF2 should contain BF");
-        final BitMapProducer producer = bf2;
+        final BitMapExtractor producer = bf2;
         assertTrue(bf2.contains(producer), "BF2 should contain BF bitMapProducer");
     }
 
@@ -323,8 +323,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         assertCounts(bf4, from1Counts);
 
-        // with BitMapProducer
-        final BitMapProducer bmp = BitMapProducer.fromIndexProducer(ip, getTestShape().getNumberOfBits());
+        // with BitMapExtractor
+        final BitMapExtractor bmp = BitMapExtractor.fromIndexProducer(ip, getTestShape().getNumberOfBits());
         final CountingBloomFilter bf5 = createFilter(getTestShape(), TestingHashers.FROM1);
         bf5.add(CellExtractor.from(TestingHashers.FROM11.indices(getTestShape())));
 
@@ -340,7 +340,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         assertThrows(IllegalArgumentException.class, () -> bf6.remove(ip2));
 
         final CountingBloomFilter bf7 = createFilter(getTestShape(), TestingHashers.FROM1);
-        final BitMapProducer bmp2 = BitMapProducer.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
+        final BitMapExtractor bmp2 = BitMapExtractor.fromIndexProducer(ip2, getTestShape().getNumberOfBits());
         assertThrows(IllegalArgumentException.class, () -> bf7.remove(bmp2));
         assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(-1)));
         assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(getTestShape().getNumberOfBits())));
@@ -389,17 +389,17 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         assertEquals(0, bf.getMaxInsert(new IncrementingHasher(0, 1)));
         assertEquals(0, bf.getMaxInsert(bfFrom0));
-        assertEquals(0, bf.getMaxInsert((BitMapProducer) bfFrom0));
+        assertEquals(0, bf.getMaxInsert((BitMapExtractor) bfFrom0));
         assertEquals(0, bf.getMaxInsert((IndexExtractor) bfFrom0));
 
         assertEquals(from1, bf.getMaxInsert(TestingHashers.FROM1));
         assertEquals(from1, bf.getMaxInsert(bfFrom1));
-        assertEquals(from1, bf.getMaxInsert((BitMapProducer) bfFrom1));
+        assertEquals(from1, bf.getMaxInsert((BitMapExtractor) bfFrom1));
         assertEquals(from1, bf.getMaxInsert((IndexExtractor) bfFrom1));
 
         assertEquals(from11, bf.getMaxInsert(TestingHashers.FROM11));
         assertEquals(from11, bf.getMaxInsert(bfFrom11));
-        assertEquals(from11, bf.getMaxInsert((BitMapProducer) bfFrom11));
+        assertEquals(from11, bf.getMaxInsert((BitMapExtractor) bfFrom11));
         assertEquals(from11, bf.getMaxInsert((IndexExtractor) bfFrom11));
     }
 }

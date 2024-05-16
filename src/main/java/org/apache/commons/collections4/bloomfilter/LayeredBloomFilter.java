@@ -62,7 +62,7 @@ import java.util.function.Predicate;
  * @param <T> The type of Bloom Filter that is used for the layers.
  * @since 4.5
  */
-public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, BloomFilterProducer {
+public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, BloomFilterExtractor {
     /**
      * A class used to locate matching filters across all the layers.
      */
@@ -131,15 +131,15 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return contains(createFilter(bitMapProducer));
+    public boolean contains(final BitMapExtractor bitMapExtractor) {
+        return contains(createFilter(bitMapExtractor));
     }
 
     /**
      * Returns {@code true} if this any layer contained by this filter contains the
      * specified filter.
      * <p>
-     * If the {@code other} is a BloomFilterProducer each filter within the
+     * If the {@code other} is a BloomFilterExtractor each filter within the
      * {@code other} is checked to see if it exits within this filter.
      * </p>
      *
@@ -148,7 +148,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      */
     @Override
     public boolean contains(final BloomFilter other) {
-        return other instanceof BloomFilterProducer ? contains((BloomFilterProducer) other)
+        return other instanceof BloomFilterExtractor ? contains((BloomFilterExtractor) other)
                 : !forEachBloomFilter(x -> !x.contains(other));
     }
 
@@ -156,12 +156,12 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      * Returns {@code true} if each filter within the {@code producer} exits within
      * this filter.
      *
-     * @param producer the BloomFilterProducer that provides the filters to check
+     * @param producer the BloomFilterExtractor that provides the filters to check
      *                 for.
      * @return {@code true} if this filter contains all of the filters contained in
      *         the {@code producer}.
      */
-    public boolean contains(final BloomFilterProducer producer) {
+    public boolean contains(final BloomFilterExtractor producer) {
         final boolean[] result = { true };
         // return false when we have found a match to short circuit checks
         return producer.forEachBloomFilter(x -> {
@@ -186,14 +186,14 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     /**
-     * Creates a Bloom filter from a BitMapProducer.
+     * Creates a Bloom filter from a BitMapExtractor.
      *
-     * @param bitMapProducer the BitMapProducer to create the filter from.
+     * @param bitMapExtractor the BitMapExtractor to create the filter from.
      * @return the BloomFilter.
      */
-    private BloomFilter createFilter(final BitMapProducer bitMapProducer) {
+    private BloomFilter createFilter(final BitMapExtractor bitMapExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(bitMapProducer);
+        bf.merge(bitMapExtractor);
         return bf;
     }
 
@@ -235,14 +235,14 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     /**
-     * Finds the layers in which the BitMapProducer is found.
+     * Finds the layers in which the BitMapExtractor is found.
      *
-     * @param bitMapProducer the BitMapProducer to search for.
+     * @param bitMapExtractor the BitMapExtractor to search for.
      * @return an array of layer indices in which the Bloom filter is found.
      */
-    public int[] find(final BitMapProducer bitMapProducer) {
+    public int[] find(final BitMapExtractor bitMapExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
-        bf.merge(bitMapProducer);
+        bf.merge(bitMapExtractor);
         return find(bf);
     }
 
@@ -351,8 +351,8 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     }
 
     @Override
-    public boolean merge(final BitMapProducer bitMapProducer) {
-        return layerManager.getTarget().merge(bitMapProducer);
+    public boolean merge(final BitMapExtractor bitMapExtractor) {
+        return layerManager.getTarget().merge(bitMapExtractor);
     }
 
     @Override

@@ -113,7 +113,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+    public boolean forEachBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
         return other.forEachBitMap(p) && p.forEachRemaining();
     }
@@ -135,11 +135,11 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
+    public boolean merge(final BitMapExtractor bitMapExtractor) {
+        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
         try {
             final int[] idx = new int[1];
-            bitMapProducer.forEachBitMap(value -> {
+            bitMapExtractor.forEachBitMap(value -> {
                 bitMap[idx[0]++] |= value;
                 return true;
             });
@@ -150,14 +150,14 @@ public final class SimpleBloomFilter implements BloomFilter {
                 final long excess = bitMap[idxLimit] >> shape.getNumberOfBits();
                 if (excess != 0) {
                     throw new IllegalArgumentException(
-                            String.format("BitMapProducer set a bit higher than the limit for the shape: %s",
+                            String.format("BitMapExtractor set a bit higher than the limit for the shape: %s",
                                     shape.getNumberOfBits()));
                 }
             }
             cardinality = -1;
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
-                    String.format("BitMapProducer should send at most %s maps", bitMap.length), e);
+                    String.format("BitMapExtractor should send at most %s maps", bitMap.length), e);
         }
         return true;
     }
@@ -168,7 +168,7 @@ public final class SimpleBloomFilter implements BloomFilter {
         if ((other.characteristics() & SPARSE) != 0) {
             merge((IndexExtractor) other);
         } else {
-            merge((BitMapProducer) other);
+            merge((BitMapExtractor) other);
         }
         return true;
     }

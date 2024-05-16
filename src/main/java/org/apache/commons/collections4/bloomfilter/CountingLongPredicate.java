@@ -45,7 +45,7 @@ class CountingLongPredicate implements LongPredicate {
     /**
      * Call the long-long consuming bi-predicate for each remaining unpaired long in
      * the input array. This method should be invoked after the predicate has been
-     * passed to {@link BitMapProducer#forEachBitMap(LongPredicate)} to consume any
+     * passed to {@link BitMapExtractor#forEachBitMap(LongPredicate)} to consume any
      * unpaired bitmaps. The second argument to the bi-predicate will be zero.
      *
      * @return true if all calls the predicate were successful

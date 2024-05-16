@@ -36,15 +36,15 @@ import java.util.function.LongPredicate;
  * @since 4.5
  */
 @FunctionalInterface
-public interface BitMapProducer {
+public interface BitMapExtractor {
 
     /**
-     * Creates a BitMapProducer from an array of Long.
+     * Creates a BitMapExtractor from an array of Long.
      * @param bitMaps the bit maps to return.
-     * @return a BitMapProducer.
+     * @return a BitMapExtractor.
      */
-    static BitMapProducer fromBitMapArray(final long... bitMaps) {
-        return new BitMapProducer() {
+    static BitMapExtractor fromBitMapArray(final long... bitMaps) {
+        return new BitMapExtractor() {
             @Override
             public long[] asBitMapArray() {
                 return Arrays.copyOf(bitMaps, bitMaps.length);
@@ -61,7 +61,7 @@ public interface BitMapProducer {
             }
 
             @Override
-            public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+            public boolean forEachBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
                 final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
                 return other.forEachBitMap(p) && p.forEachRemaining();
             }
@@ -69,12 +69,12 @@ public interface BitMapProducer {
     }
 
     /**
-     * Creates a BitMapProducer from an IndexExtractor.
+     * Creates a BitMapExtractor from an IndexExtractor.
      * @param producer the IndexExtractor that specifies the indexes of the bits to enable.
      * @param numberOfBits the number of bits in the Bloom filter.
-     * @return A BitMapProducer that produces the bit maps equivalent of the Indices from the producer.
+     * @return A BitMapExtractor that produces the bit maps equivalent of the Indices from the producer.
      */
-    static BitMapProducer fromIndexProducer(final IndexExtractor producer, final int numberOfBits) {
+    static BitMapExtractor fromIndexProducer(final IndexExtractor producer, final int numberOfBits) {
         Objects.requireNonNull(producer, "producer");
         Objects.requireNonNull(numberOfBits, "numberOfBits");
 
@@ -87,7 +87,7 @@ public interface BitMapProducer {
     }
 
     /**
-     * Return a copy of the BitMapProducer data as a bit map array.
+     * Return a copy of the BitMapExtractor data as a bit map array.
      * <p>
      * The default implementation of this method is slow. It is recommended
      * that implementing classes reimplement this method.
@@ -138,17 +138,17 @@ public interface BitMapProducer {
 
     /**
      * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
-     * BitMapProducer to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
+     * BitMapExtractor to this producer. If this producer does not have as many bit maps it will provide 0 (zero)
      * for all excess calls to the LongBiPredicate.
      * <p>
      * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
-     * of BitMapProducer that have local arrays reimplement this method.</em></p>
+     * of BitMapExtractor that have local arrays reimplement this method.</em></p>
      *
-     * @param other The other BitMapProducer that provides the y values in the (x,y) pair.
+     * @param other The other BitMapExtractor that provides the y values in the (x,y) pair.
      * @param func The function to apply.
      * @return A LongPredicate that tests this BitMapProducers bitmap values in order.
      */
-    default boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
+    default boolean forEachBitMapPair(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
         return other.forEachBitMap(p) && p.forEachRemaining();
     }

@@ -27,10 +27,10 @@ import java.util.function.Predicate;
  *
  * @since 4.5
  */
-public interface BloomFilterProducer {
+public interface BloomFilterExtractor {
 
     /**
-     * Creates a BloomFilterProducer from an array of Bloom filters.
+     * Creates a BloomFilterExtractor from an array of Bloom filters.
      *
      * <ul>
      * <li>The asBloomFilterArray() method returns a copy of the original array
@@ -40,11 +40,11 @@ public interface BloomFilterProducer {
      * <p><em>All modifications to the Bloom filters are reflected in the original filters</em></p>
      *
      * @param filters The filters to be returned by the producer.
-     * @return THe BloomFilterProducer containing the filters.
+     * @return THe BloomFilterExtractor containing the filters.
      */
-    static BloomFilterProducer fromBloomFilterArray(final BloomFilter... filters) {
+    static BloomFilterExtractor fromBloomFilterArray(final BloomFilter... filters) {
         Objects.requireNonNull(filters, "filters");
-        return new BloomFilterProducer() {
+        return new BloomFilterExtractor() {
             /**
              * This implementation returns a copy the original array, the contained Bloom filters
              * are references to the originals, any modifications to them are reflected in the original
@@ -70,7 +70,7 @@ public interface BloomFilterProducer {
              * filters are reflected in the originals.
              */
             @Override
-            public boolean forEachBloomFilterPair(final BloomFilterProducer other,
+            public boolean forEachBloomFilterPair(final BloomFilterExtractor other,
                     final BiPredicate<BloomFilter, BloomFilter> func) {
                 final CountingPredicate<BloomFilter> p = new CountingPredicate<>(filters, func);
                 return other.forEachBloomFilter(p) && p.forEachRemaining();
@@ -121,7 +121,7 @@ public interface BloomFilterProducer {
 
     /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
-     * of the Bloom filters from the other BloomFilterProducer to this producer. If
+     * of the Bloom filters from the other BloomFilterExtractor to this producer. If
      * either {@code this} producer or {@code other} producer has fewer BloomFilters
      * ths method will provide {@code null} for all excess calls to the {@code func}.
      *
@@ -129,13 +129,13 @@ public interface BloomFilterProducer {
      * should specify if the array contains deep copies, immutable instances,
      * or references to the filters in the collection.</em></p>
      *
-     * @param other The other BloomFilterProducer that provides the y values in the
+     * @param other The other BloomFilterExtractor that provides the y values in the
      *              (x,y) pair.
      * @param func  The function to apply.
      * @return {@code true} if the {@code func} returned {@code true} for every pair,
      *         {@code false} otherwise.
      */
-    default boolean forEachBloomFilterPair(final BloomFilterProducer other,
+    default boolean forEachBloomFilterPair(final BloomFilterExtractor other,
             final BiPredicate<BloomFilter, BloomFilter> func) {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
         return other.forEachBloomFilter(p) && p.forEachRemaining();

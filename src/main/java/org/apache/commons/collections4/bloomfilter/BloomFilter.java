@@ -21,13 +21,13 @@ import java.util.Objects;
 /**
  * The interface that describes a Bloom filter.
  * <p>
- * <em>See implementation notes for BitMapProducer and IndexExtractor.</em>
+ * <em>See implementation notes for BitMapExtractor and IndexExtractor.</em>
  * </p>
- * @see BitMapProducer
+ * @see BitMapExtractor
  * @see IndexExtractor
  * @since 4.5
  */
-public interface BloomFilter extends IndexExtractor, BitMapProducer {
+public interface BloomFilter extends IndexExtractor, BitMapExtractor {
 
     /**
      * The sparse characteristic used to determine the best method for matching.
@@ -64,13 +64,13 @@ public interface BloomFilter extends IndexExtractor, BitMapProducer {
 
     /**
      * Returns {@code true} if this filter contains the bits specified in the bit maps produced by the
-     * bitMapProducer.
+     * bitMapExtractor.
      *
-     * @param bitMapProducer the {@code BitMapProducer} to provide the bit maps.
+     * @param bitMapExtractor the {@code BitMapExtractor} to provide the bit maps.
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
-    default boolean contains(final BitMapProducer bitMapProducer) {
-        return forEachBitMapPair(bitMapProducer, (x, y) -> (x & y) == y);
+    default boolean contains(final BitMapExtractor bitMapExtractor) {
+        return forEachBitMapPair(bitMapExtractor, (x, y) -> (x & y) == y);
     }
 
     /**
@@ -86,7 +86,7 @@ public interface BloomFilter extends IndexExtractor, BitMapProducer {
      */
     default boolean contains(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return (characteristics() & SPARSE) != 0 ? contains((IndexExtractor) other) : contains((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? contains((IndexExtractor) other) : contains((BitMapExtractor) other);
     }
 
     /**
@@ -268,11 +268,11 @@ public interface BloomFilter extends IndexExtractor, BitMapProducer {
      * enabled in the {@code producer}.</em>  This state may occur in complex Bloom filter implementations like
      * counting Bloom filters.</p>
      *
-     * @param bitMapProducer The producer to merge.
+     * @param bitMapExtractor The producer to merge.
      * @return true if the merge was successful
      * @throws IllegalArgumentException if producer sends illegal value.
      */
-    boolean merge(BitMapProducer bitMapProducer);
+    boolean merge(BitMapExtractor bitMapExtractor);
 
     /**
      * Merges the specified Bloom filter into this Bloom filter.
@@ -289,7 +289,7 @@ public interface BloomFilter extends IndexExtractor, BitMapProducer {
      * @return true if the merge was successful
      */
     default boolean merge(final BloomFilter other) {
-        return (characteristics() & SPARSE) != 0 ? merge((IndexExtractor) other) : merge((BitMapProducer) other);
+        return (characteristics() & SPARSE) != 0 ? merge((IndexExtractor) other) : merge((BitMapExtractor) other);
     }
 
     /**
