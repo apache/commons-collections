@@ -107,7 +107,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean add(final CellExtractor other) {
         Objects.requireNonNull(other, "other");
-        other.forEachCell(this::add);
+        other.processCells(this::add);
         return isValid();
     }
 
@@ -194,7 +194,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
-    public boolean forEachCell(final CellPredicate consumer) {
+    public boolean processCells(final CellPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] != 0 && !consumer.test(i, cells[i])) {
@@ -223,7 +223,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public int getMaxInsert(final CellExtractor cellProducer) {
         final int[] max = {Integer.MAX_VALUE};
-        cellProducer.forEachCell( (x, y) -> {
+        cellProducer.processCells( (x, y) -> {
             final int count = cells[x] / y;
             if (count < max[0]) {
                 max[0] = count;
@@ -250,7 +250,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
      * generated invalid cells can be reversed by using the complement of the
      * original operation with the same Bloom filter. This will restore the cells
      * to the state prior to the invalid operation. Cells can then be extracted
-     * using {@link #forEachCell(CellPredicate)}.</p>
+     * using {@link #processCells(CellPredicate)}.</p>
      */
     @Override
     public boolean isValid() {
@@ -260,7 +260,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     @Override
     public boolean subtract(final CellExtractor other) {
         Objects.requireNonNull(other, "other");
-        other.forEachCell(this::subtract);
+        other.processCells(this::subtract);
         return isValid();
     }
 

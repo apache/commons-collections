@@ -48,7 +48,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
      */
     private static void assertCounts(final CountingBloomFilter bf, final int[] expected) {
         final Map<Integer, Integer> m = new HashMap<>();
-        bf.forEachCell((i, c) -> {
+        bf.processCells((i, c) -> {
             m.put(i, c);
             return true;
         });
@@ -65,7 +65,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     }
 
     private void assertCell3(final CountingBloomFilter bf, final int value) {
-        bf.forEachCell((k, v) -> {
+        bf.processCells((k, v) -> {
             if (k == 3) {
                 assertEquals(value, v, "Mismatch at position 3");
             } else {
@@ -234,7 +234,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         CountingBloomFilter bf1 = createFilter(shape, hasher);
         assertEquals(6, bf1.cardinality());
-        bf1.forEachCell((x, y) -> {
+        bf1.processCells((x, y) -> {
             assertEquals(1, y, "Hasher in constructor results in value not equal to 1");
             return true;
         });
@@ -242,7 +242,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1 = createEmptyFilter(shape);
         bf1.merge(hasher);
         assertEquals(6, bf1.cardinality());
-        bf1.forEachCell((x, y) -> {
+        bf1.processCells((x, y) -> {
             assertEquals(1, y, "Hasher in merge results in value not equal to 1");
             return true;
         });
@@ -251,7 +251,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         bf1.merge(hasher);
         bf1.remove(hasher);
         assertEquals(0, bf1.cardinality());
-        assertTrue(bf1.forEachCell((x, y) -> false), "Hasher in removes results in value not equal to 0");
+        assertTrue(bf1.processCells((x, y) -> false), "Hasher in removes results in value not equal to 0");
     }
 
     @Test

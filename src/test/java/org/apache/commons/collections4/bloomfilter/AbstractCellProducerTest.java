@@ -66,14 +66,14 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
     protected abstract int[] getExpectedValues();
 
     /**
-     * Test the behavior of {@link CellExtractor#forEachCell(CellPredicate)} with respect
+     * Test the behavior of {@link CellExtractor#processCells(CellPredicate)} with respect
      * to ordered and distinct indices. Currently the behavior is assumed to be the same as
      * {@link IndexExtractor#forEachIndex(java.util.function.IntPredicate)}.
      */
     @Test
     public final void testBehaviourForEachCell() {
         final IntList list = new IntList();
-        createProducer().forEachCell((i, j) -> list.add(i));
+        createProducer().processCells((i, j) -> list.add(i));
         final int[] actual = list.toArray();
         // check order
         final int[] expected = Arrays.stream(actual).sorted().toArray();
@@ -88,7 +88,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
         final CellExtractor empty = createEmptyProducer();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
-        assertTrue(empty.forEachCell((i, j) -> {
+        assertTrue(empty.processCells((i, j) -> {
             fail("forEachCell consumer should not be called");
             return false;
         }));
@@ -97,13 +97,13 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
     @Test
     public void testForEachCellEarlyExit() {
         final int[] passes = new int[1];
-        assertTrue(createEmptyProducer().forEachCell((i, j) -> {
+        assertTrue(createEmptyProducer().processCells((i, j) -> {
             passes[0]++;
             return false;
         }));
         assertEquals(0, passes[0]);
 
-        assertFalse(createProducer().forEachCell((i, j) -> {
+        assertFalse(createProducer().processCells((i, j) -> {
             passes[0]++;
             return false;
         }));
@@ -115,11 +115,11 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
         final CellExtractor populated = createProducer();
         final CellExtractor empty = createEmptyProducer();
 
-        assertFalse(populated.forEachCell(FALSE_CONSUMER), "non-empty should be false");
-        assertTrue(empty.forEachCell(FALSE_CONSUMER), "empty should be true");
+        assertFalse(populated.processCells(FALSE_CONSUMER), "non-empty should be false");
+        assertTrue(empty.processCells(FALSE_CONSUMER), "empty should be true");
 
-        assertTrue(populated.forEachCell(TRUE_CONSUMER), "non-empty should be true");
-        assertTrue(empty.forEachCell(TRUE_CONSUMER), "empty should be true");
+        assertTrue(populated.processCells(TRUE_CONSUMER), "non-empty should be true");
+        assertTrue(empty.processCells(TRUE_CONSUMER), "empty should be true");
     }
 
     @Test
@@ -128,7 +128,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
         final int[] expectedValue = getExpectedValues();
         assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
         final int[] idx = {0};
-        createProducer().forEachCell((i, j) -> {
+        createProducer().processCells((i, j) -> {
             assertEquals(expectedIdx[idx[0]], i, "bad index at " + idx[0]);
             assertEquals(expectedValue[idx[0]], j, "bad value at " + idx[0]);
             idx[0]++;
@@ -145,7 +145,7 @@ public abstract class AbstractCellProducerTest extends AbstractIndexExtractorTes
             bs1.set(i);
             return true;
         });
-        producer.forEachCell((i, j) -> {
+        producer.processCells((i, j) -> {
             bs2.set(i);
             return true;
         });

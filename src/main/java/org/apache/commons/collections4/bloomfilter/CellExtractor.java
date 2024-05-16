@@ -112,7 +112,7 @@ public interface CellExtractor extends IndexExtractor {
             }
 
             @Override
-            public boolean forEachCell(final CellPredicate consumer) {
+            public boolean processCells(final CellPredicate consumer) {
                 populate();
                 for (final CounterCell cell : counterCells.values()) {
                     if (!consumer.test(cell.idx, cell.count)) {
@@ -153,14 +153,14 @@ public interface CellExtractor extends IndexExtractor {
      * @return {@code true} if all cells return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified consumer is null
      */
-    boolean forEachCell(CellPredicate consumer);
+    boolean processCells(CellPredicate consumer);
 
     /**
      * The default implementation returns distinct and ordered indices for all cells with a non-zero count.
      */
     @Override
     default boolean forEachIndex(final IntPredicate predicate) {
-        return forEachCell((i, v) -> predicate.test(i));
+        return processCells((i, v) -> predicate.test(i));
     }
 
     @Override
