@@ -150,7 +150,7 @@ public class LayerManagerTest {
             underTest.getTarget().merge(bf);
         }
         final List<BloomFilter> lst2 = new ArrayList<>();
-        underTest.forEachBloomFilter(lst2::add);
+        underTest.processBloomFilters(lst2::add);
         assertEquals(10, lst.size());
         assertEquals(10, lst2.size());
         for (int i = 0; i < lst.size(); i++) {

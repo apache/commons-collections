@@ -358,7 +358,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      *         {@code true} if all filters pass the test.
      */
     @Override
-    public boolean forEachBloomFilter(final Predicate<BloomFilter> bloomFilterPredicate) {
+    public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
         for (final BloomFilter bf : filters) {
             if (!bloomFilterPredicate.test(bf)) {
                 return false;

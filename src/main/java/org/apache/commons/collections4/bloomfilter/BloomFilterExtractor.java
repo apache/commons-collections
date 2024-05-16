@@ -56,7 +56,7 @@ public interface BloomFilterExtractor {
             }
 
             @Override
-            public boolean forEachBloomFilter(final Predicate<BloomFilter> predicate) {
+            public boolean processBloomFilters(final Predicate<BloomFilter> predicate) {
                 for (final BloomFilter filter : filters) {
                     if (!predicate.test(filter)) {
                         return false;
@@ -73,7 +73,7 @@ public interface BloomFilterExtractor {
             public boolean forEachBloomFilterPair(final BloomFilterExtractor other,
                     final BiPredicate<BloomFilter, BloomFilter> func) {
                 final CountingPredicate<BloomFilter> p = new CountingPredicate<>(filters, func);
-                return other.forEachBloomFilter(p) && p.forEachRemaining();
+                return other.processBloomFilters(p) && p.forEachRemaining();
             }
         };
     }
@@ -88,7 +88,7 @@ public interface BloomFilterExtractor {
      */
     default BloomFilter[] asBloomFilterArray() {
         final List<BloomFilter> filters = new ArrayList<>();
-        forEachBloomFilter(f -> filters.add(f.copy()));
+        processBloomFilters(f -> filters.add(f.copy()));
         return filters.toArray(new BloomFilter[0]);
     }
 
@@ -100,7 +100,7 @@ public interface BloomFilterExtractor {
      */
     default BloomFilter flatten() {
         final BloomFilter[] bf = {null};
-        forEachBloomFilter( x -> {
+        processBloomFilters(x -> {
             if (bf[0] == null) {
                 bf[0] = new SimpleBloomFilter( x.getShape());
             }
@@ -117,7 +117,7 @@ public interface BloomFilterExtractor {
      * @return {@code false} when the first filter fails the predicate test. Returns
      *         {@code true} if all filters pass the test.
      */
-    boolean forEachBloomFilter(Predicate<BloomFilter> bloomFilterPredicate);
+    boolean processBloomFilters(Predicate<BloomFilter> bloomFilterPredicate);
 
     /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
@@ -138,6 +138,6 @@ public interface BloomFilterExtractor {
     default boolean forEachBloomFilterPair(final BloomFilterExtractor other,
             final BiPredicate<BloomFilter, BloomFilter> func) {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
-        return other.forEachBloomFilter(p) && p.forEachRemaining();
+        return other.processBloomFilters(p) && p.forEachRemaining();
     }
 }

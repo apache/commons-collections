@@ -291,7 +291,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
         }
-        underTest.forEachBloomFilter(dbg.and(x -> lst.add(((TimestampedBloomFilter) x).timestamp)));
+        underTest.processBloomFilters(dbg.and(x -> lst.add(((TimestampedBloomFilter) x).timestamp)));
         assertTrue(underTest.getDepth() > 1);
 
         Thread.sleep(300);
@@ -299,20 +299,20 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
             underTest.merge(TestingHashers.randomHasher());
         }
         dbgInstrument.add("=== AFTER 300 milliseconds ====\n");
-        underTest.forEachBloomFilter(dbg);
+        underTest.processBloomFilters(dbg);
 
         Thread.sleep(150);
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
         }
         dbgInstrument.add("=== AFTER 450 milliseconds ====\n");
-        underTest.forEachBloomFilter(dbg);
+        underTest.processBloomFilters(dbg);
 
         // sleep 200 milliseconds to ensure we cross the 600 millisecond boundary
         Thread.sleep(200);
         underTest.merge(TestingHashers.randomHasher());
         dbgInstrument.add("=== AFTER 600 milliseconds ====\n");
-        assertTrue(underTest.forEachBloomFilter(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
+        assertTrue(underTest.processBloomFilters(dbg.and(x -> !lst.contains(((TimestampedBloomFilter) x).timestamp))),
                 "Found filter that should have been deleted: " + dbgInstrument.get(dbgInstrument.size() - 1));
     }
 

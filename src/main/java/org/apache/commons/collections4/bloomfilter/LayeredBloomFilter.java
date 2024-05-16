@@ -149,7 +149,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     @Override
     public boolean contains(final BloomFilter other) {
         return other instanceof BloomFilterExtractor ? contains((BloomFilterExtractor) other)
-                : !forEachBloomFilter(x -> !x.contains(other));
+                : !processBloomFilters(x -> !x.contains(other));
     }
 
     /**
@@ -164,7 +164,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     public boolean contains(final BloomFilterExtractor producer) {
         final boolean[] result = { true };
         // return false when we have found a match to short circuit checks
-        return producer.forEachBloomFilter(x -> {
+        return producer.processBloomFilters(x -> {
             result[0] &= contains(x);
             return result[0];
         });
@@ -254,7 +254,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      */
     public int[] find(final BloomFilter bf) {
         final Finder finder = new Finder(bf);
-        forEachBloomFilter(finder);
+        processBloomFilters(finder);
         return finder.getResult();
     }
 
@@ -291,7 +291,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
     @Override
     public BloomFilter flatten() {
         final BloomFilter bf = new SimpleBloomFilter(shape);
-        forEachBloomFilter(bf::merge);
+        processBloomFilters(bf::merge);
         return bf;
     }
 
@@ -310,13 +310,13 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      *         otherwise.
      */
     @Override
-    public final boolean forEachBloomFilter(final Predicate<BloomFilter> bloomFilterPredicate) {
-        return layerManager.forEachBloomFilter(bloomFilterPredicate);
+    public final boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
+        return layerManager.processBloomFilters(bloomFilterPredicate);
     }
 
     @Override
     public boolean forEachIndex(final IntPredicate predicate) {
-        return forEachBloomFilter(bf -> bf.forEachIndex(predicate));
+        return processBloomFilters(bf -> bf.forEachIndex(predicate));
     }
 
     /**
@@ -347,7 +347,7 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
 
     @Override
     public boolean isEmpty() {
-        return forEachBloomFilter(BloomFilter::isEmpty);
+        return processBloomFilters(BloomFilter::isEmpty);
     }
 
     @Override
