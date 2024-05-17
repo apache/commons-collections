@@ -27,6 +27,7 @@ import java.util.function.Predicate;
  *
  * @since 4.5
  */
+@FunctionalInterface
 public interface BloomFilterExtractor {
 
     /**
@@ -70,10 +71,10 @@ public interface BloomFilterExtractor {
              * filters are reflected in the originals.
              */
             @Override
-            public boolean forEachBloomFilterPair(final BloomFilterExtractor other,
-                    final BiPredicate<BloomFilter, BloomFilter> func) {
+            public boolean processBloomFilterPair(final BloomFilterExtractor other,
+                                                  final BiPredicate<BloomFilter, BloomFilter> func) {
                 final CountingPredicate<BloomFilter> p = new CountingPredicate<>(filters, func);
-                return other.processBloomFilters(p) && p.forEachRemaining();
+                return other.processBloomFilters(p) && p.processRemaining();
             }
         };
     }
@@ -135,9 +136,9 @@ public interface BloomFilterExtractor {
      * @return {@code true} if the {@code func} returned {@code true} for every pair,
      *         {@code false} otherwise.
      */
-    default boolean forEachBloomFilterPair(final BloomFilterExtractor other,
-            final BiPredicate<BloomFilter, BloomFilter> func) {
+    default boolean processBloomFilterPair(final BloomFilterExtractor other,
+                                           final BiPredicate<BloomFilter, BloomFilter> func) {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
-        return other.processBloomFilters(p) && p.forEachRemaining();
+        return other.processBloomFilters(p) && p.processRemaining();
     }
 }

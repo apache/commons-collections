@@ -115,7 +115,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     @Override
     public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
-        return other.processBitMaps(p) && p.forEachRemaining();
+        return other.processBitMaps(p) && p.processRemaining();
     }
 
     @Override

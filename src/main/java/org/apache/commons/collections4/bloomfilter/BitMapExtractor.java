@@ -63,7 +63,7 @@ public interface BitMapExtractor {
             @Override
             public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
                 final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
-                return other.processBitMaps(p) && p.forEachRemaining();
+                return other.processBitMaps(p) && p.processRemaining();
             }
         };
     }
@@ -150,6 +150,6 @@ public interface BitMapExtractor {
      */
     default boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
         final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
-        return other.processBitMaps(p) && p.forEachRemaining();
+        return other.processBitMaps(p) && p.processRemaining();
     }
 }

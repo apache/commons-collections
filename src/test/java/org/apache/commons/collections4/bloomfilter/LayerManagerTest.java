@@ -134,7 +134,7 @@ public class LayerManagerTest {
 
         assertEquals(underTest.getDepth(), copy.getDepth());
         assertTrue(
-                underTest.forEachBloomFilterPair(copy, (x, y) -> Arrays.equals(x.asBitMapArray(), y.asBitMapArray())));
+                underTest.processBloomFilterPair(copy, (x, y) -> Arrays.equals(x.asBitMapArray(), y.asBitMapArray())));
     }
 
     @Test

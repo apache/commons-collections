@@ -21,7 +21,7 @@
  * <h2>Background:</h2>
  *
  * <p>The Bloom filter is a probabilistic data structure that indicates where things are not. Conceptually it is a bit
- * vector. You create a Bloom filter by creating hashes and converting those to enabled bits in the vector. Multiple
+ * vector or BitMap. You create a Bloom filter by creating hashes and converting those to enabled bits in the map. Multiple
  * Bloom filters may be merged together into one Bloom filter. It is possible to test if a filter {@code B} has merged
  * into another filter {@code A} by verifying that {@code (A & B) == B}.</p>
  *
@@ -41,12 +41,42 @@
  * {@code add}, and {@code subtract} may throw exceptions. Once an exception is thrown the state of the Bloom filter is unknown.
  * The choice to use not use atomic transactions was made to achieve maximum performance under correct usage.</p>
  *
- * <p>In addition the architecture is designed so that the implementation of the storage of bits is abstracted.
- * Programs that utilize the Bloom filters may use the {@code BitMapExtractor} or {@code IndexExtractor} to retrieve a
- * representation of the internal structure. Additional methods are available in the {@code BitMap} to assist in
- * manipulation of the representations.</p>
+ * <h4>Nomenclature</h4>
  *
- * <p>The Bloom filter code is an interface that requires implementation of 9 methods:</p>
+ * <ul>
+ *     <li>BitMap - In the bloomfilter package a BitMap is not a structure but a logical construct.  It is conceptualized
+ *     as an ordered collection of {@code long} values each of which is interpreted as a 64-bit bit vector.  The mapping of
+ *     bits into the {@code long} values ss described in the the {@code BitMaps} javadoc.</li>
+ *
+ *     <li>Index - In the bloomfilter package an Index is a logical collection of {@code int}s specifying the enabled
+ *     bits in the BitMap.</li>
+ *
+ *     <li>Cell - Some Bloom filters (e.g. CountingBloomFilter) use counters rather than bits.  In the bloomfilter package
+ *     Cells are pairs of ints representing an index and a value.  They are not {@code Pair} objects.  </li>
+ *
+ *     <li>Extractor - The Extractors are {@code FunctionalInterfaces} that are conceptually iterators on a {@code BitMap}, an {@code Index}, or a
+ *     collection of {@code Cell}s, with an early termination switch.  Extractors have
+ *     names like {@code BitMapExtractor} or {@code IndexExtractor} and  have a {@code processXs} methods that take a
+ *     {@code Predicate<X>} argument (e.g. {@code processBitMaps(LongPredicate)} or {@code processIndicies(IntPredicate)}).
+ *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
+ *     or {@code false} to stop it. </li>
+ * </ul>
+ *
+ * <p>There is an obvious association between the BitMap and the Index in that if bit 5 is enabled in the BitMap than the index must contain the index 5.</p>
+ *
+ *
+ * <h4>Implementation Notes</h4>
+ *
+ * <p>The architecture is designed so that the implementation of the storage of bits is abstracted. Rather than specifying a
+ * specific state representation we require that all Bloom filters implement the BitMapExtractor and IndexExtractor interfaces,
+ * Counting based Bloom filters implement {@code CellExtractor} as well.  There are static
+ * methods in the various Extractor interfaces to convert from one type to another.</p>
+ *
+ * <p>Programs that utilize the Bloom filters may use the {@code BitMapExtractor} or {@code IndexExtractor} to retrieve
+ * or process a representation of the internal structure.
+ * Additional methods are available in the {@code BitMaps} class to assist in manipulation of BitMap representations.</p>
+ *
+ * <p>The Bloom filter is an interface that requires implementation of 9 methods:</p>
  * <ul>
  * <li>{@link BloomFilter#cardinality()} returns the number of bits enabled in the Bloom filter.</li>
  *
@@ -83,7 +113,8 @@
  *
  * <h3>Shape</h3>
  *
- * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions</p>
+ * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
+ * by the number of exptected items and desired false positive rate.</p>
  *
  * <h3>Hasher</h3>
  *
