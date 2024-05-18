@@ -26,7 +26,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 
 /**
- * Implementation of {@link BidiMap} that uses two {@link HashMap} instances.
+ * Implements {@link BidiMap} with two {@link HashMap} instances.
  * <p>
  * Two {@link HashMap} instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries.

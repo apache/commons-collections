@@ -37,7 +37,7 @@ import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
 
 /**
- * Implementation of {@link BidiMap} that uses two {@link TreeMap} instances.
+ * Implements {@link BidiMap} with two {@link TreeMap} instances.
  * <p>
  * The setValue() method on iterators will succeed only if the new value being set is
  * not already in the bidi map.

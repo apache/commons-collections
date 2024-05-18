@@ -48,7 +48,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         extends AbstractMapDecorator<K, V> {
 
     /**
-     * Implementation of an entry set that checks additions via setValue.
+     * Implements an entry set that checks additions via setValue.
      */
     private final class EntrySet extends AbstractSetDecorator<Map.Entry<K, V>> {
 
@@ -107,7 +107,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     }
 
     /**
-     * Implementation of an entry set iterator that checks additions via setValue.
+     * Implements an entry set iterator that checks additions via setValue.
      */
     private final class EntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
 
@@ -128,7 +128,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     }
 
     /**
-     * Implementation of a map entry that checks additions via setValue.
+     * Implements a map entry that checks additions via setValue.
      */
     private final class MapEntry extends AbstractMapEntryDecorator<K, V> {
 

@@ -21,7 +21,7 @@ import java.util.Map;
 import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 
 /**
- * Implementation of a PATRICIA Trie (Practical Algorithm to Retrieve Information
+ * Implements a PATRICIA Trie (Practical Algorithm to Retrieve Information
  * Coded in Alphanumeric).
  * <p>
  * A PATRICIA {@link org.apache.commons.collections4.Trie} is a compressed
