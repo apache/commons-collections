@@ -45,8 +45,8 @@
  *
  * <ul>
  *     <li>BitMap - In the bloomfilter package a BitMap is not a structure but a logical construct.  It is conceptualized
- *     as an ordered collection of {@code long} values each of which is interpreted as a 64-bit bit vector.  The mapping of
- *     bits into the {@code long} values ss described in the the {@code BitMaps} javadoc.</li>
+ *     as an ordered collection of {@code long} values each of which is interpreted as the enabled true/false state of 64 continuous indices.  The mapping of
+ *     bits into the {@code long} values is described in the {@code BitMaps} javadoc.</li>
  *
  *     <li>Index - In the bloomfilter package an Index is a logical collection of {@code int}s specifying the enabled
  *     bits in the BitMap.</li>
@@ -56,20 +56,20 @@
  *
  *     <li>Extractor - The Extractors are {@code FunctionalInterfaces} that are conceptually iterators on a {@code BitMap}, an {@code Index}, or a
  *     collection of {@code Cell}s, with an early termination switch.  Extractors have
- *     names like {@code BitMapExtractor} or {@code IndexExtractor} and  have a {@code processXs} methods that take a
+ *     names like {@code BitMapExtractor} or {@code IndexExtractor} and have a {@code processXs} methods that take a
  *     {@code Predicate<X>} argument (e.g. {@code processBitMaps(LongPredicate)} or {@code processIndicies(IntPredicate)}).
  *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
  * </ul>
  *
- * <p>There is an obvious association between the BitMap and the Index in that if bit 5 is enabled in the BitMap than the index must contain the index 5.</p>
+ * <p>There is an obvious association between the BitMap and the Index in that if bit 5 is enabled in the BitMap than the Index must contain the value 5.</p>
  *
  *
  * <h4>Implementation Notes</h4>
  *
  * <p>The architecture is designed so that the implementation of the storage of bits is abstracted. Rather than specifying a
  * specific state representation we require that all Bloom filters implement the BitMapExtractor and IndexExtractor interfaces,
- * Counting based Bloom filters implement {@code CellExtractor} as well.  There are static
+ * Counting-based Bloom filters implement {@code CellExtractor} as well.  There are static
  * methods in the various Extractor interfaces to convert from one type to another.</p>
  *
  * <p>Programs that utilize the Bloom filters may use the {@code BitMapExtractor} or {@code IndexExtractor} to retrieve
@@ -114,7 +114,7 @@
  * <h3>Shape</h3>
  *
  * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
- * by the number of exptected items and desired false positive rate.</p>
+ * by the number of expected items and desired false positive rate.</p>
  *
  * <h3>Hasher</h3>
  *
