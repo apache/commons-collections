@@ -251,7 +251,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             }
             final HashEntry<K, V> newCurrent = next;
             if (newCurrent == null)  {
-                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
+                throw new NoSuchElementException(NO_NEXT_ENTRY);
             }
             final HashEntry<K, V>[] data = parent.data;
             int i = hashIndex;
@@ -267,7 +267,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
 
         public void remove() {
             if (last == null) {
-                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
+                throw new IllegalStateException(REMOVE_INVALID);
             }
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -301,7 +301,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         public K getKey() {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
+                throw new IllegalStateException(GETKEY_INVALID);
             }
             return current.getKey();
         }
@@ -310,7 +310,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         public V getValue() {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
+                throw new IllegalStateException(GETVALUE_INVALID);
             }
             return current.getValue();
         }
@@ -324,7 +324,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         public V setValue(final V value) {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
+                throw new IllegalStateException(SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
