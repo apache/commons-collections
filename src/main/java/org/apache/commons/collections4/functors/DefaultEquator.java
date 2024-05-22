@@ -48,7 +48,7 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
      * @return the singleton instance
      */
     public static <T> DefaultEquator<T> defaultEquator() {
-        return DefaultEquator.INSTANCE;
+        return INSTANCE;
     }
 
     /**
