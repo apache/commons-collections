@@ -1217,7 +1217,7 @@ public class MapUtils {
      * @since 3.2
      */
     public static boolean isNotEmpty(final Map<?, ?> map) {
-        return !MapUtils.isEmpty(map);
+        return !isEmpty(map);
     }
 
     /**
