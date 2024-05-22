@@ -148,7 +148,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
             }
             return new String(chars);
         }
-        return AbstractHashedMap.NULL;
+        return NULL;
     }
 
     /**

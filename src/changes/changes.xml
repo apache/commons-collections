@@ -43,6 +43,7 @@
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
