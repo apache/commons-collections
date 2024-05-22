@@ -179,7 +179,7 @@ public class PredicateUtils {
     public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1,
                                                    final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        final Predicate<T> onePredicate = PredicateUtils.onePredicate(predicate1, predicate2);
+        final Predicate<T> onePredicate = onePredicate(predicate1, predicate2);
         return onePredicate;
     }
 
@@ -252,7 +252,7 @@ public class PredicateUtils {
      * and have no parameters. If the input object is null, a
      * PredicateException is thrown.
      * <p>
-     * For example, {@code PredicateUtils.invokerPredicate("isEmpty");}
+     * For ePredicateUtils.invokerPredicate("isEmpty");}
      * will call the {@code isEmpty} method on the input object to
      * determine the predicate result.
      *
@@ -308,7 +308,7 @@ public class PredicateUtils {
     public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1,
                                                     final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        final Predicate<T> nonePredicate = PredicateUtils.nonePredicate(predicate1, predicate2);
+        final Predicate<T> nonePredicate = nonePredicate(predicate1, predicate2);
         return nonePredicate;
     }
 
