@@ -30,6 +30,7 @@ jobs:
         java: [ 8, 11, 17, 21 ]
         experimental: [false]
         include:
+          # https://github.com/easymock/easymock/issues/547
           - java: 22
             experimental: true
           - java: 23-ea
