@@ -92,11 +92,11 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
         // All bits are 0
         if (allNull) {
-            return KeyAnalyzer.NULL_BIT_KEY;
+            return NULL_BIT_KEY;
         }
 
         // Both keys are equal
-        return KeyAnalyzer.EQUAL_BIT_KEY;
+        return EQUAL_BIT_KEY;
     }
 
     @Override
