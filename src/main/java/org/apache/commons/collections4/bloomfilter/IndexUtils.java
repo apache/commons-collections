@@ -37,7 +37,7 @@ final class IndexUtils {
      */
     static int[] ensureCapacityForAdd(final int[] array, final int index) {
         if (index >= array.length) {
-            return Arrays.copyOf(array, (int) Math.min(IndexUtils.MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
+            return Arrays.copyOf(array, (int) Math.min(MAX_ARRAY_SIZE, Math.max(array.length * 2L, index + 1)));
         }
         return array;
     }
