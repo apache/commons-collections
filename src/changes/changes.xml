@@ -32,18 +32,18 @@
      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Predicate in favor of java.util.function.Predicate.</action>
      <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Transformer in favor of java.util.function.Function.</action>
      <action issue="COLLECTIONS-853" type="fix" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Change LayerManager to use List and added generics to LayerdedBloomFilter #481.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CollectionUtils.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in IndexUtils.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in MapUtils.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in PredicateUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in IndexUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
+     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot">Bump org.apache.commons:commons-parent from 67 to 69 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
