@@ -74,8 +74,8 @@ public class CollectionUtils {
          * @param b  the second collection
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
-            cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
+            cardinalityA = getCardinalityMap(a);
+            cardinalityB = getCardinalityMap(b);
         }
 
         /**
@@ -778,7 +778,7 @@ public class CollectionUtils {
      * @return an empty collection if the argument is {@code null}
      */
     public static <T> Collection<T> emptyIfNull(final Collection<T> collection) {
-        return collection == null ? CollectionUtils.<T>emptyCollection() : collection;
+        return collection == null ? emptyCollection() : collection;
     }
 
     /**
@@ -1328,7 +1328,7 @@ public class CollectionUtils {
     public static boolean isProperSubCollection(final Collection<?> a, final Collection<?> b) {
         Objects.requireNonNull(a, "a");
         Objects.requireNonNull(b, "b");
-        return a.size() < b.size() && CollectionUtils.isSubCollection(a, b);
+        return a.size() < b.size() && isSubCollection(a, b);
     }
 
     /**
@@ -1599,7 +1599,7 @@ public class CollectionUtils {
         if (input.size() < endIndex) {
             throw new IndexOutOfBoundsException("The end index can't be greater than the size of collection.");
         }
-        return CollectionUtils.removeCount(input, startIndex, endIndex - startIndex);
+        return removeCount(input, startIndex, endIndex - startIndex);
     }
 
     /**
