@@ -437,19 +437,23 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return super.nextEntry().getValue();
         }
     }
+
     protected static final String NO_NEXT_ENTRY = "No next() entry in the iteration";
     protected static final String NO_PREVIOUS_ENTRY = "No previous() entry in the iteration";
-
     protected static final String REMOVE_INVALID = "remove() can only be called once after next()";
     protected static final String GETKEY_INVALID = "getKey() can only be called after next() and before remove()";
     protected static final String GETVALUE_INVALID = "getValue() can only be called after next() and before remove()";
     protected static final String SETVALUE_INVALID = "setValue() can only be called after next() and before remove()";
+
     /** The default capacity to use */
     protected static final int DEFAULT_CAPACITY = 16;
+
     /** The default threshold to use */
     protected static final int DEFAULT_THRESHOLD = 12;
+
     /** The default load factor to use */
     protected static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
     /** The maximum capacity allowed */
     protected static final int MAXIMUM_CAPACITY = 1 << 30;
 
