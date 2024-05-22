@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -272,30 +271,6 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
         @Override
         public synchronized int size() {
             return 0;
-        }
-
-        @Override
-        public void store(final OutputStream out, final String comments) throws IOException {
-            // Implement as super
-            super.store(out, comments);
-        }
-
-        @Override
-        public void store(final Writer writer, final String comments) throws IOException {
-            // Implement as super
-            super.store(writer, comments);
-        }
-
-        @Override
-        public void storeToXML(final OutputStream os, final String comment) throws IOException {
-            // Implement as super
-            super.storeToXML(os, comment);
-        }
-
-        @Override
-        public void storeToXML(final OutputStream os, final String comment, final String encoding) throws IOException {
-            // Implement as super
-            super.storeToXML(os, comment, encoding);
         }
 
         @Override
