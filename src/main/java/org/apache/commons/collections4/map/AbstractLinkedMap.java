@@ -175,7 +175,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
                 throw new ConcurrentModificationException();
             }
             if (next == parent.header)  {
-                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
+                throw new NoSuchElementException(NO_NEXT_ENTRY);
             }
             last = next;
             next = next.after;
@@ -188,7 +188,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             }
             final LinkEntry<K, V> previous = next.before;
             if (previous == parent.header)  {
-                throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
+                throw new NoSuchElementException(NO_PREVIOUS_ENTRY);
             }
             next = previous;
             last = previous;
@@ -197,7 +197,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
         public void remove() {
             if (last == null) {
-                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
+                throw new IllegalStateException(REMOVE_INVALID);
             }
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -235,7 +235,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         public K getKey() {
             final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
+                throw new IllegalStateException(GETKEY_INVALID);
             }
             return current.getKey();
         }
@@ -244,7 +244,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         public V getValue() {
             final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
+                throw new IllegalStateException(GETVALUE_INVALID);
             }
             return current.getValue();
         }
@@ -263,7 +263,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         public V setValue(final V value) {
             final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
+                throw new IllegalStateException(SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
