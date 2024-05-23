@@ -83,7 +83,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
          *
          * @param cleanup the Consumer that will modify the list of filters removing out
          *                dated or stale filters.
-         * @return this
+         * @return {@code this} instance.
          */
         public Builder<T> setCleanup(final Consumer<Deque<T>> cleanup) {
             this.cleanup = cleanup;
