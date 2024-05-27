@@ -76,7 +76,6 @@ public interface BitMapExtractor {
      */
     static BitMapExtractor fromIndexExtractor(final IndexExtractor extractor, final int numberOfBits) {
         Objects.requireNonNull(extractor, "extractor");
-        Objects.requireNonNull(numberOfBits, "numberOfBits");
 
         final long[] result = new long[BitMaps.numberOfBitMaps(numberOfBits)];
         extractor.processIndices(i -> {
@@ -95,7 +94,7 @@ public interface BitMapExtractor {
      * @return An array of bit map data.
      */
     default long[] asBitMapArray() {
-        class Bits {
+        final class Bits {
             private long[] data = new long[16];
             private int size;
 

@@ -185,7 +185,6 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      */
     @Override
     default boolean merge(final BitMapExtractor bitMapExtractor) {
-        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
         return merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
@@ -235,9 +234,12 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: If indices that are returned multiple times should be incremented multiple times convert the IndexExtractor
-     * to a CellExtractor and add that.</p>
-     *
+     * <p>Notes:</p>
+     * <ul>
+     * <li>If indices that are returned multiple times should be incremented multiple times convert the IndexExtractor
+     * to a CellExtractor and add that.</li>
+     * <li>Implementations should throw {@code IllegalArgumentException} on and no other exception on bad input.</li>
+     * </ul>
      * @param indexExtractor the IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
@@ -268,7 +270,6 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #subtract(CellExtractor)
      */
     default boolean remove(final BitMapExtractor bitMapExtractor) {
-        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
         return remove(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
@@ -288,7 +289,6 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #subtract(CellExtractor)
      */
     default boolean remove(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
         return remove((IndexExtractor) other);
     }
 
@@ -353,6 +353,10 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      */
     boolean subtract(CellExtractor other);
 
+    /**
+     * The default implementation is a no-op since the counting bloom filter returns an unique IndexExtractor by default.
+     * @return this counting Bloom filter.
+     */
     @Override
     default IndexExtractor uniqueIndices() {
         return this;
