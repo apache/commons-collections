@@ -62,8 +62,8 @@
  *     or {@code false} to stop it. </li>
  * </ul>
  *
- * <p>There is an obvious association between the BitMap and the Index in that if bit 5 is enabled in the BitMap than the indices must contain the
- * value 5.</p>
+ * <p>There is an obvious association between the BitMap and the Index, as defined above, in that if bit 5 is enabled in the
+ * BitMap than the Index must contain the value 5.</p>
  *
  *
  * <h4>Implementation Notes</h4>

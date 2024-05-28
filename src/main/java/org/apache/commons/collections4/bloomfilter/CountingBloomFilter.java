@@ -238,7 +238,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * <ul>
      * <li>If indices that are returned multiple times should be incremented multiple times convert the IndexExtractor
      * to a CellExtractor and add that.</li>
-     * <li>Implementations should throw {@code IllegalArgumentException} on and no other exception on bad input.</li>
+     * <li>Implementations should throw {@code IllegalArgumentException} and no other exception on bad input.</li>
      * </ul>
      * @param indexExtractor the IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
