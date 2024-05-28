@@ -130,10 +130,10 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
 
             @Override
             public int[] asIndexArray() {
@@ -142,7 +142,7 @@ public class EnhancedDoubleHasher implements Hasher {
 
                 // This method needs to return duplicate indices
 
-                forEachIndex(i -> {
+                processIndices(i -> {
                     result[idx[0]++] = i;
                     return true;
                 });
@@ -150,7 +150,7 @@ public class EnhancedDoubleHasher implements Hasher {
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
+            public boolean processIndices(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
                 // Enhanced double hashing:
@@ -166,8 +166,8 @@ public class EnhancedDoubleHasher implements Hasher {
                 // The final hash is:
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
-                int index = BitMap.mod(initial, bits);
-                int inc = BitMap.mod(increment, bits);
+                int index = BitMaps.mod(initial, bits);
+                int inc = BitMaps.mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
                 if (k > bits) {

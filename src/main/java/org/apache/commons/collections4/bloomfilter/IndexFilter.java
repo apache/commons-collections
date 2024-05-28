@@ -71,13 +71,13 @@ public final class IndexFilter {
          * @param shape The shape that is being generated.
          */
         BitMapTracker(final Shape shape) {
-            bits = new long[BitMap.numberOfBitMaps(shape.getNumberOfBits())];
+            bits = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
         }
 
         @Override
         public boolean test(final int number) {
-            final boolean retval = !BitMap.contains(bits, number);
-            BitMap.set(bits, number);
+            final boolean retval = !BitMaps.contains(bits, number);
+            BitMaps.set(bits, number);
             return retval;
         }
     }
@@ -105,7 +105,7 @@ public final class IndexFilter {
     private IndexFilter(final Shape shape, final IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
-        if (BitMap.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
+        if (BitMaps.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
                 * Integer.BYTES) {
             this.tracker = new BitMapTracker(shape);
         } else {

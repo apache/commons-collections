@@ -51,15 +51,15 @@ import java.util.Objects;
  * of the filter after such an operation. For example are the cells not updated,
  * partially updated or updated entirely before the exception is raised.</p>
  *
- * @see CellProducer
+ * @see CellExtractor
  * @since 4.5
  */
-public interface CountingBloomFilter extends BloomFilter, CellProducer {
+public interface CountingBloomFilter extends BloomFilter, CellExtractor {
 
     // Query Operations
 
     /**
-     * Adds the specified CellProducer to this Bloom filter.
+     * Adds the specified CellExtractor to this Bloom filter.
      *
      * <p>Specifically
      * all cells for the indexes identified by the {@code other} will be incremented
@@ -67,12 +67,12 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param other the CellProducer to add.
+     * @param other the CellExtractor to add.
      * @return {@code true} if the addition was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CellProducer)
+     * @see #subtract(CellExtractor)
      */
-    boolean add(CellProducer other);
+    boolean add(CellExtractor other);
 
     /**
      * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
@@ -88,19 +88,19 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     int getMaxCell();
 
     /**
-     * Determines the maximum number of times the BitMapProducer could have been merged into this
+     * Determines the maximum number of times the BitMapExtractor could have been merged into this
      * counting filter.
-     * @param bitMapProducer the BitMapProducer to provide the indices.
-     * @return the maximum number of times the BitMapProducer could have been inserted.
+     * @param bitMapExtractor the BitMapExtractor to provide the indices.
+     * @return the maximum number of times the BitMapExtractor could have been inserted.
      */
-    default int getMaxInsert(final BitMapProducer bitMapProducer) {
-        if (!contains(bitMapProducer)) {
+    default int getMaxInsert(final BitMapExtractor bitMapExtractor) {
+        if (!contains(bitMapExtractor)) {
             return 0;
         }
-        final long[] bitMaps = bitMapProducer.asBitMapArray();
+        final long[] bitMaps = bitMapExtractor.asBitMapArray();
         final int[] max = { Integer.MAX_VALUE };
-        forEachCell((x, y) -> {
-            if ((bitMaps[BitMap.getLongIndex(x)] & BitMap.getLongBit(x)) != 0) {
+        processCells((x, y) -> {
+            if ((bitMaps[BitMaps.getLongIndex(x)] & BitMaps.getLongBit(x)) != 0) {
                 max[0] = max[0] <= y ? max[0] : y;
             }
             return true;
@@ -115,15 +115,15 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @return the maximum number of times the Bloom filter could have been inserted.
      */
     default int getMaxInsert(final BloomFilter bloomFilter) {
-        return getMaxInsert((BitMapProducer) bloomFilter);
+        return getMaxInsert((BitMapExtractor) bloomFilter);
     }
 
     /**
-     * Determines the maximum number of times the Cell Producer could have been add.
-     * @param cellProducer the producer of cells.
-     * @return the maximum number of times the CellProducer could have been inserted.
+     * Determines the maximum number of times the Cell Extractor could have been added.
+     * @param cellExtractor the extractor of cells.
+     * @return the maximum number of times the CellExtractor could have been inserted.
      */
-    int getMaxInsert(CellProducer cellProducer);
+    int getMaxInsert(CellExtractor cellExtractor);
 
     /**
      * Determines the maximum number of times the Hasher could have been merged into this
@@ -138,16 +138,16 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     // Modification Operations
 
     /**
-     * Determines the maximum number of times the IndexProducer could have been merged
+     * Determines the maximum number of times the IndexExtractor could have been merged
      * into this counting filter.
-     * <p>To determine how many times an indxProducer could have been added create a CellProducer
-     * from the indexProducer and check that</p>
-     * @param idxProducer the producer to drive the count check.
-     * @return the maximum number of times the IndexProducer could have been inserted.
-     * @see #getMaxInsert(CellProducer)
+     * <p>To determine how many times an indexExtractor could have been added create a CellExtractor
+     * from the indexExtractor and check that</p>
+     * @param indexExtractor the extractor to drive the count check.
+     * @return the maximum number of times the IndexExtractor could have been inserted.
+     * @see #getMaxInsert(CellExtractor)
      */
-    default int getMaxInsert(final IndexProducer idxProducer) {
-        return getMaxInsert(CellProducer.from(idxProducer.uniqueIndices()) );
+    default int getMaxInsert(final IndexExtractor indexExtractor) {
+        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()) );
     }
 
     /**
@@ -172,21 +172,20 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     boolean isValid();
 
     /**
-     * Merges the specified BitMap producer into this Bloom filter.
+     * Merges the specified BitMap extractor into this Bloom filter.
      *
-     * <p>Specifically: all cells for the indexes identified by the {@code bitMapProducer} will be incremented by 1.</p>
+     * <p>Specifically: all cells for the indexes identified by the {@code bitMapExtractor} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapProducer the BitMapProducer
+     * @param bitMapExtractor the BitMapExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #add(CellExtractor)
      */
     @Override
-    default boolean merge(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+    default boolean merge(final BitMapExtractor bitMapExtractor) {
+        return merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     /**
@@ -195,19 +194,19 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * <p>Specifically: all cells for the indexes identified by the {@code other} filter will be incremented by 1.</p>
      *
      * <p>Note: If the other filter is a counting Bloom filter the other filter's cells are ignored and it is treated as an
-     * IndexProducer.</p>
+     * IndexExtractor.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param other the other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #add(CellExtractor)
      */
     @Override
     default boolean merge(final BloomFilter other) {
         Objects.requireNonNull(other, "other");
-        return merge((IndexProducer) other);
+        return merge((IndexExtractor) other);
     }
 
     /**
@@ -220,7 +219,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @param hasher the hasher
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #add(CellExtractor)
      */
     @Override
     default boolean merge(final Hasher hasher) {
@@ -229,25 +228,28 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     }
 
     /**
-     * Merges the specified index producer into this Bloom filter.
+     * Merges the specified index extractor into this Bloom filter.
      *
-     * <p>Specifically: all unique cells for the indices identified by the {@code indexProducer} will be incremented by 1.</p>
+     * <p>Specifically: all unique cells for the indices identified by the {@code indexExtractor} will be incremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: If indices that are returned multiple times should be incremented multiple times convert the IndexProducer
-     * to a CellProducer and add that.</p>
-     *
-     * @param indexProducer the IndexProducer
+     * <p>Notes:</p>
+     * <ul>
+     * <li>If indices that are returned multiple times should be incremented multiple times convert the IndexExtractor
+     * to a CellExtractor and add that.</li>
+     * <li>Implementations should throw {@code IllegalArgumentException} and no other exception on bad input.</li>
+     * </ul>
+     * @param indexExtractor the IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #add(CellExtractor)
      */
     @Override
-    default boolean merge(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
+    default boolean merge(final IndexExtractor indexExtractor) {
+        Objects.requireNonNull(indexExtractor, "indexExtractor");
         try {
-            return add(CellProducer.from(indexProducer.uniqueIndices()));
+            return add(CellExtractor.from(indexExtractor.uniqueIndices()));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()), e);
@@ -255,21 +257,20 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     }
 
     /**
-     * Removes the specified BitMapProducer from this Bloom filter.
+     * Removes the specified BitMapExtractor from this Bloom filter.
      *
-     * <p>Specifically all cells for the indices produced by the {@code bitMapProducer} will be
+     * <p>Specifically all cells for the indices produced by the {@code bitMapExtractor} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapProducer the BitMapProducer to provide the indexes
+     * @param bitMapExtractor the BitMapExtractor to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CellProducer)
+     * @see #subtract(CellExtractor)
      */
-    default boolean remove(final BitMapProducer bitMapProducer) {
-        Objects.requireNonNull(bitMapProducer, "bitMapProducer");
-        return remove(IndexProducer.fromBitMapProducer(bitMapProducer));
+    default boolean remove(final BitMapExtractor bitMapExtractor) {
+        return remove(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
     }
 
     /**
@@ -278,18 +279,17 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * <p>Specifically: all cells for the indexes identified by the {@code other} filter will be decremented by 1.</p>
      *
      * <p>Note: If the other filter is a counting Bloom filter the other filter's cells are ignored and it is treated as an
-     * IndexProducer.</p>
+     * IndexExtractor.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
      * @param other the other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CellProducer)
+     * @see #subtract(CellExtractor)
      */
     default boolean remove(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        return remove((IndexProducer) other);
+        return remove((IndexExtractor) other);
     }
 
     /**
@@ -303,7 +303,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      * @param hasher the hasher to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CellProducer)
+     * @see #subtract(CellExtractor)
      */
     default boolean remove(final Hasher hasher) {
         Objects.requireNonNull(hasher, "hasher");
@@ -311,25 +311,25 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
     }
 
     /**
-     * Removes the values from the specified IndexProducer from the Bloom filter from this Bloom filter.
+     * Removes the values from the specified IndexExtractor from the Bloom filter from this Bloom filter.
      *
      * <p>Specifically all cells for the unique indices produced by the {@code hasher} will be
      * decremented by 1.</p>
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * <p>Note: If indices that are returned multiple times should be decremented multiple times convert the IndexProducer
-     * to a CellProducer and subtract that.</p>
+     * <p>Note: If indices that are returned multiple times should be decremented multiple times convert the IndexExtractor
+     * to a CellExtractor and subtract that.</p>
      *
-     * @param indexProducer the IndexProducer to provide the indexes
+     * @param indexExtractor the IndexExtractor to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
-     * @see #subtract(CellProducer)
+     * @see #subtract(CellExtractor)
      */
-    default boolean remove(final IndexProducer indexProducer) {
-        Objects.requireNonNull(indexProducer, "indexProducer");
+    default boolean remove(final IndexExtractor indexExtractor) {
+        Objects.requireNonNull(indexExtractor, "indexExtractor");
         try {
-            return subtract(CellProducer.from(indexProducer.uniqueIndices()));
+            return subtract(CellExtractor.from(indexExtractor.uniqueIndices()));
         } catch (final IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(
                     String.format("Filter only accepts values in the [0,%d) range", getShape().getNumberOfBits()));
@@ -338,7 +338,7 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
 
 
     /**
-     * Adds the specified CellProducer to this Bloom filter.
+     * Adds the specified CellExtractor to this Bloom filter.
      *
      * <p>Specifically
      * all cells for the indexes identified by the {@code other} will be decremented
@@ -346,15 +346,19 @@ public interface CountingBloomFilter extends BloomFilter, CellProducer {
      *
      * <p>This method will return true if the filter is valid after the operation.</p>
      *
-     * @param other the CellProducer to subtract.
+     * @param other the CellExtractor to subtract.
      * @return {@code true} if the subtraction was successful and the state is valid
      * @see #isValid()
-     * @see #add(CellProducer)
+     * @see #add(CellExtractor)
      */
-    boolean subtract(CellProducer other);
+    boolean subtract(CellExtractor other);
 
+    /**
+     * The default implementation is a no-op since the counting bloom filter returns an unique IndexExtractor by default.
+     * @return this counting Bloom filter.
+     */
     @Override
-    default IndexProducer uniqueIndices() {
+    default IndexExtractor uniqueIndices() {
         return this;
     }
 }

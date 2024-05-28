@@ -31,14 +31,14 @@ final class NullHasher implements Hasher {
      */
     static final NullHasher INSTANCE = new NullHasher();
 
-    private static final IndexProducer PRODUCER = new IndexProducer() {
+    private static final IndexExtractor INDEX_EXTRACTOR = new IndexExtractor() {
         @Override
         public int[] asIndexArray() {
             return new int[0];
         }
 
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
+        public boolean processIndices(final IntPredicate consumer) {
             Objects.requireNonNull(consumer, "consumer");
             return true;
         }
@@ -49,8 +49,8 @@ final class NullHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return PRODUCER;
+        return INDEX_EXTRACTOR;
     }
 }

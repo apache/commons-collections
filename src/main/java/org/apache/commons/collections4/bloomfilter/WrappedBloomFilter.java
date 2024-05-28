@@ -62,8 +62,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final BitMapProducer bitMapProducer) {
-        return wrapped.contains(bitMapProducer);
+    public boolean contains(final BitMapExtractor bitMapExtractor) {
+        return wrapped.contains(bitMapExtractor);
     }
 
     @Override
@@ -77,8 +77,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean contains(final IndexProducer indexProducer) {
-        return wrapped.contains(indexProducer);
+    public boolean contains(final IndexExtractor indexExtractor) {
+        return wrapped.contains(indexExtractor);
     }
 
     @Override
@@ -97,18 +97,18 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean forEachBitMap(final LongPredicate predicate) {
-        return wrapped.forEachBitMap(predicate);
+    public boolean processBitMaps(final LongPredicate predicate) {
+        return wrapped.processBitMaps(predicate);
     }
 
     @Override
-    public boolean forEachBitMapPair(final BitMapProducer other, final LongBiPredicate func) {
-        return wrapped.forEachBitMapPair(other, func);
+    public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
+        return wrapped.processBitMapPairs(other, func);
     }
 
     @Override
-    public boolean forEachIndex(final IntPredicate predicate) {
-        return wrapped.forEachIndex(predicate);
+    public boolean processIndices(final IntPredicate predicate) {
+        return wrapped.processIndices(predicate);
     }
 
     @Override
@@ -126,8 +126,8 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BitMapProducer bitMapProducer) {
-        return wrapped.merge(bitMapProducer);
+    public boolean merge(final BitMapExtractor bitMapExtractor) {
+        return wrapped.merge(bitMapExtractor);
     }
 
     @Override
@@ -141,7 +141,7 @@ public abstract class WrappedBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final IndexProducer indexProducer) {
-        return wrapped.merge(indexProducer);
+    public boolean merge(final IndexExtractor indexExtractor) {
+        return wrapped.merge(indexExtractor);
     }
 }

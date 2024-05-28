@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 /**
- * A Hasher creates IndexProducer based on the hash implementation and the
+ * A Hasher creates IndexExtractor based on the hash implementation and the
  * provided Shape.
  *
  * @since 4.5
@@ -25,14 +25,14 @@ package org.apache.commons.collections4.bloomfilter;
 public interface Hasher {
 
     /**
-     * Creates an IndexProducer for this hasher based on the Shape.
+     * Creates an IndexExtractor for this hasher based on the Shape.
      *
-     * <p>The {@code IndexProducer} will create indices within the range defined by the number of bits in
+     * <p>The {@code IndexExtractor} will create indices within the range defined by the number of bits in
      * the shape. The total number of indices will respect the number of hash functions per item
      * defined by the shape. However the count of indices may not be a multiple of the number of
      * hash functions if the implementation has removed duplicates.</p>
      *
-     * <p>This IndexProducer must be deterministic in that it must return the same indices for the
+     * <p>This IndexExtractor must be deterministic in that it must return the same indices for the
      * same Shape.</p>
      *
      * <p>No guarantee is made as to order of indices.</p>
@@ -41,5 +41,5 @@ public interface Hasher {
      * @param shape the shape of the desired Bloom filter.
      * @return the iterator of integers
      */
-    IndexProducer indices(Shape shape);
+    IndexExtractor indices(Shape shape);
 }

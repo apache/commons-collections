@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.Arrays;
 
 /**
- * Provides functions to assist in IndexProducer creation and manipulation.
- * @see IndexProducer
+ * Provides functions to assist in IndexExtractor creation and manipulation.
+ * @see IndexExtractor
  */
 final class IndexUtils {
 

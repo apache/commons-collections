@@ -22,19 +22,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
+public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
 
     protected abstract Hasher createEmptyHasher();
 
     @Override
-    protected IndexProducer createEmptyProducer() {
+    protected IndexExtractor createEmptyExtractor() {
         return createEmptyHasher().indices(getTestShape());
     }
 
     protected abstract Hasher createHasher();
 
     @Override
-    protected IndexProducer createProducer() {
+    protected IndexExtractor createExtractor() {
         return createHasher().indices(getTestShape());
     }
 
@@ -68,7 +68,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
     public void testHashing(final int k, final int m) {
         final int[] count = {0};
         final Hasher hasher = createHasher();
-        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+        hasher.indices(Shape.fromKM(k, m)).processIndices(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return true;
@@ -78,7 +78,7 @@ public abstract class AbstractHasherTest extends AbstractIndexProducerTest {
 
         // test early exit
         count[0] = 0;
-        hasher.indices(Shape.fromKM(k, m)).forEachIndex(i -> {
+        hasher.indices(Shape.fromKM(k, m)).processIndices(i -> {
             assertTrue(i >= 0 && i < m, () -> "Out of range: " + i + ", m=" + m);
             count[0]++;
             return false;

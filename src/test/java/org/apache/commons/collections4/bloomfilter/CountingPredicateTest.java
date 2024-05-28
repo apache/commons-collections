@@ -55,17 +55,17 @@ public class CountingPredicateTest {
         assertTrue(cp.test(Integer.valueOf(3)));
         assertEquals(expected, result);
         expected.add(Pair.of(2, null));
-        assertTrue(cp.forEachRemaining());
+        assertTrue(cp.processRemaining());
         assertEquals(expected, result);
 
         // if the other array is zero length then cp.test() will not be called so
-        // we can just call cp.forEachRemaining() here.
+        // we can just call cp.processRemaining() here.
         expected.clear();
         expected.add(Pair.of(1, null));
         expected.add(Pair.of(2, null));
         result.clear();
         cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x != null, result));
-        assertTrue(cp.forEachRemaining());
+        assertTrue(cp.processRemaining());
         assertEquals(expected, result);
 
         // If a test fails then the result should be false and the rest of the list should
@@ -74,7 +74,7 @@ public class CountingPredicateTest {
         expected.add(Pair.of(1, null));
         result.clear();
         cp = new CountingPredicate<>(ary, makeFunc((x, y) -> x == Integer.valueOf(1), result));
-        assertFalse(cp.forEachRemaining());
+        assertFalse(cp.processRemaining());
         assertEquals(expected, result);
     }
 
@@ -92,7 +92,7 @@ public class CountingPredicateTest {
         assertTrue(cp.test(3));
         assertTrue(cp.test(3));
         assertEquals(expected, result);
-        assertTrue(cp.forEachRemaining());
+        assertTrue(cp.processRemaining());
         assertEquals(expected, result);
     }
 
@@ -112,7 +112,7 @@ public class CountingPredicateTest {
             assertTrue(cp.test(i));
         }
         assertEquals(expected, result);
-        assertTrue(cp.forEachRemaining());
+        assertTrue(cp.processRemaining());
         assertEquals(expected, result);
     }
 }

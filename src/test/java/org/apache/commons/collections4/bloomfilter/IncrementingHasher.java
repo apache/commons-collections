@@ -52,10 +52,10 @@ public final class IncrementingHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
             @Override
             public int[] asIndexArray() {
                 final int[] result = new int[shape.getNumberOfHashFunctions()];
@@ -63,7 +63,7 @@ public final class IncrementingHasher implements Hasher {
 
                 // This method needs to return duplicate indices
 
-                forEachIndex(i -> {
+                processIndices(i -> {
                     result[idx[0]++] = i;
                     return true;
                 });
@@ -71,7 +71,7 @@ public final class IncrementingHasher implements Hasher {
             }
 
             @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
+            public boolean processIndices(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
 
@@ -80,8 +80,8 @@ public final class IncrementingHasher implements Hasher {
                 // This avoids any modulus operation inside the while loop. It uses a long index
                 // to avoid overflow.
 
-                long index = BitMap.mod(initial, bits);
-                final int inc = BitMap.mod(increment, bits);
+                long index = BitMaps.mod(initial, bits);
+                final int inc = BitMaps.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     if (!consumer.test((int) index)) {

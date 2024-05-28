@@ -134,7 +134,7 @@ public class LayerManagerTest {
 
         assertEquals(underTest.getDepth(), copy.getDepth());
         assertTrue(
-                underTest.forEachBloomFilterPair(copy, (x, y) -> Arrays.equals(x.asBitMapArray(), y.asBitMapArray())));
+                underTest.processBloomFilterPair(copy, (x, y) -> Arrays.equals(x.asBitMapArray(), y.asBitMapArray())));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class LayerManagerTest {
             underTest.getTarget().merge(bf);
         }
         final List<BloomFilter> lst2 = new ArrayList<>();
-        underTest.forEachBloomFilter(lst2::add);
+        underTest.processBloomFilters(lst2::add);
         assertEquals(10, lst.size());
         assertEquals(10, lst2.size());
         for (int i = 0; i < lst.size(); i++) {
@@ -242,7 +242,7 @@ public class LayerManagerTest {
         assertTrue(list.isEmpty());
 
         // does not remove a populated filter.
-        bf.merge(IndexProducer.fromIndexArray(1));
+        bf.merge(IndexExtractor.fromIndexArray(1));
         list.add(bf);
         assertEquals(bf, list.get(0));
         underTest.accept(list);

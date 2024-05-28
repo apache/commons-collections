@@ -51,7 +51,7 @@ import java.util.function.Supplier;
  *
  * @since 4.5
  */
-public class LayerManager<T extends BloomFilter> implements BloomFilterProducer {
+public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor {
 
     /**
      * Builder to create Layer Manager
@@ -358,7 +358,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterProducer 
      *         {@code true} if all filters pass the test.
      */
     @Override
-    public boolean forEachBloomFilter(final Predicate<BloomFilter> bloomFilterPredicate) {
+    public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
         for (final BloomFilter bf : filters) {
             if (!bloomFilterPredicate.test(bf)) {
                 return false;

@@ -64,22 +64,22 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean contains(final BitMapProducer bitMapProducer) {
-            return contains(IndexProducer.fromBitMapProducer(bitMapProducer));
+        public boolean contains(final BitMapExtractor bitMapExtractor) {
+            return contains(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
         }
 
         @Override
-        public boolean contains(final IndexProducer indexProducer) {
-            return indexProducer.forEachIndex(indices::contains);
+        public boolean contains(final IndexExtractor indexExtractor) {
+            return indexExtractor.processIndices(indices::contains);
         }
 
         @Override
-        public boolean forEachBitMap(final LongPredicate consumer) {
-            return BitMapProducer.fromIndexProducer(this, shape.getNumberOfBits()).forEachBitMap(consumer);
+        public boolean processBitMaps(final LongPredicate consumer) {
+            return BitMapExtractor.fromIndexExtractor(this, shape.getNumberOfBits()).processBitMaps(consumer);
         }
 
         @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
+        public boolean processIndices(final IntPredicate consumer) {
             for (final Integer i : indices) {
                 if (!consumer.test(i)) {
                     return false;
@@ -94,13 +94,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean merge(final BitMapProducer bitMapProducer) {
-            return merge(IndexProducer.fromBitMapProducer(bitMapProducer));
+        public boolean merge(final BitMapExtractor bitMapExtractor) {
+            return merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
         }
 
         @Override
-        public boolean merge(final IndexProducer indexProducer) {
-            final boolean result = indexProducer.forEachIndex(x -> {
+        public boolean merge(final IndexExtractor indexExtractor) {
+            final boolean result = indexExtractor.processIndices(x -> {
                 indices.add(x);
                 return true;
             });
@@ -193,7 +193,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         final Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bits set.
         final BloomFilter bf1 = new SimpleBloomFilter(s);
-        bf1.merge((BitMapProducer) predicate -> {
+        bf1.merge((BitMapExtractor) predicate -> {
             int limit = Integer.MAX_VALUE - 1;
             while (limit > 64) {
                 predicate.test(0xFFFFFFFFFFFFFFFFL);
@@ -201,7 +201,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             }
             long last = 0L;
             for (int i = 0; i < limit; i++) {
-                last |= BitMap.getLongBit(i);
+                last |= BitMaps.getLongBit(i);
             }
             predicate.test(last);
             return true;
@@ -224,13 +224,13 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
 
         BloomFilter bf1 = new NonSparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair(bf1, (x, y) -> x == y));
+        assertTrue(BitMapExtractor.fromIndexExtractor(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .processBitMapPairs(bf1, (x, y) -> x == y));
 
         bf1 = new SparseDefaultBloomFilter(getTestShape());
         bf1.merge(hasher);
-        assertTrue(BitMapProducer.fromIndexProducer(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
-                .forEachBitMapPair(bf1, (x, y) -> x == y));
+        assertTrue(BitMapExtractor.fromIndexExtractor(hasher.indices(getTestShape()), getTestShape().getNumberOfBits())
+                .processBitMapPairs(bf1, (x, y) -> x == y));
     }
 
     @Test
@@ -238,7 +238,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         final Shape s = Shape.fromKM(1, Integer.MAX_VALUE);
         // create a very large filter with Integer.MAX_VALUE-1 bit set.
         final BloomFilter bf1 = new SimpleBloomFilter(s);
-        bf1.merge((BitMapProducer) predicate -> {
+        bf1.merge((BitMapExtractor) predicate -> {
             int limit = Integer.MAX_VALUE - 1;
             while (limit > 64) {
                 predicate.test(0xFFFFFFFFFFFFFFFFL);
@@ -246,7 +246,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             }
             long last = 0L;
             for (int i = 0; i < limit; i++) {
-                last |= BitMap.getLongBit(i);
+                last |= BitMaps.getLongBit(i);
             }
             predicate.test(last);
             return true;

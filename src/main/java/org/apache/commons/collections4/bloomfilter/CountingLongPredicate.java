@@ -21,7 +21,7 @@ import java.util.function.LongPredicate;
 /**
  * A long predicate that applies the test func to each member of the {@code ary} in sequence for each call to {@code test()}.
  * if the {@code ary} is exhausted, the subsequent calls to {@code test} are executed with a zero value.
- * If the calls to {@code test} do not exhaust the {@code ary} the {@code forEachRemaining} method can be called to
+ * If the calls to {@code test} do not exhaust the {@code ary} the {@code processRemaining} method can be called to
  * execute the @{code test} with a zero value for each remaining {@code idx} value.
  * @since 4.5
  */
@@ -45,12 +45,12 @@ class CountingLongPredicate implements LongPredicate {
     /**
      * Call the long-long consuming bi-predicate for each remaining unpaired long in
      * the input array. This method should be invoked after the predicate has been
-     * passed to {@link BitMapProducer#forEachBitMap(LongPredicate)} to consume any
+     * passed to {@link BitMapExtractor#processBitMaps(LongPredicate)} to consume any
      * unpaired bitmaps. The second argument to the bi-predicate will be zero.
      *
-     * @return true if all calls the predicate were successful
+     * @return true if all calls to the predicate were successful
      */
-    boolean forEachRemaining() {
+    boolean processRemaining() {
         // uses local references for optimization benefit.
         int i = idx;
         final long[] a = ary;
