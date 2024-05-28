@@ -45,6 +45,7 @@
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
      <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
+     <action issue="COLLECTIONS-854" type="fix" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 70 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
