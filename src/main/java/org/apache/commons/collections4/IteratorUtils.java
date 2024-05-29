@@ -52,6 +52,7 @@ import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections4.iterators.ObjectGraphIterator;
+import org.apache.commons.collections4.iterators.PairedIterator;
 import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.apache.commons.collections4.iterators.PushbackIterator;
 import org.apache.commons.collections4.iterators.SingletonIterator;
@@ -1054,6 +1055,26 @@ public class IteratorUtils {
     public static <E> Iterator<E> objectGraphIterator(final E root,
             final Transformer<? super E, ? extends E> transformer) {
         return new ObjectGraphIterator<>(root, transformer);
+    }
+
+    /**
+     * Gets an Iterator over the elements contained in a pair of Iterables in-tandem.
+     * <p>
+     * The returned iterator traverses the elements in {@code a} and {@code b} together until one of the iterators
+     * is exhausted.
+     * <p>
+     * The returned iterator does NOT support {@code remove()}.
+     *
+     * @param <L> the left elements' type
+     * @param <R> the right elements' type
+     * @param left the iterator for the left side elements
+     * @param right the iterator for the right side elements
+     * @return an iterator, to iterate over the decorated iterators together until one is exhausted
+     * @throws NullPointerException if any iterator is null
+     * @since 4.5
+     */
+    public static <L, R> PairedIterator<L, R> pairedIterator(final Iterator<L> left, Iterator<R> right) {
+        return PairedIterator.of(left, right);
     }
 
     /**
