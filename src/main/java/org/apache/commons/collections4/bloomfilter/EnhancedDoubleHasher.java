@@ -175,7 +175,7 @@ public class EnhancedDoubleHasher implements Hasher {
                         // handle k > bits
                         final int block = Math.min(j, bits);
                         j -= block;
-                        for (int i = 0; i < block; i++) {
+                        for (int i = 1; i <= block; i++) {
                             if (!consumer.test(index)) {
                                 return false;
                             }
@@ -190,7 +190,7 @@ public class EnhancedDoubleHasher implements Hasher {
                         }
                     }
                 } else {
-                    for (int i = 0; i < k; i++) {
+                    for (int i = 1; i <= k; i++) {
                         if (!consumer.test(index)) {
                             return false;
                         }
