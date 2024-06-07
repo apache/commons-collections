@@ -50,7 +50,7 @@
      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 70 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump optional commons-codec:commons-codec from 1.16.1 to 1.17.0.</action>
-     <action type="update" dev="ggregory" due-to="Dependabot">Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.0-jre #487.</action> 
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.1-jre #487, #500.</action> 
   </release>
   <release version="4.5.0-M1" date="2024-03-31" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter` for review.">
     <!-- FIX -->
