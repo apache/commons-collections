@@ -27,30 +27,32 @@
      <action issue="COLLECTIONS-852" type="add" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layered Bloom filter clean method #476.</action>
      <action issue="COLLECTIONS-842" type="add" dev="aherbert" due-to="Julian Reschke">Deprecate Lists incompatible with Java 21, add new variant of AbstractLinkedList #485.</action>
      <!-- FIX -->
-     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Closure in favor of java.util.function.Consumer.</action>
-     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Factory in favor of java.util.function.Supplier.</action>
-     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Predicate in favor of java.util.function.Predicate.</action>
-     <action type="update" dev="ggregory" due-to="Gary Gregory">Deprecate Transformer in favor of java.util.function.Function.</action>
-     <action issue="COLLECTIONS-853" type="fix" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Change LayerManager to use List and added generics to LayerdedBloomFilter #481.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UselessOverridingMethod in PropertiesFactory.EmptyProperties.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CollectionUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in IndexUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in MapUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in PredicateUtils.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
-     <action type="update" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
-     <action issue="COLLECTIONS-854" type="fix" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Closure in favor of java.util.function.Consumer.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Factory in favor of java.util.function.Supplier.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Predicate in favor of java.util.function.Predicate.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Transformer in favor of java.util.function.Function.</action>
+     <action type="fix" issue="COLLECTIONS-853" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Change LayerManager to use List and added generics to LayerdedBloomFilter #481.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UselessOverridingMethod in PropertiesFactory.EmptyProperties.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CollectionUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in IndexUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in MapUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in PredicateUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
+     <action type="fix" issue="COLLECTIONS-854" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Java 22 builds through Easymock upgrade #502.</action>
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 70 #473.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump optional commons-codec:commons-codec from 1.16.1 to 1.17.0.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.1-jre #487, #500.</action> 
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump org.easymock:easymock from 5.2.0 to 5.3.0 #502.</action>
   </release>
   <release version="4.5.0-M1" date="2024-03-31" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter` for review.">
     <!-- FIX -->
