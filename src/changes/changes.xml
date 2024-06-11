@@ -48,7 +48,7 @@
      <action type="fix" issue="COLLECTIONS-854" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Java 22 builds through Easymock upgrade #502.</action>
      <!-- UPDATE -->
-     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 70 #473.</action>
+     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 71 #473, #503.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump optional commons-codec:commons-codec from 1.16.1 to 1.17.0.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.1-jre #487, #500.</action> 
