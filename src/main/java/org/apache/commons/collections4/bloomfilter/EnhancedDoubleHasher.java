@@ -189,9 +189,6 @@ public class EnhancedDoubleHasher implements Hasher {
                     // tetrahedral number additional term, and handle wrapping.
                     inc -= tet;
                     inc = inc < 0 ? inc + bits : inc;
-                    if (inc >= bits) {
-                        inc = BitMaps.mod(increment, bits);
-                    }
                     if (++tet == bits) {
                         tet = 0;
                     }
