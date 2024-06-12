@@ -174,24 +174,42 @@ public class EnhancedDoubleHasher implements Hasher {
 
                 final int k = shape.getNumberOfHashFunctions();
 
-                // the tetraheadral incrementer.  We need to ensure that this
-                // number does not exceed bits-1 or we may end up with an index > bits.
-                int tet = 1;
-                for (int i = 1; i < k; i++) {
-                    // Update index and handle wrapping
-                    index -= inc;
-                    index = index < 0 ? index + bits : index;
-                    if (!consumer.test(index)) {
-                        return false;
+                if (k >= bits) {
+
+                    // the tetraheadral incrementer.  We need to ensure that this
+                    // number does not exceed bits-1 or we may end up with an index > bits.
+                    int tet = 1;
+                    for (int i = 1; i < k; i++) {
+                        // Update index and handle wrapping
+                        index -= inc;
+                        index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
+
+                        // Incorporate the counter into the increment to create a
+                        // tetrahedral number additional term, and handle wrapping.
+                        inc -= tet;
+                        inc = inc < 0 ? inc + bits : inc;
+                        if (++tet == bits) {
+                            tet = 0;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < k; i++) {
+                        // Update index and handle wrapping
+                        index -= inc;
+                        index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
+
+                        // Incorporate the counter into the increment to create a
+                        // tetrahedral number additional term, and handle wrapping.
+                        inc -= i;
+                        inc = inc < 0 ? inc + bits : inc;
                     }
 
-                    // Incorporate the counter into the increment to create a
-                    // tetrahedral number additional term, and handle wrapping.
-                    inc -= tet;
-                    inc = inc < 0 ? inc + bits : inc;
-                    if (++tet == bits) {
-                        tet = 0;
-                    }
                 }
                 return true;
             }
