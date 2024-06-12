@@ -167,42 +167,48 @@ public class EnhancedDoubleHasher implements Hasher {
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
                 int index = BitMaps.mod(initial, bits);
+                if (!consumer.test(index)) {
+                    return false;
+                }
                 int inc = BitMaps.mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                if (k > bits) {
-                    for (int j = k; j > 0;) {
-                        // handle k > bits
-                        final int block = Math.min(j, bits);
-                        j -= block;
-                        for (int i = 0; i < block; i++) {
-                            if (!consumer.test(index)) {
-                                return false;
-                            }
-                            // Update index and handle wrapping
-                            index -= inc;
-                            index = index < 0 ? index + bits : index;
 
-                            // Incorporate the counter into the increment to create a
-                            // tetrahedral number additional term, and handle wrapping.
-                            inc -= i;
-                            inc = inc < 0 ? inc + bits : inc;
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < k; i++) {
-                        if (!consumer.test(index)) {
-                            return false;
-                        }
+                if (k >= bits) {
+                    // the tetraheadral incrementer.  We need to ensure that this
+                    // number does not exceed bits-1 or we may end up with an index > bits.
+                    int tet = 1;
+                    for (int i = 1; i < k; i++) {
                         // Update index and handle wrapping
                         index -= inc;
                         index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
+
+                        // Incorporate the counter into the increment to create a
+                        // tetrahedral number additional term, and handle wrapping.
+                        inc -= tet;
+                        inc = inc < 0 ? inc + bits : inc;
+                        if (++tet == bits) {
+                            tet = 0;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < k; i++) {
+                        // Update index and handle wrapping
+                        index -= inc;
+                        index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
 
                         // Incorporate the counter into the increment to create a
                         // tetrahedral number additional term, and handle wrapping.
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
+
                 }
                 return true;
             }
