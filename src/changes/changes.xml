@@ -47,6 +47,7 @@
      <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
      <action type="fix" issue="COLLECTIONS-854" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
      <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Java 22 builds through Easymock upgrade #502.</action>
+     <action type="fix" issue="COLLECTIONS-855" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Fixed hashing calculation as per report #501.</action> 
      <!-- UPDATE -->
      <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 71 #473, #503.</action>
      <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
