@@ -175,7 +175,6 @@ public class EnhancedDoubleHasher implements Hasher {
                 final int k = shape.getNumberOfHashFunctions();
 
                 if (k >= bits) {
-
                     // the tetraheadral incrementer.  We need to ensure that this
                     // number does not exceed bits-1 or we may end up with an index > bits.
                     int tet = 1;
