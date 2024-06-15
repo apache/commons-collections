@@ -121,8 +121,11 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      * tests on whether to reduce the collection of Bloom filters.
      */
     public static final class Cleanup {
+
         /**
          * A Cleanup that never removes anything.
+         *
+         * @param <T> Type of BloomFilter.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
         public static <T extends BloomFilter> Consumer<Deque<T>> noCleanup() {
@@ -135,6 +138,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * Removes the earliest filters in the list when the the number of filters
          * exceeds maxSize.
          *
+         * @param <T> Type of BloomFilter.
          * @param maxSize the maximum number of filters for the list. Must be greater
          *                than 0
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
@@ -155,6 +159,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * Removes the last added target if it is empty.  Useful as the first in a chain
          * of cleanup consumers.  (e.g. {@code Cleanup.removeEmptyTarget.andThen( otherConsumer )})
          *
+         * @param <T> Type of BloomFilter.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
         public static <T extends BloomFilter> Consumer<Deque<T>> removeEmptyTarget() {
@@ -168,6 +173,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
         /**
          * Removes any layer identified by the predicate.
          *
+         * @param <T> Type of BloomFilter.
          * @param test Predicate.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          */
@@ -188,6 +194,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * Creates a new target after a specific number of filters have been added to
          * the current target.
          *
+         * @param <T> Type of BloomFilter.
          * @param breakAt the number of filters to merge into each filter in the list.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code breakAt <= 0}
@@ -212,6 +219,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
 
         /**
          * Advances the target once a merge has been performed.
+         *
+         * @param <T> Type of BloomFilter.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static <T extends BloomFilter> Predicate<LayerManager<T>> advanceOnPopulated() {
@@ -225,6 +234,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * <p>An example usage is advancing on a calculated saturation by calling:
          * {@code ExtendCheck.advanceOnSaturation(shape.estimateMaxN()) }</p>
          *
+         * @param <T> Type of BloomFilter.
          * @param maxN the maximum number of estimated items in the filter.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code maxN <= 0}
@@ -242,6 +252,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
         /**
          * Does not automatically advance the target. @{code next()} must be called directly to
          * perform the advance.
+         *
+         * @param <T> Type of BloomFilter.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          */
         public static <T extends BloomFilter> Predicate<LayerManager<T>> neverAdvance() {
@@ -255,6 +267,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      * Creates a new Builder with defaults of {@code ExtendCheck.neverAdvance()} and
      * {@code Cleanup.noCleanup()}.
      *
+     * @param <T> Type of BloomFilter.
      * @return A builder.
      * @see ExtendCheck#neverAdvance()
      * @see Cleanup#noCleanup()
@@ -262,7 +275,9 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
     public static <T extends BloomFilter> Builder<T> builder() {
         return new Builder<>();
     }
+
     private final LinkedList<T> filters = new LinkedList<>();
+
     private final Consumer<Deque<T>> filterCleanup;
 
     private final Predicate<LayerManager<T>> extendCheck;
