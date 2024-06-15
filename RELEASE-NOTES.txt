@@ -1,3 +1,63 @@
+Apache Commons Collections 4.5.0-M2 RELEASE NOTES
+-------------------------------------------------
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.
+
+Changes in this version
+-----------------------
+
+New features
+------------
+
+* COLLECTIONS-852:  Add layered Bloom filter clean method #476. Thanks to Claude Warren, Alex Herbert. 
+* COLLECTIONS-842:  Deprecate Lists incompatible with Java 21, add new variant of AbstractLinkedList #485. Thanks to Julian Reschke. 
+
+Fixed Bugs
+----------
+
+* Deprecate Closure in favor of java.util.function.Consumer. Thanks to Gary Gregory. 
+* Deprecate Factory in favor of java.util.function.Supplier. Thanks to Gary Gregory. 
+* Deprecate Predicate in favor of java.util.function.Predicate. Thanks to Gary Gregory. 
+* Deprecate Transformer in favor of java.util.function.Function. Thanks to Gary Gregory. 
+* COLLECTIONS-853:  Change LayerManager to use List and added generics to LayerdedBloomFilter #481. Thanks to Claude Warren, Alex Herbert, Gary Gregory. 
+* Fix PMD UselessOverridingMethod in PropertiesFactory.EmptyProperties. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in CollectionUtils. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in IndexUtils. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in LinkIterator. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in MapUtils. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in PredicateUtils. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer. Thanks to PMD, Gary Gregory. 
+* Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils. Thanks to PMD, Gary Gregory. 
+* COLLECTIONS-854:  Renaming bloomfilter components and methods as per ticket #492. Thanks to Claude Warren, Alex Herbert, Gary Gregory. 
+* Fix Java 22 builds through Easymock upgrade #502. Thanks to Gary Gregory. 
+* COLLECTIONS-855:  Fixed hashing calculation as per report #501. Thanks to Claude Warren, Alex Herbert, Gary Gregory. 
+
+Changes
+-------
+
+* Bump org.apache.commons:commons-parent from 67 to 71 #473, #503. Thanks to Dependabot, Gary Gregory. 
+* Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475. Thanks to Dependabot. 
+* Bump optional commons-codec:commons-codec from 1.16.1 to 1.17.0. Thanks to Dependabot. 
+* Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.1-jre #487, #500. Thanks to Dependabot. 
+* Bump org.easymock:easymock from 5.2.0 to 5.3.0 #502. Thanks to Dependabot. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+https://commons.apache.org/proper/commons-collections/
+
+Download page: https://commons.apache.org/proper/commons-collections/download_collections.cgi
+
+-----------------------------------------------------------------------------
+
 Apache Commons Collections 4.5.0-M1 RELEASE NOTES
 -------------------------------------------------
 
