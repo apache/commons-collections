@@ -31,7 +31,9 @@ import org.apache.commons.collections4.KeyValue;
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
  * {@link java.util.Map} that performs well in a highly
- * thread-contentious environment.  The map supports very efficient
+ * thread-contentious environment.
+ * <p>
+ * The map supports very efficient
  * {@link #get(Object) get}, {@link #put(Object,Object) put},
  * {@link #remove(Object) remove} and {@link #containsKey(Object) containsKey}
  * operations, assuming (approximate) uniform hashing and
@@ -39,8 +41,9 @@ import org.apache.commons.collections4.KeyValue;
  * number of entries exceeds the number of buckets or if the hash codes of the
  * objects are not uniformly distributed, these operations have a worst case
  * scenario that is proportional to the number of elements in the map
- * (<i>O(n)</i>).<p>
- *
+ * (<i>O(n)</i>).
+ * </p>
+ * <p>
  * Each bucket in the hash table has its own monitor, so two threads can
  * safely operate on the map at the same time, often without incurring any
  * monitor contention.  This means that you don't have to wrap instances
@@ -51,6 +54,7 @@ import org.apache.commons.collections4.KeyValue;
  * {@link Collection#retainAll(Collection) retainAll} operation in collection
  * views, are <i>not</i> atomic.  If two threads are simultaneously
  * executing
+ * </p>
  *
  * <pre>
  *   staticBucketMapInstance.putAll(map);
@@ -62,34 +66,41 @@ import org.apache.commons.collections4.KeyValue;
  *   staticBucketMapInstance.entrySet().removeAll(map.entrySet());
  * </pre>
  *
+ * <p>
  * then the results are generally random.  Those two statement could cancel
  * each other out, leaving {@code staticBucketMapInstance} essentially
  * unchanged, or they could leave some random subset of {@code map} in
- * {@code staticBucketMapInstance}.<p>
- *
+ * {@code staticBucketMapInstance}.
+ * </p>
+ * <p>
  * Also, much like an encyclopedia, the results of {@link #size()} and
- * {@link #isEmpty()} are out-of-date as soon as they are produced.<p>
- *
+ * {@link #isEmpty()} are out-of-date as soon as they are produced.
+ * </p>
+ * <p>
  * The iterators returned by the collection views of this class are <i>not</i>
  * fail-fast.  They will <i>never</i> raise a
  * {@link java.util.ConcurrentModificationException}.  Keys and values
  * added to the map after the iterator is created do not necessarily appear
  * during iteration.  Similarly, the iterator does not necessarily fail to
- * return keys and values that were removed after the iterator was created.<p>
- *
+ * return keys and values that were removed after the iterator was created.
+ * </p>
+ * <p>
  * Finally, unlike {@link java.util.HashMap}-style implementations, this
  * class <i>never</i> rehashes the map.  The number of buckets is fixed
  * at construction time and never altered.  Performance may degrade if
- * you do not allocate enough buckets upfront.<p>
- *
+ * you do not allocate enough buckets upfront.
+ * </p>
+ * <p>
  * The {@link #atomic(Runnable)} method is provided to allow atomic iterations
  * and bulk operations; however, overuse of {@link #atomic(Runnable) atomic}
  * will basically result in a map that's slower than an ordinary synchronized
  * {@link java.util.HashMap}.
- *
+ * </p>
+ * <p>
  * Use this class if you do not require reliable bulk operations and
  * iterations, or if you can make your own guarantees about how bulk
- * operations will affect the map.<p>
+ * operations will affect the map.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
@@ -138,6 +149,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             last = null;
         }
     }
+
     private final class EntryIterator extends BaseIterator implements Iterator<Map.Entry<K, V>> {
 
         @Override
@@ -146,6 +158,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
     }
+
     private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
         @Override

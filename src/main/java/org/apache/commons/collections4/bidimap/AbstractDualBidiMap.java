@@ -697,6 +697,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * The Map Entry setValue() method only allow a new value to be set.
      * If the value being set is already in the map, an IllegalArgumentException
      * is thrown (as setValue cannot change the size of the map).
+     * </p>
      *
      * @return the entrySet view
      */
@@ -762,7 +763,6 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Obtains a {@code MapIterator} over the map.
      * The iterator implements {@link BidiMapIterator}.
      * This implementation relies on the entrySet iterator.
-     * <p>
      *
      * @return a map iterator
      */
