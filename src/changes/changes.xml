@@ -22,6 +22,11 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
+  <release version="4.5.0-M3" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+    <!-- FIX -->
+    <!-- ADD -->
+    <!-- UPDATE -->
+  </release>
   <release version="4.5.0-M2" date="2024-06-15" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
      <!-- ADD -->
      <action issue="COLLECTIONS-852" type="add" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layered Bloom filter clean method #476.</action>
