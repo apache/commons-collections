@@ -23,7 +23,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0-M2</version>
+  <version>4.5.0-M3-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -161,7 +161,7 @@
     <!--Commons Release Plugin -->
     <commons.bc.version>4.4</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
-    <project.build.outputTimestamp>2024-06-15T02:00:47Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-06-18T12:42:32Z</project.build.outputTimestamp>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
     <commons.jacoco.classRatio>0.96</commons.jacoco.classRatio>
