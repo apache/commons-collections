@@ -150,12 +150,12 @@ public class BulkTest implements Cloneable {
      *  test should be ignored.  It's also displayed in the text runner
      *  to ease debugging.
      */
-    String verboseName;
+    private String verboseName;
 
     /**
      *  the name of the simple test method
      */
-    private final String name;
+    private String name;
 
     /**
      *  Constructs a new {@code BulkTest} instance that will run the
@@ -189,6 +189,13 @@ public class BulkTest implements Cloneable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public String getVerboseName() {
+        return verboseName;
     }
 
     /**
@@ -226,6 +233,20 @@ public class BulkTest implements Cloneable {
      */
     public String[] ignoredTests() {
         return null;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public void setVerboseName(final String verboseName) {
+        this.verboseName = verboseName;
     }
 
     /**
