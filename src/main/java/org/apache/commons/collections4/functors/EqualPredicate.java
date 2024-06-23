@@ -25,6 +25,7 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if the input is the same object
  * as the one stored in this predicate by equals.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
 public final class EqualPredicate<T> implements Predicate<T>, Serializable {
