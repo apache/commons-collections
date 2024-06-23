@@ -614,22 +614,20 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return true;
                 }
             }
-        } else {
-            if (size > 0) {
-                final int hashCode = key.hashCode();
-                switch (size) {  // drop through
-                case 3:
-                    if (hash3 == hashCode && key.equals(key3)) {
-                        return true;
-                    }
-                case 2:
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        return true;
-                    }
-                case 1:
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        return true;
-                    }
+        } else if (size > 0) {
+            final int hashCode = key.hashCode();
+            switch (size) {  // drop through
+            case 3:
+                if (hash3 == hashCode && key.equals(key3)) {
+                    return true;
+                }
+            case 2:
+                if (hash2 == hashCode && key.equals(key2)) {
+                    return true;
+                }
+            case 1:
+                if (hash1 == hashCode && key.equals(key1)) {
+                    return true;
                 }
             }
         }
@@ -817,23 +815,21 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return value1;
                 }
             }
-        } else {
-            if (size > 0) {
-                final int hashCode = key.hashCode();
-                switch (size) {
-                // drop through
-                case 3:
-                    if (hash3 == hashCode && key.equals(key3)) {
-                        return value3;
-                    }
-                case 2:
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        return value2;
-                    }
-                case 1:
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        return value1;
-                    }
+        } else if (size > 0) {
+            final int hashCode = key.hashCode();
+            switch (size) {
+            // drop through
+            case 3:
+                if (hash3 == hashCode && key.equals(key3)) {
+                    return value3;
+                }
+            case 2:
+                if (hash2 == hashCode && key.equals(key2)) {
+                    return value2;
+                }
+            case 1:
+                if (hash1 == hashCode && key.equals(key1)) {
+                    return value1;
                 }
             }
         }
@@ -947,28 +943,26 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return old;
                 }
             }
-        } else {
-            if (size > 0) {
-                final int hashCode = key.hashCode();
-                switch (size) {  // drop through
-                case 3:
-                    if (hash3 == hashCode && key.equals(key3)) {
-                        final V old = value3;
-                        value3 = value;
-                        return old;
-                    }
-                case 2:
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        final V old = value2;
-                        value2 = value;
-                        return old;
-                    }
-                case 1:
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        final V old = value1;
-                        value1 = value;
-                        return old;
-                    }
+        } else if (size > 0) {
+            final int hashCode = key.hashCode();
+            switch (size) {  // drop through
+            case 3:
+                if (hash3 == hashCode && key.equals(key3)) {
+                    final V old = value3;
+                    value3 = value;
+                    return old;
+                }
+            case 2:
+                if (hash2 == hashCode && key.equals(key2)) {
+                    final V old = value2;
+                    value2 = value;
+                    return old;
+                }
+            case 1:
+                if (hash1 == hashCode && key.equals(key1)) {
+                    final V old = value1;
+                    value1 = value;
+                    return old;
                 }
             }
         }
@@ -1123,72 +1117,70 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                     return old;
                 }
             }
-        } else {
-            if (size > 0) {
-                final int hashCode = key.hashCode();
-                switch (size) {  // drop through
-                case 3:
-                    if (hash3 == hashCode && key.equals(key3)) {
-                        final V old = value3;
-                        hash3 = 0;
-                        key3 = null;
-                        value3 = null;
-                        size = 2;
-                        return old;
-                    }
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        final V old = value2;
-                        hash2 = hash3;
-                        key2 = key3;
-                        value2 = value3;
-                        hash3 = 0;
-                        key3 = null;
-                        value3 = null;
-                        size = 2;
-                        return old;
-                    }
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        final V old = value1;
-                        hash1 = hash3;
-                        key1 = key3;
-                        value1 = value3;
-                        hash3 = 0;
-                        key3 = null;
-                        value3 = null;
-                        size = 2;
-                        return old;
-                    }
-                    return null;
-                case 2:
-                    if (hash2 == hashCode && key.equals(key2)) {
-                        final V old = value2;
-                        hash2 = 0;
-                        key2 = null;
-                        value2 = null;
-                        size = 1;
-                        return old;
-                    }
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        final V old = value1;
-                        hash1 = hash2;
-                        key1 = key2;
-                        value1 = value2;
-                        hash2 = 0;
-                        key2 = null;
-                        value2 = null;
-                        size = 1;
-                        return old;
-                    }
-                    return null;
-                case 1:
-                    if (hash1 == hashCode && key.equals(key1)) {
-                        final V old = value1;
-                        hash1 = 0;
-                        key1 = null;
-                        value1 = null;
-                        size = 0;
-                        return old;
-                    }
+        } else if (size > 0) {
+            final int hashCode = key.hashCode();
+            switch (size) {  // drop through
+            case 3:
+                if (hash3 == hashCode && key.equals(key3)) {
+                    final V old = value3;
+                    hash3 = 0;
+                    key3 = null;
+                    value3 = null;
+                    size = 2;
+                    return old;
+                }
+                if (hash2 == hashCode && key.equals(key2)) {
+                    final V old = value2;
+                    hash2 = hash3;
+                    key2 = key3;
+                    value2 = value3;
+                    hash3 = 0;
+                    key3 = null;
+                    value3 = null;
+                    size = 2;
+                    return old;
+                }
+                if (hash1 == hashCode && key.equals(key1)) {
+                    final V old = value1;
+                    hash1 = hash3;
+                    key1 = key3;
+                    value1 = value3;
+                    hash3 = 0;
+                    key3 = null;
+                    value3 = null;
+                    size = 2;
+                    return old;
+                }
+                return null;
+            case 2:
+                if (hash2 == hashCode && key.equals(key2)) {
+                    final V old = value2;
+                    hash2 = 0;
+                    key2 = null;
+                    value2 = null;
+                    size = 1;
+                    return old;
+                }
+                if (hash1 == hashCode && key.equals(key1)) {
+                    final V old = value1;
+                    hash1 = hash2;
+                    key1 = key2;
+                    value1 = value2;
+                    hash2 = 0;
+                    key2 = null;
+                    value2 = null;
+                    size = 1;
+                    return old;
+                }
+                return null;
+            case 1:
+                if (hash1 == hashCode && key.equals(key1)) {
+                    final V old = value1;
+                    hash1 = 0;
+                    key1 = null;
+                    value1 = null;
+                    size = 0;
+                    return old;
                 }
             }
         }
