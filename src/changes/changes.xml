@@ -28,6 +28,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Package private AbstractEmptyIterator implements ResettableIterator so subclasses don't.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate AbstractEmptyIterator.add(E) without replacement.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Add missing Javadocs.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">PatriciaTrie constructor reuse the stateless singleton StringKeyAnalyzer.INSTANCE.</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>

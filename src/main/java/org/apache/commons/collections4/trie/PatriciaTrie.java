@@ -67,11 +67,11 @@ public class PatriciaTrie<V> extends AbstractPatriciaTrie<String, V> {
     private static final long serialVersionUID = 4446367780901817838L;
 
     public PatriciaTrie() {
-        super(new StringKeyAnalyzer());
+        super(StringKeyAnalyzer.INSTANCE);
     }
 
     public PatriciaTrie(final Map<? extends String, ? extends V> m) {
-        super(new StringKeyAnalyzer(), m);
+        super(StringKeyAnalyzer.INSTANCE, m);
     }
 
 }
