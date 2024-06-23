@@ -29,6 +29,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate AbstractEmptyIterator.add(E) without replacement.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Add missing Javadocs.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">PatriciaTrie constructor reuse the stateless singleton StringKeyAnalyzer.INSTANCE.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate StringKeyAnalyzer.StringKeyAnalyzer() in favor of StringKeyAnalyzer.INSTANCE.</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>
