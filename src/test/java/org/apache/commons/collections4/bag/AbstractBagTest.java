@@ -209,14 +209,14 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
     @Override
     public void resetEmpty() {
-        this.setCollection(CollectionBag.collectionBag(makeObject()));
-        this.setConfirmed(makeConfirmedCollection());
+        setCollection(CollectionBag.collectionBag(makeObject()));
+        setConfirmed(makeConfirmedCollection());
     }
 
     @Override
     public void resetFull() {
-        this.setCollection(CollectionBag.collectionBag(makeFullCollection()));
-        this.setConfirmed(makeConfirmedFullCollection());
+        setCollection(CollectionBag.collectionBag(makeFullCollection()));
+        setConfirmed(makeConfirmedFullCollection());
     }
 
     @Test
