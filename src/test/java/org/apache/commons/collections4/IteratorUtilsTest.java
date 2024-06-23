@@ -464,7 +464,7 @@ public class IteratorUtilsTest {
 
         final List<Integer> combinedList = new ArrayList<>(collectionOdd);
         combinedList.addAll(collectionEven);
-        combinedList.sort(null);
+        Collections.sort(combinedList);
 
         assertEquals(combinedList, result);
 
