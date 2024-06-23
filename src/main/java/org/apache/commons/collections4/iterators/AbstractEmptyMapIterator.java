@@ -54,7 +54,7 @@ public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterat
     /**
      * Always throws IllegalStateException.
      *
-     * @param ignored ignored. 
+     * @param ignored ignored.
      * @return Always throws IllegalStateException.
      * @throws IllegalStateException Always thrown.
      */
