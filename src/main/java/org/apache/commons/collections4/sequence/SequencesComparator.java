@@ -195,14 +195,12 @@ public class SequencesComparator<T> {
                     script.append(new KeepCommand<>(sequence1.get(i)));
                     ++i;
                     ++j;
+                } else if (end1 - start1 > end2 - start2) {
+                    script.append(new DeleteCommand<>(sequence1.get(i)));
+                    ++i;
                 } else {
-                    if (end1 - start1 > end2 - start2) {
-                        script.append(new DeleteCommand<>(sequence1.get(i)));
-                        ++i;
-                    } else {
-                        script.append(new InsertCommand<>(sequence2.get(j)));
-                        ++j;
-                    }
+                    script.append(new InsertCommand<>(sequence2.get(j)));
+                    ++j;
                 }
             }
 
