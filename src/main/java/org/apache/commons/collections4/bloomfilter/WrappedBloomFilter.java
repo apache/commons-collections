@@ -116,6 +116,11 @@ public abstract class WrappedBloomFilter implements BloomFilter {
         return wrapped.getShape();
     }
 
+    /**
+     * Gets the wrapped BloomFilter.
+     *
+     * @return the wrapped BloomFilter.
+     */
     protected BloomFilter getWrapped() {
         return wrapped;
     }
