@@ -37,6 +37,13 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
             init();
         }
 
+        /**
+         * Deserializes an instance from an ObjectInputStream.
+         *
+         * @param in The source ObjectInputStream.
+         * @throws IOException            Any of the usual Input/Output related exceptions.
+         * @throws ClassNotFoundException A class of a serialized object cannot be found.
+         */
         private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
             in.defaultReadObject();
             doReadObject(in);
