@@ -170,6 +170,8 @@
     <commons.jacoco.branchRatio>0.78</commons.jacoco.branchRatio>
     <commons.jacoco.lineRatio>0.85</commons.jacoco.lineRatio>
     <commons.jacoco.complexityRatio>0.78</commons.jacoco.complexityRatio>
+    <doxia.module.markdown.version>1.12.0</doxia.module.markdown.version>
+    <math.mathjax.version>2.7.2</math.mathjax.version>
   </properties>
 
   <build>
@@ -267,7 +269,20 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
             <source>8</source>
+            <!-- Enable MathJax -->
+            <additionalOptions>-Xdoclint:all --allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${math.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</additionalOptions>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+            <version>${doxia.module.markdown.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
@@ -812,4 +827,3 @@
   </contributors>
 
 </project>
-
