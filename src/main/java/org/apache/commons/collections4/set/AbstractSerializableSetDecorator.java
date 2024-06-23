@@ -45,7 +45,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     }
 
     /**
-     * Read the set in using a custom routine.
+     * Deserializes the set in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
