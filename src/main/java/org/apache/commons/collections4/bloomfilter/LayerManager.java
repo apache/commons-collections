@@ -365,24 +365,6 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
     }
 
     /**
-     * Executes a Bloom filter Predicate on each Bloom filter in the manager in
-     * depth order. Oldest filter first.
-     *
-     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
-     * @return {@code false} when the a filter fails the predicate test. Returns
-     *         {@code true} if all filters pass the test.
-     */
-    @Override
-    public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
-        for (final BloomFilter bf : filters) {
-            if (!bloomFilterPredicate.test(bf)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Gets the Bloom filter at the specified depth. The filter at depth 0 is the
      * oldest filter.
      *
@@ -445,5 +427,23 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
     void next() {
         this.filterCleanup.accept(filters);
         addFilter();
+    }
+
+    /**
+     * Executes a Bloom filter Predicate on each Bloom filter in the manager in
+     * depth order. Oldest filter first.
+     *
+     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
+     * @return {@code false} when the a filter fails the predicate test. Returns
+     *         {@code true} if all filters pass the test.
+     */
+    @Override
+    public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
+        for (final BloomFilter bf : filters) {
+            if (!bloomFilterPredicate.test(bf)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

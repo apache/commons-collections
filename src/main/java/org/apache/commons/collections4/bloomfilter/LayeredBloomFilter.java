@@ -295,30 +295,6 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
         return bf;
     }
 
-    @Override
-    public boolean processBitMaps(final LongPredicate predicate) {
-        return flatten().processBitMaps(predicate);
-    }
-
-    /**
-     * Processes the Bloom filters in depth order with the most recent filters
-     * first. Each filter is passed to the predicate in turn. The function exits on
-     * the first {@code false} returned by the predicate.
-     *
-     * @param bloomFilterPredicate the predicate to execute.
-     * @return {@code true} if all filters passed the predicate, {@code false}
-     *         otherwise.
-     */
-    @Override
-    public final boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
-        return layerManager.processBloomFilters(bloomFilterPredicate);
-    }
-
-    @Override
-    public boolean processIndices(final IntPredicate predicate) {
-        return processBloomFilters(bf -> bf.processIndices(predicate));
-    }
-
     /**
      * Gets the Bloom filter at the specified depth
      *
@@ -375,6 +351,30 @@ public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, B
      */
     public void next() {
         layerManager.next();
+    }
+
+    @Override
+    public boolean processBitMaps(final LongPredicate predicate) {
+        return flatten().processBitMaps(predicate);
+    }
+
+    /**
+     * Processes the Bloom filters in depth order with the most recent filters
+     * first. Each filter is passed to the predicate in turn. The function exits on
+     * the first {@code false} returned by the predicate.
+     *
+     * @param bloomFilterPredicate the predicate to execute.
+     * @return {@code true} if all filters passed the predicate, {@code false}
+     *         otherwise.
+     */
+    @Override
+    public final boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
+        return layerManager.processBloomFilters(bloomFilterPredicate);
+    }
+
+    @Override
+    public boolean processIndices(final IntPredicate predicate) {
+        return processBloomFilters(bf -> bf.processIndices(predicate));
     }
 
 }

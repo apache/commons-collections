@@ -111,17 +111,6 @@ public interface CellExtractor extends IndexExtractor {
                 return counterCells.keySet().stream().mapToInt(c -> c.idx).toArray();
             }
 
-            @Override
-            public boolean processCells(final CellPredicate consumer) {
-                populate();
-                for (final CounterCell cell : counterCells.values()) {
-                    if (!consumer.test(cell.idx, cell.count)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
             private void populate() {
                 if (counterCells.isEmpty()) {
                     indexExtractor.processIndices(idx -> {
@@ -135,6 +124,17 @@ public interface CellExtractor extends IndexExtractor {
                         return true;
                     });
                 }
+            }
+
+            @Override
+            public boolean processCells(final CellPredicate consumer) {
+                populate();
+                for (final CounterCell cell : counterCells.values()) {
+                    if (!consumer.test(cell.idx, cell.count)) {
+                        return false;
+                    }
+                }
+                return true;
             }
         };
     }

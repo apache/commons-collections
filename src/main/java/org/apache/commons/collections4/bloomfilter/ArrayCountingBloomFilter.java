@@ -166,6 +166,48 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     @Override
+    public int getMaxCell() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getMaxInsert(final CellExtractor cellExtractor) {
+        final int[] max = {Integer.MAX_VALUE};
+        cellExtractor.processCells( (x, y) -> {
+            final int count = cells[x] / y;
+            if (count < max[0]) {
+                max[0] = count;
+            }
+            return max[0] > 0;
+        });
+        return max[0];
+    }
+
+    @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p><em>Implementation note</em>
+     *
+     * <p>The state transition to invalid is permanent.</p>
+     *
+     * <p>This implementation does not correct negative cells to zero or integer
+     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
+     * generated invalid cells can be reversed by using the complement of the
+     * original operation with the same Bloom filter. This will restore the cells
+     * to the state prior to the invalid operation. Cells can then be extracted
+     * using {@link #processCells(CellPredicate)}.</p>
+     */
+    @Override
+    public boolean isValid() {
+        return state >= 0;
+    }
+
+    @Override
     public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int blocksm1 = BitMaps.numberOfBitMaps(cells.length) - 1;
@@ -213,48 +255,6 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
             }
         }
         return true;
-    }
-
-    @Override
-    public int getMaxCell() {
-        return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public int getMaxInsert(final CellExtractor cellExtractor) {
-        final int[] max = {Integer.MAX_VALUE};
-        cellExtractor.processCells( (x, y) -> {
-            final int count = cells[x] / y;
-            if (count < max[0]) {
-                max[0] = count;
-            }
-            return max[0] > 0;
-        });
-        return max[0];
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p><em>Implementation note</em>
-     *
-     * <p>The state transition to invalid is permanent.</p>
-     *
-     * <p>This implementation does not correct negative cells to zero or integer
-     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
-     * generated invalid cells can be reversed by using the complement of the
-     * original operation with the same Bloom filter. This will restore the cells
-     * to the state prior to the invalid operation. Cells can then be extracted
-     * using {@link #processCells(CellPredicate)}.</p>
-     */
-    @Override
-    public boolean isValid() {
-        return state >= 0;
     }
 
     @Override

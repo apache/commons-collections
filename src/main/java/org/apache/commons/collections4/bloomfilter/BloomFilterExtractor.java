@@ -56,16 +56,6 @@ public interface BloomFilterExtractor {
                 return filters.clone();
             }
 
-            @Override
-            public boolean processBloomFilters(final Predicate<BloomFilter> predicate) {
-                for (final BloomFilter filter : filters) {
-                    if (!predicate.test(filter)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
             /**
              * This implementation uses references to the original filters.  Any modifications to the
              * filters are reflected in the originals.
@@ -75,6 +65,16 @@ public interface BloomFilterExtractor {
                                                   final BiPredicate<BloomFilter, BloomFilter> func) {
                 final CountingPredicate<BloomFilter> p = new CountingPredicate<>(filters, func);
                 return other.processBloomFilters(p) && p.processRemaining();
+            }
+
+            @Override
+            public boolean processBloomFilters(final Predicate<BloomFilter> predicate) {
+                for (final BloomFilter filter : filters) {
+                    if (!predicate.test(filter)) {
+                        return false;
+                    }
+                }
+                return true;
             }
         };
     }
@@ -111,16 +111,6 @@ public interface BloomFilterExtractor {
     }
 
     /**
-     * Executes a Bloom filter Predicate on each Bloom filter in the collection. The
-     * ordering of the Bloom filters is not specified by this interface.
-     *
-     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
-     * @return {@code false} when the first filter fails the predicate test. Returns
-     *         {@code true} if all filters pass the test.
-     */
-    boolean processBloomFilters(Predicate<BloomFilter> bloomFilterPredicate);
-
-    /**
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
      * of the Bloom filters from the other BloomFilterExtractor to this extractor. If
      * either {@code this} extractor or {@code other} extractor has fewer BloomFilters
@@ -141,4 +131,14 @@ public interface BloomFilterExtractor {
         final CountingPredicate<BloomFilter> p = new CountingPredicate<>(asBloomFilterArray(), func);
         return other.processBloomFilters(p) && p.processRemaining();
     }
+
+    /**
+     * Executes a Bloom filter Predicate on each Bloom filter in the collection. The
+     * ordering of the Bloom filters is not specified by this interface.
+     *
+     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
+     * @return {@code false} when the first filter fails the predicate test. Returns
+     *         {@code true} if all filters pass the test.
+     */
+    boolean processBloomFilters(Predicate<BloomFilter> bloomFilterPredicate);
 }

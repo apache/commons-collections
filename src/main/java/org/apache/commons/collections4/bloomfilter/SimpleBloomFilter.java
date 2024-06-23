@@ -102,29 +102,6 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean processBitMaps(final LongPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        for (final long l : bitMap) {
-            if (!consumer.test(l)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
-        final CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
-        return other.processBitMaps(p) && p.processRemaining();
-    }
-
-    @Override
-    public boolean processIndices(final IntPredicate consumer) {
-        Objects.requireNonNull(consumer, "consumer");
-        return IndexExtractor.fromBitMapExtractor(this).processIndices(consumer);
-    }
-
-    @Override
     public Shape getShape() {
         return shape;
     }
@@ -192,5 +169,28 @@ public final class SimpleBloomFilter implements BloomFilter {
         });
         cardinality = -1;
         return true;
+    }
+
+    @Override
+    public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
+        final CountingLongPredicate p = new CountingLongPredicate(bitMap, func);
+        return other.processBitMaps(p) && p.processRemaining();
+    }
+
+    @Override
+    public boolean processBitMaps(final LongPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        for (final long l : bitMap) {
+            if (!consumer.test(l)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean processIndices(final IntPredicate consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+        return IndexExtractor.fromBitMapExtractor(this).processIndices(consumer);
     }
 }

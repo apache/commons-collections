@@ -47,6 +47,19 @@ public class IndexExtractorTest {
         }
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {32, 33})
+    void testAsIndexArray(final int n) {
+        final IndexExtractor ip = i -> {
+            for (int j = 0; j < n; j++) {
+                // Always test index zero
+                i.test(0);
+            }
+            return true;
+        };
+        Assertions.assertArrayEquals(new int[n], ip.asIndexArray());
+    }
+
     @Test
     public void testFromBitMapExtractor() {
         TestingBitMapExtractor testingBitMapExtractor = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
@@ -70,18 +83,5 @@ public class IndexExtractorTest {
         for (int i = 0; i < 64; i++) {
             assertEquals(Integer.valueOf(i), lst.get(i));
         }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {32, 33})
-    void testAsIndexArray(final int n) {
-        final IndexExtractor ip = i -> {
-            for (int j = 0; j < n; j++) {
-                // Always test index zero
-                i.test(0);
-            }
-            return true;
-        };
-        Assertions.assertArrayEquals(new int[n], ip.asIndexArray());
     }
 }

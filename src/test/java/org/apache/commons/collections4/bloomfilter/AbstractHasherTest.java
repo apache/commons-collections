@@ -24,19 +24,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
 
-    protected abstract Hasher createEmptyHasher();
-
     @Override
     protected IndexExtractor createEmptyExtractor() {
         return createEmptyHasher().indices(getTestShape());
     }
 
-    protected abstract Hasher createHasher();
+    protected abstract Hasher createEmptyHasher();
 
     @Override
     protected IndexExtractor createExtractor() {
         return createHasher().indices(getTestShape());
     }
+
+    protected abstract Hasher createHasher();
 
     /**
      * A method to get the number of items in a hasher. Mostly applies to

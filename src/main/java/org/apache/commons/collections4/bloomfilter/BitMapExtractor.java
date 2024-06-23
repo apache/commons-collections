@@ -51,6 +51,12 @@ public interface BitMapExtractor {
             }
 
             @Override
+            public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
+                final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
+                return other.processBitMaps(p) && p.processRemaining();
+            }
+
+            @Override
             public boolean processBitMaps(final LongPredicate predicate) {
                 for (final long word : bitMaps) {
                     if (!predicate.test(word)) {
@@ -58,12 +64,6 @@ public interface BitMapExtractor {
                     }
                 }
                 return true;
-            }
-
-            @Override
-            public boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {
-                final CountingLongPredicate p = new CountingLongPredicate(bitMaps, func);
-                return other.processBitMaps(p) && p.processRemaining();
             }
         };
     }
@@ -121,21 +121,6 @@ public interface BitMapExtractor {
     }
 
     /**
-     * Each bit map is passed to the predicate in order. The predicate is applied to each
-     * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
-     * is returned, and no further bit maps are processed.
-     *
-     * <p>If the extractor is empty this method will return true.</p>
-     *
-     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
-     *
-     * @param predicate the function to execute
-     * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
-     * @throws NullPointerException if the specified consumer is null
-     */
-    boolean processBitMaps(LongPredicate predicate);
-
-    /**
      * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
      * BitMapExtractor to this extractor. If this extractor does not have as many bit maps it will provide 0 (zero)
      * for all excess calls to the LongBiPredicate.
@@ -151,4 +136,19 @@ public interface BitMapExtractor {
         final CountingLongPredicate p = new CountingLongPredicate(asBitMapArray(), func);
         return other.processBitMaps(p) && p.processRemaining();
     }
+
+    /**
+     * Each bit map is passed to the predicate in order. The predicate is applied to each
+     * bit map value, if the predicate returns {@code false} the execution is stopped, {@code false}
+     * is returned, and no further bit maps are processed.
+     *
+     * <p>If the extractor is empty this method will return true.</p>
+     *
+     * <p>Any exceptions thrown by the action are relayed to the caller.</p>
+     *
+     * @param predicate the function to execute
+     * @return {@code true} if all bit maps returned {@code true}, {@code false} otherwise.
+     * @throws NullPointerException if the specified consumer is null
+     */
+    boolean processBitMaps(LongPredicate predicate);
 }

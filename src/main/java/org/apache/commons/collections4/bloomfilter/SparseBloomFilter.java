@@ -104,6 +104,54 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return indices.isEmpty();
+    }
+
+    @Override
+    public boolean merge(final BitMapExtractor bitMapExtractor) {
+        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
+        return this.merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
+    }
+
+    @Override
+    public boolean merge(final BloomFilter other) {
+        Objects.requireNonNull(other, "other");
+        final IndexExtractor indexExtractor = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapExtractor(other);
+        merge(indexExtractor);
+        return true;
+    }
+
+    @Override
+    public boolean merge(final Hasher hasher) {
+        Objects.requireNonNull(hasher, "hasher");
+        merge(hasher.indices(shape));
+        return true;
+    }
+
+    @Override
+    public boolean merge(final IndexExtractor indexExtractor) {
+        Objects.requireNonNull(indexExtractor, "indexExtractor");
+        indexExtractor.processIndices(this::add);
+        if (!this.indices.isEmpty()) {
+            if (this.indices.last() >= shape.getNumberOfBits()) {
+                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
+                        this.indices.last(), shape.getNumberOfBits() - 1));
+            }
+            if (this.indices.first() < 0) {
+                throw new IllegalArgumentException(
+                        String.format("Value in list %s is less than 0", this.indices.first()));
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int limit = BitMaps.numberOfBitMaps(shape.getNumberOfBits());
@@ -147,54 +195,6 @@ public final class SparseBloomFilter implements BloomFilter {
         for (final int value : indices) {
             if (!consumer.test(value)) {
                 return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public Shape getShape() {
-        return shape;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return indices.isEmpty();
-    }
-
-    @Override
-    public boolean merge(final BitMapExtractor bitMapExtractor) {
-        Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
-        return this.merge(IndexExtractor.fromBitMapExtractor(bitMapExtractor));
-    }
-
-    @Override
-    public boolean merge(final BloomFilter other) {
-        Objects.requireNonNull(other, "other");
-        final IndexExtractor indexExtractor = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapExtractor(other);
-        merge(indexExtractor);
-        return true;
-    }
-
-    @Override
-    public boolean merge(final Hasher hasher) {
-        Objects.requireNonNull(hasher, "hasher");
-        merge(hasher.indices(shape));
-        return true;
-    }
-
-    @Override
-    public boolean merge(final IndexExtractor indexExtractor) {
-        Objects.requireNonNull(indexExtractor, "indexExtractor");
-        indexExtractor.processIndices(this::add);
-        if (!this.indices.isEmpty()) {
-            if (this.indices.last() >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                        this.indices.last(), shape.getNumberOfBits() - 1));
-            }
-            if (this.indices.first() < 0) {
-                throw new IllegalArgumentException(
-                        String.format("Value in list %s is less than 0", this.indices.first()));
             }
         }
         return true;

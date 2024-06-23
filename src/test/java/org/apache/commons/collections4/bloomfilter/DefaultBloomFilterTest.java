@@ -74,21 +74,6 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
         }
 
         @Override
-        public boolean processBitMaps(final LongPredicate consumer) {
-            return BitMapExtractor.fromIndexExtractor(this, shape.getNumberOfBits()).processBitMaps(consumer);
-        }
-
-        @Override
-        public boolean processIndices(final IntPredicate consumer) {
-            for (final Integer i : indices) {
-                if (!consumer.test(i)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        @Override
         public Shape getShape() {
             return shape;
         }
@@ -106,6 +91,21 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
             });
             checkIndicesRange();
             return result;
+        }
+
+        @Override
+        public boolean processBitMaps(final LongPredicate consumer) {
+            return BitMapExtractor.fromIndexExtractor(this, shape.getNumberOfBits()).processBitMaps(consumer);
+        }
+
+        @Override
+        public boolean processIndices(final IntPredicate consumer) {
+            for (final Integer i : indices) {
+                if (!consumer.test(i)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
