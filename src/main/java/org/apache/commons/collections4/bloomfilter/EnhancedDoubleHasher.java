@@ -85,7 +85,7 @@ public class EnhancedDoubleHasher implements Hasher {
      *</p>
      * <ol>
      * <li>If there is an odd number of bytes the excess byte is assigned to the increment value</li>
-     * <li>The bytes alloted are read in big-endian order any byte not populated is set to zero.</li>
+     * <li>The bytes allotted are read in big-endian order any byte not populated is set to zero.</li>
      * </ol>
      * <p>
      * This ensures that small arrays generate the largest possible increment and initial values.
