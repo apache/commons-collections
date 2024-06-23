@@ -18,7 +18,7 @@
 /**
  * Collects extensible Bloom filter classes and interfaces.
  *
- * <h2>Background:</h2>
+ * <h2>Background</h2>
  *
  * <p>The Bloom filter is a probabilistic data structure that indicates where things are not. Conceptually it is a bit
  * vector or BitMap. You create a Bloom filter by creating hashes and converting those to enabled bits in the map. Multiple
@@ -133,10 +133,10 @@
  * <h2>References</h2>
  *
  * <ol>
- * <li>https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf</li>
- * <li>https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60</li>
+ * <li><a href="https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf">Building a Better Bloom Filter by Adam Kirsch and Michael Mitzenmacher.</a></li>
+ * <li><a href="https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60">Apache Cassandra's BloomFilter.</a></li>
  * </ol>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 package org.apache.commons.collections4.bloomfilter;
