@@ -294,7 +294,7 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
     /**
      * The empty map (immutable). This map is serializable.
      *
-     * @since 4.5
+     * @since 4.5.0
      */
     public static final Properties EMPTY_PROPERTIES = new EmptyProperties();
 

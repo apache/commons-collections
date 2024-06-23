@@ -43,7 +43,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
     /**
      * Enumerates property formats.
      *
-     * @since 4.5
+     * @since 4.5.0
      */
     public enum PropertyFormat {
 
@@ -130,7 +130,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @return a new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
-     * @since 4.5
+     * @since 4.5.0
      */
     public T load(final InputStream inputStream, final PropertyFormat propertyFormat) throws IOException {
         if (inputStream == null) {

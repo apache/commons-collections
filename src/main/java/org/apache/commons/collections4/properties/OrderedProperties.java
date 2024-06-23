@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @see OrderedPropertiesFactory#INSTANCE
- * @since 4.5
+ * @since 4.5.0
  */
 public class OrderedProperties extends Properties {
 
