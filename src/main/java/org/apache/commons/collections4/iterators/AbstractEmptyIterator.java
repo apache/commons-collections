@@ -36,7 +36,7 @@ abstract class AbstractEmptyIterator<E> implements ResettableIterator<E> {
     /**
      * Always throws UnsupportedOperationException.
      *
-     * @param ignored ignore. 
+     * @param ignored ignore.
      * @throws UnsupportedOperationException Always thrown.
      * @deprecated Will be removed in 5.0 without replacement.
      */
