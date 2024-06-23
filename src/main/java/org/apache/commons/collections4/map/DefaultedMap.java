@@ -177,7 +177,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
