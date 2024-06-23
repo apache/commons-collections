@@ -86,7 +86,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     }
 
     /**
-     * Read the collection in using a custom routine.
+     * Deserializes the collection in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
