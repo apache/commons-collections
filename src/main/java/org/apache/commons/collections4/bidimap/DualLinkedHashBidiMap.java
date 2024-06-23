@@ -102,7 +102,12 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
         putAll(map);
     }
 
-    // Serialization
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);
