@@ -92,6 +92,13 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         return new DualHashBidiMap<>(normalMap, reverseMap, inverseBidiMap);
     }
 
+    /**
+     * Deserializes an instance from an ObjectInputStream.
+     *
+     * @param in The source ObjectInputStream.
+     * @throws IOException            Any of the usual Input/Output related exceptions.
+     * @throws ClassNotFoundException A class of a serialized object cannot be found.
+     */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new HashMap<>();
