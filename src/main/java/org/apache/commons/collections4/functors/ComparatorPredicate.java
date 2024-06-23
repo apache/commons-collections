@@ -74,6 +74,7 @@ import org.apache.commons.collections4.Predicate;
  * using the {@code GREATER} evaluation criterion constant. This instructs the predicate to
  * return {@code true} if the comparator returns a value greater than {@code 0}.</p>
  *
+ * @param <T> the type of the input to the predicate.
  * @since 4.0
  */
 public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
