@@ -48,7 +48,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         public boolean equals(final Object object) {
             if (object instanceof Entry) {
                 final Entry<?> other = (Entry<?>) object;
-                final E element = this.getElement();
+                final E element = getElement();
                 final Object otherElement = other.getElement();
 
                 return this.getCount() == other.getCount() &&
