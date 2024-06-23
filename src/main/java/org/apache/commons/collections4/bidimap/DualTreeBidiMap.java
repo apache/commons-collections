@@ -414,7 +414,12 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return ((SortedMap<V, K>) reverseMap).comparator();
     }
 
-    // Serialization
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);
