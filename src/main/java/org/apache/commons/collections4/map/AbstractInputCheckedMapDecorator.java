@@ -65,13 +65,13 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
 
         @Override
         public Iterator<Map.Entry<K, V>> iterator() {
-            return new EntrySetIterator(this.decorated().iterator(), parent);
+            return new EntrySetIterator(decorated().iterator(), parent);
         }
 
         @Override
         @SuppressWarnings("unchecked")
         public Object[] toArray() {
-            final Object[] array = this.decorated().toArray();
+            final Object[] array = decorated().toArray();
             for (int i = 0; i < array.length; i++) {
                 array[i] = new MapEntry((Map.Entry<K, V>) array[i], parent);
             }
@@ -87,7 +87,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
                 // where another thread could access data before we decorate it
                 result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
             }
-            result = this.decorated().toArray(result);
+            result = decorated().toArray(result);
             for (int i = 0; i < result.length; i++) {
                 result[i] = new MapEntry((Map.Entry<K, V>) result[i], parent);
             }
