@@ -774,12 +774,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             Map.Entry<K, V> e = null;
             if (fromKey == null) {
                 e = firstEntry();
+            } else if (fromInclusive) {
+                e = ceilingEntry(fromKey);
             } else {
-                if (fromInclusive) {
-                    e = ceilingEntry(fromKey);
-                } else {
-                    e = higherEntry(fromKey);
-                }
+                e = higherEntry(fromKey);
             }
 
             final K first = e != null ? e.getKey() : null;
@@ -814,12 +812,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             final Map.Entry<K, V> e;
             if (toKey == null) {
                 e = lastEntry();
+            } else if (toInclusive) {
+                e = floorEntry(toKey);
             } else {
-                if (toInclusive) {
-                    e = floorEntry(toKey);
-                } else {
-                    e = lowerEntry(toKey);
-                }
+                e = lowerEntry(toKey);
             }
 
             final K last = e != null ? e.getKey() : null;
@@ -2314,10 +2310,8 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             if (selectR(h.left, h.bitIndex, key, lengthInBits, reference)) {
                 return selectR(h.right, h.bitIndex, key, lengthInBits, reference);
             }
-        } else {
-            if (selectR(h.right, h.bitIndex, key, lengthInBits, reference)) {
-                return selectR(h.left, h.bitIndex, key, lengthInBits, reference);
-            }
+        } else if (selectR(h.right, h.bitIndex, key, lengthInBits, reference)) {
+            return selectR(h.left, h.bitIndex, key, lengthInBits, reference);
         }
         return false;
     }
