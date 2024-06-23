@@ -25,6 +25,7 @@
  * from the new format to the old format and vice versa.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
  *   <li>DualHashBidiMap - uses two HashMaps to implement BidiMap
  *   <li>DualLinkedHashBidiMap - uses two LinkedHashMaps to implement BidiMap
@@ -33,6 +34,7 @@
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
  *   <li>Unmodifiable - ensures the map cannot be altered
  * </ul>
