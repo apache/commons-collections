@@ -66,10 +66,16 @@ public class PatriciaTrie<V> extends AbstractPatriciaTrie<String, V> {
 
     private static final long serialVersionUID = 4446367780901817838L;
 
+    /**
+     * Constructs a new instance.
+     */
     public PatriciaTrie() {
         super(StringKeyAnalyzer.INSTANCE);
     }
 
+    /**
+     * Constructs a new instance.
+     */
     public PatriciaTrie(final Map<? extends String, ? extends V> m) {
         super(StringKeyAnalyzer.INSTANCE, m);
     }
