@@ -49,6 +49,12 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
             doReadObject(in);
         }
 
+        /**
+         * Serializes this object to an ObjectOutputStream.
+         *
+         * @param out the target ObjectOutputStream.
+         * @throws IOException thrown when an I/O errors occur writing to the target stream.
+         */
         private void writeObject(final ObjectOutputStream out) throws IOException {
             out.defaultWriteObject();
             doWriteObject(out);
