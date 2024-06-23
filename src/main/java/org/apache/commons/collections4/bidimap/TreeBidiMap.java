@@ -2219,10 +2219,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * Writes the content to the stream for serialization.
+     * Serializes this object to an ObjectOutputStream.
      *
-     * @param stream  the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
