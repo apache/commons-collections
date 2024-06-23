@@ -21,7 +21,7 @@
  * <h2>Background</h2>
  *
  * <p>The Bloom filter is a probabilistic data structure that indicates where things are not. Conceptually it is a bit
- * vector or BitMap. You create a Bloom filter by creating hashes and converting those to enabled bits in the map. Multiple
+ * vector or bit map. You create a Bloom filter by creating hashes and converting those to enabled bits in the map. Multiple
  * Bloom filters may be merged together into one Bloom filter. It is possible to test if a filter {@code B} has merged
  * into another filter {@code A} by verifying that {@code (A & B) == B}.</p>
  *
@@ -33,7 +33,7 @@
  * operation.</p>
  *
  * <p>Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits. In this case each counter
- * is called a {@code cell}.</p>
+ * is called a <em>cell</em>.</p>
  *
  * <h3>BloomFilter</h3>
  *
@@ -44,19 +44,19 @@
  * <h4>Nomenclature</h4>
  *
  * <ul>
- *     <li>BitMap - In the {@code bloomfilter} package a BitMap is not a structure but a logical construct.  It is conceptualized
+ *     <li><em>bit map</em> - In the {@code bloomfilter} package a <em>bit map</em> is not a structure but a logical construct.  It is conceptualized
  *     as an ordered collection of {@code long} values each of which is interpreted as the enabled true/false state of 64 continuous indices.  The mapping of
  *     bits into the {@code long} values is described in the {@link BitMaps} Javadoc.</li>
  *
- *     <li>Index - In the {@code bloomfilter} package an Index is a logical collection of {@code int}s specifying the enabled
+ *     <li><em>index</em> - In the {@code bloomfilter} package an Index is a logical collection of {@code int}s specifying the enabled
  *     bits in the bit map.</li>
  *
- *     <li>Cell - Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits.  In the {@code bloomfilter} package
+ *     <li><em>cell</em> - Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits.  In the {@code bloomfilter} package
  *     Cells are pairs of ints representing an index and a value.  They are not {@code Pair} objects.  </li>
  *
- *     <li>Extractor - The Extractors are {@code FunctionalInterfaces} that are conceptually iterators on a bit map, an {@code Index}, or a
- *     collection of {@code Cell}s, with an early termination switch.  Extractors have
- *     names like {@link BitMapExtractor} or {@code IndexExtractor} and have a {@code processXs} methods that take a
+ *     <li><em>extractor</em> - The extractors are {@link FunctionalInterface}s that are conceptually iterators on a bit map, an <em>index</em>, or a
+ *     collection of <em>cells</em>, with an early termination switch.  Extractors have
+ *     names like {@link BitMapExtractor} or {@link IndexExtractor} and have a {@code processXs} methods that take a
  *     {@code Predicate<X>} argument (e.g. {@code processBitMaps(LongPredicate)} or {@code processIndicies(IntPredicate)}).
  *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
@@ -110,7 +110,7 @@
  * <h3>LayeredBloomFilter</h3>
  *
  * <p>The {@link LayeredBloomFilter} extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
- * Filter or as a set of filters.  This adds the ability to perform windowing on streams of data.</p>
+ * Filter or as a set of filters. This adds the ability to perform windowing on streams of data.</p>
  *
  * <h3>Shape</h3>
  *
