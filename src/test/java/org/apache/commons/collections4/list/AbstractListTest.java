@@ -110,16 +110,16 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         @Override
         public void resetEmpty() {
             outer.resetFull();
-            this.setCollection(outer.getCollection().subList(4, 4));
-            this.setConfirmed(outer.getConfirmed().subList(4, 4));
+            setCollection(outer.getCollection().subList(4, 4));
+            setConfirmed(outer.getConfirmed().subList(4, 4));
         }
 
         @Override
         public void resetFull() {
             outer.resetFull();
             final int size = outer.getConfirmed().size();
-            this.setCollection(outer.getCollection().subList(3, size - 3));
-            this.setConfirmed(outer.getConfirmed().subList(3, size - 3));
+            setCollection(outer.getCollection().subList(3, size - 3));
+            setConfirmed(outer.getConfirmed().subList(3, size - 3));
         }
 
         @Override
