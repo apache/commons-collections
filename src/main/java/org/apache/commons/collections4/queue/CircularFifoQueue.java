@@ -349,7 +349,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Read the queue in using a custom routine.
+     * Deserializes the queue in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an I/O error occurs while writing to the output stream
