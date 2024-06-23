@@ -240,10 +240,8 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         if (!isAllowNullKey()) {
             final OrderedMap<K, V> finalOrdered = ordered;
             assertThrows(NullPointerException.class, () -> finalOrdered.previousKey(null));
-        } else {
-            if (!isAllowNullKey()) {
-                assertNull(ordered.previousKey(null));
-            }
+        } else if (!isAllowNullKey()) {
+            assertNull(ordered.previousKey(null));
         }
     }
 
