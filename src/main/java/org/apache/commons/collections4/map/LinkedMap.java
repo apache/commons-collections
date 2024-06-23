@@ -287,7 +287,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in the input stream
      * @throws IOException if an error occurs while reading from the stream
