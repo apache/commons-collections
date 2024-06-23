@@ -2430,7 +2430,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Writes the content to the stream for serialization.
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
