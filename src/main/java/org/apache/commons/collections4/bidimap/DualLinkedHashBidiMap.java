@@ -86,6 +86,13 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
         return new DualLinkedHashBidiMap<>(normalMap, reverseMap, inverseBidiMap);
     }
 
+    /**
+     * Deserializes an instance from an ObjectInputStream.
+     *
+     * @param in The source ObjectInputStream.
+     * @throws IOException            Any of the usual Input/Output related exceptions.
+     * @throws ClassNotFoundException A class of a serialized object cannot be found.
+     */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new LinkedHashMap<>();
