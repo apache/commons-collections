@@ -23,6 +23,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if the input is null.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
 public final class NullPredicate<T> implements Predicate<T>, Serializable {
