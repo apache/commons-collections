@@ -56,8 +56,8 @@
  *
  *     <li><em>extractor</em> - The extractors are {@link FunctionalInterface}s that are conceptually iterators on a bit map, an <em>index</em>, or a
  *     collection of <em>cells</em>, with an early termination switch.  Extractors have
- *     names like {@link BitMapExtractor} or {@link IndexExtractor} and have a {@code processXs} methods that take a
- *     {@code Predicate<X>} argument (e.g. {@link BitMapExtractor#processBitMaps()} or {@code processIndicies(IntPredicate)}).
+ *     names like {@link org.apache.commons.collections4.bloomfilter.BitMapExtractor} or {@link org.apache.commons.collections4.bloomfilter.IndexExtractor} and have a {@code processXs} methods that take a
+ *     {@code Predicate<X>} argument (e.g. {@link org.apache.commons.collections4.bloomfilter.BitMapExtractor#processBitMaps(java.util.function.LongPredicate)} or {@code processIndicies(IntPredicate)}).
  *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
  * </ul>
@@ -69,13 +69,13 @@
  * <h4>Implementation Notes</h4>
  *
  * <p>The architecture is designed so that the implementation of the storage of bits is abstracted. Rather than specifying a
- * specific state representation we require that all Bloom filters implement the {@link BitMapExtractor} and {@link IndexExtractor} interfaces,
- * Counting-based Bloom filters implement {@link CellExtractor} as well.  There are static
+ * specific state representation we require that all Bloom filters implement the {@link org.apache.commons.collections4.bloomfilter.BitMapExtractor} and {@link org.apache.commons.collections4.bloomfilter.IndexExtractor} interfaces,
+ * Counting-based Bloom filters implement {@link org.apache.commons.collections4.bloomfilter.CellExtractor} as well.  There are static
  * methods in the various Extractor interfaces to convert from one type to another.</p>
  *
- * <p>Programs that utilize the Bloom filters may use the {@link BitMapExtractor} or {@link IndexExtractor} to retrieve
+ * <p>Programs that utilize the Bloom filters may use the {@link org.apache.commons.collections4.bloomfilter.BitMapExtractor} or {@link org.apache.commons.collections4.bloomfilter.IndexExtractor} to retrieve
  * or process a representation of the internal structure.
- * Additional methods are available in the {@link BitMaps} class to assist in manipulation of bit map representations.</p>
+ * Additional methods are available in the {@link org.apache.commons.collections4.bloomfilter.BitMaps} class to assist in manipulation of bit map representations.</p>
  *
  * <p>The Bloom filter is an interface that requires implementation of 9 methods:</p>
  * <ul>
@@ -103,30 +103,30 @@
  *
  * <h3>CountingBloomFilter</h3>
  *
- * <p>The {@link CountingBloomFilter} extends the Bloom filter by counting the number of times a specific bit has been
+ * <p>The {@link org.apache.commons.collections4.bloomfilter.CountingBloomFilter} extends the Bloom filter by counting the number of times a specific bit has been
  * enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
  * overhead.</p>
  *
  * <h3>LayeredBloomFilter</h3>
  *
- * <p>The {@link LayeredBloomFilter} extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
+ * <p>The {@link org.apache.commons.collections4.bloomfilter.LayeredBloomFilter} extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
  * Filter or as a set of filters. This adds the ability to perform windowing on streams of data.</p>
  *
  * <h3>Shape</h3>
  *
- * <p>The {@link Shape} describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
+ * <p>The {@link org.apache.commons.collections4.bloomfilter.Shape} describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
  * by the number of expected items and desired false positive rate.</p>
  *
  * <h3>Hasher</h3>
  *
- * <p>A {@link Hasher} converts bytes into a series of integers based on a Shape. Each hasher represents one item being added
+ * <p>A {@link org.apache.commons.collections4.bloomfilter.Hasher} converts bytes into a series of integers based on a Shape. Each hasher represents one item being added
  * to the Bloom filter.</p>
  *
- * <p>The {@link EnhancedDoubleHasher} uses a combinatorial generation technique to create the integers. It is easily
+ * <p>The {@link org.apache.commons.collections4.bloomfilter.EnhancedDoubleHasher} uses a combinatorial generation technique to create the integers. It is easily
  * initialized by using a byte array returned by the standard {@link java.security.MessageDigest} or other hash function to
  * initialize the Hasher. Alternatively, a pair of a long values may also be used.</p>
  *
- * <p>Other implementations of the {@link Hasher} are easy to implement, and should make use of the {@code Hasher.Filter}
+ * <p>Other implementations of the {@link org.apache.commons.collections4.bloomfilter.Hasher} are easy to implement, and should make use of the {@code Hasher.Filter}
  * and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices when implementing
  * {@code Hasher.uniqueIndices(Shape)}.</p>
  *
