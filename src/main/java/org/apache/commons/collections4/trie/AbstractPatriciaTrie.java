@@ -2054,16 +2054,20 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Reads the content of the stream.
+     * Deserializes an instance from an ObjectInputStream.
+     *
+     * @param in The source ObjectInputStream.
+     * @throws IOException            Any of the usual Input/Output related exceptions.
+     * @throws ClassNotFoundException A class of a serialized object cannot be found.
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        stream.defaultReadObject();
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
         root = new TrieEntry<>(null, null, -1);
-        final int size = stream.readInt();
+        final int size = in.readInt();
         for (int i = 0; i < size; i++) {
-            final K k = (K) stream.readObject();
-            final V v = (V) stream.readObject();
+            final K k = (K) in.readObject();
+            final V v = (V) in.readObject();
             put(k, v);
         }
     }
