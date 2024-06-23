@@ -464,22 +464,22 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
     }
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String NO_NEXT_ENTRY = "No next() entry in the iteration";
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String NO_PREVIOUS_ENTRY = "No previous() entry in the iteration";
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String REMOVE_INVALID = "remove() can only be called once after next()";
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String GETKEY_INVALID = "getKey() can only be called after next() and before remove()";
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String GETVALUE_INVALID = "getValue() can only be called after next() and before remove()";
 
-    /** Exception message. */    
+    /** Exception message. */
     protected static final String SETVALUE_INVALID = "setValue() can only be called after next() and before remove()";
 
     /** The default capacity to use */
