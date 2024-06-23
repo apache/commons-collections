@@ -1030,10 +1030,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
                     if (map.get(key) != null || !map.containsKey(key)) {
                         return false;
                     }
-                } else {
-                    if (!value.equals(map.get(key))) {
-                        return false;
-                    }
+                } else if (!value.equals(map.get(key))) {
+                    return false;
                 }
             }
         } catch (final ClassCastException | NullPointerException ignored) {
