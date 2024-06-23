@@ -18,12 +18,14 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections4.ResettableIterator;
+
 /**
- * Provides an implementation of an empty iterator.
+ * Provides an abstract implementation of an empty iterator.
  *
  * @since 3.1
  */
-abstract class AbstractEmptyIterator<E> {
+abstract class AbstractEmptyIterator<E> implements ResettableIterator<E> {
 
     /**
      * Constructs a new instance.
@@ -35,6 +37,7 @@ abstract class AbstractEmptyIterator<E> {
         throw new UnsupportedOperationException("add() not supported for empty Iterator");
     }
 
+    @Override
     public boolean hasNext() {
         return false;
     }
@@ -43,6 +46,7 @@ abstract class AbstractEmptyIterator<E> {
         return false;
     }
 
+    @Override
     public E next() {
         throw new NoSuchElementException("Iterator contains no elements");
     }
@@ -59,10 +63,12 @@ abstract class AbstractEmptyIterator<E> {
         return -1;
     }
 
+    @Override
     public void remove() {
         throw new IllegalStateException("Iterator contains no elements");
     }
 
+    @Override
     public void reset() {
         // do nothing
     }

@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.iterators;
 
 import org.apache.commons.collections4.OrderedIterator;
-import org.apache.commons.collections4.ResettableIterator;
 
 /**
  * Provides an implementation of an empty ordered iterator.
@@ -26,7 +25,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @since 3.1
  */
 public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
-        implements OrderedIterator<E>, ResettableIterator<E> {
+        implements OrderedIterator<E> {
 
     /**
      * Singleton instance of the iterator.
