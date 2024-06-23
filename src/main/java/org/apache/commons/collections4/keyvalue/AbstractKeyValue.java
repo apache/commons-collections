@@ -64,12 +64,24 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
         return value;
     }
 
+    /**
+     * Sets the key.
+     *
+     * @param key The key.
+     * @return The previous key.
+     */
     protected K setKey(final K key) {
         final K old = this.key;
         this.key = key;
         return old;
     }
 
+    /**
+     * Sets the value.
+     *
+     * @param value The value.
+     * @return The previous value.
+     */
     protected V setValue(final V value) {
         final V old = this.value;
         this.value = value;

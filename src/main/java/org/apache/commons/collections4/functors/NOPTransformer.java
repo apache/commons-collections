@@ -51,6 +51,11 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     private NOPTransformer() {
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

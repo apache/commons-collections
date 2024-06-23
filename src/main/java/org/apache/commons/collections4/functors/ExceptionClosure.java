@@ -63,6 +63,11 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
         throw new FunctorException("ExceptionClosure invoked");
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

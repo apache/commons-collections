@@ -63,6 +63,11 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
         throw new FunctorException("ExceptionFactory invoked");
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

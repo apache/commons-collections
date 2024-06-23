@@ -61,6 +61,11 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
         // do nothing
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

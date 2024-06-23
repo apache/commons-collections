@@ -65,6 +65,11 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
         throw new FunctorException("ExceptionPredicate invoked");
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

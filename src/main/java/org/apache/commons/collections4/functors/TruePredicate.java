@@ -63,6 +63,11 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
         return true;
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

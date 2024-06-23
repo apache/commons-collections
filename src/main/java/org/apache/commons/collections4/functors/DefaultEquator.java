@@ -76,6 +76,11 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
         return o == null ? HASHCODE_NULL : o.hashCode();
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

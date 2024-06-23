@@ -53,6 +53,11 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
     private ExceptionTransformer() {
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

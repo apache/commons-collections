@@ -63,6 +63,11 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
         return false;
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

@@ -52,6 +52,11 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     private StringValueTransformer() {
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

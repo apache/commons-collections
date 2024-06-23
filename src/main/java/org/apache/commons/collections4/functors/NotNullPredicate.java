@@ -63,6 +63,11 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
         return object != null;
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }
