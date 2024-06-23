@@ -35,6 +35,7 @@ There are many features, including:
 <ul>
 <li>Bag interface for collections that have a number of copies of each object</li>
 <li>BidiMap interface for maps that can be looked up from value to key as well and key to value</li>
+<li>Bloom filter classes and interfaces</li>
 <li>MapIterator interface to provide simple and quick iteration over maps</li>
 <li>Transforming decorators that alter each object as it is added to the collection</li>
 <li>Composite collections that make multiple collections look like one</li>
