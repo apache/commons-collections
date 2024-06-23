@@ -57,7 +57,7 @@
  *     <li><em>extractor</em> - The extractors are {@link FunctionalInterface}s that are conceptually iterators on a bit map, an <em>index</em>, or a
  *     collection of <em>cells</em>, with an early termination switch.  Extractors have
  *     names like {@link BitMapExtractor} or {@link IndexExtractor} and have a {@code processXs} methods that take a
- *     {@code Predicate<X>} argument (e.g. {@code processBitMaps(LongPredicate)} or {@code processIndicies(IntPredicate)}).
+ *     {@code Predicate<X>} argument (e.g. {@link BitMapExtractor#processBitMaps()} or {@code processIndicies(IntPredicate)}).
  *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
  * </ul>
