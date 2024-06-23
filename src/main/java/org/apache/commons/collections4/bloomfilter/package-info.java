@@ -26,13 +26,13 @@
  * into another filter {@code A} by verifying that {@code (A & B) == B}.</p>
  *
  * <p>Bloom filters are generally used where hash tables would be too large, or as a filter front end for longer processes.
- * For example most browsers have a Bloom filter that is built from all known bad URLs (ones that serve up malware).
+ * For example most browsers have a Bloom filter that is built from all known bad URLs (ones that serve up malicious software).
  * When you enter a URL the browser builds a Bloom filter and checks to see if it is "in" the bad URL filter. If not the
  * URL is good, if it matches, then the expensive lookup on a remote system is made to see if it actually is in the
  * list. There are lots of other uses, and in most cases the reason is to perform a fast check as a gateway for a longer
  * operation.</p>
  *
- * <p>Some Bloom filters (e.g. CountingBloomFilter) use counters rather than bits. In this case each counter
+ * <p>Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits. In this case each counter
  * is called a {@code cell}.</p>
  *
  * <h3>BloomFilter</h3>
@@ -44,38 +44,38 @@
  * <h4>Nomenclature</h4>
  *
  * <ul>
- *     <li>BitMap - In the bloomfilter package a BitMap is not a structure but a logical construct.  It is conceptualized
+ *     <li>BitMap - In the {@code bloomfilter} package a BitMap is not a structure but a logical construct.  It is conceptualized
  *     as an ordered collection of {@code long} values each of which is interpreted as the enabled true/false state of 64 continuous indices.  The mapping of
- *     bits into the {@code long} values is described in the {@code BitMaps} javadoc.</li>
+ *     bits into the {@code long} values is described in the {@link BitMaps} Javadoc.</li>
  *
- *     <li>Index - In the bloomfilter package an Index is a logical collection of {@code int}s specifying the enabled
- *     bits in the BitMap.</li>
+ *     <li>Index - In the {@code bloomfilter} package an Index is a logical collection of {@code int}s specifying the enabled
+ *     bits in the bit map.</li>
  *
- *     <li>Cell - Some Bloom filters (e.g. CountingBloomFilter) use counters rather than bits.  In the bloomfilter package
+ *     <li>Cell - Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits.  In the {@code bloomfilter} package
  *     Cells are pairs of ints representing an index and a value.  They are not {@code Pair} objects.  </li>
  *
- *     <li>Extractor - The Extractors are {@code FunctionalInterfaces} that are conceptually iterators on a {@code BitMap}, an {@code Index}, or a
+ *     <li>Extractor - The Extractors are {@code FunctionalInterfaces} that are conceptually iterators on a bit map, an {@code Index}, or a
  *     collection of {@code Cell}s, with an early termination switch.  Extractors have
- *     names like {@code BitMapExtractor} or {@code IndexExtractor} and have a {@code processXs} methods that take a
+ *     names like {@link BitMapExtractor} or {@code IndexExtractor} and have a {@code processXs} methods that take a
  *     {@code Predicate<X>} argument (e.g. {@code processBitMaps(LongPredicate)} or {@code processIndicies(IntPredicate)}).
  *     That predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
  * </ul>
  *
- * <p>There is an obvious association between the BitMap and the Index, as defined above, in that if bit 5 is enabled in the
- * BitMap than the Index must contain the value 5.</p>
+ * <p>There is an obvious association between the bit map and the Index, as defined above, in that if bit 5 is enabled in the
+ * bit map than the Index must contain the value 5.</p>
  *
  *
  * <h4>Implementation Notes</h4>
  *
  * <p>The architecture is designed so that the implementation of the storage of bits is abstracted. Rather than specifying a
- * specific state representation we require that all Bloom filters implement the BitMapExtractor and IndexExtractor interfaces,
- * Counting-based Bloom filters implement {@code CellExtractor} as well.  There are static
+ * specific state representation we require that all Bloom filters implement the {@link BitMapExtractor} and {@link IndexExtractor} interfaces,
+ * Counting-based Bloom filters implement {@link CellExtractor} as well.  There are static
  * methods in the various Extractor interfaces to convert from one type to another.</p>
  *
- * <p>Programs that utilize the Bloom filters may use the {@code BitMapExtractor} or {@code IndexExtractor} to retrieve
+ * <p>Programs that utilize the Bloom filters may use the {@link BitMapExtractor} or {@link IndexExtractor} to retrieve
  * or process a representation of the internal structure.
- * Additional methods are available in the {@code BitMaps} class to assist in manipulation of BitMap representations.</p>
+ * Additional methods are available in the {@link BitMaps} class to assist in manipulation of bit map representations.</p>
  *
  * <p>The Bloom filter is an interface that requires implementation of 9 methods:</p>
  * <ul>
@@ -103,30 +103,30 @@
  *
  * <h3>CountingBloomFilter</h3>
  *
- * <p>The counting Bloom filter extends the Bloom filter by counting the number of times a specific bit has been
+ * <p>The {@link CountingBloomFilter} extends the Bloom filter by counting the number of times a specific bit has been
  * enabled or disabled. This allows the removal (opposite of merge) of Bloom filters at the expense of additional
  * overhead.</p>
  *
  * <h3>LayeredBloomFilter</h3>
  *
- * <p>The layered Bloom filter extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
+ * <p>The {@link LayeredBloomFilter} extends the Bloom filter by creating layers of Bloom filters that can be queried as a single
  * Filter or as a set of filters.  This adds the ability to perform windowing on streams of data.</p>
  *
  * <h3>Shape</h3>
  *
- * <p>The Shape describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
+ * <p>The {@link Shape} describes the Bloom filter using the number of bits and the number of hash functions.  It can be specified
  * by the number of expected items and desired false positive rate.</p>
  *
  * <h3>Hasher</h3>
  *
- * <p>A Hasher converts bytes into a series of integers based on a Shape. Each hasher represents one item being added
+ * <p>A {@link Hasher} converts bytes into a series of integers based on a Shape. Each hasher represents one item being added
  * to the Bloom filter.</p>
  *
- * <p>The EnhancedDoubleHasher uses a combinatorial generation technique to create the integers. It is easily
- * initialized by using a byte array returned by the standard {@code MessageDigest} or other hash function to
- * initialize the Hasher. Alternatively a pair of a long values may also be used.</p>
+ * <p>The {@link EnhancedDoubleHasher} uses a combinatorial generation technique to create the integers. It is easily
+ * initialized by using a byte array returned by the standard {@link java.security.MessageDigest} or other hash function to
+ * initialize the Hasher. Alternatively, a pair of a long values may also be used.</p>
  *
- * <p>Other implementations of the Hasher are easy to implement, and should make use of the {@code Hasher.Filter}
+ * <p>Other implementations of the {@link Hasher} are easy to implement, and should make use of the {@code Hasher.Filter}
  * and/or {@code Hasher.FileredIntConsumer} classes to filter out duplicate indices when implementing
  * {@code Hasher.uniqueIndices(Shape)}.</p>
  *
