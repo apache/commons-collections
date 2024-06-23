@@ -26,6 +26,7 @@
     <!-- FIX -->
     <action issue="COLLECTIONS-857" type="fix" dev="ggregory" due-to="Claude Warren">Complete bloom filter documentation #507.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Package private AbstractEmptyIterator implements ResettableIterator so subclasses don't.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate AbstractEmptyIterator.add(E) without replacement.</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>

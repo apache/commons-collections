@@ -33,7 +33,14 @@ abstract class AbstractEmptyIterator<E> implements ResettableIterator<E> {
     protected AbstractEmptyIterator() {
     }
 
-    public void add(final E obj) {
+    /**
+     * Always throws UnsupportedOperationException.
+     * @param ignore ignore. 
+     * @throws UnsupportedOperationException
+     * @deprecated Will be removed in 5.0 without replacement.
+     */
+    @Deprecated
+    public void add(final E ignore) {
         throw new UnsupportedOperationException("add() not supported for empty Iterator");
     }
 
