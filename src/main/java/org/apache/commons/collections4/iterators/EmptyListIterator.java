@@ -30,8 +30,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * @param <E> the type of elements returned by this iterator.
  * @since 2.1.1 and 3.1
  */
-public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
-        ResettableListIterator<E> {
+public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Singleton instance of the iterator.
