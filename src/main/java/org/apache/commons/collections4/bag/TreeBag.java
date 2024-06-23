@@ -116,7 +116,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     /**
-     * Read the bag in using a custom routine.
+     * Deserializes the bag in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
