@@ -38,7 +38,7 @@ import java.util.function.IntPredicate;
  * <li>The IndexExtractor will not generate indices that have a zero count for the cell.</li>
  * </ul>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 @FunctionalInterface
 public interface CellExtractor extends IndexExtractor {

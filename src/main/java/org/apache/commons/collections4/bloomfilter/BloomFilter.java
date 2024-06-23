@@ -25,7 +25,7 @@ import java.util.Objects;
  * </p>
  * @see BitMapExtractor
  * @see IndexExtractor
- * @since 4.5
+ * @since 4.5.0
  */
 public interface BloomFilter extends IndexExtractor, BitMapExtractor {
 

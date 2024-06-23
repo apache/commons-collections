@@ -42,7 +42,7 @@ import java.util.function.IntPredicate;
  * than the number of bits then the modulus will create a 'random' position and increment within the size.
  * </p>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 public class EnhancedDoubleHasher implements Hasher {
 

@@ -33,7 +33,7 @@ import java.util.function.LongPredicate;
  * The default implementations of the {@code makePredicate()} and {@code asBitMapArray} methods
  * are slow and should be reimplemented in the implementing classes where possible.</em></p>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 @FunctionalInterface
 public interface BitMapExtractor {

@@ -28,7 +28,7 @@ import java.util.function.LongPredicate;
  * The default implementation of {@code asIndexArray} is slow. Implementers should reimplement the
  * method where possible.</em></p>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 @FunctionalInterface
 public interface IndexExtractor {

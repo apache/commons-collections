@@ -60,7 +60,7 @@ import java.util.function.Predicate;
  * it and sets the {@code target} before the operation.</li>
  * </ul>
  * @param <T> The type of Bloom Filter that is used for the layers.
- * @since 4.5
+ * @since 4.5.0
  */
 public class LayeredBloomFilter<T extends BloomFilter> implements BloomFilter, BloomFilterExtractor {
     /**

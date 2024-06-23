@@ -21,7 +21,7 @@ import java.util.function.LongBinaryOperator;
 /**
  * Implementations of set operations on BitMapExtractors.
  *
- * @since 4.5
+ * @since 4.5.0
  */
 public final class SetOperations {
 

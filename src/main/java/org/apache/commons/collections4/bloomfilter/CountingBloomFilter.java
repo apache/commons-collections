@@ -52,7 +52,7 @@ import java.util.Objects;
  * partially updated or updated entirely before the exception is raised.</p>
  *
  * @see CellExtractor
- * @since 4.5
+ * @since 4.5.0
  */
 public interface CountingBloomFilter extends BloomFilter, CellExtractor {
 

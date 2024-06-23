@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 /**
  * Produces Bloom filters from a collection (e.g. LayeredBloomFilter).
  *
- * @since 4.5
+ * @since 4.5.0
  */
 @FunctionalInterface
 public interface BloomFilterExtractor {

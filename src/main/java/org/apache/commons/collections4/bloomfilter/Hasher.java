@@ -20,7 +20,7 @@ package org.apache.commons.collections4.bloomfilter;
  * A Hasher creates IndexExtractor based on the hash implementation and the
  * provided Shape.
  *
- * @since 4.5
+ * @since 4.5.0
  */
 public interface Hasher {
 

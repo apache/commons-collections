@@ -49,7 +49,7 @@ import java.util.function.Supplier;
  * the {@code target} filter.</li>
  * </ol>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor {
 

@@ -24,13 +24,13 @@ import java.util.function.IntPredicate;
  * <p><em>If the index is negative the behavior is not defined.</em></p>
  *
  * <p>This is conceptually a unique filter implemented as an {@code IntPredicate}.</p>
- * @since 4.5
+ * @since 4.5.0
  */
 public final class IndexFilter {
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
      * number has been seen. Suitable for Shapes that have few hash functions.
-     * @since 4.5
+     * @since 4.5.0
      */
     static class ArrayTracker implements IntPredicate {
         private final int[] seen;
@@ -61,7 +61,7 @@ public final class IndexFilter {
     /**
      * An IndexTracker implementation that uses an array of bit maps to track whether or not a
      * number has been seen.
-     * @since 4.5
+     * @since 4.5.0
      */
     static class BitMapTracker implements IntPredicate {
         private final long[] bits;

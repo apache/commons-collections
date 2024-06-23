@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
 /**
  * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
- * @since 4.5
+ * @since 4.5.0
  */
 public final class SimpleBloomFilter implements BloomFilter {
 
