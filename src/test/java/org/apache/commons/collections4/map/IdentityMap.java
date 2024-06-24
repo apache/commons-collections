@@ -47,7 +47,10 @@ public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
 
     /**
-     * HashEntry
+     * HashEntry.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected static class IdentityEntry<K, V> extends HashEntry<K, V> {
 

@@ -49,12 +49,16 @@ import java.util.function.Supplier;
  * the {@code target} filter.</li>
  * </ol>
  *
+ *
+ * @param <T> the {@link BloomFilter} type.
  * @since 4.5.0
  */
 public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor {
 
     /**
-     * Builder to create Layer Manager
+     * Builder to create Layer Manager.
+     *
+     * @param <T> the {@link BloomFilter} type.
      */
     public static class Builder<T extends BloomFilter> {
         private Predicate<LayerManager<T>> extendCheck;

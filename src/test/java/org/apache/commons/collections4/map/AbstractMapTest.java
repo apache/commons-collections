@@ -120,6 +120,9 @@ import org.junit.jupiter.api.Test;
  * If your {@link Map} fails one of these tests by design, you may still use this base set of cases. Simply override the test case (method) your map fails
  * and/or the methods that define the assumptions used by the test cases. For example, if your map does not allow duplicate values, override
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
@@ -489,6 +492,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Creates a new Map Entry that is independent of the first and the map.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     public static <K, V> Map.Entry<K, V> cloneMapEntry(final Map.Entry<K, V> entry) {
         final HashMap<K, V> map = new HashMap<>();

@@ -404,6 +404,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <p>
      * From Commons Collections 3.1, all access to the {@code value} property
      * is via the methods on this class.
+     * </p>
+     *
+     * @param <E> The node value type. 
      */
     protected static class Node<E> {
 

@@ -70,6 +70,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     /**
      * EntrySet iterator.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected static class EntrySetIterator<K, V> extends LinkIterator<K, V> implements
             OrderedIterator<Map.Entry<K, V>>, ResettableIterator<Map.Entry<K, V>> {
@@ -91,6 +94,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     /**
      * KeySet iterator.
+     *
+     * @param <K> the key type.
      */
     protected static class KeySetIterator<K> extends LinkIterator<K, Object> implements
             OrderedIterator<K>, ResettableIterator<K> {
@@ -118,6 +123,10 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * then you will not be able to access the protected fields.
      * The {@code entryXxx()} methods on {@code AbstractLinkedMap} exist
      * to provide the necessary access.
+     * </p>
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected static class LinkEntry<K, V> extends HashEntry<K, V> {
         /** The entry before this one in the order */
@@ -140,6 +149,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     /**
      * Base Iterator that iterates in link order.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected abstract static class LinkIterator<K, V> {
 
@@ -223,6 +235,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     /**
      * MapIterator implementation.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
             OrderedMapIterator<K, V>, ResettableIterator<K> {
@@ -271,6 +286,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
     /**
      * Values iterator.
+     *
+     * @param <V> the value type.
      */
     protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
             OrderedIterator<V>, ResettableIterator<V> {

@@ -972,7 +972,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     *  A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
+     * A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
+     *
+     * @param <K> the key type.
+     * @param <V> the value type.
      */
     protected static class TrieEntry<K, V> extends BasicEntry<K, V> {
 
