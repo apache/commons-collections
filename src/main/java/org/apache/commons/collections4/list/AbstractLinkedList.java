@@ -406,7 +406,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * is via the methods on this class.
      * </p>
      *
-     * @param <E> The node value type. 
+     * @param <E> The node value type.
      */
     protected static class Node<E> {
 
