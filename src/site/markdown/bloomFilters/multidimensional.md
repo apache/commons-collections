@@ -22,7 +22,7 @@ We can use reference Bloom filters to index data by storing the Bloom filter alo
 
 Searching can be performed by creating a target Bloom filter with partial data, for example name and date of birth from the person example, and then searching through the list as described above.  The associated records either have the name and birthdate or are false positives and need to be filtered out during retrieval.
 
-## Multidimensional Bloom filters
+## Multidimensional Bloom Filters
 
 The description above is a multidimensional Bloom filter.  A multidimensional Bloom filter is simply a collection of searchable filters, the simplest implementation being a list.  In fact, for fewer than 10K filters the list is the fastest possible solution.  There are two basic reasons for this:
   * Bloom filter comparisons are extremely fast taking on approximately five (5) machine instructions for the simple comparison.
@@ -72,7 +72,7 @@ This solution utilizes the rapidity of the standard list solution, while providi
 
 Natural Bloofi uses a Tree structure like Bloofi does except that each node in the tree is a filter that was inserted into the index.<span><a class="footnote-ref" href="#fn2">2</a></span>  Natural Bloofi operates like the sharded list except that if the Bloom filter for a node is contained by a node in the list then it is made a child of that node.  If the Bloom filter node contains a node in the list, then it becomes the parent of that node.  This yields a flat Bloofi tree where the more saturated filters are closer to the root.
 
-## Encrypted indexing
+## Encrypted Indexing
 
 The idea of using Bloom filters for indexing encrypted data is not a new idea.<span><a class="footnote-ref" href="#fn3">3</a></span><span><a class="footnote-ref" href="#fn4">4</a></span><span><a class="footnote-ref" href="#fn5">5</a></span><span><a class="footnote-ref" href="#fn6">6</a></span>    The salient points are that Bloom filters are a very effective one way hash with matching capabilities.  The simplest solution is to create a reference Bloom filter comprising the plain text of the columns that are to be indexed.  Encrypt the data.  Send the encrypted data and the Bloom filter to the storage engine.  The storage engine stores the encrypted data as a blob and indexes the Bloom filter with a reference to the stored blob.
 

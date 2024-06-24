@@ -220,9 +220,9 @@ However, the issue with this solution is that once the filters are saturated, th
 ```
 The above calculation is dependent upon `BloomFilter.cardinality()` function, so it is advisable to use BloomFilters that track cardinality or can calculate cardinality quickly.
 
-## Counting Bloom filters
+## Counting Bloom Filters
 
-Standard Bloom filters do not have a mechanism to remove items.  One of the solutions for this is to convert each bit to a counter<span><a class="footnote-ref" href="#fn1">1</a></span>. The counter and index together are commonly called a cell.  As items are added to the filter, the values of the cells associated with the enabled bits are incremented.  When an item is removed the values of the cells associated with the enabled bits are decremented.  This solution supports removal of items at the expense of making the filter many times larger than a `BitMap` based one.
+Standard Bloom filters do not have a mechanism to remove items.  One of the solutions for this is to convert each bit to a counter<span><a class="footnote-ref" href="#fn1">1</a></span>. The counter and index together are commonly called a cell.  As items are added to the filter, the values of the cells associated with the enabled bits are incremented.  When an item is removed the values of the cells associated with the enabled bits are decremented.  This solution supports removal of items at the expense of making the filter many times larger than a bit map based one.
 
 The counting Bloom filter also has a couple of operations not found in other Bloom filters:
  * Counting Bloom filters can be added together so that the sum of their counts is achieved.
@@ -269,7 +269,7 @@ The stable filter works well in environments where inserts occur at a fairly fix
 
 There is no implementation of a stable Bloom filter in commons collections.
 
-### Layered Bloom filter
+### Layered Bloom Filter
 
 The layered Bloom filter<span><a class="footnote-ref" href="#fn3">3</a></span> creates a list of filters.  Items are added to a target filter and, after a specified condition is met, a new filter is added to the list and it becomes the target.  Filters are removed from the list based on other specified conditions.
 
@@ -279,7 +279,7 @@ The layered filter also has the capability to locate the layer in which a filter
 
 The layered filter can also be used in situations where the actual number of items is unknown when the Bloom filter is defined.  By using a layered filter that adds a target whenever the saturation of the current target reaches 1, the false positive rate for the entire filter does not rise above the value calculated for the shape.
 
-### Apache Commons Collections Implementation
+#### Apache Commons Collections Implementation
 
 The Apache Commons Collections Bloom filter package contains a layered Bloom filter implementation.  To support the `LayeredBloomFilter` there are a `LayerManager` class and a `BloomFilterExtractor` interface.
 
@@ -301,8 +301,172 @@ The `LayeredBloomFilter` class defines several new methods:
 * `contains(BloomFilterExtractor others)` - returns true if the layered filter contains all of the other filters.
 * `find(BitmapExtractor)`, `find(BloomFilter)`, `find(Hasher)`, and `find(IndexExtractor)` - returns an array of ints identifying which layers match the pattern.
 * `get(int layer)` - returns the Bloom filter for the layer.
-* `getDepth()` - returns the number of layers in the filter..
+* `getDepth()` - returns the number of layers in the filter.
 * `next()` - forces the the creation of a new layer.
+
+#### Layered Bloom Filter Example
+
+In this example we are building a layered Bloom filter that will 
+* Retain information for a specified period of time: `layerExpiry`.
+* Create a new layer when  
+  * the current layer becomes saturates: `numberOfItems`; or
+  * a timer has expired `layerExpiry / layerCount`.
+
+This construct has the interesting effect of growing and shrinking the number of layers as demand grows or shrinks.  If there is a steady flow of items that does not exceed \\( \frac{numberOfItems}{layerExpiry / layerCount} \\) then there will be `layerCount` layers.  If the rate of entities is higher, then the number of layers will grow to handle the rate.  When the rate decreases the number of layers will decrease as the items age out `(layerExpiry)`.  If the rate drops to zero there will be one empty Bloom filter layer.  However, the number of layers will not shrink unless `isEmpty()` or one of the `merge()` or `contains()` methods are called.
+
+This implementation is not thread safe and has the effect that the item is removed from the filter after `layerExpiry` has elapsed even if it was seen again. If the desired effect is to retain the reference until after the last time the item was seen then the check needs to verify that the item was seen in or near the last filter.
+
+```java
+package org.example;
+
+import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.Hasher;
+import org.apache.commons.collections4.bloomfilter.LayerManager;
+import org.apache.commons.collections4.bloomfilter.LayeredBloomFilter;
+import org.apache.commons.collections4.bloomfilter.Shape;
+import org.apache.commons.collections4.bloomfilter.SimpleBloomFilter;
+import org.apache.commons.collections4.bloomfilter.WrappedBloomFilter;
+
+import java.time.Duration;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+public class LayeredExample {
+    // the layered Bloom filter.
+    private final LayeredBloomFilter<TimestampedBloomFilter> bloomFilter;
+    // the expiry time for a layer
+    private final Duration layerExpiry;
+    // the expected number of layers.
+    private final int layerCount;
+
+    /**
+     * @param numberOfItems the expected number of item in a layer.
+     * @param falsePositiveRate the acceptable false positive rate for the filter.
+     * @param layerCount the number of expected layers.
+     * @param layerExpiry The length of time a layer should exist
+     */
+    public LayeredExample(int numberOfItems, double falsePositiveRate, int layerCount, Duration layerExpiry) {
+        this.layerCount = layerCount;
+        this.layerExpiry = layerExpiry;
+        Shape shape = Shape.fromNP(numberOfItems, falsePositiveRate);
+
+        // we will create a new Bloom filter (advance) every time the active filter in the layered filter becomes full
+        Predicate<LayerManager<TimestampedBloomFilter>> advance = LayerManager.ExtendCheck.advanceOnCount(numberOfItems);
+        //  or when the next window should be started.
+        advance = advance.or(new TimerPredicate());
+
+        // the cleanup for the LayerManager determines when to remove a layer.
+        // always remove the empty target.
+        Consumer<Deque<TimestampedBloomFilter>> cleanup = LayerManager.Cleanup.removeEmptyTarget();
+        // remove any expired layers from the front of the list.
+        cleanup = cleanup.andThen(
+                lst -> {
+                    if (!lst.isEmpty()) {
+                        long now = System.currentTimeMillis();
+                        Iterator<TimestampedBloomFilter> iter = lst.iterator();
+                        while (iter.hasNext()) {
+                            if (iter.next().expires < now) {
+                                iter.remove();
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                });
+        
+        LayerManager.Builder<TimestampedBloomFilter> builder = LayerManager.builder();
+        // the layer manager for the Bloom filter, performs automatic cleanup and advance when necessary.
+        LayerManager<TimestampedBloomFilter> layerManager = builder.setExtendCheck(advance)
+                .setCleanup(cleanup)
+                // create a new TimestampedBloomFilter when needed.
+                .setSupplier(() -> new TimestampedBloomFilter(shape, layerExpiry.toMillis()))
+                .build();
+        // create the layered bloom filter.
+        bloomFilter = new LayeredBloomFilter<TimestampedBloomFilter>(shape, layerManager);
+    }
+
+    // merge a hasher into the bloom filter.
+    public LayeredExample merge(Hasher hasher) {
+        bloomFilter.merge(hasher);
+        return this;
+    }
+
+    /**
+     * Returns true if {@code bf} is found in the layered filter.
+     *
+     * @param bf the filter to look for.
+     * @return true if found.
+     */
+    public boolean contains(BloomFilter bf) {
+        return bloomFilter.contains(bf);
+    }
+
+    /**
+     * Returns true if {@code bf} is found in the layered filter.
+     *
+     * @param hasher the hasher representation to search for.
+     * @return true if found.
+     */
+    public boolean contains(Hasher hasher) {
+        return bloomFilter.contains(hasher);
+    }
+    
+    /**
+     * @return true if there are no entities being tracked for the principal.
+     */
+    public boolean isEmpty() {
+        bloomFilter.cleanup(); // forces clean
+        return bloomFilter.isEmpty();
+    }
+
+    /**
+     * A cleanup() predicate that triggers when a new layer should be created based on time
+     * and the desired number of layers.
+     */
+    class TimerPredicate implements Predicate<LayerManager<TimestampedBloomFilter>> {
+        long expires;
+
+        TimerPredicate() {
+            expires = System.currentTimeMillis() + layerExpiry.toMillis() / layerCount;
+        }
+
+        @Override
+        public boolean test(LayerManager o) {
+            long now = System.currentTimeMillis();
+            if (expires > now) {
+                return false;
+            }
+            expires = now + layerExpiry.toMillis() / layerCount;
+            return true;
+        }
+    }
+    
+    /**
+     * A Bloom filter implementation that has a timestamp indicating when it expires.
+     * Used as the Bloom filter for the layer in the LayeredBloomFilter
+     */
+    static class TimestampedBloomFilter extends WrappedBloomFilter {
+        long expires;
+
+        TimestampedBloomFilter(Shape shape, long ttl) {
+            super(new SimpleBloomFilter(shape));
+            expires = System.currentTimeMillis() + ttl;
+        }
+
+        private TimestampedBloomFilter(TimestampedBloomFilter other) {
+            super(other.getWrapped().copy());
+            this.expires = other.expires;
+        }
+
+        @Override
+        public TimestampedBloomFilter copy() {
+            return new TimestampedBloomFilter(this);
+        }
+    }
+}
+```
 
 ## Review
 

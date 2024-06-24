@@ -32,7 +32,7 @@
  * list. There are lots of other uses, and in most cases the reason is to perform a fast check as a gateway for a longer
  * operation.</p>
  *
- * <p>Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits. In this case each counter
+ * <p>Some Bloom filters (e.g. {@link org.apache.commons.collections4.bloomfilter.CountingBloomFilter}) use counters rather than bits. In this case each counter
  * is called a <em>cell</em>.</p>
  *
  * <h3>BloomFilter</h3>
@@ -46,14 +46,14 @@
  * <ul>
  *     <li><em>bit map</em> - In the {@code bloomfilter} package a <em>bit map</em> is not a structure but a logical construct.  It is conceptualized
  *     as an ordered collection of {@code long} values each of which is interpreted as the enabled true/false state of 64 continuous indices.  The mapping of
- *     bits into the {@code long} values is described in the {@link BitMaps} Javadoc.</li>
+ *     bits into the {@code long} values is described in the {@link org.apache.commons.collections4.bloomfilter.BitMaps} Javadoc.</li>
  *
  *     <li><em>index</em> - In the {@code bloomfilter} package an Index is a logical collection of {@code int}s specifying the enabled
  *     bits in the bit map.</li>
  *
- *     <li><em>cell</em> - Some Bloom filters (e.g. {@link CountingBloomFilter}) use counters rather than bits.  In the {@code bloomfilter} package
+ *     <li><em>cell</em> - Some Bloom filters (e.g. {@link org.apache.commons.collections4.bloomfilter.CountingBloomFilter}) use counters rather than bits.  In the {@code bloomfilter} package
  *     Cells are pairs of ints representing an index and a value.  They are not the standard Java {@code Pair} objects,
- *  *     nor the Apache Commons Lang version either.</li>
+ *     nor the Apache Commons Lang version either.</li>
  *
  *     <li><em>extractor</em> - The extractors are {@link java.lang.FunctionalInterface}s that are conceptually iterators on a bit map, an <em>index</em>, or a
  *     collection of <em>cells</em>, with an early termination switch.  Extractors have
@@ -62,7 +62,7 @@
  *     type specialization of {@link java.util.function.Predicate}.
  *     {@code Predicate} type argument.
  *     (e.g. {@link org.apache.commons.collections4.bloomfilter.BitMapExtractor#processBitMaps(java.util.function.LongPredicate)},
- *     {@link org.apache.commons.collections4.bloomfilter.IndexExtractor#processIndices(java.util.function.IntPredicate),
+ *     {@link org.apache.commons.collections4.bloomfilter.IndexExtractor#processIndices(java.util.function.IntPredicate)},
  *     and {@link org.apache.commons.collections4.bloomfilter.CellExtractor#processCells(org.apache.commons.collections4.bloomfilter.CellExtractor.CellPredicate)}).
  *     The predicate is expected to process each of the Xs in turn and return {@code true} if the processing should continue
  *     or {@code false} to stop it. </li>
