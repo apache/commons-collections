@@ -32,6 +32,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate StringKeyAnalyzer.StringKeyAnalyzer() in favor of StringKeyAnalyzer.INSTANCE.</action>
     <!-- ADD -->
     <!-- UPDATE -->
+    <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
   </release>
   <release version="4.5.0-M2" date="2024-06-15" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
      <!-- ADD -->
