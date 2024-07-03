@@ -35,7 +35,7 @@ The equation for matching can be expressed as: \\( T \cap C = T \\)
 
 There are several properties that define a Bloom filter: the number of bits in the vector (`m`), the number of items that will be merged into the filter (`n`), the number of hash functions for each item (`k`), and the probability of false positives (`p`).  All of these values are mathematically related. Mitzenmacher and Upfal<span><a class="footnote-ref" href="#fn2">2</a></span> have shown that the relationship between these properties is
 
-\\[ p = \left( 1 - e^{-kn/m} \rigth) ^k \\]
+\\[ p = \left( 1 - e^{-kn/m} \right) ^k \\]
 
 However, it has been reported  that the false positive rate in real deployments is higher than the value given by this equation.<span><a class="footnote-ref" href="#fn3">3</a></span><span><a class="footnote-ref" href="#fn4">4</a></span> Theoretically it has been proven that the equation offered a lower bound of the false positive rate, and a more accurate false positive rate has been discovered.<span><a class="footnote-ref" href="#fn5">5</a></span>
 
@@ -48,7 +48,7 @@ Bloom filters are often used to reduce the search space. For example, consider a
 
 Examples of large Bloom filter collections can be found in bioinformatics<span><a class="footnote-ref" href="#fn6">6</a></span><span><a class="footnote-ref" href="#fn7">7</a></span><span><a class="footnote-ref" href="#fn8">8</a></span> where Bloom filters are used to represent gene sequences, and Bloom filter based databases where records are encoded into Bloom filters.<span><a class="footnote-ref" href="#fn9">9</a></span><span><a class="footnote-ref" href="#fn10">10</a></span>
 
-Medium, the digital publishing company, uses Bloom filters to track what articles have been read.<span><a class="footnote-ref" href="#fn11">11</a></span>  Bitcoin uses them to speed up clients.<span><a class="footnote-ref" href="#fn12">12</a></span>  They have been used to improve caching performance<span><a class="footnote-ref" href="#fn13">13</a></span> and in detecting malicious websites.<span><a class="footnote-ref" href="#fn14">14</a></span>
+Medium, the digital publishing company, uses Bloom filters to track what articles have been read.<span><a class="footnote-ref" href="#fn11">11</a></span>  Bitcoin uses them to speed up clients.<span><a class="footnote-ref" href="#fn12">12</a></span>  Bloom filters have been used to improve caching performance<span><a class="footnote-ref" href="#fn13">13</a></span> and in detecting malicious websites.<span><a class="footnote-ref" href="#fn14">14</a></span>
 
 ## How?
 So, let’s work through an example.  Let's assume we want to put 3 items in a filter `(n = 3)` with a 1/5 probability of collision `(p = 1/5 = 0.2)`.  Solving \\( p = \left( 1 - e^{-kn/m} \right) ^k \\) yields  `m=11` and `k=3`.  Thomas Hurst has provided an online calculator<span><a class="footnote-ref" href="#fn15">15</a></span> where you can explore the interactions between the values.
@@ -107,22 +107,22 @@ The Jaccard distance, like the cosine distance, is calculated as `1 - Jaccard si
 
 The similarity and distance statistics can be used to group similar Bloom filters together; for example when distributing files across a system that uses Bloom filters to determine where the file might be located.  In this case it might make sense to store Bloom filters in the collection that has minimal distance.
 
-In addition to basic similarity and difference, if the shape of the filter is known some information about the data behind the filters can be estimated.  For example the number of items merged into a filter (n) can be estimated provided we have the cardinality (`c`), number of bits in the vector (`m`) and the number of hash functions (`k`) used when adding each element.
+In addition to basic similarity and difference, if the shape of the filter is known some information about the data behind the filters can be estimated.  For example the number of items merged into a filter (`n`) can be estimated provided we have the cardinality (`c`), number of bits in the vector (`m`) and the number of hash functions (`k`) used when adding each element.
 
 \\[ n = \frac{-m ln(1 - c/m)}{k} \\]
 
-Estimating the size of the union of two filters is simply calculating n for the union (bitwise ‘or’) of the two filters.
+Estimating the size of the union of two filters is simply calculating `n` for the union (bitwise ‘or’) of the two filters.
 
-Estimating the size of the intersection of two filters is the estimated n of the first + the estimated n of the second - the estimated union of the two.  There are some tricky edge conditions, such as when one or both of the estimates of n is infinite.
+Estimating the size of the intersection of two filters is the estimated `n` of the first + the estimated `n` of the second - the estimated union of the two.  There are some tricky edge conditions, such as when one or both of the estimates of `n` is infinite.
 
 ## Usage Errors
 There are several places that errors can creep into Bloom filter usage.
 
 ### Saturation errors
 
-Saturation errors arise from under estimating the number of items that will be placed into the filter.  Let’s define  “saturation” as the number of items merged into a filter divided by the number of items specified in the Shape.  Then once `n` items have been inserted the filter is at a saturation of 1.  As the saturation increases the false positive rate increases.   Using the calculation for the false positive rate noted above, we can calculate the expected false positive rate for the various saturations.  For an interactive version see Thomas Hursts online calculator.
+Saturation errors arise from underestimating the number of items that will be placed into the filter.  Let’s define  “saturation” as the number of items merged into a filter divided by the number of items specified in the Shape.  Then once `n` items have been inserted the filter is at a saturation of 1.  As the saturation increases the false positive rate increases.   Using the calculation for the false positive rate noted above, we can calculate the expected false positive rate for the various saturations.  For an interactive version see Thomas Hursts online calculator.
 
-For Bloom filters defined as k=17 and n=3 the calculation yields m=72, and p=0.00001.  As the saturation increases the rates of false positives increase as per the following table:
+For Bloom filters defined as `k=17` and `n=3` the calculation yields `m=72`, and `p=0.00001`.  As the saturation increases the rates of false positives increase as per the following table:
 
 | Saturation | Probability of false positive |
 |------------|-------------------------------|

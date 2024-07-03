@@ -35,19 +35,19 @@ The `Shape` is constructed from one of five combinations of parameters specified
 
 ## The Extractors
 
-The question of how to efficiently externally represent the internal representation of a Bloom filter led to the development of two “extractors”.   One that logically represents an ordered collection of BitMap longs, and the other that represents a collection of enabled bits indices.  In both cases the extractor feeds each value to a function - called a predicate - that does some operation with the value and returns true to continue processing, or false to stop processing.
+The question of how to efficiently externally represent the internal representation of a Bloom filter led to the development of two “extractors”.   One that logically represents an ordered collection of bit map longs, and the other that represents a collection of enabled bits indices.  In both cases the extractor feeds each value to a function - called a predicate - that does some operation with the value and returns true to continue processing, or false to stop processing.
 
 The extractors allow implementation of different internal storage as long as implementation can produce one or both of the standard producers.  Each producer has a static method to convert from the other type so only one implementation is required of the internal storage.
 
 ### BitMapExtractor
 
-The BitMap extractor is an interface that defines objects that can produce BitMap vectors.  BitMap vectors are vectors of long values where the bits are enabled as per the `BitMap` class.  All Bloom filters implement this interface.  The `BitMapExtractor` has static methods to create a producer from an array of long values, as well as from an `IndexExtractor`.  The interface has default implementations that convert the extractor into an array of long values, and one that executes a LongPredicate for each BitMap.
+The `BitMapExtractor` is an interface that defines objects that can produce bit map vectors.  Bit map vectors are vectors of long values where the bits are enabled as per the `BitMap` class.  All Bloom filters implement this interface.  The `BitMapExtractor` has static methods to create an extractor from an array of long values, as well as from an `IndexExtractor`.  The interface has default implementations that convert the extractor into an array of long values, and one that executes a LongPredicate for each bit map.
 
-The method `processBitMaps(LongPredicate)` is the standard access method for the extractor.  Each long value in the BitMap is passed to the predicate in order.  Processing continues until the last BitMap is processed or the `LongPredicate` returns false.
+The method `processBitMaps(LongPredicate)` is the standard access method for the extractor.  Each long value in the bit map is passed to the predicate in order.  Processing continues until the last bit map is processed or the `LongPredicate` returns false.
 
 ### IndexExtractor
 
-The index extractor produces the index values for the enabled bits in a Bloom filter.  All Bloom filters implement this interface.  The `IndexExtractor` has static methods to create the extractor from an array of integers or a `BitMapExtractor`.  The interface also has default implementations to convert the extractor to an array of integers and one that executes an `IntPredicate` on each index.
+The `IndexExtractor` produces the index values for the enabled bits in a Bloom filter.  All Bloom filters implement this interface.  The `IndexExtractor` has static methods to create the extractor from an array of integers or a `BitMapExtractor`.  The interface also has default implementations to convert the extractor to an array of integers and one that executes an `IntPredicate` on each index.
 
 The method `processIndices(IntPredicate)` is the standard access method for the extractor.  Each int value in the extractor is passed to the predicate.  Processing continues until the last int is processed or the `IntPredicate` returns false.  The order and uniqueness of the values is not guaranteed.
 
@@ -72,12 +72,11 @@ The constructor accepts either two longs or a byte array from a hashing function
 ### Bloom Filter
 
 Now we come to the Bloom filter.  As noted above the `BloomFilter` interface implements both the `IndexExtractor` and the `BitMapExtractor`.  The two extractors are the external representations of the internal representation of the Bloom filter.  Bloom filter implementations are free to store bit values in any way deemed fit.  The requirements for bit value storage are:
- * Must be able to produce an IndexExtractor.
- * Must be able to produce a BitMapExtractor.
+ * Must be able to produce an `IndexExtractor` or `BitMapExtractor`.
  * Must be able to clear the values.  Reset the cardinality to zero.
- * Must specify if the filter prefers (is faster creating) the IndexExtractor (Sparse characteristic) or the BitMapExtractor (Not sparse characteristic).
- * Must be able to merge hashers, Bloom filters, index extractors, and BitMap extractors.  When handling extractors it is often the case that an implementation will convert one type of extractor to the other for merging.  The BloomFilter interface has default implementations for Bloom filter and hasher merging.
- * Must be able to determine if the filter contains hashers, Bloom filters, index extractors, and BitMap extractors. The BloomFilter interface has default implementations for BitMap extractor, Bloom filter and hasher checking.
+ * Must specify if the filter prefers (is faster creating) the `IndexExtractor` (Sparse characteristic) or the `BitMapExtractor` (Not sparse characteristic).
+ * Must be able to merge hashers, Bloom filters, index extractors, and bit map extractors.  When handling extractors it is often the case that an implementation will convert one type of extractor to the other for merging.  The BloomFilter interface has default implementations for Bloom filter and hasher merging.
+ * Must be able to determine if the filter contains hashers, Bloom filters, index extractors, and bit map extractors. The BloomFilter interface has default implementations for bit map extractor, Bloom filter and hasher checking.
  * Must be able to make a deep copy of itself.
  * Must be able to produce its `Shape`.
 
@@ -85,10 +84,10 @@ Several implementations of Bloom filter are provided.  We will start by focusing
 
 ### SimpleBloomFilter
 
-The `SimpleBloomFilter` implements its storage as an on-heap array of longs.  This implementation is suitable for many applications.  It can also serve as a good model for how to implement `BitMap` storage in specific off-heap situations.
+The `SimpleBloomFilter` implements its storage as an on-heap array of longs.  This implementation is suitable for many applications.  It can also serve as a good model for how to implement bit map storage in specific off-heap situations.
 
 ### SparseBloomFilter
-The `SparseBloomFilter` implements its storage as a TreeSet of Integers.  Since each bit is randomly selected across the entire [0,shape.numberOfBits) range the Sparse Bloom filter only makes sense when \\( \frac{2 \times m}{64} \lt k \times n \\).  The reasoning being that every BitMap in the array is equivalent to 2 integers in the sparse filter.  The number of integers is the number of hash functions times the number of items – this is an overestimation due to the number of hash collisions that will occur over the number of bits.
+The `SparseBloomFilter` implements its storage as a TreeSet of Integers.  Since each bit is randomly selected across the entire [0,shape.numberOfBits) range the Sparse Bloom filter only makes sense when \\( \frac{2m}{64} \lt kn \\).  The reasoning being that every bit map in the array is equivalent to 2 integers in the sparse filter.  The number of integers is the number of hash functions times the number of items – this is an overestimation due to the number of hash collisions that will occur over the number of bits.
 
 ### Other
 
