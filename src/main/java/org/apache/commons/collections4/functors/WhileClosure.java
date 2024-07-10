@@ -80,10 +80,10 @@ public class WhileClosure<E> implements Closure<E> {
     @Override
     public void execute(final E input) {
         if (iDoLoop) {
-            iClosure.execute(input);
+            iClosure.accept(input);
         }
         while (iPredicate.evaluate(input)) {
-            iClosure.execute(input);
+            iClosure.accept(input);
         }
     }
 

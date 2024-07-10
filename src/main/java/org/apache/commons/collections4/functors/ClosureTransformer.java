@@ -76,7 +76,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      */
     @Override
     public T transform(final T input) {
-        iClosure.execute(input);
+        iClosure.accept(input);
         return input;
     }
 

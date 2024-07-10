@@ -113,9 +113,9 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     @Override
     public void execute(final E input) {
         if (iPredicate.evaluate(input)) {
-            iTrueClosure.execute(input);
+            iTrueClosure.accept(input);
         } else {
-            iFalseClosure.execute(input);
+            iFalseClosure.accept(input);
         }
     }
 

@@ -107,7 +107,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     @Override
     public void execute(final E input) {
         for (final Closure<? super E> iClosure : iClosures) {
-            iClosure.execute(input);
+            iClosure.accept(input);
         }
     }
 

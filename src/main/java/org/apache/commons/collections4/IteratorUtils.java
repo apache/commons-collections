@@ -716,7 +716,7 @@ public class IteratorUtils {
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
-                closure.execute(element);
+                closure.accept(element);
             }
         }
     }
@@ -742,7 +742,7 @@ public class IteratorUtils {
                 if (!iterator.hasNext()) {
                     return element;
                 }
-                closure.execute(element);
+                closure.accept(element);
             }
         }
         return null;
