@@ -75,9 +75,11 @@ public class PatriciaTrie<V> extends AbstractPatriciaTrie<String, V> {
 
     /**
      * Constructs a new instance.
+     *
+     * @param map mappings to be stored in this map.
      */
-    public PatriciaTrie(final Map<? extends String, ? extends V> m) {
-        super(StringKeyAnalyzer.INSTANCE, m);
+    public PatriciaTrie(final Map<? extends String, ? extends V> map) {
+        super(StringKeyAnalyzer.INSTANCE, map);
     }
 
 }
