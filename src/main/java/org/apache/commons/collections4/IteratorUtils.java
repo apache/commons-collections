@@ -712,11 +712,9 @@ public class IteratorUtils {
      */
     public static <E> void forEach(final Iterator<E> iterator, final Closure<? super E> closure) {
         Objects.requireNonNull(closure, "closure");
-
         if (iterator != null) {
             while (iterator.hasNext()) {
-                final E element = iterator.next();
-                closure.accept(element);
+                closure.accept(iterator.next());
             }
         }
     }
