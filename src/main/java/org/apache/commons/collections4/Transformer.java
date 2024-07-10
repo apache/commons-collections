@@ -40,6 +40,7 @@ import java.util.function.Function;
  * @deprecated Use {@link Function}.
  */
 @Deprecated
+@FunctionalInterface
 public interface Transformer<T, R> extends Function<T, R> {
 
     @Override
