@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
@@ -710,7 +711,7 @@ public class IteratorUtils {
      * @throws NullPointerException if closure is null
      * @since 4.1
      */
-    public static <E> void forEach(final Iterator<E> iterator, final Closure<? super E> closure) {
+    public static <E> void forEach(final Iterator<E> iterator, final Consumer<? super E> closure) {
         Objects.requireNonNull(closure, "closure");
         if (iterator != null) {
             while (iterator.hasNext()) {
