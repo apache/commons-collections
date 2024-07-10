@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -123,14 +124,14 @@ final class FunctorUtils {
     }
 
     /**
-     * Validate the closures to ensure that all is well.
+     * Validates the consumers to ensure that all is well.
      *
-     * @param closures  the closures to validate
+     * @param consumers  the consumers to validate.
      */
-    static void validate(final Closure<?>... closures) {
-        Objects.requireNonNull(closures, "closures");
-        for (int i = 0; i < closures.length; i++) {
-            if (closures[i] == null) {
+    static void validate(final Consumer<?>... consumers) {
+        Objects.requireNonNull(consumers, "closures");
+        for (int i = 0; i < consumers.length; i++) {
+            if (consumers[i] == null) {
                 throw new NullPointerException("closures[" + i + "]");
             }
         }
