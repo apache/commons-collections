@@ -19,6 +19,7 @@ package org.apache.commons.collections4.functors;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -176,13 +177,13 @@ final class FunctorUtils {
     /**
      * Validate method
      *
-     * @param transformers  the transformers to validate
+     * @param functions  the transformers to validate
      */
-    static void validate(final Transformer<?, ?>... transformers) {
-        Objects.requireNonNull(transformers, "transformers");
-        for (int i = 0; i < transformers.length; i++) {
-            if (transformers[i] == null) {
-                throw new NullPointerException("transformers[" + i + "]");
+    static void validate(final Function<?, ?>... functions) {
+        Objects.requireNonNull(functions, "functions");
+        for (int i = 0; i < functions.length; i++) {
+            if (functions[i] == null) {
+                throw new NullPointerException("functions[" + i + "]");
             }
         }
     }

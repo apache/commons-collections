@@ -32,6 +32,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate StringKeyAnalyzer.StringKeyAnalyzer() in favor of StringKeyAnalyzer.INSTANCE.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Closure...) is now FunctorUtils.validate(Consumer...).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Predicate...) is now FunctorUtils.validate(java.util.function.Predicate...).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...).</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
