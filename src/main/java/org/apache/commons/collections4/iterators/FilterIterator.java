@@ -155,7 +155,7 @@ public class FilterIterator<E> implements Iterator<E> {
     private boolean setNextObject() {
         while (iterator.hasNext()) {
             final E object = iterator.next();
-            if (predicate.evaluate(object)) {
+            if (predicate.test(object)) {
                 nextObject = object;
                 nextObjectSet = true;
                 return true;

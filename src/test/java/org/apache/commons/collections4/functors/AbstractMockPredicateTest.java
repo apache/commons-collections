@@ -62,7 +62,7 @@ public abstract class AbstractMockPredicateTest<T> {
     protected final Predicate<T> createMockPredicate(final Boolean returnValue) {
         final Predicate<T> mockPredicate = EasyMock.createMock(Predicate.class);
         if (returnValue != null) {
-            EasyMock.expect(mockPredicate.evaluate(testValue)).andReturn(returnValue);
+            EasyMock.expect(mockPredicate.test(testValue)).andReturn(returnValue);
         }
         replay(mockPredicate);
         mockPredicatesToVerify.add(mockPredicate);

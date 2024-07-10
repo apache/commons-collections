@@ -24,9 +24,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if either of the predicates return true.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class OrPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8791518325735182855L;
@@ -70,8 +71,8 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      * @return true if either decorated predicate returns true
      */
     @Override
-    public boolean evaluate(final T object) {
-        return iPredicate1.evaluate(object) || iPredicate2.evaluate(object);
+    public boolean test(final T object) {
+        return iPredicate1.test(object) || iPredicate2.test(object);
     }
 
     /**

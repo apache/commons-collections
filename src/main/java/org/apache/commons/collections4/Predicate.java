@@ -31,7 +31,6 @@ package org.apache.commons.collections4;
  * </p>
  *
  * @param <T> the type of the input to the predicate.
- *
  * @since 1.0
  * @deprecated Use {@link java.util.function.Predicate}.
  */

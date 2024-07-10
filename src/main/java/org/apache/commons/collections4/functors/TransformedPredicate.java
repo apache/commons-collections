@@ -26,9 +26,10 @@ import org.apache.commons.collections4.Transformer;
  * Predicate implementation that transforms the given object before invoking
  * another {@code Predicate}.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.1
  */
-public final class TransformedPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class TransformedPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -5596090919668315834L;
@@ -75,9 +76,9 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
      * @return true if decorated predicate returns true
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         final T result = iTransformer.transform(object);
-        return iPredicate.evaluate(result);
+        return iPredicate.test(result);
     }
 
     /**

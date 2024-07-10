@@ -111,7 +111,7 @@ public class PredicatedMap<K, V>
      */
     @Override
     protected V checkSetValue(final V value) {
-        if (!valuePredicate.evaluate(value)) {
+        if (!valuePredicate.test(value)) {
             throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
         }
         return value;
@@ -164,10 +164,10 @@ public class PredicatedMap<K, V>
      * @throws IllegalArgumentException if invalid
      */
     protected void validate(final K key, final V value) {
-        if (keyPredicate != null && !keyPredicate.evaluate(key)) {
+        if (keyPredicate != null && !keyPredicate.test(key)) {
             throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
         }
-        if (valuePredicate != null && !valuePredicate.evaluate(value)) {
+        if (valuePredicate != null && !valuePredicate.test(value)) {
             throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
         }
     }

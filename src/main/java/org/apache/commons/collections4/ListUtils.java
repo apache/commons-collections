@@ -242,7 +242,7 @@ public class ListUtils {
         if (list != null && predicate != null) {
             for (int i = 0; i < list.size(); i++) {
                 final E item = list.get(i);
-                if (predicate.evaluate(item)) {
+                if (predicate.test(item)) {
                     return i;
                 }
             }

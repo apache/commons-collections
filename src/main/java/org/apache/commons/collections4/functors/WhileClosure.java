@@ -82,7 +82,7 @@ public class WhileClosure<E> implements Closure<E> {
         if (iDoLoop) {
             iClosure.accept(input);
         }
-        while (iPredicate.evaluate(input)) {
+        while (iPredicate.test(input)) {
             iClosure.accept(input);
         }
     }

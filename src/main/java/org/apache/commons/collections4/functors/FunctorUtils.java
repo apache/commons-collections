@@ -49,7 +49,7 @@ final class FunctorUtils {
 
     /**
      * A very simple method that coerces Predicate<? super T> to Predicate<T>.
-     * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
+     * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
      * <p>This method exists
      * simply as centralised documentation and atomic unchecked warning
@@ -96,7 +96,7 @@ final class FunctorUtils {
 
     /**
      * Clone the predicates to ensure that the internal reference can't be messed with.
-     * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
+     * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
      *
      * @param predicates  the predicates to copy

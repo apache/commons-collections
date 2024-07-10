@@ -25,9 +25,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that throws an exception if the input is null.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3243449850504576071L;
@@ -66,11 +67,11 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @throws FunctorException if input is null
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         if (object == null) {
             throw new FunctorException("Input Object must not be null");
         }
-        return iPredicate.evaluate(object);
+        return iPredicate.test(object);
     }
 
     /**

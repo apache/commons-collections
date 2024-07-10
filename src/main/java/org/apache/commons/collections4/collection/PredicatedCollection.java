@@ -118,7 +118,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return the PredicatedCollectionBuilder.
          */
         public Builder<E> add(final E item) {
-            if (predicate.evaluate(item)) {
+            if (predicate.test(item)) {
                 accepted.add(item);
             } else {
                 rejected.add(item);
@@ -419,7 +419,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if the add is invalid
      */
     protected void validate(final E object) {
-        if (!predicate.evaluate(object)) {
+        if (!predicate.test(object)) {
             throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
                                                predicate + "' rejected it");
         }

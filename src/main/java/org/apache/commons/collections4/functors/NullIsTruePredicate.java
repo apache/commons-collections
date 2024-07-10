@@ -24,9 +24,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if the input is null.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NullIsTruePredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class NullIsTruePredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -7625133768987126273L;
@@ -64,11 +65,11 @@ public final class NullIsTruePredicate<T> implements PredicateDecorator<T>, Seri
      * @return true if decorated predicate returns true or input is null
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         if (object == null) {
             return true;
         }
-        return iPredicate.evaluate(object);
+        return iPredicate.test(object);
     }
 
     /**

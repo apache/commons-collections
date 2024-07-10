@@ -698,7 +698,7 @@ public class IterableUtils {
         for (final O element : iterable) {
             boolean elementAssigned = false;
             for (int i = 0; i < numberOfPredicates; ++i) {
-                if (predicates[i].evaluate(element)) {
+                if (predicates[i].test(element)) {
                     partitions.get(i).add(element);
                     elementAssigned = true;
                     break;

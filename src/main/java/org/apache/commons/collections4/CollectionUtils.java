@@ -833,7 +833,7 @@ public class CollectionUtils {
         boolean result = false;
         if (collection != null && predicate != null) {
             for (final Iterator<T> it = collection.iterator(); it.hasNext();) {
-                if (!predicate.evaluate(it.next())) {
+                if (!predicate.test(it.next())) {
                     it.remove();
                     result = true;
                 }
@@ -1740,7 +1740,7 @@ public class CollectionUtils {
 
         if (inputCollection != null && predicate != null) {
             for (final O item : inputCollection) {
-                if (predicate.evaluate(item)) {
+                if (predicate.test(item)) {
                     outputCollection.add(item);
                 }
             }
@@ -1783,7 +1783,7 @@ public class CollectionUtils {
 
         if (inputCollection != null && predicate != null) {
             for (final O element : inputCollection) {
-                if (predicate.evaluate(element)) {
+                if (predicate.test(element)) {
                     outputCollection.add(element);
                 } else {
                     rejectedCollection.add(element);
@@ -1837,7 +1837,7 @@ public class CollectionUtils {
 
         if (inputCollection != null && predicate != null) {
             for (final O item : inputCollection) {
-                if (!predicate.evaluate(item)) {
+                if (!predicate.test(item)) {
                     outputCollection.add(item);
                 }
             }
@@ -1998,7 +1998,7 @@ public class CollectionUtils {
         final ArrayList<O> list = new ArrayList<>();
         final HashBag<O> bag = new HashBag<>();
         for (final O element : b) {
-            if (p.evaluate(element)) {
+            if (p.test(element)) {
                 bag.add(element);
             }
         }

@@ -673,7 +673,7 @@ public class IteratorUtils {
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
-                if (predicate.evaluate(element)) {
+                if (predicate.test(element)) {
                     return element;
                 }
             }
@@ -860,7 +860,7 @@ public class IteratorUtils {
         if (iterator != null) {
             for (int index = 0; iterator.hasNext(); index++) {
                 final E element = iterator.next();
-                if (predicate.evaluate(element)) {
+                if (predicate.test(element)) {
                     return index;
                 }
             }
@@ -935,7 +935,7 @@ public class IteratorUtils {
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
-                if (!predicate.evaluate(element)) {
+                if (!predicate.test(element)) {
                     return false;
                 }
             }

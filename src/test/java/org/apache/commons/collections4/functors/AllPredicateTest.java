@@ -80,8 +80,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @Test
     public void testEmptyCollectionToGetInstance() {
-        final Predicate<Integer> allPredicate = getPredicateInstance(
-                Collections.<Predicate<Integer>>emptyList());
+        final Predicate<Integer> allPredicate = getPredicateInstance(Collections.<Predicate<Integer>>emptyList());
         assertTrue(allPredicate.evaluate(getTestValue()), "empty collection not true");
     }
 
@@ -94,8 +93,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(false);
-        assertFalse(allPredicate(predicate).evaluate(getTestValue()),
-                "single false predicate evaluated to true");
+        assertFalse(allPredicate(predicate).test(getTestValue()), "single false predicate evaluated to true");
     }
 
     /**
@@ -107,8 +105,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(true);
-
-        assertTrue(allPredicate(predicate).evaluate(getTestValue()), "single true predicate evaluated to false");
+        assertTrue(allPredicate(predicate).test(getTestValue()), "single true predicate evaluated to false");
     }
 
     /**

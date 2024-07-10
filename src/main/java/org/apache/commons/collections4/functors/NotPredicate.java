@@ -24,9 +24,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns the opposite of the decorated predicate.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NotPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class NotPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2654603322338049674L;
@@ -63,8 +64,8 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @return true if predicate returns false
      */
     @Override
-    public boolean evaluate(final T object) {
-        return !iPredicate.evaluate(object);
+    public boolean test(final T object) {
+        return !iPredicate.test(object);
     }
 
     /**

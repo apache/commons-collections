@@ -229,7 +229,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
         }
         while (iterator.hasNext()) {
             final E object = iterator.next();
-            if (predicate.evaluate(object)) {
+            if (predicate.test(object)) {
                 nextObject = object;
                 nextObjectSet = true;
                 return true;
@@ -265,7 +265,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
         }
         while (iterator.hasPrevious()) {
             final E object = iterator.previous();
-            if (predicate.evaluate(object)) {
+            if (predicate.test(object)) {
                 previousObject = object;
                 previousObjectSet = true;
                 return true;
