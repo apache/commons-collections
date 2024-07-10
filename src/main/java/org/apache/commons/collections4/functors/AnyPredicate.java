@@ -101,7 +101,7 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @return true if any decorated predicate return true
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         for (final Predicate<? super T> iPredicate : iPredicates) {
             if (iPredicate.evaluate(object)) {
                 return true;

@@ -53,4 +53,8 @@ public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorat
         return FunctorUtils.<T>copy(iPredicates);
     }
 
+    @Override
+    public boolean evaluate(final T object) {
+        return test(object);
+    }
 }
