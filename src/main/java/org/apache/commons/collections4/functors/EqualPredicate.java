@@ -28,7 +28,7 @@ import org.apache.commons.collections4.Predicate;
  * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class EqualPredicate<T> implements Predicate<T>, Serializable {
+public final class EqualPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 5633766978029907089L;
@@ -101,7 +101,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @return true if input object equals stored value
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         if (equator != null) {
             return equator.equate(iValue, object);
         }

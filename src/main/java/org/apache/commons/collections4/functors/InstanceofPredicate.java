@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Predicate;
  *
  * @since 3.0
  */
-public final class InstanceofPredicate implements Predicate<Object>, Serializable {
+public final class InstanceofPredicate extends AbstractPredicate<Object> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6682656911025165584L;
@@ -63,7 +63,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      * @return true if input is of stored type
      */
     @Override
-    public boolean evaluate(final Object object) {
+    public boolean test(final Object object) {
         return iType.isInstance(object);
     }
 

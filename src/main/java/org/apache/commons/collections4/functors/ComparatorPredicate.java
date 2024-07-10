@@ -77,7 +77,7 @@ import org.apache.commons.collections4.Predicate;
  * @param <T> the type of the input to the predicate.
  * @since 4.0
  */
-public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
+public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     public enum Criterion {
         EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL,
@@ -158,7 +158,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */
     @Override
-    public boolean evaluate(final T target) {
+    public boolean test(final T target) {
 
         boolean result = false;
         final int comparison = comparator.compare(object, target);

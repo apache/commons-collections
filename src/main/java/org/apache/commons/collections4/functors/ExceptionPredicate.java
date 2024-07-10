@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Predicate;
  * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
+public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
@@ -61,7 +61,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
      * @throws FunctorException always
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         throw new FunctorException("ExceptionPredicate invoked");
     }
 

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Predicate;
  * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
+public final class IdentityPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -89901658494523293L;
@@ -67,7 +67,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @return true if input is the same object as the stored value
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         return iValue == object;
     }
 

@@ -29,7 +29,7 @@ import org.apache.commons.collections4.Transformer;
  * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class TransformerPredicate<T> implements Predicate<T>, Serializable {
+public final class TransformerPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2407966402920578741L;
@@ -67,7 +67,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @throws FunctorException if the transformer returns an invalid type
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         final Boolean result = iTransformer.transform(object);
         if (result == null) {
             throw new FunctorException(
