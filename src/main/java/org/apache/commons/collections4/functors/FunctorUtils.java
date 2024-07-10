@@ -164,7 +164,7 @@ final class FunctorUtils {
      *
      * @param predicates  the predicates to validate
      */
-    static void validate(final Predicate<?>... predicates) {
+    static void validate(final java.util.function.Predicate<?>... predicates) {
         Objects.requireNonNull(predicates, "predicates");
         for (int i = 0; i < predicates.length; i++) {
             if (predicates[i] == null) {
