@@ -678,7 +678,7 @@ public class IterableUtils {
 
         if (predicates.length < 1) {
             // return the entire input collection as a single partition
-            final R singlePartition = partitionFactory.create();
+            final R singlePartition = partitionFactory.get();
             CollectionUtils.addAll(singlePartition, iterable);
             return Collections.singletonList(singlePartition);
         }
@@ -688,7 +688,7 @@ public class IterableUtils {
         final int numberOfPartitions = numberOfPredicates + 1;
         final List<R> partitions = new ArrayList<>(numberOfPartitions);
         for (int i = 0; i < numberOfPartitions; ++i) {
-            partitions.add(partitionFactory.create());
+            partitions.add(partitionFactory.get());
         }
 
         // for each element in inputCollection:

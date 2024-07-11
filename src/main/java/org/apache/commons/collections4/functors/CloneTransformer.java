@@ -66,7 +66,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
         if (input == null) {
             return null;
         }
-        return PrototypeFactory.prototypeFactory(input).create();
+        return PrototypeFactory.prototypeFactory(input).get();
     }
 
 }

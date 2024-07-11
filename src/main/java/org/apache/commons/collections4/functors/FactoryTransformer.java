@@ -77,7 +77,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      */
     @Override
     public O transform(final I input) {
-        return iFactory.create();
+        return iFactory.get();
     }
 
 }
