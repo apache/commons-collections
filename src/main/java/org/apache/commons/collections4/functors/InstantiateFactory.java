@@ -32,6 +32,7 @@ import org.apache.commons.collections4.FunctorException;
  * for more details.
  * </p>
  *
+ * @param <T> the type of results supplied by this supplier.
  * @since 3.0
  */
 public class InstantiateFactory<T> implements Factory<T> {

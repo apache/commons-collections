@@ -42,9 +42,10 @@ import org.apache.commons.collections4.FunctorException;
  */
 public class PrototypeFactory {
 
-    // PrototypeCloneFactory
     /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
+     *
+     * @param <T> the type of results supplied by this supplier.
      */
     static class PrototypeCloneFactory<T> implements Factory<T> {
 
@@ -95,9 +96,10 @@ public class PrototypeFactory {
         }
     }
 
-    // PrototypeSerializationFactory
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
+     *
+     * @param <T> the type of results supplied by this supplier.
      */
     static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T> {
 

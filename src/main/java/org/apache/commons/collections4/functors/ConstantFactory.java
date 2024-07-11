@@ -28,6 +28,7 @@ import org.apache.commons.collections4.Factory;
  * use the prototype factory.
  * </p>
  *
+ * @param <T> the type of results supplied by this supplier.
  * @since 3.0
  */
 public class ConstantFactory<T> implements Factory<T>, Serializable {
