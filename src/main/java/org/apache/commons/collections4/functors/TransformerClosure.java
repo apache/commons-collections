@@ -25,9 +25,10 @@ import org.apache.commons.collections4.Transformer;
  * Closure implementation that calls a Transformer using the input object
  * and ignore the result.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class TransformerClosure<E> implements Closure<E>, Serializable {
+public class TransformerClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -5194992589193388969L;
@@ -49,7 +50,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
     }
 
     /** The transformer to wrap */
-    private final Transformer<? super E, ?> iTransformer;
+    private final Transformer<? super T, ?> iTransformer;
 
     /**
      * Constructor that performs no validation.
@@ -57,7 +58,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      *
      * @param transformer  the transformer to call, not null
      */
-    public TransformerClosure(final Transformer<? super E, ?> transformer) {
+    public TransformerClosure(final Transformer<? super T, ?> transformer) {
         iTransformer = transformer;
     }
 
@@ -67,7 +68,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         iTransformer.transform(input);
     }
 
@@ -77,7 +78,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * @return the transformer
      * @since 3.1
      */
-    public Transformer<? super E, ?> getTransformer() {
+    public Transformer<? super T, ?> getTransformer() {
         return iTransformer;
     }
 

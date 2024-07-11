@@ -27,9 +27,10 @@ import org.apache.commons.collections4.Closure;
  * for more details.
  * </p>
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class ForClosure<E> implements Closure<E> {
+public class ForClosure<T> implements Closure<T> {
 
     /**
      * Factory method that performs validation.
@@ -56,7 +57,7 @@ public class ForClosure<E> implements Closure<E> {
     private final int iCount;
 
     /** The closure to call */
-    private final Closure<? super E> iClosure;
+    private final Closure<? super T> iClosure;
 
     /**
      * Constructor that performs no validation.
@@ -65,7 +66,7 @@ public class ForClosure<E> implements Closure<E> {
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
      */
-    public ForClosure(final int count, final Closure<? super E> closure) {
+    public ForClosure(final int count, final Closure<? super T> closure) {
         iCount = count;
         iClosure = closure;
     }
@@ -76,7 +77,7 @@ public class ForClosure<E> implements Closure<E> {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         for (int i = 0; i < iCount; i++) {
             iClosure.accept(input);
         }
@@ -88,7 +89,7 @@ public class ForClosure<E> implements Closure<E> {
      * @return the closure
      * @since 3.1
      */
-    public Closure<? super E> getClosure() {
+    public Closure<? super T> getClosure() {
         return iClosure;
     }
 

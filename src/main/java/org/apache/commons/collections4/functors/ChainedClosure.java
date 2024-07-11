@@ -25,9 +25,10 @@ import org.apache.commons.collections4.Closure;
 /**
  * Closure implementation that chains the specified closures together.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class ChainedClosure<E> implements Closure<E>, Serializable {
+public class ChainedClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3520677225766901240L;
@@ -77,7 +78,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     }
 
     /** The closures to call in turn */
-    private final Closure<? super E>[] iClosures;
+    private final Closure<? super T>[] iClosures;
 
     /**
      * Hidden constructor for the use by the static factory methods.
@@ -85,7 +86,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @param clone  if {@code true} the input argument will be cloned
      * @param closures  the closures to chain, no nulls
      */
-    private ChainedClosure(final boolean clone, final Closure<? super E>... closures) {
+    private ChainedClosure(final boolean clone, final Closure<? super T>... closures) {
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
     }
 
@@ -95,7 +96,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param closures  the closures to chain, copied, no nulls
      */
-    public ChainedClosure(final Closure<? super E>... closures) {
+    public ChainedClosure(final Closure<? super T>... closures) {
         this(true, closures);
     }
 
@@ -105,8 +106,8 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object passed to each closure
      */
     @Override
-    public void execute(final E input) {
-        for (final Closure<? super E> iClosure : iClosures) {
+    public void execute(final T input) {
+        for (final Closure<? super T> iClosure : iClosures) {
             iClosure.accept(input);
         }
     }
@@ -117,7 +118,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @return a copy of the closures
      * @since 3.1
      */
-    public Closure<? super E>[] getClosures() {
+    public Closure<? super T>[] getClosures() {
         return FunctorUtils.copy(iClosures);
     }
 

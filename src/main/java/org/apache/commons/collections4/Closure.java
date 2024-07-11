@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  * {@link ClosureUtils}. These include method invocation and for/while loops.
  * </p>
  *
- * @param <T> the type that the closure acts on
+ * @param <T> the type of the input to the operation.
  * @since 1.0
  * @deprecated Use {@link Consumer}.
  */

@@ -27,9 +27,10 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation calls the closure whose predicate returns true,
  * like a switch statement.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class SwitchClosure<E> implements Closure<E>, Serializable {
+public class SwitchClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
@@ -98,13 +99,13 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         return new SwitchClosure<>(predicates, closures, defaultClosure);
     }
     /** The tests to consider */
-    private final Predicate<? super E>[] iPredicates;
+    private final Predicate<? super T>[] iPredicates;
 
     /** The matching closures to call */
-    private final Closure<? super E>[] iClosures;
+    private final Closure<? super T>[] iClosures;
 
     /** The default closure to call if no tests match */
-    private final Closure<? super E> iDefault;
+    private final Closure<? super T> iDefault;
 
     /**
      * Hidden constructor for the use by the static factory methods.
@@ -114,11 +115,11 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param closures  matching array of closures, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
      */
-    private SwitchClosure(final boolean clone, final Predicate<? super E>[] predicates,
-                          final Closure<? super E>[] closures, final Closure<? super E> defaultClosure) {
+    private SwitchClosure(final boolean clone, final Predicate<? super T>[] predicates,
+                          final Closure<? super T>[] closures, final Closure<? super T> defaultClosure) {
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iClosures = clone ? FunctorUtils.copy(closures) : closures;
-        iDefault = defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure;
+        iDefault = defaultClosure == null ? NOPClosure.<T>nopClosure() : defaultClosure;
     }
 
     /**
@@ -129,8 +130,8 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param closures  matching array of closures, cloned, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
      */
-    public SwitchClosure(final Predicate<? super E>[] predicates, final Closure<? super E>[] closures,
-                         final Closure<? super E> defaultClosure) {
+    public SwitchClosure(final Predicate<? super T>[] predicates, final Closure<? super T>[] closures,
+                         final Closure<? super T> defaultClosure) {
         this(true, predicates, closures, defaultClosure);
     }
 
@@ -140,7 +141,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].test(input)) {
                 iClosures[i].accept(input);
@@ -156,7 +157,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @return a copy of the closures
      * @since 3.1
      */
-    public Closure<? super E>[] getClosures() {
+    public Closure<? super T>[] getClosures() {
         return FunctorUtils.copy(iClosures);
     }
 
@@ -166,7 +167,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @return the default closure
      * @since 3.1
      */
-    public Closure<? super E> getDefaultClosure() {
+    public Closure<? super T> getDefaultClosure() {
         return iDefault;
     }
 
@@ -176,7 +177,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @return a copy of the predicates
      * @since 3.1
      */
-    public Predicate<? super E>[] getPredicates() {
+    public Predicate<? super T>[] getPredicates() {
         return FunctorUtils.copy(iPredicates);
     }
 

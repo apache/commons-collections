@@ -23,9 +23,10 @@ import org.apache.commons.collections4.Closure;
 /**
  * Closure implementation that does nothing.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public final class NOPClosure<E> implements Closure<E>, Serializable {
+public final class NOPClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
@@ -57,7 +58,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         // do nothing
     }
 
