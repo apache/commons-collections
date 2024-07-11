@@ -69,7 +69,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      */
     @Override
     public void execute(final T input) {
-        iTransformer.transform(input);
+        iTransformer.apply(input);
     }
 
     /**

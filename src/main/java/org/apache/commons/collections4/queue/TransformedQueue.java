@@ -62,7 +62,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
             final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics
             queue.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;

@@ -134,8 +134,8 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     @Override
     public O transform(final I input) {
         if (iPredicate.test(input)) {
-            return iTrueTransformer.transform(input);
+            return iTrueTransformer.apply(input);
         }
-        return iFalseTransformer.transform(input);
+        return iFalseTransformer.apply(input);
     }
 }

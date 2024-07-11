@@ -133,6 +133,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @return the transformed object
      */
     protected O transform(final I source) {
-        return transformer.transform(source);
+        return transformer.apply(source);
     }
 }

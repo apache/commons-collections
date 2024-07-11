@@ -560,7 +560,7 @@ public class CollectionUtils {
         if (inputIterator != null && transformer != null) {
             while (inputIterator.hasNext()) {
                 final I item = inputIterator.next();
-                final O value = transformer.transform(item);
+                final O value = transformer.apply(item);
                 outputCollection.add(value);
             }
         }
@@ -2068,7 +2068,7 @@ public class CollectionUtils {
             if (collection instanceof List<?>) {
                 final List<C> list = (List<C>) collection;
                 for (final ListIterator<C> it = list.listIterator(); it.hasNext();) {
-                    it.set(transformer.transform(it.next()));
+                    it.set(transformer.apply(it.next()));
                 }
             } else {
                 final Collection<C> resultCollection = collect(collection, transformer);

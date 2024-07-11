@@ -68,7 +68,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
      */
     @Override
     public boolean test(final T object) {
-        final Boolean result = iTransformer.transform(object);
+        final Boolean result = iTransformer.apply(object);
         if (result == null) {
             throw new FunctorException(
                     "Transformer must return an instanceof Boolean, it was a null object");

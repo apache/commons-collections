@@ -93,7 +93,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
             final E[] values = (E[]) list.toArray(); // NOPMD - false positive for generics
             list.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;

@@ -160,7 +160,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
         while (currentIterator.hasNext() && !hasNext) {
             E next = currentIterator.next();
             if (transformer != null) {
-                next = transformer.transform(next);
+                next = transformer.apply(next);
             }
             findNext(next);
         }
@@ -238,7 +238,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
                 if (transformer == null) {
                     findNext(root);
                 } else {
-                    findNext(transformer.transform(root));
+                    findNext(transformer.apply(root));
                 }
                 root = null;
             }

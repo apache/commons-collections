@@ -167,7 +167,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
         if (keyTransformer == null) {
             return object;
         }
-        return keyTransformer.transform(object);
+        return keyTransformer.apply(object);
     }
 
     /**
@@ -182,7 +182,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
         if (valueTransformer == null) {
             return object;
         }
-        return valueTransformer.transform(object);
+        return valueTransformer.apply(object);
     }
 
 }

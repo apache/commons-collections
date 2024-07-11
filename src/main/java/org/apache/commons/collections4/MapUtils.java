@@ -1497,7 +1497,7 @@ public class MapUtils {
     public static <K, V, E> void populateMap(final Map<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
         for (final E temp : elements) {
-            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+            map.put(keyTransformer.apply(temp), valueTransformer.apply(temp));
         }
     }
 
@@ -1532,7 +1532,7 @@ public class MapUtils {
     public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
         for (final E temp : elements) {
-            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+            map.put(keyTransformer.apply(temp), valueTransformer.apply(temp));
         }
     }
 

@@ -134,7 +134,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
             return factory.get();
         }
         if (transformer != null) {
-            return transformer.transform(index);
+            return transformer.apply(index);
         }
         throw new IllegalStateException("Factory and Transformer are both null!");
     }

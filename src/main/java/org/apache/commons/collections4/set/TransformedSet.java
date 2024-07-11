@@ -63,7 +63,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;

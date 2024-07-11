@@ -173,7 +173,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         final V v;
         return (v = map.get(key)) != null || map.containsKey(key)
             ? v
-            : value.transform((K) key);
+            : value.apply((K) key);
     }
 
     /**

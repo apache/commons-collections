@@ -315,7 +315,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return the new collection
      */
     protected Collection<V> createCollection(final int size) {
-        return collectionFactory.create();
+        return collectionFactory.get();
     }
 
     /**

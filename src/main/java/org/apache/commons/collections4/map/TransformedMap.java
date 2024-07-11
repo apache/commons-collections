@@ -139,7 +139,7 @@ public class TransformedMap<K, V>
      */
     @Override
     protected V checkSetValue(final V value) {
-        return valueTransformer.transform(value);
+        return valueTransformer.apply(value);
     }
 
     /**
@@ -192,7 +192,7 @@ public class TransformedMap<K, V>
         if (keyTransformer == null) {
             return object;
         }
-        return keyTransformer.transform(object);
+        return keyTransformer.apply(object);
     }
 
     /**
@@ -228,7 +228,7 @@ public class TransformedMap<K, V>
         if (valueTransformer == null) {
             return object;
         }
-        return valueTransformer.transform(object);
+        return valueTransformer.apply(object);
     }
 
     /**

@@ -68,7 +68,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
             final E[] values = (E[]) collection.toArray(); // NOPMD - false positive for generics
             collection.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;
@@ -146,7 +146,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @return a transformed object
      */
     protected E transform(final E object) {
-        return transformer.transform(object);
+        return transformer.apply(object);
     }
 
 }

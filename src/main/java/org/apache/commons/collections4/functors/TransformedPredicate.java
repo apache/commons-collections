@@ -77,7 +77,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      */
     @Override
     public boolean test(final T object) {
-        final T result = iTransformer.transform(object);
+        final T result = iTransformer.apply(object);
         return iPredicate.test(result);
     }
 

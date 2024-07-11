@@ -65,7 +65,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
             final E[] values = (E[]) bag.toArray(); // NOPMD - false positive for generics
             bag.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;

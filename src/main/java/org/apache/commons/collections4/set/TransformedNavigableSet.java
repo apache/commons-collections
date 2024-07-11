@@ -61,7 +61,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;

@@ -135,7 +135,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         if (!map.containsKey(key)) {
             @SuppressWarnings("unchecked")
             final K castKey = (K) key;
-            final V value = factory.transform(castKey);
+            final V value = factory.apply(castKey);
             map.put(castKey, value);
             return value;
         }

@@ -145,7 +145,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *   enforces a uniqueness constraint
      */
     private void addToIndex(final C object) {
-        final K key = keyTransformer.transform(object);
+        final K key = keyTransformer.apply(object);
         if (uniqueIndex && index.containsKey(key)) {
             throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
         }
@@ -166,7 +166,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean contains(final Object object) {
-        return index.containsKey(keyTransformer.transform((C) object));
+        return index.containsKey(keyTransformer.apply((C) object));
     }
 
     /**
@@ -236,7 +236,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param object the object to remove
      */
     private void removeFromIndex(final C object) {
-        index.remove(keyTransformer.transform(object));
+        index.remove(keyTransformer.apply(object));
     }
 
     /**

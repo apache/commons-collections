@@ -1312,7 +1312,7 @@ public class IteratorUtils {
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
-                stringBuilder.append(transformer.transform(element));
+                stringBuilder.append(transformer.apply(element));
                 stringBuilder.append(delimiter);
             }
             if (stringBuilder.length() > prefix.length()) {

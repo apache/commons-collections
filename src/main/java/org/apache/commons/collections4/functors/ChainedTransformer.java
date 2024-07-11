@@ -120,7 +120,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     @Override
     public T transform(T object) {
         for (final Transformer<? super T, ? extends T> iTransformer : iTransformers) {
-            object = iTransformer.transform(object);
+            object = iTransformer.apply(object);
         }
         return object;
     }
