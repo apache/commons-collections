@@ -72,7 +72,8 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 0) {
             return TruePredicate.<T>truePredicate();
         }
-        return new NonePredicate<>(FunctorUtils.copy(predicates));
+        // <T> not needed in Eclipse but needed by the command line compiler
+        return new NonePredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**

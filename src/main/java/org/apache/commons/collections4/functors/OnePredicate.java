@@ -72,7 +72,8 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 1) {
             return (Predicate<T>) predicates[0];
         }
-        return new OnePredicate<>(FunctorUtils.copy(predicates));
+        // <T> not needed in Eclipse but needed by the command line compiler
+        return new OnePredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**

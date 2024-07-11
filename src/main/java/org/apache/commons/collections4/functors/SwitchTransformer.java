@@ -164,7 +164,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @since 3.1
      */
     public Predicate<? super I>[] getPredicates() {
-        return FunctorUtils.<I>copy(iPredicates);
+        return FunctorUtils.copy(iPredicates);
     }
 
     /**

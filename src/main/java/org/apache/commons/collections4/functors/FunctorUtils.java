@@ -87,7 +87,7 @@ final class FunctorUtils {
      * @return the cloned consumers.
      */
     @SuppressWarnings("unchecked")
-    static <C extends Consumer<?>> C[] copy(final C... consumers) {
+    static <T extends Consumer<?>> T[] copy(final T... consumers) {
         if (consumers == null) {
             return null;
         }
@@ -103,11 +103,11 @@ final class FunctorUtils {
      * @return the cloned predicates
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T>[] copy(final Predicate<? super T>... predicates) {
+    static <T extends java.util.function.Predicate<?>> T[] copy(final T... predicates) {
         if (predicates == null) {
             return null;
         }
-        return (Predicate<T>[]) predicates.clone();
+        return predicates.clone();
     }
 
     /**

@@ -84,8 +84,8 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 1) {
             return coerce(predicates[0]);
         }
-
-        return new AllPredicate<>(FunctorUtils.copy(predicates));
+        // <T> not needed in Eclipse but needed by the command line compiler
+        return new AllPredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**

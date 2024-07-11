@@ -51,7 +51,7 @@ public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T
      */
     @Override
     public Predicate<? super T>[] getPredicates() {
-        return FunctorUtils.<T>copy(iPredicates);
+        return FunctorUtils.copy(iPredicates);
     }
 
 }

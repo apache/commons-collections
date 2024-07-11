@@ -82,7 +82,7 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 1) {
             return (Predicate<T>) predicates[0];
         }
-        return new AnyPredicate<>(FunctorUtils.copy(predicates));
+        return new AnyPredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**
