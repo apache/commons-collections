@@ -127,14 +127,14 @@ final class FunctorUtils {
      * @param predicates  the predicates to validate
      * @return predicate array
      */
-    static <T> Predicate<? super T>[] validate(final Collection<? extends Predicate<? super T>> predicates) {
+    static <T> Predicate<? super T>[] validate(final Collection<? extends java.util.function.Predicate<? super T>> predicates) {
         Objects.requireNonNull(predicates, "predicates");
         // convert to array like this to guarantee iterator() ordering
         @SuppressWarnings("unchecked") // OK
         final Predicate<? super T>[] preds = new Predicate[predicates.size()];
         int i = 0;
-        for (final Predicate<? super T> predicate : predicates) {
-            preds[i] = predicate;
+        for (final java.util.function.Predicate<? super T> predicate : predicates) {
+            preds[i] = (Predicate<? super T>) predicate;
             if (preds[i] == null) {
                 throw new NullPointerException("predicates[" + i + "]");
             }
