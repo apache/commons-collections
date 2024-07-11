@@ -58,17 +58,6 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     }
 
     /**
-     * Evaluates the predicate returning the opposite to the stored predicate.
-     *
-     * @param object  the input object
-     * @return true if predicate returns false
-     */
-    @Override
-    public boolean test(final T object) {
-        return !iPredicate.test(object);
-    }
-
-    /**
      * Gets the predicate being decorated.
      *
      * @return the predicate as the only element in an array
@@ -78,6 +67,17 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate};
+    }
+
+    /**
+     * Evaluates the predicate returning the opposite to the stored predicate.
+     *
+     * @param object  the input object
+     * @return true if predicate returns false
+     */
+    @Override
+    public boolean test(final T object) {
+        return !iPredicate.test(object);
     }
 
 }

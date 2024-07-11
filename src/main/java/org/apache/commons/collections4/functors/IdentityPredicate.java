@@ -60,6 +60,16 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
     }
 
     /**
+     * Gets the value.
+     *
+     * @return the value
+     * @since 3.1
+     */
+    public T getValue() {
+        return iValue;
+    }
+
+    /**
      * Evaluates the predicate returning true if the input object is identical to
      * the stored object.
      *
@@ -69,16 +79,6 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
     @Override
     public boolean test(final T object) {
         return iValue == object;
-    }
-
-    /**
-     * Gets the value.
-     *
-     * @return the value
-     * @since 3.1
-     */
-    public T getValue() {
-        return iValue;
     }
 
 }

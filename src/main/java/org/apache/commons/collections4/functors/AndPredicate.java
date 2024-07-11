@@ -65,17 +65,6 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
     }
 
     /**
-     * Evaluates the predicate returning true if both predicates return true.
-     *
-     * @param object  the input object
-     * @return true if both decorated predicates return true
-     */
-    @Override
-    public boolean test(final T object) {
-        return iPredicate1.test(object) && iPredicate2.test(object);
-    }
-
-    /**
      * Gets the two predicates being decorated as an array.
      *
      * @return the predicates
@@ -85,6 +74,17 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate1, iPredicate2};
+    }
+
+    /**
+     * Evaluates the predicate returning true if both predicates return true.
+     *
+     * @param object  the input object
+     * @return true if both decorated predicates return true
+     */
+    @Override
+    public boolean test(final T object) {
+        return iPredicate1.test(object) && iPredicate2.test(object);
     }
 
 }

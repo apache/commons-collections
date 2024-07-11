@@ -95,6 +95,16 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
     }
 
     /**
+     * Gets the value.
+     *
+     * @return the value
+     * @since 3.1
+     */
+    public Object getValue() {
+        return iValue;
+    }
+
+    /**
      * Evaluates the predicate returning true if the input equals the stored value.
      *
      * @param object  the input object
@@ -106,16 +116,6 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
             return equator.equate(iValue, object);
         }
         return iValue.equals(object);
-    }
-
-    /**
-     * Gets the value.
-     *
-     * @return the value
-     * @since 3.1
-     */
-    public Object getValue() {
-        return iValue;
     }
 
 }

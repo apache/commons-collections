@@ -53,6 +53,15 @@ public final class NotNullPredicate<T> extends AbstractPredicate<T> implements S
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning true if the object does not equal null.
      *
      * @param object  the object to evaluate
@@ -61,15 +70,6 @@ public final class NotNullPredicate<T> extends AbstractPredicate<T> implements S
     @Override
     public boolean test(final T object) {
         return object != null;
-    }
-
-    /**
-     * Returns the singleton instance.
-     *
-     * @return the singleton instance.
-     */
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

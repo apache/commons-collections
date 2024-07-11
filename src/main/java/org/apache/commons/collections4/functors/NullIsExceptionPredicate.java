@@ -59,6 +59,18 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
     }
 
     /**
+     * Gets the predicate being decorated.
+     *
+     * @return the predicate as the only element in an array
+     * @since 3.1
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Predicate<? super T>[] getPredicates() {
+        return new Predicate[] { iPredicate };
+    }
+
+    /**
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
      *
@@ -72,18 +84,6 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
             throw new FunctorException("Input Object must not be null");
         }
         return iPredicate.test(object);
-    }
-
-    /**
-     * Gets the predicate being decorated.
-     *
-     * @return the predicate as the only element in an array
-     * @since 3.1
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public Predicate<? super T>[] getPredicates() {
-        return new Predicate[] { iPredicate };
     }
 
 }

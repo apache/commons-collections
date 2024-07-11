@@ -54,6 +54,15 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate always throwing an exception.
      *
      * @param object  the input object
@@ -63,15 +72,6 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     @Override
     public boolean test(final T object) {
         throw new FunctorException("ExceptionPredicate invoked");
-    }
-
-    /**
-     * Returns the singleton instance.
-     *
-     * @return the singleton instance.
-     */
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

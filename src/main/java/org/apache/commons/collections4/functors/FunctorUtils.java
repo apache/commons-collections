@@ -108,20 +108,6 @@ final class FunctorUtils {
     }
 
     /**
-     * Validates the consumers to ensure that all is well.
-     *
-     * @param consumers  the consumers to validate.
-     */
-    static void validate(final Consumer<?>... consumers) {
-        Objects.requireNonNull(consumers, "closures");
-        for (int i = 0; i < consumers.length; i++) {
-            if (consumers[i] == null) {
-                throw new NullPointerException("closures[" + i + "]");
-            }
-        }
-    }
-
-    /**
      * Validate the predicates to ensure that all is well.
      *
      * @param predicates  the predicates to validate
@@ -144,15 +130,15 @@ final class FunctorUtils {
     }
 
     /**
-     * Validate the predicates to ensure that all is well.
+     * Validates the consumers to ensure that all is well.
      *
-     * @param predicates  the predicates to validate
+     * @param consumers  the consumers to validate.
      */
-    static void validate(final java.util.function.Predicate<?>... predicates) {
-        Objects.requireNonNull(predicates, "predicates");
-        for (int i = 0; i < predicates.length; i++) {
-            if (predicates[i] == null) {
-                throw new NullPointerException("predicates[" + i + "]");
+    static void validate(final Consumer<?>... consumers) {
+        Objects.requireNonNull(consumers, "closures");
+        for (int i = 0; i < consumers.length; i++) {
+            if (consumers[i] == null) {
+                throw new NullPointerException("closures[" + i + "]");
             }
         }
     }
@@ -167,6 +153,20 @@ final class FunctorUtils {
         for (int i = 0; i < functions.length; i++) {
             if (functions[i] == null) {
                 throw new NullPointerException("functions[" + i + "]");
+            }
+        }
+    }
+
+    /**
+     * Validate the predicates to ensure that all is well.
+     *
+     * @param predicates  the predicates to validate
+     */
+    static void validate(final java.util.function.Predicate<?>... predicates) {
+        Objects.requireNonNull(predicates, "predicates");
+        for (int i = 0; i < predicates.length; i++) {
+            if (predicates[i] == null) {
+                throw new NullPointerException("predicates[" + i + "]");
             }
         }
     }

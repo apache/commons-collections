@@ -53,6 +53,15 @@ public final class NullPredicate<T> extends AbstractPredicate<T> implements Seri
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning true if the input is null.
      *
      * @param object  the input object
@@ -61,15 +70,6 @@ public final class NullPredicate<T> extends AbstractPredicate<T> implements Seri
     @Override
     public boolean test(final T object) {
         return object == null;
-    }
-
-    /**
-     * Returns the singleton instance.
-     *
-     * @return the singleton instance.
-     */
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

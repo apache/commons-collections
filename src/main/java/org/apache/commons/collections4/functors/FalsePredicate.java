@@ -53,6 +53,15 @@ public final class FalsePredicate<T> extends AbstractPredicate<T> implements Ser
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning false always.
      *
      * @param object  the input object
@@ -61,15 +70,6 @@ public final class FalsePredicate<T> extends AbstractPredicate<T> implements Ser
     @Override
     public boolean test(final T object) {
         return false;
-    }
-
-    /**
-     * Returns the singleton instance.
-     *
-     * @return the singleton instance.
-     */
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

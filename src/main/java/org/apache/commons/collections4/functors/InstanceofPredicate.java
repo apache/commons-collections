@@ -57,6 +57,16 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     }
 
     /**
+     * Gets the type to compare to.
+     *
+     * @return the type
+     * @since 3.1
+     */
+    public Class<?> getType() {
+        return iType;
+    }
+
+    /**
      * Evaluates the predicate returning true if the input object is of the correct type.
      *
      * @param object  the input object
@@ -65,16 +75,6 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     @Override
     public boolean test(final Object object) {
         return iType.isInstance(object);
-    }
-
-    /**
-     * Gets the type to compare to.
-     *
-     * @return the type
-     * @since 3.1
-     */
-    public Class<?> getType() {
-        return iType;
     }
 
 }

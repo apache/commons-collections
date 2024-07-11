@@ -69,19 +69,6 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
     }
 
     /**
-     * Evaluates the predicate returning the result of the decorated predicate
-     * once the input has been transformed
-     *
-     * @param object  the input object which will be transformed
-     * @return true if decorated predicate returns true
-     */
-    @Override
-    public boolean test(final T object) {
-        final T result = iTransformer.apply(object);
-        return iPredicate.test(result);
-    }
-
-    /**
      * Gets the predicate being decorated.
      *
      * @return the predicate as the only element in an array
@@ -100,6 +87,19 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      */
     public Transformer<? super T, ? extends T> getTransformer() {
         return iTransformer;
+    }
+
+    /**
+     * Evaluates the predicate returning the result of the decorated predicate
+     * once the input has been transformed
+     *
+     * @param object  the input object which will be transformed
+     * @return true if decorated predicate returns true
+     */
+    @Override
+    public boolean test(final T object) {
+        final T result = iTransformer.apply(object);
+        return iPredicate.test(result);
     }
 
 }

@@ -65,17 +65,6 @@ public final class OrPredicate<T> extends AbstractPredicate<T> implements Predic
     }
 
     /**
-     * Evaluates the predicate returning true if either predicate returns true.
-     *
-     * @param object  the input object
-     * @return true if either decorated predicate returns true
-     */
-    @Override
-    public boolean test(final T object) {
-        return iPredicate1.test(object) || iPredicate2.test(object);
-    }
-
-    /**
      * Gets the two predicates being decorated as an array.
      *
      * @return the predicates
@@ -85,6 +74,17 @@ public final class OrPredicate<T> extends AbstractPredicate<T> implements Predic
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate1, iPredicate2};
+    }
+
+    /**
+     * Evaluates the predicate returning true if either predicate returns true.
+     *
+     * @param object  the input object
+     * @return true if either decorated predicate returns true
+     */
+    @Override
+    public boolean test(final T object) {
+        return iPredicate1.test(object) || iPredicate2.test(object);
     }
 
 }
