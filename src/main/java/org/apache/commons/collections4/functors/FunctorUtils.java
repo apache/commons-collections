@@ -52,7 +52,7 @@ final class FunctorUtils {
      * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
      * <p>This method exists
-     * simply as centralised documentation and atomic unchecked warning
+     * simply as centralized documentation and atomic unchecked warning
      * suppression.
      *
      * @param <T> the type of object the returned predicate should "accept"
@@ -67,7 +67,7 @@ final class FunctorUtils {
     /**
      * A very simple method that coerces Transformer<? super I, ? extends O> to Transformer<I, O>.
      * <p>This method exists
-     * simply as centralised documentation and atomic unchecked warning
+     * simply as centralized documentation and atomic unchecked warning
      * suppression.
      *
      * @param <I> the type of object the returned transformer should "accept"
