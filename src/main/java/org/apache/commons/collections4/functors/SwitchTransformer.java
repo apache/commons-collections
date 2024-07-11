@@ -174,7 +174,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @since 3.1
      */
     public Transformer<? super I, ? extends O>[] getTransformers() {
-        return FunctorUtils.<I, O>copy(iTransformers);
+        return FunctorUtils.copy(iTransformers);
     }
 
     /**

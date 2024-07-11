@@ -111,17 +111,17 @@ final class FunctorUtils {
     }
 
     /**
-     * Copy method
+     * Copy method.
      *
      * @param transformers  the transformers to copy
      * @return a clone of the transformers
      */
     @SuppressWarnings("unchecked")
-    static <I, O> Transformer<I, O>[] copy(final Transformer<? super I, ? extends O>... transformers) {
+    static <T extends Function<?, ?>> T[] copy(final T... transformers) {
         if (transformers == null) {
             return null;
         }
-        return (Transformer<I, O>[]) transformers.clone();
+        return transformers.clone();
     }
 
     /**
