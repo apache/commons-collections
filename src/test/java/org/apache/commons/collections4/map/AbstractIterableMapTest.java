@@ -43,13 +43,13 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
 
         @Override
         public V[] addSetValues() {
-            return AbstractIterableMapTest.this.getNewSampleValues();
+            return getNewSampleValues();
         }
 
         @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractIterableMapTest.this.getConfirmed();
+            return getConfirmed();
         }
 
         @Override
@@ -77,12 +77,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
 
         @Override
         public boolean supportsRemove() {
-            return AbstractIterableMapTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return AbstractIterableMapTest.this.isSetValueSupported();
+            return isSetValueSupported();
         }
 
         @Override

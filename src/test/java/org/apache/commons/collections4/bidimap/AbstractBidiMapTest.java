@@ -116,13 +116,13 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
         @Override
         public V[] addSetValues() {
-            return AbstractBidiMapTest.this.getNewSampleValues();
+            return getNewSampleValues();
         }
 
         @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractBidiMapTest.this.getConfirmed();
+            return getConfirmed();
         }
 
         @Override
@@ -145,12 +145,12 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
         @Override
         public boolean supportsRemove() {
-            return AbstractBidiMapTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return AbstractBidiMapTest.this.isSetValueSupported();
+            return isSetValueSupported();
         }
 
         @Override

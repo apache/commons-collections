@@ -41,7 +41,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
         @Override
         public K[] getFullElements() {
-            return ListOrderedMap2Test.this.getSampleKeys();
+            return getSampleKeys();
         }
 
         @Override
@@ -51,7 +51,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
         @Override
         public boolean isNullSupported() {
-            return ListOrderedMap2Test.this.isAllowNullKey();
+            return isAllowNullKey();
         }
 
         @Override

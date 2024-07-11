@@ -49,7 +49,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractOrderedMapTest.this.getConfirmed();
+            return getConfirmed();
         }
 
         @Override
@@ -77,12 +77,12 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
 
         @Override
         public boolean supportsRemove() {
-            return AbstractOrderedMapTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return AbstractOrderedMapTest.this.isSetValueSupported();
+            return isSetValueSupported();
         }
 
         @Override

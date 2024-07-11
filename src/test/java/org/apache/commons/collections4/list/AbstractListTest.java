@@ -136,7 +136,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         @Override
         public E addSetValue() {
-            return AbstractListTest.this.getOtherElements()[0];
+            return getOtherElements()[0];
         }
 
         @Override
@@ -153,12 +153,12 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         @Override
         public boolean supportsAdd() {
-            return AbstractListTest.this.isAddSupported();
+            return isAddSupported();
         }
 
         @Override
         public boolean supportsRemove() {
-            return AbstractListTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override

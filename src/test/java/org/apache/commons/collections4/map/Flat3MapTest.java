@@ -51,13 +51,13 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         @Override
         public V[] addSetValues() {
-            return Flat3MapTest.this.getNewSampleValues();
+            return getNewSampleValues();
         }
 
         @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return Flat3MapTest.this.getConfirmed();
+            return getConfirmed();
         }
 
         @Override
@@ -80,12 +80,12 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         @Override
         public boolean supportsRemove() {
-            return Flat3MapTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return Flat3MapTest.this.isSetValueSupported();
+            return isSetValueSupported();
         }
 
         @Override

@@ -46,7 +46,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
 
         @Override
         public V[] addSetValues() {
-            return AbstractOrderedBidiMapTest.this.getNewSampleValues();
+            return getNewSampleValues();
         }
 
         @Override
@@ -75,12 +75,12 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
 
         @Override
         public boolean supportsRemove() {
-            return AbstractOrderedBidiMapTest.this.isRemoveSupported();
+            return isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return AbstractOrderedBidiMapTest.this.isSetValueSupported();
+            return isSetValueSupported();
         }
 
         @Override
