@@ -22,7 +22,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.Transformer;
 
 /**
  * Internal utilities for functors.
@@ -60,8 +59,8 @@ final class FunctorUtils {
      * @return the coerced transformer.
      */
     @SuppressWarnings("unchecked")
-    static <I, O> Transformer<I, O> coerce(final Transformer<? super I, ? extends O> transformer) {
-        return (Transformer<I, O>) transformer;
+    static <R extends Function<I, O>, P extends Function<? super I, ? extends O>, I, O> R coerce(final P transformer) {
+        return (R) transformer;
     }
 
     /**
