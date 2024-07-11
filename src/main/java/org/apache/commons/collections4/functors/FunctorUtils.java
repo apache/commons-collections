@@ -21,7 +21,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
 
@@ -31,21 +30,6 @@ import org.apache.commons.collections4.Transformer;
  * @since 3.0
  */
 final class FunctorUtils {
-
-    /**
-     * A very simple method that coerces Closure<? super T> to Closure<T>.
-     * <p>This method exists
-     * simply as centralized documentation and atomic unchecked warning
-     * suppression.
-     *
-     * @param <T> the type of object the returned closure should "accept"
-     * @param closure the closure to coerce.
-     * @return the coerced closure.
-     */
-    @SuppressWarnings("unchecked")
-    static <T> Closure<T> coerce(final Closure<? super T> closure) {
-        return (Closure<T>) closure;
-    }
 
     /**
      * A very simple method that coerces Predicate<? super T> to Predicate<T>.
@@ -60,8 +44,8 @@ final class FunctorUtils {
      * @return the coerced predicate.
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T> coerce(final Predicate<? super T> predicate) {
-        return (Predicate<T>) predicate;
+    static <R extends java.util.function.Predicate<T>, P extends java.util.function.Predicate<? super T>, T> R coerce(final P predicate) {
+        return (R) predicate;
     }
 
     /**
