@@ -157,7 +157,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
-        return FunctorUtils.<E>copy(iClosures);
+        return FunctorUtils.copy(iClosures);
     }
 
     /**

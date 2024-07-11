@@ -81,17 +81,17 @@ final class FunctorUtils {
     }
 
     /**
-     * Clone the closures to ensure that the internal reference can't be messed with.
+     * Clones the consumers to ensure that the internal references can't be updated.
      *
-     * @param closures  the closures to copy
-     * @return the cloned closures
+     * @param consumers  the consumers to copy.
+     * @return the cloned consumers.
      */
     @SuppressWarnings("unchecked")
-    static <E> Closure<E>[] copy(final Closure<? super E>... closures) {
-        if (closures == null) {
+    static <C extends Consumer<?>> C[] copy(final C... consumers) {
+        if (consumers == null) {
             return null;
         }
-        return (Closure<E>[]) closures.clone();
+        return consumers.clone();
     }
 
     /**
