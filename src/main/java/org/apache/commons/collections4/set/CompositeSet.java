@@ -54,6 +54,8 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * Defines callbacks for mutation operations.
+     *
+     * @param <E> the type of the elements in this instance.
      */
     public interface SetMutator<E> extends Serializable {
 

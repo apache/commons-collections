@@ -52,10 +52,10 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * needed to transform the first sequence into the second one.
  * </p>
  *
+ * @param <T> the type of elements in the lists.
  * @see EditScript
  * @see EditCommand
  * @see CommandVisitor
- *
  * @since 4.0
  */
 public class SequencesComparator<T> {

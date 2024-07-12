@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * Serializable subclass of AbstractListDecorator.
  *
+ * @param <E> the type of the elements in the list.
  * @since 3.1
  */
-public abstract class AbstractSerializableListDecorator<E>
-        extends AbstractListDecorator<E> {
+public abstract class AbstractSerializableListDecorator<E> extends AbstractListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2684959196747496299L;

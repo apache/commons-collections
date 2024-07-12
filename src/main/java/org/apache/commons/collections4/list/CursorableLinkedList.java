@@ -55,6 +55,7 @@ import java.util.ListIterator;
  * <b>Note that this implementation is not synchronized.</b>
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @see java.util.LinkedList
  * @since 1.0
  * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21

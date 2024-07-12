@@ -26,9 +26,9 @@ package org.apache.commons.collections4.sequence;
  * these type of commands always come from the first sequence.
  * </p>
  *
+ * @param <T> the type of object to apply this command.
  * @see SequencesComparator
  * @see EditScript
- *
  * @since 4.0
  */
 public class DeleteCommand<T> extends EditCommand<T> {

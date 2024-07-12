@@ -37,11 +37,11 @@ import java.util.List;
  * method is specialized.
  * </p>
  *
+ * @param <T> the type of object to apply commands.
  * @see SequencesComparator
  * @see EditCommand
  * @see CommandVisitor
  * @see ReplacementsHandler
- *
  * @since 4.0
  */
 public class EditScript<T> {

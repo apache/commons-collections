@@ -28,11 +28,10 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated list.
  * </p>
  *
- * @param <E> the type of the elements in the list
+ * @param <E> the type of the elements in the list.
  * @since 3.0
  */
-public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E>
-        implements List<E> {
+public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E> implements List<E> {
 
     /** Serialization version--necessary in an abstract class? */
     private static final long serialVersionUID = 4500739654952315623L;

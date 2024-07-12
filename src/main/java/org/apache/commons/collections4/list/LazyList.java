@@ -61,6 +61,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @see GrowthList
  * @since 3.0
  */

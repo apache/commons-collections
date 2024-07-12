@@ -59,6 +59,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * does use slightly more memory.
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @since 3.1
  */
 public class TreeList<E> extends AbstractList<E> {

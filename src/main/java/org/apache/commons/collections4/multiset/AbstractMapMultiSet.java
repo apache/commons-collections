@@ -36,13 +36,15 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  * number of occurrences of that element in the multiset.
  * </p>
  *
- * @param <E> the type held in the multiset
+ * @param <E> the type held in the multiset.
  * @since 4.1
  */
 public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
     /**
      * Inner class EntrySetIterator.
+     *
+     * @param <E> the element type.
      */
     protected static class EntrySetIterator<E> implements Iterator<Entry<E>> {
 
@@ -154,8 +156,11 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             canRemove = false;
         }
     }
+
     /**
      * Inner class MultiSetEntry.
+     *
+     * @param <E> the key type.
      */
     protected static class MultiSetEntry<E> extends AbstractEntry<E> {
 
@@ -211,6 +216,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
     /**
      * Inner class UniqueSetIterator.
+     *
+     * @param <E> the element type.
      */
     protected static class UniqueSetIterator<E> extends AbstractIteratorDecorator<E> {
 

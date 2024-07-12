@@ -404,6 +404,9 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
      * <p>
      * From Commons Collections 3.1, all access to the {@code value} property
      * is via the methods on this class.
+     * </p>
+     *
+     * @param <E> the type of the node value.
      */
     protected static class Node<E> {
 
