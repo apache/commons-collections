@@ -25,9 +25,11 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that calls a Factory and returns the result.
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable {
+public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6817674502475353160L;
@@ -46,7 +48,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     }
 
     /** The factory to wrap */
-    private final Factory<? extends O> iFactory;
+    private final Factory<? extends R> iFactory;
 
     /**
      * Constructor that performs no validation.
@@ -54,7 +56,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      *
      * @param factory  the factory to call, not null
      */
-    public FactoryTransformer(final Factory<? extends O> factory) {
+    public FactoryTransformer(final Factory<? extends R> factory) {
         iFactory = factory;
     }
 
@@ -64,7 +66,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return the factory
      * @since 3.1
      */
-    public Factory<? extends O> getFactory() {
+    public Factory<? extends R> getFactory() {
         return iFactory;
     }
 
@@ -76,7 +78,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return the transformed result
      */
     @Override
-    public O transform(final I input) {
+    public R transform(final T input) {
         return iFactory.get();
     }
 

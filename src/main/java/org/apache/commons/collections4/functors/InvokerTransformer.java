@@ -32,9 +32,11 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  * </p>
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public class InvokerTransformer<I, O> implements Transformer<I, O> {
+public class InvokerTransformer<T, R> implements Transformer<T, R> {
 
     /**
      * Gets an instance of this transformer calling a specific method with no arguments.
@@ -118,14 +120,14 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public O transform(final Object input) {
+    public R transform(final Object input) {
         if (input == null) {
             return null;
         }
         try {
             final Class<?> cls = input.getClass();
             final Method method = cls.getMethod(iMethodName, iParamTypes);
-            return (O) method.invoke(input, iArgs);
+            return (R) method.invoke(input, iArgs);
         } catch (final NoSuchMethodException ex) {
             throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
                                        input.getClass() + "' does not exist");

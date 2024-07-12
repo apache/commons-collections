@@ -23,6 +23,8 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Decorates an iterator such that each element returned is transformed.
  *
+ * @param <I> the type of the input to the function.
+ * @param <O> the type of the result of the function.
  * @since 1.0
  */
 public class TransformIterator<I, O> implements Iterator<O> {

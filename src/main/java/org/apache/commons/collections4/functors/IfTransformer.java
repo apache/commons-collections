@@ -26,12 +26,11 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that will call one of two closures based on whether a predicate evaluates
  * as true or false.
  *
- * @param <I> The input type for the transformer
- * @param <O> The output type for the transformer
- *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 4.1
  */
-public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
+public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 8069309411242014252L;
@@ -73,13 +72,13 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
                 Objects.requireNonNull(trueTransformer, "trueTransformer"), NOPTransformer.<T>nopTransformer());
     }
     /** The test */
-    private final Predicate<? super I> iPredicate;
+    private final Predicate<? super T> iPredicate;
 
     /** The transformer to use if true */
-    private final Transformer<? super I, ? extends O> iTrueTransformer;
+    private final Transformer<? super T, ? extends R> iTrueTransformer;
 
     /** The transformer to use if false */
-    private final Transformer<? super I, ? extends O> iFalseTransformer;
+    private final Transformer<? super T, ? extends R> iFalseTransformer;
 
     /**
      * Constructor that performs no validation.
@@ -89,9 +88,9 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      * @param trueTransformer  transformer used if true, not null
      * @param falseTransformer  transformer used if false, not null
      */
-    public IfTransformer(final Predicate<? super I> predicate,
-        final Transformer<? super I, ? extends O> trueTransformer,
-        final Transformer<? super I, ? extends O> falseTransformer) {
+    public IfTransformer(final Predicate<? super T> predicate,
+        final Transformer<? super T, ? extends R> trueTransformer,
+        final Transformer<? super T, ? extends R> falseTransformer) {
 
         iPredicate = predicate;
         iTrueTransformer = trueTransformer;
@@ -103,7 +102,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      *
      * @return the transformer
      */
-    public Transformer<? super I, ? extends O> getFalseTransformer() {
+    public Transformer<? super T, ? extends R> getFalseTransformer() {
         return iFalseTransformer;
     }
 
@@ -112,7 +111,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      *
      * @return the predicate
      */
-    public Predicate<? super I> getPredicate() {
+    public Predicate<? super T> getPredicate() {
         return iPredicate;
     }
 
@@ -121,7 +120,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      *
      * @return the transformer
      */
-    public Transformer<? super I, ? extends O> getTrueTransformer() {
+    public Transformer<? super T, ? extends R> getTrueTransformer() {
         return iTrueTransformer;
     }
 
@@ -132,7 +131,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      * @return the transformed result
      */
     @Override
-    public O transform(final I input) {
+    public R transform(final T input) {
         if (iPredicate.test(input)) {
             return iTrueTransformer.apply(input);
         }

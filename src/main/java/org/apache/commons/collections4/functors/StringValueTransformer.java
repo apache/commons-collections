@@ -24,6 +24,7 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that returns the result of calling
  * {@code String.valueOf} on the input object.
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public final class StringValueTransformer<T> implements Transformer<T, String>, Serializable {

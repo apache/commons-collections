@@ -31,6 +31,7 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  * </p>
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public class InstantiateTransformer<T> implements Transformer<Class<? extends T>, T> {

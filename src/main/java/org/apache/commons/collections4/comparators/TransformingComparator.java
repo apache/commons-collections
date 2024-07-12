@@ -31,8 +31,8 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 4.0.
  * </p>
  *
- * @param <I> the input type to the transformer
- * @param <O> the output type from the transformer
+ * @param <I> the type of the input to the function
+ * @param <O> the type of the result of the function
  *
  * @since 2.1
  *

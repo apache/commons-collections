@@ -24,9 +24,11 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that always throws an exception.
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Serializable {
+public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
@@ -70,7 +72,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
      * @throws FunctorException always
      */
     @Override
-    public O transform(final I input) {
+    public R transform(final T input) {
         throw new FunctorException("ExceptionTransformer invoked");
     }
 
