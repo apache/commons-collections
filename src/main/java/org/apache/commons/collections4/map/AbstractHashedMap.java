@@ -585,31 +585,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected AbstractHashedMap(final Map<? extends K, ? extends V> map) {
         this(Math.max(2 * map.size(), DEFAULT_CAPACITY), DEFAULT_LOAD_FACTOR);
-        _putAll(map);
-    }
-
-    /**
-     * Puts all the values from the specified map into this map.
-     * <p>
-     * This implementation iterates around the specified map and
-     * uses {@link #put(Object, Object)}.
-     * <p>
-     * It is private to allow the constructor to still call it
-     * even when putAll is overridden.
-     *
-     * @param map  the map to add
-     * @throws NullPointerException if the map is null
-     */
-    private void _putAll(final Map<? extends K, ? extends V> map) {
-        final int mapSize = map.size();
-        if (mapSize == 0) {
-            return;
-        }
-        final int newSize = (int) ((size + mapSize) / loadFactor + 1);
-        ensureCapacity(calculateNewCapacity(newSize));
-        for (final Map.Entry<? extends K, ? extends V> entry: map.entrySet()) {
-            put(entry.getKey(), entry.getValue());
-        }
+        putAll(map);
     }
 
     /**
@@ -1280,7 +1256,15 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
-        _putAll(map);
+        final int mapSize = map.size();
+        if (mapSize == 0) {
+            return;
+        }
+        final int newSize = (int) ((size + mapSize) / loadFactor + 1);
+        ensureCapacity(calculateNewCapacity(newSize));
+        for (final Map.Entry<? extends K, ? extends V> entry: map.entrySet()) {
+            put(entry.getKey(), entry.getValue());
+        }
     }
 
     /**
