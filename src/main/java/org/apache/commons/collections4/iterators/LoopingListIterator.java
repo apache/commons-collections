@@ -57,11 +57,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      */
     public LoopingListIterator(final List<E> list) {
         this.list = Objects.requireNonNull(list, "collection");
-        _reset();
-    }
-
-    private void _reset() {
-        iterator = list.listIterator();
+        init();
     }
 
     /**
@@ -108,6 +104,10 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     @Override
     public boolean hasPrevious() {
         return !list.isEmpty();
+    }
+
+    private void init() {
+        iterator = list.listIterator();
     }
 
     /**
@@ -230,7 +230,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      */
     @Override
     public void reset() {
-        _reset();
+        init();
     }
 
     /**
