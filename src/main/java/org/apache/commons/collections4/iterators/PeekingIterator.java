@@ -75,7 +75,9 @@ public class PeekingIterator<E> implements Iterator<E> {
 
     /**
      * Returns the next element in iteration without advancing the underlying iterator.
-     * If the iterator is already exhausted, null will be returned.
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate
+     * will <em>not</em> be tested if element() or {@link #peek()} has been called after the most recent invocation of {@link #next()}
      *
      * @return the next element from the iterator
      * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
@@ -110,6 +112,15 @@ public class PeekingIterator<E> implements Iterator<E> {
         return slotFilled || iterator.hasNext();
     }
 
+    /**
+     * Returns the next element in iteration.
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate
+     * will <em>not</em> be tested if {@link #element()} or {@link #peek()} has been called after the most recent invocation of next()
+     *
+     * @return the next element from the iterator
+     * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
+     */
     @Override
     public E next() {
         if (!hasNext()) {
@@ -131,6 +142,9 @@ public class PeekingIterator<E> implements Iterator<E> {
      * <p>
      * The rationale behind this is to follow the {@link java.util.Queue} interface
      * which uses the same terminology.
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate
+     * will <em>not</em> be tested if {@link #element()} or peek() has been called after the most recent invocation of {@link #next()}
      *
      * @return the next element from the iterator
      */
