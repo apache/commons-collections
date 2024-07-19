@@ -91,6 +91,15 @@ public class ListUtilsTest {
         assertFalse(ListUtils.isEqualList(a, null));
         assertFalse(ListUtils.isEqualList(null, b));
         assertTrue(ListUtils.isEqualList(null, null));
+
+        b.clear();
+        a.add("a");
+        b.add("b");
+        assertFalse(ListUtils.isEqualList(a, b));
+
+        a.add("b");
+        b.add("a");
+        assertFalse(ListUtils.isEqualList(a, b));
     }
 
     @Test
@@ -121,6 +130,9 @@ public class ListUtilsTest {
         a.clear();
         assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
         assertEquals(0, ListUtils.hashCodeForList(null));
+
+        a.add(null);
+        assertEquals(31, ListUtils.hashCodeForList(a));
     }
 
     /**
@@ -329,6 +341,12 @@ public class ListUtilsTest {
         assertEquals(3, partition.size());
         assertEquals(1, partition.get(2).size());
         assertAll(
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> partition.get(-1),
+                        "Index -1 must not be negative"),
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> partition.get(3),
+                        "Index " + 3 + " must be less than size " + partition.size())
+        );
+        assertAll(
                 () -> assertThrows(NullPointerException.class, () -> ListUtils.partition(null, 3),
                         "failed to check for null argument"),
                 () -> assertThrows(IllegalArgumentException.class, () -> ListUtils.partition(strings, 0),
@@ -481,4 +499,59 @@ public class ListUtilsTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void testUnion() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(b);
+        final List<String> result1 = ListUtils.union(list1, list2);
+        final List<String> expected1 = new ArrayList<>();
+        expected1.add(a);
+        expected1.add(b);
+        assertEquals(2, result1.size());
+        assertEquals(expected1, result1);
+
+        final List<String> list3 = new ArrayList<>();
+        list3.add(a);
+        final List<String> result2 = ListUtils.union(list1, list3);
+        final List<String> expected2 = new ArrayList<>();
+        expected2.add(a);
+        expected2.add(a);
+        assertEquals(2, result1.size());
+        assertEquals(expected2, result2);
+
+        list1.add(null);
+        final List<String> result3 = ListUtils.union(list1, list2);
+        final List<String> expected3 = new ArrayList<>();
+        expected3.add(a);
+        expected3.add(null);
+        expected3.add(b);
+        assertEquals(3, result3.size());
+        assertEquals(expected3, result3);
+
+        list2.add(null);
+        final List<String> result4 = ListUtils.union(list1, list2);
+        final List<String> expected4 = new ArrayList<>();
+        expected4.add(a);
+        expected4.add(null);
+        expected4.add(b);
+        expected4.add(null);
+        assertEquals(4, result4.size());
+        assertEquals(expected4, result4);
+    }
+
+    @Test
+    public void testSum() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(b);
+        final List<String> expected1 = new ArrayList<>();
+        expected1.add(a);
+        expected1.add(b);
+        final List<String> result1 = ListUtils.sum(list1, list2);
+        assertEquals(2, result1.size());
+        assertEquals(expected1, result1);
+    }
 }
