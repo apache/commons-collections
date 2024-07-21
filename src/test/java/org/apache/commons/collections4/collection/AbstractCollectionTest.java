@@ -314,11 +314,11 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Returns an array of objects that are contained in a collection
      *  produced by {@link #makeFullCollection()}.  Every element in the
-     *  returned array <I>must</I> be an element in a full collection.<P>
+     *  returned array <em>must</em> be an element in a full collection.<P>
      *  The default implementation returns a heterogeneous array of
      *  objects with some duplicates. null is added if allowed.
      *  Override if you require specific testing elements.  Note that if you
-     *  override {@link #makeFullCollection()}, you <I>must</I> override
+     *  override {@link #makeFullCollection()}, you <em>must</em> override
      *  this method to reflect the contents of a full collection.
      */
     @SuppressWarnings("unchecked")
@@ -389,7 +389,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     *  Returns an array of elements that are <I>not</I> contained in a
+     *  Returns an array of elements that are <em>not</em> contained in a
      *  full collection.  Every element in the returned array must
      *  not exist in a collection returned by {@link #makeFullCollection()}.
      *  The default implementation returns a heterogeneous array of elements

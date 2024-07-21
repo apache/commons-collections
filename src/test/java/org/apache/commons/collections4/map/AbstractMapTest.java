@@ -94,12 +94,12 @@ import org.junit.jupiter.api.Test;
  * <p>
  * For tests on modification operations (puts and removes), fixtures are used to verify that that operation results in correct state for the map and its
  * collection views. Basically, the modification is performed against your map implementation, and an identical modification is performed against a
- * <I>confirmed</I> map implementation. A confirmed map implementation is something like <Code>java.util.HashMap</Code>, which is known to conform exactly to
+ * <em>confirmed</em> map implementation. A confirmed map implementation is something like <Code>java.util.HashMap</Code>, which is known to conform exactly to
  * the {@link Map} contract. After the modification takes place on both your map implementation and the confirmed map implementation, the two maps are compared
  * to see if their state is identical. The comparison also compares the collection views to make sure they're still the same.
  * <P>
  *
- * The upshot of all that is that <I>any</I> test that modifies the map in <I>any</I> way will verify that <I>all</I> of the map's state is still correct,
+ * The upshot of all that is that <em>any</em> test that modifies the map in <em>any</em> way will verify that <em>all</em> of the map's state is still correct,
  * including the state of its collection views. So for instance if a key is removed by the map's key set's iterator, then the entry set is checked to make sure
  * the key/value pair no longer appears.
  * <P>
@@ -1845,7 +1845,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Verifies that {@link #map} is still equal to {@link #confirmed}. This method checks that the map is equal to the HashMap, <I>and</I> that the map's
+     * Verifies that {@link #map} is still equal to {@link #confirmed}. This method checks that the map is equal to the HashMap, <em>and</em> that the map's
      * collection views are still equal to the HashMap's collection views. An <Code>equals</Code> test is done on the maps and their collection views; their
      * size and <Code>isEmpty</Code> results are compared; their hashCodes are compared; and <Code>containsAll</Code> tests are run on the collection views.
      */
