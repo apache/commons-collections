@@ -90,7 +90,7 @@ import org.junit.jupiter.api.Test;
  * Fixtures are used to verify that the operation results in correct state
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
- * <i>confirmed</i> collection implementation.  A confirmed collection
+ * <em>confirmed</em> collection implementation.  A confirmed collection
  * implementation is something like {@link java.util.ArrayList}, which is
  * known to conform exactly to its collection interface's contract.  After the
  * operation takes place on both your collection implementation and the

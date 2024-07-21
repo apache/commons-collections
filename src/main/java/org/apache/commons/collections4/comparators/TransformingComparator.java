@@ -87,12 +87,12 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is
+     * Returns {@code true} iff <em>that</em> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
-     * iff {@code <i>that</i>} is a {@link TransformingComparator}
+     * iff {@code <em>that</em>} is a {@link TransformingComparator}
      * whose attributes are equal to mine.
      *
      * @param object  the object to compare to

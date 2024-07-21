@@ -67,7 +67,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Adds one copy of the specified object to the Bag.
      * <p>
      * Since this method always increases the size of the bag, it
@@ -82,7 +82,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Adds {@code count} copies of the specified object to the Bag.
      * <p>
      * Since this method always increases the size of the bag, it
@@ -111,7 +111,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Returns {@code true} if the bag contains all elements in
      * the given collection, <b>not</b> respecting cardinality. That is,
      * if the given collection {@code coll} contains at least one of
@@ -140,7 +140,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Removes the first occurrence of the given object from the bag.
      * <p>
      * This will also remove the object from the {@link #uniqueSet()} if the
@@ -155,9 +155,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Remove all elements represented in the given collection,
-     * <b>not</b> respecting cardinality. That is, remove <i>all</i>
+     * <b>not</b> respecting cardinality. That is, remove <em>all</em>
      * occurrences of every object contained in the given collection.
      *
      * @param coll  the collection to remove
@@ -178,9 +178,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Remove any members of the bag that are not in the given collection,
-     * <i>not</i> respecting cardinality. That is, any object in the given
+     * <em>not</em> respecting cardinality. That is, any object in the given
      * collection {@code coll} will be retained in the bag with the same
      * number of copies prior to this operation. All other objects will be
      * completely removed from this bag.

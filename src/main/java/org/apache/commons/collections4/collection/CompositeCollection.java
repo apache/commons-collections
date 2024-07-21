@@ -499,7 +499,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * Returns a new collection containing all of the elements
      *
      * @return A new ArrayList containing all of the elements in this composite.
-     *         The new collection is <i>not</i> backed by this composite.
+     *         The new collection is <em>not</em> backed by this composite.
      */
     public Collection<E> toCollection() {
         return new ArrayList<>(this);

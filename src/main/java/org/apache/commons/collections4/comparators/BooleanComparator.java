@@ -42,8 +42,8 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
 
     /**
      * Returns a BooleanComparator instance that sorts
-     * {@code <i>trueFirst</i>} values before
-     * {@code &#x21;<i>trueFirst</i>} values.
+     * {@code <em>trueFirst</em>} values before
+     * {@code &#x21;<em>trueFirst</em>} values.
      * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
@@ -112,8 +112,8 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
 
     /**
      * Creates a {@code BooleanComparator} that sorts
-     * {@code <i>trueFirst</i>} values before
-     * {@code &#x21;<i>trueFirst</i>} values.
+     * {@code <em>trueFirst</em>} values before
+     * {@code &#x21;<em>trueFirst</em>} values.
      * <p>
      * Please use the static factories instead whenever possible.
      *
@@ -142,12 +142,12 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is
+     * Returns {@code true} iff <em>that</em> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
-     * iff {@code <i>that</i>} is a {@link BooleanComparator}
+     * iff {@code <em>that</em>} is a {@link BooleanComparator}
      * whose value of {@link #sortsTrueFirst()} is equal to mine.
      *
      * @param object  the object to compare to

@@ -41,7 +41,7 @@ import org.apache.commons.collections4.KeyValue;
  * number of entries exceeds the number of buckets or if the hash codes of the
  * objects are not uniformly distributed, these operations have a worst case
  * scenario that is proportional to the number of elements in the map
- * (<i>O(n)</i>).
+ * (<em>O(n)</em>).
  * </p>
  * <p>
  * Each bucket in the hash table has its own monitor, so two threads can
@@ -52,7 +52,7 @@ import org.apache.commons.collections4.KeyValue;
  * that this map implementation behaves in ways you may find disconcerting.
  * Bulk operations, such as {@link #putAll(Map) putAll} or the
  * {@link Collection#retainAll(Collection) retainAll} operation in collection
- * views, are <i>not</i> atomic.  If two threads are simultaneously
+ * views, are <em>not</em> atomic.  If two threads are simultaneously
  * executing
  * </p>
  *
@@ -77,8 +77,8 @@ import org.apache.commons.collections4.KeyValue;
  * {@link #isEmpty()} are out-of-date as soon as they are produced.
  * </p>
  * <p>
- * The iterators returned by the collection views of this class are <i>not</i>
- * fail-fast.  They will <i>never</i> raise a
+ * The iterators returned by the collection views of this class are <em>not</em>
+ * fail-fast.  They will <em>never</em> raise a
  * {@link java.util.ConcurrentModificationException}.  Keys and values
  * added to the map after the iterator is created do not necessarily appear
  * during iteration.  Similarly, the iterator does not necessarily fail to
@@ -86,7 +86,7 @@ import org.apache.commons.collections4.KeyValue;
  * </p>
  * <p>
  * Finally, unlike {@link java.util.HashMap}-style implementations, this
- * class <i>never</i> rehashes the map.  The number of buckets is fixed
+ * class <em>never</em> rehashes the map.  The number of buckets is fixed
  * at construction time and never altered.  Performance may degrade if
  * you do not allocate enough buckets upfront.
  * </p>

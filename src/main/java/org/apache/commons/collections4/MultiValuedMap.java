@@ -286,7 +286,7 @@ public interface MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned collection <i>may</i> be modifiable, but updates will not be propagated
+     * The returned collection <em>may</em> be modifiable, but updates will not be propagated
      * to this multivalued map. In case no mapping was stored for the specified
      * key, an empty, unmodifiable collection will be returned.
      * </p>

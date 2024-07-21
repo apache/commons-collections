@@ -215,7 +215,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Returns a {@link BulkTest} for testing {@link List#subList(int,int)}.
      *  The returned bulk test will run through every {@code TestList}
-     *  method, <i>including</i> another {@code bulkTestSubList}.
+     *  method, <em>including</em> another {@code bulkTestSubList}.
      *  Sublists are tested until the size of the sublist is less than 10.
      *  Each sublist is 6 elements smaller than its parent list.
      *  (By default this means that two rounds of sublists will be tested).

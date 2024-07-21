@@ -523,7 +523,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * Returns a new Set containing all of the elements.
      *
      * @return A new HashSet containing all of the elements in this composite.
-     *   The new collection is <i>not</i> backed by this composite.
+     *   The new collection is <em>not</em> backed by this composite.
      */
     public Set<E> toSet() {
         return new HashSet<>(this);

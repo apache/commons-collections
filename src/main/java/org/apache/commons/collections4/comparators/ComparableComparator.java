@@ -82,9 +82,9 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @param obj1  the first object to compare
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
-     * @throws NullPointerException if <i>obj1</i> is {@code null},
+     * @throws NullPointerException if <em>obj1</em> is {@code null},
      *         or when {@code ((Comparable)obj1).compareTo(obj2)} does
-     * @throws ClassCastException if <i>obj1</i> is not a {@code Comparable},
+     * @throws ClassCastException if <em>obj1</em> is not a {@code Comparable},
      *         or when {@code ((Comparable)obj1).compareTo(obj2)} does
      */
     @Override
@@ -93,11 +93,11 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is a {@link Comparator Comparator}
+     * Returns {@code true} iff <em>that</em> Object is a {@link Comparator Comparator}
      * whose ordering is known to be equivalent to mine.
      * <p>
      * This implementation returns {@code true} iff
-     * {@code <i>object</i>.{@link Object#getClass() getClass()}} equals
+     * {@code <em>object</em>.{@link Object#getClass() getClass()}} equals
      * {@code this.getClass()}. Subclasses may want to override this behavior to remain
      * consistent with the {@link Comparator#equals(Object)} contract.
      *

@@ -69,7 +69,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * hard keys and soft values, providing a memory-sensitive cache.
  * </p>
  * <p>
- * This {@link Map} implementation does <i>not</i> allow null elements.
+ * This {@link Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a
  * {@code NullPointerException}.
  * </p>
@@ -350,7 +350,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param <T> the type of the referenced object
          * @param type  HARD, SOFT or WEAK
          * @param referent  the object to refer to
-         * @param hash  the hash code of the <i>key</i> of the mapping;
+         * @param hash  the hash code of the <em>key</em> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
          * @return the reference to the object

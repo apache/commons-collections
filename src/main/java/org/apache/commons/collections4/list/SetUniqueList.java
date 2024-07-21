@@ -177,7 +177,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Adds an element to the list if it is not already present.
      * <p>
-     * <i>(Violation)</i> The {@code List} interface requires that this
+     * <em>(Violation)</em> The {@code List} interface requires that this
      * method returns {@code true} always. However, this class may return
      * {@code false} because of the {@code Set} behavior.
      *
@@ -200,7 +200,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Adds an element to a specific index in the list if it is not already
      * present.
      * <p>
-     * <i>(Violation)</i> The {@code List} interface makes the assumption
+     * <em>(Violation)</em> The {@code List} interface makes the assumption
      * that the element is always inserted. This may not happen with this
      * implementation.
      *
@@ -222,7 +222,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Only elements that are not already in this list will be added, and
      * duplicates from the specified collection will be ignored.
      * <p>
-     * <i>(Violation)</i> The {@code List} interface makes the assumption
+     * <em>(Violation)</em> The {@code List} interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
@@ -241,7 +241,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Only elements that are not already in this list will be added, and
      * duplicates from the specified collection will be ignored.
      * <p>
-     * <i>(Violation)</i> The {@code List} interface makes the assumption
+     * <em>(Violation)</em> The {@code List} interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *

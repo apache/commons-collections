@@ -122,7 +122,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * Mark this cursor as no longer being needed. Any resources
          * associated with this cursor are immediately released.
          * In previous versions of this class, it was mandatory to close
-         * all cursor objects to avoid memory leaks. It is <i>no longer</i>
+         * all cursor objects to avoid memory leaks. It is <em>no longer</em>
          * necessary to call this close method; an instance of this class
          * can now be treated exactly like a normal iterator.
          */

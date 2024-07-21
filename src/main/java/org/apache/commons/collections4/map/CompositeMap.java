@@ -315,7 +315,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Returns the value to which this map maps the specified key.  Returns
      * {@code null} if the map contains no mapping for this key.  A return
-     * value of {@code null} does not <i>necessarily</i> indicate that the
+     * value of {@code null} does not <em>necessarily</em> indicate that the
      * map contains no mapping for the key; it's also possible that the map
      * explicitly maps the key to {@code null}.  The {@code containsKey}
      * operation may be used to distinguish these two cases.
