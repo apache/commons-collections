@@ -81,25 +81,25 @@ public class ListUtilsTest {
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> a = new ArrayList<>( data );
-        final List<String> b = new ArrayList<>( data );
+        final List<String> list1 = new ArrayList<>( data );
+        final List<String> list2 = new ArrayList<>( data );
 
-        assertEquals(a, b);
-        assertTrue(ListUtils.isEqualList(a, b));
-        a.clear();
-        assertFalse(ListUtils.isEqualList(a, b));
-        assertFalse(ListUtils.isEqualList(a, null));
-        assertFalse(ListUtils.isEqualList(null, b));
+        assertEquals(list1, list2);
+        assertTrue(ListUtils.isEqualList(list1, list2));
+        list1.clear();
+        assertFalse(ListUtils.isEqualList(list1, list2));
+        assertFalse(ListUtils.isEqualList(list1, null));
+        assertFalse(ListUtils.isEqualList(null, list2));
         assertTrue(ListUtils.isEqualList(null, null));
 
-        b.clear();
-        a.add("a");
-        b.add("b");
-        assertFalse(ListUtils.isEqualList(a, b));
+        list2.clear();
+        list1.add("a");
+        list2.add("b");
+        assertFalse(ListUtils.isEqualList(list1, list2));
 
-        a.add("b");
-        b.add("a");
-        assertFalse(ListUtils.isEqualList(a, b));
+        list1.add("b");
+        list2.add("a");
+        assertFalse(ListUtils.isEqualList(list1, list2));
     }
 
     @Test
@@ -120,19 +120,19 @@ public class ListUtilsTest {
     public void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> a = new ArrayList<>(data);
-        final List<String> b = new ArrayList<>(data);
+        final List<String> list1 = new ArrayList<>(data);
+        final List<String> list2 = new ArrayList<>(data);
 
-        assertEquals(a.hashCode(), b.hashCode());
-        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
-        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
-        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        a.clear();
-        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        assertEquals(list1.hashCode(), list2.hashCode());
+        assertEquals(list1.hashCode(), ListUtils.hashCodeForList(list1));
+        assertEquals(list2.hashCode(), ListUtils.hashCodeForList(list2));
+        assertEquals(ListUtils.hashCodeForList(list1), ListUtils.hashCodeForList(list2));
+        list1.clear();
+        assertNotEquals(ListUtils.hashCodeForList(list1), ListUtils.hashCodeForList(list2));
         assertEquals(0, ListUtils.hashCodeForList(null));
 
-        a.add(null);
-        assertEquals(31, ListUtils.hashCodeForList(a));
+        list1.add(null);
+        assertEquals(31, ListUtils.hashCodeForList(list1));
     }
 
     /**
