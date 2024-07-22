@@ -27,12 +27,9 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21 ]
+        java: [ 8, 11, 17, 21, 22 ]
         experimental: [false]
         include:
-          # https://github.com/easymock/easymock/issues/547
-          - java: 22
-            experimental: true
           - java: 23-ea
             experimental: true
         
