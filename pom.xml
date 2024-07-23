@@ -91,12 +91,24 @@
     </dependency>
   </dependencies>
   <distributionManagement>
-    <site>
-      <id>apache.website</id>
-      <name>Apache Commons Site</name>
-      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}</url>
-    </site>
+    <snapshotRepository>
+      <id>dijkstra-dijkstra</id>
+      <name>dijkstra-dijkstra</name>
+      <url>https://dijkstra-008679635962.d.codeartifact.us-east-1.amazonaws.com/maven/dijkstra/</url>
+    </snapshotRepository>
+    <repository>
+      <id>dijkstra-dijkstra</id>
+      <name>dijkstra-dijkstra</name>
+      <url>https://dijkstra-008679635962.d.codeartifact.us-east-1.amazonaws.com/maven/dijkstra/</url>
+    </repository>
   </distributionManagement>
+<!--  <distributionManagement>-->
+<!--    <site>-->
+<!--      <id>apache.website</id>-->
+<!--      <name>Apache Commons Site</name>-->
+<!--      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}</url>-->
+<!--    </site>-->
+<!--  </distributionManagement>-->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
