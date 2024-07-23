@@ -34,6 +34,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Predicate...) is now FunctorUtils.validate(java.util.function.Predicate...).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...).</action>
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán. Gary Gregory">Increase test coverage for ListUtils #517.</action>
+    <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
