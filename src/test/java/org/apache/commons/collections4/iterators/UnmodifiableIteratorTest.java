@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
