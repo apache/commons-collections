@@ -55,9 +55,6 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return UnmodifiableIterator.unmodifiableIterator(testList.iterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {

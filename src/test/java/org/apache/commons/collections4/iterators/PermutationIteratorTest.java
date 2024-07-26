@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for PermutationIterator.
- *
- * @param <E> the type of elements tested by this iterator.
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 

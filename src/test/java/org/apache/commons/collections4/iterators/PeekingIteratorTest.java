@@ -57,9 +57,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         return PeekingIterator.peekingIterator(testList.iterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {
