@@ -500,6 +500,20 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void testSum() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(b);
+        final List<String> expected1 = new ArrayList<>();
+        expected1.add(a);
+        expected1.add(b);
+        final List<String> result1 = ListUtils.sum(list1, list2);
+        assertEquals(2, result1.size());
+        assertEquals(expected1, result1);
+    }
+
+    @Test
     public void testUnion() {
         final List<String> list1 = new ArrayList<>();
         list1.add(a);
@@ -539,19 +553,5 @@ public class ListUtilsTest {
         expected4.add(null);
         assertEquals(4, result4.size());
         assertEquals(expected4, result4);
-    }
-
-    @Test
-    public void testSum() {
-        final List<String> list1 = new ArrayList<>();
-        list1.add(a);
-        final List<String> list2 = new ArrayList<>();
-        list2.add(b);
-        final List<String> expected1 = new ArrayList<>();
-        expected1.add(a);
-        expected1.add(b);
-        final List<String> result1 = ListUtils.sum(list1, list2);
-        assertEquals(2, result1.size());
-        assertEquals(expected1, result1);
     }
 }
