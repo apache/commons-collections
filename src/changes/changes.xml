@@ -40,6 +40,7 @@
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.15.0 #516.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 72.</action>
   </release>
   <release version="4.5.0-M2" date="2024-06-15" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
      <!-- ADD -->
