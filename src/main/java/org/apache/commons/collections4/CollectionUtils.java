@@ -1206,15 +1206,7 @@ public class CollectionUtils {
             return false;
         }
         final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
-        if (helper.cardinalityA.size() != helper.cardinalityB.size()) {
-            return false;
-        }
-        for (final Object obj : helper.cardinalityA.keySet()) {
-            if (helper.freqA(obj) != helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return helper.cardinalityA.equals(helper.cardinalityB);
     }
 
     /**
